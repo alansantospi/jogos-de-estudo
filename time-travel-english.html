@@ -1,0 +1,3112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Time Travel English</title>
+<style>
+  :root{
+    --bg:#081225;
+    --panel:#101d3a;
+    --panel2:#14264d;
+    --accent:#50e3ff;
+    --accent2:#9b7bff;
+    --good:#42e695;
+    --bad:#ff5f7a;
+    --text:#f7fbff;
+    --muted:#b7c6df;
+    --gold:#ffd166;
+    --orange:#ffb86b;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  button{touch-action:manipulation}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(80,227,255,.15), transparent 25%),
+      radial-gradient(circle at 80% 20%, rgba(155,123,255,.14), transparent 30%),
+      linear-gradient(180deg,#06101f,#09162b 55%,#07111f);
+    color:var(--text);
+    min-height:100vh;
+  }
+  .stars{
+    position:fixed; inset:0; pointer-events:none; opacity:.35;
+    background-image:
+      radial-gradient(#fff 1px, transparent 1px),
+      radial-gradient(#fff 1px, transparent 1px);
+    background-size:46px 46px,70px 70px;
+    background-position:0 0,20px 30px;
+  }
+  .wrap{max-width:1080px;margin:auto;padding:24px}
+  .game{
+    background:rgba(9,20,43,.9);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 22px 70px rgba(0,0,0,.35);
+    backdrop-filter:blur(12px);
+  }
+  header{
+    padding:20px 22px;
+    background:linear-gradient(90deg,rgba(80,227,255,.12),rgba(155,123,255,.15));
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .top{
+    display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap
+  }
+  h1{font-size:clamp(24px,4vw,38px);margin:0}
+  .subtitle{color:var(--muted);margin-top:4px}
+  .hud{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.08);
+    padding:10px 14px;border-radius:999px;font-weight:800
+  }
+  .progress{height:12px;background:#07101f;border-radius:999px;overflow:hidden;margin-top:16px}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.35s}
+  main{padding:28px}
+  .screen{display:none}
+  .screen.active{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .hero{text-align:center;padding:34px 10px}
+  .hero .emoji{font-size:82px;filter:drop-shadow(0 10px 30px rgba(80,227,255,.25))}
+  .hero h2{font-size:clamp(30px,5vw,54px);margin:14px 0 8px}
+  .hero p{max-width:760px;margin:0 auto 22px;color:var(--muted);font-size:18px;line-height:1.6}
+
+  button{
+    font:inherit;border:0;cursor:pointer;border-radius:14px;
+    padding:13px 18px;font-weight:850;transition:.2s
+  }
+  button:hover{transform:translateY(-2px)}
+  button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .primary{background:linear-gradient(90deg,var(--accent),#7ce7ff);color:#00131b}
+  .secondary{background:#1d315f;color:white;border:1px solid rgba(255,255,255,.08)}
+  .gold{background:linear-gradient(90deg,var(--gold),var(--orange));color:#241800}
+
+  .lesson-wrap{display:grid;gap:18px}
+  .lesson-card{
+    background:linear-gradient(180deg,rgba(20,38,77,.95),rgba(15,29,58,.95));
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;padding:24px;
+  }
+  .lesson-card h2,.lesson-card h3{margin-top:0}
+  .lesson-tag{
+    display:inline-block;
+    padding:7px 11px;
+    border-radius:999px;
+    background:rgba(80,227,255,.12);
+    color:var(--accent);
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .formula{
+    background:#07101f;
+    border:1px solid #2b477a;
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+    font-size:clamp(20px,3vw,30px);
+    font-weight:950;
+    color:var(--gold);
+    margin:16px 0;
+  }
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .mini{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;padding:16px
+  }
+  .mini strong{display:block;font-size:19px;margin-bottom:6px}
+  .example{
+    border-left:4px solid var(--accent);
+    padding:10px 14px;
+    background:rgba(80,227,255,.07);
+    border-radius:8px;
+    margin:10px 0;
+  }
+  .warning{
+    border-left-color:var(--gold);
+    background:rgba(255,209,102,.08)
+  }
+  .lesson-nav{display:flex;justify-content:space-between;gap:12px;margin-top:18px;flex-wrap:wrap}
+  .lesson-counter{color:var(--muted);font-weight:700}
+
+  .question-card{
+    background:linear-gradient(180deg,rgba(20,38,77,.92),rgba(15,29,58,.92));
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;padding:24px
+  }
+  .stage-label{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:900}
+  .question{font-size:clamp(22px,3vw,32px);font-weight:900;margin:10px 0 18px}
+  .hint{color:var(--muted);margin:-6px 0 18px}
+  .answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .answer{
+    background:#0d1a33;color:white;text-align:left;border:1px solid rgba(255,255,255,.08);
+    min-height:58px
+  }
+  .answer:hover{border-color:var(--accent);background:#112449}
+  .answer.correct{background:rgba(66,230,149,.18);border-color:var(--good)}
+  .answer.wrong{background:rgba(255,95,122,.18);border-color:var(--bad)}
+
+  .feedback{
+    margin-top:18px;border-radius:16px;padding:15px 16px;display:none;font-weight:750
+  }
+  .feedback.show{display:block}
+  .feedback.good{background:rgba(66,230,149,.14);border:1px solid rgba(66,230,149,.4)}
+  .feedback.bad{background:rgba(255,95,122,.12);border:1px solid rgba(255,95,122,.4)}
+
+  .controls{display:flex;justify-content:flex-end;margin-top:18px}
+  .ticket{
+    background:#f4f0dc;color:#152034;border-radius:18px;padding:18px;margin:8px 0 20px;
+    border:3px dashed #8e7e4d;box-shadow:inset 0 0 0 4px rgba(255,255,255,.3)
+  }
+  .ticket h3{margin:0 0 12px;font-size:24px}
+  .ticket-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .ticket b{color:#5d4c16}
+  .input-row{display:flex;gap:10px;flex-wrap:wrap}
+  input{
+    flex:1;min-width:220px;background:#07101f;border:1px solid #2f4575;color:white;
+    border-radius:14px;padding:14px 15px;font:inherit;outline:none
+  }
+  input:focus{border-color:var(--accent)}
+
+  .word-bank{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+  .word{
+    background:#15294f;border:1px solid #36548c;color:white;
+    border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:800
+  }
+  .word.used{opacity:.3;pointer-events:none}
+  .sentence-box{
+    min-height:58px;
+    background:#07101f;
+    border:1px dashed #4568a2;
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .selected-word{
+    background:rgba(80,227,255,.12);
+    border:1px solid var(--accent);
+    border-radius:10px;
+    padding:8px 10px;
+    cursor:pointer;
+  }
+
+  .truefalse{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tf-true{background:rgba(66,230,149,.14);color:white;border:1px solid rgba(66,230,149,.4)}
+  .tf-false{background:rgba(255,95,122,.12);color:white;border:1px solid rgba(255,95,122,.4)}
+
+  .result{text-align:center;padding:24px}
+  .result .trophy{font-size:88px}
+  .rank{font-size:28px;font-weight:950;color:var(--gold);margin:10px 0}
+  .summary{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:24px 0
+  }
+  .stat{background:#0d1a33;border-radius:16px;padding:16px}
+  .stat strong{display:block;font-size:26px}
+  .small{color:var(--muted);font-size:14px}
+  .shake{animation:shake .25s}
+  @keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
+
+  
+  .illustration{
+    display:flex;justify-content:center;align-items:center;
+    font-size:70px;min-height:110px;margin:6px 0 18px;
+    filter:drop-shadow(0 10px 24px rgba(80,227,255,.18))
+  }
+  .match-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px
+  }
+  .match-col{display:grid;gap:10px}
+  .match-item{
+    background:#0d1a33;color:white;border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;padding:12px;cursor:pointer;font-weight:800;text-align:left
+  }
+  .match-item.selected{border-color:var(--accent);background:#15305f}
+  .match-item.done{opacity:.42;pointer-events:none;text-decoration:line-through}
+  .memory-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px
+  }
+  .memory-card{
+    min-height:86px;background:#0d1a33;color:white;border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:8px;cursor:pointer
+  }
+  .memory-card.revealed,.memory-card.matched{background:#17345f;border-color:var(--accent)}
+  .memory-card.matched{background:rgba(66,230,149,.16);border-color:var(--good)}
+  .crossword{
+    display:grid;grid-template-columns:repeat(7,42px);gap:4px;justify-content:center;margin:18px 0
+  }
+  .cw-cell{
+    width:42px;height:42px;background:#07101f;border:1px solid #35578e;border-radius:7px;
+    display:flex;align-items:center;justify-content:center
+  }
+  .cw-cell input{
+    width:100%;height:100%;min-width:0;border:0;background:transparent;text-align:center;
+    text-transform:uppercase;font-weight:900;padding:0
+  }
+  .cw-block{background:transparent;border:0}
+  .clues{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;padding:14px;margin-top:12px
+  }
+  .wordsearch{
+    display:grid;grid-template-columns:repeat(8,40px);gap:4px;justify-content:center;margin:18px 0
+  }
+  .ws-cell{
+    width:40px;height:40px;background:#0d1a33;border:1px solid #2e4f83;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;font-weight:900;cursor:pointer;user-select:none
+  }
+  .ws-cell.sel{background:#153a68;border-color:var(--accent)}
+  .ws-cell.found{background:rgba(66,230,149,.16);border-color:var(--good)}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+  .badge{background:#0d1a33;border:1px solid rgba(255,255,255,.08);padding:8px 10px;border-radius:999px;font-size:13px;font-weight:800}
+  
+  .audio-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 16px}
+  .audio-btn{
+    background:#15305f;color:white;border:1px solid var(--accent);
+    border-radius:12px;padding:10px 14px;font-weight:850
+  }
+  .speaker{font-size:20px;margin-right:6px}
+
+  @media(max-width:760px){
+    .memory-grid{grid-template-columns:repeat(2,1fr)}
+    .match-grid{grid-template-columns:1fr}
+    .crossword{grid-template-columns:repeat(7,36px)}
+    .cw-cell{width:36px;height:36px}
+    .wordsearch{grid-template-columns:repeat(8,34px)}
+    .ws-cell{width:34px;height:34px}
+  }
+
+  @media(max-width:760px){
+    .answers,.ticket-grid,.summary,.grid2,.grid3,.truefalse{grid-template-columns:1fr}
+    main{padding:18px}
+  }
+
+  html,body{overscroll-behavior-y:contain}
+  button,.word,.match-item,.memory-card,.ws-cell,.selected-word{
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+    touch-action:manipulation;
+  }
+  button{
+    min-height:48px;
+  }
+  .answer,.match-item,.memory-card{
+    min-height:56px;
+  }
+  .audio-btn{
+    min-height:48px;
+  }
+  @media(max-width:760px){
+    body{font-size:16px}
+    .wrap{padding:10px}
+    .game{border-radius:16px}
+    header{padding:14px}
+    main{padding:14px}
+    .hud{width:100%;justify-content:space-between}
+    .pill{flex:1;text-align:center;min-width:92px}
+    button{width:100%;font-size:16px;padding:14px 16px}
+    .lesson-nav>div:last-child{display:grid;grid-template-columns:1fr;gap:10px;width:100%}
+    .input-row{display:grid;grid-template-columns:1fr;gap:10px}
+    input{min-width:0;width:100%;font-size:16px}
+    .audio-row{display:grid;grid-template-columns:1fr 1fr;width:100%}
+    .audio-row .audio-btn{width:100%}
+    .word-bank{display:grid;grid-template-columns:1fr 1fr}
+    .word{width:100%}
+    .match-item{width:100%}
+    .memory-card{width:100%;min-height:74px}
+    .controls{justify-content:stretch}
+    .controls button{width:100%}
+    .selected-word{padding:10px 12px}
+    .ticket{font-size:15px}
+    .illustration{font-size:58px;min-height:80px}
+  }
+  @media(max-width:420px){
+    .audio-row{grid-template-columns:1fr}
+    .word-bank{grid-template-columns:1fr}
+    .memory-grid{grid-template-columns:repeat(2,1fr)}
+    .hud{gap:6px}
+    .pill{padding:8px 6px;font-size:14px}
+    h1{font-size:25px}
+    .question{font-size:23px}
+  }
+
+
+  .start-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    min-height:48px;
+    padding:13px 18px;
+    border-radius:14px;
+    font-weight:850;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+
+  /* CSS-only fallback: entering #lesson works even when JS is disabled. */
+  .static-lesson{display:none}
+  #lesson1{display:block}
+  .rule-section{
+    background:linear-gradient(180deg,rgba(13,30,62,.96),rgba(10,23,48,.96));
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:18px;
+    margin:16px 0;
+  }
+  .rule-title{
+    display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    font-size:22px;font-weight:950;margin-bottom:10px
+  }
+  .rule-chip{
+    background:rgba(255,209,102,.12);
+    border:1px solid rgba(255,209,102,.35);
+    color:var(--gold);
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:13px;
+    font-weight:900
+  }
+  .verb-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+    margin-top:12px
+  }
+  .verb-card{
+    background:#0d1a33;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:14px;
+    text-align:center
+  }
+  .verb-card .pic{font-size:42px;margin-bottom:6px}
+  .verb-card .base{font-size:18px;font-weight:950;color:var(--accent)}
+  .verb-card .meaning{font-size:14px;color:var(--muted);margin:3px 0}
+  .verb-card .ing{font-size:17px;font-weight:900;color:var(--gold)}
+  .verb-card .sentence{font-size:13px;margin-top:6px}
+  .focus-box{
+    background:rgba(80,227,255,.08);
+    border-left:4px solid var(--accent);
+    border-radius:10px;
+    padding:12px 14px;
+    margin:12px 0;
+    line-height:1.55
+  }
+  .rule-example{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+    background:#07101f;
+    border-radius:14px;
+    padding:12px;
+    margin:8px 0
+  }
+  .rule-example .arrow{font-size:20px;color:var(--gold);font-weight:900}
+  @media(max-width:900px){.verb-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:650px){
+    .verb-grid{grid-template-columns:repeat(2,1fr)}
+    .rule-example{grid-template-columns:1fr;text-align:center}
+    .rule-example .arrow{transform:rotate(90deg)}
+  }
+
+
+  #skipLessonBtn{min-height:48px}
+  @media(max-width:760px){
+    #startLessonBtn,#skipLessonBtn{
+      width:100%;
+      max-width:100%;
+    }
+  }
+
+
+  .category-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+    margin-top:20px;
+  }
+  .category-card{
+    width:100%;
+    min-height:155px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    text-align:center;
+    padding:16px;
+    border-radius:18px;
+    background:#0d1a33;
+    border:1px solid rgba(255,255,255,.1);
+    color:inherit;
+  }
+  .category-card:hover{transform:translateY(-2px)}
+  .category-card .category-icon{font-size:38px}
+  .category-card strong{font-size:17px;color:var(--accent)}
+  .category-card small{line-height:1.35;color:var(--muted);font-weight:600}
+  .category-card.all-category{
+    grid-column:1/-1;
+    min-height:120px;
+    border-color:rgba(255,209,102,.45);
+    background:rgba(255,209,102,.08);
+  }
+  .category-card.all-category strong{color:var(--gold);font-size:20px}
+  
+  
+  @media(max-width:760px){
+    .category-grid{grid-template-columns:1fr 1fr}
+    .category-card{min-height:145px}
+    .category-card.all-category{grid-column:1/-1}
+  }
+  @media(max-width:430px){
+    .category-grid{grid-template-columns:1fr}
+    .category-card,.category-card.all-category{grid-column:1;min-height:120px}
+  }
+
+
+  body.quiz-mode #categories{display:none !important}
+  body.quiz-mode #start{display:none !important}
+  body.quiz-mode #lesson{display:none !important}
+
+  .mission-banner{
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:18px;
+    background:linear-gradient(135deg,rgba(80,227,255,.12),rgba(155,123,255,.18));
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .mission-banner::after{
+    content:"";
+    position:absolute;
+    width:180px;height:180px;border-radius:50%;
+    right:-60px;top:-70px;
+    background:radial-gradient(circle,rgba(255,255,255,.13),transparent 65%);
+  }
+  .mission-title{font-size:22px;font-weight:950;margin-bottom:5px}
+  .mission-desc{color:var(--muted);line-height:1.5}
+  .xp-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .xp-chip{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.08);
+    padding:8px 11px;border-radius:999px;font-size:13px;font-weight:850
+  }
+  .combo{
+    color:var(--gold);font-weight:950;animation:pulseCombo .8s ease
+  }
+  @keyframes pulseCombo{0%{transform:scale(.85);opacity:.3}60%{transform:scale(1.1)}100%{transform:scale(1)}}
+  .achievement-pop{
+    position:fixed;
+    left:50%;top:18px;
+    transform:translateX(-50%) translateY(-20px);
+    z-index:9999;
+    background:#101d3a;
+    border:1px solid rgba(255,209,102,.45);
+    box-shadow:0 16px 50px rgba(0,0,0,.4);
+    border-radius:16px;
+    padding:12px 18px;
+    opacity:0;
+    pointer-events:none;
+    transition:.35s;
+    font-weight:900
+  }
+  .achievement-pop.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .portal-bg{
+    background:
+      radial-gradient(circle at 50% 0%,rgba(80,227,255,.12),transparent 28%),
+      radial-gradient(circle at 90% 20%,rgba(155,123,255,.12),transparent 25%),
+      linear-gradient(180deg,#06101f,#09162b 55%,#07111f);
+  }
+  .question-card{
+    position:relative;
+    overflow:hidden;
+  }
+  .question-card::before{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.025),transparent);
+    transform:translateX(-100%);
+    animation:scan 5s linear infinite;
+    pointer-events:none
+  }
+  @keyframes scan{to{transform:translateX(100%)}}
+  .answer{position:relative;overflow:hidden}
+  .answer::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+    transform:translateX(-120%);
+    transition:.4s
+  }
+  .answer:hover::after{transform:translateX(120%)}
+  .stage-transition{
+    text-align:center;
+    padding:34px 18px;
+  }
+  .stage-transition .big{font-size:74px;margin-bottom:10px}
+  .stage-transition h2{font-size:34px;margin:8px 0}
+  .stage-transition p{color:var(--muted);max-width:650px;margin:0 auto 20px}
+  .category-card{transition:.22s ease}
+  .category-card:hover{box-shadow:0 12px 35px rgba(0,0,0,.25);border-color:rgba(80,227,255,.4)}
+  .category-card .category-icon{filter:drop-shadow(0 8px 20px rgba(80,227,255,.15))}
+  .streak-glow{box-shadow:0 0 0 1px rgba(255,209,102,.35),0 0 24px rgba(255,209,102,.12)}
+  .storyline{
+    font-size:15px;color:var(--muted);margin:4px 0 10px
+  }
+
+
+  /* Navegação por telas: somente uma tela principal pode ficar visível */
+  .screen{display:none !important}
+  .screen.active{display:block !important}
+
+  /* A lição contém sub-telas; somente uma delas aparece por vez */
+  #lesson .static-lesson{display:none !important}
+  #lesson .static-lesson.active-lesson{display:block !important}
+
+  /* Remove comportamento antigo baseado em :target/:has */
+  #start,#categories,#lesson,#quiz,#end{scroll-margin-top:0}
+
+  @media(max-width:760px){
+    .screen.active{min-height:calc(100vh - 110px)}
+  }
+
+
+  .trail-map{
+    display:flex;
+    align-items:center;
+    gap:0;
+    overflow-x:auto;
+    padding:14px 4px 18px;
+    margin:12px 0 18px;
+    scrollbar-width:thin;
+  }
+  .trail-node{
+    flex:0 0 auto;
+    width:46px;height:46px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:950;
+    background:#0b1730;
+    border:2px solid rgba(255,255,255,.16);
+    color:var(--muted);
+    position:relative;
+    transition:.25s;
+  }
+  .trail-node.done{
+    background:rgba(74,222,128,.16);
+    border-color:rgba(74,222,128,.7);
+    color:#d8ffe5;
+  }
+  .trail-node.current{
+    background:rgba(255,209,102,.16);
+    border-color:var(--gold);
+    color:var(--gold);
+    transform:scale(1.13);
+    box-shadow:0 0 22px rgba(255,209,102,.18);
+  }
+  .trail-line{
+    flex:0 0 25px;height:3px;
+    background:rgba(255,255,255,.12);
+  }
+  .trail-line.done{background:rgba(74,222,128,.55)}
+  .progress-panel{
+    background:#09162b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:12px 14px;
+    margin-bottom:14px;
+  }
+  .progress-head{
+    display:flex;justify-content:space-between;gap:12px;
+    align-items:center;margin-bottom:8px;font-size:14px;font-weight:850
+  }
+  .progress-track{
+    height:11px;border-radius:999px;
+    background:#050c18;overflow:hidden;
+    border:1px solid rgba(255,255,255,.06)
+  }
+  .progress-fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--accent),var(--gold));
+    border-radius:999px;
+    transition:width .35s ease
+  }
+  .trail-choice{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;margin:18px 0;
+  }
+  .trail-card{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.09);
+    border-radius:18px;padding:16px;text-align:left;
+  }
+  .trail-card strong{display:block;font-size:17px;margin:5px 0;color:var(--accent)}
+  .trail-card small{color:var(--muted);line-height:1.4}
+  .trail-card .trail-icon{font-size:34px}
+  .trail-card.recommended{border-color:rgba(255,209,102,.45)}
+  .trail-card.recommended strong{color:var(--gold)}
+  .mission-progress{
+    font-size:13px;color:var(--muted);margin-top:6px
+  }
+  @media(max-width:760px){
+    .trail-choice{grid-template-columns:1fr}
+    .trail-node{width:42px;height:42px}
+    .trail-line{flex-basis:18px}
+  }
+
+  /* ---------- Progresso, modo treino e revisao ---------- */
+  .stats-line{
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0 4px
+  }
+  .stat-chip{
+    background:#0d1a33;border:1px solid rgba(255,255,255,.1);
+    border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--muted)
+  }
+  .stat-chip b{color:var(--accent);font-weight:900}
+
+  .mode-toggle{
+    display:inline-flex;gap:6px;padding:6px;margin:8px auto 0;
+    background:#07101f;border:1px solid rgba(255,255,255,.1);border-radius:999px
+  }
+  .mode-opt{
+    background:transparent;color:var(--muted);border-radius:999px;
+    padding:9px 16px;font-size:14px;font-weight:800;display:flex;gap:7px;align-items:baseline
+  }
+  .mode-opt small{font-size:11px;font-weight:600;opacity:.7}
+  .mode-opt:hover{transform:none}
+  .mode-opt.active{background:linear-gradient(90deg,var(--accent),#7ce7ff);color:#00131b}
+  .mode-opt.active small{opacity:.75}
+  .mode-hint{color:var(--muted);font-size:13px;margin-top:8px}
+
+  .category-card#reviewCard{
+    grid-column:1/-1;min-height:120px;
+    border-color:rgba(66,230,149,.45);
+    background:rgba(66,230,149,.08);
+  }
+  .category-card#reviewCard strong{color:var(--good);font-size:20px}
+  .category-card#reviewCard.empty{opacity:.55}
+  .review-count{color:var(--muted);font-weight:700;font-size:13px}
+
+  .trail-done{
+    display:none;margin-left:8px;padding:3px 9px;border-radius:999px;
+    background:rgba(66,230,149,.18);color:var(--good);font-size:11px;font-weight:900
+  }
+  .trail-card.done{border-color:rgba(66,230,149,.45)}
+
+  .missed{
+    margin:20px auto 0;max-width:640px;text-align:center;
+    background:#0d1a33;border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;padding:18px
+  }
+  .missed-title{font-weight:900;color:var(--orange);margin-bottom:12px}
+  .missed-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+  .missed-chip{
+    background:rgba(255,184,107,.1);border:1px solid rgba(255,184,107,.3);
+    border-radius:999px;padding:7px 12px;font-size:13px;color:var(--text)
+  }
+  .link-btn{
+    background:none;color:var(--muted);font-size:12px;font-weight:700;
+    text-decoration:underline;padding:6px 10px
+  }
+  .link-btn:hover{transform:none;color:var(--bad)}
+
+  /* =========================================================
+     TOQUE EM CELULAR E TABLET (Android e iOS)
+     ========================================================= */
+
+  /* 1. Área segura. Com viewport-fit=cover o conteúdo se estende para baixo
+        da barra do navegador e do indicador de home; sem estas margens os
+        botões do rodapé ficam encobertos e não recebem o toque no iPhone. */
+  body{
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:calc(env(safe-area-inset-bottom) + 14px);
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+
+  /* 2. :hover só onde existe mouse. Em tela de toque o estado de hover fica
+        "grudado" no último elemento tocado e pode consumir o primeiro toque. */
+  @media (hover:none),(pointer:coarse){
+    button:hover,.answer:hover,.category-card:hover,.trail-card:hover,.word:hover,.selected-word:hover,.match-item:hover,.memory-card:hover,.ws-cell:hover,.audio-btn:hover,.mode-opt:hover,.link-btn:hover,.tf-true:hover,.tf-false:hover{transform:none!important}
+  }
+
+  /* 3. Feedback de toque. -webkit-tap-highlight-color está transparente, então
+        sem um :active o toque parece não ter acontecido. */
+  button:active,.answer:active,.category-card:active,.trail-card:active,.word:active,.selected-word:active,.match-item:active,.memory-card:active,.ws-cell:active,.audio-btn:active,.mode-opt:active,.link-btn:active,.tf-true:active,.tf-false:active{
+    transform:scale(.97);
+    filter:brightness(1.18);
+  }
+
+  /* 4. Alvo de toque de no mínimo 44px, só onde hoje é menor. Os cards e a
+        maioria dos botões já têm min-height maior e não podem ser reduzidos. */
+  .selected-word{min-height:44px;display:inline-flex;align-items:center}
+
+  /* 5. Tudo que recebe toque precisa de touch-action e, em <div>/<span>,
+        de cursor:pointer — sem ele o iOS não dispara click em elemento
+        que não é nativamente clicável. */
+  button,.answer,.category-card,.trail-card,.word,.selected-word,.match-item,.memory-card,.ws-cell,.audio-btn,.mode-opt,.link-btn,.tf-true,.tf-false{touch-action:manipulation;cursor:pointer}
+
+  /* 6. Abaixo de 16px o iOS dá zoom automático ao focar um campo. */
+  input,select,textarea{font-size:16px}
+
+  /* A grade do caça-palavras usava células de 34px, abaixo do alvo mínimo. */
+  .ws-cell{width:44px;height:44px;font-size:15px}
+  @media(max-width:430px){.ws-cell{width:38px;height:38px;font-size:14px}
+    .wordsearch{grid-template-columns:repeat(8,38px)}}
+  .cw-cell input{min-height:44px;font-size:16px}
+
+  /* ---------- Som, conquistas e estado das missões ---------- */
+  .som-btn{cursor:pointer;font-size:17px;line-height:1;padding:10px 14px;background:#0d1a33;color:inherit}
+  .som-btn:active{transform:scale(.9)}
+
+  .floater{
+    position:absolute;left:50%;top:0;transform:translateX(-50%);
+    font-weight:950;font-size:26px;pointer-events:none;
+    animation:sobe 1.05s ease-out forwards;z-index:50
+  }
+  .floater.bom{color:var(--good)}
+  .floater.ruim{color:var(--bad)}
+  @keyframes sobe{
+    0%{opacity:0;transform:translate(-50%,6px) scale(.85)}
+    22%{opacity:1;transform:translate(-50%,-8px) scale(1.1)}
+    100%{opacity:0;transform:translate(-50%,-52px) scale(1)}
+  }
+  .question{position:relative}
+
+  @keyframes comboPulse{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+  .combo-pulse{animation:comboPulse .45s ease;border-color:var(--gold)!important;color:var(--gold)}
+
+  .category-card{position:relative}
+  .selo{
+    display:none;position:absolute;top:10px;right:10px;
+    padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900
+  }
+  .category-card.andamento{border-color:rgba(255,209,102,.5)}
+  .category-card.andamento .selo{background:rgba(255,209,102,.18);color:var(--gold)}
+  .category-card.concluida{border-color:rgba(66,230,149,.5)}
+  .category-card.concluida .selo{background:rgba(66,230,149,.18);color:var(--good)}
+  .category-card.dominada{border-color:rgba(80,227,255,.62);box-shadow:0 0 0 1px rgba(80,227,255,.22) inset}
+  .category-card.dominada .selo{background:rgba(80,227,255,.2);color:var(--accent)}
+  .mini-bar{width:100%;height:6px;background:#07101f;border-radius:999px;overflow:hidden;margin-top:10px}
+  .mini-bar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .5s ease}
+  .mini-txt{color:var(--muted);font-size:11.5px;font-weight:700;margin-top:6px}
+
+  @media(prefers-reduced-motion:reduce){
+    .floater,.combo-pulse,.achievement-pop{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div><div id="achievementPop" class="achievement-pop"></div>
+<div class="wrap">
+  <div class="game">
+    <header>
+      <div class="top">
+        <div>
+          <h1>🚀 Time Travel English</h1>
+          <div class="subtitle">Learn first, then play!</div>
+        </div>
+        <div class="hud">
+          <div class="pill">⭐ <span id="score">0</span></div>
+          <div class="pill">❤️ <span id="lives">5</span></div><div class="pill">🔥 <span id="combo">0</span></div>
+          <div class="pill">🌀 <span id="modeLabel">Aula</span></div>
+          <button id="btnSom" type="button" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som">🔊</button>
+        </div>
+      </div>
+      <div class="progress"><div id="bar" class="bar"></div></div>
+    </header>
+
+    <main>
+      <section id="start" class="screen active">
+        <div class="hero">
+          <div class="emoji">⏳🚀</div>
+          <h2>Time Travel English</h2>
+          <p>
+            Você pode começar pela <b>lição interativa</b> ou ir direto para os <b>desafios</b>. O áudio é opcional e só é carregado quando você toca em “Ouvir”. Ele nunca interfere na abertura do jogo. <b>Cada nova partida monta desafios diferentes aleatoriamente.</b>
+            Depois, enfrenta várias missões com exercícios diferentes para provar que domina
+            Present Continuous, ações e informações de tickets.
+          </p>
+          <div id="startStats" class="stats-line"></div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+            <button id="startLessonBtn" type="button" class="primary" onclick="openLesson('lesson1')">📘 Estudar a lição</button>
+            <button id="skipLessonBtn" type="button" class="gold" onclick="openCategories()">🎮 Escolher desafios</button>
+          </div>
+          <div style="margin-top:8px"><button type="button" class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div>
+        </div>
+      </section>
+
+      <section id="lesson" class="screen"><div id="lessonContent" class="lesson-wrap">
+<section id="lesson1" class="static-lesson active-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Parte expositiva 1</span>
+    <h2>⏱️ Quando usamos o Present Continuous?</h2>
+    <p>Usamos o <b>Present Continuous</b> para falar de uma ação que está acontecendo <b>agora</b>.</p>
+    <div class="formula">SUBJECT + AM / IS / ARE + VERB + ING</div>
+    <div class="grid3">
+      <div class="mini"><strong>🙋 I → AM</strong>I am studying.</div>
+      <div class="mini"><strong>👦 HE / 👧 SHE → IS</strong>She is reading.</div>
+      <div class="mini"><strong>👥 YOU / WE / THEY → ARE</strong>They are playing.</div>
+    </div>
+    <div class="example">📖 <b>She is reading.</b> = Ela está lendo. <button type="button" class="audio-btn" onclick="speakSentence('She is reading.')">🔊 Ouvir</button></div>
+    <div class="example">⚽ <b>They are playing soccer.</b> = Eles estão jogando futebol. <button type="button" class="audio-btn" onclick="speakSentence('They are playing soccer.')">🔊 Ouvir</button></div>
+    <div class="example">🚀 <b>We are traveling in time.</b> = Nós estamos viajando no tempo. <button type="button" class="audio-btn" onclick="speakSentence('We are traveling in time.')">🔊 Ouvir</button></div>
+  </div>
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 1 de 6</div>
+    <div><button type="button" class="primary" onclick="openLesson('lesson2')">Continuar →</button></div>
+  </div>
+</section>
+
+<section id="lesson2" class="static-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Parte expositiva 2</span>
+    <h2>❌ Negativas e ❓ perguntas</h2>
+    <div class="grid2">
+      <div class="mini">
+        <strong>Forma negativa</strong>
+        Coloque <b>NOT</b> depois de am/is/are.
+        <div class="example">He <b>is not</b> running. <button type="button" class="audio-btn" onclick="speakSentence('He is not running.')">🔊 Ouvir</button></div>
+        <div class="example">He <b>isn't</b> running. <button type="button" class="audio-btn" onclick="speakSentence('He isn’t running.')">🔊 Ouvir</button></div>
+        <div class="example">They <b>aren't</b> sleeping. <button type="button" class="audio-btn" onclick="speakSentence('They aren’t sleeping.')">🔊 Ouvir</button></div>
+      </div>
+      <div class="mini">
+        <strong>Forma interrogativa</strong>
+        Coloque <b>am/is/are</b> no começo.
+        <div class="example"><b>Is</b> she dancing? <button type="button" class="audio-btn" onclick="speakSentence('Is she dancing?')">🔊 Ouvir</button></div>
+        <div class="example"><b>Are</b> they studying? <button type="button" class="audio-btn" onclick="speakSentence('Are they studying?')">🔊 Ouvir</button></div>
+        <div class="example"><b>Are</b> you traveling? <button type="button" class="audio-btn" onclick="speakSentence('Are you traveling?')">🔊 Ouvir</button></div>
+      </div>
+    </div>
+    <div class="example warning">💡 Respostas curtas: <b>Yes, she is.</b> / <b>No, she isn't.</b></div>
+  </div>
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 2 de 6</div>
+    <div>
+      <button type="button" class="secondary" onclick="openLesson('lesson1')">← Voltar</button>
+      <button type="button" class="primary" onclick="openLesson('lesson3')">Continuar →</button>
+    </div>
+  </div>
+</section>
+
+<section id="lesson3" class="static-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Parte expositiva 3</span>
+    <h2>🏃 Actions Vocabulary</h2>
+    <p>Reconheça a ação e observe como ela aparece com <b>-ING</b>.</p>
+    <div class="grid3">
+      <div class="mini">🧹 <b>clean → cleaning</b><br>limpar</div>
+      <div class="mini">🍳 <b>cook → cooking</b><br>cozinhar</div>
+      <div class="mini">🍕 <b>eat → eating</b><br>comer</div>
+      <div class="mini">🎧 <b>listen to music → listening to music</b><br>ouvir música</div>
+      <div class="mini">😴 <b>sleep → sleeping</b><br>dormir</div>
+      <div class="mini">📚 <b>study → studying</b><br>estudar</div>
+      <div class="mini">💬 <b>talk → talking</b><br>conversar</div>
+      <div class="mini">💻 <b>use the computer → using the computer</b><br>usar o computador</div>
+      <div class="mini">🏃 <b>run → running</b><br>correr</div>
+    </div>
+    <div class="example warning">⚠️ run → <b>running</b> | swim → <b>swimming</b> | write → <b>writing</b> | use → <b>using</b></div>
+  </div>
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 3 de 6</div>
+    <div>
+      <button type="button" class="secondary" onclick="openLesson('lesson2')">← Voltar</button>
+      <button type="button" class="primary" onclick="openLesson('lesson3b')">Continuar →</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="lesson3b" class="static-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Fixação</span>
+    <h2>🧠 Como memorizar significado + conjugação</h2>
+    <p>Use sempre três passos: <b>1) significado</b>, <b>2) forma com -ING</b> e <b>3) frase completa</b>.</p>
+    <div class="grid3">
+      <div class="mini"><strong>🧹 CLEAN</strong>limpar<br><b>cleaning</b><br>She is cleaning.</div>
+      <div class="mini"><strong>🍳 COOK</strong>cozinhar<br><b>cooking</b><br>He is cooking.</div>
+      <div class="mini"><strong>🍕 EAT</strong>comer<br><b>eating</b><br>They are eating.</div>
+      <div class="mini"><strong>🎧 LISTEN TO MUSIC</strong>ouvir música<br><b>listening to music</b><br>We are listening to music.</div>
+      <div class="mini"><strong>😴 SLEEP</strong>dormir<br><b>sleeping</b><br>The baby is sleeping.</div>
+      <div class="mini"><strong>📚 STUDY</strong>estudar<br><b>studying</b><br>I am studying.</div>
+      <div class="mini"><strong>💬 TALK</strong>conversar<br><b>talking</b><br>They are talking.</div>
+      <div class="mini"><strong>💻 USE THE COMPUTER</strong>usar o computador<br><b>using the computer</b><br>He is using the computer.</div>
+    </div>
+    <div class="example warning">💡 Faça o caminho nos dois sentidos: <b>cook → cozinhar</b> e <b>cozinhar → cook</b>. Isso melhora muito a lembrança.</div>
+  </div>
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 4 de 6 • Fixação</div>
+    <div>
+      <button type="button" class="secondary" onclick="openLesson('lesson3')">← Voltar</button>
+      <button type="button" class="primary" onclick="openLesson('lessonRules')">Continuar →</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="lessonRules" class="static-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Present Continuous — Regras do -ING</span>
+    <h2>🧠 Significado + conjugação por regra</h2>
+    <p>Agora vamos separar os verbos pela <b>regra usada para formar o -ING</b>. O objetivo é memorizar três coisas juntas: <b>o que significa</b>, <b>como fica no Present Continuous</b> e <b>como aparece em uma frase</b>.</p>
+
+    <div class="rule-section">
+      <div class="rule-title">✅ REGRA 1 — normalmente, apenas acrescentamos <b>-ING</b> <span class="rule-chip">verb + ing</span></div>
+      <div class="focus-box">Exemplo: <b>help → helping</b>. A palavra-base permanece e acrescentamos <b>-ing</b>.</div>
+      <div class="verb-grid">
+        <div class="verb-card"><div class="pic">🧍</div><div class="base">stand</div><div class="meaning">ficar em pé</div><div class="ing">standing</div><div class="sentence">He is standing.</div></div>
+        <div class="verb-card"><div class="pic">🏋️</div><div class="base">lift</div><div class="meaning">levantar</div><div class="ing">lifting</div><div class="sentence">She is lifting a box.</div></div>
+        <div class="verb-card"><div class="pic">💨</div><div class="base">blow</div><div class="meaning">soprar</div><div class="ing">blowing</div><div class="sentence">He is blowing.</div></div>
+        <div class="verb-card"><div class="pic">😭</div><div class="base">cry</div><div class="meaning">chorar</div><div class="ing">crying</div><div class="sentence">The baby is crying.</div></div>
+        <div class="verb-card"><div class="pic">⚽</div><div class="base">play</div><div class="meaning">jogar / brincar</div><div class="ing">playing</div><div class="sentence">They are playing.</div></div>
+        <div class="verb-card"><div class="pic">🎨</div><div class="base">paint</div><div class="meaning">pintar</div><div class="ing">painting</div><div class="sentence">She is painting.</div></div>
+        <div class="verb-card"><div class="pic">🗣️</div><div class="base">discuss</div><div class="meaning">discutir / debater</div><div class="ing">discussing</div><div class="sentence">They are discussing.</div></div>
+        <div class="verb-card"><div class="pic">🤲</div><div class="base">borrow</div><div class="meaning">pegar emprestado</div><div class="ing">borrowing</div><div class="sentence">He is borrowing a book.</div></div>
+        <div class="verb-card"><div class="pic">🛍️</div><div class="base">buy</div><div class="meaning">comprar</div><div class="ing">buying</div><div class="sentence">She is buying food.</div></div>
+        <div class="verb-card"><div class="pic">✏️</div><div class="base">draw</div><div class="meaning">desenhar</div><div class="ing">drawing</div><div class="sentence">He is drawing.</div></div>
+        <div class="verb-card"><div class="pic">🤝</div><div class="base">help</div><div class="meaning">ajudar</div><div class="ing">helping</div><div class="sentence">She is helping him.</div></div>
+        <div class="verb-card"><div class="pic">📺</div><div class="base">watch</div><div class="meaning">assistir / observar</div><div class="ing">watching</div><div class="sentence">We are watching TV.</div></div>
+        <div class="verb-card"><div class="pic">⬆️</div><div class="base">jump</div><div class="meaning">pular</div><div class="ing">jumping</div><div class="sentence">The boy is jumping.</div></div>
+        <div class="verb-card"><div class="pic">🛩️</div><div class="base">fly</div><div class="meaning">voar</div><div class="ing">flying</div><div class="sentence">The bird is flying.</div></div>
+        <div class="verb-card"><div class="pic">⛵</div><div class="base">sail</div><div class="meaning">navegar / velejar</div><div class="ing">sailing</div><div class="sentence">They are sailing.</div></div>
+        <div class="verb-card"><div class="pic">🔎</div><div class="base">find</div><div class="meaning">encontrar</div><div class="ing">finding</div><div class="sentence">She is finding clues.</div></div>
+        <div class="verb-card"><div class="pic">💔</div><div class="base">break</div><div class="meaning">quebrar</div><div class="ing">breaking</div><div class="sentence">He is breaking the toy.</div></div>
+      </div>
+    </div>
+
+    <div class="rule-section">
+      <div class="rule-title">✂️ REGRA 2 — verbo terminado em <b>E</b>: tiramos o E + ING <span class="rule-chip">e → ing</span></div>
+      <div class="rule-example"><div><b>ride</b><br><span class="small">andar de / montar</span></div><div class="arrow">→</div><div><b>riding</b><br>She is riding a bike.</div></div>
+      <div class="rule-example"><div><b>drive</b><br><span class="small">dirigir</span></div><div class="arrow">→</div><div><b>driving</b><br>He is driving a car.</div></div>
+      <div class="rule-example"><div><b>lose</b><br><span class="small">perder</span></div><div class="arrow">→</div><div><b>losing</b><br>They are losing the game.</div></div>
+      <div class="rule-example"><div><b>write</b><br><span class="small">escrever</span></div><div class="arrow">→</div><div><b>writing</b><br>She is writing a letter.</div></div>
+      <div class="rule-example"><div><b>dance</b><br><span class="small">dançar</span></div><div class="arrow">→</div><div><b>dancing</b><br>They are dancing.</div></div>
+      <div class="focus-box">Lembre: <b>ride ≠ rideing</b>, <b>drive ≠ driveing</b>, <b>write ≠ writeing</b>, <b>dance ≠ danceing</b>.</div>
+    </div>
+
+    <div class="rule-section">
+      <div class="rule-title">✌️ REGRA 3 — alguns verbos curtos dobram a última consoante <span class="rule-chip">CVC → double + ing</span></div>
+      <div class="rule-example"><div><b>hop</b><br><span class="small">saltar / pular em um pé</span></div><div class="arrow">→</div><div><b>hopping</b><br>The rabbit is hopping.</div></div>
+      <div class="rule-example"><div><b>win</b><br><span class="small">vencer / ganhar</span></div><div class="arrow">→</div><div><b>winning</b><br>Our team is winning.</div></div>
+      <div class="rule-example"><div><b>run</b><br><span class="small">correr</span></div><div class="arrow">→</div><div><b>running</b><br>He is running.</div></div>
+      <div class="rule-example"><div><b>swim</b><br><span class="small">nadar</span></div><div class="arrow">→</div><div><b>swimming</b><br>She is swimming.</div></div>
+      <div class="rule-example"><div><b>sit</b><br><span class="small">sentar</span></div><div class="arrow">→</div><div><b>sitting</b><br>They are sitting.</div></div>
+      <div class="rule-example"><div><b>stop</b><br><span class="small">parar</span></div><div class="arrow">→</div><div><b>stopping</b><br>The bus is stopping.</div></div>
+      <div class="focus-box">Atenção: <b>hop → hopping</b>, <b>win → winning</b>, <b>run → running</b>, <b>swim → swimming</b>. Já <b>jump → jumping</b> não dobra, porque termina em duas consoantes no som/escrita final.</div>
+    </div>
+
+    <div class="rule-section">
+      <div class="rule-title">🚲 Verbos de movimento que confundem</div>
+      <div class="grid3">
+        <div class="mini">🚲 <b>ride → riding</b><br>andar de bicicleta / montar</div>
+        <div class="mini">🚗 <b>drive → driving</b><br>dirigir</div>
+        <div class="mini">🛩️ <b>fly → flying</b><br>voar</div>
+        <div class="mini">⛵ <b>sail → sailing</b><br>navegar / velejar</div>
+        <div class="mini">⬆️ <b>jump → jumping</b><br>pular</div>
+        <div class="mini">🐇 <b>hop → hopping</b><br>saltar / pular em um pé</div>
+        <div class="mini">🏃 <b>run → running</b><br>correr</div>
+        <div class="mini">🏊 <b>swim → swimming</b><br>nadar</div>
+      </div>
+    </div>
+
+    <div class="rule-section">
+      <div class="rule-title">🏆 Resultado e ações</div>
+      <div class="grid3">
+        <div class="mini">🏆 <b>win → winning</b><br>vencer / ganhar</div>
+        <div class="mini">😞 <b>lose → losing</b><br>perder</div>
+        <div class="mini">🔎 <b>find → finding</b><br>encontrar</div>
+        <div class="mini">💔 <b>break → breaking</b><br>quebrar</div>
+        <div class="mini">🤲 <b>borrow → borrowing</b><br>pegar emprestado</div>
+        <div class="mini">🛍️ <b>buy → buying</b><br>comprar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 5 de 6 • Regras do -ING</div>
+    <div>
+      <button type="button" class="secondary" onclick="openLesson('lesson3b')">← Voltar</button>
+      <button type="button" class="primary" onclick="openLesson('lesson4')">Continuar →</button>
+    </div>
+  </div>
+</section>
+
+<section id="lesson4" class="static-lesson">
+  <div class="lesson-card">
+    <span class="lesson-tag">Parte expositiva 4</span>
+    <h2>🎟️ Como ler um ticket?</h2>
+    <p>Em uma atividade com ingresso, passagem ou ticket, procure palavras-chave.</p>
+    <div class="grid3">
+      <div class="mini"><b>DATE</b><br>data</div>
+      <div class="mini"><b>TIME</b><br>horário</div>
+      <div class="mini"><b>DESTINATION</b><br>destino</div>
+      <div class="mini"><b>GATE</b><br>portão</div>
+      <div class="mini"><b>SEAT</b><br>assento</div>
+      <div class="mini"><b>PRICE</b><br>preço</div>
+    </div>
+    <div class="ticket">
+      <h3>🎟️ TIME TRAVEL EXPRESS</h3>
+      <div class="ticket-grid">
+        <div><b>DATE:</b> October 25th</div>
+        <div><b>TIME:</b> 8:30 p.m.</div>
+        <div><b>DESTINATION:</b> London — 1888</div>
+        <div><b>GATE:</b> 7</div>
+        <div><b>SEAT:</b> B12</div>
+        <div><b>PRICE:</b> $25.00</div>
+      </div>
+    </div>
+  </div>
+  <div class="lesson-nav">
+    <div class="lesson-counter">Parte 6 de 6</div>
+    <div>
+      <button type="button" class="secondary" onclick="openLesson('lessonRules')">← Voltar</button>
+      <button type="button" class="gold" onclick="openCategories()">Escolher desafios 🚀</button>
+    </div>
+  </div>
+</section>
+</div></section>
+
+      
+
+<section id="categories" class="screen">
+  <div class="lesson-wrap">
+    <div class="lesson-card">
+      <span class="lesson-tag">Escolha o conteúdo</span>
+      <div class="mission-banner">
+        <div class="mission-title">🌀 Central de Missões Temporais</div>
+        <div class="mission-desc">Escolha <b>o conteúdo que deseja revisar</b>. Dentro de cada missão, os tipos de desafio variam automaticamente.</div>
+        <div class="mode-toggle">
+          <button type="button" class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">🌱 Treino <small>sem vidas</small></button>
+          <button type="button" class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">🔥 Desafio <small>5 vidas</small></button>
+        </div>
+        <div class="mode-hint">No <b>Treino</b> o erro nunca elimina você — só mostra a explicação da regra e segue em frente.</div>
+      </div>
+
+      <h2>🗺️ Escolha uma trilha</h2>
+      <p>Você pode seguir uma sequência de aprendizagem ou escolher qualquer conteúdo individualmente.</p>
+
+      <div class="trail-choice">
+        <button type="button" class="trail-card recommended" data-trail="essential" onclick="startTrail('essential')">
+          <span class="trail-icon">🚀</span>
+          <strong>Trilha Essencial<span class="trail-done">✓ concluída</span></strong>
+          <small>Vocabulário → regras do -ING → AM/IS/ARE → frases → listening → negativas e perguntas.</small>
+          <div class="mission-progress">⭐ Recomendada para aprender do início</div>
+        </button>
+
+        <button type="button" class="trail-card" data-trail="verbs" onclick="startTrail('verbs')">
+          <span class="trail-icon">🧠</span>
+          <strong>Trilha dos Verbos<span class="trail-done">✓ concluída</span></strong>
+          <small>Significados → +ING → retirar E → dobrar consoante → grupos de ações.</small>
+          <div class="mission-progress">🎯 Foco em significado e conjugação</div>
+        </button>
+
+        <button type="button" class="trail-card" data-trail="grammar" onclick="startTrail('grammar')">
+          <span class="trail-icon">⚙️</span>
+          <strong>Trilha da Gramática<span class="trail-done">✓ concluída</span></strong>
+          <small>AM/IS/ARE → afirmativas → negativas e perguntas → revisão mista.</small>
+          <div class="mission-progress">📚 Foco no Present Continuous</div>
+        </button>
+      </div>
+
+      <h2>🎯 Ou escolha um conteúdo</h2>
+
+      <div class="category-grid">
+
+        <button type="button" id="reviewCard" class="category-card" data-cat="review" onclick="startCategory('review')">
+          <span class="category-icon">🩹</span>
+          <strong>Revisar meus erros</strong>
+          <small>Só os verbos que você vem errando, por significado, conjugação e contexto.</small>
+          <span class="review-count"></span>
+        </button>
+
+        <button type="button" class="category-card all-category" data-cat="all" onclick="startCategory('all')">
+          <span class="category-icon">🎲</span>
+          <strong>Tudo misturado</strong>
+          <small>Todos os conteúdos em uma única partida.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="vocabulary" onclick="startCategory('vocabulary')">
+          <span class="category-icon">🧠</span>
+          <strong>Actions Vocabulary</strong>
+          <small>Significados dos verbos, inglês ↔ português e reconhecimento das ações.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="ing_add" onclick="startCategory('ing_add')">
+          <span class="category-icon">➕</span>
+          <strong>Regra: acrescentar -ING</strong>
+          <small>play → playing, watch → watching, help → helping, fly → flying...</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="ing_drop_e" onclick="startCategory('ing_drop_e')">
+          <span class="category-icon">✂️</span>
+          <strong>Regra: retirar o E + ING</strong>
+          <small>ride → riding, drive → driving, lose → losing, use → using.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="ing_double" onclick="startCategory('ing_double')">
+          <span class="category-icon">✌️</span>
+          <strong>Regra: dobrar a consoante</strong>
+          <small>hop → hopping, win → winning, run → running, swim → swimming.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="be" onclick="startCategory('be')">
+          <span class="category-icon">⚙️</span>
+          <strong>AM / IS / ARE</strong>
+          <small>I am, he/she is, you/we/they are.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="affirmative" onclick="startCategory('affirmative')">
+          <span class="category-icon">✅</span>
+          <strong>Frases afirmativas</strong>
+          <small>Sujeito + am/is/are + verbo com -ING.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="negative_questions" onclick="startCategory('negative_questions')">
+          <span class="category-icon">❌❓</span>
+          <strong>Negativas e perguntas</strong>
+          <small>isn't, aren't, am not e inversão para perguntas.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="listening" onclick="startCategory('listening')">
+          <span class="category-icon">🎧</span>
+          <strong>Listening</strong>
+          <small>Ouça frases em inglês e escolha ou digite o que ouviu.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="ticket" onclick="startCategory('ticket')">
+          <span class="category-icon">🎟️</span>
+          <strong>Ticket Information</strong>
+          <small>Date, time, gate, seat, price e destination.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="movement" onclick="startCategory('movement')">
+          <span class="category-icon">🚲</span>
+          <strong>Verbos de movimento</strong>
+          <small>ride, drive, fly, sail, jump, hop, stand e outros.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="daily_actions" onclick="startCategory('daily_actions')">
+          <span class="category-icon">🏠</span>
+          <strong>Ações do dia a dia</strong>
+          <small>clean, cook, eat, study, sleep, talk, watch, use the computer...</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="results_actions" onclick="startCategory('results_actions')">
+          <span class="category-icon">🏆</span>
+          <strong>Resultado e outras ações</strong>
+          <small>win, lose, find, break, buy, borrow, draw, paint, help, discuss...</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+      </div>
+
+      <div style="margin-top:18px">
+        <button type="button" class="secondary" onclick="goHome()">← Voltar ao início</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="quiz" class="screen">
+        <div class="question-card" id="card">
+          <div class="progress-panel">
+      <div class="progress-head">
+        <span id="progressText">Questão 1</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+      <div id="trailMap" class="trail-map"></div>
+    </div>
+    <div id="stageLabel" class="stage-label"></div><div id="storyline" class="storyline"></div>
+          <div id="question" class="question"></div>
+          <div id="hint" class="hint"></div>
+          <div id="illustration" class="illustration"></div>
+          <div id="audioBox"></div>
+          <div id="ticketBox"></div>
+          <div id="answers" class="answers"></div>
+          <div id="inputBox"></div>
+          <div id="specialBox"></div>
+          <div id="feedback" class="feedback"></div>
+          <div class="controls">
+            <button type="button" id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próximo desafio →</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="end" class="screen">
+        <div class="result">
+          <div class="trophy" id="trophy">🏆</div>
+          <h2 id="endTitle">Missão concluída!</h2>
+          <div class="rank" id="rank"></div>
+          <p id="endText" class="subtitle"></p>
+          <div class="summary">
+            <div class="stat"><span class="small">Pontuação</span><strong id="finalScore">0</strong></div>
+            <div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div>
+            <div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div><div class="stat"><span class="small">Jornada</span><strong id="journeyResult">Livre</strong></div>
+          </div>
+          <div id="missedList" class="missed" style="display:none"></div>
+          <div style="margin-top:18px"><button type="button" class="primary" onclick="restart()">Jogar novamente</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+const baseQuestionPool = [
+  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", icon:"📖", q:"Complete: She ___ reading a book.", hint:"Use am, is ou are.", choices:["am","is","are","be"], answer:1, ok:"Com SHE usamos IS.", bad:"A resposta correta é IS: She is reading."},
+  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", icon:"⚽", q:"Qual frase está correta?", choices:["They is playing.","They are playing.","They playing.","They are play."], answer:1, ok:"THEY + ARE + VERB-ING.", bad:"A estrutura correta é: They are playing."},
+  {type:"tf", stage:"FASE 1 — VERDADEIRO OU FALSO", icon:"🧠", q:"“I are studying English.” está correto.", answer:false, ok:"Certo! Com I usamos AM.", bad:"É falso. O correto é: I am studying English."},
+  {type:"text", stage:"FASE 1 — COMPLETE A FRASE", icon:"🚀", q:"Complete: We ___ traveling in time.", valid:["are"], placeholder:"Digite uma palavra...", ok:"Perfeito! We ARE traveling.", bad:"A palavra correta é ARE."},
+  {type:"choice", stage:"FASE 1 — NEGATIVE MODE", icon:"❌", q:"Qual é a negativa correta de “He is running”?", choices:["He not running.","He isn't running.","He aren't running.","He doesn't running."], answer:1, ok:"Correto: He isn't running.", bad:"A forma correta é He isn't running."},
+  {type:"text", stage:"FASE 1 — QUESTION MODE", icon:"❓", q:"Transforme em pergunta: She is dancing.", valid:["is she dancing","is she dancing?"], placeholder:"Digite a pergunta...", ok:"Excelente! Is she dancing?", bad:"A resposta esperada é: Is she dancing?"},
+  {type:"order", stage:"FASE 2 — ORGANIZE A FRASE", icon:"🧩", q:"Organize as palavras para formar uma frase correta.", words:["playing","They","soccer","are"], answer:"They are playing soccer", ok:"Muito bem! They are playing soccer.", bad:"A ordem correta é: They are playing soccer."},
+
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"🏊", q:"Qual verbo significa “nadar”?", choices:["dance","swim","write","sleep"], answer:1, ok:"SWIM = nadar.", bad:"A resposta correta é SWIM."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"🏃", q:"Qual é a forma correta de RUN + ING?", choices:["runing","running","runeing","runinng"], answer:1, ok:"RUN → RUNNING.", bad:"A forma correta é RUNNING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"✍️", q:"The girl is ___ a letter.", hint:"A garota está escrevendo uma carta.", choices:["reading","writing","drinking","running"], answer:1, ok:"WRITE → WRITING.", bad:"Escrever = WRITE. No Present Continuous: WRITING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"🧹", q:"Qual verbo significa “limpar”?", choices:["clean","cook","talk","sleep"], answer:0, ok:"CLEAN = limpar.", bad:"A resposta correta é CLEAN."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"🍳", q:"Complete: My mother is ___ dinner.", choices:["cleaning","cooking","talking","sleeping"], answer:1, ok:"COOK → COOKING.", bad:"Cozinhar = COOK. No Present Continuous: COOKING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"🍕", q:"Complete: The boy is ___ pizza.", choices:["eating","studying","cleaning","talking"], answer:0, ok:"EAT → EATING.", bad:"Comer = EAT. A forma correta é EATING."},
+  {type:"text", stage:"FASE 3 — ACTIONS", icon:"🎧", q:"Complete: She is ______ to music.", valid:["listening","listening to music"], placeholder:"Digite a palavra...", ok:"Muito bem! She is listening to music.", bad:"A forma correta é LISTENING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"😴", q:"Qual frase significa “Ele está dormindo”?", choices:["He is studying.","He is sleeping.","He is talking.","He is cleaning."], answer:1, ok:"SLEEP → SLEEPING.", bad:"Dormir = SLEEP. O correto é He is sleeping."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"📚", q:"Qual frase significa “Nós estamos estudando”?", choices:["We are talking.","We are studying.","We are cooking.","We are sleeping."], answer:1, ok:"STUDY → STUDYING.", bad:"Estudar = STUDY. O correto é We are studying."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"💬", q:"Complete: They are ___ in the classroom.", choices:["talking","using","cooking","sleeping"], answer:0, ok:"TALK → TALKING.", bad:"Conversar = TALK. A forma correta é TALKING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", icon:"💻", q:"Complete: I am ___ the computer.", choices:["use","using","useing","used"], answer:1, ok:"USE → USING.", bad:"A forma correta é USING."},
+
+  {type:"match", stage:"FASE 4 — ASSOCIAÇÃO DE ITENS", icon:"🔗", q:"Associe cada verbo ao significado em português.",
+   pairs:[["clean","limpar"],["cook","cozinhar"],["sleep","dormir"],["talk","conversar"]]},
+  {type:"memory", stage:"FASE 5 — JOGO DA MEMÓRIA", icon:"🧠", q:"Encontre os pares: verbo em inglês + significado em português.",
+   pairs:[["eat","comer"],["study","estudar"],["cook","cozinhar"],["sleep","dormir"]]},
+  {type:"crossword", stage:"FASE 6 — PALAVRAS CRUZADAS", icon:"✏️", q:"Complete as palavras cruzadas com verbos de ações.",
+   answers:{clean:"limpar",cook:"cozinhar",sleep:"dormir"}},
+  {type:"wordsearch", stage:"FASE 7 — CAÇA-PALAVRAS", icon:"🔎", q:"Encontre 4 ações escondidas: EAT, TALK, COOK e SLEEP."},
+
+  
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", icon:"🎧", q:"Ouça e escolha a ação correta.", audio:"She is cooking dinner.", choices:["She is cleaning.","She is cooking.","She is sleeping.","She is studying."], answer:1, ok:"Você ouviu corretamente: She is cooking dinner.", bad:"O áudio diz: She is cooking dinner."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", icon:"🎧", q:"Ouça e escolha a frase correta.", audio:"They are studying English.", choices:["They are talking.","They are studying English.","They are using the computer.","They are sleeping."], answer:1, ok:"Correto! They are studying English.", bad:"O áudio diz: They are studying English."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", icon:"🎧", q:"Ouça e escolha a ação correta.", audio:"He is using the computer.", choices:["He is eating.","He is using the computer.","He is cleaning.","He is cooking."], answer:1, ok:"Muito bem! He is using the computer.", bad:"O áudio diz: He is using the computer."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", icon:"🎧", q:"Ouça e escolha a frase correta.", audio:"She is listening to music.", choices:["She is talking.","She is reading.","She is listening to music.","She is sleeping."], answer:2, ok:"Correto! She is listening to music.", bad:"O áudio diz: She is listening to music."},
+
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", icon:"🎟️", q:"What is the seat number?", choices:["7","B12","8:30 p.m.","$25.00"], answer:1, ok:"SEAT = assento. O assento é B12.", bad:"O assento é B12."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", icon:"🎟️", q:"How much is the ticket?", choices:["October 25th","London","$25.00","Gate 7"], answer:2, ok:"PRICE = preço. O ingresso custa $25.00.", bad:"O preço do ticket é $25.00."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", icon:"🎟️", q:"What time is the departure?", choices:["B12","8:30 p.m.","October 25th","London"], answer:1, ok:"TIME = horário: 8:30 p.m.", bad:"O horário é 8:30 p.m."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", icon:"🎟️", q:"What is the destination?", choices:["London — 1888","Gate 7","B12","October 25th"], answer:0, ok:"DESTINATION = destino: London — 1888.", bad:"O destino é London — 1888."},
+  {type:"tf", stage:"FASE 9 — TICKET INFORMATION", icon:"🚪", q:"No ticket, GATE significa assento.", answer:false, ok:"Certo! GATE = portão; SEAT = assento.", bad:"É falso. GATE significa portão."},
+
+  
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", icon:"🧠", q:"O que significa CLEAN?", choices:["cozinhar","limpar","estudar","conversar"], answer:1, ok:"CLEAN = limpar.", bad:"CLEAN significa limpar."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", icon:"🍳", q:"O que significa COOK?", choices:["dormir","comer","cozinhar","usar o computador"], answer:2, ok:"COOK = cozinhar.", bad:"COOK significa cozinhar."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", icon:"🎧", q:"Qual expressão significa “ouvir música”?", choices:["talk","listen to music","use the computer","study"], answer:1, ok:"LISTEN TO MUSIC = ouvir música.", bad:"A expressão correta é LISTEN TO MUSIC."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", icon:"💻", q:"Qual expressão significa “usar o computador”?", choices:["use the computer","listen to music","clean","cook"], answer:0, ok:"USE THE COMPUTER = usar o computador.", bad:"A expressão correta é USE THE COMPUTER."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", icon:"💬", q:"Qual verbo significa “conversar”?", choices:["talk","eat","sleep","clean"], answer:0, ok:"TALK = conversar.", bad:"TALK significa conversar."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", icon:"🧹", q:"The room is dirty. She is ______.", choices:["cleaning","cooking","sleeping","studying"], answer:0, ok:"Se o quarto está sujo, ela está CLEANING.", bad:"A ação coerente é CLEANING."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", icon:"📚", q:"He has a test tomorrow. He is ______.", choices:["talking","studying","eating","sleeping"], answer:1, ok:"Para uma prova, ele está STUDYING.", bad:"A ação mais adequada é STUDYING."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", icon:"😴", q:"It is midnight. The baby is ______.", choices:["cooking","sleeping","talking","cleaning"], answer:1, ok:"À meia-noite, o bebê está SLEEPING.", bad:"A ação coerente é SLEEPING."},
+
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"🔤", q:"Qual é a forma correta de CLEAN no Present Continuous?", choices:["cleaning","cleaninng","cleanning","clean"], answer:0, ok:"CLEAN → CLEANING.", bad:"A forma correta é CLEANING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"🍳", q:"COOK vira:", choices:["cooking","cookking","cookeing","cook"], answer:0, ok:"COOK → COOKING.", bad:"A forma correta é COOKING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"🍕", q:"EAT vira:", choices:["eating","eatting","eatin","eat"], answer:0, ok:"EAT → EATING.", bad:"A forma correta é EATING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"📚", q:"STUDY vira:", choices:["studying","studyng","studyying","studing"], answer:0, ok:"STUDY → STUDYING.", bad:"A forma correta é STUDYING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"💬", q:"TALK vira:", choices:["talking","talkking","talkeing","talk"], answer:0, ok:"TALK → TALKING.", bad:"A forma correta é TALKING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"💻", q:"USE vira:", choices:["useing","using","ussing","use"], answer:1, ok:"USE → USING. Tiramos o E final.", bad:"A forma correta é USING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"🏃", q:"RUN vira:", choices:["runing","running","runeing","runnning"], answer:1, ok:"RUN → RUNNING. Dobramos o N.", bad:"A forma correta é RUNNING."},
+  {type:"choice", stage:"FASE 11 — BASE → ING", icon:"🏊", q:"SWIM vira:", choices:["swiming","swimming","swimmming","swimingg"], answer:1, ok:"SWIM → SWIMMING. Dobramos o M.", bad:"A forma correta é SWIMMING."},
+
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", icon:"🙋", q:"I ___ studying.", choices:["am","is","are","be"], answer:0, ok:"I + AM.", bad:"Com I usamos AM."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", icon:"👧", q:"She ___ cooking.", choices:["am","is","are","be"], answer:1, ok:"SHE + IS.", bad:"Com SHE usamos IS."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", icon:"👥", q:"They ___ talking.", choices:["am","is","are","be"], answer:2, ok:"THEY + ARE.", bad:"Com THEY usamos ARE."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", icon:"👦", q:"He ___ using the computer.", choices:["am","is","are","be"], answer:1, ok:"HE + IS.", bad:"Com HE usamos IS."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", icon:"👫", q:"We ___ listening to music.", choices:["am","is","are","be"], answer:2, ok:"WE + ARE.", bad:"Com WE usamos ARE."},
+
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", icon:"❌", q:"Qual é a negativa correta?", hint:"She is studying.", choices:["She isn't studying.","She aren't studying.","She not studying.","She doesn't studying."], answer:0, ok:"She isn't studying.", bad:"A forma correta é She isn't studying."},
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", icon:"❌", q:"Qual é a negativa correta?", hint:"They are cooking.", choices:["They isn't cooking.","They aren't cooking.","They not cooking.","They don't cooking."], answer:1, ok:"They aren't cooking.", bad:"A forma correta é They aren't cooking."},
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", icon:"❌", q:"Qual é a negativa correta?", hint:"I am sleeping.", choices:["I am not sleeping.","I isn't sleeping.","I aren't sleeping.","I don't sleeping."], answer:0, ok:"I am not sleeping.", bad:"A forma correta é I am not sleeping."},
+
+  {type:"order", stage:"FASE 14 — PERGUNTAS", icon:"❓", q:"Monte a pergunta correta.", words:["she","Is","cooking"], answer:"Is she cooking", ok:"Is she cooking?", bad:"A ordem correta é: Is she cooking?"},
+  {type:"order", stage:"FASE 14 — PERGUNTAS", icon:"❓", q:"Monte a pergunta correta.", words:["they","Are","studying"], answer:"Are they studying", ok:"Are they studying?", bad:"A ordem correta é: Are they studying?"},
+  {type:"order", stage:"FASE 14 — PERGUNTAS", icon:"❓", q:"Monte a pergunta correta.", words:["he","Is","sleeping"], answer:"Is he sleeping", ok:"Is he sleeping?", bad:"A ordem correta é: Is he sleeping?"},
+
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", icon:"🔁", q:"Escolha a tradução correta de “She is cleaning.”", choices:["Ela está cozinhando.","Ela está limpando.","Ela está estudando.","Ela está dormindo."], answer:1, ok:"She is cleaning = Ela está limpando.", bad:"A tradução correta é Ela está limpando."},
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", icon:"🔁", q:"Escolha a frase correta para “Eles estão ouvindo música.”", choices:["They are listening to music.","They is listening to music.","They are listen to music.","They listening to music."], answer:0, ok:"Perfeito!", bad:"A correta é They are listening to music."},
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", icon:"🔁", q:"Qual opção está completamente correta?", choices:["He is useing the computer.","He are using the computer.","He is using the computer.","He using the computer."], answer:2, ok:"He is using the computer.", bad:"A correta é He is using the computer."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “cozinhar”", valid:["cook"], placeholder:"Digite o verbo...", ok:"COOK = cozinhar.", bad:"A resposta é COOK."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “dormir”", valid:["sleep"], placeholder:"Digite o verbo...", ok:"SLEEP = dormir.", bad:"A resposta é SLEEP."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “conversar”", valid:["talk"], placeholder:"Digite o verbo...", ok:"TALK = conversar.", bad:"A resposta é TALK."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite a forma com -ING de USE.", valid:["using"], placeholder:"Digite a forma correta...", ok:"USE → USING.", bad:"A resposta é USING."},
+
+  
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🧍", q:"O que significa STAND?", choices:["sentar","ficar em pé","pular","correr"], answer:1, ok:"STAND = ficar em pé.", bad:"STAND significa ficar em pé."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🏋️", q:"O que significa LIFT?", choices:["levantar","quebrar","perder","voar"], answer:0, ok:"LIFT = levantar.", bad:"LIFT significa levantar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"💨", q:"O que significa BLOW?", choices:["chorar","soprar","desenhar","ajudar"], answer:1, ok:"BLOW = soprar.", bad:"BLOW significa soprar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"😭", q:"O que significa CRY?", choices:["chorar","comprar","navegar","assistir"], answer:0, ok:"CRY = chorar.", bad:"CRY significa chorar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🎨", q:"O que significa PAINT?", choices:["pintar","desenhar","dirigir","discutir"], answer:0, ok:"PAINT = pintar.", bad:"PAINT significa pintar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🗣️", q:"O que significa DISCUSS?", choices:["dormir","debater / discutir","emprestar","comprar"], answer:1, ok:"DISCUSS = discutir / debater.", bad:"DISCUSS significa discutir / debater."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🤲", q:"O que significa BORROW?", choices:["comprar","dar","pegar emprestado","quebrar"], answer:2, ok:"BORROW = pegar emprestado.", bad:"BORROW significa pegar emprestado."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"🛍️", q:"O que significa BUY?", choices:["vender","comprar","emprestar","encontrar"], answer:1, ok:"BUY = comprar.", bad:"BUY significa comprar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"✏️", q:"O que significa DRAW?", choices:["desenhar","pintar","assistir","voar"], answer:0, ok:"DRAW = desenhar.", bad:"DRAW significa desenhar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", icon:"📺", q:"O que significa WATCH?", choices:["olhar / assistir","quebrar","levantar","conversar"], answer:0, ok:"WATCH = assistir / observar.", bad:"WATCH significa assistir / observar."},
+
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🧍", q:"STAND vira:", choices:["standing","standding","standeing","stand"], answer:0, ok:"STAND → STANDING.", bad:"A forma correta é STANDING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🏋️", q:"LIFT vira:", choices:["lifting","liftting","lifteing","lift"], answer:0, ok:"LIFT → LIFTING.", bad:"A forma correta é LIFTING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"💨", q:"BLOW vira:", choices:["blowing","blowwing","bloweing","blow"], answer:0, ok:"BLOW → BLOWING.", bad:"A forma correta é BLOWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"😭", q:"CRY vira:", choices:["crying","criying","cryying","crieing"], answer:0, ok:"CRY → CRYING.", bad:"A forma correta é CRYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"⚽", q:"PLAY vira:", choices:["playing","plaing","playying","playeing"], answer:0, ok:"PLAY → PLAYING.", bad:"A forma correta é PLAYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🎨", q:"PAINT vira:", choices:["painting","paintting","painteing","paint"], answer:0, ok:"PAINT → PAINTING.", bad:"A forma correta é PAINTING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🗣️", q:"DISCUSS vira:", choices:["discussing","discusing","discussying","discusseing"], answer:0, ok:"DISCUSS → DISCUSSING.", bad:"A forma correta é DISCUSSING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🤲", q:"BORROW vira:", choices:["borrowing","borrowwing","borroweing","borrow"], answer:0, ok:"BORROW → BORROWING.", bad:"A forma correta é BORROWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🛍️", q:"BUY vira:", choices:["buying","buyying","buing","buyeing"], answer:0, ok:"BUY → BUYING.", bad:"A forma correta é BUYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"✏️", q:"DRAW vira:", choices:["drawing","drawwing","draing","draweing"], answer:0, ok:"DRAW → DRAWING.", bad:"A forma correta é DRAWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🤝", q:"HELP vira:", choices:["helping","helpping","helpeing","help"], answer:0, ok:"HELP → HELPING.", bad:"A forma correta é HELPING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"📺", q:"WATCH vira:", choices:["watching","watchhing","watcheing","watch"], answer:0, ok:"WATCH → WATCHING.", bad:"A forma correta é WATCHING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"⬆️", q:"JUMP vira:", choices:["jumping","jumpping","jumpeing","jump"], answer:0, ok:"JUMP → JUMPING.", bad:"A forma correta é JUMPING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🛩️", q:"FLY vira:", choices:["flying","flyying","flieing","flyng"], answer:0, ok:"FLY → FLYING.", bad:"A forma correta é FLYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"⛵", q:"SAIL vira:", choices:["sailing","sailling","saileing","sail"], answer:0, ok:"SAIL → SAILING.", bad:"A forma correta é SAILING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"🔎", q:"FIND vira:", choices:["finding","findding","findeing","find"], answer:0, ok:"FIND → FINDING.", bad:"A forma correta é FINDING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", icon:"💔", q:"BREAK vira:", choices:["breaking","breakking","breakeing","break"], answer:0, ok:"BREAK → BREAKING.", bad:"A forma correta é BREAKING."},
+
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", icon:"🚲", q:"RIDE vira:", choices:["rideing","riding","ridding","rideng"], answer:1, ok:"RIDE → RIDING.", bad:"Tiramos o E: RIDING."},
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", icon:"🚗", q:"DRIVE vira:", choices:["driveing","driving","drivving","drivinge"], answer:1, ok:"DRIVE → DRIVING.", bad:"Tiramos o E: DRIVING."},
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", icon:"😞", q:"LOSE vira:", choices:["loseing","losing","lossing","loosing"], answer:1, ok:"LOSE → LOSING.", bad:"Tiramos o E: LOSING."},
+
+  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", icon:"🐇", q:"HOP vira:", choices:["hoping","hopping","hoppping","hopeing"], answer:1, ok:"HOP → HOPPING.", bad:"Dobramos o P: HOPPING."},
+  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", icon:"🏆", q:"WIN vira:", choices:["wining","winning","winnig","wineing"], answer:1, ok:"WIN → WINNING.", bad:"Dobramos o N: WINNING."},
+
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"🚲", q:"Qual frase significa “Ela está andando de bicicleta”?", choices:["She is driving a bike.","She is riding a bike.","She is sailing a bike.","She is flying a bike."], answer:1, ok:"RIDE = andar de / montar.", bad:"A frase correta é She is riding a bike."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"🚗", q:"Qual frase significa “Ele está dirigindo”?", choices:["He is driving.","He is riding.","He is sailing.","He is watching."], answer:0, ok:"DRIVE = dirigir.", bad:"A frase correta é He is driving."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"🛩️", q:"The bird is ______.", hint:"O pássaro está voando.", choices:["sailing","flying","driving","riding"], answer:1, ok:"FLY → FLYING.", bad:"Voar = FLY. A forma é FLYING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"⛵", q:"They are ______ across the sea.", hint:"Eles estão navegando pelo mar.", choices:["sailing","driving","hopping","standing"], answer:0, ok:"SAIL → SAILING.", bad:"Navegar = SAIL. A forma é SAILING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"🏆", q:"Our team is ______ the game.", hint:"Nosso time está vencendo.", choices:["losing","winning","breaking","finding"], answer:1, ok:"WIN → WINNING.", bad:"Vencer = WIN. A forma é WINNING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"😞", q:"They are ______ the game.", hint:"Eles estão perdendo o jogo.", choices:["winning","losing","finding","buying"], answer:1, ok:"LOSE → LOSING.", bad:"Perder = LOSE. A forma é LOSING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"🔎", q:"She is ______ the key.", hint:"Ela está encontrando a chave.", choices:["finding","breaking","buying","lifting"], answer:0, ok:"FIND → FINDING.", bad:"Encontrar = FIND. A forma é FINDING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", icon:"💔", q:"He is ______ the toy.", hint:"Ele está quebrando o brinquedo.", choices:["finding","breaking","borrowing","drawing"], answer:1, ok:"BREAK → BREAKING.", bad:"Quebrar = BREAK. A forma é BREAKING."},
+
+  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", icon:"🔗", q:"Associe o verbo ao significado.",
+   pairs:[["ride","andar de / montar"],["drive","dirigir"],["fly","voar"],["sail","navegar"]]},
+  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", icon:"🔗", q:"Associe o verbo ao significado.",
+   pairs:[["borrow","pegar emprestado"],["buy","comprar"],["find","encontrar"],["break","quebrar"]]},
+  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", icon:"🧠", q:"Encontre os pares inglês ↔ português.",
+   pairs:[["win","vencer"],["lose","perder"],["draw","desenhar"],["paint","pintar"]]},
+  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", icon:"🧠", q:"Encontre os pares inglês ↔ português.",
+   pairs:[["stand","ficar em pé"],["lift","levantar"],["blow","soprar"],["cry","chorar"]]},
+
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", icon:"🧩", q:"Monte a frase: “Ele está dirigindo.”", words:["driving","He","is"], answer:"He is driving", ok:"He is driving.", bad:"A ordem correta é He is driving."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", icon:"🧩", q:"Monte a frase: “Eles estão vencendo.”", words:["winning","They","are"], answer:"They are winning", ok:"They are winning.", bad:"A ordem correta é They are winning."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", icon:"🧩", q:"Monte a frase: “Ela está chorando.”", words:["crying","She","is"], answer:"She is crying", ok:"She is crying.", bad:"A ordem correta é She is crying."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", icon:"🧩", q:"Monte a frase: “Nós estamos assistindo TV.”", words:["TV","watching","We","are"], answer:"We are watching TV", ok:"We are watching TV.", bad:"A ordem correta é We are watching TV."},
+
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “dirigir”", valid:["drive"], placeholder:"Digite o verbo...", ok:"DRIVE = dirigir.", bad:"A resposta é DRIVE."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “voar”", valid:["fly"], placeholder:"Digite o verbo...", ok:"FLY = voar.", bad:"A resposta é FLY."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite em inglês: “vencer”", valid:["win"], placeholder:"Digite o verbo...", ok:"WIN = vencer.", bad:"A resposta é WIN."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite a forma com -ING de RIDE.", valid:["riding"], placeholder:"Digite a forma correta...", ok:"RIDE → RIDING.", bad:"A resposta é RIDING."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite a forma com -ING de HOP.", valid:["hopping"], placeholder:"Digite a forma correta...", ok:"HOP → HOPPING.", bad:"A resposta é HOPPING."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", icon:"🧠", q:"Digite a forma com -ING de WIN.", valid:["winning"], placeholder:"Digite a forma correta...", ok:"WIN → WINNING.", bad:"A resposta é WINNING."},
+
+  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", icon:"🌌", q:"Qual frase está correta?", choices:["She are reading.","She is reading.","She reading.","She am reading."], answer:1, ok:"Correto!", bad:"A correta é She is reading."},
+  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", icon:"⚡", q:"Qual palavra NÃO é uma ação?", choices:["running","ticket","sleeping","writing"], answer:1, ok:"TICKET não é uma ação.", bad:"A palavra que não é ação é TICKET."},
+  {type:"order", stage:"FASE FINAL — DESAFIO DE ORDEM", icon:"🧩", q:"Monte: “Ela está ouvindo música.”", words:["music","to","She","listening","is"], answer:"She is listening to music", ok:"Perfeito!", bad:"A ordem correta é: She is listening to music."},
+  {type:"text", stage:"FASE FINAL — CÓDIGO FINAL", icon:"🚀", q:"Complete: I ___ traveling through time!", valid:["am"], placeholder:"Digite a palavra correta...", ok:"CÓDIGO ACEITO! I AM traveling through time!", bad:"Com I usamos AM."}
+]
+
+
+const verbBank = [
+  {base:"clean",ing:"cleaning",pt:"limpar",icon:"🧹",rule:"add"},
+  {base:"cook",ing:"cooking",pt:"cozinhar",icon:"🍳",rule:"add"},
+  {base:"eat",ing:"eating",pt:"comer",icon:"🍕",rule:"add"},
+  {base:"listen to music",ing:"listening to music",pt:"ouvir música",icon:"🎧",rule:"add"},
+  {base:"sleep",ing:"sleeping",pt:"dormir",icon:"😴",rule:"add"},
+  {base:"study",ing:"studying",pt:"estudar",icon:"📚",rule:"add"},
+  {base:"talk",ing:"talking",pt:"conversar",icon:"💬",rule:"add"},
+  {base:"use the computer",ing:"using the computer",pt:"usar o computador",icon:"💻",rule:"drop_e"},
+  {base:"stand",ing:"standing",pt:"ficar em pé",icon:"🧍",rule:"add"},
+  {base:"ride",ing:"riding",pt:"andar de / montar",icon:"🚲",rule:"drop_e"},
+  {base:"lift",ing:"lifting",pt:"levantar",icon:"🏋️",rule:"add"},
+  {base:"blow",ing:"blowing",pt:"soprar",icon:"💨",rule:"add"},
+  {base:"cry",ing:"crying",pt:"chorar",icon:"😭",rule:"add"},
+  {base:"play",ing:"playing",pt:"jogar / brincar",icon:"⚽",rule:"add"},
+  {base:"paint",ing:"painting",pt:"pintar",icon:"🎨",rule:"add"},
+  {base:"discuss",ing:"discussing",pt:"discutir / debater",icon:"🗣️",rule:"add"},
+  {base:"borrow",ing:"borrowing",pt:"pegar emprestado",icon:"🤲",rule:"add"},
+  {base:"buy",ing:"buying",pt:"comprar",icon:"🛍️",rule:"add"},
+  {base:"draw",ing:"drawing",pt:"desenhar",icon:"✏️",rule:"add"},
+  {base:"help",ing:"helping",pt:"ajudar",icon:"🤝",rule:"add"},
+  {base:"watch",ing:"watching",pt:"assistir / observar",icon:"📺",rule:"add"},
+  {base:"jump",ing:"jumping",pt:"pular",icon:"⬆️",rule:"add"},
+  {base:"hop",ing:"hopping",pt:"saltar / pular em um pé",icon:"🐇",rule:"double"},
+  {base:"drive",ing:"driving",pt:"dirigir",icon:"🚗",rule:"drop_e"},
+  {base:"fly",ing:"flying",pt:"voar",icon:"🛩️",rule:"add"},
+  {base:"sail",ing:"sailing",pt:"navegar / velejar",icon:"⛵",rule:"add"},
+  {base:"find",ing:"finding",pt:"encontrar",icon:"🔎",rule:"add"},
+  {base:"break",ing:"breaking",pt:"quebrar",icon:"💔",rule:"add"},
+  {base:"win",ing:"winning",pt:"vencer / ganhar",icon:"🏆",rule:"double"},
+  {base:"lose",ing:"losing",pt:"perder",icon:"😞",rule:"drop_e"},
+  {base:"run",ing:"running",pt:"correr",icon:"🏃",rule:"double"},
+  {base:"swim",ing:"swimming",pt:"nadar",icon:"🏊",rule:"double"},
+  {base:"sit",ing:"sitting",pt:"sentar",icon:"🪑",rule:"double"},
+  {base:"stop",ing:"stopping",pt:"parar",icon:"🛑",rule:"double"},
+  {base:"write",ing:"writing",pt:"escrever",icon:"✍️",rule:"drop_e"},
+  {base:"dance",ing:"dancing",pt:"dançar",icon:"💃",rule:"drop_e"}
+];
+
+const subjects = [
+  {s:"I",be:"am"},
+  {s:"He",be:"is"},
+  {s:"She",be:"is"},
+  {s:"We",be:"are"},
+  {s:"They",be:"are"}
+];
+
+
+/* ============================================================
+   PROGRESSO PERSISTENTE, MODO TREINO E EXPLICACAO DAS REGRAS
+   ============================================================ */
+
+const STORE_KEY="ttg_progress_v1";
+
+function defaultProgress(){
+  return {verbs:{}, best:{score:0,accuracy:0}, trails:{}, missions:{}, practice:true, mudo:false};
+}
+
+// Estado de uma missao: nunca jogada, comecada, concluida ou dominada.
+function missionStat(cat){
+  return progress.missions[cat] || (progress.missions[cat]={iniciada:false,concluidas:0,melhorAcc:0});
+}
+// Quais verbos cada missao cobre, para medir o quanto ja foi dominado.
+function verbosDaMissao(cat){
+  const por={
+    ing_add:v=>v.rule==="add", ing_drop_e:v=>v.rule==="drop_e", ing_double:v=>v.rule==="double",
+    movement:v=>["stand","ride","jump","hop","drive","fly","sail","run","swim","stop"].includes(v.base),
+    daily_actions:v=>["clean","cook","eat","listen to music","sleep","study","talk","use the computer","watch","play","sit","write","dance"].includes(v.base),
+    results_actions:v=>["win","lose","find","break","buy","borrow","draw","paint","help","discuss","lift","blow","cry"].includes(v.base)
+  };
+  return por[cat] ? verbBank.filter(por[cat]) : verbBank;
+}
+function missionInfo(cat){
+  const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
+  const lista=verbosDaMissao(cat);
+  const dominados=lista.filter(v=>{const t=progress.verbs[v.base];return t&&t.hits>=3&&t.hits>t.errors}).length;
+  const pct=lista.length?Math.round(dominados/lista.length*100):0;
+  let estado="nova",rotulo="",icone="";
+  if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="★";rotulo="Dominada"}
+  else if(m.concluidas){estado="concluida";icone="✓";rotulo="Concluída"}
+  else if(m.iniciada){estado="andamento";icone="▶";rotulo="Em andamento"}
+  return {...m,dominados,total:lista.length,pct,estado,rotulo,icone};
+}
+
+let progress=defaultProgress();
+let practiceMode=true;
+
+function loadProgress(){
+  // localStorage pode lancar em file:// ou com cookies bloqueados: nunca quebrar o jogo por isso.
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultProgress();
+    const p=JSON.parse(raw);
+    const d=defaultProgress();
+    return {verbs:p.verbs||d.verbs, best:p.best||d.best, trails:p.trails||d.trails,
+            missions:p.missions||d.missions,
+            practice:typeof p.practice==="boolean"?p.practice:d.practice,
+            mudo:!!p.mudo};
+  }catch(e){ return defaultProgress(); }
+}
+
+function saveProgress(){
+  try{ localStorage.setItem(STORE_KEY,JSON.stringify(progress)); }catch(e){}
+}
+
+function verbStat(base){
+  return progress.verbs[base] || (progress.verbs[base]={errors:0,hits:0});
+}
+
+// Verbos com erro pendente = os que ainda precisam de revisao.
+function weakVerbs(){
+  return verbBank
+    .filter(v=>{ const e=progress.verbs[v.base]; return e && e.errors>e.hits; })
+    .sort((a,b)=>(progress.verbs[b.base].errors-progress.verbs[b.base].hits)
+                -(progress.verbs[a.base].errors-progress.verbs[a.base].hits));
+}
+
+function masteredVerbs(){
+  return verbBank.filter(v=>{ const e=progress.verbs[v.base]; return e && e.hits>=3 && e.hits>e.errors; });
+}
+
+function recordAnswer(q,ok){
+  if(!q) return;
+  const bases=q.verb ? [q.verb] : (q.verbs||[]);
+  if(!bases.length) return;
+  bases.forEach(b=>{ const e=verbStat(b); if(ok) e.hits++; else e.errors++; });
+  saveProgress();
+}
+
+// Sorteio enviesado para os verbos fracos: e daqui que sai a repeticao espacada.
+function verbWeight(v){
+  const e=progress.verbs[v.base];
+  if(!e) return 3;                       // nunca visto: prioridade alta
+  const net=e.errors-e.hits;
+  if(net>0) return Math.min(12,3+net*3); // errando mais do que acerta
+  if(e.hits>=3) return 1;                // dominado: aparece pouco
+  return 2;
+}
+
+function pickWeighted(list,n){
+  const pool=[...list], out=[];
+  n=Math.min(n,pool.length);
+  while(out.length<n && pool.length){
+    const w=pool.map(verbWeight);
+    const total=w.reduce((a,b)=>a+b,0);
+    let r=Math.random()*total, i=0;
+    while(i<pool.length-1 && (r-=w[i])>0) i++;
+    out.push(pool.splice(i,1)[0]);
+  }
+  return out;
+}
+
+// Marca a qual verbo a questao se refere, para alimentar o progresso.
+function tag(q,v){ if(q&&v) q.verb=v.base; return q; }
+
+function ruleExplanation(v){
+  const b=v.base.split(" ")[0];
+  if(v.rule==="drop_e")
+    return `${b.toUpperCase()} termina em E: retiramos o E e acrescentamos -ING → ${v.ing.toUpperCase()}. Não é “${b}ing”.`;
+  if(v.rule==="double")
+    return `${b.toUpperCase()} é curto e termina em consoante-vogal-consoante: dobramos a última consoante → ${v.ing.toUpperCase()}. Compare com jump → jumping, que não dobra.`;
+  return `${b.toUpperCase()} segue a regra geral: mantemos o verbo inteiro e só acrescentamos -ING → ${v.ing.toUpperCase()}. Não dobramos a consoante nem tiramos letras.`;
+}
+
+function beExplanation(sub){
+  return `${sub.s.toUpperCase()} → ${sub.be.toUpperCase()}. Lembre: I → am | he/she/it → is | you/we/they → are.`;
+}
+
+/* ---------- Modo treino x desafio ---------- */
+
+/* ============================================================
+   SOM E FEEDBACK
+   Tudo em try/catch: o jogo nunca pode quebrar por causa de áudio.
+   ============================================================ */
+
+let audioCtx=null, mudo=false;
+
+function ensureAudio(){
+  if(audioCtx) return audioCtx;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C) return null;
+    audioCtx=new C();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    return audioCtx;
+  }catch(e){ return null; }
+}
+
+// Uma nota. `quando` permite encadear arpejos sem setTimeout.
+function nota(freq,dur=0.12,vol=0.05,tipo="sine",quando=0){
+  if(mudo) return;
+  const ctx=ensureAudio(); if(!ctx) return;
+  try{
+    const t=ctx.currentTime+quando;
+    const osc=ctx.createOscillator(), g=ctx.createGain();
+    osc.type=tipo; osc.frequency.setValueAtTime(freq,t);
+    osc.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    osc.start(t); osc.stop(t+dur+0.02);
+  }catch(e){}
+}
+function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
+  freqs.forEach((f,i)=>nota(f,0.16,vol,tipo,i*passo));
+}
+
+const sfx={
+  toque(){ nota(320,0.05,0.02,"sine"); },
+  acerto(){ arpejo([660,880],0.07,0.045); },
+  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
+  // O combo sobe de tom: quanto maior a sequência, mais alto e mais brilhante.
+  combo(n){
+    const base=520+Math.min(n,8)*45;
+    arpejo([base,base*1.25,base*1.5],0.06,0.05,"triangle");
+  },
+  etapa(){ arpejo([523,659,784],0.09,0.05); },
+  missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
+  recorde(){ arpejo([784,988,1175,1568],0.09,0.06,"triangle"); },
+  fimDeVidas(){ arpejo([440,349,262],0.14,0.05,"triangle"); }
+};
+
+function setMudo(v){
+  mudo=!!v;
+  progress.mudo=mudo;
+  saveProgress();
+  const b=document.getElementById("btnSom");
+  if(b){ b.textContent=mudo?"🔇":"🔊"; b.setAttribute("aria-label",mudo?"Ativar som":"Desativar som"); }
+}
+function alternarSom(){ setMudo(!mudo); if(!mudo) sfx.toque(); }
+
+/* ---------- feedback visual ---------- */
+
+// Número que sobe e some, ancorado no card da questão.
+function pontosVoando(texto,bom){
+  try{
+    const alvo=document.getElementById("question")||document.body;
+    const el=document.createElement("div");
+    el.className="floater "+(bom?"bom":"ruim");
+    el.textContent=texto;
+    alvo.appendChild(el);
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },1100);
+  }catch(e){}
+}
+
+function pulsarCombo(){
+  const el=document.getElementById("combo");
+  if(!el||!el.parentNode) return;
+  const p=el.parentNode;
+  p.classList.remove("combo-pulse");
+  void p.offsetWidth;              // reinicia a animação
+  p.classList.add("combo-pulse");
+}
+
+function setPracticeMode(on){
+  practiceMode=!!on;
+  progress.practice=practiceMode;
+  saveProgress();
+  renderModeToggle();
+  renderLives();
+}
+
+function renderModeToggle(){
+  document.querySelectorAll(".mode-opt").forEach(b=>{
+    const isTreino=b.dataset.mode==="treino";
+    b.classList.toggle("active", isTreino===practiceMode);
+  });
+}
+
+function renderLives(){
+  const el=document.getElementById("lives");
+  if(el) el.textContent = practiceMode ? "∞" : String(lives);
+}
+
+// Unico ponto que tira vida: no modo treino o erro nunca elimina o aluno.
+function loseLife(){
+  if(practiceMode){ renderLives(); return; }
+  lives--;
+  renderLives();
+}
+
+function shuffle(arr){
+  // Fisher-Yates: distribuicao uniforme. `sort(()=>Math.random()-.5)` e enviesado.
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function pick(arr,n=1){
+  return shuffle(arr).slice(0,n);
+}
+
+function distractorsForMeaning(v){
+  return pick(verbBank.filter(x=>x.base!==v.base && x.pt!==v.pt),3).map(x=>x.pt);
+}
+
+function distractorsForBase(v){
+  return pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>x.base);
+}
+
+function wrongIngForms(v){
+  // Gera 3 erros de grafia PLAUSIVEIS, sempre distintos entre si e nunca iguais
+  // a resposta correta. Verbos compostos mantem o complemento ("use the computer").
+  const parts=v.base.split(" ");
+  const b=parts[0];
+  const tail=parts.slice(1).join(" ");
+  const withTail=w=>tail ? `${w} ${tail}` : w;
+  const stem=b.replace(/e$/,"");
+  const candidates=[
+    b+"ing",                      // esqueceu de tirar o E / de dobrar
+    stem+"ing",                   // tirou o E onde nao devia
+    stem+stem.slice(-1)+"ing",    // dobrou a consoante do radical
+    b+b.slice(-1)+"ing",          // dobrou a ultima letra
+    b+"eing",                     // manteve/acrescentou E
+    b.replace(/y$/,"i")+"ing",    // trocou Y por I (cry -> criing)
+    b.slice(0,-1)+"ing",          // comeu a ultima letra
+    stem+"in"                     // esqueceu o G
+  ];
+  const out=[];
+  for(const c of candidates){
+    const full=withTail(c);
+    if(full===v.ing || c===b || c.length<3 || out.includes(full)) continue;
+    out.push(full);
+    if(out.length===3) break;
+  }
+  return out;
+}
+
+function makeChoice(stage,icon,q,correct,distractors,ok,bad){
+  const all=shuffle([correct,...distractors.slice(0,3)]);
+  return {
+    type:"choice",stage,icon,q,
+    choices:all,
+    answer:all.indexOf(correct),
+    ok,bad
+  };
+}
+
+function generateMeaningQuestions(count=8){
+  return pickWeighted(verbBank,count).map(v=>{
+    if(Math.random()<0.5){
+      return tag(makeChoice(
+        "POOL — SIGNIFICADO",v.icon,
+        `O que significa ${v.base.toUpperCase()}?`,
+        v.pt,
+        distractorsForMeaning(v),
+        `${v.base.toUpperCase()} = ${v.pt}.`,
+        `${v.base.toUpperCase()} significa ${v.pt} — no Present Continuous vira ${v.ing}.`
+      ),v);
+    }
+    return tag(makeChoice(
+      "POOL — SIGNIFICADO",v.icon,
+      `Qual verbo significa “${v.pt}”?`,
+      v.base,
+      distractorsForBase(v),
+      `${v.base.toUpperCase()} = ${v.pt}.`,
+      `A resposta correta é ${v.base.toUpperCase()} (${v.pt}) → ${v.ing}.`
+    ),v);
+  });
+}
+
+function generateIngQuestions(count=8){
+  return pickWeighted(verbBank,count).map(v=>{
+    const ruleName = v.rule==="drop_e" ? "TIRA O E + ING" : v.rule==="double" ? "DOBRA A CONSOANTE + ING" : "+ ING";
+    return tag(makeChoice(
+      `POOL — CONJUGAÇÃO (${ruleName})`,v.icon,
+      `${v.base.toUpperCase()} vira:`,
+      v.ing,
+      wrongIngForms(v),
+      `${v.base.toUpperCase()} → ${v.ing.toUpperCase()}. ${ruleExplanation(v)}`,
+      ruleExplanation(v)
+    ),v);
+  });
+}
+
+function generateBeQuestions(count=5){
+  return pick(subjects,count).map(sub=>{
+    const v=pickWeighted(verbBank,1)[0];
+    const all=["am","is","are","be"];
+    return {
+      type:"choice",
+      stage:"POOL — AM / IS / ARE",
+      icon:v.icon,
+      q:`${sub.s} ___ ${v.ing}.`,
+      choices:shuffle(all),
+      answer:0,
+      _correct:sub.be,
+      ok:`${sub.s.toUpperCase()} + ${sub.be.toUpperCase()} + verbo-ING.`,
+      bad:beExplanation(sub)
+    };
+  }).map(q=>{
+    q.answer=q.choices.indexOf(q._correct);
+    delete q._correct;
+    return q;
+  });
+}
+
+function generateNegativeQuestions(count=4){
+  return pick(subjects.filter(x=>x.s!=="I"),count).map(sub=>{
+    const v=pickWeighted(verbBank,1)[0];
+    const neg=sub.be==="is" ? "isn't" : "aren't";
+    const correct=`${sub.s} ${neg} ${v.ing}.`;
+    const distractors=[
+      `${sub.s} not ${v.ing}.`,
+      `${sub.s} doesn't ${v.ing}.`,
+      `${sub.s} ${sub.be==="is"?"aren't":"isn't"} ${v.ing}.`
+    ];
+    return tag(makeChoice(
+      "POOL — NEGATIVAS",v.icon,
+      `Qual é a negativa correta de “${sub.s} ${sub.be} ${v.ing}.”?`,
+      correct,distractors,
+      `${correct} O NOT vem depois de ${sub.be.toUpperCase()}, nunca antes.`,
+      `A forma correta é “${correct}” — colocamos NOT depois de ${sub.be.toUpperCase()} (${sub.be} + not = ${neg}). Não se usa DOESN'T no Present Continuous.`
+    ),v);
+  });
+}
+
+function generateOrderQuestions(count=4){
+  return pick(subjects,count).map(sub=>{
+    const v=pickWeighted(verbBank,1)[0];
+    const words=[sub.s,sub.be,...v.ing.split(" ")];
+    return {
+      type:"order",
+      stage:"POOL — ORGANIZE A FRASE",
+      icon:v.icon,
+      q:`Monte a frase correta: “${sub.s} está ${v.pt}.”`,
+      words,
+      verb:v.base,
+      answer:`${sub.s} ${sub.be} ${v.ing}`,
+      ok:`${sub.s} ${sub.be} ${v.ing}. A ordem é sempre SUJEITO + AM/IS/ARE + VERBO-ING.`,
+      bad:`A ordem correta é: ${sub.s} ${sub.be} ${v.ing}. ${beExplanation(sub)}`
+    };
+  });
+}
+
+function generateTextRecall(count=4){
+  return pickWeighted(verbBank,count).map(v=>{
+    if(Math.random()<0.5){
+      return {
+        type:"text", verb:v.base,
+        stage:"POOL — RECUPERAÇÃO ATIVA",
+        icon:v.icon,
+        q:`Digite em inglês: “${v.pt}”`,
+        valid:[v.base],
+        placeholder:"Digite o verbo...",
+        ok:`${v.base.toUpperCase()} = ${v.pt} → ${v.ing}.`,
+        bad:`A resposta é ${v.base.toUpperCase()} (${v.pt}), que no Present Continuous vira ${v.ing}.`
+      };
+    }
+    return {
+      type:"text", verb:v.base,
+      stage:"POOL — RECUPERAÇÃO ATIVA",
+      icon:v.icon,
+      q:`Digite a forma com -ING de ${v.base.toUpperCase()}.`,
+      valid:[v.ing],
+      placeholder:"Digite a forma correta...",
+      ok:`${v.base.toUpperCase()} → ${v.ing.toUpperCase()}. ${ruleExplanation(v)}`,
+      bad:ruleExplanation(v)
+    };
+  });
+}
+
+function generateContextQuestions(count=5){
+  const contexts=[
+    {base:"cook",q:"There is dinner on the stove. She is ______."},
+    {base:"sleep",q:"It is midnight. The baby is ______."},
+    {base:"study",q:"He has a test tomorrow. He is ______."},
+    {base:"watch",q:"The TV is on. They are ______ TV."},
+    {base:"drive",q:"He is inside the car. He is ______."},
+    {base:"ride",q:"She is on a bicycle. She is ______ a bike."},
+    {base:"paint",q:"She has a brush and colors. She is ______."},
+    {base:"draw",q:"He has a pencil and paper. He is ______."},
+    {base:"cry",q:"The baby has tears. The baby is ______."},
+    {base:"jump",q:"The boy leaves the ground with both feet. He is ______."},
+    {base:"fly",q:"The bird is in the sky. It is ______."},
+    {base:"sail",q:"They are on a sailboat. They are ______."}
+  ];
+  return pick(contexts,count).map(c=>{
+    const v=verbBank.find(x=>x.base===c.base);
+    const ds=pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>x.ing);
+    return tag(makeChoice(
+      "POOL — CONTEXTO",v.icon,c.q,v.ing,ds,
+      `${v.base.toUpperCase()} = ${v.pt}.`,
+      `A resposta correta é ${v.ing.toUpperCase()} (${v.base} = ${v.pt}). ${ruleExplanation(v)}`
+    ),v);
+  });
+}
+
+
+/* ============================================================
+   LISTENING — frases geradas a partir do verbBank e dos sujeitos
+   ============================================================ */
+
+const contracoes={"I am":"I'm","He is":"He's","She is":"She's","We are":"We're","They are":"They're"};
+
+function frase(sub,v){ return `${sub.s} ${sub.be} ${v.ing}.`; }
+
+// Aceita a forma completa e a contraida ao digitar: "He is cooking" / "He's cooking".
+function respostasValidas(sub,v){
+  const cheia=frase(sub,v);
+  const curta=`${contracoes[`${sub.s} ${sub.be}`]} ${v.ing}.`;
+  return [...new Set([cheia,curta])];
+}
+
+function generateListeningQuestions(count=6){
+  return pickWeighted(verbBank,count).map((v,i)=>{
+    const sub=pick(subjects,1)[0];
+    const dita=frase(sub,v);
+    const modo=i%3;
+
+    if(modo===0){
+      // Mesmo sujeito, verbos diferentes: treina reconhecer a ACAO.
+      const ds=pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>frase(sub,x));
+      const q=makeChoice("🎧 LISTENING — QUAL É A AÇÃO?",v.icon,
+        "Ouça e escolha a frase que você ouviu.",dita,ds,
+        `Isso mesmo: ${dita} (${v.base} = ${v.pt})`,
+        `O áudio diz: ${dita} — ${v.base.toUpperCase()} significa ${v.pt}.`);
+      q.audio=dita;
+      return tag(q,v);
+    }
+
+    if(modo===1){
+      // Mesmo verbo, sujeitos diferentes: treina ouvir o SUJEITO e o am/is/are.
+      const ds=pick(subjects.filter(x=>x.s!==sub.s),3).map(x=>frase(x,v));
+      const q=makeChoice("🎧 LISTENING — QUEM ESTÁ FAZENDO?",v.icon,
+        "Ouça com atenção e escolha a frase correta.",dita,ds,
+        `Correto: ${dita}`,
+        `O áudio diz: ${dita}. ${beExplanation(sub)}`);
+      q.audio=dita;
+      return tag(q,v);
+    }
+
+    // Producao: ouvir e escrever e onde o aluno realmente trava.
+    return {
+      type:"text", verb:v.base, audio:dita,
+      stage:"🎧 LISTENING — OUÇA E ESCREVA",
+      icon:v.icon,
+      q:"Ouça a frase e digite exatamente o que você ouviu.",
+      hint:"Pode usar a forma completa (He is) ou a contraída (He's).",
+      valid:respostasValidas(sub,v),
+      placeholder:"Digite a frase em inglês...",
+      ok:`Perfeito! ${dita}`,
+      bad:`A frase é: ${dita} — ${beExplanation(sub)}`
+    };
+  });
+}
+
+function generateMatchGame(){
+  const subset=pickWeighted(verbBank,4);
+  return [{
+    type:"match",
+    stage:"POOL — ASSOCIAÇÃO",
+    icon:"🔗",
+    q:"Associe cada verbo ao significado.",
+    verbs:subset.map(v=>v.base),
+    pairs:subset.map(v=>[v.base,v.pt])
+  }];
+}
+
+function generateMemoryGame(){
+  const subset=pickWeighted(verbBank,4);
+  return [{
+    type:"memory",
+    stage:"POOL — MEMÓRIA",
+    icon:"🧠",
+    q:"Encontre os pares inglês ↔ português.",
+    verbs:subset.map(v=>v.base),
+    pairs:subset.map(v=>[v.base,v.pt])
+  }];
+}
+
+
+function buildCategoryPool(category){
+  const byBases=(bases)=>verbBank.filter(v=>bases.includes(v.base));
+
+  function meaningFrom(list,count=10){
+    return pickWeighted(list,count).map(v=>{
+      if(Math.random()<0.5){
+        const ds=pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>x.pt);
+        return tag(makeChoice("VOCABULÁRIO",v.icon,`O que significa ${v.base.toUpperCase()}?`,v.pt,ds,
+          `${v.base.toUpperCase()} = ${v.pt}.`,
+          `${v.base.toUpperCase()} significa ${v.pt} — no Present Continuous vira ${v.ing}.`),v);
+      }else{
+        const ds=pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>x.base);
+        return tag(makeChoice("VOCABULÁRIO",v.icon,`Qual verbo significa “${v.pt}”?`,v.base,ds,
+          `${v.base.toUpperCase()} = ${v.pt}.`,
+          `A resposta correta é ${v.base.toUpperCase()} (${v.pt}) → ${v.ing}.`),v);
+      }
+    });
+  }
+
+  function ingFrom(list,count=10){
+    return pickWeighted(list,count).map(v=>{
+      const rule=v.rule==="drop_e"?"retirar o E + ING":v.rule==="double"?"dobrar a consoante + ING":"acrescentar -ING";
+      return tag(makeChoice(`REGRA — ${rule.toUpperCase()}`,v.icon,`${v.base.toUpperCase()} vira:`,v.ing,wrongIngForms(v),
+        `${v.base.toUpperCase()} → ${v.ing.toUpperCase()}. ${ruleExplanation(v)}`,
+        ruleExplanation(v)),v);
+    });
+  }
+
+  function contextFrom(list,count=6){
+    return pickWeighted(list,count).map(v=>{
+      const sub=pick(subjects,1)[0];
+      const ds=pick(verbBank.filter(x=>x.base!==v.base),3).map(x=>x.ing);
+      return tag(makeChoice("CONTEXTO",v.icon,
+        `Qual forma de ${v.pt.toUpperCase()} completa a frase: “${sub.s} ${sub.be} ______.”?`,
+        v.ing,ds,`${v.base.toUpperCase()} = ${v.pt} → ${v.ing}.`,
+        `A resposta correta é ${v.ing.toUpperCase()}. ${ruleExplanation(v)}`),v);
+    });
+  }
+
+  const addList=verbBank.filter(v=>v.rule==="add");
+  const dropEList=verbBank.filter(v=>v.rule==="drop_e");
+  const doubleList=verbBank.filter(v=>v.rule==="double");
+
+  const movement=byBases(["stand","ride","jump","hop","drive","fly","sail","run","swim","stop"]);
+  const daily=byBases(["clean","cook","eat","listen to music","sleep","study","talk","use the computer","watch","play","sit","write","dance"]);
+  const results=byBases(["win","lose","find","break","buy","borrow","draw","paint","help","discuss","lift","blow","cry"]);
+
+  switch(category){
+    case "review": {
+      // Monta a partida a partir dos verbos que o aluno mais erra, 3 exercicios por verbo
+      // (significado, conjugacao e contexto) para atacar o item por angulos diferentes.
+      const fracos=weakVerbs().slice(0,8);
+      if(!fracos.length) return [];
+      const out=[];
+      fracos.forEach(v=>{
+        out.push(...ingFrom([v],1));
+        out.push(...meaningFrom([v],1));
+        if(out.length<20) out.push(...contextFrom([v],1));
+      });
+      return shuffle(out);
+    }
+
+    case "listening":
+      return shuffle([
+        ...generateListeningQuestions(15),
+        ...generateContextQuestions(4)
+      ]);
+
+    case "vocabulary":
+      return shuffle([
+        ...generateMeaningQuestions(14),
+        ...generateMatchGame(),
+        ...generateMemoryGame(),
+        ...generateTextRecall(5)
+      ]);
+
+    case "ing_add":
+      return shuffle([
+        ...ingFrom(addList,14),
+        ...meaningFrom(addList,5),
+        ...contextFrom(addList,4)
+      ]);
+
+    case "ing_drop_e":
+      return shuffle([
+        ...ingFrom(dropEList,10),
+        ...meaningFrom(dropEList,5),
+        ...contextFrom(dropEList,4)
+      ]);
+
+    case "ing_double":
+      return shuffle([
+        ...ingFrom(doubleList,8),
+        ...meaningFrom(doubleList,4),
+        ...contextFrom(doubleList,3)
+      ]);
+
+    case "be":
+      return shuffle([
+        ...generateBeQuestions(14),
+        ...generateOrderQuestions(5)
+      ]);
+
+    case "affirmative":
+      return shuffle([
+        ...generateOrderQuestions(12),
+        ...generateBeQuestions(6),
+        ...generateContextQuestions(6)
+      ]);
+
+    case "negative_questions":
+      return shuffle([
+        ...generateNegativeQuestions(12),
+        ...pick(baseQuestionPool.filter(q =>
+          String(q.stage||"").includes("NEGATIV") ||
+          String(q.stage||"").includes("PERGUNT") ||
+          String(q.stage||"").includes("QUESTION")
+        ),10)
+      ]);
+
+    case "ticket":
+      return shuffle([
+        ...baseQuestionPool.filter(q=>String(q.stage||"").includes("TICKET"))
+      ]);
+
+    case "movement":
+      return shuffle([
+        ...meaningFrom(movement,8),
+        ...ingFrom(movement,8),
+        ...contextFrom(movement,6)
+      ]);
+
+    case "daily_actions":
+      return shuffle([
+        ...meaningFrom(daily,10),
+        ...ingFrom(daily,10),
+        ...contextFrom(daily,6)
+      ]);
+
+    case "results_actions":
+      return shuffle([
+        ...meaningFrom(results,12),
+        ...ingFrom(results,10),
+        ...contextFrom(results,6)
+      ]);
+
+    default:
+      buildQuestionPool();
+      return questions;
+  }
+}
+
+const categoryNames={
+  review:"Revisar meus erros",
+  all:"Tudo misturado",
+  vocabulary:"Actions Vocabulary",
+  ing_add:"Regra +ING",
+  ing_drop_e:"Retirar E + ING",
+  ing_double:"Dobrar consoante",
+  listening:"Listening",
+  be:"AM / IS / ARE",
+  affirmative:"Frases afirmativas",
+  negative_questions:"Negativas e perguntas",
+  ticket:"Ticket Information",
+  movement:"Verbos de movimento",
+  daily_actions:"Ações do dia a dia",
+  results_actions:"Outras ações"
+};
+
+
+
+const trails={
+  essential:{
+    name:"Trilha Essencial",
+    steps:[
+      {cat:"vocabulary",label:"Vocabulário",icon:"🧠"},
+      {cat:"ing_add",label:"+ING",icon:"➕"},
+      {cat:"ing_drop_e",label:"Tirar E",icon:"✂️"},
+      {cat:"ing_double",label:"Dobrar",icon:"✌️"},
+      {cat:"be",label:"AM/IS/ARE",icon:"⚙️"},
+      {cat:"affirmative",label:"Frases",icon:"✅"},
+      {cat:"listening",label:"Listening",icon:"🎧"},
+      {cat:"negative_questions",label:"Neg./Perg.",icon:"❌"}
+    ]
+  },
+  verbs:{
+    name:"Trilha dos Verbos",
+    steps:[
+      {cat:"vocabulary",label:"Significados",icon:"🧠"},
+      {cat:"ing_add",label:"+ING",icon:"➕"},
+      {cat:"ing_drop_e",label:"Tirar E",icon:"✂️"},
+      {cat:"ing_double",label:"Dobrar",icon:"✌️"},
+      {cat:"daily_actions",label:"Dia a dia",icon:"🏠"},
+      {cat:"movement",label:"Movimento",icon:"🚲"},
+      {cat:"results_actions",label:"Outras",icon:"🏆"}
+    ]
+  },
+  grammar:{
+    name:"Trilha da Gramática",
+    steps:[
+      {cat:"be",label:"AM/IS/ARE",icon:"⚙️"},
+      {cat:"affirmative",label:"Afirmativas",icon:"✅"},
+      {cat:"negative_questions",label:"Neg./Perg.",icon:"❌"},
+      {cat:"all",label:"Revisão",icon:"🎲"}
+    ]
+  }
+};
+
+function renderTrailMap(){
+  const map=document.getElementById("trailMap");
+  if(!map) return;
+  if(!activeTrail){
+    map.innerHTML="";
+    map.style.display="none";
+    return;
+  }
+  map.style.display="flex";
+  const steps=trails[activeTrail].steps;
+  map.innerHTML=steps.map((s,i)=>{
+    const cls=i<trailStep?"done":i===trailStep?"current":"";
+    const line=i<steps.length-1?`<div class="trail-line ${i<trailStep?"done":""}"></div>`:"";
+    return `<div class="trail-node ${cls}" title="${s.label}">${i<trailStep?"✓":s.icon}</div>${line}`;
+  }).join("");
+}
+
+function updateProgress(){
+  const total=Math.max(questions.length,1);
+  const current=Math.min(index+1,total);
+  const pct=Math.round((Math.min(index,total)/total)*100);
+  const t=document.getElementById("progressText");
+  const p=document.getElementById("progressPercent");
+  const f=document.getElementById("progressFill");
+  if(t){
+    if(activeTrail){
+      const step=trails[activeTrail].steps[trailStep];
+      t.textContent=`${trails[activeTrail].name} • Etapa ${trailStep+1}/${trails[activeTrail].steps.length} • Questão ${current}/${total}`;
+    }else{
+      t.textContent=`Questão ${current}/${total}`;
+    }
+  }
+  if(p) p.textContent=pct+"%";
+  if(f) f.style.width=pct+"%";
+  renderTrailMap();
+}
+
+function startTrail(name){
+  activeTrail=name;
+  trailStep=0;
+  score=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;
+  startTrailStep();
+}
+
+function startTrailStep(){
+  const trail=trails[activeTrail];
+  const step=trail.steps[trailStep];
+  currentCategory=step.cat;
+  missionStat(step.cat).iniciada=true;
+
+  if(step.cat==="all"){
+    buildQuestionPool();
+  }else{
+    questions=buildCategoryPool(step.cat);
+  }
+  questions=shuffle(questions).slice(0,trailQuestionsPerStep);
+
+  index=0;
+  locked=false;
+  document.getElementById("score").textContent=score;
+  renderLives();
+  const comboEl=document.getElementById("combo"); if(comboEl) comboEl.textContent=combo;
+  setMode(`${trail.name} • ${step.label}`);
+  show("quiz");
+  updateProgress();
+  renderQuestion();
+}
+
+function advanceTrail(){
+  if(!activeTrail) return false;
+  const trail=trails[activeTrail];
+  if(trailStep<trail.steps.length-1){
+    trailStep++;
+    sfx.etapa();
+    showAchievement(`🗺️ Etapa concluída! Próxima: ${trail.steps[trailStep].label}`);
+    startTrailStep();
+    return true;
+  }
+  return false;
+}
+
+const missionMeta={
+  review:{icon:"🩹",title:"Sala de Reparos",story:"Só os verbos que você vem errando, por significado, conjugação e contexto."},
+  all:{icon:"🎲",title:"Portal Completo",story:"Todos os conteúdos aparecem misturados nesta linha do tempo."},
+  vocabulary:{icon:"🧠",title:"Arquivo de Vocabulário",story:"Recupere o significado das ações em inglês e português."},
+  ing_add:{icon:"➕",title:"Portal +ING",story:"Treine verbos que normalmente apenas recebem -ING."},
+  ing_drop_e:{icon:"✂️",title:"Portal do E Perdido",story:"Remova o E final antes de acrescentar -ING."},
+  ing_double:{icon:"✌️",title:"Portal da Consoante Dupla",story:"Reconheça quando a última consoante precisa ser duplicada."},
+  be:{icon:"⚙️",title:"Núcleo AM / IS / ARE",story:"Conecte cada sujeito à forma correta do verbo to be."},
+  affirmative:{icon:"✅",title:"Linha das Frases Afirmativas",story:"Monte frases completas no Present Continuous."},
+  negative_questions:{icon:"❌❓",title:"Zona de Negativas e Perguntas",story:"Transforme frases e domine a inversão do verbo to be."},
+  listening:{icon:"🎧",title:"Sala de Escuta",story:"Ouça as frases e reconheça a ação, o sujeito e a forma do verbo to be."},
+  ticket:{icon:"🎟️",title:"Terminal Temporal",story:"Leia tickets e encontre date, time, gate, seat, price e destination."},
+  movement:{icon:"🚲",title:"Rota do Movimento",story:"Treine verbos ligados a deslocamento, salto, voo e navegação."},
+  daily_actions:{icon:"🏠",title:"Rotina Temporal",story:"Revise ações comuns do dia a dia."},
+  results_actions:{icon:"🏆",title:"Arquivo de Ações Especiais",story:"Treine ações como vencer, perder, encontrar, quebrar, comprar e ajudar."}
+};
+
+
+/* ---------- Painel de progresso na interface ---------- */
+
+function renderStartStats(){
+  const el=document.getElementById("startStats");
+  if(!el) return;
+  const dom=masteredVerbs().length;
+  const fracos=weakVerbs().length;
+  const feitas=Object.keys(trails).filter(k=>progress.trails[k]).length;
+  el.innerHTML=
+    `<span class="stat-chip">🏅 Recorde <b>${progress.best.score}</b></span>`+
+    `<span class="stat-chip">📚 Dominados <b>${dom}/${verbBank.length}</b></span>`+
+    `<span class="stat-chip">⚠️ A revisar <b>${fracos}</b></span>`+
+    `<span class="stat-chip">🗺️ Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+}
+
+function renderCategoryBadges(){
+  // Cada card mostra em que pé está a missão e quanto do conteúdo já foi dominado.
+  document.querySelectorAll("[data-cat]").forEach(card=>{
+    const cat=card.dataset.cat;
+    if(cat==="review") return;
+    const info=missionInfo(cat);
+    card.classList.remove("nova","andamento","concluida","dominada");
+    card.classList.add(info.estado);
+    const selo=card.querySelector(".selo");
+    if(selo){
+      selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:"";
+      selo.style.display=info.rotulo?"inline-block":"none";
+    }
+    const barra=card.querySelector(".mini-bar span");
+    if(barra) barra.style.width=info.pct+"%";
+    const txt=card.querySelector(".mini-txt");
+    if(txt) txt.textContent=info.total
+      ? `${info.dominados}/${info.total} verbos dominados`+(info.melhorAcc?` • melhor ${info.melhorAcc}%`:"")
+      : "";
+  });
+  const n=weakVerbs().length;
+  const card=document.getElementById("reviewCard");
+  if(card){
+    const txt=card.querySelector(".review-count");
+    if(txt) txt.textContent = n
+      ? `${n} verbo${n>1?"s":""} esperando revisão`
+      : "Nada pendente — jogue uma missão primeiro";
+    card.classList.toggle("empty", n===0);
+  }
+  document.querySelectorAll("[data-trail]").forEach(b=>{
+    const done=!!progress.trails[b.dataset.trail];
+    b.classList.toggle("done", done);
+    const badge=b.querySelector(".trail-done");
+    if(badge) badge.style.display = done ? "inline-block" : "none";
+  });
+}
+
+function renderMissedList(){
+  const box=document.getElementById("missedList");
+  if(!box) return;
+  const fracos=weakVerbs().slice(0,8);
+  if(!fracos.length){ box.innerHTML=""; box.style.display="none"; return; }
+  box.style.display="block";
+  box.innerHTML=
+    `<div class="missed-title">⚠️ Verbos que ainda pedem atenção</div>`+
+    `<div class="missed-chips">${fracos.map(v=>
+        `<span class="missed-chip">${v.icon} <b>${v.base}</b> → ${v.ing}</span>`).join("")}</div>`+
+    `<button type="button" class="gold" onclick="startCategory('review')">🩹 Revisar só esses verbos</button>`;
+}
+
+function resetProgress(){
+  if(!confirm("Apagar todo o progresso salvo (recorde, verbos dominados e trilhas concluídas)?")) return;
+  progress=defaultProgress();
+  progress.practice=practiceMode;
+  saveProgress();
+  renderStartStats();
+  renderCategoryBadges();
+  showAchievement("🧹 Progresso apagado.");
+}
+
+function showAchievement(text){
+  const pop=document.getElementById("achievementPop");
+  if(!pop)return;
+  pop.textContent=text;
+  pop.classList.add("show");
+  setTimeout(()=>pop.classList.remove("show"),1800);
+}
+
+function updateCombo(ok){
+  if(ok){
+    combo++;
+    if(combo>bestCombo) bestCombo=combo;
+    if(combo===3) showAchievement("🔥 Combo x3!");
+    if(combo===5) showAchievement("⚡ Sequência x5!");
+    if(combo===8) showAchievement("🌟 Mestre da sequência!");
+  }else{
+    combo=0;
+  }
+  const el=document.getElementById("combo");
+  if(el) el.textContent=combo;
+}
+
+function updateStory(){
+  const meta=missionMeta[currentCategory]||missionMeta.all;
+  const story=document.getElementById("storyline");
+  if(story) story.textContent=`${meta.icon} ${meta.title} — ${meta.story}`;
+}
+
+function startCategory(category){
+  activeTrail=null;
+  trailStep=0;
+  currentCategory=category;
+  missionStat(category).iniciada=true;saveProgress();
+  combo=0;bestCombo=0;answeredCount=0;
+  if(category==="all"){
+    buildQuestionPool();
+  }else{
+    questions=buildCategoryPool(category);
+  }
+  if(!questions.length){
+    showAchievement("🎉 Nada para revisar! Jogue uma missão para gerar revisões.");
+    openCategories();
+    return;
+  }
+  index=0;score=0;lives=5;hits=0;locked=false;
+  document.getElementById("score").textContent=score;
+  renderLives();
+  const comboEl=document.getElementById("combo"); if(comboEl) comboEl.textContent=combo;
+  setMode(categoryNames[category] || "Desafios");
+
+  // Remove qualquer alvo CSS (#categories) para evitar que a tela de categorias
+  // continue visível atrás/antes do desafio no mobile.
+  // Em file:// o replaceState pode lancar. O fallback antigo era location.hash="",
+  // que em alguns navegadores Android recarrega a pagina e zera a partida
+  // justamente ao iniciar a missao. Falhar aqui e inofensivo: ignoramos.
+  try{
+    history.replaceState(null,"",location.pathname+location.search);
+  }catch(e){}
+
+  document.getElementById("categories").classList.remove("active");
+  show("quiz");
+  window.scrollTo(0,0);
+  renderQuestion();
+}
+
+function buildQuestionPool(){
+  // Keep a small random sample of handcrafted items, then combine with generated variations.
+  const fixed = pick(baseQuestionPool,10);
+  const generated = [
+    ...generateMeaningQuestions(8),
+    ...generateIngQuestions(8),
+    ...generateBeQuestions(5),
+    ...generateNegativeQuestions(4),
+    ...generateOrderQuestions(4),
+    ...generateTextRecall(4),
+    ...generateContextQuestions(5),
+    ...generateListeningQuestions(4),
+    ...generateMatchGame(),
+    ...generateMemoryGame()
+  ];
+  questions = shuffle([...fixed,...generated]);
+}
+
+let activeTrail=null;
+let trailStep=0;
+let trailQuestionsPerStep=8;
+let questions=[];
+let combo=0;
+let bestCombo=0;
+let answeredCount=0;
+let currentCategory="all";
+let index=0, score=0, lives=5, hits=0, locked=false;
+let orderSelection=[];
+let matchLeft=null, matchRight=null, matchedPairs=0;
+let memoryOpen=[];
+let wsSelected=[];
+
+
+
+
+
+
+let selectedVoice=null;
+
+function refreshVoices(){
+  if(!("speechSynthesis" in window)) return;
+  const voices=window.speechSynthesis.getVoices() || [];
+  const english=voices.filter(v=>/^en[-_]/i.test(v.lang||""));
+
+  const preferred=[
+    "Samantha","Ava","Allison","Susan","Alex","Daniel",
+    "Google US English","Google UK English",
+    "Microsoft Aria","Microsoft Jenny","Microsoft Guy"
+  ];
+
+  selectedVoice=null;
+  for(const name of preferred){
+    const found=english.find(v=>(v.name||"").toLowerCase().includes(name.toLowerCase()));
+    if(found){ selectedVoice=found; break; }
+  }
+  if(!selectedVoice && english.length) selectedVoice=english[0];
+
+}
+
+
+
+function speakText(text, rate=0.82){
+  if(!selectedVoice) refreshVoices();
+  if(!("speechSynthesis" in window)){
+    alert("O áudio por voz não está disponível neste navegador. O jogo pode ser usado normalmente sem áudio.");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(String(text||"").trim());
+
+  // Force English language metadata. Assign a specific English voice only when available.
+  u.lang="en-US";
+  if(selectedVoice) {
+    u.voice=selectedVoice;
+    u.lang=selectedVoice.lang || "en-US";
+  }
+
+  u.rate=rate;
+  u.pitch=1;
+  u.volume=1;
+
+  try{
+    window.speechSynthesis.speak(u);
+  }catch(e){
+    // Never block the game because of TTS.
+  }
+}
+
+function speakSentence(text){ speakText(text,0.84); }
+
+// O motor de som antigo foi substituido pelo sfx unificado.
+function soundCorrect(){ sfx.acerto(); }
+function soundWrong(){ sfx.erro(); }
+
+function bindTap(el, handler){
+  // O iOS Safari nao dispara "click" de forma confiavel em <div>/<span>:
+  // o elemento precisa parecer clicavel. Marcamos isso explicitamente e
+  // tratamos o toque por touchend, com guarda contra o click sintetico que
+  // o navegador emite logo depois.
+  el.style.cursor="pointer";
+  el.style.touchAction="manipulation";
+  if(!el.hasAttribute("role") && !/^(BUTTON|A|INPUT)$/.test(el.tagName)){
+    el.setAttribute("role","button");
+    el.setAttribute("tabindex","0");
+  }
+  let ultimoToque=0;
+  el.addEventListener("touchend",ev=>{
+    ultimoToque=Date.now();
+    if(ev.cancelable) ev.preventDefault();
+    handler(ev);
+  },{passive:false});
+  el.addEventListener("click",ev=>{
+    if(Date.now()-ultimoToque<700) return;   // ja tratado pelo touchend
+    handler(ev);
+  });
+  el.addEventListener("keydown",ev=>{
+    if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); handler(ev); }
+  });
+}
+
+
+
+
+function openLesson(lessonId){
+  show("lesson");
+  document.querySelectorAll("#lesson .static-lesson").forEach(s=>s.classList.remove("active-lesson"));
+  const part=document.getElementById(lessonId || "lesson1");
+  if(part) part.classList.add("active-lesson");
+  window.scrollTo(0,0);
+}
+
+function openCategories(){
+  renderCategoryBadges();
+  renderModeToggle();
+  show("categories");
+  window.scrollTo(0,0);
+}
+
+function goHome(){
+  renderStartStats();
+  renderModeToggle();
+  show("start");
+  window.scrollTo(0,0);
+}
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  const target=document.getElementById(id);
+  if(target) target.classList.add("active");
+  document.body.classList.toggle("quiz-mode", id==="quiz");
+  try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){}
+  window.scrollTo(0,0);
+}
+function setMode(t){ document.getElementById("modeLabel").textContent=t; }
+
+function updateHUD(){
+  document.getElementById("score").textContent=score;
+  renderLives();
+  const totalQ=questions.length;
+  document.getElementById("bar").style.width=(totalQ ? (index/totalQ*100) : 0)+"%";
+}
+function normalize(s){
+  return s.trim().toLowerCase().replace(/[?.!]/g,"").replace(/\s+/g," ");
+}
+function ticketHTML(){
+  return `
+  <div class="ticket">
+    <h3>🎟️ TIME TRAVEL EXPRESS</h3>
+    <div class="ticket-grid">
+      <div><b>DATE:</b> October 25th</div>
+      <div><b>TIME:</b> 8:30 p.m.</div>
+      <div><b>DESTINATION:</b> London — 1888</div>
+      <div><b>GATE:</b> 7</div>
+      <div><b>SEAT:</b> B12</div>
+      <div><b>PRICE:</b> $25.00</div>
+    </div>
+  </div>`;
+}
+
+function clearZones(){
+  document.getElementById("answers").innerHTML="";
+  document.getElementById("inputBox").innerHTML="";
+  document.getElementById("specialBox").innerHTML="";
+  document.getElementById("ticketBox").innerHTML="";
+  document.getElementById("illustration").textContent="";
+  document.getElementById("audioBox").innerHTML="";
+}
+
+function renderQuestion(){
+  updateProgress();
+  if(lives<=0){ endGame(); return; }
+  if(index>=questions.length){
+    if(advanceTrail()) return;   // trilha continua na proxima etapa
+    endGame(); return;
+  }
+  locked=false;
+  orderSelection=[];
+  const q=questions[index];
+  document.getElementById("stageLabel").textContent=q.stage;
+  updateStory();
+  document.getElementById("question").textContent=q.q;
+  document.getElementById("hint").textContent=q.hint || "";
+  document.getElementById("feedback").className="feedback";
+  document.getElementById("feedback").textContent="";
+  document.getElementById("nextBtn").style.display="none";
+  document.getElementById("illustration").textContent=q.icon || "";
+  clearZones();
+
+  // O audio e ortogonal ao tipo: qualquer questao com `audio` ganha os botoes,
+  // inclusive as de digitar ("ouca e escreva").
+  if(q.audio){
+    const row=document.createElement("div");
+    row.className="audio-row";
+    [["🔊 Ouvir áudio",0.84],["🐢 Ouvir devagar",0.6]].forEach(([label,rate])=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="audio-btn"; b.textContent=label;
+      bindTap(b,()=>speakText(q.audio,rate));
+      row.appendChild(b);
+    });
+    document.getElementById("audioBox").appendChild(row);
+  }
+
+  if(q.type==="listenchoice" || q.type==="choice"){
+    renderChoices(q);
+  } else if(q.type==="ticketchoice"){
+    document.getElementById("ticketBox").innerHTML=ticketHTML();
+    renderChoices(q);
+  } else if(q.type==="text"){
+    document.getElementById("inputBox").innerHTML=`
+      <div class="input-row">
+        <input id="textAnswer" placeholder="${q.placeholder || "Digite sua resposta..."}" inputmode="text" autocapitalize="none" autocomplete="off" onkeydown="if(event.key==='Enter') checkText()">
+        <button type="button" class="secondary" onclick="checkText()">Confirmar</button>
+      </div>`;
+    setTimeout(()=>document.getElementById("textAnswer").focus(),50);
+  } else if(q.type==="tf"){
+    document.getElementById("specialBox").innerHTML=`
+      <div class="truefalse">
+        <button type="button" class="tf-true" onclick="checkTF(true,this)">✅ Verdadeiro</button>
+        <button type="button" class="tf-false" onclick="checkTF(false,this)">❌ Falso</button>
+      </div>`;
+  } else if(q.type==="order"){
+    renderOrder(q);
+  } else if(q.type==="match"){
+    renderMatch(q);
+  } else if(q.type==="memory"){
+    renderMemory(q);
+  } else if(q.type==="crossword"){
+    renderCrossword(q);
+  } else if(q.type==="wordsearch"){
+    renderWordSearch(q);
+  }
+  updateHUD();
+}
+
+function renderChoices(q){
+  const answers=document.getElementById("answers");
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement("button");
+    b.className="answer";
+    b.textContent=c;
+    bindTap(b,()=>checkChoice(i,b));
+    answers.appendChild(b);
+  });
+}
+
+function renderOrder(q){
+  const special=document.getElementById("specialBox");
+  special.innerHTML=`
+    <div class="sentence-box" id="sentenceBox"><span class="small">Clique nas palavras na ordem correta...</span></div>
+    <div class="word-bank" id="wordBank"></div>
+    <div class="input-row">
+      <button type="button" class="secondary" onclick="resetOrder()">Limpar</button>
+      <button type="button" class="primary" onclick="checkOrder()">Confirmar frase</button>
+    </div>`;
+  const bank=document.getElementById("wordBank");
+  shuffle(q.words).forEach((w,i)=>{
+    const btn=document.createElement("button");
+    btn.className="word";
+    btn.textContent=w;
+    btn.dataset.word=w;
+    bindTap(btn,()=>selectWord(btn,w));
+    bank.appendChild(btn);
+  });
+}
+
+function selectWord(btn,w){
+  if(locked || btn.classList.contains("used")) return;
+  btn.classList.add("used");
+  orderSelection.push({word:w,btn});
+  drawOrder();
+}
+function drawOrder(){
+  const box=document.getElementById("sentenceBox");
+  box.innerHTML="";
+  if(orderSelection.length===0){
+    box.innerHTML='<span class="small">Clique nas palavras na ordem correta...</span>';
+    return;
+  }
+  orderSelection.forEach((item,idx)=>{
+    const s=document.createElement("span");
+    s.className="selected-word";
+    s.textContent=item.word;
+    s.title="Clique para remover";
+    bindTap(s,()=>{
+      if(locked)return;
+      item.btn.classList.remove("used");
+      orderSelection.splice(idx,1);
+      drawOrder();
+    });
+    box.appendChild(s);
+  });
+}
+function resetOrder(){
+  if(locked)return;
+  orderSelection.forEach(x=>x.btn.classList.remove("used"));
+  orderSelection=[];
+  drawOrder();
+}
+function checkOrder(){
+  if(locked)return;
+  locked=true;
+  const q=questions[index];
+  const formed=normalize(orderSelection.map(x=>x.word).join(" "));
+  const expected=normalize(q.answer);
+  if(formed===expected){
+    score+=130;hits++;
+    feedback(true,q.ok);
+  }else{
+    loseLife();
+    feedback(false,q.bad);
+    shake();
+  }
+  updateHUD();
+}
+
+
+function renderMatch(q){
+  matchedPairs=0; matchLeft=null; matchRight=null;
+  const pairs=[...q.pairs];
+  const left=shuffle(pairs.map(x=>x[0]));
+  const right=shuffle(pairs.map(x=>x[1]));
+  document.getElementById("specialBox").innerHTML=`
+    <div class="match-grid">
+      <div class="match-col" id="matchLeft"></div>
+      <div class="match-col" id="matchRight"></div>
+    </div>
+    <div class="small" style="margin-top:10px">Clique em um item de cada coluna.</div>`;
+  const l=document.getElementById("matchLeft"), r=document.getElementById("matchRight");
+  left.forEach(w=>{
+    const b=document.createElement("button"); b.className="match-item"; b.textContent=w; b.dataset.word=w;
+    bindTap(b,()=>selectMatch("left",b,w)); l.appendChild(b);
+  });
+  right.forEach(w=>{
+    const b=document.createElement("button"); b.className="match-item"; b.textContent=w; b.dataset.word=w;
+    bindTap(b,()=>selectMatch("right",b,w)); r.appendChild(b);
+  });
+}
+function selectMatch(side,btn,val){
+  if(locked || btn.classList.contains("done")) return;
+  document.querySelectorAll(`#match${side==="left"?"Left":"Right"} .match-item`).forEach(x=>x.classList.remove("selected"));
+  btn.classList.add("selected");
+  if(side==="left") matchLeft={btn,val}; else matchRight={btn,val};
+  if(matchLeft && matchRight){
+    const q=questions[index];
+    const ok=q.pairs.some(p=>p[0]===matchLeft.val && p[1]===matchRight.val);
+    if(ok){
+      matchLeft.btn.classList.add("done"); matchRight.btn.classList.add("done");
+      matchLeft.btn.classList.remove("selected"); matchRight.btn.classList.remove("selected");
+      matchedPairs++; score+=40;
+      if(matchedPairs===q.pairs.length){
+        locked=true; hits++; score+=100;
+        feedback(true,"Associações completas! Você conectou todos os pares.");
+      }
+    }else{
+      loseLife(); shake();
+      const a=matchLeft.btn,b=matchRight.btn;
+      setTimeout(()=>{a.classList.remove("selected");b.classList.remove("selected")},300);
+    }
+    matchLeft=null;matchRight=null;updateHUD();
+  }
+}
+
+function renderMemory(q){
+  memoryOpen=[];
+  const cards=[];
+  q.pairs.forEach((p,i)=>{
+    cards.push({text:p[0],pair:i},{text:p[1],pair:i});
+  });
+  const deck=shuffle(cards);
+  const box=document.createElement("div"); box.className="memory-grid";
+  deck.forEach((c,idx)=>{
+    const b=document.createElement("button"); b.className="memory-card"; b.textContent="❓";
+    b.dataset.text=c.text;b.dataset.pair=c.pair;b.dataset.idx=idx;
+    bindTap(b,()=>flipMemory(b));
+    box.appendChild(b);
+  });
+  document.getElementById("specialBox").appendChild(box);
+}
+function flipMemory(btn){
+  if(locked || btn.classList.contains("matched") || btn.classList.contains("revealed") || memoryOpen.length>=2)return;
+  btn.classList.add("revealed"); btn.textContent=btn.dataset.text;
+  memoryOpen.push(btn);
+  if(memoryOpen.length===2){
+    const [a,b]=memoryOpen;
+    if(a.dataset.pair===b.dataset.pair){
+      a.classList.remove("revealed");b.classList.remove("revealed");
+      a.classList.add("matched");b.classList.add("matched");
+      memoryOpen=[];
+      score+=50;
+      if(document.querySelectorAll(".memory-card.matched").length===document.querySelectorAll(".memory-card").length){
+        locked=true;hits++;score+=120;feedback(true,"Memória completa! Todos os pares foram encontrados.");updateHUD();
+      }
+    }else{
+      loseLife();updateHUD();shake();
+      setTimeout(()=>{a.classList.remove("revealed");b.classList.remove("revealed");a.textContent="❓";b.textContent="❓";memoryOpen=[]},700);
+    }
+  }
+}
+
+function renderCrossword(q){
+  // 7x7: CLEAN horizontal (linha 1), COOK vertical na coluna 1 compartilhando o C
+  // de CLEAN, SLEEP horizontal (linha 6) isolado pela linha 5 de blocos.
+  const layout=[
+    "#######",
+    "#CLEAN#",
+    "#O#####",
+    "#O#####",
+    "#K#####",
+    "#######",
+    "#SLEEP#"
+  ];
+  const box=document.createElement("div"); box.className="crossword";
+  layout.forEach((row,r)=>[...row].forEach((ch,c)=>{
+    const cell=document.createElement("div");
+    if(ch==="#"){cell.className="cw-cell cw-block";}
+    else{
+      cell.className="cw-cell";
+      const inp=document.createElement("input"); inp.maxLength=1; inp.dataset.answer=ch; inp.setAttribute("aria-label","letra");
+      cell.appendChild(inp);
+    }
+    box.appendChild(cell);
+  }));
+  document.getElementById("specialBox").innerHTML=`
+    <div class="clues"><b>Pistas:</b><br>1. Limpar — horizontal, 1ª linha<br>2. Cozinhar — vertical, começa no C de CLEAN<br>3. Dormir — horizontal, última linha</div>`;
+  document.getElementById("specialBox").appendChild(box);
+  const b=document.createElement("button");b.className="primary";b.textContent="Verificar palavras cruzadas";b.onclick=checkCrossword;
+  document.getElementById("specialBox").appendChild(b);
+}
+function checkCrossword(){
+  if(locked)return;
+  const inputs=[...document.querySelectorAll(".cw-cell input")];
+  let ok=true;
+  inputs.forEach(i=>{
+    if(i.value.trim().toUpperCase()!==i.dataset.answer){ok=false;i.style.background="rgba(255,95,122,.15)";}
+    else i.style.background="rgba(66,230,149,.12)";
+  });
+  if(ok){locked=true;hits++;score+=180;feedback(true,"Palavras cruzadas completas!");}
+  else{loseLife();shake();feedback(false,"Algumas letras ainda estão incorretas. Revise CLEAN, COOK e SLEEP.");}
+  updateHUD();
+}
+
+function renderWordSearch(q){
+  const grid=[
+    ["E","A","T","R","M","P","Q","L"],
+    ["B","C","O","O","K","N","A","S"],
+    ["T","X","Y","Z","U","V","L","L"],
+    ["A","P","Q","R","S","T","K","E"],
+    ["L","M","N","O","P","Q","R","E"],
+    ["K","T","A","L","K","B","C","P"],
+    ["D","E","F","G","H","I","J","S"],
+    ["M","N","O","P","Q","R","S","T"]
+  ];
+  wsSelected=[];
+  const box=document.createElement("div");box.className="wordsearch";box.id="wsGrid";
+  grid.forEach((row,r)=>row.forEach((ch,c)=>{
+    const d=document.createElement("div");d.className="ws-cell";d.textContent=ch;d.dataset.r=r;d.dataset.c=c;
+    bindTap(d,()=>toggleWS(d));box.appendChild(d);
+  }));
+  document.getElementById("specialBox").innerHTML=`
+    <div class="badge-row"><span class="badge">EAT</span><span class="badge">COOK</span><span class="badge">TALK</span><span class="badge">SLEEP</span></div>`;
+  document.getElementById("specialBox").appendChild(box);
+  const b=document.createElement("button");b.className="primary";b.textContent="Verificar caça-palavras";b.onclick=checkWordSearch;
+  document.getElementById("specialBox").appendChild(b);
+}
+function toggleWS(d){
+  if(locked || d.classList.contains("found"))return;
+  d.classList.toggle("sel");
+}
+function checkWordSearch(){
+  if(locked)return;
+  const selected=[...document.querySelectorAll(".ws-cell.sel")];
+  const coords=new Set(selected.map(d=>`${d.dataset.r},${d.dataset.c}`));
+  const words=[
+    ["0,0","0,1","0,2"],                       // EAT
+    ["1,1","1,2","1,3","1,4"],                 // COOK
+    ["5,1","5,2","5,3","5,4"],                 // TALK
+    ["1,7","2,7","3,7","4,7","5,7"]            // SLEEP
+  ];
+  let found=0;
+  words.forEach(w=>{
+    if(w.every(x=>coords.has(x))){
+      found++;
+      w.forEach(x=>{
+        const [r,c]=x.split(",");
+        const el=document.querySelector(`.ws-cell[data-r="${r}"][data-c="${c}"]`);
+        el.classList.remove("sel");el.classList.add("found");
+      });
+    }
+  });
+  if(found===4 || document.querySelectorAll(".ws-cell.found").length===16){
+    locked=true;hits++;score+=180;feedback(true,"Você encontrou todas as ações escondidas!");
+  }else{
+    loseLife();shake();feedback(false,"Ainda faltam palavras. Procure EAT, COOK, TALK e SLEEP.");
+  }
+  updateHUD();
+}
+
+function feedback(ok,msg){
+  recordAnswer(questions[index],ok);   // alimenta a repeticao espacada
+  updateCombo(ok);
+  answeredCount++;
+  if(ok){
+    pontosVoando("+100",true);
+    if(combo>=3){ sfx.combo(combo); pulsarCombo(); } else sfx.acerto();
+  }else{
+    pontosVoando(practiceMode?"ops":"−1 ❤️",false);
+    sfx.erro();
+  }
+  const box=document.getElementById("feedback");
+  box.textContent=(ok?(combo>=3?"🔥 ":"✅ "):"⚠️ ")+msg;
+  box.className="feedback show "+(ok?"good":"bad");
+  document.getElementById("nextBtn").style.display="inline-block";
+}
+function shake(){
+  document.getElementById("card").classList.add("shake");
+  setTimeout(()=>document.getElementById("card").classList.remove("shake"),300);
+}
+function checkChoice(i,btn){
+  if(locked)return;
+  locked=true;
+  const q=questions[index];
+  const buttons=[...document.querySelectorAll(".answer")];
+  if(i===q.answer){
+    btn.classList.add("correct");
+    score+=100;hits++;
+    feedback(true,q.ok);
+  }else{
+    btn.classList.add("wrong");
+    if(buttons[q.answer]) buttons[q.answer].classList.add("correct");
+    loseLife();shake();
+    feedback(false,q.bad);
+  }
+  updateHUD();
+}
+function checkText(){
+  if(locked)return;
+  locked=true;
+  const q=questions[index];
+  const val=normalize(document.getElementById("textAnswer").value);
+  const valid=q.valid.map(normalize);
+  if(valid.includes(val)){
+    score+=120;hits++;
+    feedback(true,q.ok);
+  }else{
+    loseLife();shake();
+    feedback(false,q.bad);
+  }
+  updateHUD();
+}
+function checkTF(value,btn){
+  if(locked)return;
+  locked=true;
+  const q=questions[index];
+  if(value===q.answer){
+    score+=110;hits++;
+    feedback(true,q.ok);
+  }else{
+    loseLife();shake();
+    feedback(false,q.bad);
+  }
+  updateHUD();
+}
+function nextQuestion(){
+  index++;
+  renderQuestion();
+}
+function endGame(){
+  if(activeTrail && trailStep>=trails[activeTrail].steps.length-1 && lives>0){
+    progress.trails[activeTrail]=true;
+  }
+  show("end");
+  setMode("Fim");
+  document.getElementById("bar").style.width="100%";
+  // answeredCount cobre a trilha inteira (varias etapas) e evita divisao por zero
+  // quando a partida termina antes da primeira resposta.
+  const total=answeredCount;
+  const acc=total ? Math.round(hits/total*100) : 0;
+  document.getElementById("finalScore").textContent=score;
+  document.getElementById("finalHits").textContent=hits+"/"+total;
+  document.getElementById("accuracy").textContent=acc+"%";
+  document.getElementById("bestCombo").textContent=bestCombo;
+  const jr=document.getElementById("journeyResult"); if(jr) jr.textContent=activeTrail ? "Trilha completa" : "Treino livre";
+  let rank,title,text,trophy;
+  if(lives<=0){
+    rank="🛠️ Cadete Temporal";
+    title="A máquina perdeu energia!";
+    text="Você já aprendeu bastante. Revise a aula e tente novamente para completar as missões.";
+    trophy="🌀";
+  } else if(acc>=90){
+    rank="🌟 Mestre do Tempo";
+    title="Você salvou a máquina do tempo!";
+    text="Excelente domínio do Present Continuous. Você mostrou segurança em gramática, vocabulário e interpretação.";
+    trophy="🏆";
+  } else if(acc>=75){
+    rank="🚀 Explorador Temporal";
+    title="Missão concluída!";
+    text="Muito bom! Você dominou a maior parte do conteúdo e conseguiu voltar ao presente.";
+    trophy="🚀";
+  } else {
+    rank="⏳ Aprendiz do Tempo";
+    title="Você voltou ao presente!";
+    text="Missão cumprida. Jogue novamente para revisar os pontos que ainda precisam de atenção.";
+    trophy="⏳";
+  }
+  // Recorde so conta no modo desafio, onde o erro tem custo.
+  if(!practiceMode && total){
+    if(score>progress.best.score) progress.best.score=score;
+    if(acc>progress.best.accuracy) progress.best.accuracy=acc;
+  }
+  // Registra a missao como concluida quando chegou ao fim com vidas.
+  if(total&&(lives>0||practiceMode)){
+    const m=missionStat(currentCategory);
+    m.iniciada=true;m.concluidas++;
+    if(acc>m.melhorAcc)m.melhorAcc=acc;
+  }
+  saveProgress();
+  if(lives<=0&&!practiceMode) sfx.fimDeVidas();
+  else if(!practiceMode&&score>0&&score>=progress.best.score) sfx.recorde();
+  else sfx.missao();
+  renderMissedList();
+  document.getElementById("rank").textContent=rank;
+  document.getElementById("endTitle").textContent=title;
+  document.getElementById("endText").textContent=text;
+  document.getElementById("trophy").textContent=trophy;
+}
+/* ---------- Inicializacao ---------- */
+progress=loadProgress();
+practiceMode=progress.practice;
+mudo=!!progress.mudo;setMudo(mudo);
+renderModeToggle();
+renderLives();
+renderStartStats();
+
+function restart(){
+  renderStartStats();
+  activeTrail=null;trailStep=0;
+  questions=[];
+  index=0;score=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;locked=false;
+  show("start");
+  setMode("Aula");
+  document.getElementById("bar").style.width="0";
+  document.getElementById("score").textContent="0";
+  document.getElementById("lives").textContent="5";
+  const c=document.getElementById("combo"); if(c) c.textContent="0";
+}
+</script>
+</body>
+</html>
