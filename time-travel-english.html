@@ -805,6 +805,11 @@
   @media(prefers-reduced-motion:reduce){
     .floater,.combo-pulse,.achievement-pop{animation:none!important;transition:none!important}
   }
+  .fonte{
+    display:inline-block;margin:6px 0 2px;padding:5px 12px;border-radius:999px;
+    background:rgba(255,209,102,.13);border:1px solid rgba(255,209,102,.3);
+    color:var(--gold);font-size:12px;font-weight:800
+  }
 </style>
 </head>
 <body>
@@ -1177,6 +1182,20 @@
           <small>isn't, aren't, am not e inversão para perguntas.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
         </button>
 
+        <button type="button" class="category-card" data-cat="time_numbers" onclick="startCategory('time_numbers')">
+          <span class="category-icon">🕐</span>
+          <strong>Horas e números</strong>
+          <small>Numbers 1 a 100, what time is it, hour hand e minute hand.</small>
+          <span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="world" onclick="startCategory('world')">
+          <span class="category-icon">🪐</span>
+          <strong>Planets &amp; Culture</strong>
+          <small>Sistema Solar em inglês, Big Ben e o tea time britânico.</small>
+          <span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
         <button type="button" class="category-card" data-cat="listening" onclick="startCategory('listening')">
           <span class="category-icon">🎧</span>
           <strong>Listening</strong>
@@ -1227,7 +1246,7 @@
       <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
       <div id="trailMap" class="trail-map"></div>
     </div>
-    <div id="stageLabel" class="stage-label"></div><div id="storyline" class="storyline"></div>
+    <div id="stageLabel" class="stage-label"></div><div id="fonte" class="fonte" style="display:none"></div><div id="storyline" class="storyline"></div>
           <div id="question" class="question"></div>
           <div id="hint" class="hint"></div>
           <div id="illustration" class="illustration"></div>
@@ -1419,6 +1438,54 @@ const baseQuestionPool = [
 ]
 
 
+/* ============================================================
+   ATIVIDADE COMPLEMENTAR DE INGLES (folha de 14/09, prof. Juliana)
+   Numeros, horas, partes do relogio, Sistema Solar e cultura.
+   Nao esta no roteiro da prova, que cobra Present Continuous.
+   ============================================================ */
+const extraPool = [
+  // ---- numbers ----
+  {type:"choice", stage:"🔢 NUMBERS", icon:"4️⃣0️⃣", src:"folha q8", q:"How do you write 40 in English?", choices:["forty","fourty","fourteen","fivety"], answer:0, ok:"FORTY — sem o U. É a pegadinha clássica.", bad:"É FORTY, sem U. Cuidado: FOURTEEN é 14."},
+  {type:"choice", stage:"🔢 NUMBERS", icon:"5️⃣0️⃣", src:"folha q8", q:"Qual número é “fifty”?", choices:["15","50","5","500"], answer:1, ok:"Fifty = 50. Quinze é fifteen.", bad:"Fifty = 50. Não confunda com fifteen, que é 15."},
+  {type:"choice", stage:"🔢 NUMBERS", icon:"9️⃣", src:"folha q9", q:"Which number is “fifty-nine”?", choices:["49","56","59","95"], answer:2, ok:"Fifty-nine = 59.", bad:"Fifty (50) + nine (9) = 59."},
+  {type:"choice", stage:"🔢 NUMBERS", icon:"2️⃣1️⃣", src:"folha q9", q:"Which number is “twenty-one”?", choices:["21","22","12","20"], answer:0, ok:"Twenty-one = 21.", bad:"Twenty (20) + one (1) = 21. Doze é twelve."},
+  {type:"choice", stage:"🔢 NUMBERS", icon:"1️⃣4️⃣", src:"folha q9", q:"Which number is “fourteen”?", choices:["40","14","41","4"], answer:1, ok:"Fourteen = 14.", bad:"Fourteen = 14. Quarenta é forty, e 41 é forty-one."},
+  {type:"text", stage:"🔢 NUMBERS", icon:"✍️", q:"Escreva em inglês o número 80.", valid:["eighty"], placeholder:"Digite em inglês...", ok:"Eighty = 80.", bad:"A resposta é EIGHTY."},
+  {type:"text", stage:"🔢 NUMBERS", icon:"✍️", q:"Escreva em inglês o número 100.", valid:["one hundred","a hundred","hundred"], placeholder:"Digite em inglês...", ok:"One hundred = 100.", bad:"A resposta é ONE HUNDRED."},
+  {type:"tf", stage:"🔢 NUMBERS", icon:"🤔", q:"“Fifteen” e “fifty” são o mesmo número.", answer:false, ok:"Isso! Fifteen é 15 e fifty é 50.", bad:"São diferentes: fifteen = 15, fifty = 50. O som parecido confunde muita gente."},
+  {type:"match", stage:"🔢 NUMBERS", icon:"🔗", src:"folha q8", q:"Associe o número por extenso ao algarismo.", pairs:[["twenty","20"],["fifty","50"],["eighty","80"],["one hundred","100"]]},
+
+  // ---- telling the time ----
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕔", src:"folha q5", q:"O relógio marca 5:00. What time is it?", choices:["It's five o'clock.","It's five thirty.","It's four o'clock.","It's eleven o'clock."], answer:0, ok:"It's five o'clock — usamos o'clock nas horas exatas.", bad:"5:00 = It's five o'clock."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕝", q:"São 2:30. Como se diz em inglês?", choices:["It's half past two.","It's half past three.","It's two o'clock.","It's a quarter past two."], answer:0, ok:"Half past two = duas e meia. HALF PAST = e meia.", bad:"2:30 = It's half past two (ou two thirty). Half past = e meia."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕑", q:"São 2:15. Como se diz em inglês?", choices:["It's a quarter past two.","It's a quarter to two.","It's half past two.","It's two fifty."], answer:0, ok:"A quarter past two = duas e quinze. QUARTER PAST = e quinze.", bad:"2:15 = a quarter past two. “Past” é depois da hora."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕖", q:"São 7:45. Como se diz em inglês?", choices:["It's a quarter to eight.","It's a quarter past seven.","It's half past seven.","It's seven o'clock."], answer:0, ok:"A quarter to eight = quinze para as oito. TO = para a próxima hora.", bad:"7:45 = a quarter to eight. Faltam 15 minutos para as 8."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"⏰", src:"folha q6", q:"Which hand shows the hours?", choices:["The hour hand — the short one","The minute hand — the long one","The second hand","The hour number"], answer:0, ok:"Hour hand é o ponteiro curto, das horas.", bad:"É o HOUR HAND, o ponteiro curto."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"⏱️", src:"folha q6", q:"Which hand is the longest and shows the minutes?", choices:["The minute hand","The hour hand","The second hand","The minute line"], answer:0, ok:"Minute hand é o ponteiro comprido, dos minutos.", bad:"É o MINUTE HAND, o mais comprido."},
+  {type:"match", stage:"🕐 WHAT TIME IS IT?", icon:"🔗", src:"folha q6", q:"Associe cada parte do relógio ao seu nome em português.", pairs:[["hour hand","ponteiro das horas"],["minute hand","ponteiro dos minutos"],["second hand","ponteiro dos segundos"],["hour number","número das horas"]]},
+  {type:"text", stage:"🕐 WHAT TIME IS IT?", icon:"✍️", q:"Como se diz “ponteiro dos minutos” em inglês?", valid:["minute hand","the minute hand"], placeholder:"Digite em inglês...", ok:"Minute hand.", bad:"A resposta é MINUTE HAND."},
+  {type:"listenchoice", stage:"🎧 LISTENING — THE TIME", icon:"🎧", audio:"It's half past nine.", q:"Ouça e escolha o horário correto.", choices:["9:30","9:15","8:30","10:30"], answer:0, ok:"Half past nine = 9:30.", bad:"O áudio diz: It's half past nine — 9:30."},
+  {type:"listenchoice", stage:"🎧 LISTENING — THE TIME", icon:"🎧", audio:"It's a quarter to six.", q:"Ouça e escolha o horário correto.", choices:["5:45","6:15","6:45","5:15"], answer:0, ok:"A quarter to six = 5:45.", bad:"O áudio diz: It's a quarter to six — quinze para as seis, ou seja, 5:45."},
+
+  // ---- solar system ----
+  {type:"order", stage:"🪐 SOLAR SYSTEM", icon:"🪐", src:"folha q1", q:"Coloque os planetas em ordem, a partir do Sol.", words:["Mercury","Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune"], answer:"Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune", ok:"Essa é a ordem a partir do Sol.", bad:"A ordem é: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."},
+  {type:"text", stage:"🪐 SOLAR SYSTEM", icon:"🔤", src:"folha q1", q:"UNSCRAMBLE: ERRMCYU", valid:["mercury"], placeholder:"Digite o nome do planeta...", ok:"Mercury — o planeta mais próximo do Sol.", bad:"A resposta é MERCURY."},
+  {type:"text", stage:"🪐 SOLAR SYSTEM", icon:"🔤", src:"folha q1", q:"UNSCRAMBLE: TPIRJEU", valid:["jupiter"], placeholder:"Digite o nome do planeta...", ok:"Jupiter — o maior planeta.", bad:"A resposta é JUPITER."},
+  {type:"text", stage:"🪐 SOLAR SYSTEM", icon:"🔤", src:"folha q1", q:"UNSCRAMBLE: ENUNERT", valid:["neptune"], placeholder:"Digite o nome do planeta...", ok:"Neptune — o mais distante do Sol.", bad:"A resposta é NEPTUNE."},
+  {type:"choice", stage:"🪐 SOLAR SYSTEM", icon:"🌍", src:"folha q2", q:"How many planets do we have?", choices:["Eight planets","Nine planets","Seven planets","Ten planets"], answer:0, ok:"Eight planets.", bad:"Are eight planets: de Mercury a Neptune."},
+  {type:"choice", stage:"🪐 SOLAR SYSTEM", icon:"🌎", src:"folha q2", q:"What's the name of your planet?", choices:["Earth","Mars","Venus","Saturn"], answer:0, ok:"Earth — a Terra.", bad:"O nosso planeta é a EARTH."},
+  {type:"text", stage:"🪐 SOLAR SYSTEM", icon:"☀️", src:"folha q2", q:"What big star can you see during the day?", valid:["sun","the sun"], placeholder:"Digite em inglês...", ok:"The Sun! Escreve-se S-U-N.", bad:"É THE SUN, escrito S-U-N (não “sum”)."},
+  {type:"choice", stage:"🪐 SOLAR SYSTEM", icon:"🪐", q:"Which planet has big rings around it?", choices:["Saturn","Mars","Venus","Mercury"], answer:0, ok:"Saturn — famoso pelos anéis.", bad:"É SATURN, o planeta dos anéis."},
+
+  // ---- culture ----
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"🕰️", src:"folha q3", q:"What is Big Ben?", choices:["It's a very famous clock.","It's a famous bridge.","It's a big park.","It's a museum."], answer:0, ok:"Big Ben is a very famous clock.", bad:"Big Ben is a very famous CLOCK."},
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"📍", src:"folha q3", q:"Where is Big Ben from?", choices:["It is in London.","It is in Lisbon.","It is in New York.","It is in Paris."], answer:0, ok:"It is IN London — não esqueça o “in”.", bad:"It is IN London. A preposição IN é obrigatória."},
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"🫖", src:"folha q3", q:"What time is tea time in Britain?", choices:["Between 4 and 5 o'clock","Between 4 and 6 o'clock","Between 3 and 4 o'clock","At 8 o'clock"], answer:0, ok:"Between 4 and 5 o'clock.", bad:"É entre 4 e 5 horas — between 4 and 5 o'clock."},
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"👑", src:"folha q3", q:"What time did the Queen have her tea?", choices:["At 4 o'clock","At 5 o'clock","At 6 o'clock","At noon"], answer:0, ok:"The Queen has tea at 4 o'clock, too!", bad:"At 4 o'clock."},
+  {type:"tf", stage:"🇬🇧 CULTURE", icon:"🗺️", q:"Big Ben is in New York.", answer:false, ok:"Correto, é falso: Big Ben fica em Londres.", bad:"É falso. Big Ben is in London, England."},
+  {type:"listenchoice", stage:"🎧 LISTENING — CULTURE", icon:"🎧", audio:"Big Ben is a very famous clock in London.", q:"Ouça e escolha a frase que você ouviu.", choices:["Big Ben is a very famous clock in London.","Big Ben is a very famous bridge in London.","Big Ben is a very famous clock in Lisbon.","Big Ben is a very old park in London."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: Big Ben is a very famous clock in London."}
+];
+
 const verbBank = [
   {base:"clean",ing:"cleaning",pt:"limpar",icon:"🧹",rule:"add"},
   {base:"cook",ing:"cooking",pt:"cozinhar",icon:"🍳",rule:"add"},
@@ -1489,7 +1556,10 @@ function verbosDaMissao(cat){
     daily_actions:v=>["clean","cook","eat","listen to music","sleep","study","talk","use the computer","watch","play","sit","write","dance"].includes(v.base),
     results_actions:v=>["win","lose","find","break","buy","borrow","draw","paint","help","discuss","lift","blow","cry"].includes(v.base)
   };
-  return por[cat] ? verbBank.filter(por[cat]) : verbBank;
+  if(por[cat]) return verbBank.filter(por[cat]);
+  // Missoes que nao sao de verbos nao tem barra de dominio por verbo.
+  if(cat==="time_numbers"||cat==="world"||cat==="ticket") return [];
+  return verbBank;
 }
 function missionInfo(cat){
   const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
@@ -2056,6 +2126,12 @@ function buildCategoryPool(category){
       return shuffle(out);
     }
 
+    case "time_numbers":
+      return shuffle(extraPool.filter(q=>/NUMBERS|WHAT TIME|LISTENING — THE TIME/.test(q.stage)));
+
+    case "world":
+      return shuffle(extraPool.filter(q=>/SOLAR SYSTEM|CULTURE/.test(q.stage)));
+
     case "listening":
       return shuffle([
         ...generateListeningQuestions(15),
@@ -2154,6 +2230,8 @@ const categoryNames={
   ing_drop_e:"Retirar E + ING",
   ing_double:"Dobrar consoante",
   listening:"Listening",
+  time_numbers:"Horas e números",
+  world:"Planets & Culture",
   be:"AM / IS / ARE",
   affirmative:"Frases afirmativas",
   negative_questions:"Negativas e perguntas",
@@ -2293,6 +2371,8 @@ const missionMeta={
   be:{icon:"⚙️",title:"Núcleo AM / IS / ARE",story:"Conecte cada sujeito à forma correta do verbo to be."},
   affirmative:{icon:"✅",title:"Linha das Frases Afirmativas",story:"Monte frases completas no Present Continuous."},
   negative_questions:{icon:"❌❓",title:"Zona de Negativas e Perguntas",story:"Transforme frases e domine a inversão do verbo to be."},
+  time_numbers:{icon:"🕐",title:"Relógio do Tempo",story:"Números de 1 a 100, as horas em inglês e as partes do relógio."},
+  world:{icon:"🪐",title:"Volta ao Mundo e ao Espaço",story:"Os planetas do Sistema Solar, Big Ben e o tea time britânico."},
   listening:{icon:"🎧",title:"Sala de Escuta",story:"Ouça as frases e reconheça a ação, o sujeito e a forma do verbo to be."},
   ticket:{icon:"🎟️",title:"Terminal Temporal",story:"Leia tickets e encontre date, time, gate, seat, price e destination."},
   movement:{icon:"🚲",title:"Rota do Movimento",story:"Treine verbos ligados a deslocamento, salto, voo e navegação."},
@@ -2641,6 +2721,13 @@ function renderQuestion(){
   orderSelection=[];
   const q=questions[index];
   document.getElementById("stageLabel").textContent=q.stage;
+  // Questoes vindas da folha da escola ganham um selo.
+  const fonte=document.getElementById("fonte");
+  if(fonte){
+    const d=q.src ? String(q.src).replace(/^folha\s*/,"") : "";
+    fonte.textContent=q.src ? `📝 Questão da folha da escola${d?" — "+d:""}` : "";
+    fonte.style.display=q.src ? "inline-block" : "none";
+  }
   updateStory();
   document.getElementById("question").textContent=q.q;
   document.getElementById("hint").textContent=q.hint || "";
