@@ -1182,10 +1182,24 @@
           <small>isn't, aren't, am not e inversão para perguntas.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
         </button>
 
-        <button type="button" class="category-card" data-cat="time_numbers" onclick="startCategory('time_numbers')">
+        <button type="button" class="category-card" data-cat="contractions" onclick="startCategory('contractions')">
+          <span class="category-icon">✂️</span>
+          <strong>Contrações e perguntas</strong>
+          <small>I'm, she's, they're, isn't, aren't, What are you doing? e can/can't.</small>
+          <span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="clock_routine" onclick="startCategory('clock_routine')">
           <span class="category-icon">🕐</span>
-          <strong>Horas e números</strong>
-          <small>Numbers 1 a 100, what time is it, hour hand e minute hand.</small>
+          <strong>Que horas são e rotina</strong>
+          <small>a.m. e p.m., midday e midnight, eight thirty, e a rotina do dia.</small>
+          <span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
+        </button>
+
+        <button type="button" class="category-card" data-cat="time_numbers" onclick="startCategory('time_numbers')">
+          <span class="category-icon">🔢</span>
+          <strong>Números (folha extra)</strong>
+          <small>Numbers 1 a 100 e as partes do relógio.</small>
           <span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div>
         </button>
 
@@ -1443,6 +1457,49 @@ const baseQuestionPool = [
    Numeros, horas, partes do relogio, Sistema Solar e cultura.
    Nao esta no roteiro da prova, que cobra Present Continuous.
    ============================================================ */
+const unit5Pool = [
+  // ---- contracoes (livro p.9, 10) ----
+  {type:"choice", stage:"✂️ CONTRACTIONS", icon:"🙋", src:"livro p.9", q:"Qual é a forma contraída de “I am studying”?", choices:["I'm studying","Im studying","I's studying","I am'studying"], answer:0, ok:"I am → I'm. O apóstrofo substitui o A.", bad:"É I'M studying. O apóstrofo entra no lugar do A de AM."},
+  {type:"choice", stage:"✂️ CONTRACTIONS", icon:"👧", src:"livro p.9", q:"Qual é a forma contraída de “She is studying at home”?", choices:["She's studying at home","Shes studying at home","She're studying at home","She'is studying"], answer:0, ok:"She is → She's.", bad:"É SHE'S studying at home."},
+  {type:"choice", stage:"✂️ CONTRACTIONS", icon:"👥", src:"livro p.9", q:"Qual é a forma contraída de “They are watching TV”?", choices:["They're watching TV","Theyre watching TV","They's watching TV","They'are watching TV"], answer:0, ok:"They are → They're.", bad:"É THEY'RE watching TV."},
+  {type:"choice", stage:"✂️ CONTRACTIONS", icon:"❌", src:"livro p.9", q:"Complete: “Lilly ______ studying at school.” (negativa)", choices:["isn't","aren't","am not","don't"], answer:0, ok:"Lilly isn't studying — com um nome no singular usamos IS NOT = ISN'T.", bad:"É ISN'T. Lilly é uma pessoa só: is + not = isn't."},
+  {type:"choice", stage:"✂️ CONTRACTIONS", icon:"❌", src:"livro p.9", q:"Complete: “Joe and Jill ______ dancing.” (negativa)", choices:["aren't","isn't","am not","doesn't"], answer:0, ok:"Joe and Jill aren't dancing — duas pessoas, ARE NOT = AREN'T.", bad:"É AREN'T. São duas pessoas: are + not = aren't."},
+  {type:"match", stage:"✂️ CONTRACTIONS", icon:"🔗", src:"livro p.9", q:"Associe a forma completa à contraída.", pairs:[["I am","I'm"],["She is","She's"],["They are","They're"],["is not","isn't"],["are not","aren't"]]},
+  {type:"text", stage:"✂️ CONTRACTIONS", icon:"✍️", q:"Escreva a contração de “We are”.", valid:["we're"], placeholder:"Digite a contração...", ok:"We are → We're.", bad:"A resposta é WE'RE (com apóstrofo)."},
+  {type:"text", stage:"✂️ CONTRACTIONS", icon:"✍️", q:"Escreva a contração de “He is”.", valid:["he's"], placeholder:"Digite a contração...", ok:"He is → He's.", bad:"A resposta é HE'S (com apóstrofo)."},
+
+  // ---- What are you doing? ----
+  {type:"choice", stage:"❓ WHAT ARE YOU DOING?", icon:"💬", src:"livro p.10", q:"Como se pergunta “o que você está fazendo?” em inglês?", choices:["What are you doing?","What you are doing?","What do you doing?","What are you do?"], answer:0, ok:"What are you doing? — a pergunta padrão do Present Continuous.", bad:"É WHAT ARE YOU DOING? O verbo to be vem antes do sujeito."},
+  {type:"choice", stage:"❓ WHAT ARE YOU DOING?", icon:"🏠", src:"livro p.10", q:"“What are you doing?” Qual é uma resposta correta?", choices:["I'm studying at home.","I study at home.","I am study at home.","Yes, I am."], answer:0, ok:"I'm studying at home — responde com o verbo em -ING.", bad:"A resposta usa Present Continuous: I'm studying at home."},
+  {type:"listenchoice", stage:"🎧 LISTENING — UNIT 5", icon:"🎧", audio:"What are you doing? I'm doing homework.", q:"Ouça o diálogo e escolha o que foi dito.", choices:["What are you doing? I'm doing homework.","What are you doing? I'm having lunch.","What time is it? I'm doing homework.","Where are you? I'm at home."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: What are you doing? I'm doing homework."},
+  {type:"order", stage:"❓ WHAT ARE YOU DOING?", icon:"🧩", q:"Monte a pergunta: “O que ela está fazendo?”", words:["What","is","she","doing"], answer:"What is she doing", ok:"What is she doing? — palavra interrogativa + to be + sujeito + verbo-ING.", bad:"A ordem é: What is she doing?"},
+
+  // ---- can / can't ----
+  {type:"choice", stage:"💪 CAN / CAN'T", icon:"✅", src:"livro p.12", q:"Complete: “We ______ learn more about different time machines.”", choices:["can","can't","are","aren't"], answer:0, ok:"We CAN learn — can indica que é possível.", bad:"É CAN: We can learn more about different time machines."},
+  {type:"choice", stage:"💪 CAN / CAN'T", icon:"🚫", src:"livro p.12", q:"Complete: “We ______ travel to the future now.”", choices:["can't","can","don't","aren't"], answer:0, ok:"We CAN'T travel — can't indica que não é possível.", bad:"É CAN'T: We can't travel to the future now."},
+  {type:"tf", stage:"💪 CAN / CAN'T", icon:"🤔", q:"Depois de “can” usamos o verbo com -ING. Ex.: “I can climbing”.", answer:false, ok:"Correto, é falso! Depois de can o verbo fica no infinitivo sem to: I can climb.", bad:"É falso. O certo é I CAN CLIMB, sem -ING."},
+  {type:"choice", stage:"💪 CAN / CAN'T", icon:"🧗", src:"livro p.33", q:"Na história, o que Leo diz enquanto sobe as escadas de Big Ben?", choices:["I can climb fast.","I can't climb.","I am climbing slowly.","I climb fast."], answer:0, ok:"I can climb fast! Look! 58, 59, 60...", bad:"Ele diz: I CAN CLIMB FAST."},
+
+  // ---- telling the time, do jeito do livro ----
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕛", src:"livro p.30", q:"12:00 p.m. é...", choices:["midday","midnight","o'clock","a quarter"], answer:0, ok:"12:00 p.m. = midday (meio-dia).", bad:"12:00 p.m. = MIDDAY, meio-dia. Meia-noite é midnight."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🌙", src:"livro p.30", q:"12:00 a.m. é...", choices:["midnight","midday","noon","o'clock"], answer:0, ok:"12:00 a.m. = midnight (meia-noite).", bad:"12:00 a.m. = MIDNIGHT, meia-noite."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕘", src:"livro p.31", q:"Como o livro lê o horário 8:30?", choices:["It's eight thirty.","It's thirty eight.","It's eight and half.","It's half eight."], answer:0, ok:"It's eight thirty — o livro lê a hora e depois os minutos.", bad:"É IT'S EIGHT THIRTY: primeiro a hora, depois os minutos."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕜", src:"livro p.31", q:"Como o livro lê o horário 3:45?", choices:["It's three forty-five.","It's forty-five three.","It's four fifteen.","It's a quarter three."], answer:0, ok:"It's three forty-five.", bad:"É IT'S THREE FORTY-FIVE: a hora e depois os minutos."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🕖", src:"livro p.31", q:"Como o livro lê o horário 7:15?", choices:["It's seven fifteen.","It's fifteen seven.","It's a quarter seven.","It's seven and fifteen."], answer:0, ok:"It's seven fifteen.", bad:"É IT'S SEVEN FIFTEEN."},
+  {type:"choice", stage:"🕐 WHAT TIME IS IT?", icon:"🌅", src:"livro p.31", q:"O que significa a.m.?", choices:["Da meia-noite ao meio-dia (manhã)","Do meio-dia à meia-noite (tarde e noite)","Só à noite","Só ao meio-dia"], answer:0, ok:"a.m. = da meia-noite ao meio-dia. Ex.: It's eleven a.m.", bad:"a.m. é a parte da manhã, da meia-noite ao meio-dia. p.m. é depois do meio-dia."},
+  {type:"listenchoice", stage:"🎧 LISTENING — THE TIME", icon:"🎧", audio:"It's eleven p.m.", q:"Ouça e escolha o horário.", choices:["11:00 p.m.","11:00 a.m.","1:00 p.m.","10:00 p.m."], answer:0, ok:"It's eleven p.m. — onze da noite.", bad:"O áudio diz: It's eleven p.m."},
+
+  // ---- rotina diaria (livro p.32, 36) ----
+  {type:"match", stage:"🌅 DAILY ROUTINE", icon:"🔗", src:"livro p.32", q:"Associe cada ação da rotina ao seu significado.", pairs:[["get up","levantar da cama"],["have breakfast","tomar café da manhã"],["do homework","fazer a lição"],["have lunch","almoçar"],["go to bed","ir dormir"]]},
+  {type:"order", stage:"🌅 DAILY ROUTINE", icon:"⏰", src:"livro p.32", q:"Coloque a rotina do dia na ordem, do começo ao fim.", words:["getting up","having breakfast","having lunch","having dinner","going to bed"], answer:"getting up having breakfast having lunch having dinner going to bed", ok:"É a ordem do dia: acordar, café, almoço, jantar e dormir.", bad:"A ordem é: getting up → having breakfast → having lunch → having dinner → going to bed."},
+  {type:"text", stage:"🌅 DAILY ROUTINE", icon:"✍️", src:"livro p.32", q:"Complete: “It's 7:00 a.m. and I am ______ breakfast.”", valid:["having"], placeholder:"Digite o verbo com -ING...", ok:"I am HAVING breakfast.", bad:"É HAVING. Em inglês “tomar café da manhã” é have breakfast."},
+  {type:"choice", stage:"🌅 DAILY ROUTINE", icon:"🛏️", src:"livro p.32", q:"“It's 10:00 p.m. and I am ______.”", choices:["going to bed","getting up","having lunch","doing homework"], answer:0, ok:"Às 22h a gente vai dormir: going to bed.", bad:"Às 10 da noite é GOING TO BED."},
+
+  // ---- Rock Around the Clock (livro p.35) ----
+  {type:"choice", stage:"🎵 SONG", icon:"🎸", src:"livro p.35", q:"Qual é o nome da música da Unit?", choices:["Rock Around the Clock","Time After Time","Big Ben Rock","Around the World"], answer:0, ok:"Rock Around the Clock, de Bill Haley & His Comets.", bad:"É ROCK AROUND THE CLOCK."},
+  {type:"choice", stage:"🎵 SONG", icon:"🎼", src:"livro p.35", q:"Complete a letra: “One, two, three o'clock, four ______ rock.”", choices:["o'clock","clock","hour","time"], answer:0, ok:"“One, two, three o'clock, four o'clock rock.”", bad:"A letra repete O'CLOCK: four o'clock rock."}
+];
+
 const extraPool = [
   // ---- numbers ----
   {type:"choice", stage:"🔢 NUMBERS", icon:"4️⃣0️⃣", src:"folha q8", q:"How do you write 40 in English?", choices:["forty","fourty","fourteen","fivety"], answer:0, ok:"FORTY — sem o U. É a pegadinha clássica.", bad:"É FORTY, sem U. Cuidado: FOURTEEN é 14."},
@@ -1478,7 +1535,8 @@ const extraPool = [
   {type:"choice", stage:"🪐 SOLAR SYSTEM", icon:"🪐", q:"Which planet has big rings around it?", choices:["Saturn","Mars","Venus","Mercury"], answer:0, ok:"Saturn — famoso pelos anéis.", bad:"É SATURN, o planeta dos anéis."},
 
   // ---- culture ----
-  {type:"choice", stage:"🇬🇧 CULTURE", icon:"🕰️", src:"folha q3", q:"What is Big Ben?", choices:["It's a very famous clock.","It's a famous bridge.","It's a big park.","It's a museum."], answer:0, ok:"Big Ben is a very famous clock.", bad:"Big Ben is a very famous CLOCK."},
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"🔔", src:"livro p.33", q:"No livro, o que a guia diz que Big Ben realmente é?", choices:["It's a bell!","It's a clock.","It's a bridge.","It's a palace."], answer:0, ok:"“This is Big Ben! It's a bell!” — Big Ben é o SINO, não o relógio nem a torre.", bad:"Surpresa do livro: Big Ben é o SINO. O menino aponta para o relógio e a guia responde “Not really. Follow me.”"},
+  {type:"choice", stage:"🇬🇧 CULTURE", icon:"🕰️", src:"livro p.33", q:"Na história, o que acontece quando o sino toca ao meio-dia?", choices:["The bell is striking midday. DING DONG!","The bell is broken.","The kids go home.","Nothing happens."], answer:0, ok:"“Listen! The bell is striking midday.” DING DONG!", bad:"The bell is striking midday — o sino bate o meio-dia."},
   {type:"choice", stage:"🇬🇧 CULTURE", icon:"📍", src:"folha q3", q:"Where is Big Ben from?", choices:["It is in London.","It is in Lisbon.","It is in New York.","It is in Paris."], answer:0, ok:"It is IN London — não esqueça o “in”.", bad:"It is IN London. A preposição IN é obrigatória."},
   {type:"choice", stage:"🇬🇧 CULTURE", icon:"🫖", src:"folha q3", q:"What time is tea time in Britain?", choices:["Between 4 and 5 o'clock","Between 4 and 6 o'clock","Between 3 and 4 o'clock","At 8 o'clock"], answer:0, ok:"Between 4 and 5 o'clock.", bad:"É entre 4 e 5 horas — between 4 and 5 o'clock."},
   {type:"choice", stage:"🇬🇧 CULTURE", icon:"👑", src:"folha q3", q:"What time did the Queen have her tea?", choices:["At 4 o'clock","At 5 o'clock","At 6 o'clock","At noon"], answer:0, ok:"The Queen has tea at 4 o'clock, too!", bad:"At 4 o'clock."},
@@ -1522,7 +1580,20 @@ const verbBank = [
   {base:"sit",ing:"sitting",pt:"sentar",icon:"🪑",rule:"double"},
   {base:"stop",ing:"stopping",pt:"parar",icon:"🛑",rule:"double"},
   {base:"write",ing:"writing",pt:"escrever",icon:"✍️",rule:"drop_e"},
-  {base:"dance",ing:"dancing",pt:"dançar",icon:"💃",rule:"drop_e"}
+  {base:"dance",ing:"dancing",pt:"dançar",icon:"💃",rule:"drop_e"},
+  {base:"read a book",ing:"reading a book",pt:"ler um livro",icon:"📖",rule:"add"},
+  {base:"work",ing:"working",pt:"trabalhar",icon:"👷",rule:"add"},
+  {base:"drink",ing:"drinking",pt:"beber",icon:"🥤",rule:"add"},
+  {base:"take a shower",ing:"taking a shower",pt:"tomar banho",icon:"🚿",rule:"drop_e"},
+  {base:"play video games",ing:"playing video games",pt:"jogar videogame",icon:"🎮",rule:"add"},
+  {base:"ride a bike",ing:"riding a bike",pt:"andar de bicicleta",icon:"🚲",rule:"drop_e"},
+  {base:"play soccer",ing:"playing soccer",pt:"jogar futebol",icon:"⚽",rule:"add"},
+  {base:"get up",ing:"getting up",pt:"levantar da cama",icon:"🛏️",rule:"double"},
+  {base:"have breakfast",ing:"having breakfast",pt:"tomar café da manhã",icon:"🥐",rule:"drop_e"},
+  {base:"have lunch",ing:"having lunch",pt:"almoçar",icon:"🍽️",rule:"drop_e"},
+  {base:"have dinner",ing:"having dinner",pt:"jantar",icon:"🍲",rule:"drop_e"},
+  {base:"do homework",ing:"doing homework",pt:"fazer a lição de casa",icon:"📝",rule:"add"},
+  {base:"go to bed",ing:"going to bed",pt:"ir dormir",icon:"😴",rule:"add"}
 ];
 
 const subjects = [
@@ -1558,7 +1629,7 @@ function verbosDaMissao(cat){
   };
   if(por[cat]) return verbBank.filter(por[cat]);
   // Missoes que nao sao de verbos nao tem barra de dominio por verbo.
-  if(cat==="time_numbers"||cat==="world"||cat==="ticket") return [];
+  if(["time_numbers","world","ticket","contractions","clock_routine"].includes(cat)) return [];
   return verbBank;
 }
 function missionInfo(cat){
@@ -2126,6 +2197,12 @@ function buildCategoryPool(category){
       return shuffle(out);
     }
 
+    case "contractions":
+      return shuffle(unit5Pool.filter(q=>/CONTRACTIONS|WHAT ARE YOU DOING|CAN \/ CAN'T|LISTENING — UNIT 5/.test(q.stage)));
+
+    case "clock_routine":
+      return shuffle(unit5Pool.filter(q=>/WHAT TIME IS IT|DAILY ROUTINE|SONG|LISTENING — THE TIME/.test(q.stage)));
+
     case "time_numbers":
       return shuffle(extraPool.filter(q=>/NUMBERS|WHAT TIME|LISTENING — THE TIME/.test(q.stage)));
 
@@ -2230,7 +2307,9 @@ const categoryNames={
   ing_drop_e:"Retirar E + ING",
   ing_double:"Dobrar consoante",
   listening:"Listening",
-  time_numbers:"Horas e números",
+  contractions:"Contrações e What are you doing?",
+  clock_routine:"Que horas são e rotina",
+  time_numbers:"Números (folha extra)",
   world:"Planets & Culture",
   be:"AM / IS / ARE",
   affirmative:"Frases afirmativas",
@@ -2253,6 +2332,7 @@ const trails={
       {cat:"ing_double",label:"Dobrar",icon:"✌️"},
       {cat:"be",label:"AM/IS/ARE",icon:"⚙️"},
       {cat:"affirmative",label:"Frases",icon:"✅"},
+      {cat:"contractions",label:"Contrações",icon:"✂️"},
       {cat:"listening",label:"Listening",icon:"🎧"},
       {cat:"negative_questions",label:"Neg./Perg.",icon:"❌"}
     ]
@@ -2371,7 +2451,9 @@ const missionMeta={
   be:{icon:"⚙️",title:"Núcleo AM / IS / ARE",story:"Conecte cada sujeito à forma correta do verbo to be."},
   affirmative:{icon:"✅",title:"Linha das Frases Afirmativas",story:"Monte frases completas no Present Continuous."},
   negative_questions:{icon:"❌❓",title:"Zona de Negativas e Perguntas",story:"Transforme frases e domine a inversão do verbo to be."},
-  time_numbers:{icon:"🕐",title:"Relógio do Tempo",story:"Números de 1 a 100, as horas em inglês e as partes do relógio."},
+  contractions:{icon:"✂️",title:"Central das Contrações",story:"I'm, she's, they're, isn't, aren't, What are you doing? e can/can't."},
+  clock_routine:{icon:"🕐",title:"Estação do Relógio",story:"Que horas são, a.m. e p.m., midday e midnight, e a rotina do dia."},
+  time_numbers:{icon:"🔢",title:"Relógio do Tempo",story:"Números de 1 a 100, as horas em inglês e as partes do relógio."},
   world:{icon:"🪐",title:"Volta ao Mundo e ao Espaço",story:"Os planetas do Sistema Solar, Big Ben e o tea time britânico."},
   listening:{icon:"🎧",title:"Sala de Escuta",story:"Ouça as frases e reconheça a ação, o sujeito e a forma do verbo to be."},
   ticket:{icon:"🎟️",title:"Terminal Temporal",story:"Leia tickets e encontre date, time, gate, seat, price e destination."},
