@@ -140,8 +140,9 @@ inglês, que nomeia o campo do ícone de outro jeito), `build/trilha.py`
 (rotas e migalhas), `build/busca.py` (busca e grupos) e
 `build/alternativas.py` (alternativas do mesmo tamanho).
 
-No fim, `build/medir_alternativas.py` derruba o build se o comprimento voltar
-a entregar a resposta certa — ver PRODUCT.md.
+No fim, `build/medir_alternativas.py` e `build/medir_plausibilidade.py`
+derrubam o build se a alternativa certa voltar a se entregar pelo tamanho,
+pelos absolutos ou pelo eco do enunciado — ver PRODUCT.md.
 
 A varredura de emoji do `aplicar.py` remove **só pictogramas**. Setas
 (`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo:

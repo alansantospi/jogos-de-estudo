@@ -17,3 +17,4 @@ python3 build/navegacao.py
 python3 build/busca.py
 python3 build/alternativas.py
 python3 build/medir_alternativas.py
+python3 build/medir_plausibilidade.py

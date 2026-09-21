@@ -101,6 +101,30 @@ REESCRITA = {
    "e": "O livro aponta três motivos: a inovação técnica, a extensão da obra e o domínio em retratar a forma humana."},
 },
 "historia.html": {
+ # --- a certa era a única alternativa afirmativa ---------------------------
+ "Qual era uma das principais funções do Almanaque Laemmert?": {
+   "c": "Divulgar informações úteis do dia a dia",
+   "d": ["Publicar histórias de ficção para crianças", "Ensinar conteúdos religiosos",
+         "Registrar acontecimentos de outros países"],
+   "e": "Trazia calendários, endereços de lojas, nomes de autoridades e anúncios."},
+ "Que tipos de texto a imprensa passou a produzir naquela época?": {
+   "c": "Literatura, textos religiosos e registros",
+   "d": ["Jornais diários do governo", "Livros escolares e cartilhas",
+         "Documentos oficiais do governo"]},
+ "Por que boa parte da população não se informava pelos jornais naquela época?": {
+   "c": "Poucas pessoas sabiam ler e os jornais eram caros",
+   "d": ["Os jornais circulavam pela corte", "A leitura era proibida aos moradores",
+         "As pessoas preferiam as notícias faladas"]},
+ "A Libras e o Braille são importantes tecnologias de comunicação porque...": {
+   "c": "dão a surdos e cegos acesso à informação e à participação na sociedade",
+   "d": ["servem para ensinar línguas estrangeiras",
+         "substituem a escrita comum nas escolas",
+         "foram criadas para uso dos professores"]},
+ "Como a Libras e o Braille estão presentes no mundo digital?": {
+   "c": "Em leitores de tela e em vídeos",
+   "d": ["Em livros impressos em papel", "Em escolas especializadas",
+         "Em legendas de filmes antigos"],
+   "e": "Há programas que transformam texto em áudio e vídeos com tradutores de Libras."},
  "Antes da prensa de tipos móveis, como os livros eram produzidos?": {
    "c": "Copiados à mão, um a um, por escribas",
    "d": ["Impressos em máquinas a vapor", "Comprados prontos da Alemanha",
@@ -140,30 +164,15 @@ REESCRITA = {
  "Qual foi o primeiro jornal produzido no Brasil?": {
    "c": "A Gazeta do Rio de Janeiro",
    "d": ["O Jornal do Commercio do Rio", "O Spectador Brasileiro", "A Revista Tico-tico"]},
- "Qual era uma das principais funções do Almanaque Laemmert?": {
-   "c": "Divulgar informações úteis do dia a dia",
-   "d": ["Publicar somente histórias de ficção para crianças",
-         "Ensinar apenas conteúdos religiosos",
-         "Registrar apenas acontecimentos de outros países"],
-   "e": "Trazia calendários, endereços de lojas, nomes de autoridades e anúncios."},
  "Qual famoso livro de poemas foi impresso naquela época?": {
    "c": "Marília de Dirceu, de Tomás Gonzaga",
    "d": ["Memórias Póstumas, de Machado de Assis", "Iracema, de José de Alencar",
          "Os Sertões, de Euclides da Cunha"]},
- "Que tipos de texto a imprensa passou a produzir naquela época?": {
-   "c": "Literatura, textos religiosos e registros",
-   "d": ["Apenas jornais diários do governo", "Apenas livros escolares e cartilhas",
-         "Apenas documentos oficiais do governo"]},
  "O que são fontes históricas?": {
    "c": "Materiais do passado que sobraram",
    "d": ["Livros escritos por historiadores hoje", "Apenas documentos oficiais do governo",
          "Somente fotografias muito antigas"],
    "e": "Jornais, cartas e almanaques ajudam a conhecer como as pessoas viviam."},
- "Por que boa parte da população não se informava pelos jornais naquela época?": {
-   "c": "Poucas pessoas sabiam ler e os jornais eram caros",
-   "d": ["Não existiam jornais no Brasil", "Era proibido ler jornais aqui",
-         "Todos preferiam ouvir o rádio"],
-   "e": "Além disso, os livros e jornais eram muito caros."},
  "Segundo o glossário, o que é uma Gazeta?": {
    "c": "Uma revista com notícias",
    "d": ["Uma carta oficial do rei", "Um tipo de máquina de impressão",
@@ -297,16 +306,6 @@ REESCRITA = {
  "Em que ano começou a organização da Libras no Brasil?": {
    "c": "1857, ainda no Império",
    "d": ["1825, no Império", "1908, já na República", "2002, já na República"]},
- "A Libras e o Braille são importantes tecnologias de comunicação porque...": {
-   "c": "dão a surdos e cegos acesso à informação e à participação na sociedade",
-   "d": ["são utilizadas apenas em computadores e celulares",
-         "substituem todas as outras formas de comunicação",
-         "foram criadas somente para serem usadas nas escolas"]},
- "Como a Libras e o Braille estão presentes no mundo digital?": {
-   "c": "Em leitores de tela e em vídeos",
-   "d": ["Não estão presentes no mundo digital", "Apenas em livros impressos em papel",
-         "Somente em escolas especiais"],
-   "e": "Há programas que transformam texto em áudio e vídeos com tradutores de Libras."},
  "O que eram as epístolas bíblicas?": {
    "c": "Cartas às comunidades cristãs",
    "d": ["Livros de leis do Império Romano", "Poemas escritos por Gutenberg",
@@ -316,6 +315,108 @@ REESCRITA = {
    "d": ["Quinze", "Quatro", "Vinte e uma"]},
 },
 "exploradores-do-ceu.html": {
+ # --- absolutos que eram só enchimento. Onde "sempre" é o próprio equívoco
+ #     testado ("a sombra fica sempre igual"), ele fica.
+ "Enquanto é dia no Brasil, do outro lado do planeta geralmente é...": {
+   "d": ["dia também", "inverno", "verão"]},
+ "Por volta do meio-dia, as sombras costumam ficar...": {
+   "d": ["mais compridas", "do mesmo tamanho da manhã", "invisíveis no chão"]},
+ "Olhar diretamente para o Sol...": {
+   "c": "pode machucar os olhos",
+   "d": ["é seguro com o céu nublado", "ajuda a enxergar melhor",
+         "é perigoso ao entardecer"]},
+ "No Brasil, a Lua Quarto Crescente aparece iluminada de que lado?": {
+   "d": ["Do lado direito, com formato de “D”", "Por cima, como um arco",
+         "Por baixo, como uma tigela"]},
+ "No Hemisfério Sul, qual conjunto de estrelas pode servir como referência aproximada para orientação?": {
+   "d": ["A Ursa Maior", "O Cinturão de Órion", "A Estrela Polar"]},
+ "Os planetas, diferentemente das estrelas...": {
+   "c": "não produzem luz própria",
+   "d": ["são maiores que as estrelas", "brilham bem mais que o Sol",
+         "ficam parados no céu"],
+   "e": "Os planetas apenas refletem a luz do Sol."},
+ "As estrelas de uma constelação estão realmente próximas umas das outras no espaço?": {
+   "c": "Não: a proximidade é aparente",
+   "d": ["Sim, estão bem coladas", "Sim, todas à mesma distância",
+         "Sim, presas em uma esfera"],
+   "e": "A proximidade é só o que se vê daqui da Terra."},
+ # --- erradas plausíveis no lugar das caricatas ---------------------------
+ "Por que o Sol parece se deslocar pelo céu ao longo do dia?": {
+   "d": ["Porque o Sol gira ao redor da Terra todos os dias",
+         "Porque a Terra se afasta do Sol durante a tarde",
+         "Porque a inclinação do eixo muda ao longo do dia"]},
+ "Se a Terra deixasse de girar em torno do próprio eixo, o que aconteceria?": {
+   "c": "O dia e a noite não se alternariam",
+   "d": ["Nada mudaria no planeta", "O ano ficaria bem mais curto que hoje",
+         "As estações do ano deixariam de existir"]},
+ "O que significa dizer que o movimento do Sol no céu é “aparente”?": {
+   "c": "Quem gira é a Terra, não o Sol",
+   "d": ["O Sol dá mesmo uma volta na Terra", "O Sol muda de tamanho durante o dia",
+         "O Sol muda de posição em sua própria órbita"]},
+ "Ao longo de um mesmo dia, a sombra de um poste...": {
+   "d": ["fica sempre igual", "aponta sempre para o norte",
+         "muda de posição, mas não de tamanho"]},
+ "Qual é o formato da trajetória que a Terra faz ao redor do Sol?": {
+   "d": ["Circular perfeita", "Espiral", "Ondulada"]},
+ "A posição exata do nascer do Sol é idêntica todos os dias do ano?": {
+   "c": "Não, ela muda ao longo do ano",
+   "d": ["Sim, é sempre no mesmo ponto", "Muda só nos anos bissextos",
+         "Muda só para quem mora perto dos polos"]},
+ "De onde vem a luz que ilumina o dia na Terra?": {
+   "d": ["Da Lua", "Das estrelas mais distantes", "Do brilho da própria atmosfera"]},
+ "Quais duas direções o Sol ajuda a identificar com mais facilidade?": {
+   "d": ["Norte e Sul", "Nordeste e Sudoeste", "Noroeste e Sudeste"]},
+ "Quais são os quatro pontos cardeais principais?": {
+   "d": ["Nordeste, Noroeste, Sudeste e Sudoeste",
+         "Norte, Sul, Nordeste e Sudoeste", "Leste, Oeste, Sudeste e Noroeste"]},
+ "Qual tecnologia usa sinais de satélites para ajudar na localização?": {
+   "d": ["Bússola", "Radar", "Sonar"]},
+ "Qual recurso representa lugares e ajuda a localizar posições e direções?": {
+   "d": ["Gráfico", "Tabela", "Fotografia"]},
+ "A bússola ajuda principalmente a identificar...": {
+   "d": ["a fase da Lua", "a altitude do lugar", "a distância percorrida"]},
+ "Montanhas, rios e prédios podem ser usados como...": {
+   "d": ["pontos cardeais", "linhas imaginárias", "coordenadas geográficas"]},
+ "O que é a rosa dos ventos?": {
+   "c": "Um desenho que indica as direções",
+   "d": ["Um instrumento com agulha magnética", "Um tipo de bússola eletrônica",
+         "Uma constelação do hemisfério sul"]},
+ "Antes da bússola e do GPS, os navegadores se orientavam bastante...": {
+   "c": "pelo Sol e pelas estrelas",
+   "d": ["por mapas do fundo do mar", "por satélites artificiais",
+         "pela direção constante dos ventos"]},
+ "Por que um mês lunar tem cerca de 29 dias?": {
+   "c": "É o tempo de um ciclo completo de fases",
+   "d": ["É o tempo da volta da Lua ao redor do Sol",
+         "É o tempo que a Lua leva para girar no próprio eixo",
+         "É o número fixo de dias de todos os meses"]},
+ "Por que as estrelas parecem mudar de posição ao longo da noite?": {
+   "d": ["Porque todas as estrelas orbitam a Terra em uma noite",
+         "Porque as estrelas se movem rápido no espaço",
+         "Porque a atmosfera desvia a luz delas"]},
+ "Por que a Lua brilha no céu?": {
+   "d": ["Porque produz luz própria como o Sol", "Porque é feita de rocha clara que brilha",
+         "Porque é iluminada pelas estrelas distantes"]},
+ "Qual instrumento ajuda a observar melhor os astros distantes?": {
+   "d": ["O periscópio", "O microscópio", "O caleidoscópio"]},
+ "Qual instrumento foi muito usado nas grandes navegações marítimas?": {
+   "d": ["O telescópio de mão", "A bússola solar", "O barômetro de mercúrio"]},
+ "O que a bússola e o sextante têm em comum?": {
+   "c": "Os dois ajudam a se orientar",
+   "d": ["Os dois usam ímãs", "Os dois medem distâncias", "Os dois precisam ver o céu"]},
+ "Saber em que hemisfério você está ajuda a...": {
+   "c": "escolher a referência certa no céu",
+   "d": ["mudar a direção do norte magnético", "usar o mesmo mapa em qualquer lugar",
+         "saber a hora exata do nascer do Sol"]},
+ # --- a certa era a única alternativa afirmativa ---------------------------
+ "Por que é útil conhecer mais de uma forma de se orientar?": {
+   "c": "Porque cada recurso pode falhar",
+   "d": ["Porque funcionam de maneiras iguais", "Porque a bússola é a mais confiável",
+         "Porque orientar-se ficou mais simples hoje"]},
+ "As estrelas são corpos celestes que...": {
+   "c": "emitem sua própria luz",
+   "d": ["refletem a luz da Lua", "recebem luz dos planetas",
+         "brilham por causa da atmosfera"]},
  "A rotação é o movimento da Terra em torno de...": {
    "c": "seu próprio eixo",
    "d": ["do Sol e da Lua", "da Lua apenas", "do planeta Marte"]},
@@ -327,14 +428,6 @@ REESCRITA = {
    "c": "inclinação do eixo e translação",
    "d": ["distância da Terra até o Sol", "velocidade da rotação da Terra",
          "quantidade de estrelas visíveis"]},
- "Se a Terra deixasse de girar em torno do próprio eixo, o que aconteceria?": {
-   "c": "O dia e a noite não se alternariam",
-   "d": ["Nada mudaria no planeta", "O ano ficaria bem mais curto que hoje",
-         "O Sol se apagaria devagar"]},
- "O que significa dizer que o movimento do Sol no céu é “aparente”?": {
-   "c": "Quem gira é a Terra, não o Sol",
-   "d": ["O Sol dá mesmo uma volta na Terra", "O Sol muda de tamanho durante o dia",
-         "A Lua empurra o Sol pelo céu"]},
  "Qual é a alternativa CORRETA sobre o Solstício?": {
    "c": "É o dia mais longo do verão",
    "d": ["Acontece a cada quatro anos, no calendário",
@@ -352,10 +445,6 @@ REESCRITA = {
          "Porque na Coreia do Sul o dia dura menos horas",
          "Porque a Lua ilumina a Coreia do Sul primeiro"],
    "e": "A rotação deixa cada região voltada para o Sol em momentos diferentes."},
- "Olhar diretamente para o Sol...": {
-   "c": "pode machucar os olhos",
-   "d": ["é seguro em qualquer horário", "ajuda a enxergar melhor",
-         "só é perigoso à noite"]},
  "Por que o Sol some do céu à noite?": {
    "c": "Porque nossa região virou de costas",
    "d": ["Porque ele se apaga à noite", "Porque ele vai para trás da Lua",
@@ -372,22 +461,10 @@ REESCRITA = {
    "c": "do campo magnético da Terra",
    "d": ["da luz forte do Sol", "do peso da agulha de metal",
          "do vento que sopra no norte"]},
- "O que é a rosa dos ventos?": {
-   "c": "Um desenho que indica as direções",
-   "d": ["Uma flor que cresce só no norte", "Um tipo de bússola eletrônica",
-         "Uma constelação do hemisfério sul"]},
  "Para que serve a legenda de um mapa?": {
    "c": "Explicar o que os símbolos significam",
    "d": ["Indicar a data em que o mapa foi feito", "Mostrar o preço do mapa na loja",
          "Contar a história do lugar"]},
- "Antes da bússola e do GPS, os navegadores se orientavam bastante...": {
-   "c": "pelo Sol e pelas estrelas",
-   "d": ["por telefones e rádios", "por satélites artificiais", "por semáforos na estrada"]},
- "Por que é útil conhecer mais de uma forma de se orientar?": {
-   "c": "Porque cada recurso pode falhar",
-   "d": ["Porque todas funcionam exatamente igual",
-         "Porque só a bússola funciona de verdade",
-         "Porque orientar-se não é mais necessário"]},
  "Um amigo diz que a parte escura da Lua é a sombra da Terra. Como corrigir essa informação?": {
    "c": "Ela não está voltada para o Sol",
    "d": ["Ele está certo: é a sombra da Terra", "É a sombra da própria Lua no céu",
@@ -425,16 +502,6 @@ REESCRITA = {
    "c": "Um local escuro, longe das luzes",
    "d": ["Uma rua com muitos refletores", "Um shopping muito iluminado",
          "Um estádio com as luzes acesas"]},
- "Os planetas, diferentemente das estrelas...": {
-   "c": "não produzem luz própria",
-   "d": ["são maiores que todas as estrelas", "brilham bem mais que o Sol",
-         "ficam totalmente parados no céu"],
-   "e": "Os planetas apenas refletem a luz do Sol."},
- "As estrelas de uma constelação estão realmente próximas umas das outras no espaço?": {
-   "c": "Não: a proximidade é aparente",
-   "d": ["Sim, estão sempre bem coladas", "Sim, todas à mesma distância",
-         "Sim, presas em uma esfera"],
-   "e": "A proximidade é só o que se vê daqui da Terra."},
  "Por que não enxergamos estrelas durante o dia?": {
    "c": "Porque a luz do Sol as ofusca",
    "d": ["Porque elas se apagam de dia", "Porque vão para o outro lado",
@@ -485,12 +552,18 @@ REESCRITA = {
    "c": "pouca diferença na duração do dia",
    "d": ["seis meses de noite seguidos", "quatro estações muito marcadas",
          "o Sol a pino à meia-noite"]},
- "Saber em que hemisfério você está ajuda a...": {
-   "c": "escolher a referência certa no céu",
-   "d": ["mudar a direção do norte magnético", "fazer o Sol nascer no oeste",
-         "aumentar o número de estrelas"]},
 },
 }
+
+def _sem_repetidas(pares):
+    """Chave repetida num dicionário literal se sobrescreve em silêncio.
+    Já engoliu 11 reescritas aqui; agora derruba o build."""
+    visto = {}
+    for k, v in pares:
+        assert k not in visto, "pergunta repetida na tabela: %r" % k[:70]
+        visto[k] = v
+    return visto
+
 
 PERG = re.compile(r'(?<![a-z])q:"((?:[^"\\]|\\.)*)"')
 
@@ -505,6 +578,14 @@ def _troca(linha, chave, valor):
     assert len(pad.findall(linha)) == 1, "campo %s ambíguo em %r" % (chave, linha[:70])
     return pad.sub(lambda m: novo, linha, count=1)
 
+
+# As tabelas são lidas de novo a partir do próprio arquivo para pegar chave
+# repetida, que o interpretador já teria descartado em silêncio.
+import ast as _ast
+for _no in _ast.walk(_ast.parse(io.open(__file__, encoding='utf-8').read())):
+    if isinstance(_no, _ast.Assign) and getattr(_no.targets[0], 'id', '') == 'REESCRITA':
+        for _jogo, _tab in zip(_no.value.keys, _no.value.values):
+            _sem_repetidas([(k.value, None) for k in _tab.keys])
 
 for arq, tabela in REESCRITA.items():
     s = io.open(arq, encoding="utf-8").read()

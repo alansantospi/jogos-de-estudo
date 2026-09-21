@@ -39,8 +39,26 @@ perto de 25%.** As quatro alternativas ficam no mesmo registro e no mesmo
 tamanho aproximado; o detalhe que a certa não comporta vai para a explicação,
 que aparece no retorno — onde ensina mais.
 
-`build/medir_alternativas.py` mede e derruba o build fora da faixa de 15% a
-35%. Vale para cada conteúdo novo.
+Comprimento não é o único atalho. `build/medir_plausibilidade.py` mede mais
+dois, do mesmo jeito — quanto acerta quem joga só por eles:
+
+- **eliminar absolutos**: "apenas", "sempre", "somente", "nunca" quase nunca
+  aparecem na resposta certa. Em História havia 5 questões, e em Ciências 2,
+  em que a certa era a **única alternativa afirmativa** — descarte puro,
+  sobrou 1.
+- **seguir o eco do enunciado**: a certa repetindo as palavras da pergunta.
+
+Onde "sempre" é o próprio equívoco testado ("a sombra fica sempre igual"),
+ele fica: o problema é o absoluto usado como enchimento.
+
+O que **não** dá para medir é a caricatura: a alternativa que a criança
+descarta por ser absurda, sem saber a matéria — "a nuvem só é lida em dias de
+chuva", "uma flor que cresce só no norte". Essa parte é leitura e julgamento,
+não número; 27 questões foram reescritas assim. O critério: a errada tem de
+ser um engano que alguém poderia mesmo cometer.
+
+Os dois medidores derrubam o build fora da faixa de 15% a 35%. Valem para
+cada conteúdo novo.
 
 ## Escopo
 
