@@ -18,7 +18,13 @@ for arq in ("historia.html","artes.html","exploradores-do-ceu.html"):
     s=io.open(arq,encoding="utf-8").read()
     assert s.count(CEU_DE)==1, arq
     io.open(arq,"w",encoding="utf-8").write(s.replace(CEU_DE,CEU_PARA))
+# No motor de inglês a linha antiga fica ANTES de clearZones(), que limpa a
+# própria ilustração. Desenhar ali não adianta: tem de ser depois da limpeza.
 s=io.open("time-travel-english.html",encoding="utf-8").read()
 assert s.count(EN_DE)==1, "inglês"
-io.open("time-travel-english.html","w",encoding="utf-8").write(s.replace(EN_DE,EN_PARA))
+s=s.replace(EN_DE+"\n","")
+CHAMADA="  clearZones();\n"
+assert s.count(CHAMADA)==1, "clearZones() nao esta onde eu esperava"
+s=s.replace(CHAMADA, CHAMADA+EN_PARA+"\n")
+io.open("time-travel-english.html","w",encoding="utf-8").write(s)
 print("  ok  ilustração da questão desenhada pelo motor")

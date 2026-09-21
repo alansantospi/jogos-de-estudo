@@ -7,9 +7,17 @@ from theme import FONTS, MATERIAS
 TOKENS=io.open("build/_tokens.css",encoding="utf-8").read()
 COMP=io.open("build/comp.css",encoding="utf-8").read()
 
-EMOJI=re.compile("(?:[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U00002B00-\U00002BFF"
- "\U0001F1E6-\U0001F1FF←-⇿⌀-⏿①-⓿■-◿"
- "⁉‼™ℹ]️?‍?)+")
+# Só pictogramas. Setas (→ ↔ ←), sinais de conferido (✓ ✗) e formas geométricas
+# ficam: são conteúdo, não decoração. Foi por não separar isso que a primeira
+# varredura apagou 192 setas de explicações como "clean → cleaning".
+_PICTO = ("\U0001F000-\U0001FAFF"                        # pictogramas, emoticons, transporte
+          "\U0001F1E6-\U0001F1FF"                        # bandeiras
+          "\u2600-\u26FF"                                # símbolos diversos: ☀ ☁ ⚡ ⛵
+          "\u2700-\u2712\u2715\u2716\u2719-\u27BF"     # dingbats, menos ✓ ✔ ✗ ✘
+          "\u2300-\u23FF"                                # ⌨ ⏳ ⏰
+          "\u2B00-\u2BFF"                                # ⬆ ⭐
+          "\u2049\u203C\u2122\u2139")                   # ⁉ ‼ ™ ℹ
+EMOJI=re.compile("(?:[0-9#*]\uFE0F?\u20E3|[" + _PICTO + "]\uFE0F?\u200D?)+")
 
 ICO={
  "ciencias":{"all":"dado","review":"remendo","earth":"terra","sun":"sol","orientation":"bussola",
@@ -33,9 +41,9 @@ def aplicar(arq, materia):
     from mapa import nome as icone_de
     c1=[0]; c2=[0]
     def _i(m): c1[0]+=1; return 'ic:"%s",' % icone_de(m.group(1))
-    def _ic(m): c2[0]+=1; return ', ic:"%s"' % icone_de(m.group(1))
+    def _ic(m): c2[0]+=1; return '%s ic:"%s"' % (m.group(1), icone_de(m.group(2)))
     s=re.sub(r'\bi:"([^"]*)",', _i, s)
-    s=re.sub(r',\s*icon:"([^"]*)"', _ic, s)
+    s=re.sub(r'([,{])\s*icon:"([^"]*)"', _ic, s)
     n["ilustrações das questões"]=c1[0]+c2[0]
 
     # 2. ícone dos cards vira SVG, escolhido pela categoria/trilha do próprio botão

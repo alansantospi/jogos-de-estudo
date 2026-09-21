@@ -1,3 +1,4 @@
 # web/ contém fragmentos usados pela hospedagem de artifacts.
 # Não são páginas completas e não funcionam sozinhas no GitHub Pages.
 web/
+build/__pycache__/
