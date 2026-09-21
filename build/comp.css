@@ -170,6 +170,15 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .review-count{grid-column:1/-1;grid-row:3;font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
 .trail-done{display:none;margin-left:var(--s-2);font-size:var(--t-xs);font-weight:700;color:var(--certo-forte)}
 .trail-card.done .trail-done{display:inline}
+/* A trilha recomendada se anuncia com uma etiqueta, não com uma frase
+   ("Recomendada para aprender do início") embaixo da que já descreve
+   o conteúdo. */
+.trail-card.recommended{position:relative}
+.trail-card.recommended::after{
+  content:"Comece aqui";position:absolute;top:calc(-1 * var(--s-2));right:var(--s-4);
+  background:var(--materia-solida);color:var(--sobre-materia);
+  padding:2px var(--s-3);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;line-height:1.5}
 #reviewCard.empty{opacity:.55}
 .secao-tit,#categories h2{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin:var(--s-6) 0 0}
 .mode-toggle{display:inline-flex;gap:var(--s-2);background:none;border:0;padding:0;margin-top:var(--s-3)}
@@ -238,21 +247,23 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   color:var(--texto);font-family:var(--corpo);font-size:var(--t-md);font-weight:700;line-height:1.35;
   overflow:visible;position:relative}
 .answer::after{display:none}
+/* A letra é o marcador da alternativa: mesma função das formas do Kahoot,
+   sem a assinatura dele, e é como a professora se refere à resposta. */
 .answer .letra{
   flex:none;width:2.5rem;height:2.5rem;display:grid;place-items:center;
-  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1)}
+  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
 .answer:nth-child(2) .letra{background:var(--alt-2)}
 .answer:nth-child(3) .letra{background:var(--alt-3)}
 .answer:nth-child(4) .letra{background:var(--alt-4)}
-.answer .letra svg{width:1.25rem;height:1.25rem;stroke:none;fill:currentColor}
 .answer:hover:not(.correct):not(.wrong){border-color:var(--materia);color:var(--texto);
   transform:translateY(-2px);box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
 .answer:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
 .answer.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte);
   animation:pulo 420ms var(--mola)}
-.answer.correct .letra{background:var(--certo)}
+.answer.correct .letra{background:var(--certo-solida);color:var(--sobre-solida)}
 .answer.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
-.answer.wrong .letra{background:var(--errado)}
+.answer.wrong .letra{background:var(--errado-solida);color:var(--sobre-solida)}
 @keyframes pulo{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
 
 .feedback{display:none;margin-top:var(--s-4);padding:var(--s-4);border:2px solid var(--risco);

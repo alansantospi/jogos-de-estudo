@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Marcador de FORMA nas alternativas (círculo, triângulo, quadrado, losango),
-no espírito do Kahoot. Substitui o que o emoji fazia: identificar de relance."""
+"""Marcador de LETRA nas alternativas (A, B, C, D), cada uma em sua cor.
 
-FORMAS = ('const FORMAS=['
- '\'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>\','
- '\'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2z"/></svg>\','
- '\'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/></svg>\','
- '\'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/></svg>\''
- '];\nconst NOMES_FORMA=["círculo","triângulo","quadrado","losango"];\n')
+Antes eram círculo, triângulo, quadrado e losango — que não é inspiração no
+Kahoot, é a assinatura dele. A letra faz o mesmo trabalho de identificar a
+resposta de relance, é a convenção que a criança já usa na escola ("a letra
+B") e não é de ninguém."""
+
+FORMAS = ('const FORMAS=["A","B","C","D"];\n'
+          'const NOMES_FORMA=FORMAS;\n')
 import io
 CEU_DE="""  q.choices.forEach((c,i)=>{
     const b=document.createElement('button');
@@ -16,12 +16,12 @@ CEU_PARA="""  q.choices.forEach((c,i)=>{
     const b=document.createElement('button');
     b.className='answer';b.type='button';
     const marca=document.createElement('span');
-    marca.className='letra';marca.innerHTML=FORMAS[i%4];
+    marca.className='letra';marca.textContent=FORMAS[i%4];
     const txt=document.createElement('span');txt.textContent=c;
     b.append(marca,txt);"""
 TF_DE="""    b.className='answer tf-btn';b.type='button';b.textContent=label;"""
 TF_PARA="""    b.className='answer tf-btn';b.type='button';
-    const mk=document.createElement('span');mk.className='letra';mk.innerHTML=FORMAS[i%4];
+    const mk=document.createElement('span');mk.className='letra';mk.textContent=FORMAS[i%4];
     const tx=document.createElement('span');tx.textContent=label;b.append(mk,tx);"""
 EN_DE="""    const b=document.createElement("button");
     b.className="answer";
@@ -29,7 +29,7 @@ EN_DE="""    const b=document.createElement("button");
 EN_PARA="""    const b=document.createElement("button");
     b.className="answer";b.type="button";
     const marca=document.createElement("span");
-    marca.className="letra";marca.innerHTML=FORMAS[i%4];
+    marca.className="letra";marca.textContent=FORMAS[i%4];
     const txt=document.createElement("span");txt.textContent=c;
     b.append(marca,txt);"""
 for arq in ("historia.html","artes.html","exploradores-do-ceu.html"):
@@ -45,4 +45,4 @@ assert s.count(EN_DE)==1
 s=s.replace(EN_DE,EN_PARA)
 s=s.replace("<script>\nconst SVG_SOM=","<script>\n"+FORMAS+"const SVG_SOM=",1)
 io.open("time-travel-english.html","w",encoding="utf-8").write(s)
-print("  ok  formas nas alternativas")
+print("  ok  letras nas alternativas")

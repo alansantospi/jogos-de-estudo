@@ -30,9 +30,16 @@
   /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
    cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
    nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
---aviso:       oklch(0.50 0.16 148);
+/* Superfícies sólidas de certo e errado, iguais nos dois temas, para quando
+   a cor vira fundo de um texto — a letra da alternativa marcada, o aviso.
+   As variantes --certo/--errado são claras demais para carregar texto
+   branco: 3,12:1 e 4,39:1. Estas dão 5,51:1 e 7,54:1. */
+--certo-solida:  oklch(0.50 0.16 148);
+--errado-solida: oklch(0.47 0.19 22);
+--sobre-solida:  oklch(1 0 0);
+--aviso:       var(--certo-solida);
 --aviso-fundo: oklch(0.38 0.13 148);
---sobre-aviso: oklch(1 0 0);
+--sobre-aviso: var(--sobre-solida);
 --certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
   --certo-claro:oklch(0.95 0.055 148);

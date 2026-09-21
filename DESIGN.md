@@ -8,7 +8,7 @@ retorno físico ao toque.
 
 | Referência | O que veio dela |
 |---|---|
-| **Kahoot** | cada alternativa tem uma **forma** própria (círculo, triângulo, quadrado, losango) em cor própria. A forma identifica a resposta — é o papel que o emoji fazia, mas legível e acessível. |
+| **Kahoot** | cada alternativa tem **marcador e cor próprios**, para ser identificada de relance. O marcador é a **letra** (A, B, C, D), não a forma: círculo/triângulo/quadrado/losango é a assinatura do Kahoot, não uma ideia emprestada dele. A letra ainda é a convenção que a criança usa na escola. |
 | **Duolingo** | botão com **lábio** de 4px que afunda ao apertar; barra de progresso grossa e arredondada; espaço generoso. |
 | **Quizizz** | cor saturada carregando a tela, faixa colorida no topo, celebração curta no acerto. |
 | **Quizlet** | tipografia grande e confiante, o card como objeto central. |
@@ -44,6 +44,22 @@ As quatro cores de alternativa — índigo, âmbar, turquesa e violeta — foram
 escolhidas **longe de vermelho e verde**, que já significam errado e certo.
 Uma primeira versão usava coral e dava para confundir uma alternativa ainda
 não respondida com uma marcada errada.
+
+## Texto
+
+Menos palavras do que parece necessário. Três regras:
+
+- **Nada de "Trilha da X"** — o rótulo já diz que é uma trilha; o nome diz o
+  que ela ensina ("Verbos e o -ING", "Imprensa no Brasil").
+- **Nenhum elemento explica o vizinho.** O seletor já diz "Treino / sem
+  vidas"; não cabe uma frase embaixo repetindo que no Treino o erro não
+  elimina. A missão já aparece no HUD e no cabeçalho do progresso; não cabe
+  uma terceira linha descrevendo-a em cada questão.
+- **A tela de abertura diz o assunto, não o manual.** Uma linha, tipo
+  "Movimento da Terra, fases da Lua, calendários e estrelas."
+
+O que fica é o que ensina: as partes expositivas da lição e a explicação que
+aparece no retorno de cada resposta.
 
 ## Tipografia
 

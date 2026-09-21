@@ -36,9 +36,16 @@
   /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
    cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
    nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
---aviso:       oklch(0.50 0.16 148);
+/* Superfícies sólidas de certo e errado, iguais nos dois temas, para quando
+   a cor vira fundo de um texto — a letra da alternativa marcada, o aviso.
+   As variantes --certo/--errado são claras demais para carregar texto
+   branco: 3,12:1 e 4,39:1. Estas dão 5,51:1 e 7,54:1. */
+--certo-solida:  oklch(0.50 0.16 148);
+--errado-solida: oklch(0.47 0.19 22);
+--sobre-solida:  oklch(1 0 0);
+--aviso:       var(--certo-solida);
 --aviso-fundo: oklch(0.38 0.13 148);
---sobre-aviso: oklch(1 0 0);
+--sobre-aviso: var(--sobre-solida);
 --certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
   --certo-claro:oklch(0.95 0.055 148);
@@ -253,6 +260,15 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .review-count{grid-column:1/-1;grid-row:3;font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
 .trail-done{display:none;margin-left:var(--s-2);font-size:var(--t-xs);font-weight:700;color:var(--certo-forte)}
 .trail-card.done .trail-done{display:inline}
+/* A trilha recomendada se anuncia com uma etiqueta, não com uma frase
+   ("Recomendada para aprender do início") embaixo da que já descreve
+   o conteúdo. */
+.trail-card.recommended{position:relative}
+.trail-card.recommended::after{
+  content:"Comece aqui";position:absolute;top:calc(-1 * var(--s-2));right:var(--s-4);
+  background:var(--materia-solida);color:var(--sobre-materia);
+  padding:2px var(--s-3);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;line-height:1.5}
 #reviewCard.empty{opacity:.55}
 .secao-tit,#categories h2{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin:var(--s-6) 0 0}
 .mode-toggle{display:inline-flex;gap:var(--s-2);background:none;border:0;padding:0;margin-top:var(--s-3)}
@@ -321,21 +337,23 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   color:var(--texto);font-family:var(--corpo);font-size:var(--t-md);font-weight:700;line-height:1.35;
   overflow:visible;position:relative}
 .answer::after{display:none}
+/* A letra é o marcador da alternativa: mesma função das formas do Kahoot,
+   sem a assinatura dele, e é como a professora se refere à resposta. */
 .answer .letra{
   flex:none;width:2.5rem;height:2.5rem;display:grid;place-items:center;
-  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1)}
+  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
 .answer:nth-child(2) .letra{background:var(--alt-2)}
 .answer:nth-child(3) .letra{background:var(--alt-3)}
 .answer:nth-child(4) .letra{background:var(--alt-4)}
-.answer .letra svg{width:1.25rem;height:1.25rem;stroke:none;fill:currentColor}
 .answer:hover:not(.correct):not(.wrong){border-color:var(--materia);color:var(--texto);
   transform:translateY(-2px);box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
 .answer:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
 .answer.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte);
   animation:pulo 420ms var(--mola)}
-.answer.correct .letra{background:var(--certo)}
+.answer.correct .letra{background:var(--certo-solida);color:var(--sobre-solida)}
 .answer.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
-.answer.wrong .letra{background:var(--errado)}
+.answer.wrong .letra{background:var(--errado-solida);color:var(--sobre-solida)}
 @keyframes pulo{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
 
 .feedback{display:none;margin-top:var(--s-4);padding:var(--s-4);border:2px solid var(--risco);
@@ -526,11 +544,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
         <div class="hero">
           <div class="emoji"></div>
           <h2>Time Travel English</h2>
-          <p>
-            Você pode começar pela <b>lição interativa</b> ou ir direto para os <b>desafios</b>. O áudio é opcional e só é carregado quando você toca em “Ouvir”. Ele nunca interfere na abertura do jogo. <b>Cada nova partida monta desafios diferentes aleatoriamente.</b>
-            Depois, enfrenta várias missões com exercícios diferentes para provar que domina
-            Present Continuous, ações e informações de tickets.
-          </p>
+          <p>Present continuous, contrações, horas e rotina.</p>
           <div id="startStats" class="stats-line"></div>
           <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px">
             <button id="startLessonBtn" type="button" class="primary" onclick="openLesson('lesson1')">Estudar a lição</button>
@@ -778,37 +792,34 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
       <span class="lesson-tag">Escolha o conteúdo</span>
       <div class="mission-banner">
         <div class="mission-title">Central de Missões Temporais</div>
-        <div class="mission-desc">Escolha <b>o conteúdo que deseja revisar</b>. Dentro de cada missão, os tipos de desafio variam automaticamente.</div>
+        
         <div class="mode-toggle">
           <button type="button" class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">Treino <small>sem vidas</small></button>
           <button type="button" class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">Desafio <small>5 vidas</small></button>
         </div>
-        <div class="mode-hint">No <b>Treino</b> o erro nunca elimina você — só mostra a explicação da regra e segue em frente.</div>
+        
       </div>
 
-      <h2>Escolha uma trilha</h2>
-      <p>Você pode seguir uma sequência de aprendizagem ou escolher qualquer conteúdo individualmente.</p>
+      
 
-      <div class="trail-choice">
+      <h2>Trilhas</h2>
+<div class="trail-choice">
         <button type="button" class="trail-card recommended" data-trail="essential" onclick="startTrail('essential')">
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-rota"/></svg>
-          <strong>Trilha Essencial<span class="trail-done">✓ concluída</span></strong>
+          <strong>Do Começo ao Fim<span class="trail-done">✓ concluída</span></strong>
           <small>Vocabulário → regras do -ING → AM/IS/ARE → frases → listening → negativas e perguntas.</small>
-          <div class="mission-progress">Recomendada para aprender do início</div>
         </button>
 
         <button type="button" class="trail-card" data-trail="verbs" onclick="startTrail('verbs')">
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-livro"/></svg>
-          <strong>Trilha dos Verbos<span class="trail-done">✓ concluída</span></strong>
+          <strong>Verbos e o -ING<span class="trail-done">✓ concluída</span></strong>
           <small>Significados → +ING → retirar E → dobrar consoante → grupos de ações.</small>
-          <div class="mission-progress">Foco em significado e conjugação</div>
         </button>
 
         <button type="button" class="trail-card" data-trail="grammar" onclick="startTrail('grammar')">
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-engrenagem"/></svg>
-          <strong>Trilha da Gramática<span class="trail-done">✓ concluída</span></strong>
+          <strong>Montar as Frases<span class="trail-done">✓ concluída</span></strong>
           <small>AM/IS/ARE → afirmativas → negativas e perguntas → revisão mista.</small>
-          <div class="mission-progress">Foco no Present Continuous</div>
         </button>
       </div>
 
@@ -949,7 +960,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
       <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
       <div id="trailMap" class="trail-map"></div>
     </div>
-    <div id="stageLabel" class="stage-label"></div><div id="fonte" class="fonte" style="display:none"></div><div id="storyline" class="storyline"></div>
+    <div id="stageLabel" class="stage-label"></div><div id="fonte" class="fonte" style="display:none"></div>
           <div id="question" class="question"></div>
           <div id="hint" class="hint"></div>
           <div id="illustration" class="illustration"></div>
@@ -985,8 +996,8 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 </div>
 
 <script>
-const FORMAS=['<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2z"/></svg>','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/></svg>','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/></svg>'];
-const NOMES_FORMA=["círculo","triângulo","quadrado","losango"];
+const FORMAS=["A","B","C","D"];
+const NOMES_FORMA=FORMAS;
 const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
 
 const baseQuestionPool = [
@@ -2015,7 +2026,7 @@ const categoryNames={
 
 const trails={
   essential:{
-    name:"Trilha Essencial",
+    name:"Do Começo ao Fim",
     steps:[
       {cat:"vocabulary",label:"Vocabulário", ic:"cabeca"},
       {cat:"ing_add",label:"+ING", ic:"mais"},
@@ -2029,7 +2040,7 @@ const trails={
     ]
   },
   verbs:{
-    name:"Trilha dos Verbos",
+    name:"Verbos e o -ING",
     steps:[
       {cat:"vocabulary",label:"Significados", ic:"cabeca"},
       {cat:"ing_add",label:"+ING", ic:"mais"},
@@ -2041,7 +2052,7 @@ const trails={
     ]
   },
   grammar:{
-    name:"Trilha da Gramática",
+    name:"Montar as Frases",
     steps:[
       {cat:"be",label:"AM/IS/ARE", ic:"engrenagem"},
       {cat:"affirmative",label:"Afirmativas", ic:"check"},
@@ -2592,7 +2603,7 @@ function renderChoices(q){
     const b=document.createElement("button");
     b.className="answer";b.type="button";
     const marca=document.createElement("span");
-    marca.className="letra";marca.innerHTML=FORMAS[i%4];
+    marca.className="letra";marca.textContent=FORMAS[i%4];
     const txt=document.createElement("span");txt.textContent=c;
     b.append(marca,txt);
     bindTap(b,()=>checkChoice(i,b));
@@ -2936,7 +2947,7 @@ function endGame(){
   document.getElementById("finalHits").textContent=hits+"/"+total;
   document.getElementById("accuracy").textContent=acc+"%";
   document.getElementById("bestCombo").textContent=bestCombo;
-  const jr=document.getElementById("journeyResult"); if(jr) jr.textContent=activeTrail ? "Trilha completa" : "Treino livre";
+  const jr=document.getElementById("journeyResult"); if(jr) jr.textContent=activeTrail ? "Trilha concluída" : "Treino livre";
   let rank,title,text,trophy;
   if(lives<=0){
     rank="Cadete Temporal";
