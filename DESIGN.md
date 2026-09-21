@@ -94,6 +94,16 @@ A conexão é direta entre os aparelhos, por WebRTC via PeerJS — sem servidor
 nosso, sem conta. **É o único modo que exige internet**, e a tela diz isso: o
 resto do jogo roda do arquivo baixado.
 
+**Não precisa ser a mesma rede, mas ajuda.** O caminho é: broker
+(`0.peerjs.com`) para os aparelhos se acharem, STUN para descobrir o endereço
+público e furar o NAT, e daí conexão direta. O STUN funciona — verificado com
+o do Google e o da Cloudflare. O que não existe é o relé (TURN) para quando o
+NAT é restritivo demais, caso típico de dados móveis: os servidores TURN que o
+PeerJS traz por padrão **não resolvem em DNS**, e o relé público mais conhecido
+(OpenRelay) passou a recusar credencial anônima — responde 400. Por isso o
+jogador que não conecta em 12 s recebe um aviso dizendo para pôr todo mundo no
+mesmo Wi-Fi. Resolver de verdade exigiria um TURN com conta.
+
 ## Texto
 
 Menos palavras do que parece necessário. Três regras:

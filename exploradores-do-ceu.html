@@ -710,7 +710,9 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
     <div class="sala-codigo"><span class="rot">Código da sala</span>
       <strong id="salaCodigoTela">----</strong></div>
     <p id="salaDica" class="sala-dica">Abra o mesmo endereço no celular de cada
-    jogador, toque em <b>Entrar numa sala</b> e digite o código.</p>
+    jogador, toque em <b>Entrar numa sala</b> e digite o código.<br>
+    <b>Melhor com todos no mesmo Wi-Fi.</b> Em redes diferentes costuma
+    funcionar, mas em dados móveis pode não conectar.</p>
     <div id="salaJogadores" class="sala-jogadores"></div>
     <label class="sala-campo"><span>Missão</span>
       <select id="salaMissao"></select></label>
@@ -1947,11 +1949,22 @@ async function entrarSala(){
   _peer = new Peer();
   _peer.on("open", () => {
     _conAnfitriao = _peer.connect(SALA_PREFIXO + codigo);
-    _conAnfitriao.on("open", () => _conAnfitriao.send({t: "entrar", nome}));
+    let abriu = false;
+    _conAnfitriao.on("open", () => { abriu = true; _conAnfitriao.send({t: "entrar", nome}); });
     _conAnfitriao.on("data", d => _doTelao(d));
     _conAnfitriao.on("close", () => _avisoSala("O telão encerrou a sala."));
+    // O telão respondeu mas o canal não abriu: é a rede no meio. Acontece
+    // quando os dois lados estão atrás de NAT restritivo — dados móveis, por
+    // exemplo. Sem um servidor de relé não há o que fazer daqui, então o
+    // aviso diz o que resolve na prática.
+    setTimeout(() => {
+      if(!abriu) _avisoSala("Não consegui conectar ao telão. "
+        + "Ponha os dois aparelhos no mesmo Wi-Fi e tente de novo.");
+    }, 12000);
   });
-  _peer.on("error", () => _avisoSala("Não achei essa sala. Confira o código."));
+  _peer.on("error", e => _avisoSala(
+    e && e.type === "peer-unavailable" ? "Não achei essa sala. Confira o código."
+                                       : "Falha de conexão. Tente de novo."));
 }
 
 function _doTelao(d){
