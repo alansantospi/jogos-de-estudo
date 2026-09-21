@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Linhas do Tempo</title>
+<style>
+:root{--bg:#07101f;--panel:#0d1a33;--panel2:#13264a;--text:#f7fbff;--muted:#b7c6df;--accent:#ffb84d;--accent2:#e8734a;--gold:#ffd166;--good:#4ade80;--bad:#ff6b81}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 20% 10%,rgba(255,184,77,.14),transparent 28%),radial-gradient(circle at 80% 20%,rgba(232,115,74,.14),transparent 30%),linear-gradient(180deg,#030815,#07101f 45%,#08152a);min-height:100vh}.stars{position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#fff 1px,transparent 1px);background-size:48px 48px,74px 74px;background-position:0 0,23px 31px}.wrap{max-width:1080px;margin:auto;padding:18px}.app{background:rgba(7,16,31,.9);border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.38)}header{padding:18px 20px;background:linear-gradient(90deg,rgba(255,184,77,.12),rgba(232,115,74,.14));border-bottom:1px solid rgba(255,255,255,.08)}.top{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}h1{margin:0;font-size:clamp(24px,4vw,38px)}.subtitle{color:var(--muted);margin-top:4px}.hud{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#0b1730;border:1px solid rgba(255,255,255,.08);padding:9px 12px;border-radius:999px;font-weight:850}main{padding:22px}.screen{display:none!important}.screen.active{display:block!important}.hero{text-align:center;padding:34px 10px}.hero .icon{font-size:84px;filter:drop-shadow(0 12px 28px rgba(255,184,77,.18))}.hero h2{font-size:clamp(30px,5vw,52px);margin:10px 0}.hero p{max-width:760px;margin:0 auto 22px;color:var(--muted);font-size:18px;line-height:1.6}button,.btn{font:inherit;border:0;cursor:pointer;border-radius:14px;padding:13px 18px;font-weight:850;min-height:48px;touch-action:manipulation}.primary{background:linear-gradient(90deg,var(--accent),#8cf0ff);color:#00131b}.gold{background:linear-gradient(90deg,var(--gold),#ffb86b);color:#251700}.secondary{background:#1b315d;color:white;border:1px solid rgba(255,255,255,.08)}.lesson-card,.question-card,.category-card,.trail-card{background:linear-gradient(180deg,rgba(19,38,74,.95),rgba(12,27,54,.95));border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:20px}.lesson-tag{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,184,77,.1);color:var(--accent);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}.lesson-card h2,.lesson-card h3{margin-top:0}.content-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.mini{background:#0b1730;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px}.mini .pic{font-size:38px}.mini strong{display:block;font-size:17px;margin:6px 0}.example{background:rgba(255,184,77,.07);border-left:4px solid var(--accent);border-radius:9px;padding:12px 14px;margin:10px 0;line-height:1.5}.warning{background:rgba(255,209,102,.07);border-left-color:var(--gold)}.lesson-nav{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}.category-grid,.trail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.category-card,.trail-card{text-align:center;transition:.2s}.category-card:hover,.trail-card:hover{transform:translateY(-2px);border-color:rgba(255,184,77,.35)}.category-card .ico,.trail-card .ico{font-size:38px}.category-card strong,.trail-card strong{display:block;color:var(--accent);font-size:17px;margin:7px 0}.category-card small,.trail-card small{color:var(--muted);line-height:1.4}.all{grid-column:1/-1;border-color:rgba(255,209,102,.4);background:rgba(255,209,102,.06)}.all strong{color:var(--gold);font-size:20px}.progress-panel{background:#09162b;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;margin-bottom:14px}.progress-head{display:flex;justify-content:space-between;font-size:14px;font-weight:850;margin-bottom:8px}.track{height:10px;background:#030815;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:.3s}.trail-map{display:flex;align-items:center;overflow-x:auto;padding:12px 2px 4px}.node{flex:0 0 auto;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#0b1730;border:2px solid rgba(255,255,255,.15);font-weight:900}.node.current{border-color:var(--gold);color:var(--gold);transform:scale(1.08)}.node.done{border-color:var(--good);color:#d8ffe5;background:rgba(74,222,128,.12)}.line{flex:0 0 24px;height:3px;background:rgba(255,255,255,.12)}.line.done{background:rgba(74,222,128,.55)}.stage{font-size:12px;color:var(--accent);font-weight:900;letter-spacing:.1em;text-transform:uppercase}.question{font-size:clamp(22px,3vw,31px);font-weight:950;margin:10px 0 16px}.illustration{font-size:70px;text-align:center;min-height:90px;display:flex;justify-content:center;align-items:center}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{background:#0b1730;color:white;border:1px solid rgba(255,255,255,.08);text-align:left}.answer.correct{background:rgba(74,222,128,.15);border-color:var(--good)}.answer.wrong{background:rgba(255,107,129,.13);border-color:var(--bad)}.feedback{display:none;margin-top:16px;border-radius:14px;padding:13px 14px;font-weight:800}.feedback.show{display:block}.feedback.good{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}.feedback.bad{background:rgba(255,107,129,.1);border:1px solid rgba(255,107,129,.35)}.controls{display:flex;justify-content:flex-end;margin-top:16px}.result{text-align:center;padding:28px}.result .trophy{font-size:88px}.rank{color:var(--gold);font-size:28px;font-weight:950;margin:10px 0}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.stat{background:#0b1730;border-radius:15px;padding:14px}.stat strong{display:block;font-size:25px}.small{color:var(--muted);font-size:13px}@media(max-width:760px){.wrap{padding:8px}.app{border-radius:16px}main{padding:14px}header{padding:14px}.content-grid,.category-grid,.trail-grid,.answers,.summary{grid-template-columns:1fr}.all{grid-column:1}button,.btn{width:100%}.lesson-nav>div:last-child{display:grid;grid-template-columns:1fr;gap:8px;width:100%}.hud{width:100%;justify-content:space-between}.pill{flex:1;text-align:center;padding:8px 6px}}
+.chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:16px 0 4px}
+.chip{background:#0b1730;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;color:var(--muted)}
+.chip b{color:var(--accent);font-weight:900}
+.mode-toggle{display:inline-flex;gap:6px;padding:6px;margin:10px 0 0;background:#030815;border:1px solid rgba(255,255,255,.1);border-radius:999px}
+.mode-opt{background:transparent;color:var(--muted);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:800;min-height:0;display:flex;gap:6px;align-items:baseline}
+.mode-opt small{font-size:11px;font-weight:600;opacity:.7}
+.mode-opt.active{background:linear-gradient(90deg,var(--accent),#8cf0ff);color:#00131b}
+.mode-hint{color:var(--muted);font-size:13px;margin-top:8px}
+#reviewCard{grid-column:1/-1;border-color:rgba(74,222,128,.42);background:rgba(74,222,128,.07)}
+#reviewCard strong{color:var(--good);font-size:20px}
+#reviewCard.empty{opacity:.55}
+.review-count{color:var(--muted);font-weight:700;font-size:13px}
+.trail-done{display:none;margin-left:8px;padding:3px 9px;border-radius:999px;background:rgba(74,222,128,.18);color:var(--good);font-size:11px;font-weight:900}
+.trail-card.done{border-color:rgba(74,222,128,.45)}
+.missed{margin:18px auto 0;max-width:620px;text-align:left;background:#0b1730;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px}
+.missed-title{font-weight:900;color:var(--gold);margin-bottom:10px;text-align:center}
+.missed-list{margin:0 0 14px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.5}
+.missed-list li{margin-bottom:6px}
+.link-btn{background:none;color:var(--muted);font-size:12px;font-weight:700;text-decoration:underline;padding:6px 10px;min-height:0}
+.link-btn:hover{color:var(--bad)}
+.quiz-top{display:flex;justify-content:flex-end;margin-bottom:10px}
+.exit-btn{background:#0b1730;color:var(--muted);border:1px solid rgba(255,255,255,.1);font-size:13px;padding:8px 14px;min-height:0;width:auto}
+@media(max-width:760px){.exit-btn{width:auto}}
+.special{margin-top:14px}
+.tf-btn{text-align:center;font-size:17px}
+.rosa,.rosa-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:330px;margin:14px auto 0}
+.rosa-btn,.rosa-cell{background:#0b1730;border:1px solid rgba(255,255,255,.1);color:var(--text);border-radius:14px;padding:0;height:64px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;min-height:0;width:auto}
+.rosa-btn.card,.rosa-cell.card{color:var(--accent);border-color:rgba(255,184,77,.3);font-size:19px}
+.rosa-btn.centro,.rosa-cell.centro{background:transparent;border-color:transparent;font-size:30px;cursor:default}
+.rosa-btn:hover:not(:disabled){border-color:var(--accent);transform:translateY(-2px)}
+.rosa-btn.correct{background:rgba(74,222,128,.2);border-color:var(--good);color:#d8ffe5}
+.rosa-btn.wrong{background:rgba(255,107,129,.18);border-color:var(--bad)}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{background:#0b1730;border:1px solid rgba(255,255,255,.1);color:var(--text);text-align:left;font-size:14px;font-weight:700;padding:12px;min-height:0}
+.match-item:hover{border-color:var(--accent)}
+.match-item.sel{border-color:var(--gold);background:rgba(255,209,102,.12)}
+.match-item.done{border-color:var(--good);background:rgba(74,222,128,.14);opacity:.75;cursor:default}
+.match-item.wrong{border-color:var(--bad);background:rgba(255,107,129,.15)}
+.order-slot{min-height:58px;background:#09162b;border:1px dashed rgba(255,255,255,.18);border-radius:14px;padding:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.order-chip{background:rgba(255,184,77,.13);border:1px solid rgba(255,184,77,.32);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:800}
+.order-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.order-btn{background:#0b1730;border:1px solid rgba(255,255,255,.12);color:var(--text);font-size:14px;font-weight:700;padding:11px 14px;min-height:0;width:auto}
+.order-btn:hover:not(:disabled){border-color:var(--accent)}
+.order-btn:disabled{opacity:.3;cursor:default}
+.text-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.text-row input{flex:1;min-width:200px;background:#0b1730;border:1px solid rgba(255,255,255,.14);border-radius:14px;color:var(--text);font:inherit;font-weight:700;padding:13px 15px}
+.text-row input:focus{outline:none;border-color:var(--accent)}
+@media(max-width:760px){.match{grid-template-columns:1fr}.order-btn,.rosa-btn{width:auto}.text-row button{width:100%}}
+  /* =========================================================
+     TOQUE EM CELULAR E TABLET (Android e iOS)
+     ========================================================= */
+
+  /* 1. Área segura. Com viewport-fit=cover o conteúdo se estende para baixo
+        da barra do navegador e do indicador de home; sem estas margens os
+        botões do rodapé ficam encobertos e não recebem o toque no iPhone. */
+  body{
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:calc(env(safe-area-inset-bottom) + 14px);
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+
+  /* 2. :hover só onde existe mouse. Em tela de toque o estado de hover fica
+        "grudado" no último elemento tocado e pode consumir o primeiro toque. */
+  @media (hover:none),(pointer:coarse){
+    button:hover,.btn:hover,.answer:hover,.category-card:hover,.trail-card:hover,.rosa-btn:hover,.match-item:hover,.order-btn:hover,.mode-opt:hover,.exit-btn:hover,.link-btn:hover{transform:none!important}
+  }
+
+  /* 3. Feedback de toque. -webkit-tap-highlight-color está transparente, então
+        sem um :active o toque parece não ter acontecido. */
+  button:active,.btn:active,.answer:active,.category-card:active,.trail-card:active,.rosa-btn:active,.match-item:active,.order-btn:active,.mode-opt:active,.exit-btn:active,.link-btn:active{
+    transform:scale(.97);
+    filter:brightness(1.18);
+  }
+
+  /* 4. Alvo de toque de no mínimo 44px, só nos controles que hoje são
+        menores. `button,.btn` já tem 48px e os cards são bem maiores. */
+  .match-item,.order-btn,.mode-opt,.exit-btn,.link-btn{min-height:44px}
+
+  /* 5. Tudo que recebe toque precisa de touch-action e, em <div>/<span>,
+        de cursor:pointer — sem ele o iOS não dispara click em elemento
+        que não é nativamente clicável. */
+  button,.btn,.answer,.category-card,.trail-card,.rosa-btn,.match-item,.order-btn,.mode-opt,.exit-btn,.link-btn{touch-action:manipulation;cursor:pointer}
+
+  /* 6. Abaixo de 16px o iOS dá zoom automático ao focar um campo. */
+  input,select,textarea{font-size:16px}
+
+  .rosa-btn{min-height:56px}
+  .text-row input{font-size:16px}
+
+/* ---------- Som, conquistas e estado das missões ---------- */
+.som-btn{cursor:pointer;font-size:17px;line-height:1;padding:9px 14px;min-height:0;background:#0b1730;color:inherit}
+.som-btn:active{transform:scale(.9)}
+
+.conquista{
+  position:fixed;left:50%;top:14px;transform:translateX(-50%) translateY(-24px);
+  background:linear-gradient(90deg,var(--gold),#ffb86b);color:#241800;
+  padding:12px 22px;border-radius:999px;font-weight:900;font-size:15px;
+  box-shadow:0 14px 34px rgba(0,0,0,.4);opacity:0;pointer-events:none;z-index:9999;
+  transition:opacity .25s ease,transform .25s ease;max-width:92vw;text-align:center
+}
+.conquista.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.floater{
+  position:absolute;left:50%;top:0;transform:translateX(-50%);
+  font-weight:950;font-size:26px;pointer-events:none;
+  animation:sobe 1.05s ease-out forwards;z-index:50
+}
+.floater.bom{color:var(--good)}
+.floater.ruim{color:var(--bad)}
+@keyframes sobe{
+  0%{opacity:0;transform:translate(-50%,6px) scale(.85)}
+  22%{opacity:1;transform:translate(-50%,-8px) scale(1.1)}
+  100%{opacity:0;transform:translate(-50%,-52px) scale(1)}
+}
+.question{position:relative}
+
+@keyframes comboPulse{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+.combo-pulse{animation:comboPulse .45s ease;border-color:var(--gold)!important;color:var(--gold)}
+
+/* Estado da missão no card */
+.category-card{position:relative}
+.selo{
+  display:none;position:absolute;top:10px;right:10px;
+  padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em
+}
+.category-card.andamento{border-color:rgba(255,209,102,.5)}
+.category-card.andamento .selo{background:rgba(255,209,102,.18);color:var(--gold)}
+.category-card.concluida{border-color:rgba(74,222,128,.5)}
+.category-card.concluida .selo{background:rgba(74,222,128,.18);color:var(--good)}
+.category-card.dominada{border-color:rgba(255,184,77,.62);box-shadow:0 0 0 1px rgba(255,184,77,.22) inset}
+.category-card.dominada .selo{background:rgba(255,184,77,.2);color:var(--accent)}
+.mini-bar{width:100%;height:6px;background:#030815;border-radius:999px;overflow:hidden;margin-top:10px}
+.mini-bar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .5s ease}
+.mini-txt{color:var(--muted);font-size:11.5px;font-weight:700;margin-top:6px}
+
+@media(prefers-reduced-motion:reduce){
+  .floater,.combo-pulse,.conquista{animation:none!important;transition:none!important}
+}
+.fonte{
+  display:inline-block;margin:6px 0 2px;padding:5px 12px;border-radius:999px;
+  background:rgba(255,209,102,.13);border:1px solid rgba(255,209,102,.3);
+  color:var(--gold);font-size:12px;font-weight:800
+}
+</style>
+</head>
+<body><div class="stars"></div><div id="conquista" class="conquista"></div><div class="wrap"><div class="app"><header><div class="top"><div><h1>🖨️ Linhas do Tempo</h1><div class="subtitle">História da comunicação e Arte</div></div><div class="hud"><div class="pill">⭐ <span id="score">0</span></div><div class="pill">❤️ <span id="lives">5</span></div><div class="pill">🔥 <span id="combo">0</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som">🔊</button></div></div></header><main>
+<section id="start" class="screen active"><div class="hero"><div class="icon">🖨️📰📻</div><h2>Da carta ao celular</h2><p>Descubra como as pessoas se comunicaram ao longo do tempo — dos livros copiados à mão até a internet — e mergulhe na música e na pintura mural.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">📘 Estudar a lição</button><button class="gold" onclick="openCategories()">🎮 Ir aos desafios</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
+<section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1</span><h2>🖨️ Antes da imprensa: livros copiados à mão</h2><p>Há cerca de <b>5 mil anos</b> surgiu a escrita. No início, poucas pessoas sabiam ler e escrever: eram os <b>escribas</b>, que registravam contratos em tabletes de argila, pedras ou peles de animais.</p><div class="content-grid"><div class="mini"><div class="pic">📜</div><strong>Papiro e pergaminho</strong>Páginas costuradas em uma borda formavam um volume chamado <b>códice</b> — o “tataravô” do livro de hoje.</div><div class="mini"><div class="pic">✍️</div><strong>Copiados à mão</strong>Cada exemplar precisava ser copiado inteirinho à mão. Levava meses.</div><div class="mini"><div class="pic">🔤</div><strong>Tipos móveis</strong>Peças de metal com uma letra em relevo, usadas como carimbos. Depois de imprimir, dava para desmontar e remontar outro texto.</div></div><div class="example">🇩🇪 Por volta de <b>1440</b>, na Alemanha, <b>Johannes Gutenberg</b> criou a <b>prensa de tipos móveis</b>. O que levava meses para ser copiado passou a ser impresso em vários exemplares de uma só vez.</div><div class="example warning">⏳ Mesmo assim, essa tecnologia demorou <b>quase 400 anos</b> para ser autorizada no Brasil.</div></div><div class="lesson-nav"><span class="small">1 de 8</span><button class="primary" onclick="openLesson('lesson2')">Continuar →</button></div></div>
+<div id="lesson2" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 2</span><h2>👑 A família real e a Impressão Régia</h2><p>Durante o período colonial era <b>proibido</b> ter máquinas de impressão no Brasil. Tudo vinha de Portugal, de navio.</p><div class="content-grid"><div class="mini"><div class="pic">👸</div><strong>Dona Maria I</strong>Rainha de Portugal. Como estava doente, quem governava de fato era seu filho.</div><div class="mini"><div class="pic">🤴</div><strong>D. João</strong>O Príncipe Regente, que tomou a decisão de atravessar o Atlântico.</div><div class="mini"><div class="pic">⚔️</div><strong>Por que vieram</strong>Uma grande guerra na Europa: um exército liderado pela <b>França</b> invadia vários países.</div></div><div class="example">⛵ Partiram de Lisboa em <b>29 de novembro de 1807</b>, às pressas, em <b>16 navios</b>, com mais de <b>dez mil pessoas</b>. Chegaram ao Rio de Janeiro em <b>8 de março de 1808</b>.</div><div class="example">🏙️ O Rio tinha então cerca de <b>60 mil habitantes</b>, e a população cresceu rápido. Faltava de tudo: casas, comida e, principalmente, <b>informação</b>.</div><div class="example warning">🖨️ Em <b>13 de maio de 1808</b>, D. João criou a <b>Impressão Régia</b> — a primeira fábrica oficial de livros e jornais do Brasil, e a primeira imprensa oficial e permanente do país.</div><div class="example">🤝 Em <b>1815</b>, o Brasil deixou de ser apenas colônia e passou a fazer parte do <b>Reino Unido de Portugal, Brasil e Algarves</b>.</div></div><div class="lesson-nav"><span class="small">2 de 8</span><div><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button> <button class="primary" onclick="openLesson('lesson3')">Continuar →</button></div></div></div>
+<div id="lesson3" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 3</span><h2>📰 Jornais, livrarias e fontes históricas</h2><div class="content-grid"><div class="mini"><div class="pic">🗞️</div><strong>Gazeta do Rio de Janeiro</strong>O <b>primeiro jornal</b> produzido no Brasil, de <b>setembro de 1808</b>. Trazia notícias do governo e da corte.</div><div class="mini"><div class="pic">📰</div><strong>Jornal do Commercio</strong>Surgiu em <b>1827</b>.</div><div class="mini"><div class="pic">📗</div><strong>Almanaque Laemmert</strong>Um “guia da cidade”: calendários, endereços de lojas, nomes de autoridades e anúncios.</div></div><div class="example">🏪 Antes da vinda da família real existiam <b>apenas duas livrarias</b> em todo o Brasil. Com a Impressão Régia, o número de livros e lojas cresceu rapidamente.</div><div class="example">📚 O que se imprimia: <b>livros de literatura</b> (como “Marília de Dirceu”, de Tomás Antônio Gonzaga), <b>textos religiosos</b>, <b>registros práticos</b> (contas e contratos) e <b>cartas</b>.</div><div class="example warning">🗣️ <b>Nem todos podiam ler.</b> Os livros eram caros e poucas pessoas sabiam ler, então a maioria se informava pela <b>fala</b> — a comunicação oral.</div><div class="example">🕰️ Jornais, cartas, almanaques e anúncios antigos são <b>fontes históricas</b>: funcionam como uma “cápsula do tempo” e preservam a memória de como as pessoas viviam.</div></div><div class="lesson-nav"><span class="small">3 de 8</span><div><button class="secondary" onclick="openLesson('lesson2')">← Voltar</button> <button class="primary" onclick="openLesson('lesson4')">Continuar →</button></div></div></div>
+<div id="lesson4" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 4</span><h2>📮 Mensagens a distância: correio, telégrafo e telefone</h2><div class="content-grid"><div class="mini"><div class="pic">✉️</div><strong>O selo</strong>Para a carta ser entregue passou a ser preciso pagar uma taxa, comprovada pelo <b>selo</b>. Os <b>cartões-postais</b> ficaram populares no fim do século XIX.</div><div class="mini"><div class="pic">⚡</div><strong>Telégrafo</strong>Criado por <b>Samuel Morse em 1837</b>. Enviava mensagens por sinais elétricos em fios. Pela primeira vez, uma mensagem chegava quase <b>instantaneamente</b>.</div><div class="mini"><div class="pic">⌨️</div><strong>Código Morse</strong>Um alfabeto feito de <b>pontos e traços</b>, fundamental até para a segurança dos trens.</div><div class="mini"><div class="pic">☎️</div><strong>Telefone</strong>Inventado por <b>Alexander Graham Bell</b>, no fim do século XIX. A novidade: ouvir a <b>voz</b> da outra pessoa.</div><div class="mini"><div class="pic">🔌</div><strong>A dificuldade</strong>Dependia de fios, que podiam se romper e não alcançavam lugares distantes. Exigia cabos terrestres e até submarinos.</div><div class="mini"><div class="pic">📻</div><strong>Radiotelegrafia</strong>Mandar Código Morse <b>pelo ar</b>, por ondas de rádio. Foi o degrau para o rádio se popularizar.</div></div><div class="example">🐎 Antes do telégrafo, a mensagem mais rápida do mundo dependia da velocidade de um <b>cavalo</b> ou de um <b>navio</b>.</div><div class="example warning">🔤 O prefixo <b>“tele”</b> vem do grego e significa <b>distância</b>. Por isso chamamos de <b>telecomunicações</b> as tecnologias que levam mensagens para longe. E a descoberta científica essencial para todas elas foi a <b>eletricidade</b>.</div></div><div class="lesson-nav"><span class="small">4 de 8</span><div><button class="secondary" onclick="openLesson('lesson3')">← Voltar</button> <button class="primary" onclick="openLesson('lesson5')">Continuar →</button></div></div></div>
+<div id="lesson5" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 5</span><h2>🎬 A imagem em movimento: fotografia, cinema e TV</h2><div class="content-grid"><div class="mini"><div class="pic">📷</div><strong>Fotografia</strong>Captura uma imagem <b>parada</b> de um momento real. Surgiu entre <b>1827 e 1839</b>. Os primeiros aparelhos exigiam ficar parado por muito tempo.</div><div class="mini"><div class="pic">🎞️</div><strong>Cinema</strong>Coloca <b>várias imagens em sequência</b> rápida para criar a ilusão de movimento. Popularizou-se no <b>final do século XIX</b>. No início os filmes eram curtos, em preto e branco e sem som.</div><div class="mini"><div class="pic">📺</div><strong>Televisão</strong>Transmite <b>som e imagem em movimento</b> direto para dentro das casas, por sinais elétricos. Início do <b>século XX</b> (anos 1920 e 1930).</div></div><div class="example">🔌 Para a TV funcionar, dois elementos eram fundamentais: a <b>eletricidade</b>, para alimentar os aparelhos, e uma <b>câmera de vídeo</b>, capaz de captar a “vida em movimento” e transformá-la em sinal eletrônico.</div><div class="example warning">🎥 Atenção à diferença: a <b>câmera capta e grava</b> a imagem; o <b>televisor recebe e exibe</b>. Uma fabrica a imagem, a outra a mostra.</div><div class="example">📼 Os primeiros aparelhos de TV, as <b>“TVs de tubo”</b>, surgiram por volta de <b>1907</b>.</div></div><div class="lesson-nav"><span class="small">5 de 8</span><div><button class="secondary" onclick="openLesson('lesson4')">← Voltar</button> <button class="primary" onclick="openLesson('lesson6')">Continuar →</button></div></div></div>
+<div id="lesson6" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 6</span><h2>🌐 O mundo digital e a comunicação para todos</h2><div class="content-grid"><div class="mini"><div class="pic">☎️</div><strong>Década de 1950</strong>Conexão manual: você falava com uma <b>telefonista</b>, que conectava os fios numa central.</div><div class="mini"><div class="pic">📡</div><strong>Década de 1960</strong>Surgem as <b>micro-ondas</b>: sinal pelo ar entre torres, sem depender só de cabos no chão.</div><div class="mini"><div class="pic">💻</div><strong>A internet nasce</strong>Década de <b>1960</b>, nos <b>Estados Unidos</b>, ligando computadores de universidades e do governo. Se um parasse, os outros continuavam conectados.</div><div class="mini"><div class="pic">🌍</div><strong>1980 e 1990</strong>A rede deixa de ser do governo e se torna <b>global</b>.</div><div class="mini"><div class="pic">🚦</div><strong>Protocolos</strong>As “regras de trânsito” da internet: garantem que os dados cheguem ao destino certo.</div><div class="mini"><div class="pic">🧭</div><strong>Navegadores</strong>Os “tradutores”: transformam os códigos da rede em imagens e textos que conseguimos ler.</div></div><div class="example">📱 Hoje o celular é um <b>dispositivo convergente</b>: reuniu num só aparelho o que antes eram vários. Tem câmera e <b>GPS</b> (Global Positioning System), que usa satélites para dizer onde você está.</div><div class="example">☁️ Documentos que antes ficavam em gavetas hoje vão para a <b>nuvem</b> — servidores, computadores gigantes ligados o tempo todo. O arquivo digital não amarela nem rasga, e pode ser acessado de qualquer lugar.</div><div class="example warning">🤟 <b>Comunicação para todos.</b> O <b>Braille</b> foi criado por <b>Louis Braille</b>, jovem francês, em <b>1825</b>: um alfabeto de pontos em relevo lidos pelo tato, em células de <b>6 pontos</b> (duas colunas de três). Chegou ao Brasil em <b>1854</b>, com o <b>Instituto Benjamin Constant</b>. A <b>Libras</b> (Língua Brasileira de Sinais) começou a se organizar em <b>1857</b>, no Império, e foi reconhecida por lei em <b>2002</b>. Isso se chama <b>inclusão</b>.</div></div><div class="lesson-nav"><span class="small">6 de 8</span><div><button class="secondary" onclick="openLesson('lesson5')">← Voltar</button> <button class="primary" onclick="openLesson('lesson7')">Continuar →</button></div></div></div>
+<div id="lesson7" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 7 · ARTE</span><h2>🎵 Melodia, harmonia e arranjo</h2><div class="content-grid"><div class="mini"><div class="pic">🎶</div><strong>Melodia</strong>Uma <b>linha musical</b> feita de notas organizadas em um ritmo. É a parte que você sabe cantar ou assobiar.</div><div class="mini"><div class="pic">🥁</div><strong>Ritmo</strong>A <b>ordem do tempo</b> da música.</div><div class="mini"><div class="pic">🎻</div><strong>Timbre</strong>A <b>“cor”</b> ou voz única de um instrumento — o que faz o violino soar diferente do piano.</div><div class="mini"><div class="pic">📖</div><strong>Teoria musical</strong>A área que ensina a <b>ouvir, ler e escrever</b> música em uma partitura, como as regras da Língua Portuguesa.</div><div class="mini"><div class="pic">🤝</div><strong>Harmonia</strong>Do grego: <b>união, concórdia, ajuste</b>. É quando melodias diferentes “soam bem” com a principal.</div><div class="mini"><div class="pic">🎸</div><strong>Arranjo</strong><b>Organização e possibilidades</b>: uma nova “roupa” para a mesma melodia.</div></div><div class="example">🎼 Uma única nota fora do lugar pode mudar a sensação da peça inteira — assim como uma vírgula no lugar errado muda o sentido de uma frase.</div><div class="example warning">🌊 A música também descreve imagens: compositores usam os sons dos instrumentos para retratar, por exemplo, o movimento das águas do <b>Rio Moldava</b>, em Praga.</div></div><div class="lesson-nav"><span class="small">7 de 8</span><div><button class="secondary" onclick="openLesson('lesson6')">← Voltar</button> <button class="primary" onclick="openLesson('lesson8')">Continuar →</button></div></div></div>
+<div id="lesson8" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 8 · ARTE</span><h2>🧱 A Pintura Mural e o afresco</h2><div class="content-grid"><div class="mini"><div class="pic">🏛️</div><strong>Pintura Mural</strong>Arte de <b>grande escala</b> feita em parede, teto ou grande painel, em local público. É obra <b>permanente</b>.</div><div class="mini"><div class="pic">🌦️</div><strong>O muro como tela</strong>Feita com materiais que <b>resistem ao sol e à chuva</b> ao longo do tempo.</div><div class="mini"><div class="pic">🎨</div><strong>Afresco</strong>Do italiano <b>“fresco”</b>. A pintura só pode ser aplicada <b>enquanto o gesso está úmido</b> — uma corrida contra o tempo.</div></div><div class="example">🧪 No afresco, as cores são misturadas <b>apenas com água</b>. Quando o gesso seca, a tinta se fixa quimicamente a ele: vira parte da parede e pode durar milhares de anos.</div><div class="example warning">⛪ <b>Michelangelo e a Capela Sistina.</b> Era <b>escultor</b> e ficou receoso ao aceitar o pedido do <b>Papa Júlio II</b>. O teto fica a mais de <b>20 metros</b> de altura, no Palácio Apostólico, na Cidade do Vaticano. Trabalhou <b>de 1508 a 1512</b> — cerca de quatro anos — pintando mais de <b>300 figuras</b> em cerca de <b>1000 m²</b>. Pintava <b>em pé</b>, sobre um andaime que ele mesmo projetou, com a cabeça inclinada para trás.</div><div class="example">📖 O teto retrata cenas do <b>Livro do Gênesis</b>: os três primeiros painéis, a <b>Criação do mundo</b>; os três centrais, <b>Adão e Eva</b> — incluindo o afresco mais famoso, <b>A Criação de Adão</b>; e os três últimos, a história de <b>Noé</b>. Na parede do altar, o <b>Juízo Final</b>.</div><div class="example">⭐ É uma das obras mais importantes da história da arte por três motivos: a <b>inovação técnica e extensão</b>, o <b>domínio em retratar a forma humana</b> e o <b>impacto duradouro</b>.</div></div><div class="lesson-nav"><span class="small">8 de 8</span><div><button class="secondary" onclick="openLesson('lesson7')">← Voltar</button> <button class="gold" onclick="openCategories()">Escolher desafios 🚀</button></div></div></div></section>
+<section id="categories" class="screen"><div class="lesson-card"><span class="lesson-tag">Escolha o conteúdo</span><div class="mode-toggle"><button class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">🌱 Treino <small>sem vidas</small></button><button class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">🔥 Desafio <small>5 vidas</small></button></div><div class="mode-hint">No <b>Treino</b> o erro não elimina: mostra a explicação e segue em frente.</div><h2 style="margin-top:20px">🗺️ Trilhas de aprendizagem</h2><div class="trail-grid"><button class="trail-card" data-trail="comunicacao" onclick="startTrail('comunicacao')"><div class="ico">🖨️</div><strong>Trilha da Imprensa<span class="trail-done">✓ concluída</span></strong><small>Gutenberg, Impressão Régia, jornais, almanaques e revisão.</small></button><button class="trail-card" data-trail="distancia" onclick="startTrail('distancia')"><div class="ico">📮</div><strong>Trilha das Mensagens<span class="trail-done">✓ concluída</span></strong><small>Correio, telégrafo, telefone, fotografia, cinema, TV e revisão.</small></button><button class="trail-card" data-trail="digital" onclick="startTrail('digital')"><div class="ico">🌐</div><strong>Trilha do Mundo Digital<span class="trail-done">✓ concluída</span></strong><small>Cinema e TV, internet, celular, Braille, Libras e revisão.</small></button><button class="trail-card" data-trail="arte" onclick="startTrail('arte')"><div class="ico">🎨</div><strong>Trilha de Arte<span class="trail-done">✓ concluída</span></strong><small>Melodia, harmonia, arranjo, pintura mural, afresco e revisão.</small></button></div><h2 style="margin-top:24px">🎯 Ou escolha um conteúdo</h2><div class="category-grid"><button class="category-card" id="reviewCard" onclick="startCategory('review')"><div class="ico">🩹</div><strong>Revisar meus erros</strong><small>Só as questões que você vem errando.</small><span class="review-count"></span></button><button class="category-card all" data-cat="all" onclick="startCategory('all')"><div class="ico">🎲</div><strong>Tudo misturado</strong><small>História e Arte em uma única partida.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="imprensa" onclick="startCategory('imprensa')"><div class="ico">🖨️</div><strong>A chegada da imprensa</strong><small>Gutenberg, família real, D. João e a Impressão Régia.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="jornais" onclick="startCategory('jornais')"><div class="ico">📰</div><strong>Jornais e fontes históricas</strong><small>Gazeta do Rio, Almanaque Laemmert e livrarias.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="distancia" onclick="startCategory('distancia')"><div class="ico">📮</div><strong>Correio, telégrafo e telefone</strong><small>Selo, Samuel Morse, Código Morse e Graham Bell.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="imagem" onclick="startCategory('imagem')"><div class="ico">🎬</div><strong>Fotografia, cinema e TV</strong><small>Da imagem parada à imagem em movimento dentro de casa.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="digital" onclick="startCategory('digital')"><div class="ico">🌐</div><strong>Internet e mundo digital</strong><small>Telefonistas, micro-ondas, protocolos, GPS e nuvem.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="inclusao" onclick="startCategory('inclusao')"><div class="ico">🤟</div><strong>Braille e Libras</strong><small>Louis Braille, Instituto Benjamin Constant e inclusão.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="musica" onclick="startCategory('musica')"><div class="ico">🎵</div><strong>Música: melodia e harmonia</strong><small>Ritmo, timbre, teoria musical, harmonia e arranjo.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="mural" onclick="startCategory('mural')"><div class="ico">🧱</div><strong>Pintura mural e afresco</strong><small>Michelangelo, Capela Sistina e a técnica do afresco.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button></div><div style="margin-top:18px"><button class="secondary" onclick="goHome()">← Voltar</button></div></div></section>
+<section id="quiz" class="screen"><div class="quiz-top"><button class="exit-btn" onclick="sairDaPartida()">✕ Sair da missão</button></div><div class="question-card"><div class="progress-panel"><div class="progress-head"><span id="progressText">Questão 1</span><span id="progressPct">0%</span></div><div class="track"><div id="fill" class="fill"></div></div><div id="trailMap" class="trail-map"></div></div><div id="stage" class="stage"></div><div id="fonte" class="fonte" style="display:none"></div><div id="illustration" class="illustration"></div><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="special" class="special"></div><div id="feedback" class="feedback" role="status" aria-live="polite"></div><div class="controls"><button id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próxima →</button></div></div></section>
+<section id="end" class="screen"><div class="result"><div class="trophy">🏆</div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
+</main></div></div>
+<script>
+const bank={
+imprensa:[
+{i:"🖨️",src:"livro p.49",q:"Quem inventou a prensa de tipos móveis e em que país?",c:"Johannes Gutenberg, na Alemanha",d:["Dom João VI, em Portugal","Samuel Morse, nos Estados Unidos","Louis Braille, na França"],e:"Gutenberg criou a prensa por volta de 1440, na Alemanha."},
+{i:"📅",src:"livro p.49",q:"Por volta de que ano Gutenberg criou a prensa de tipos móveis?",c:"1440",d:["1808","1500","1905"],e:"Foi por volta de 1440 — quase 400 anos antes de a tecnologia ser autorizada no Brasil."},
+{i:"✍️",src:"revisão q8",q:"Antes da prensa de tipos móveis, como os livros eram produzidos?",c:"Copiados à mão, um a um, por escribas e copistas",d:["Impressos em máquinas a vapor","Comprados prontos da Alemanha","Gravados em placas de metal por máquinas"],e:"Copiar um livro inteiro à mão podia levar meses."},
+{i:"🔤",src:"livro p.58",q:"O que são os tipos móveis?",c:"Pequenas peças de metal, cada uma com uma letra em relevo",d:["Folhas de papel já impressas","Tintas de várias cores","Máquinas movidas a vapor"],e:"Como carimbos: depois de imprimir, dava para desmontar e remontar outro texto."},
+{i:"🚫",src:"livro p.51",q:"Antes de 1808, o que era proibido no Brasil Colônia?",c:"Ter máquinas de impressão",d:["Ler qualquer livro","Escrever cartas","Falar português"],e:"Quase tudo era escrito à mão ou vinha de navio, de Portugal."},
+{i:"👑",src:"livro p.47",q:"Quem era a rainha de Portugal na época da vinda para o Brasil?",c:"Dona Maria I",d:["Dona Leopoldina","Rainha Elizabeth","Princesa Isabel"],e:"Como ela estava doente, quem governava de fato era seu filho, o príncipe D. João."},
+{i:"🤴",src:"livro p.47",q:"Quem governava de fato Portugal, no lugar da rainha doente?",c:"O príncipe D. João",d:["D. Pedro I","Napoleão","O Papa Júlio II"],e:"Por isso ele é chamado de Príncipe Regente."},
+{i:"⚔️",src:"revisão q1 / livro p.50",q:"O que motivou a transferência da família real portuguesa para o Brasil?",c:"As guerras na Europa e a ameaça de invasão de Portugal por exércitos estrangeiros",d:["A falta de saneamento básico no Rio de Janeiro","O Brasil já ser a capital do Reino Unido","A vontade do rei de conhecer o Brasil"],e:"Um exército liderado pela França invadia vários países. A família real atravessou o Atlântico."},
+{i:"⛵",src:"livro p.49",q:"Quando a família real partiu do porto de Lisboa?",c:"Em 29 de novembro de 1807",d:["Em 8 de março de 1808","Em 13 de maio de 1808","Em 1815"],e:"Partiram às pressas, em 16 navios, com mais de dez mil pessoas."},
+{i:"🚢",src:"livro p.49",q:"Em quantos navios a família real embarcou?",c:"16 navios",d:["3 navios","60 navios","100 navios"],e:"Foram 16 navios levando mais de dez mil pessoas."},
+{i:"📍",src:"livro p.49",q:"Quando a família real chegou ao Rio de Janeiro?",c:"Em 8 de março de 1808",d:["Em 29 de novembro de 1807","Em 1814","Em 1822"],e:"Depois de uma longa viagem pelo oceano Atlântico."},
+{i:"🏛️",src:"livro p.51",q:"Em que data D. João criou a Impressão Régia?",c:"13 de maio de 1808",d:["29 de novembro de 1807","10 de setembro de 1808","7 de setembro de 1822"],e:"Foi a primeira imprensa oficial e permanente do país, que nunca mais parou de funcionar."},
+{i:"📖",src:"livro p.51",q:"O que foi a Impressão Régia?",c:"A primeira fábrica oficial de livros e jornais do Brasil",d:["A primeira escola do Brasil","O primeiro jornal do Brasil","A primeira biblioteca do Brasil"],e:"Criada por D. João, no Rio de Janeiro, em 1808."},
+{i:"✅",src:"revisão q4",q:"Qual foi uma consequência da criação da Impressão Régia?",c:"Livros, jornais e documentos passaram a ser impressos oficialmente no Brasil",d:["A comunicação entre as pessoas passou a ser proibida","Os livros deixaram de ser utilizados no Brasil","As máquinas de impressão foram retiradas do Brasil"],e:"Antes disso, tudo vinha de Portugal por navio e demorava meses."},
+{i:"🔗",t:"match",src:"livro p.61",q:"Associe cada suporte de escrita à sua descrição.",pairs:[["Códice","Primeiro formato de livro parecido com os de hoje"],["Peles de animais","Suporte muito usado na primeira metade da Idade Média"],["Tipos móveis","Peças de metal com letras em relevo"],["Tabletes de argila","Um dos suportes mais antigos de mensagens"]],e:"A escrita passou por muitos suportes antes do papel e do celular."},
+{i:"⏳",t:"order",src:"revisão / livro p.55",q:"Coloque em ordem, do mais antigo para o mais recente.",seq:["Invenção da prensa de tipos móveis por Gutenberg","Chegada da família real portuguesa ao Rio de Janeiro","Criação da Impressão Régia no Rio de Janeiro"],e:"Gutenberg por volta de 1440; a família real chegou em março de 1808; a Impressão Régia veio em maio de 1808."},
+{i:"✍️",t:"text",q:"Como se chama a oficina oficial de impressão criada por D. João em 1808?",valid:["impressao regia","a impressao regia","imprensa regia"],ph:"Digite o nome...",e:"Impressão Régia — a primeira imprensa oficial e permanente do Brasil."},
+{i:"🌎",t:"tf",src:"revisão q2",q:"A família real desembarcou no Rio de Janeiro no ano de 1814.",c:false,e:"Falso: foi em 1808. Em 1815 o Brasil passou a fazer parte do Reino Unido de Portugal, Brasil e Algarves."},
+{i:"🤝",t:"tf",src:"revisão q2",q:"Em 1815 o Brasil deixou de ser apenas colônia e passou a fazer parte do Reino Unido de Portugal, Brasil e Algarves.",c:true,e:"A chegada da corte mudou o status do Brasil."},
+{i:"🏙️",src:"livro p.49",q:"Quantos habitantes o Rio de Janeiro tinha aproximadamente em 1808?",c:"Cerca de 60 mil",d:["Cerca de 10 mil","Cerca de 500 mil","Cerca de 2 milhões"],e:"E a população cresceu rápido com a chegada de mais de dez mil pessoas da corte."}
+],
+jornais:[
+{i:"📰",src:"livro p.52",q:"Qual foi o primeiro jornal produzido no Brasil?",c:"A Gazeta do Rio de Janeiro",d:["O Jornal do Commercio","O Spectador Brasileiro","A Revista Tico-tico"],e:"Começou a circular em setembro de 1808 e trazia notícias do governo e da corte."},
+{i:"📅",src:"livro p.53",q:"Em que ano surgiu a Gazeta do Rio de Janeiro?",c:"1808",d:["1827","1824","1905"],e:"O primeiro número é de 10 de setembro de 1808."},
+{i:"🗞️",src:"livro p.52",q:"Qual jornal surgiu em 1827?",c:"O Jornal do Commercio",d:["A Gazeta do Rio de Janeiro","O Spectador Brasileiro","O Almanaque Laemmert"],e:"Veio quase vinte anos depois da Gazeta."},
+{i:"📗",src:"revisão q7",q:"Qual era uma das principais funções do Almanaque Laemmert?",c:"Divulgar informações úteis, como calendários, endereços de lojas, nomes de autoridades e anúncios",d:["Publicar somente histórias de ficção para crianças","Ensinar apenas conteúdos religiosos","Registrar apenas acontecimentos de outros países"],e:"Ele funcionava como um verdadeiro “guia da cidade”."},
+{i:"🏛️",src:"livro p.54",q:"Que instituição já guardava uma enorme coleção de livros trazida de Portugal?",c:"A Biblioteca Nacional",d:["O Museu do Ipiranga","O Instituto Benjamin Constant","A Impressão Régia"],e:"O Almanaque Laemmert trazia até o horário de funcionamento dela."},
+{i:"🏪",src:"livro p.52",q:"Antes da vinda da família real, quantas livrarias existiam em todo o Brasil?",c:"Apenas duas",d:["Nenhuma","Cerca de cinquenta","Mais de duzentas"],e:"Com a Impressão Régia, o número de livros e lojas aumentou rapidamente."},
+{i:"📜",src:"livro p.52",q:"Qual famoso livro de poemas foi impresso naquela época?",c:"Marília de Dirceu, de Tomás Antônio Gonzaga",d:["Dom Casmurro, de Machado de Assis","Iracema, de José de Alencar","O Guarani, de José de Alencar"],e:"Publicado originalmente em 1792, é um dos livros de literatura citados no capítulo."},
+{i:"📚",src:"revisão q5",q:"Que tipos de texto a imprensa passou a produzir naquela época?",c:"Livros de literatura, textos religiosos, registros práticos e cartas",d:["Apenas jornais","Apenas livros escolares","Apenas documentos do governo"],e:"Leis e avisos do governo, poemas, orações, contratos e cartas."},
+{i:"🕰️",src:"livro p.54",q:"O que são fontes históricas?",c:"Materiais do passado, como jornais, cartas e almanaques, que ajudam a conhecer como as pessoas viviam",d:["Livros escritos por historiadores hoje","Apenas documentos oficiais do governo","Somente fotografias antigas"],e:"O livro as compara a uma “cápsula do tempo”."},
+{i:"🗣️",src:"livro p.54",q:"Por que boa parte da população não se informava pelos jornais naquela época?",c:"Poucas pessoas sabiam ler e os livros eram muito caros",d:["Não existiam jornais no Brasil","Era proibido ler jornais","Todos preferiam o rádio"],e:"A maioria se informava pela fala — a comunicação oral — ouvindo quem sabia ler."},
+{i:"📖",src:"livro p.53",q:"Segundo o glossário, o que é uma Gazeta?",c:"Uma revista com notícias e outros textos sobre um tema específico",d:["Uma carta oficial do rei","Um tipo de máquina de impressão","Um livro de poemas"],e:"Daí o nome Gazeta do Rio de Janeiro."},
+{i:"🧒",src:"livro p.51",q:"De que ano é a Revista Tico-tico, citada no livro?",c:"1905",d:["1808","1827","1950"],e:"É um exemplo de revista antiga com quadrinhos."},
+{i:"🔗",t:"match",q:"Associe cada publicação ao que ela era.",pairs:[["Gazeta do Rio de Janeiro","Primeiro jornal produzido no Brasil"],["Jornal do Commercio","Jornal que surgiu em 1827"],["Almanaque Laemmert","Guia da cidade com endereços e anúncios"],["Marília de Dirceu","Livro de poemas de Tomás Antônio Gonzaga"]],e:"Todos são fontes históricas valiosas."},
+{i:"✍️",t:"text",q:"Como se chamavam os materiais antigos (jornais, cartas, almanaques) que ajudam a estudar o passado?",valid:["fontes historicas","fonte historica","fontes"],ph:"Digite o termo...",e:"Fontes históricas — funcionam como uma cápsula do tempo."},
+{i:"💧",src:"livro p.50",q:"Segundo o glossário, o que envolve o saneamento básico?",c:"Chegada de água, tratamento de esgoto, limpeza, coleta de lixo e soluções contra alagamentos",d:["Apenas a coleta de lixo","Apenas a iluminação das ruas","O transporte público da cidade"],e:"Mesmo com a chegada da corte, o Rio ainda sofria com ruas apertadas e falta de saneamento."}
+],
+distancia:[
+{i:"✉️",src:"livro p.59",q:"No século XIX, o que passou a ser necessário para uma carta ser entregue?",c:"O pagamento de uma taxa, comprovada pelo uso do selo",d:["A assinatura do rei","Uma autorização da igreja","Levar a carta pessoalmente"],e:"O selo comprova que o envio foi pago e ajuda o carteiro."},
+{i:"📮",src:"revisão q10",q:"Qual era a função do selo no sistema de correios?",c:"Comprovar o pagamento da taxa de envio da carta",d:["Decorar o envelope","Indicar quem escreveu a carta","Substituir o endereço"],e:"Sem o selo, a carta não seguia viagem."},
+{i:"📬",src:"livro p.59",q:"O que se tornou popular no final do século XIX, permitindo enviar imagens das viagens?",c:"Os cartões-postais",d:["Os telegramas","Os cartões telefônicos","Os e-mails"],e:"Eram uma forma de mandar imagens para amigos e familiares."},
+{i:"⚡",src:"livro p.59",q:"Quem criou o telégrafo e em que ano?",c:"Samuel Morse, em 1837",d:["Alexander Graham Bell, em 1876","Johannes Gutenberg, em 1440","Louis Braille, em 1825"],e:"Foi um aparelho revolucionário: pela primeira vez uma mensagem chegava quase instantaneamente."},
+{i:"⌨️",src:"livro p.59",q:"O que é o Código Morse?",c:"Um alfabeto feito de pontos e traços",d:["Um tipo de selo postal","Uma máquina de escrever","Uma língua de sinais"],e:"Era fundamental até para a segurança dos trens, avisando se os trilhos estavam livres."},
+{i:"🐎",src:"livro p.59",q:"Antes do telégrafo, de que dependia a mensagem mais rápida do mundo?",c:"Da velocidade de um cavalo ou de um navio",d:["Da eletricidade","Do rádio","Dos correios aéreos"],e:"O telégrafo superou até os sistemas eficientes da Antiguidade, como os da Assíria."},
+{i:"☎️",src:"livro p.60",q:"Quem inventou o telefone?",c:"Alexander Graham Bell",d:["Samuel Morse","Thomas Edison","Louis Braille"],e:"Surgiu no final do século XIX."},
+{i:"🗣️",src:"revisão q11",q:"Qual foi a grande novidade do telefone em relação ao telégrafo?",c:"Permitia ouvir a voz da outra pessoa à distância",d:["Era mais barato que o telégrafo","Funcionava sem eletricidade","Enviava imagens"],e:"O telégrafo mandava códigos; o telefone, a própria voz."},
+{i:"🔌",src:"revisão q11",q:"Qual era a principal dificuldade dos primeiros telefones?",c:"Dependiam de fios, que podiam se romper e não alcançavam lugares muito distantes",d:["Eram grandes demais para caber em casa","Só funcionavam à noite","Precisavam de selo para cada ligação"],e:"Exigiam uma imensa rede de cabos terrestres e até cabos submarinos."},
+{i:"📻",src:"livro p.60",q:"O que é a radiotelegrafia?",c:"Enviar mensagens em Código Morse pelo ar, por ondas de rádio",d:["Enviar cartas por avião","Transmitir imagens por cabo","Gravar sons em disco"],e:"Foi o “degrau” necessário para o rádio se popularizar no início do século XX."},
+{i:"🔤",src:"livro p.60",q:"O prefixo “tele”, de telefone e televisão, vem do grego e significa...",c:"distância",d:["som","imagem","rápido"],e:"Por isso chamamos de telecomunicações as tecnologias que levam mensagens para longe."},
+{i:"💡",src:"livro p.73",q:"Qual descoberta científica foi essencial para o telégrafo, o rádio e a TV funcionarem?",c:"A eletricidade",d:["O telefone","A locomotiva","A fotografia"],e:"Sem eletricidade nenhum desses aparelhos funcionaria."},
+{i:"🔗",t:"match",q:"Associe cada invenção ao que ela trouxe de novo.",pairs:[["Selo","Comprova o pagamento do envio da carta"],["Telégrafo","Mensagens quase instantâneas por sinais elétricos"],["Código Morse","Alfabeto de pontos e traços"],["Telefone","Ouvir a voz da outra pessoa à distância"]],e:"Cada uma resolveu um problema diferente da comunicação."},
+{i:"⏳",t:"order",q:"Coloque em ordem, do mais antigo para o mais recente.",seq:["Correio com selo","Telégrafo e Código Morse","Telefone","Radiotelegrafia"],e:"Cada tecnologia se apoiou na anterior."},
+{i:"✍️",t:"text",q:"Como se chama o alfabeto de pontos e traços criado para o telégrafo?",valid:["codigo morse","morse","o codigo morse"],ph:"Digite o nome...",e:"Código Morse, criado por Samuel Morse."}
+],
+imagem:[
+{i:"📷",src:"livro p.62",q:"Em que período surgiu a câmera fotográfica?",c:"Na primeira metade do século XIX, entre 1827 e 1839",d:["No século XV, com Gutenberg","No início do século XX","Na década de 1950"],e:"Os primeiros exemplares exigiam que a pessoa ficasse parada por muito tempo."},
+{i:"🎬",src:"revisão q12",q:"Como o cinema criou a sensação de que as pessoas estavam se movendo na tela?",c:"Projetando várias fotos em sequência muito rápida",d:["Usando espelhos que giravam","Transmitindo sinais elétricos","Desenhando quadro a quadro na parede"],e:"A sequência rápida de imagens cria a ilusão de movimento."},
+{i:"🎞️",src:"livro p.62",q:"Quando o cinema se popularizou?",c:"No final do século XIX",d:["No início do século XIX","Na década de 1950","Na década de 1990"],e:"No início, os filmes eram curtos, em preto e branco e não tinham som."},
+{i:"📺",src:"revisão q13",q:"Qual é a diferença principal entre o cinema e a televisão?",c:"O cinema projeta filmes numa tela grande; a TV transmite som e imagem por sinais elétricos direto para dentro das casas",d:["O cinema é colorido e a TV é preto e branco","A TV é mais antiga que o cinema","O cinema não tem som e a TV tem"],e:"A TV levou a imagem em movimento para dentro dos lares."},
+{i:"🔌",src:"livro p.62",q:"Quais dois elementos eram fundamentais para a televisão funcionar?",c:"A eletricidade e uma câmera de vídeo",d:["O papel e a tinta","O selo e o correio","O telefone e o rádio"],e:"A eletricidade alimenta os aparelhos; a câmera capta a “vida em movimento” e a transforma em sinal."},
+{i:"📼",src:"livro p.62",q:"Quando surgiram os primeiros aparelhos de televisão, as “TVs de tubo”?",c:"No início do século XX, por volta de 1907",d:["Em 1827","Na década de 1960","Na década de 1980"],e:"Entre as décadas de 1920 e 1930 a tecnologia ficou disponível para o público."},
+{i:"🎥",src:"revisão q14",q:"Qual é a diferença entre a função da câmera de vídeo e a do televisor?",c:"A câmera capta e grava a imagem; o televisor recebe e exibe",d:["As duas fazem exatamente a mesma coisa","A câmera exibe e o televisor grava","Nenhuma das duas precisa de eletricidade"],e:"Uma “fabrica” a imagem, a outra a mostra."},
+{i:"🔗",t:"match",src:"livro p.63",q:"Relacione cada invenção à sua principal característica.",pairs:[["Fotografia","Registro de uma imagem parada de um momento real"],["Cinema","Sequência de imagens rápidas que criam ilusão de movimento"],["Televisão","Som e imagem em movimento direto para dentro das casas"]],e:"Cada passo dependeu do anterior."},
+{i:"⏳",t:"order",src:"livro p.62",q:"Coloque em ordem de surgimento.",seq:["Fotografia","Cinema","Televisão"],e:"Fotografia (1827-1839), cinema (final do século XIX) e televisão (início do século XX)."},
+{i:"📸",t:"tf",src:"livro p.62",q:"Os primeiros aparelhos de fotografia exigiam que a pessoa ficasse parada por muito tempo.",c:true,e:"Por isso as fotos antigas mostram pessoas tão sérias e imóveis."},
+{i:"🎦",t:"tf",src:"livro p.62",q:"No início, os filmes de cinema já eram coloridos e com som.",c:false,e:"Eram curtos, em preto e branco e mudos."},
+{i:"✍️",t:"text",q:"Qual invenção registra uma imagem parada de um momento real?",valid:["fotografia","a fotografia","foto"],ph:"Digite o nome...",e:"A fotografia foi o primeiro passo rumo ao cinema e à televisão."}
+],
+digital:[
+{i:"☎️",src:"livro p.64",q:"Até a década de 1950, como se fazia uma ligação telefônica?",c:"Falando primeiro com uma telefonista, que conectava manualmente os fios",d:["Digitando o número no celular","Enviando um telegrama","Pelo rádio"],e:"As telefonistas conectavam os fios em uma central."},
+{i:"📡",src:"livro p.64",q:"O que surgiu a partir da década de 1960 e permitiu ligações entre cidades sem tantos fios?",c:"As micro-ondas, com sinais transmitidos pelo ar entre torres",d:["Os satélites de GPS","A fibra óptica caseira","O telefone celular"],e:"O sinal passou a viajar pelo ar, sem depender só de cabos no chão."},
+{i:"💻",src:"revisão / livro p.64",q:"Em que década e onde nasceu a internet?",c:"Na década de 1960, nos Estados Unidos",d:["Na década de 1950, no Brasil","Na década de 1990, na Alemanha","Na década de 1980, no Japão"],e:"Começou como uma rede conectando computadores de universidades e do governo."},
+{i:"🎯",src:"livro p.64",q:"Qual era o objetivo original da internet?",c:"Que, se um computador parasse de funcionar, os outros continuassem conectados",d:["Vender produtos pela rede","Transmitir programas de televisão","Substituir o telefone"],e:"Era uma rede pensada para resistir a falhas."},
+{i:"🌐",src:"livro p.64",q:"Em que décadas a internet deixou de ser restrita ao governo e se tornou global?",c:"Nas décadas de 1980 e 1990",d:["Nas décadas de 1950 e 1960","Na década de 2010","No século XIX"],e:"Foi quando a rede se espalhou pelo mundo."},
+{i:"🚦",src:"revisão / livro p.64",q:"O que são os protocolos da internet?",c:"São como as “regras de trânsito” da rede, garantindo que os dados cheguem ao destino correto",d:["Programas usados apenas para criar imagens e vídeos","Os cabos que ligam os computadores","As antenas de celular"],e:"Sem eles, os dados se perderiam no caminho."},
+{i:"🧭",src:"livro p.64",q:"O que fazem os navegadores?",c:"Funcionam como “tradutores”, transformando os códigos da rede em imagens e textos que conseguimos ler",d:["Guardam os arquivos na nuvem","Conectam os fios na central telefônica","Transmitem sinais de micro-ondas"],e:"São os programas que usamos para ver sites."},
+{i:"📱",src:"revisão q14 / livro p.65",q:"Por que o celular atual é chamado de “dispositivo convergente”?",c:"Porque reuniu em um só aparelho funções que antes eram de aparelhos separados",d:["Porque tem tela colorida","Porque funciona sem bateria","Porque só serve para conversar"],e:"Câmera, GPS, telefone, internet e muito mais em um único dispositivo."},
+{i:"🛰️",src:"livro p.65",q:"O que significa a sigla GPS?",c:"Global Positioning System — Sistema de Posicionamento Global",d:["Grande Produção de Sinais","Guia de Passagem Segura","Global Phone Service"],e:"Usa satélites para dizer exatamente onde você está no mapa."},
+{i:"☁️",src:"livro p.65",q:"O que é a “nuvem”?",c:"O armazenamento de dados na internet, em servidores que podem ser acessados de qualquer lugar",d:["Uma pasta dentro do celular","Um tipo de cabo submarino","Um programa de edição de fotos"],e:"Em vez de salvar só no aparelho, você salva em um servidor."},
+{i:"📂",src:"revisão / livro p.66",q:"Qual é a diferença entre um arquivo físico e um arquivo na nuvem?",c:"O arquivo físico (papel) pode estragar com o tempo; o da nuvem fica protegido em servidores e pode ser acessado de qualquer lugar",d:["O arquivo físico é guardado na internet e a nuvem é uma caixa de sapatos","Guardar na nuvem significa que o documento só pode ser lido em dias de chuva","Servidores são pessoas que entregam cartas de porta em porta"],e:"O arquivo digital não amarela nem rasga."},
+{i:"🏗️",src:"livro p.65",q:"O que são servidores?",c:"Computadores gigantes e potentes que guardam as informações da internet",d:["Pessoas que entregam encomendas","Antenas de celular","Programas de edição de texto"],e:"Ficam ligados o tempo todo, armazenando dados na nuvem."},
+{i:"⏳",t:"order",src:"livro p.64",q:"Coloque a evolução da conexão em ordem.",seq:["Telefonistas conectando fios manualmente","Micro-ondas transmitindo sinal pelo ar","A internet virando uma rede global","A convergência no celular"],e:"Década de 1950, 1960, 1980-1990 e os dias atuais."},
+{i:"📶",t:"order",src:"livro p.73",q:"Coloque as fases do celular em ordem.",seq:["A ideia do telefone móvel começa a ser testada, no final da década de 1970","O celular passa a integrar o envio e o recebimento de mensagens de texto","Surgimento dos smartphones, que funcionam como minicomputadores com aplicativos"],e:"Primeiro a voz, depois o texto e por fim os aplicativos."},
+{i:"✍️",t:"text",q:"Qual é o nome dado ao armazenamento de dados na internet, em servidores?",valid:["nuvem","a nuvem","nuven"],ph:"Digite o termo...",e:"A nuvem — é ela que permite acessar seus arquivos de qualquer lugar."}
+],
+inclusao:[
+{i:"👆",src:"livro p.67",q:"Quem criou o sistema Braille e em que ano?",c:"Louis Braille, em 1825",d:["Samuel Morse, em 1837","Alexander Graham Bell, em 1876","Dom João, em 1808"],e:"Ele era um jovem francês e adaptou sinais usados por militares."},
+{i:"🇫🇷",src:"livro p.67",q:"De que país era Louis Braille?",c:"França",d:["Alemanha","Estados Unidos","Portugal"],e:"Ele criou um alfabeto de pontos em relevo."},
+{i:"⠿",src:"livro p.67",q:"Como funciona o sistema Braille?",c:"Por um alfabeto de pontos em relevo, lidos pelo tato",d:["Por gestos feitos com as mãos","Por sons em sequência","Por cores diferentes no papel"],e:"Permite que pessoas com deficiência visual leiam e escrevam."},
+{i:"🔢",src:"livro p.67",q:"Quantos pontos tem uma célula Braille?",c:"Seis, em duas colunas de três",d:["Quatro, em duas colunas de dois","Oito, em duas colunas de quatro","Nove, em três colunas de três"],e:"A combinação desses pontos em relevo define qual é a letra."},
+{i:"🏛️",src:"livro p.67",q:"Quando o Braille chegou ao Brasil e com a fundação de qual instituição?",c:"Em 1854, com o Instituto Benjamin Constant",d:["Em 1825, com a Impressão Régia","Em 1857, com a Biblioteca Nacional","Em 2002, com a Lei de Libras"],e:"O Instituto Benjamin Constant fica no Rio de Janeiro."},
+{i:"🤟",src:"livro p.68",q:"O que significa a sigla Libras?",c:"Língua Brasileira de Sinais",d:["Livros Brasileiros Acessíveis","Linguagem Braille Simplificada","Leitura Brasileira de Sinais"],e:"É uma língua feita de gestos e expressões."},
+{i:"📅",src:"livro p.68",q:"Em que ano começou a organização da Libras no Brasil?",c:"1857, ainda no Império",d:["1825","1908","2002"],e:"Ela foi oficializada muito tempo depois, mas sua história começou no Império."},
+{i:"⚖️",src:"livro p.72",q:"Em que ano a Libras foi reconhecida por lei como a segunda língua oficial do Brasil?",c:"2002",d:["1857","1854","1988"],e:"A lei é de 2002 e a regulamentação veio em 2005."},
+{i:"✅",src:"revisão q16",q:"A Libras e o Braille são importantes tecnologias de comunicação porque...",c:"permitem que pessoas surdas ou cegas tenham acesso à informação e participem da sociedade com mais inclusão",d:["são utilizadas apenas em computadores e celulares","substituem todas as outras formas de comunicação","foram criadas somente para serem usadas nas escolas"],e:"Isso se chama inclusão: garantir que a comunicação seja, de fato, para todos."},
+{i:"💻",src:"livro p.68",q:"Como a Libras e o Braille estão presentes no mundo digital?",c:"Em programas que transformam texto em áudio e em vídeos com tradutores de Libras",d:["Não estão presentes no mundo digital","Apenas em livros impressos","Somente em escolas especiais"],e:"Garantem que a comunicação em rede seja para todos."},
+{i:"🔗",t:"match",q:"Associe cada sistema à sua característica.",pairs:[["Braille","Pontinhos em relevo lidos pelo tato"],["Libras","Língua feita de gestos e expressões"],["Instituto Benjamin Constant","Trouxe o Braille ao Brasil em 1854"],["Louis Braille","Jovem francês que criou o sistema em 1825"]],e:"As duas são tecnologias de comunicação que promovem inclusão."},
+{i:"🌍",t:"tf",q:"A tecnologia é feita só de máquinas.",c:false,e:"Falso. A Libras e o Braille também são tecnologias de comunicação."},
+{i:"✍️",t:"text",q:"Como se chama a língua brasileira feita de gestos e expressões?",valid:["libras","a libras","lingua brasileira de sinais"],ph:"Digite o nome...",e:"Libras — Língua Brasileira de Sinais."},
+{i:"📖",src:"revisão q9",q:"O que eram as epístolas bíblicas?",c:"Cartas escritas para orientar as primeiras comunidades cristãs",d:["Livros de leis do Império Romano","Poemas escritos por Gutenberg","Jornais impressos na Impressão Régia"],e:"Treze delas são atribuídas ao apóstolo Paulo."},
+{i:"✉️",src:"livro p.58",q:"Quantas epístolas são atribuídas ao apóstolo Paulo?",c:"Treze",d:["Três","Duas","Uma"],e:"Três são atribuídas a João, duas a Pedro, e uma a Tiago e outra a Judas."}
+],
+musica:[
+{i:"🎵",src:"livro p.13",q:"O que é uma melodia?",c:"Uma linha musical feita de notas organizadas em um ritmo",d:["O conjunto de todos os instrumentos juntos","A cor do som de um instrumento","O volume de uma música"],e:"Geralmente é a parte da canção que você sabe cantar ou assobiar."},
+{i:"🥁",src:"livro p.13",q:"O que é o ritmo de uma música?",c:"A ordem do tempo da música",d:["A cor única de cada instrumento","A união de melodias diferentes","O nome do compositor"],e:"É o ritmo que organiza as notas da melodia."},
+{i:"🎻",src:"livro p.13",q:"O que é o timbre?",c:"A “cor” ou voz única de um instrumento",d:["A velocidade da música","O número de notas de uma melodia","O nome de uma partitura"],e:"É o timbre que faz um violino soar diferente de um piano tocando a mesma nota."},
+{i:"📖",src:"livro p.13",q:"Como se chama a área de estudo que ensina a ouvir, ler e escrever música em uma partitura?",c:"Teoria musical",d:["Harmonia","Timbre","Arranjo"],e:"É como aprender as regras da Língua Portuguesa para escrever melhor."},
+{i:"🤝",src:"livro p.19",q:"A palavra harmonia vem do grego e significa...",c:"união, concórdia ou ajuste",d:["velocidade e ritmo","cor e brilho","força e volume"],e:"A beleza na música depende da união e do ajuste perfeito de todas as partes."},
+{i:"🎼",src:"livro p.19",q:"Quando dizemos que uma melodia está harmonizada?",c:"Quando combinamos melodias diferentes e elas “soam bem” com a melodia principal",d:["Quando ela é tocada bem alto","Quando só um instrumento a toca","Quando ela é escrita numa partitura"],e:"Harmonia é o encaixe entre as partes."},
+{i:"🎸",src:"livro p.19",q:"O que é um arranjo?",c:"Uma nova maneira de organizar e vestir a mesma melodia, com instrumentos e possibilidades diferentes",d:["O nome da nota mais aguda","O tempo que a música dura","O título de uma canção"],e:"A mesma melodia pode ser tocada só com um violão ou com coral, cordas, percussão e piano."},
+{i:"😢",src:"livro p.19",q:"Segundo o livro, o que pode acontecer se uma única nota ficar fora do lugar?",c:"Pode mudar a sensação da peça inteira",d:["Nada muda na música","A música fica mais rápida","O instrumento quebra"],e:"É como uma vírgula colocada no lugar errado em um texto — muda o sentido da frase."},
+{i:"🌊",src:"livro p.21",q:"O que os compositores fazem com os sons dos instrumentos ao descrever o Rio Moldava, em Praga?",c:"Usam os sons para descrever o movimento das águas",d:["Usam apenas o silêncio","Tocam sempre a mesma nota","Cantam a letra da música"],e:"A música pode descrever imagens e criar cenas na nossa imaginação."},
+{i:"🔗",t:"match",src:"livro p.13, 19",q:"Associe cada elemento musical ao seu significado.",pairs:[["Melodia","Linha musical que dá vontade de cantar"],["Ritmo","A ordem do tempo da música"],["Timbre","A cor ou voz única de um instrumento"],["Harmonia","União e ajuste entre as melodias"],["Arranjo","Nova forma de organizar a mesma música"]],e:"Juntos, esses elementos formam a estrutura de uma música."},
+{i:"✍️",t:"text",q:"Como se chama a “cor” ou voz única de cada instrumento?",valid:["timbre","o timbre"],ph:"Digite o termo...",e:"Timbre — é ele que diferencia um violino de um piano."},
+{i:"✍️",t:"text",q:"Qual palavra vem do grego e significa união, concórdia ou ajuste?",valid:["harmonia","a harmonia"],ph:"Digite a palavra...",e:"Harmonia — a beleza na música depende do ajuste entre as partes."},
+{i:"🎹",t:"tf",q:"O compositor escolhe apenas as notas de uma música.",c:false,e:"Falso: ele escolhe também o timbre, ou seja, quais instrumentos melhor se encaixam na obra."},
+{i:"🎤",t:"tf",src:"livro p.19",q:"As possibilidades de arranjo para uma mesma melodia são quase infinitas.",c:true,e:"A mesma melodia pode ganhar “roupas” muito diferentes."}
+],
+mural:[
+{i:"🧱",src:"livro p.36",q:"O que é uma Pintura Mural?",c:"Uma arte de grande escala feita em uma parede, teto ou grande painel, geralmente em local público",d:["Um quadro pequeno pintado em tela","Um desenho feito em folha de papel","Uma escultura de pedra"],e:"Por ser obra permanente em local público, é pensada para embelezar espaços."},
+{i:"🎨",src:"livro p.36",q:"Por que a Pintura Mural é considerada um ato de vocação e serviço?",c:"Porque o artista não a cria para si, mas para a comunidade e para a história",d:["Porque o artista ganha muito dinheiro","Porque é mais fácil que pintar em tela","Porque leva pouco tempo para ficar pronta"],e:"É uma arte feita para todos verem."},
+{i:"🇮🇹",src:"livro p.36",q:"A palavra afresco vem do italiano e significa...",c:"fresco",d:["parede","tinta","gigante"],e:"O nome indica que a pintura só pode ser aplicada enquanto o gesso ainda está úmido."},
+{i:"💧",src:"livro p.36",q:"Qual é a condição essencial da técnica do afresco?",c:"A pintura só pode ser aplicada enquanto o gesso está úmido",d:["A parede precisa estar totalmente seca","Só pode ser feita à noite","A tinta precisa ser misturada com óleo"],e:"Por isso a técnica exige uma preparação meticulosa e é uma corrida contra o tempo."},
+{i:"🧪",src:"livro p.37",q:"No afresco, as cores são misturadas apenas com...",c:"água",d:["óleo","cola","areia"],e:"Quando o gesso seca, a tinta fixa-se quimicamente a ele e vira parte da parede."},
+{i:"🏰",src:"livro p.37",q:"Qual obra Michelangelo foi escolhido para pintar?",c:"O teto da Capela Sistina",d:["O teto do Museu do Louvre","A parede da Biblioteca Nacional","A cúpula da Torre de Pisa"],e:"Fica no Palácio Apostólico, na Cidade do Vaticano."},
+{i:"📏",src:"livro p.37",q:"A que altura ficava o teto da Capela Sistina?",c:"A mais de 20 metros",d:["A 3 metros","A 100 metros","A 5 metros"],e:"Era um suporte enorme e curvo, o que tornava o trabalho ainda mais difícil."},
+{i:"👤",src:"livro p.37",q:"Qual era a profissão principal de Michelangelo, que o deixou receoso em aceitar o trabalho?",c:"Escultor",d:["Arquiteto","Músico","Poeta"],e:"Ele aceitou o pedido do Papa Júlio II mesmo sendo escultor, não pintor."},
+{i:"⛪",src:"livro p.37",q:"Quem pediu a Michelangelo que pintasse o teto da Capela Sistina?",c:"O Papa Júlio II",d:["O Papa Gregório XIII","Dom João VI","Leonardo da Vinci"],e:"Michelangelo ficou bastante receoso em aceitar."},
+{i:"🪜",src:"livro p.37",q:"Como Michelangelo pintava o teto?",c:"Em pé sobre um andaime que ele mesmo projetou, com a cabeça inclinada para trás",d:["Deitado de costas no andaime","Sentado em uma cadeira alta","Pendurado por cordas"],e:"É um engano comum imaginar que ele pintava deitado."},
+{i:"📅",src:"livro p.37",q:"Entre que anos Michelangelo trabalhou no teto da Capela Sistina?",c:"Entre 1508 e 1512",d:["Entre 1440 e 1444","Entre 1808 e 1812","Entre 1600 e 1604"],e:"Foram cerca de quatro anos de trabalho."},
+{i:"👥",src:"livro p.37",q:"Quantas figuras Michelangelo pintou no teto?",c:"Mais de 300",d:["Cerca de 30","Cerca de 50","Mais de 3.000"],e:"Ao longo de uma superfície de cerca de 1000 metros quadrados."},
+{i:"📖",src:"livro p.37",q:"De qual livro bíblico o teto da Capela Sistina retrata diversas cenas?",c:"Gênesis",d:["Apocalipse","Salmos","Êxodo"],e:"Os três primeiros painéis tratam da Criação do mundo."},
+{i:"🤲",src:"livro p.38",q:"Qual é o afresco mais famoso do teto da Capela Sistina?",c:"A Criação de Adão, em que Deus e Adão estendem as mãos",d:["O Juízo Final","A Última Ceia","A Noite Estrelada"],e:"Faz parte dos três painéis centrais, que retratam a história de Adão e Eva."},
+{i:"⚖️",src:"livro p.38",q:"O que Michelangelo pintou na parede do altar da Capela Sistina?",c:"Uma cena que representa o Juízo Final",d:["A Criação de Adão","A história de Noé","O nascimento de Cristo"],e:"Além dos painéis do teto, há essa cena na parede do altar."},
+{i:"🔗",t:"match",src:"livro p.38",q:"Associe cada conjunto de painéis do teto ao seu tema.",pairs:[["Os três primeiros painéis","A Criação do mundo"],["Os três painéis centrais","A história de Adão e Eva"],["Os três últimos painéis","A história de Noé"],["A parede do altar","O Juízo Final"]],e:"O teto conta a história desde a Criação até Noé."},
+{i:"⭐",src:"livro p.38",q:"Por que a pintura da Capela Sistina é uma das obras mais importantes da história da arte?",c:"Pela inovação técnica e extensão da obra, o domínio em retratar a forma humana e o impacto duradouro",d:["Porque foi a pintura mais rápida já feita","Porque usou tintas coloridas pela primeira vez","Porque foi pintada por vários artistas juntos"],e:"São os três motivos apontados pelo livro."},
+{i:"✍️",t:"text",q:"Qual é a técnica de pintura mural aplicada sobre o gesso úmido?",valid:["afresco","o afresco","fresco"],ph:"Digite o nome da técnica...",e:"Afresco — do italiano fresco."},
+{i:"⏱️",t:"tf",src:"livro p.37",q:"No afresco, o artista pode pintar com calma, pois a tinta demora muito para secar.",c:false,e:"Falso: é uma corrida contra o tempo, porque a pintura só vale enquanto o gesso está úmido."},
+{i:"🏛️",t:"tf",src:"livro p.36",q:"Uma pintura mural é feita com materiais que resistem ao sol e à chuva ao longo do tempo.",c:true,e:"O muro funciona como tela, e a obra precisa durar."}
+]
+};
+const trails={
+comunicacao:{name:"Imprensa no Brasil",steps:["imprensa","jornais","all"]},
+distancia:{name:"Mensagens a Distância",steps:["distancia","imagem","all"]},
+digital:{name:"Do Analógico ao Digital",steps:["imagem","digital","inclusao","all"]},
+arte:{name:"Trilha de Arte",steps:["musica","mural","all"]}};
+
+/* Identidade estavel de cada questao, usada pelo progresso e pela revisao. */
+Object.keys(bank).forEach(cat=>bank[cat].forEach((q,i)=>{q.id=cat+i;q.cat=cat}));
+const allItems=Object.values(bank).flat();
+
+let questions=[],index=0,score=0,lives=5,hits=0,answered=0,combo=0,bestCombo=0,
+    locked=false,activeTrail=null,trailStep=0,currentCategory="all",practiceMode=true;
+
+/* ---------- progresso persistente ---------- */
+const STORE="hist_arte_progress_v1";
+function defaultProgress(){return{items:{},best:{score:0,acc:0},trails:{},missions:{},practice:true,mudo:false}}
+
+// Estado de uma missão: nunca jogada, começada, concluída ou dominada.
+function missionStat(cat){return progress.missions[cat]||(progress.missions[cat]={iniciada:false,concluidas:0,melhorAcc:0})}
+function missionInfo(cat){
+  const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
+  const itens = cat==="all" ? allItems : (bank[cat]||[]);
+  const dominadas = itens.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e}).length;
+  const pct = itens.length ? Math.round(dominadas/itens.length*100) : 0;
+  let estado="nova", rotulo="", icone="";
+  if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="★";rotulo="Dominada"}
+  else if(m.concluidas){estado="concluida";icone="✓";rotulo="Concluída"}
+  else if(m.iniciada){estado="andamento";icone="▶";rotulo="Em andamento"}
+  return {...m,dominadas,total:itens.length,pct,estado,rotulo,icone};
+}
+let progress=defaultProgress();
+function loadProgress(){
+  try{
+    const raw=localStorage.getItem(STORE); if(!raw) return defaultProgress();
+    const p=JSON.parse(raw),d=defaultProgress();
+    return{items:p.items||d.items,best:p.best||d.best,trails:p.trails||d.trails,
+           missions:p.missions||d.missions,
+           practice:typeof p.practice==="boolean"?p.practice:d.practice,
+           mudo:!!p.mudo};
+  }catch(e){return defaultProgress()}
+}
+function saveProgress(){try{localStorage.setItem(STORE,JSON.stringify(progress))}catch(e){}}
+function stat(id){return progress.items[id]||(progress.items[id]={e:0,h:0})}
+function weakItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.e>t.h})
+                                    .sort((a,b)=>(progress.items[b.id].e-progress.items[b.id].h)-(progress.items[a.id].e-progress.items[a.id].h))}
+function masteredItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e})}
+function record(q,ok){if(!q||!q.id)return;const t=stat(q.id);ok?t.h++:t.e++;saveProgress()}
+
+/* ---------- sorteio: uniforme e enviesado para o que o aluno erra ---------- */
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function weight(q){const t=progress.items[q.id];if(!t)return 3;const n=t.e-t.h;if(n>0)return Math.min(12,3+n*3);if(t.h>=2)return 1;return 2}
+function pickWeighted(list,n){
+  const pool=[...list],out=[];n=Math.min(n,pool.length);
+  while(out.length<n&&pool.length){
+    const w=pool.map(weight),tot=w.reduce((a,b)=>a+b,0);
+    let r=Math.random()*tot,i=0;
+    while(i<pool.length-1&&(r-=w[i])>0)i++;
+    out.push(pool.splice(i,1)[0]);
+  }
+  return out;
+}
+
+/* ---------- montagem da partida: sem repetir questao ---------- */
+const TAM_PARTIDA=12, TAM_ETAPA=8;
+function makeQuestions(cat,limite){
+  let src;
+  if(cat==="review"){src=weakItems(); if(!src.length) return [];}
+  else src = cat==="all" ? allItems : bank[cat];
+  const alvo=Math.min(limite||TAM_PARTIDA, src.length);   // nunca pede mais do que existe
+  return pickWeighted(src,alvo).map(x=>{
+    const t=x.t||"choice";
+    if(t!=="choice") return {...x,t};
+    const choices=shuffle([x.c,...x.d]);
+    return {...x,t,choices,answer:choices.indexOf(x.c)};
+  });
+}
+
+/* ---------- telas ---------- */
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function goHome(){renderStats();renderModeToggle();show('start')}
+function openCategories(){renderCards();renderModeToggle();show('categories')}
+function openLesson(id){show('lesson');document.querySelectorAll('.lesson-part').forEach(x=>x.style.display='none');document.getElementById(id).style.display='block'}
+function sairDaPartida(){if(index>0&&!confirm("Sair da missão? O progresso desta partida será perdido."))return;activeTrail=null;openCategories()}
+
+/* ---------- modo treino x desafio ---------- */
+/* ============================================================
+   SOM E FEEDBACK
+   Tudo em try/catch: o jogo nunca pode quebrar por causa de áudio.
+   ============================================================ */
+
+let audioCtx=null, mudo=false;
+
+function ensureAudio(){
+  if(audioCtx) return audioCtx;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C) return null;
+    audioCtx=new C();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    return audioCtx;
+  }catch(e){ return null; }
+}
+
+// Uma nota. `quando` permite encadear arpejos sem setTimeout.
+function nota(freq,dur=0.12,vol=0.05,tipo="sine",quando=0){
+  if(mudo) return;
+  const ctx=ensureAudio(); if(!ctx) return;
+  try{
+    const t=ctx.currentTime+quando;
+    const osc=ctx.createOscillator(), g=ctx.createGain();
+    osc.type=tipo; osc.frequency.setValueAtTime(freq,t);
+    osc.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    osc.start(t); osc.stop(t+dur+0.02);
+  }catch(e){}
+}
+function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
+  freqs.forEach((f,i)=>nota(f,0.16,vol,tipo,i*passo));
+}
+
+const sfx={
+  toque(){ nota(320,0.05,0.02,"sine"); },
+  acerto(){ arpejo([660,880],0.07,0.045); },
+  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
+  // O combo sobe de tom: quanto maior a sequência, mais alto e mais brilhante.
+  combo(n){
+    const base=520+Math.min(n,8)*45;
+    arpejo([base,base*1.25,base*1.5],0.06,0.05,"triangle");
+  },
+  etapa(){ arpejo([523,659,784],0.09,0.05); },
+  missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
+  recorde(){ arpejo([784,988,1175,1568],0.09,0.06,"triangle"); },
+  fimDeVidas(){ arpejo([440,349,262],0.14,0.05,"triangle"); }
+};
+
+// Aviso flutuante no topo: conquistas, etapas concluídas, marcos de combo.
+function mostrarConquista(txt){
+  const p=document.getElementById("conquista");
+  if(!p) return;
+  p.textContent=txt;
+  p.classList.add("show");
+  clearTimeout(p._t);
+  p._t=setTimeout(()=>p.classList.remove("show"),2200);
+}
+
+const MARCOS={3:"🔥 Combo x3!",5:"⚡ Sequência de 5!",8:"🌟 Sequência de 8!",12:"💫 Imparável! 12 seguidas!"};
+function festeja(n){ if(MARCOS[n]) mostrarConquista(MARCOS[n]); }
+
+function setMudo(v){
+  mudo=!!v;
+  progress.mudo=mudo;
+  saveProgress();
+  const b=document.getElementById("btnSom");
+  if(b){ b.textContent=mudo?"🔇":"🔊"; b.setAttribute("aria-label",mudo?"Ativar som":"Desativar som"); }
+}
+function alternarSom(){ setMudo(!mudo); if(!mudo) sfx.toque(); }
+
+/* ---------- feedback visual ---------- */
+
+// Número que sobe e some, ancorado no card da questão.
+function pontosVoando(texto,bom){
+  try{
+    const alvo=document.getElementById("question")||document.body;
+    const el=document.createElement("div");
+    el.className="floater "+(bom?"bom":"ruim");
+    el.textContent=texto;
+    alvo.appendChild(el);
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },1100);
+  }catch(e){}
+}
+
+function pulsarCombo(){
+  const el=document.getElementById("combo");
+  if(!el||!el.parentNode) return;
+  const p=el.parentNode;
+  p.classList.remove("combo-pulse");
+  void p.offsetWidth;              // reinicia a animação
+  p.classList.add("combo-pulse");
+}
+
+function setPracticeMode(on){practiceMode=!!on;progress.practice=practiceMode;saveProgress();renderModeToggle();renderLives()}
+function renderModeToggle(){document.querySelectorAll('.mode-opt').forEach(b=>b.classList.toggle('active',(b.dataset.mode==='treino')===practiceMode))}
+function renderLives(){const e=document.getElementById('lives');if(e)e.textContent=practiceMode?'∞':String(lives)}
+function loseLife(){if(!practiceMode)lives--;renderLives()}
+
+/* ---------- inicio de partida ---------- */
+function reset(){index=0;score=0;lives=5;hits=0;answered=0;combo=0;bestCombo=0;locked=false}
+function startCategory(cat){
+  activeTrail=null;trailStep=0;currentCategory=cat;
+  questions=makeQuestions(cat);
+  if(!questions.length){alert("Nada para revisar ainda. Jogue uma missão primeiro!");openCategories();return}
+  missionStat(cat).iniciada=true;saveProgress();
+  reset();updateHud();show('quiz');renderQuestion();
+}
+function startTrail(name){activeTrail=name;trailStep=0;reset();startTrailStep()}
+function startTrailStep(){
+  currentCategory=trails[activeTrail].steps[trailStep];
+  missionStat(currentCategory).iniciada=true;
+  questions=makeQuestions(currentCategory,TAM_ETAPA);
+  index=0;locked=false;updateHud();show('quiz');renderQuestion();
+}
+function updateHud(){document.getElementById('score').textContent=score;renderLives();document.getElementById('combo').textContent=combo}
+
+/* ---------- progresso da partida ---------- */
+function updateProgress(){
+  const total=Math.max(questions.length,1),pct=Math.round(index/total*100),t=trails[activeTrail];
+  document.getElementById('progressText').textContent=activeTrail
+    ?`${t.name} • Etapa ${trailStep+1}/${t.steps.length} • Questão ${Math.min(index+1,total)}/${total}`
+    :`Questão ${Math.min(index+1,total)}/${total}`;
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('fill').style.width=pct+'%';
+  const map=document.getElementById('trailMap');
+  if(!activeTrail){map.innerHTML='';return}
+  map.innerHTML=t.steps.map((s,i)=>{
+    const cls=i<trailStep?'done':i===trailStep?'current':'';
+    const line=i<t.steps.length-1?`<div class="line ${i<trailStep?'done':''}"></div>`:'';
+    return `<div class="node ${cls}">${i<trailStep?'✓':i+1}</div>${line}`}).join('');
+}
+
+const nomes={all:"Desafio misto",review:"Revisão dos meus erros",
+  imprensa:"A chegada da imprensa",jornais:"Jornais e fontes históricas",
+  distancia:"Correio, telégrafo e telefone",imagem:"Fotografia, cinema e TV",
+  digital:"Internet e mundo digital",inclusao:"Braille e Libras",
+  musica:"Música: melodia e harmonia",mural:"Pintura mural e afresco"};
+
+/* ---------- utilidades comuns a todos os formatos ---------- */
+function norm(x){return String(x||"").trim().toLowerCase().replace(/[.!?,;]/g,"")
+  .normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ")}
+
+function zonas(){document.getElementById('answers').innerHTML='';document.getElementById('special').innerHTML=''}
+
+// Ponto unico de pontuacao: todo formato termina aqui.
+function resolve(ok,msg){
+  const q=questions[index];
+  answered++;record(q,ok);
+  if(ok){
+    score+=100;hits++;combo++;bestCombo=Math.max(bestCombo,combo);
+    pontosVoando("+100",true);
+    if(combo>=3){sfx.combo(combo);pulsarCombo();festeja(combo)} else sfx.acerto();
+  }else{
+    loseLife();combo=0;
+    pontosVoando(practiceMode?"ops":"−1 ❤️",false);
+    sfx.erro();
+  }
+  feedback(ok,(ok?'Muito bem! ':'')+(msg||q.e));
+  updateHud();
+}
+
+/* ---------- 1. múltipla escolha ---------- */
+function renderChoice(q){
+  const a=document.getElementById('answers');
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='answer';b.type='button';b.textContent=c;
+    b.setAttribute('aria-label',`Alternativa ${i+1}: ${c}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      const buttons=[...document.querySelectorAll('.answer')];
+      b.classList.add(i===q.answer?'correct':'wrong');
+      if(i!==q.answer&&buttons[q.answer])buttons[q.answer].classList.add('correct');
+      resolve(i===q.answer);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 2. verdadeiro ou falso ---------- */
+function renderTF(q){
+  const a=document.getElementById('answers');
+  [['✅ Verdadeiro',true],['❌ Falso',false]].forEach(([label,val],i)=>{
+    const b=document.createElement('button');
+    b.className='answer tf-btn';b.type='button';b.textContent=label;
+    b.setAttribute('aria-label',`Alternativa ${i+1}: ${label}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      b.classList.add(val===q.c?'correct':'wrong');
+      if(val!==q.c){const cert=[...a.children].find((_,j)=>(j===0)===q.c);if(cert)cert.classList.add('correct')}
+      resolve(val===q.c);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 3. rosa dos ventos clicável ---------- */
+const ROSA=['NO','N','NE','O','🌹','L','SO','S','SE'];
+const CARDEAIS=['N','S','L','O'];
+function renderCompass(q){
+  const sp=document.getElementById('special');
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique na direção correta na rosa dos ventos.';
+  const g=document.createElement('div');g.className='rosa';
+  ROSA.forEach(cell=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='rosa-btn'+(cell==='🌹'?' centro':CARDEAIS.includes(cell)?' card':'');
+    b.textContent=cell;
+    if(cell==='🌹'){b.disabled=true;b.setAttribute('aria-hidden','true')}
+    else{
+      b.setAttribute('aria-label',cell);
+      b.onclick=()=>{
+        if(locked)return;locked=true;
+        const acertou=cell===q.target;
+        b.classList.add(acertou?'correct':'wrong');
+        if(!acertou){const alvo=[...g.children].find(x=>x.textContent===q.target);if(alvo)alvo.classList.add('correct')}
+        resolve(acertou,acertou?undefined:`A direção correta é ${q.target}. ${q.e}`);
+      };
+    }
+    g.appendChild(b);
+  });
+  sp.appendChild(dica);sp.appendChild(g);
+}
+
+/* ---------- 4. associação (colunas) ---------- */
+function renderMatch(q){
+  const sp=document.getElementById('special');
+  let sel=null,feitos=0,erros=0;
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique em um item da esquerda e depois no par correspondente da direita.';
+  const wrap=document.createElement('div');wrap.className='match';
+  const esq=document.createElement('div');esq.className='match-col';
+  const dir=document.createElement('div');dir.className='match-col';
+  const criar=(txt,lado,col)=>{
+    const b=document.createElement('button');
+    b.className='match-item';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.classList.contains('done'))return;
+      if(lado==='e'){[...esq.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;return}
+      if(!sel)return;
+      if(q.pairs.some(p=>p[0]===sel.textContent&&p[1]===txt)){
+        sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;feitos++;
+        if(feitos===q.pairs.length){
+          locked=true;
+          resolve(erros===0,erros===0?undefined:`Você completou, mas com ${erros} tentativa${erros>1?'s':''} errada${erros>1?'s':''}. ${q.e}`);
+        }
+      }else{
+        erros++;b.classList.add('wrong');sel.classList.remove('sel');sel=null;
+        setTimeout(()=>b.classList.remove('wrong'),450);
+      }
+    };
+    col.appendChild(b);
+  };
+  shuffle(q.pairs.map(p=>p[0])).forEach(t=>criar(t,'e',esq));
+  shuffle(q.pairs.map(p=>p[1])).forEach(t=>criar(t,'d',dir));
+  wrap.appendChild(esq);wrap.appendChild(dir);
+  sp.appendChild(dica);sp.appendChild(wrap);
+}
+
+/* ---------- 5. ordenar a sequência ---------- */
+function renderOrder(q){
+  const sp=document.getElementById('special');
+  const escolha=[];
+  const slot=document.createElement('div');slot.className='order-slot';
+  const banco=document.createElement('div');banco.className='order-bank';
+  const redesenhar=()=>{
+    slot.innerHTML='';
+    if(!escolha.length){const v=document.createElement('span');v.className='small';v.textContent='Clique nos itens na ordem correta...';slot.appendChild(v);return}
+    escolha.forEach((txt,i)=>{const c=document.createElement('span');c.className='order-chip';c.textContent=`${i+1}. ${txt}`;slot.appendChild(c)});
+  };
+  shuffle(q.seq).forEach(txt=>{
+    const b=document.createElement('button');
+    b.className='order-btn';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.disabled)return;
+      b.disabled=true;escolha.push(txt);redesenhar();
+      if(escolha.length===q.seq.length){
+        locked=true;
+        const ok=escolha.every((x,i)=>x===q.seq[i]);
+        resolve(ok,ok?undefined:`A ordem correta é: ${q.seq.join(' → ')}. ${q.e}`);
+      }
+    };
+    banco.appendChild(b);
+  });
+  const limpar=document.createElement('button');
+  limpar.className='secondary';limpar.type='button';limpar.textContent='Limpar';
+  limpar.onclick=()=>{if(locked)return;escolha.length=0;[...banco.children].forEach(b=>b.disabled=false);redesenhar()};
+  redesenhar();
+  sp.appendChild(slot);sp.appendChild(banco);sp.appendChild(limpar);
+}
+
+/* ---------- 6. digitar a resposta ---------- */
+function renderText(q){
+  const sp=document.getElementById('special');
+  const row=document.createElement('div');row.className='text-row';
+  const inp=document.createElement('input');
+  inp.id='resp';inp.type='text';inp.placeholder=q.ph||'Digite sua resposta...';
+  inp.autocomplete='off';inp.setAttribute('autocapitalize','none');
+  const b=document.createElement('button');
+  b.className='primary';b.type='button';b.textContent='Confirmar';
+  const confirmar=()=>{
+    if(locked)return;locked=true;
+    const ok=q.valid.some(v=>norm(v)===norm(inp.value));
+    resolve(ok,ok?undefined:`A resposta é: ${q.valid[0]}. ${q.e}`);
+  };
+  b.onclick=confirmar;
+  inp.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();confirmar()}};
+  row.appendChild(inp);row.appendChild(b);sp.appendChild(row);
+  setTimeout(()=>{try{inp.focus()}catch(e){}},50);
+}
+
+const RENDER={choice:renderChoice,tf:renderTF,compass:renderCompass,match:renderMatch,order:renderOrder,text:renderText};
+
+function renderQuestion(){
+  if(lives<=0){endGame();return}
+  if(index>=questions.length){
+    if(activeTrail&&trailStep<trails[activeTrail].steps.length-1){
+      trailStep++;sfx.etapa();
+      mostrarConquista(`🗺️ Etapa concluída! Próxima: ${nomes[trails[activeTrail].steps[trailStep]]||''}`);
+      startTrailStep();return;
+    }
+    endGame();return;
+  }
+  updateProgress();
+  const q=questions[index];
+  document.getElementById('stage').textContent=nomes[currentCategory]||currentCategory;
+  // Questões tiradas do capítulo do livro ganham um selo, para o aluno reconhecer o que já caiu.
+  const fonte=document.getElementById('fonte');
+  if(fonte){
+    // As questões vêm de duas fontes: o livro (p.NN) e a folha de revisão da escola.
+    // Duas fontes: o livro didatico (livro p.NN) e a folha de revisao da escola.
+    fonte.textContent = !q.src ? ''
+      : /^livro/.test(q.src) ? `📖 Livro — ${q.src.replace(/^livro\s*/,"")}`
+      : /^revis/i.test(q.src) ? `📝 Folha de revisão — ${q.src.replace(/^revisão\s*/i,"")}`
+      : `📖 ${q.src}`;
+    fonte.style.display=q.src?'inline-block':'none';
+  }
+  document.getElementById('illustration').textContent=q.i;
+  document.getElementById('question').textContent=q.q;
+  const f=document.getElementById('feedback');f.className='feedback';f.textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  zonas();
+  locked=false;
+  (RENDER[q.t]||renderChoice)(q);
+}
+
+function feedback(ok,msg){
+  const f=document.getElementById('feedback');
+  f.className='feedback show '+(ok?'good':'bad');
+  f.textContent=(ok?'✅ ':'⚠️ ')+msg;
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+function nextQuestion(){index++;renderQuestion()}
+
+/* ---------- atalhos de teclado ---------- */
+document.addEventListener('keydown',ev=>{
+  if(!document.getElementById('quiz').classList.contains('active'))return;
+  if(ev.target&&ev.target.tagName==='INPUT')return;   // o campo de texto trata o Enter sozinho
+  const btn=document.getElementById('nextBtn');
+  if(ev.key==='Enter'||ev.key===' '){
+    if(btn.style.display!=='none'){ev.preventDefault();nextQuestion()}
+    return;
+  }
+  const n=parseInt(ev.key,10);
+  if(n>=1&&n<=4&&!locked){
+    const b=document.querySelectorAll('.answer')[n-1];
+    if(b){ev.preventDefault();b.click()}
+  }
+});
+
+/* ---------- fim de partida ---------- */
+function endGame(){
+  if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
+  // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
+  if(answered&&(lives>0||practiceMode)){
+    const m=missionStat(currentCategory);
+    m.iniciada=true;m.concluidas++;
+    const a=Math.round(hits/answered*100);
+    if(a>m.melhorAcc)m.melhorAcc=a;
+  }
+  // denominador = questoes efetivamente respondidas (vale para trilhas de varias etapas
+  // e para partidas encerradas antes do fim)
+  const acc=answered?Math.round(hits/answered*100):0;
+  if(!practiceMode&&answered){
+    if(score>progress.best.score)progress.best.score=score;
+    if(acc>progress.best.acc)progress.best.acc=acc;
+  }
+  saveProgress();
+  if(lives<=0&&!practiceMode) sfx.fimDeVidas();
+  else if(!practiceMode&&score>0&&score>=progress.best.score) sfx.recorde();
+  else sfx.missao();
+  show('end');
+  document.getElementById('finalScore').textContent=score;
+  document.getElementById('finalHits').textContent=hits+'/'+answered;
+  document.getElementById('accuracy').textContent=acc+'%';
+  document.getElementById('bestCombo').textContent=bestCombo;
+  const rank=lives<=0&&!practiceMode?'🔭 Aprendiz do Céu':acc>=90?'🌟 Mestre do Céu':acc>=70?'🚀 Explorador Celeste':'🔭 Aprendiz do Céu';
+  document.getElementById('rank').textContent=rank;
+  document.getElementById('endText').textContent=
+    lives<=0&&!practiceMode?'As energias acabaram! Revise a lição e tente de novo.':
+    acc>=90?'Excelente domínio dos conteúdos!':
+    acc>=70?'Muito bom! Você já compreende bem o céu e a orientação.':
+    'Continue explorando e tente novamente para consolidar o conteúdo.';
+  renderMissed();
+}
+
+/* ---------- paineis de progresso ---------- */
+function renderStats(){
+  const el=document.getElementById('startStats');if(!el)return;
+  const feitas=Object.keys(trails).filter(k=>progress.trails[k]).length;
+  el.innerHTML=`<span class="chip">🏅 Recorde <b>${progress.best.score}</b></span>`+
+    `<span class="chip">📚 Dominadas <b>${masteredItems().length}/${allItems.length}</b></span>`+
+    `<span class="chip">⚠️ A revisar <b>${weakItems().length}</b></span>`+
+    `<span class="chip">🗺️ Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+}
+function renderCards(){
+  // Cada card mostra em que pé está a missão e quanto do conteúdo já foi dominado.
+  document.querySelectorAll('[data-cat]').forEach(card=>{
+    const info=missionInfo(card.dataset.cat);
+    card.classList.remove('nova','andamento','concluida','dominada');
+    card.classList.add(info.estado);
+    const selo=card.querySelector('.selo');
+    if(selo){
+      selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:'';
+      selo.style.display=info.rotulo?'inline-block':'none';
+    }
+    const barra=card.querySelector('.mini-bar span');
+    if(barra) barra.style.width=info.pct+'%';
+    const txt=card.querySelector('.mini-txt');
+    if(txt) txt.textContent=info.total?`${info.dominadas}/${info.total} dominadas`+(info.melhorAcc?` • melhor ${info.melhorAcc}%`:''):'';
+  });
+  const n=weakItems().length,c=document.getElementById('reviewCard');
+  if(c){
+    const t=c.querySelector('.review-count');
+    if(t)t.textContent=n?`${n} questã${n>1?'ões':'o'} esperando revisão`:'Nada pendente — jogue uma missão primeiro';
+    c.classList.toggle('empty',n===0);
+  }
+  document.querySelectorAll('[data-trail]').forEach(b=>{
+    const d=!!progress.trails[b.dataset.trail];
+    b.classList.toggle('done',d);
+    const s=b.querySelector('.trail-done');if(s)s.style.display=d?'inline-block':'none';
+  });
+}
+function renderMissed(){
+  const box=document.getElementById('missed');if(!box)return;
+  const w=weakItems().slice(0,5);
+  if(!w.length){box.style.display='none';box.innerHTML='';return}
+  box.style.display='block';
+  box.innerHTML=`<div class="missed-title">⚠️ Conteúdos que ainda pedem atenção</div>`+
+    `<ul class="missed-list">${w.map(q=>`<li>${q.i} ${q.q}</li>`).join('')}</ul>`+
+    `<button type="button" class="gold" onclick="startCategory('review')">🩹 Revisar só esses</button>`;
+}
+function resetProgress(){
+  if(!confirm("Apagar todo o progresso salvo?"))return;
+  progress=defaultProgress();progress.practice=practiceMode;saveProgress();
+  renderStats();renderCards();
+}
+
+/* ---------- init ---------- */
+progress=loadProgress();practiceMode=progress.practice;mudo=!!progress.mudo;setMudo(mudo);
+renderModeToggle();renderLives();renderStats();
+
+</script></body></html>
