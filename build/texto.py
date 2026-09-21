@@ -48,6 +48,18 @@ ABERTURA = {
 }
 
 
+# História e Artes nasceram de uma cópia do motor de Ciências e herdaram as
+# patentes dele: um aluno de Arte terminava a partida como "Mestre do Céu".
+PATENTES = {
+    "historia.html": [("Aprendiz do Céu",   "Aprendiz do Tempo"),
+                      ("Explorador Celeste", "Cronista"),
+                      ("Mestre do Céu",     "Mestre das Linhas do Tempo")],
+    "artes.html":    [("Aprendiz do Céu",   "Aprendiz de Ateliê"),
+                      ("Explorador Celeste", "Artista"),
+                      ("Mestre do Céu",     "Mestre de Ateliê")],
+}
+
+
 def corta(s, padrao, arq, obrigatorio=True):
     achados = re.findall(padrao, s, re.S)
     if obrigatorio:
@@ -81,6 +93,10 @@ for arq, pares in NOMES.items():
     if n:
         s = s.replace("<div class=\"trail-choice\">", "<h2>Trilhas</h2>\n<div class=\"trail-choice\">", 1)
         cortado += n
+    for de, para in PATENTES.get(arq, []):
+        assert de in s, "%s: nao achei a patente %r" % (arq, de)
+        s = s.replace(de, para)
+
     # A missão já aparece no HUD e no cabeçalho do progresso; a linha que a
     # descrevia de novo, em toda questão, era a terceira cópia da mesma coisa.
     s, n = corta(s, r'<div id="storyline"[^>]*></div>', arq, False); cortado += n
