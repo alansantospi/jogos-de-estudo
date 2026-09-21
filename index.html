@@ -31,7 +31,7 @@
   header{text-align:center;margin-bottom:40px}
   h1{font-size:clamp(30px,6vw,48px);margin:0 0 10px}
   .sub{color:var(--muted);font-size:17px;line-height:1.6;max-width:520px;margin:auto}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
   .card{
     display:block;text-decoration:none;color:inherit;
     background:linear-gradient(180deg,rgba(19,38,74,.95),rgba(12,27,54,.95));
@@ -53,6 +53,8 @@
   .card.ceu h2{color:var(--gold)}
   .card.hist h2{color:#ffb84d}
   .card.hist .tag{background:rgba(255,184,77,.1);border-color:rgba(255,184,77,.28);color:#ffb84d}
+  .card.arte h2{color:#f472b6}
+  .card.arte .tag{background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.28);color:#f472b6}
   .card.ceu .tag{background:rgba(255,209,102,.1);border-color:rgba(255,209,102,.26);color:var(--gold)}
   footer{margin-top:38px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.7}
   @media(max-width:640px){
@@ -92,14 +94,25 @@
       </div>
     </a>
 
-    <a class="card hist" href="historia-e-arte.html">
+    <a class="card hist" href="historia.html">
       <div class="ico">🖨️</div>
       <h2>Linhas do Tempo</h2>
-      <p>História da comunicação — da imprensa de Gutenberg ao celular — e Arte: música e pintura mural.</p>
+      <p>História da comunicação: da imprensa de Gutenberg ao celular, passando por correio, telégrafo, cinema e internet.</p>
       <div class="tags">
         <span class="tag">História</span>
+        <span class="tag">📮 Telégrafo</span>
+        <span class="tag">3 trilhas</span>
+      </div>
+    </a>
+
+    <a class="card arte" href="artes.html">
+      <div class="ico">🎨</div>
+      <h2>Ateliê</h2>
+      <p>Arte: melodia, ritmo, timbre, harmonia e arranjo — e a pintura mural, do afresco à Capela Sistina.</p>
+      <div class="tags">
         <span class="tag">Arte</span>
-        <span class="tag">4 trilhas</span>
+        <span class="tag">🎵 Música</span>
+        <span class="tag">2 trilhas</span>
       </div>
     </a>
   </div>

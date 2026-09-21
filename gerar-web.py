@@ -14,4 +14,5 @@ def preparar(src, dst, titulo):
 
 preparar("time-travel-english.html", "web/time-travel-english.html", "Time Travel English")
 preparar("exploradores-do-ceu.html", "web/exploradores-do-ceu.html", "Exploradores do Céu")
-preparar("historia-e-arte.html",     "web/historia-e-arte.html",     "Linhas do Tempo")
+preparar("historia.html",            "web/historia.html",            "Linhas do Tempo")
+preparar("artes.html",               "web/artes.html",               "Ateliê")
