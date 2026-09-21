@@ -6,165 +6,121 @@
 <title>Jogos de Estudo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap">
 <style>
 :root{
   color-scheme:light dark;
-  --paper:oklch(0.988 0.003 255);
-  --surface:oklch(1 0 0);
-  --rule:oklch(0.885 0.010 255);
-  --ink:oklch(0.26 0.021 262);
-  --ink-soft:oklch(0.46 0.018 262);
-  --ink-faint:oklch(0.60 0.014 262);
-  --ingles:oklch(0.47 0.15 258);
-  --ciencias:oklch(0.46 0.11 192);
-  --historia:oklch(0.45 0.15 28);
-  --arte:oklch(0.47 0.16 312);
-  --sans:'Atkinson Hyperlegible',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  --serif:'Source Serif 4',ui-serif,Georgia,'Times New Roman',serif;
-  --s-1:0.25rem; --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem;
-  --s-5:1.5rem; --s-6:2rem; --s-7:3rem;
-  --r-md:6px;
-  --linha:cubic-bezier(0.22,1,0.36,1);
+  --fundo:oklch(0.975 0.008 265); --carta:oklch(1 0 0);
+  --risco:oklch(0.905 0.012 265);
+  --texto:oklch(0.28 0.030 268); --texto-2:oklch(0.50 0.028 268);
+  --ingles:oklch(0.55 0.20 265); --ciencias:oklch(0.60 0.15 195);
+  --historia:oklch(0.60 0.18 40); --arte:oklch(0.56 0.22 330);
+  --display:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem;
+  --r:14px; --r-g:20px; --labio:4px;
+  --saida:cubic-bezier(0.22,1,0.36,1);
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --paper:oklch(0.185 0.008 262);
-    --surface:oklch(0.225 0.009 262);
-    --rule:oklch(0.340 0.012 262);
-    --ink:oklch(0.945 0.006 262);
-    --ink-soft:oklch(0.760 0.012 262);
-    --ink-faint:oklch(0.620 0.012 262);
-    --ingles:oklch(0.76 0.13 258);
-    --ciencias:oklch(0.76 0.10 192);
-    --historia:oklch(0.74 0.13 28);
-    --arte:oklch(0.76 0.13 312);
+    --fundo:oklch(0.205 0.028 272); --carta:oklch(0.262 0.030 272);
+    --risco:oklch(0.365 0.030 272);
+    --texto:oklch(0.975 0.008 272); --texto-2:oklch(0.800 0.020 272);
+    --ingles:oklch(0.72 0.17 265); --ciencias:oklch(0.75 0.13 195);
+    --historia:oklch(0.74 0.15 40); --arte:oklch(0.72 0.19 330);
   }
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--sans);font-size:1rem;line-height:1.6;
+body{margin:0;background:var(--fundo);color:var(--texto);
+  font-family:var(--corpo);font-size:1.0625rem;font-weight:600;line-height:1.55;
   -webkit-font-smoothing:antialiased;min-height:100vh;
   padding:env(safe-area-inset-top) env(safe-area-inset-right)
-          calc(env(safe-area-inset-bottom) + var(--s-5)) env(safe-area-inset-left);
-}
-svg{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.wrap{max-width:46rem;margin:0 auto;padding:var(--s-7) var(--s-4)}
-header{border-bottom:2px solid var(--ink);padding-bottom:var(--s-4);margin-bottom:var(--s-2)}
-h1{font-family:var(--serif);font-size:2rem;font-weight:600;letter-spacing:-0.012em;margin:0 0 var(--s-2);text-wrap:balance}
-.sub{color:var(--ink-soft);max-width:52ch;margin:0}
-
-ul{list-style:none;margin:0;padding:0}
-li{border-bottom:1px solid var(--rule)}
+          calc(env(safe-area-inset-bottom) + var(--s-5)) env(safe-area-inset-left)}
+svg{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wrap{max-width:52rem;margin:0 auto;padding:var(--s-6) var(--s-4)}
+header{margin-bottom:var(--s-5)}
+h1{font-family:var(--display);font-size:2.375rem;font-weight:700;margin:0 0 var(--s-2);letter-spacing:-0.01em}
+.sub{color:var(--texto-2);max-width:48ch;margin:0}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:var(--s-4);margin:0;padding:0;list-style:none}
 a.jogo{
-  display:grid;grid-template-columns:auto 1fr auto;gap:var(--s-4);align-items:center;
-  padding:var(--s-5) var(--s-2);text-decoration:none;color:inherit;
-  transition:background 150ms var(--linha);
-}
-a.jogo:hover{background:color-mix(in oklch,var(--cor) 7%,var(--surface))}
-a.jogo:focus-visible{outline:2px solid var(--cor);outline-offset:-2px}
-.marca{
-  width:2.75rem;height:2.75rem;display:grid;place-items:center;
-  border:1px solid var(--rule);border-radius:var(--r-md);color:var(--cor);
-}
-.nome{font-family:var(--serif);font-size:1.25rem;font-weight:600;display:block;line-height:1.25}
-.materia{font-size:0.75rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;
-  color:var(--cor);display:block;margin-bottom:2px}
-.desc{font-size:0.875rem;color:var(--ink-soft);display:block;margin-top:var(--s-1);max-width:46ch;line-height:1.5}
-.seta{color:var(--ink-faint)}
-a.jogo:hover .seta{color:var(--cor)}
-
-li.ingles{--cor:var(--ingles)} li.ciencias{--cor:var(--ciencias)}
-li.historia{--cor:var(--historia)} li.arte{--cor:var(--arte)}
-
-footer{margin-top:var(--s-5);
-  color:var(--ink-soft);font-size:0.875rem;max-width:58ch}
-footer b{color:var(--ink)}
-
+  --cor:var(--ingles);
+  display:grid;grid-template-rows:auto auto 1fr;gap:var(--s-2);height:100%;
+  padding:var(--s-5);text-decoration:none;color:inherit;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  transition:transform 120ms var(--saida),box-shadow 120ms var(--saida),border-color 140ms var(--saida)}
+a.jogo:hover{transform:translateY(-3px);border-color:var(--cor);
+  box-shadow:0 calc(var(--labio) + 3px) 0 color-mix(in oklch,var(--cor) 45%,var(--carta))}
+a.jogo:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+a.jogo:focus-visible{outline:3px solid var(--cor);outline-offset:3px}
+.marca{width:3.25rem;height:3.25rem;padding:0.7rem;border-radius:var(--r);
+  background:color-mix(in oklch,var(--cor) 14%,var(--carta));
+  color:color-mix(in oklch,var(--cor) 80%,black)}
+@media (prefers-color-scheme:dark){.marca{color:var(--cor)}}
+.materia{display:inline-block;align-self:start;justify-self:start;
+  background:var(--cor);color:#fff;border-radius:999px;padding:2px var(--s-3);
+  font-family:var(--display);font-size:0.8125rem;font-weight:600}
+.nome{font-family:var(--display);font-size:1.375rem;font-weight:600;display:block;line-height:1.2;margin-top:var(--s-2)}
+.desc{font-size:0.9375rem;color:var(--texto-2);display:block;line-height:1.45}
+li.ingles a{--cor:var(--ingles)} li.ciencias a{--cor:var(--ciencias)}
+li.historia a{--cor:var(--historia)} li.arte a{--cor:var(--arte)}
+footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r-g);
+  color:var(--texto-2);font-size:0.9375rem;max-width:56ch}
+footer b{color:var(--texto)}
 @media(max-width:34rem){
   .wrap{padding:var(--s-5) var(--s-3)}
-  h1{font-size:1.625rem}
-  a.jogo{grid-template-columns:auto 1fr;gap:var(--s-3);padding:var(--s-4) var(--s-1)}
-  .seta{display:none}
+  h1{font-size:1.875rem}
 }
-@media (prefers-reduced-motion:reduce){
-  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
-}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}a.jogo:active{transform:none}}
 </style>
 </head>
 <body>
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"
-     fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
 <defs>
 <symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol>
 <symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol>
 <symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol>
 <symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol>
-<symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
 </defs>
 </svg>
 
 <div class="wrap">
   <header>
     <h1>Jogos de Estudo</h1>
-    <p class="sub">Revisão por matéria, montada a partir do livro e das folhas da escola. O progresso fica salvo neste aparelho.</p>
+    <p class="sub">Escolha a matéria e comece. O progresso fica salvo neste aparelho.</p>
   </header>
 
-  <ul>
-    <li class="ingles">
-      <a class="jogo" href="time-travel-english.html">
-        <svg class="marca" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>
-        <span>
-          <span class="materia">Inglês</span>
-          <span class="nome">Time Travel English</span>
-          <span class="desc">Present continuous, contrações, horas e rotina. Unit 5 do student&rsquo;s book.</span>
-        </span>
-        <svg class="seta" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seta"/></svg>
-      </a>
-    </li>
-
-    <li class="ciencias">
-      <a class="jogo" href="exploradores-do-ceu.html">
-        <svg class="marca" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-terra"/></svg>
-        <span>
-          <span class="materia">Ciências</span>
-          <span class="nome">Exploradores do Céu</span>
-          <span class="desc">Movimento da Terra, fases da Lua, calendários, orientação e estrelas. Capítulo 6.</span>
-        </span>
-        <svg class="seta" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seta"/></svg>
-      </a>
-    </li>
-
-    <li class="historia">
-      <a class="jogo" href="historia.html">
-        <svg class="marca" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prensa"/></svg>
-        <span>
-          <span class="materia">História</span>
-          <span class="nome">Linhas do Tempo</span>
-          <span class="desc">Da imprensa de Gutenberg ao celular: correio, telégrafo, cinema, internet, Braille e Libras.</span>
-        </span>
-        <svg class="seta" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seta"/></svg>
-      </a>
-    </li>
-
-    <li class="arte">
-      <a class="jogo" href="artes.html">
-        <svg class="marca" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
-        <span>
-          <span class="materia">Arte</span>
-          <span class="nome">Ateliê</span>
-          <span class="desc">Melodia, ritmo, timbre, harmonia e arranjo — e a pintura mural, do afresco à Capela Sistina.</span>
-        </span>
-        <svg class="seta" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seta"/></svg>
-      </a>
-    </li>
+  <ul class="grade">
+    <li class="ingles"><a class="jogo" href="time-travel-english.html">
+      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>
+      <span class="materia">Inglês</span>
+      <span><span class="nome">Time Travel English</span>
+      <span class="desc">Present continuous, contrações, horas e rotina.</span></span>
+    </a></li>
+    <li class="ciencias"><a class="jogo" href="exploradores-do-ceu.html">
+      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-terra"/></svg>
+      <span class="materia">Ciências</span>
+      <span><span class="nome">Exploradores do Céu</span>
+      <span class="desc">Movimento da Terra, fases da Lua, calendários e estrelas.</span></span>
+    </a></li>
+    <li class="historia"><a class="jogo" href="historia.html">
+      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prensa"/></svg>
+      <span class="materia">História</span>
+      <span><span class="nome">Linhas do Tempo</span>
+      <span class="desc">Da imprensa de Gutenberg ao celular: telégrafo, cinema, internet.</span></span>
+    </a></li>
+    <li class="arte"><a class="jogo" href="artes.html">
+      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
+      <span class="materia">Arte</span>
+      <span><span class="nome">Ateliê</span>
+      <span class="desc">Melodia, harmonia e arranjo — e a pintura mural, até a Capela Sistina.</span></span>
+    </a></li>
   </ul>
 
   <footer>
-    Cada jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.
-    As questões tiradas do livro ou da folha da escola trazem a página de origem.
+    Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.
   </footer>
 </div>
 </body>

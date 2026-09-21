@@ -1,75 +1,60 @@
 # Sistema visual — Jogos de Estudo
 
-Direção: **o caderno da aluna**. Papel, pauta, tinta. O conteúdo escrito à mão
-é dela; a estrutura impressa é do caderno. O jogo deve parecer o lugar onde
-esse conteúdo mora, não um aplicativo por cima dele.
+Direção: **jogo de quiz**, no espírito de Kahoot, Quizizz e Duolingo — lúdico
+sem depender de emoji. O que dá o tom é cor forte, forma, peso tipográfico e
+retorno físico ao toque.
 
-Registro: **product**. Uma escala tipográfica fixa, cor restrita, nenhum
-ornamento que não comunique estado.
+## As quatro ideias emprestadas
+
+| Referência | O que veio dela |
+|---|---|
+| **Kahoot** | cada alternativa tem uma **forma** própria (círculo, triângulo, quadrado, losango) em cor própria. A forma identifica a resposta — é o papel que o emoji fazia, mas legível e acessível. |
+| **Duolingo** | botão com **lábio** de 4px que afunda ao apertar; barra de progresso grossa e arredondada; espaço generoso. |
+| **Quizizz** | cor saturada carregando a tela, faixa colorida no topo, celebração curta no acerto. |
+| **Quizlet** | tipografia grande e confiante, o card como objeto central. |
 
 ## Cor
 
-Estratégia **restrita**: papel + tinta + uma cor por matéria, usada só em
-ação primária, seleção e estado — nunca como decoração.
-
-O papel é branco com desvio de croma para o **azul**, não para o quente.
-Caderno brasileiro é branco-azulado; creme e pergaminho ficaram de fora de
-propósito.
-
-| Token | Claro | Papel de grafite (escuro) |
-|---|---|---|
-| `--paper` | `oklch(0.988 0.003 255)` | `oklch(0.185 0.008 262)` |
-| `--surface` | `oklch(1 0 0)` | `oklch(0.225 0.009 262)` |
-| `--rule` | `oklch(0.885 0.010 255)` | `oklch(0.340 0.012 262)` |
-| `--ink` | `oklch(0.26 0.021 262)` | `oklch(0.945 0.006 262)` |
-| `--ink-soft` | `oklch(0.46 0.018 262)` | `oklch(0.760 0.012 262)` |
-
-Uma caneta por matéria, das que existem no estojo:
+Estratégia **comprometida**: a cor da matéria carrega a faixa do topo, os
+botões primários e os selos.
 
 | Matéria | Cor |
 |---|---|
-| Inglês | `oklch(0.47 0.15 258)` azul esferográfica |
-| Ciências | `oklch(0.46 0.11 192)` verde-azulado |
-| História | `oklch(0.45 0.15 28)` vermelho-vinho |
-| Arte | `oklch(0.47 0.16 312)` violeta |
+| Inglês | `oklch(0.55 0.20 265)` azul-violeta |
+| Ciências | `oklch(0.60 0.15 195)` turquesa |
+| História | `oklch(0.60 0.18 40)` laranja-terra |
+| Arte | `oklch(0.56 0.22 330)` magenta |
 
-Semântica separada da cor da matéria: `--certo` verde, `--errado` vermelho.
-
-O modo escuro não é inversão: é papel de grafite, pensado para o uso real
-à noite com abajur.
+As quatro cores de alternativa — índigo, âmbar, turquesa e violeta — foram
+escolhidas **longe de vermelho e verde**, que já significam errado e certo.
+Uma primeira versão usava coral e dava para confundir uma alternativa ainda
+não respondida com uma marcada errada.
 
 ## Tipografia
 
-Par no eixo de contraste — serifa + sans humanista.
+- **Fredoka** (500/600/700) — títulos, enunciado, números e rótulos de jogo.
+  Arredondada e cheia, dá o tom lúdico.
+- **Nunito** (400/600/700/900) — corpo, descrições e alternativas.
 
-- **Source Serif 4** — só em h1/h2/h3 e no enunciado da questão. O enunciado
-  é matéria de leitura, vinda de um livro; a serifa marca isso.
-- **Atkinson Hyperlegible** — toda a interface: botões, rótulos, dados, corpo.
-  Foi desenhada pelo Braille Institute para legibilidade. A escolha conversa
-  com o conteúdo de História, que ensina Braille e Libras.
-
-Escala **fixa** (sem `clamp`), razão ~1.2: 0.75 / 0.875 / 1 / 1.125 / 1.375 /
-1.625 / 2 rem. Números com `tabular-nums`.
+Escala fixa, de 0.8125 a 2.375 rem. Números com `tabular-nums`.
 
 ## Componentes
 
-- **Alternativas**: linhas com marcador de letra (A, B, C, D), borda inteira,
-  estados de acerto e erro pelo fundo e pela borda.
-- **Missões e trilhas**: lista com régua entre itens — não grade de cards
-  iguais. Ícone à esquerda, título e descrição empilhados, estado e progresso
-  à direita.
-- **Retorno**: bloco com borda inteira e fundo tingido, com rótulo textual
+- **Alternativas**: bloco alto (4.5rem), forma colorida à esquerda, borda de
+  2px e lábio. Acerto fica verde e dá um pulo curto; erro fica vermelho.
+- **Missões e trilhas**: cards com ícone em chip colorido, barra de progresso
+  grossa e selo de estado.
+- **Retorno**: bloco com borda inteira, fundo tingido e rótulo grande
   ("Certo" / "Ainda não"). Sem filete lateral.
-- **Ícones**: sprite SVG de linha, 24×24, traço 1.6, `currentColor`. Um por
-  missão. Nenhum emoji em lugar nenhum.
-- **HUD**: número grande com rótulo em texto embaixo (Pontos, Vidas,
-  Sequência). Vidas mostra ∞ no modo Treino.
+- **Ícones**: sprite SVG de linha, 24×24. Nenhum emoji em lugar nenhum.
+- **HUD**: pílulas translúcidas sobre a faixa colorida, com número e rótulo.
 
 ## Movimento
 
-150–250 ms, curva `cubic-bezier(0.22,1,0.36,1)`. Só transmite estado: barra de
-progresso, troca de fundo, número de pontos que sobe e some. Sem sequência de
-entrada na carga da página. `prefers-reduced-motion` desliga tudo.
+90–420 ms. `--mola` (com leve ultrapassagem) nas celebrações; `--saida`
+(desaceleração) no resto. Os botões afundam ao toque trocando `translateY`
+pelo lábio da sombra. `prefers-reduced-motion` desliga tudo, inclusive o
+afundamento.
 
 ## Como reconstruir
 
@@ -78,5 +63,5 @@ sh build/rebuild.sh
 ```
 
 Regenera os quatro jogos a partir das cópias pré-design, aplicando
-`build/aplicar.py` (folha de estilo, ícones, remoção de emoji) e
-`build/letras.py` (marcadores das alternativas).
+`build/aplicar.py` (folha de estilo, ícones, remoção de emoji),
+`build/letras.py` (formas das alternativas) e `build/_tokens.css`.

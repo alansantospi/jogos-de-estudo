@@ -1,64 +1,67 @@
+
 :root{
   color-scheme:light dark;
 
-  /* Papel: quase branco com um desvio de croma para o AZUL da tinta.
-     Nunca creme — o caderno brasileiro é branco-azulado, não pergaminho. */
-  --paper:        oklch(0.988 0.003 255);
-  --paper-sunken: oklch(0.966 0.005 255);
-  --surface:      oklch(1 0 0);
-  --rule:         oklch(0.885 0.010 255);
-  --rule-soft:    oklch(0.940 0.010 255);
-  --pauta:        oklch(0.930 0.016 255);
-
-  --ink:       oklch(0.26 0.021 262);   /* grafite escuro, levemente azul */
-  --ink-soft:  oklch(0.46 0.018 262);   /* 4.9:1 no papel */
-  --ink-faint: oklch(0.60 0.014 262);   /* só para texto grande */
-
   --materia:      %MATERIA%;
-  --materia-tint: color-mix(in oklch, var(--materia) 9%, var(--surface));
-  --materia-edge: color-mix(in oklch, var(--materia) 32%, var(--rule));
+  --materia-forte:color-mix(in oklch, var(--materia) 82%, black);
+  --materia-clara:color-mix(in oklch, var(--materia) 12%, white);
+  --materia-borda:color-mix(in oklch, var(--materia) 45%, white);
 
-  --certo:       oklch(0.44 0.12 152);
-  --certo-tint:  oklch(0.955 0.030 152);
-  --errado:      oklch(0.48 0.17 25);
-  --errado-tint: oklch(0.960 0.028 25);
+  --fundo:    oklch(0.975 0.008 265);
+  --carta:    oklch(1 0 0);
+  --risco:    oklch(0.905 0.012 265);
+  --texto:    oklch(0.28 0.030 268);
+  --texto-2:  oklch(0.50 0.028 268);
+  --texto-3:  oklch(0.63 0.022 268);
 
-  --sans:'Atkinson Hyperlegible',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  --serif:'Source Serif 4',ui-serif,Georgia,'Times New Roman',serif;
+  /* Quatro cores de alternativa, no espírito do Kahoot, fugindo de
+     vermelho e verde puros para não brigar com certo/errado. */
+  /* Quatro cores bem distintas entre si e distantes de vermelho e verde,
+     que já significam errado e certo. */
+  --alt-1:oklch(0.54 0.19 268);   /* índigo   */
+  --alt-2:oklch(0.70 0.15 75);    /* âmbar    */
+  --alt-3:oklch(0.57 0.13 200);   /* turquesa */
+  --alt-4:oklch(0.55 0.21 322);   /* violeta  */
 
-  /* Escala fixa, razão ~1.2 — registro de produto não usa tipografia fluida. */
-  --t-xs:0.75rem; --t-sm:0.875rem; --t-md:1rem; --t-lg:1.125rem;
-  --t-xl:1.375rem; --t-2xl:1.625rem; --t-3xl:2rem;
+  --certo:      oklch(0.64 0.18 148);
+  --certo-forte:oklch(0.50 0.16 148);
+  --certo-claro:oklch(0.95 0.055 148);
+  --errado:      oklch(0.60 0.21 22);
+  --errado-forte:oklch(0.47 0.19 22);
+  --errado-claro:oklch(0.95 0.045 22);
+
+  --display:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+
+  --t-xs:0.8125rem; --t-sm:0.9375rem; --t-md:1.0625rem; --t-lg:1.25rem;
+  --t-xl:1.5rem; --t-2xl:1.875rem; --t-3xl:2.375rem;
 
   --s-1:0.25rem; --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem;
-  --s-5:1.5rem; --s-6:2rem; --s-7:3rem; --s-8:4rem;
+  --s-5:1.5rem; --s-6:2rem; --s-7:3rem;
 
-  --r-sm:3px; --r-md:6px; --r-lg:10px;
-  --linha:cubic-bezier(0.22,1,0.36,1);
-
-  --z-base:0; --z-sticky:10; --z-aviso:20;
+  --r:14px; --r-g:20px; --r-p:8px;
+  --labio:4px;                       /* a "espessura" dos botões */
+  --mola:cubic-bezier(0.34,1.4,0.64,1);
+  --saida:cubic-bezier(0.22,1,0.36,1);
 }
 
 @media (prefers-color-scheme:dark){
   :root{
-    /* Ela estuda à noite, com abajur. O modo escuro é papel de grafite,
-       não o azul-marinho espacial de antes. */
-    --paper:        oklch(0.185 0.008 262);
-    --paper-sunken: oklch(0.155 0.008 262);
-    --surface:      oklch(0.225 0.009 262);
-    --rule:         oklch(0.340 0.012 262);
-    --rule-soft:    oklch(0.285 0.010 262);
-    --pauta:        oklch(0.275 0.012 262);
-    --ink:       oklch(0.945 0.006 262);
-    --ink-soft:  oklch(0.760 0.012 262);
-    --ink-faint: oklch(0.620 0.012 262);
-    --materia:      color-mix(in oklch, %MATERIA% 62%, white);
-    --materia-tint: color-mix(in oklch, %MATERIA% 22%, var(--surface));
-    --materia-edge: color-mix(in oklch, %MATERIA% 45%, var(--rule));
-    --certo:       oklch(0.78 0.15 152);
-    --certo-tint:  color-mix(in oklch, oklch(0.55 0.13 152) 22%, var(--surface));
-    --errado:      oklch(0.76 0.16 25);
-    --errado-tint: color-mix(in oklch, oklch(0.55 0.17 25) 22%, var(--surface));
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, %MATERIA% 68%, white);
+    --materia-forte:color-mix(in oklch, %MATERIA% 55%, black);
+    --materia-clara:color-mix(in oklch, %MATERIA% 26%, var(--carta));
+    --materia-borda:color-mix(in oklch, %MATERIA% 55%, var(--carta));
+    --alt-1:oklch(0.68 0.17 268); --alt-2:oklch(0.78 0.14 75);
+    --alt-3:oklch(0.70 0.12 200); --alt-4:oklch(0.68 0.19 322);
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.56 0.16 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.54 0.19 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
   }
 }
-

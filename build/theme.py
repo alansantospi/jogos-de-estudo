@@ -9,15 +9,15 @@ restrita e nenhum ornamento que não comunique estado.
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-         'family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&'
-         'family=Atkinson+Hyperlegible:wght@400;700&display=swap">')
+         'family=Fredoka:wght@500;600;700&'
+         'family=Nunito:wght@400;600;700;900&display=swap">')
 
 # Cor de cada matéria: caneta que um estudante realmente tem no estojo.
 MATERIAS = {
-    "ingles":   "oklch(0.47 0.15 258)",   # azul esferográfica
-    "ciencias": "oklch(0.46 0.11 192)",   # verde-azulado
-    "historia": "oklch(0.45 0.15 28)",    # vermelho-vinho
-    "arte":     "oklch(0.47 0.16 312)",   # violeta
+    "ingles":   "oklch(0.55 0.20 265)",   # azul-violeta vivo
+    "ciencias": "oklch(0.60 0.15 195)",   # turquesa
+    "historia": "oklch(0.60 0.18 40)",    # laranja-terra
+    "arte":     "oklch(0.56 0.22 330)",   # magenta
 }
 
 def css(materia: str) -> str:

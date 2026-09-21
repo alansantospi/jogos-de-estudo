@@ -32,24 +32,24 @@ mesmo motor: mesmos formatos de questão, mesmo modo Treino, mesmo progresso.
 
 ## Personalidade
 
-**Três palavras:** honesto, legível, sem infantilizar.
+**Três palavras:** lúdico, colorido, legível.
 
-Ela tem 10 anos, não 5. O material não precisa de mascotes nem de festa a cada
-acerto para funcionar — precisa ser claro o suficiente para ser usado cansada,
-e sério o suficiente para ela levar a sério.
+É um **jogo**, e precisa parecer um. Uma primeira versão tratou o material como
+caderno impresso: ficou bonita e ilegível de tão séria — a própria aluna diria
+que não dá vontade de abrir. Engajamento aqui é função, não enfeite.
 
-**Referência concreta:** o caderno dela. Papel, pauta, caneta azul, lápis.
-O conteúdo escrito à mão é dela; a estrutura impressa é do caderno. O jogo
-deve parecer o lugar onde esse conteúdo mora, não um aplicativo por cima dele.
+**Referências concretas:** Kahoot (formas coloridas nas alternativas), Duolingo
+(botão que afunda, barra de progresso gorda), Quizizz (cor saturada carregando
+a tela), Quizlet (tipografia grande). O que se aproveita delas é cor, forma,
+peso e retorno ao toque — nenhuma delas depende de emoji para ser divertida.
 
 ## Anti-referências
 
-- **Cara de IA.** Emoji como ícone, herói centralizado com emoji gigante,
-  gradiente roxo-azul, cards arredondados idênticos em grade, pílulas por toda
-  parte, eyebrow em caixa alta acima de cada seção.
-- **Gamificação barulhenta.** Confete, mascote, badge dourado, "Parabéns!!!".
-- **App infantil.** Cores primárias saturadas, bordas muito arredondadas,
-  tipografia arredondada tipo Comic/Baloo.
+- **Emoji como ícone.** Nenhum, em lugar nenhum. Forma e cor fazem esse papel.
+- **Cara de IA.** Herói centralizado com emoji gigante, gradiente roxo-azul,
+  eyebrow em caixa alta acima de cada seção, glassmorphism decorativo.
+- **Gamificação barulhenta.** Confete, mascote, "Parabéns!!!".
+- **Documento impresso.** Já tentamos: sério demais, não convida a jogar.
 - **Dashboard corporativo.** Ela está estudando, não acompanhando KPI.
 
 ## Acessibilidade
