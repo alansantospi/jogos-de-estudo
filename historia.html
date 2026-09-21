@@ -704,12 +704,14 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
     <p id="salaDica" class="sala-dica">Abra o mesmo endereço no celular de cada
     jogador, toque em <b>Entrar numa sala</b> e digite o código.<br>
     <b>Melhor com todos no mesmo Wi-Fi.</b> Em redes diferentes costuma
-    funcionar, mas em dados móveis pode não conectar.</p>
+    funcionar, mas em dados móveis pode não conectar.<br>
+    O telão não responde às perguntas: é preciso pelo menos um jogador para
+    começar.</p>
     <div id="salaJogadores" class="sala-jogadores"></div>
     <label class="sala-campo"><span>Missão</span>
       <select id="salaMissao"></select></label>
     <button type="button" id="salaComecar" class="primary" onclick="comecarSala()" disabled>
-      Começar</button>
+      Esperando jogadores...</button>
     <button type="button" class="ghost" onclick="fecharSala()">Encerrar sala</button>
   </div>
 
@@ -1688,6 +1690,7 @@ async function criarSala(){
   }
   _souTelao = true;
   _montarMissoes();
+  _pintarJogadores();   // sem isto a área fica vazia e ninguém entende a espera
   _tentarCodigo(0);
 }
 
@@ -1742,7 +1745,11 @@ function _pintarJogadores(){
   c.innerHTML = [..._jogadores.values()]
     .map(j => '<span class="sala-jogador">' + _escapar(j.nome) + "</span>").join("")
     || '<span class="sala-dica">Ninguém entrou ainda.</span>';
-  document.getElementById("salaComecar").disabled = _jogadores.size === 0;
+  // Um botão desativado sem motivo é um beco: o rótulo passa a dizer por que.
+  const b = document.getElementById("salaComecar");
+  b.disabled = _jogadores.size === 0;
+  b.textContent = _jogadores.size === 0 ? "Esperando jogadores..."
+    : "Começar com " + _jogadores.size + (_jogadores.size === 1 ? " jogador" : " jogadores");
 }
 function _escapar(t){
   return String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
