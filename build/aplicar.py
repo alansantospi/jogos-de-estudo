@@ -112,7 +112,7 @@ def aplicar(arq, materia):
     # 9. visual: fontes, sprite e folha de estilo
     s=re.sub(r'<style>.*?</style>','<style>'+TOKENS.replace("%MATERIA%",MATERIAS[materia])+COMP+'</style>',s,flags=re.S)
     s=s.replace("</head>",FONTS+"</head>",1)
-    usados=sorted(set(mapa.values())|{"som","mudo"}|set(re.findall(r'href="#i-([a-z-]+)"',s))|
+    usados=sorted(set(mapa.values())|{"som","mudo","check"}|set(re.findall(r'href="#i-([a-z-]+)"',s))|
                   set(re.findall(r'\bic:"([a-z-]+)"',s)))
     s=re.sub(r'(<body[^>]*>)',r'\1'+icons.sprite(usados),s,count=1)
     s=s.replace("<script>",

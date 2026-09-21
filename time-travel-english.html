@@ -33,7 +33,13 @@
   --alt-3:oklch(0.535 0.13 200);  /* turquesa */
   --alt-4:oklch(0.550 0.21 322);  /* violeta  */
 
-  --certo:      oklch(0.64 0.18 148);
+  /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
+   cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
+   nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
+--aviso:       oklch(0.50 0.16 148);
+--aviso-fundo: oklch(0.38 0.13 148);
+--sobre-aviso: oklch(1 0 0);
+--certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
   --certo-claro:oklch(0.95 0.055 148);
   --errado:      oklch(0.60 0.21 22);
@@ -422,13 +428,43 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   display:inline-flex;align-items:center;gap:var(--s-1)}
 
 /* ---------- avisos ---------- */
+/* O aviso nasce logo abaixo do cabeçalho — o JS mede e escreve --aviso-topo.
+   Antes ficava colado no topo da janela, em cima do cabeçalho, e como usava a
+   cor da matéria era azul sobre azul: 1,09:1, praticamente invisível. */
 .conquista,.achievement-pop{
-  position:fixed;left:50%;top:var(--s-4);transform:translateX(-50%) translateY(-0.75rem) scale(.95);
-  z-index:20;background:var(--materia-solida);color:var(--sobre-materia);padding:var(--s-3) var(--s-5);border-radius:999px;
+  position:fixed;left:50%;top:var(--aviso-topo,var(--s-4));
+  transform:translateX(-50%) translateY(-1.5rem) scale(.9);
+  z-index:20;background:var(--aviso);color:var(--sobre-aviso);
+  padding:var(--s-3) var(--s-5);border-radius:999px;
   font-family:var(--display);font-size:var(--t-md);font-weight:600;
-  box-shadow:0 6px 0 var(--materia-forte);opacity:0;pointer-events:none;
-  transition:opacity 200ms var(--saida),transform 260ms var(--mola);max-width:92vw;text-align:center}
+  box-shadow:0 var(--labio) 0 var(--aviso-fundo),
+             0 0 0 2px rgb(255 255 255 / .16),
+             0 14px 30px rgb(0 0 0 / .34);
+  opacity:0;pointer-events:none;
+  transition:opacity 180ms var(--saida),transform 340ms var(--mola);
+  max-width:min(92vw,26rem);text-align:center}
 .conquista.show,.achievement-pop.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+
+/* Fim de etapa é uma virada de página, não um recado de passagem: diz onde a
+   criança estava e para onde vai. */
+.conquista.etapa,.achievement-pop.etapa{
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);
+  display:grid;justify-items:center;gap:2px;max-width:min(94vw,25rem)}
+.conquista.etapa .aviso-t,.achievement-pop.etapa .aviso-t{
+  display:flex;align-items:center;gap:var(--s-2);white-space:nowrap;
+  font-size:var(--t-md);font-weight:700}
+.conquista.etapa .aviso-s,.achievement-pop.etapa .aviso-s{
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;opacity:.92}
+.conquista .ic-txt,.achievement-pop .ic-txt{width:1.2em;height:1.2em}
+
+/* O nó que acabou de fechar pisca ao virar verde: é o sinal de que a etapa
+   mudou, e não só o texto do aviso. */
+.node.fechou,.trail-node.fechou{animation:fechou 620ms var(--mola)}
+@keyframes fechou{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.35)}
+  60%{transform:scale(.94)}
+  to{transform:scale(1)}}
 .floater{position:absolute;right:0;top:-0.75rem;font-family:var(--display);font-size:var(--t-xl);
   font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none;
   animation:sobe 950ms var(--saida) forwards;z-index:5}
@@ -2089,10 +2125,14 @@ function advanceTrail(){
   if(!activeTrail) return false;
   const trail=trails[activeTrail];
   if(trailStep<trail.steps.length-1){
+    const fechada=trailStep;
     trailStep++;
     sfx.etapa();
-    showAchievement(`Etapa concluída! Próxima: ${trail.steps[trailStep].label}`);
+    showAchievement(
+      `<span class="aviso-t"><svg class=\"ic-txt\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#i-check\"/></svg> Etapa ${fechada+1} de ${trail.steps.length} concluída</span>`+
+      `<span class="aviso-s">Agora: ${trail.steps[trailStep].label}</span>`, true);
     startTrailStep();
+    marcarEtapaFechada(fechada);
     return true;
   }
   return false;
@@ -2195,12 +2235,33 @@ function resetProgress(){
   showAchievement("Progresso apagado.");
 }
 
-function showAchievement(text){
+function posicionarAviso(pop){
+  // Abaixo do painel de progresso, para a trilha — que é o que o aviso está
+  // anunciando — continuar à vista. Fora da partida, abaixo do cabeçalho.
+  const alvo=document.querySelector("#quiz.active .progress-panel")
+          || document.querySelector("header");
+  const y=alvo?alvo.getBoundingClientRect().bottom+12:12;
+  pop.style.setProperty("--aviso-topo",Math.round(Math.max(y,12))+"px");
+}
+
+function marcarEtapaFechada(i){
+  const n=document.querySelectorAll("#trailMap .trail-node")[i];
+  if(!n) return;
+  n.classList.add("fechou");
+  setTimeout(()=>n.classList.remove("fechou"),700);
+}
+
+function showAchievement(text,etapa){
   const pop=document.getElementById("achievementPop");
   if(!pop)return;
-  pop.textContent=text;
+  pop.classList.toggle("etapa",!!etapa);
+  if(etapa) pop.innerHTML=text; else pop.textContent=text;
+  posicionarAviso(pop);
+  pop.classList.remove("show");
+  void pop.offsetWidth;            // reinicia a animação se já estava na tela
   pop.classList.add("show");
-  setTimeout(()=>pop.classList.remove("show"),1800);
+  clearTimeout(pop._t);
+  pop._t=setTimeout(()=>pop.classList.remove("show"),etapa?2800:1800);
 }
 
 function updateCombo(ok){

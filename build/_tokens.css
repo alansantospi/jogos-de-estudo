@@ -27,7 +27,13 @@
   --alt-3:oklch(0.535 0.13 200);  /* turquesa */
   --alt-4:oklch(0.550 0.21 322);  /* violeta  */
 
-  --certo:      oklch(0.64 0.18 148);
+  /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
+   cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
+   nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
+--aviso:       oklch(0.50 0.16 148);
+--aviso-fundo: oklch(0.38 0.13 148);
+--sobre-aviso: oklch(1 0 0);
+--certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
   --certo-claro:oklch(0.95 0.055 148);
   --errado:      oklch(0.60 0.21 22);

@@ -33,7 +33,13 @@
   --alt-3:oklch(0.535 0.13 200);  /* turquesa */
   --alt-4:oklch(0.550 0.21 322);  /* violeta  */
 
-  --certo:      oklch(0.64 0.18 148);
+  /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
+   cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
+   nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
+--aviso:       oklch(0.50 0.16 148);
+--aviso-fundo: oklch(0.38 0.13 148);
+--sobre-aviso: oklch(1 0 0);
+--certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
   --certo-claro:oklch(0.95 0.055 148);
   --errado:      oklch(0.60 0.21 22);
@@ -422,13 +428,43 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   display:inline-flex;align-items:center;gap:var(--s-1)}
 
 /* ---------- avisos ---------- */
+/* O aviso nasce logo abaixo do cabeçalho — o JS mede e escreve --aviso-topo.
+   Antes ficava colado no topo da janela, em cima do cabeçalho, e como usava a
+   cor da matéria era azul sobre azul: 1,09:1, praticamente invisível. */
 .conquista,.achievement-pop{
-  position:fixed;left:50%;top:var(--s-4);transform:translateX(-50%) translateY(-0.75rem) scale(.95);
-  z-index:20;background:var(--materia-solida);color:var(--sobre-materia);padding:var(--s-3) var(--s-5);border-radius:999px;
+  position:fixed;left:50%;top:var(--aviso-topo,var(--s-4));
+  transform:translateX(-50%) translateY(-1.5rem) scale(.9);
+  z-index:20;background:var(--aviso);color:var(--sobre-aviso);
+  padding:var(--s-3) var(--s-5);border-radius:999px;
   font-family:var(--display);font-size:var(--t-md);font-weight:600;
-  box-shadow:0 6px 0 var(--materia-forte);opacity:0;pointer-events:none;
-  transition:opacity 200ms var(--saida),transform 260ms var(--mola);max-width:92vw;text-align:center}
+  box-shadow:0 var(--labio) 0 var(--aviso-fundo),
+             0 0 0 2px rgb(255 255 255 / .16),
+             0 14px 30px rgb(0 0 0 / .34);
+  opacity:0;pointer-events:none;
+  transition:opacity 180ms var(--saida),transform 340ms var(--mola);
+  max-width:min(92vw,26rem);text-align:center}
 .conquista.show,.achievement-pop.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+
+/* Fim de etapa é uma virada de página, não um recado de passagem: diz onde a
+   criança estava e para onde vai. */
+.conquista.etapa,.achievement-pop.etapa{
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);
+  display:grid;justify-items:center;gap:2px;max-width:min(94vw,25rem)}
+.conquista.etapa .aviso-t,.achievement-pop.etapa .aviso-t{
+  display:flex;align-items:center;gap:var(--s-2);white-space:nowrap;
+  font-size:var(--t-md);font-weight:700}
+.conquista.etapa .aviso-s,.achievement-pop.etapa .aviso-s{
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;opacity:.92}
+.conquista .ic-txt,.achievement-pop .ic-txt{width:1.2em;height:1.2em}
+
+/* O nó que acabou de fechar pisca ao virar verde: é o sinal de que a etapa
+   mudou, e não só o texto do aviso. */
+.node.fechou,.trail-node.fechou{animation:fechou 620ms var(--mola)}
+@keyframes fechou{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.35)}
+  60%{transform:scale(.94)}
+  to{transform:scale(1)}}
 .floater{position:absolute;right:0;top:-0.75rem;font-family:var(--display);font-size:var(--t-xl);
   font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none;
   animation:sobe 950ms var(--saida) forwards;z-index:5}
@@ -465,7 +501,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"></head>
-<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-arco" viewBox="0 0 24 24"><path d="M5 20V11a7 7 0 0 1 14 0v9"/><path d="M3 20h18"/><path d="M12 20v-6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-castelo" viewBox="0 0 24 24"><path d="M4 20V8l2.5 2L9 6l3 3 3-3 2.5 4L20 8v12z"/><path d="M4 20h16"/><path d="M10.5 20v-4h3v4"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-escada" viewBox="0 0 24 24"><path d="M7 3v18M17 3v18"/><path d="M7 7h10M7 12h10M7 17h10"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-escultura" viewBox="0 0 24 24"><path d="M9 20V9a3 3 0 0 1 6 0v11"/><path d="M6 20h12"/><path d="M10 6.5 12 3l2 3.5"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></symbol><symbol id="i-instrumento" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-microfone" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.5M8.5 21.5h7"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-ondas" viewBox="0 0 24 24"><path d="M3 12c2.5-6 4.5 6 7 0s4.5 6 7 0 2.5-3 4-3"/></symbol><symbol id="i-ondas-agua" viewBox="0 0 24 24"><path d="M3 9c2.5-4 4.5 4 7 0s4.5 4 7 0 2.5-2 4-2"/><path d="M3 15c2.5-4 4.5 4 7 0s4.5 4 7 0 2.5-2 4-2"/></symbol><symbol id="i-parede" viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9.7h18M3 14.3h18"/><path d="M9 5v4.7M15 9.7v4.6M9 14.3V19"/></symbol><symbol id="i-partitura" viewBox="0 0 24 24"><path d="M3 7h18M3 11h18M3 15h18M3 19h18" opacity=".45"/><path d="M9 17V6l7-1.5v9"/><ellipse cx="7" cy="17" rx="2" ry="1.6"/><ellipse cx="14" cy="15.5" rx="2" ry="1.6"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1a5.5 5.5 0 0 1 11 0v1"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17 14.5a5.5 5.5 0 0 1 4 5.3V20"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-triste" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="9.2" cy="9.8" r=".8" fill="currentColor"/><circle cx="14.8" cy="9.8" r=".8" fill="currentColor"/></symbol><symbol id="i-tubo" viewBox="0 0 24 24"><path d="M9 2.5v10.8L5.5 19A2.5 2.5 0 0 0 7.7 22h8.6a2.5 2.5 0 0 0 2.2-3L15 13.3V2.5"/><path d="M8 2.5h8M8.5 14h7"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><div class="wrap"><div class="app"><header><div class="top"><div><h1>Ateliê</h1><div class="subtitle">Arte — música e pintura mural</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button></div></div></header><main>
+<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-arco" viewBox="0 0 24 24"><path d="M5 20V11a7 7 0 0 1 14 0v9"/><path d="M3 20h18"/><path d="M12 20v-6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-castelo" viewBox="0 0 24 24"><path d="M4 20V8l2.5 2L9 6l3 3 3-3 2.5 4L20 8v12z"/><path d="M4 20h16"/><path d="M10.5 20v-4h3v4"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-escada" viewBox="0 0 24 24"><path d="M7 3v18M17 3v18"/><path d="M7 7h10M7 12h10M7 17h10"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-escultura" viewBox="0 0 24 24"><path d="M9 20V9a3 3 0 0 1 6 0v11"/><path d="M6 20h12"/><path d="M10 6.5 12 3l2 3.5"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></symbol><symbol id="i-instrumento" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-microfone" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.5M8.5 21.5h7"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-ondas" viewBox="0 0 24 24"><path d="M3 12c2.5-6 4.5 6 7 0s4.5 6 7 0 2.5-3 4-3"/></symbol><symbol id="i-ondas-agua" viewBox="0 0 24 24"><path d="M3 9c2.5-4 4.5 4 7 0s4.5 4 7 0 2.5-2 4-2"/><path d="M3 15c2.5-4 4.5 4 7 0s4.5 4 7 0 2.5-2 4-2"/></symbol><symbol id="i-parede" viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9.7h18M3 14.3h18"/><path d="M9 5v4.7M15 9.7v4.6M9 14.3V19"/></symbol><symbol id="i-partitura" viewBox="0 0 24 24"><path d="M3 7h18M3 11h18M3 15h18M3 19h18" opacity=".45"/><path d="M9 17V6l7-1.5v9"/><ellipse cx="7" cy="17" rx="2" ry="1.6"/><ellipse cx="14" cy="15.5" rx="2" ry="1.6"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1a5.5 5.5 0 0 1 11 0v1"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17 14.5a5.5 5.5 0 0 1 4 5.3V20"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-triste" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="9.2" cy="9.8" r=".8" fill="currentColor"/><circle cx="14.8" cy="9.8" r=".8" fill="currentColor"/></symbol><symbol id="i-tubo" viewBox="0 0 24 24"><path d="M9 2.5v10.8L5.5 19A2.5 2.5 0 0 0 7.7 22h8.6a2.5 2.5 0 0 0 2.2-3L15 13.3V2.5"/><path d="M8 2.5h8M8.5 14h7"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><div class="wrap"><div class="app"><header><div class="top"><div><h1>Ateliê</h1><div class="subtitle">Arte — música e pintura mural</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button></div></div></header><main>
 <section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Música e pintura</h2><p>Melodia, ritmo, timbre, harmonia e arranjo — e a arte de pintar paredes e tetos, de afresco a Michelangelo.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
 <section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1</span><h2>Melodia, ritmo e timbre</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-nota"/></svg></div><strong>Melodia</strong>Uma <b>linha musical</b> feita de notas organizadas em um ritmo. É a parte da canção que você sabe cantar ou assobiar — a que fica “grudada” na cabeça.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-instrumento"/></svg></div><strong>Ritmo</strong>A <b>ordem do tempo</b> da música. É o ritmo que organiza as notas da melodia.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-instrumento"/></svg></div><strong>Timbre</strong>A <b>“cor”</b> ou voz única de um instrumento. É o timbre que faz o violino soar diferente do piano tocando a mesma nota.</div></div><div class="example"><b>Teoria musical</b> é a área de estudo que ensina a <b>ouvir, ler e escrever</b> música em uma partitura — assim como você aprende as regras da Língua Portuguesa para escrever e falar melhor.</div><div class="example warning">O compositor não escolhe apenas as notas: escolhe também o <b>timbre</b>, ou seja, qual instrumento melhor se encaixa na obra.</div><div class="example">A música também descreve imagens. Compositores usam os sons dos instrumentos para retratar, por exemplo, o movimento das águas do <b>Rio Moldava</b>, em Praga.</div></div><div class="lesson-nav"><span class="small">1 de 4</span><button class="primary" onclick="openLesson('lesson2')">Continuar →</button></div></div>
 <div id="lesson2" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 2</span><h2>Harmonia e arranjo</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mao"/></svg></div><strong>Harmonia</strong>Do grego: <b>união</b>, <b>concórdia</b> ou <b>ajuste</b>. Quando combinamos melodias diferentes e elas “soam bem” com a melodia principal, dizemos que ela está <b>harmonizada</b>.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-instrumento"/></svg></div><strong>Arranjo</strong><b>Organização e possibilidades</b>: uma nova maneira de vestir a mesma melodia. As possibilidades são quase infinitas.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-partitura"/></svg></div><strong>A ordem importa</strong>Uma única nota fora do lugar, ou um acorde trocado, pode mudar a sensação da peça inteira.</div></div><div class="example">É como uma <b>vírgula colocada no lugar errado</b> em um texto: muda o sentido de toda a frase. Isso mostra a importância da ordem e do rigor na arte.</div><div class="example">Imagine a mesma melodia tocada só com um <b>violão</b> — e depois com <b>canto coral, cordas, percussão e piano</b>, tudo junto. É o mesmo material musical com “roupas” diferentes.</div><div class="example warning">A beleza na música depende da <b>união e do ajuste perfeito de todas as partes</b>. Cada novo arranjo é uma nova forma de o músico servir ao público.</div></div><div class="lesson-nav"><span class="small">2 de 4</span><div><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button> <button class="primary" onclick="openLesson('lesson3')">Continuar →</button></div></div></div>
@@ -661,13 +697,33 @@ const sfx={
 };
 
 // Aviso flutuante no topo: conquistas, etapas concluídas, marcos de combo.
-function mostrarConquista(txt){
+function posicionarAviso(p){
+  // Abaixo do painel de progresso, para a trilha — que é o que o aviso está
+  // anunciando — continuar à vista. Fora da partida, abaixo do cabeçalho.
+  const alvo=document.querySelector("#quiz.active .progress-panel")
+          || document.querySelector("header");
+  const y=alvo?alvo.getBoundingClientRect().bottom+12:12;
+  p.style.setProperty("--aviso-topo",Math.round(Math.max(y,12))+"px");
+}
+
+function marcarEtapaFechada(i){
+  const n=document.querySelectorAll("#trailMap .node")[i];
+  if(!n) return;
+  n.classList.add("fechou");
+  setTimeout(()=>n.classList.remove("fechou"),700);
+}
+
+function mostrarConquista(txt,etapa){
   const p=document.getElementById("conquista");
   if(!p) return;
-  p.textContent=txt;
+  p.classList.toggle("etapa",!!etapa);
+  if(etapa) p.innerHTML=txt; else p.textContent=txt;
+  posicionarAviso(p);
+  p.classList.remove("show");
+  void p.offsetWidth;              // reinicia a animação se já estava na tela
   p.classList.add("show");
   clearTimeout(p._t);
-  p._t=setTimeout(()=>p.classList.remove("show"),2200);
+  p._t=setTimeout(()=>p.classList.remove("show"),etapa?2800:2200);
 }
 
 const MARCOS={3:"Três seguidas",5:"Cinco seguidas",8:"Oito seguidas",12:"Doze seguidas — impressionante"};
@@ -938,9 +994,13 @@ function renderQuestion(){
   if(lives<=0){endGame();return}
   if(index>=questions.length){
     if(activeTrail&&trailStep<trails[activeTrail].steps.length-1){
+      const fechada=trailStep;
       trailStep++;sfx.etapa();
-      mostrarConquista(`Etapa concluída! Próxima: ${nomes[trails[activeTrail].steps[trailStep]]||''}`);
-      startTrailStep();return;
+      const tr=trails[activeTrail];
+      mostrarConquista(
+        `<span class="aviso-t"><svg class=\"ic-txt\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#i-check\"/></svg> Etapa ${fechada+1} de ${tr.steps.length} concluída</span>`+
+        `<span class="aviso-s">Agora: ${nomes[tr.steps[trailStep]]||''}</span>`, true);
+      startTrailStep();marcarEtapaFechada(fechada);return;
     }
     endGame();return;
   }

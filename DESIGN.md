@@ -68,6 +68,15 @@ Escala fixa, de 0.8125 a 2.375 rem. Números com `tabular-nums`.
   desenho (☀️ 🌅 🌇 viram `sol`; 🎻 🎹 🥁 viram `instrumento`).
   Nenhum emoji em lugar nenhum, mas nenhuma ilustração foi perdida.
 - **HUD**: pílulas translúcidas sobre a faixa colorida, com número e rótulo.
+- **Aviso de conquista**: pílula verde (`--aviso`, a mesma nos dois temas)
+  com texto branco a 5,5:1. Não usa a cor da matéria: o cabeçalho é dessa
+  cor, e um aviso azul sobre faixa azul dá 1,09:1 — some. Aparece **abaixo
+  do painel de progresso**, nunca sobre o cabeçalho, porque é a trilha que
+  ele está anunciando. O JS mede o painel e escreve `--aviso-topo`.
+- **Virada de etapa**: cartão maior, não pílula. Nomeia a etapa que fechou
+  ("Etapa 1 de 9 concluída") e a que começa ("Agora: +ING"), fica 2,8 s, e
+  o nó correspondente da trilha pisca ao ficar verde. A criança precisa ver
+  *onde estava* e *para onde foi*, não só que algo aconteceu.
 
 ## Movimento
 
@@ -82,6 +91,14 @@ afundamento.
 sh build/rebuild.sh
 ```
 
-Regenera os quatro jogos a partir das cópias pré-design, aplicando
-`build/aplicar.py` (folha de estilo, ícones, remoção de emoji),
-`build/letras.py` (formas das alternativas) e `build/_tokens.css`.
+Regenera os quatro jogos a partir do commit `3ef9591`, o último antes do
+redesenho, aplicando em ordem: `build/aplicar.py` (folha de estilo, ícones,
+remoção de emoji), `build/letras.py` (formas das alternativas),
+`build/ilustracao.py` (o desenho da questão), `build/ingles.py` (o motor de
+inglês, que nomeia o campo do ícone de outro jeito), `build/trilha.py`
+(rolar até o nó atual) e `build/aviso.py` (o aviso e a virada de etapa).
+
+A varredura de emoji do `aplicar.py` remove **só pictogramas**. Setas
+(`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo:
+uma versão anterior apagou 192 setas e transformou `CLEAN → CLEANING` em
+`CLEAN CLEANING`.
