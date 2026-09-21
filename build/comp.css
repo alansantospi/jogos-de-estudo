@@ -355,6 +355,45 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   padding:var(--s-1) var(--s-3);font-size:var(--t-xs);font-weight:700;
   display:inline-flex;align-items:center;gap:var(--s-1)}
 
+/* ---------- navegação ---------- */
+/* Onde a criança está e como sair dali. Fica acima da faixa da matéria,
+   discreta, e some para trás do conteúdo em vez de competir com ele. */
+.migalhas{
+  display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-2);
+  max-width:56rem;margin:0 auto;padding:var(--s-3) var(--s-4) 0;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.migalhas a{display:inline-flex;align-items:center;gap:var(--s-1);
+  color:var(--texto-2);text-decoration:none;border-radius:var(--r-p);
+  padding:2px 4px;margin:-2px -4px}
+.migalhas a:hover{color:var(--materia-forte);text-decoration:underline}
+.migalhas a:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.migalhas svg{width:1rem;height:1rem}
+.migalhas b{color:var(--texto);font-weight:800}
+.migalha-sep{color:var(--texto-3);user-select:none}
+
+/* ---------- busca de missão ---------- */
+/* Com 18 missões a lista já tem três telas de altura. Buscar é o que
+   escala sozinho: cada conteúdo novo entra sem manutenção nenhuma. */
+.busca{position:relative;margin:0 0 var(--s-4)}
+.busca svg{position:absolute;left:var(--s-3);top:50%;transform:translateY(-50%);
+  width:1.15rem;height:1.15rem;color:var(--texto-3);pointer-events:none}
+.busca input{
+  width:100%;min-height:3rem;padding:var(--s-2) var(--s-3) var(--s-2) 2.75rem;
+  background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:999px;
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:600;
+  -webkit-appearance:none;appearance:none}
+.busca input::placeholder{color:var(--texto-3)}
+.busca input:focus{outline:none;border-color:var(--materia)}
+.busca input:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.grupo{
+  grid-column:1/-1;margin:var(--s-4) 0 0;
+  font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  color:var(--texto-2);letter-spacing:.02em}
+.grupo:first-child{margin-top:0}
+.sem-resultado{grid-column:1/-1;color:var(--texto-2);padding:var(--s-4) 0}
+[hidden]{display:none!important}
+
 /* ---------- avisos ---------- */
 /* O aviso nasce logo abaixo do cabeçalho — o JS mede e escreve --aviso-topo.
    Antes ficava colado no topo da janela, em cima do cabeçalho, e como usava a

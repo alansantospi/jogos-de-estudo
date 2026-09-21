@@ -45,6 +45,29 @@ escolhidas **longe de vermelho e verde**, que já significam errado e certo.
 Uma primeira versão usava coral e dava para confundir uma alternativa ainda
 não respondida com uma marcada errada.
 
+## Navegação
+
+Feita para o app crescer em matérias e em conteúdo por matéria.
+
+- **A tela mora na URL.** `#inicio`, `#licao/lesson3`, `#missoes`,
+  `#missao/moon`, `#trilha/earth`. As funções públicas (`goHome`,
+  `startCategory`, `startTrail`…) só escrevem o endereço; quem muda de tela
+  é o roteador, ouvindo `hashchange`. Daí saem três coisas de graça: o
+  botão voltar do celular recua uma tela em vez de sair do jogo,
+  recarregar cai de volta onde estava, e dá para guardar o link de uma
+  missão. Funciona igual em `file://`.
+- **Migalhas no topo**: `Jogos / Ciências / Missões`. "Jogos" leva ao
+  índice — antes não havia volta nenhuma, de dentro de um jogo só pelo
+  botão do navegador. Escala para qualquer número de matérias, porque o
+  seletor de matéria é o próprio índice.
+- **Buscar missão**, sem acento e sem caixa: digitar "relogio" acha "as
+  partes do relógio". Filtra título e descrição de missões *e* trilhas, e
+  esconde o título de seção ou de grupo que ficou sem cartão. É a parte que
+  escala sozinha: conteúdo novo entra sem manutenção.
+- **Grupos na lista** ("Atalhos", "Regras do -ING", "Terra e Sol"…) para
+  percorrer. Categoria que não está em nenhum grupo cai em "Conteúdos", no
+  fim — conteúdo novo nunca some da tela por esquecimento.
+
 ## Texto
 
 Menos palavras do que parece necessário. Três regras:
@@ -112,7 +135,9 @@ redesenho, aplicando em ordem: `build/aplicar.py` (folha de estilo, ícones,
 remoção de emoji), `build/letras.py` (formas das alternativas),
 `build/ilustracao.py` (o desenho da questão), `build/ingles.py` (o motor de
 inglês, que nomeia o campo do ícone de outro jeito), `build/trilha.py`
-(rolar até o nó atual) e `build/aviso.py` (o aviso e a virada de etapa).
+(rolar até o nó atual), `build/aviso.py` (o aviso e a virada de etapa),
+`build/texto.py` (nomes das trilhas e enxugamento), `build/navegacao.py`
+(rotas e migalhas) e `build/busca.py` (busca e grupos).
 
 A varredura de emoji do `aplicar.py` remove **só pictogramas**. Setas
 (`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo:
