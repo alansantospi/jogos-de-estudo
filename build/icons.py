@@ -39,6 +39,9 @@ _P = {
  "mudo":'<path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/>',
 }
 
+from desenhos import D as _ILUS
+_P.update(_ILUS)
+
 def sprite(nomes=None) -> str:
     itens = nomes or list(_P)
     corpo = "".join(

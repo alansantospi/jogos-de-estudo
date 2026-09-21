@@ -168,7 +168,12 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .mini{
   background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
   padding:var(--s-4);font-size:var(--t-sm);font-weight:600;color:var(--texto-2);line-height:1.5}
-.mini .pic{display:none}
+/* Ilustração do termo, na lição. */
+.mini .pic{
+  display:grid;place-items:center;width:2.5rem;height:2.5rem;padding:0.5rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-2);box-sizing:border-box;font-size:0}
+.mini .pic svg{width:100%;height:100%;stroke-width:1.9}
 .mini strong{display:block;font-family:var(--display);font-size:var(--t-md);font-weight:600;
   color:var(--texto);margin:0 0 var(--s-1)}
 .example{
@@ -196,7 +201,10 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s-2)}
 .verb-card{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
   padding:var(--s-3);font-size:var(--t-sm);color:var(--texto-2)}
-.verb-card .pic{display:none}
+.verb-card .pic{display:grid;place-items:center;width:2rem;height:2rem;padding:0.35rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-1);box-sizing:border-box;font-size:0}
+.verb-card .pic svg{width:100%;height:100%;stroke-width:1.9}
 .verb-card .base{font-family:var(--display);font-size:var(--t-md);font-weight:600;color:var(--texto)}
 .verb-card .ing{color:var(--materia);font-weight:700}
 .verb-card .sentence{font-style:italic}
@@ -276,7 +284,12 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
   border:2px dashed var(--risco);border-radius:999px;padding:2px var(--s-3);
   font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
 .storyline{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-3)}
-.illustration{display:none}
+/* Ilustração da questão: chip com a cor da matéria, acima do enunciado. */
+.illustration{
+  display:grid;justify-self:start;place-items:center;width:4rem;height:4rem;padding:0.85rem;
+  background:var(--materia-clara);border-radius:var(--r);color:var(--materia-forte);
+  margin-bottom:var(--s-3);box-sizing:border-box;min-height:0;font-size:0}
+.illustration svg{width:100%;height:100%;stroke-width:1.8}
 .question{position:relative;font-family:var(--display);font-size:var(--t-2xl);font-weight:600;
   line-height:1.25;margin:0 0 var(--s-5);max-width:32ch}
 .hint{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-4)}
@@ -440,7 +453,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"></head>
-<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-balao" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-bilhete" viewBox="0 0 24 24"><path d="M3 7h18v3.5a1.8 1.8 0 0 0 0 3.5V17H3v-3a1.8 1.8 0 0 0 0-3.5z"/><path d="M13 7v10"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><circle cx="8.8" cy="8.8" r="1.2"/><circle cx="15.2" cy="15.2" r="1.2"/><circle cx="12" cy="12" r="1.2"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.4M12 18.6V21M4.2 7.5l2 1.2M17.8 15.3l2 1.2M4.2 16.5l2-1.2M17.8 8.7l2-1.2"/></symbol><symbol id="i-fone" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v6H5.5A1.5 1.5 0 0 1 4 17.5z"/><path d="M20 13h-3v6h1.5a1.5 1.5 0 0 0 1.5-1.5z"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-lapis" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="13" cy="5" r="2"/><path d="m8 21 2.5-6.5L9 12l-3 2"/><path d="m13 9-2.5 1 2 3.5L17 16l1.5 5"/><path d="m14 10 4 .5"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-rota" viewBox="0 0 24 24"><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="5.5" r="2"/><path d="M7.5 18.5h6a4 4 0 0 0 0-8h-3a4 4 0 0 1 0-8h6" transform="translate(0 1.5)"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tesoura" viewBox="0 0 24 24"><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="18" r="2.2"/><path d="M8.5 16.2 18 4M15.5 16.2 6 4"/></symbol><symbol id="i-trofeu" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 5.5H5.5v1A3.5 3.5 0 0 0 8 10M16 5.5h2.5v1A3.5 3.5 0 0 1 16 10"/><path d="M12 13v3.5M9 20h6"/></symbol></defs></svg>
+<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-animal" viewBox="0 0 24 24"><path d="M5 17c0-4 3-7 7-7s7 3 7 7"/><circle cx="8.5" cy="7" r="2"/><circle cx="15.5" cy="7" r="2"/><path d="M9 17v3M15 17v3"/></symbol><symbol id="i-aviao" viewBox="0 0 24 24"><path d="M3 13.5 21 7l-3 6 3 6-18-6.5z"/></symbol><symbol id="i-balao" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-barco" viewBox="0 0 24 24"><path d="M3 17h18l-2.5 4h-13z"/><path d="M12 15V3l7 12z"/><path d="M10 15H5l5-8z"/></symbol><symbol id="i-bebida" viewBox="0 0 24 24"><path d="M6 6h12l-1.5 14h-9z"/><path d="M6.5 11h11"/></symbol><symbol id="i-bicicleta" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3.5"/><circle cx="18" cy="17" r="3.5"/><path d="m6 17 4-8h6l2 8M9 9h5"/></symbol><symbol id="i-bilhete" viewBox="0 0 24 24"><path d="M3 7h18v3.2a1.8 1.8 0 0 0 0 3.6V17H3v-3.2a1.8 1.8 0 0 0 0-3.6z"/><path d="M13 7v10"/></symbol><symbol id="i-bola" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m12 7 4 3-1.5 5h-5L8 10z"/></symbol><symbol id="i-cabeca" viewBox="0 0 24 24"><path d="M8.5 20v-2.2A6.5 6.5 0 1 1 18 12a4 4 0 0 1-2.5 3.7V20z"/><path d="M9 11.5a2 2 0 0 1 3 0 2 2 0 0 0 3 0"/></symbol><symbol id="i-cadeira" viewBox="0 0 24 24"><path d="M7 4h10v9H7z"/><path d="M6 13h12"/><path d="M8 13v7M16 13v7"/></symbol><symbol id="i-cama" viewBox="0 0 24 24"><path d="M3 19v-9h13a5 5 0 0 1 5 5v4"/><path d="M3 15h18"/><circle cx="7.5" cy="12.5" r="1.8"/></symbol><symbol id="i-carro" viewBox="0 0 24 24"><path d="M4 16v-3l2-5h12l2 5v3"/><path d="M2.5 16h19"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-chuveiro" viewBox="0 0 24 24"><path d="M5 20v-6a7 7 0 0 1 14 0v6"/><path d="M3 20h18"/><path d="M9 6V4a2 2 0 0 1 4 0"/></symbol><symbol id="i-ciclo" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v5h-5"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-computador" viewBox="0 0 24 24"><path d="M3 5h18v11H3z"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-controle" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 10v4M4.5 12h4"/><circle cx="16" cy="11" r="1" fill="currentColor"/><circle cx="18.5" cy="13.5" r="1" fill="currentColor"/></symbol><symbol id="i-coroa" viewBox="0 0 24 24"><path d="M4 18h16"/><path d="m4 18-1-9 5 3.5L12 5l4 7.5L21 9l-1 9z"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-dormir" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/><path d="M14 4h4l-4 4h4"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.3 7.4l2.3 1.3M17.4 15.3l2.3 1.3M4.3 16.6l2.3-1.3M17.4 8.7l2.3-1.3"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-foguete" viewBox="0 0 24 24"><path d="M12 2.5c3 2.5 4.5 6 4.5 9.5L12 17l-4.5-5c0-3.5 1.5-7 4.5-9.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8.5 15 6 20l4-1.5M15.5 15l2.5 5-4-1.5"/></symbol><symbol id="i-fone" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v6H5.5A1.5 1.5 0 0 1 4 17.5z"/><path d="M20 13h-3v6h1.5a1.5 1.5 0 0 0 1.5-1.5z"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-instrumento" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-lapis" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-mapa" viewBox="0 0 24 24"><path d="m3 6 6-2.5 6 2.5 6-2.5v15L15 21l-6-2.5L3 21z"/><path d="M9 3.5v15M15 6v15"/></symbol><symbol id="i-movimento" viewBox="0 0 24 24"><circle cx="14" cy="4.5" r="2"/><path d="m8 21 2.5-6.5L9 12l-3 2"/><path d="m13 9-2.5 1 2 3.5L17 16l1.5 5"/><path d="m14 10 4 .5"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-parar" viewBox="0 0 24 24"><path d="M8.2 3.5h7.6l5.7 5.7v7.6l-5.7 5.7H8.2L2.5 16.8V9.2z"/></symbol><symbol id="i-partitura" viewBox="0 0 24 24"><path d="M3 7h18M3 11h18M3 15h18M3 19h18" opacity=".45"/><path d="M9 17V6l7-1.5v9"/><ellipse cx="7" cy="17" rx="2" ry="1.6"/><ellipse cx="14" cy="15.5" rx="2" ry="1.6"/></symbol><symbol id="i-peca" viewBox="0 0 24 24"><path d="M9 3h6v2.5a2 2 0 1 0 4 0V9h2v6h-2v3.5a2 2 0 1 0-4 0V21H9v-2.5a2 2 0 1 0-4 0V15H3V9h2V5.5a2 2 0 1 0 4 0z"/></symbol><symbol id="i-pergunta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4v.6"/><circle cx="12" cy="16.5" r=".7" fill="currentColor"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1a5.5 5.5 0 0 1 11 0v1"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17 14.5a5.5 5.5 0 0 1 4 5.3V20"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-pino" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></symbol><symbol id="i-planeta" viewBox="0 0 24 24"><circle cx="12" cy="11" r="6"/><ellipse cx="12" cy="11" rx="11" ry="3.4" transform="rotate(-18 12 11)"/></symbol><symbol id="i-porta" viewBox="0 0 24 24"><path d="M5 3h14v18H5z"/><path d="M5 21h14"/><circle cx="15.5" cy="12.5" r="1" fill="currentColor"/></symbol><symbol id="i-quebrado" viewBox="0 0 24 24"><path d="M12 21C7 17 3.5 14 3.5 9.8A4.8 4.8 0 0 1 12 6.8a4.8 4.8 0 0 1 8.5 3c0 4.2-3.5 7.2-8.5 11.2z"/><path d="m12 7-2 4h4l-2 4"/></symbol><symbol id="i-raio" viewBox="0 0 24 24"><path d="M13.5 2.5 5 13.5h6L10.5 21.5 19 10.5h-6z"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-rota" viewBox="0 0 24 24"><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="5.5" r="2"/><path d="M7.5 18.5h6a4 4 0 0 0 0-8h-3a4 4 0 0 1 0-8h6" transform="translate(0 1.5)"/></symbol><symbol id="i-sacola" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="i-seta-cima" viewBox="0 0 24 24"><path d="M12 19.5v-15"/><path d="m6 10.5 6-6 6 6"/></symbol><symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6"/><path d="M4 17h16"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tesoura" viewBox="0 0 24 24"><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M8.6 16.2 18 3.5M15.4 16.2 6 3.5"/></symbol><symbol id="i-trabalho" viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0"/><path d="M2.5 10h19"/><path d="M6 21v-5h12v5"/></symbol><symbol id="i-triste" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="9.2" cy="9.8" r=".8" fill="currentColor"/><circle cx="14.8" cy="9.8" r=".8" fill="currentColor"/></symbol><symbol id="i-trofeu" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 5.5H5.5v1A3.5 3.5 0 0 0 8 10M16 5.5h2.5v1A3.5 3.5 0 0 1 16 10"/><path d="M12 13v3.5M9 20h6"/></symbol><symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2"/><path d="m8 3 4 3 4-3"/><path d="M9 21.5h6"/></symbol><symbol id="i-vassoura" viewBox="0 0 24 24"><path d="M15 3 8.5 12"/><path d="M5 20c0-3 1.5-6 4-7.5l3.5 2.5C11 17.5 9 20 9 21z"/><path d="M6 16.5h5"/></symbol><symbol id="i-vento" viewBox="0 0 24 24"><path d="M3 8h9a2.8 2.8 0 1 0-2.8-2.8"/><path d="M3 13h13a3 3 0 1 1-3 3"/><path d="M3 18h7"/></symbol><symbol id="i-xis" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol></defs></svg>
 <div class="stars"></div><div id="achievementPop" class="achievement-pop"></div>
 <div class="wrap">
   <div class="game">
@@ -597,23 +610,23 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
       <div class="rule-title">REGRA 1 — normalmente, apenas acrescentamos <b>-ING</b> <span class="rule-chip">verb + ing</span></div>
       <div class="focus-box">Exemplo: <b>help helping</b>. A palavra-base permanece e acrescentamos <b>-ing</b>.</div>
       <div class="verb-grid">
-        <div class="verb-card"><div class="base">stand</div><div class="meaning">ficar em pé</div><div class="ing">standing</div><div class="sentence">He is standing.</div></div>
-        <div class="verb-card"><div class="base">lift</div><div class="meaning">levantar</div><div class="ing">lifting</div><div class="sentence">She is lifting a box.</div></div>
-        <div class="verb-card"><div class="base">blow</div><div class="meaning">soprar</div><div class="ing">blowing</div><div class="sentence">He is blowing.</div></div>
-        <div class="verb-card"><div class="base">cry</div><div class="meaning">chorar</div><div class="ing">crying</div><div class="sentence">The baby is crying.</div></div>
-        <div class="verb-card"><div class="base">play</div><div class="meaning">jogar / brincar</div><div class="ing">playing</div><div class="sentence">They are playing.</div></div>
-        <div class="verb-card"><div class="base">paint</div><div class="meaning">pintar</div><div class="ing">painting</div><div class="sentence">She is painting.</div></div>
-        <div class="verb-card"><div class="base">discuss</div><div class="meaning">discutir / debater</div><div class="ing">discussing</div><div class="sentence">They are discussing.</div></div>
-        <div class="verb-card"><div class="base">borrow</div><div class="meaning">pegar emprestado</div><div class="ing">borrowing</div><div class="sentence">He is borrowing a book.</div></div>
-        <div class="verb-card"><div class="base">buy</div><div class="meaning">comprar</div><div class="ing">buying</div><div class="sentence">She is buying food.</div></div>
-        <div class="verb-card"><div class="base">draw</div><div class="meaning">desenhar</div><div class="ing">drawing</div><div class="sentence">He is drawing.</div></div>
-        <div class="verb-card"><div class="base">help</div><div class="meaning">ajudar</div><div class="ing">helping</div><div class="sentence">She is helping him.</div></div>
-        <div class="verb-card"><div class="base">watch</div><div class="meaning">assistir / observar</div><div class="ing">watching</div><div class="sentence">We are watching TV.</div></div>
-        <div class="verb-card"><div class="base">jump</div><div class="meaning">pular</div><div class="ing">jumping</div><div class="sentence">The boy is jumping.</div></div>
-        <div class="verb-card"><div class="base">fly</div><div class="meaning">voar</div><div class="ing">flying</div><div class="sentence">The bird is flying.</div></div>
-        <div class="verb-card"><div class="base">sail</div><div class="meaning">navegar / velejar</div><div class="ing">sailing</div><div class="sentence">They are sailing.</div></div>
-        <div class="verb-card"><div class="base">find</div><div class="meaning">encontrar</div><div class="ing">finding</div><div class="sentence">She is finding clues.</div></div>
-        <div class="verb-card"><div class="base">break</div><div class="meaning">quebrar</div><div class="ing">breaking</div><div class="sentence">He is breaking the toy.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoa"/></svg></div><div class="base">stand</div><div class="meaning">ficar em pé</div><div class="ing">standing</div><div class="sentence">He is standing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-movimento"/></svg></div><div class="base">lift</div><div class="meaning">levantar</div><div class="ing">lifting</div><div class="sentence">She is lifting a box.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-vento"/></svg></div><div class="base">blow</div><div class="meaning">soprar</div><div class="ing">blowing</div><div class="sentence">He is blowing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-triste"/></svg></div><div class="base">cry</div><div class="meaning">chorar</div><div class="ing">crying</div><div class="sentence">The baby is crying.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-bola"/></svg></div><div class="base">play</div><div class="meaning">jogar / brincar</div><div class="ing">playing</div><div class="sentence">They are playing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pincel"/></svg></div><div class="base">paint</div><div class="meaning">pintar</div><div class="ing">painting</div><div class="sentence">She is painting.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fala"/></svg></div><div class="base">discuss</div><div class="meaning">discutir / debater</div><div class="ing">discussing</div><div class="sentence">They are discussing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mao"/></svg></div><div class="base">borrow</div><div class="meaning">pegar emprestado</div><div class="ing">borrowing</div><div class="sentence">He is borrowing a book.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><div class="base">buy</div><div class="meaning">comprar</div><div class="ing">buying</div><div class="sentence">She is buying food.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-escrever"/></svg></div><div class="base">draw</div><div class="meaning">desenhar</div><div class="ing">drawing</div><div class="sentence">He is drawing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mao"/></svg></div><div class="base">help</div><div class="meaning">ajudar</div><div class="ing">helping</div><div class="sentence">She is helping him.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tv"/></svg></div><div class="base">watch</div><div class="meaning">assistir / observar</div><div class="ing">watching</div><div class="sentence">We are watching TV.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-seta-cima"/></svg></div><div class="base">jump</div><div class="meaning">pular</div><div class="ing">jumping</div><div class="sentence">The boy is jumping.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-aviao"/></svg></div><div class="base">fly</div><div class="meaning">voar</div><div class="ing">flying</div><div class="sentence">The bird is flying.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-barco"/></svg></div><div class="base">sail</div><div class="meaning">navegar / velejar</div><div class="ing">sailing</div><div class="sentence">They are sailing.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-lupa"/></svg></div><div class="base">find</div><div class="meaning">encontrar</div><div class="ing">finding</div><div class="sentence">She is finding clues.</div></div>
+        <div class="verb-card"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-quebrado"/></svg></div><div class="base">break</div><div class="meaning">quebrar</div><div class="ing">breaking</div><div class="sentence">He is breaking the toy.</div></div>
       </div>
     </div>
 
@@ -929,158 +942,158 @@ const NOMES_FORMA=["círculo","triângulo","quadrado","losango"];
 const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
 
 const baseQuestionPool = [
-  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", q:"Complete: She ___ reading a book.", hint:"Use am, is ou are.", choices:["am","is","are","be"], answer:1, ok:"Com SHE usamos IS.", bad:"A resposta correta é IS: She is reading."},
-  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", q:"Qual frase está correta?", choices:["They is playing.","They are playing.","They playing.","They are play."], answer:1, ok:"THEY + ARE + VERB-ING.", bad:"A estrutura correta é: They are playing."},
-  {type:"tf", stage:"FASE 1 — VERDADEIRO OU FALSO", q:"“I are studying English.” está correto.", answer:false, ok:"Certo! Com I usamos AM.", bad:"É falso. O correto é: I am studying English."},
-  {type:"text", stage:"FASE 1 — COMPLETE A FRASE", q:"Complete: We ___ traveling in time.", valid:["are"], placeholder:"Digite uma palavra...", ok:"Perfeito! We ARE traveling.", bad:"A palavra correta é ARE."},
-  {type:"choice", stage:"FASE 1 — NEGATIVE MODE", q:"Qual é a negativa correta de “He is running”?", choices:["He not running.","He isn't running.","He aren't running.","He doesn't running."], answer:1, ok:"Correto: He isn't running.", bad:"A forma correta é He isn't running."},
-  {type:"text", stage:"FASE 1 — QUESTION MODE", q:"Transforme em pergunta: She is dancing.", valid:["is she dancing","is she dancing?"], placeholder:"Digite a pergunta...", ok:"Excelente! Is she dancing?", bad:"A resposta esperada é: Is she dancing?"},
-  {type:"order", stage:"FASE 2 — ORGANIZE A FRASE", q:"Organize as palavras para formar uma frase correta.", words:["playing","They","soccer","are"], answer:"They are playing soccer", ok:"Muito bem! They are playing soccer.", bad:"A ordem correta é: They are playing soccer."},
+  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", ic:"livro", q:"Complete: She ___ reading a book.", hint:"Use am, is ou are.", choices:["am","is","are","be"], answer:1, ok:"Com SHE usamos IS.", bad:"A resposta correta é IS: She is reading."},
+  {type:"choice", stage:"FASE 1 — PRESENT CONTINUOUS", ic:"bola", q:"Qual frase está correta?", choices:["They is playing.","They are playing.","They playing.","They are play."], answer:1, ok:"THEY + ARE + VERB-ING.", bad:"A estrutura correta é: They are playing."},
+  {type:"tf", stage:"FASE 1 — VERDADEIRO OU FALSO", ic:"cabeca", q:"“I are studying English.” está correto.", answer:false, ok:"Certo! Com I usamos AM.", bad:"É falso. O correto é: I am studying English."},
+  {type:"text", stage:"FASE 1 — COMPLETE A FRASE", ic:"foguete", q:"Complete: We ___ traveling in time.", valid:["are"], placeholder:"Digite uma palavra...", ok:"Perfeito! We ARE traveling.", bad:"A palavra correta é ARE."},
+  {type:"choice", stage:"FASE 1 — NEGATIVE MODE", ic:"xis", q:"Qual é a negativa correta de “He is running”?", choices:["He not running.","He isn't running.","He aren't running.","He doesn't running."], answer:1, ok:"Correto: He isn't running.", bad:"A forma correta é He isn't running."},
+  {type:"text", stage:"FASE 1 — QUESTION MODE", ic:"pergunta", q:"Transforme em pergunta: She is dancing.", valid:["is she dancing","is she dancing?"], placeholder:"Digite a pergunta...", ok:"Excelente! Is she dancing?", bad:"A resposta esperada é: Is she dancing?"},
+  {type:"order", stage:"FASE 2 — ORGANIZE A FRASE", ic:"peca", q:"Organize as palavras para formar uma frase correta.", words:["playing","They","soccer","are"], answer:"They are playing soccer", ok:"Muito bem! They are playing soccer.", bad:"A ordem correta é: They are playing soccer."},
 
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Qual verbo significa “nadar”?", choices:["dance","swim","write","sleep"], answer:1, ok:"SWIM = nadar.", bad:"A resposta correta é SWIM."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Qual é a forma correta de RUN + ING?", choices:["runing","running","runeing","runinng"], answer:1, ok:"RUN RUNNING.", bad:"A forma correta é RUNNING."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"The girl is ___ a letter.", hint:"A garota está escrevendo uma carta.", choices:["reading","writing","drinking","running"], answer:1, ok:"WRITE WRITING.", bad:"Escrever = WRITE. No Present Continuous: WRITING."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Qual verbo significa “limpar”?", choices:["clean","cook","talk","sleep"], answer:0, ok:"CLEAN = limpar.", bad:"A resposta correta é CLEAN."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Complete: My mother is ___ dinner.", choices:["cleaning","cooking","talking","sleeping"], answer:1, ok:"COOK COOKING.", bad:"Cozinhar = COOK. No Present Continuous: COOKING."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Complete: The boy is ___ pizza.", choices:["eating","studying","cleaning","talking"], answer:0, ok:"EAT EATING.", bad:"Comer = EAT. A forma correta é EATING."},
-  {type:"text", stage:"FASE 3 — ACTIONS", q:"Complete: She is ______ to music.", valid:["listening","listening to music"], placeholder:"Digite a palavra...", ok:"Muito bem! She is listening to music.", bad:"A forma correta é LISTENING."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Qual frase significa “Ele está dormindo”?", choices:["He is studying.","He is sleeping.","He is talking.","He is cleaning."], answer:1, ok:"SLEEP SLEEPING.", bad:"Dormir = SLEEP. O correto é He is sleeping."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Qual frase significa “Nós estamos estudando”?", choices:["We are talking.","We are studying.","We are cooking.","We are sleeping."], answer:1, ok:"STUDY STUDYING.", bad:"Estudar = STUDY. O correto é We are studying."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Complete: They are ___ in the classroom.", choices:["talking","using","cooking","sleeping"], answer:0, ok:"TALK TALKING.", bad:"Conversar = TALK. A forma correta é TALKING."},
-  {type:"choice", stage:"FASE 3 — ACTIONS", q:"Complete: I am ___ the computer.", choices:["use","using","useing","used"], answer:1, ok:"USE USING.", bad:"A forma correta é USING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"movimento", q:"Qual verbo significa “nadar”?", choices:["dance","swim","write","sleep"], answer:1, ok:"SWIM = nadar.", bad:"A resposta correta é SWIM."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"movimento", q:"Qual é a forma correta de RUN + ING?", choices:["runing","running","runeing","runinng"], answer:1, ok:"RUN RUNNING.", bad:"A forma correta é RUNNING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"escrever", q:"The girl is ___ a letter.", hint:"A garota está escrevendo uma carta.", choices:["reading","writing","drinking","running"], answer:1, ok:"WRITE WRITING.", bad:"Escrever = WRITE. No Present Continuous: WRITING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"vassoura", q:"Qual verbo significa “limpar”?", choices:["clean","cook","talk","sleep"], answer:0, ok:"CLEAN = limpar.", bad:"A resposta correta é CLEAN."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"comida", q:"Complete: My mother is ___ dinner.", choices:["cleaning","cooking","talking","sleeping"], answer:1, ok:"COOK COOKING.", bad:"Cozinhar = COOK. No Present Continuous: COOKING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"comida", q:"Complete: The boy is ___ pizza.", choices:["eating","studying","cleaning","talking"], answer:0, ok:"EAT EATING.", bad:"Comer = EAT. A forma correta é EATING."},
+  {type:"text", stage:"FASE 3 — ACTIONS", ic:"fone", q:"Complete: She is ______ to music.", valid:["listening","listening to music"], placeholder:"Digite a palavra...", ok:"Muito bem! She is listening to music.", bad:"A forma correta é LISTENING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"dormir", q:"Qual frase significa “Ele está dormindo”?", choices:["He is studying.","He is sleeping.","He is talking.","He is cleaning."], answer:1, ok:"SLEEP SLEEPING.", bad:"Dormir = SLEEP. O correto é He is sleeping."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"livro", q:"Qual frase significa “Nós estamos estudando”?", choices:["We are talking.","We are studying.","We are cooking.","We are sleeping."], answer:1, ok:"STUDY STUDYING.", bad:"Estudar = STUDY. O correto é We are studying."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"fala", q:"Complete: They are ___ in the classroom.", choices:["talking","using","cooking","sleeping"], answer:0, ok:"TALK TALKING.", bad:"Conversar = TALK. A forma correta é TALKING."},
+  {type:"choice", stage:"FASE 3 — ACTIONS", ic:"computador", q:"Complete: I am ___ the computer.", choices:["use","using","useing","used"], answer:1, ok:"USE USING.", bad:"A forma correta é USING."},
 
-  {type:"match", stage:"FASE 4 — ASSOCIAÇÃO DE ITENS", q:"Associe cada verbo ao significado em português.",
+  {type:"match", stage:"FASE 4 — ASSOCIAÇÃO DE ITENS", ic:"elos", q:"Associe cada verbo ao significado em português.",
    pairs:[["clean","limpar"],["cook","cozinhar"],["sleep","dormir"],["talk","conversar"]]},
-  {type:"memory", stage:"FASE 5 — JOGO DA MEMÓRIA", q:"Encontre os pares: verbo em inglês + significado em português.",
+  {type:"memory", stage:"FASE 5 — JOGO DA MEMÓRIA", ic:"cabeca", q:"Encontre os pares: verbo em inglês + significado em português.",
    pairs:[["eat","comer"],["study","estudar"],["cook","cozinhar"],["sleep","dormir"]]},
-  {type:"crossword", stage:"FASE 6 — PALAVRAS CRUZADAS", q:"Complete as palavras cruzadas com verbos de ações.",
+  {type:"crossword", stage:"FASE 6 — PALAVRAS CRUZADAS", ic:"escrever", q:"Complete as palavras cruzadas com verbos de ações.",
    answers:{clean:"limpar",cook:"cozinhar",sleep:"dormir"}},
-  {type:"wordsearch", stage:"FASE 7 — CAÇA-PALAVRAS", q:"Encontre 4 ações escondidas: EAT, TALK, COOK e SLEEP."},
+  {type:"wordsearch", stage:"FASE 7 — CAÇA-PALAVRAS", ic:"lupa", q:"Encontre 4 ações escondidas: EAT, TALK, COOK e SLEEP."},
 
   
-  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", q:"Ouça e escolha a ação correta.", audio:"She is cooking dinner.", choices:["She is cleaning.","She is cooking.","She is sleeping.","She is studying."], answer:1, ok:"Você ouviu corretamente: She is cooking dinner.", bad:"O áudio diz: She is cooking dinner."},
-  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", q:"Ouça e escolha a frase correta.", audio:"They are studying English.", choices:["They are talking.","They are studying English.","They are using the computer.","They are sleeping."], answer:1, ok:"Correto! They are studying English.", bad:"O áudio diz: They are studying English."},
-  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", q:"Ouça e escolha a ação correta.", audio:"He is using the computer.", choices:["He is eating.","He is using the computer.","He is cleaning.","He is cooking."], answer:1, ok:"Muito bem! He is using the computer.", bad:"O áudio diz: He is using the computer."},
-  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", q:"Ouça e escolha a frase correta.", audio:"She is listening to music.", choices:["She is talking.","She is reading.","She is listening to music.","She is sleeping."], answer:2, ok:"Correto! She is listening to music.", bad:"O áudio diz: She is listening to music."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", ic:"fone", q:"Ouça e escolha a ação correta.", audio:"She is cooking dinner.", choices:["She is cleaning.","She is cooking.","She is sleeping.","She is studying."], answer:1, ok:"Você ouviu corretamente: She is cooking dinner.", bad:"O áudio diz: She is cooking dinner."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", ic:"fone", q:"Ouça e escolha a frase correta.", audio:"They are studying English.", choices:["They are talking.","They are studying English.","They are using the computer.","They are sleeping."], answer:1, ok:"Correto! They are studying English.", bad:"O áudio diz: They are studying English."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", ic:"fone", q:"Ouça e escolha a ação correta.", audio:"He is using the computer.", choices:["He is eating.","He is using the computer.","He is cleaning.","He is cooking."], answer:1, ok:"Muito bem! He is using the computer.", bad:"O áudio diz: He is using the computer."},
+  {type:"listenchoice", stage:"FASE 8 — LISTEN AND CHOOSE", ic:"fone", q:"Ouça e escolha a frase correta.", audio:"She is listening to music.", choices:["She is talking.","She is reading.","She is listening to music.","She is sleeping."], answer:2, ok:"Correto! She is listening to music.", bad:"O áudio diz: She is listening to music."},
 
-  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", q:"What is the seat number?", choices:["7","B12","8:30 p.m.","$25.00"], answer:1, ok:"SEAT = assento. O assento é B12.", bad:"O assento é B12."},
-  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", q:"How much is the ticket?", choices:["October 25th","London","$25.00","Gate 7"], answer:2, ok:"PRICE = preço. O ingresso custa $25.00.", bad:"O preço do ticket é $25.00."},
-  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", q:"What time is the departure?", choices:["B12","8:30 p.m.","October 25th","London"], answer:1, ok:"TIME = horário: 8:30 p.m.", bad:"O horário é 8:30 p.m."},
-  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", q:"What is the destination?", choices:["London — 1888","Gate 7","B12","October 25th"], answer:0, ok:"DESTINATION = destino: London — 1888.", bad:"O destino é London — 1888."},
-  {type:"tf", stage:"FASE 9 — TICKET INFORMATION", q:"No ticket, GATE significa assento.", answer:false, ok:"Certo! GATE = portão; SEAT = assento.", bad:"É falso. GATE significa portão."},
-
-  
-  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", q:"O que significa CLEAN?", choices:["cozinhar","limpar","estudar","conversar"], answer:1, ok:"CLEAN = limpar.", bad:"CLEAN significa limpar."},
-  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", q:"O que significa COOK?", choices:["dormir","comer","cozinhar","usar o computador"], answer:2, ok:"COOK = cozinhar.", bad:"COOK significa cozinhar."},
-  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", q:"Qual expressão significa “ouvir música”?", choices:["talk","listen to music","use the computer","study"], answer:1, ok:"LISTEN TO MUSIC = ouvir música.", bad:"A expressão correta é LISTEN TO MUSIC."},
-  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", q:"Qual expressão significa “usar o computador”?", choices:["use the computer","listen to music","clean","cook"], answer:0, ok:"USE THE COMPUTER = usar o computador.", bad:"A expressão correta é USE THE COMPUTER."},
-  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", q:"Qual verbo significa “conversar”?", choices:["talk","eat","sleep","clean"], answer:0, ok:"TALK = conversar.", bad:"TALK significa conversar."},
-  {type:"choice", stage:"FASE 10 — CONTEXTO", q:"The room is dirty. She is ______.", choices:["cleaning","cooking","sleeping","studying"], answer:0, ok:"Se o quarto está sujo, ela está CLEANING.", bad:"A ação coerente é CLEANING."},
-  {type:"choice", stage:"FASE 10 — CONTEXTO", q:"He has a test tomorrow. He is ______.", choices:["talking","studying","eating","sleeping"], answer:1, ok:"Para uma prova, ele está STUDYING.", bad:"A ação mais adequada é STUDYING."},
-  {type:"choice", stage:"FASE 10 — CONTEXTO", q:"It is midnight. The baby is ______.", choices:["cooking","sleeping","talking","cleaning"], answer:1, ok:"À meia-noite, o bebê está SLEEPING.", bad:"A ação coerente é SLEEPING."},
-
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"Qual é a forma correta de CLEAN no Present Continuous?", choices:["cleaning","cleaninng","cleanning","clean"], answer:0, ok:"CLEAN CLEANING.", bad:"A forma correta é CLEANING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"COOK vira:", choices:["cooking","cookking","cookeing","cook"], answer:0, ok:"COOK COOKING.", bad:"A forma correta é COOKING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"EAT vira:", choices:["eating","eatting","eatin","eat"], answer:0, ok:"EAT EATING.", bad:"A forma correta é EATING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"STUDY vira:", choices:["studying","studyng","studyying","studing"], answer:0, ok:"STUDY STUDYING.", bad:"A forma correta é STUDYING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"TALK vira:", choices:["talking","talkking","talkeing","talk"], answer:0, ok:"TALK TALKING.", bad:"A forma correta é TALKING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"USE vira:", choices:["useing","using","ussing","use"], answer:1, ok:"USE USING. Tiramos o E final.", bad:"A forma correta é USING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"RUN vira:", choices:["runing","running","runeing","runnning"], answer:1, ok:"RUN RUNNING. Dobramos o N.", bad:"A forma correta é RUNNING."},
-  {type:"choice", stage:"FASE 11 — BASE ING", q:"SWIM vira:", choices:["swiming","swimming","swimmming","swimingg"], answer:1, ok:"SWIM SWIMMING. Dobramos o M.", bad:"A forma correta é SWIMMING."},
-
-  {type:"choice", stage:"FASE 12 — AM / IS / ARE", q:"I ___ studying.", choices:["am","is","are","be"], answer:0, ok:"I + AM.", bad:"Com I usamos AM."},
-  {type:"choice", stage:"FASE 12 — AM / IS / ARE", q:"She ___ cooking.", choices:["am","is","are","be"], answer:1, ok:"SHE + IS.", bad:"Com SHE usamos IS."},
-  {type:"choice", stage:"FASE 12 — AM / IS / ARE", q:"They ___ talking.", choices:["am","is","are","be"], answer:2, ok:"THEY + ARE.", bad:"Com THEY usamos ARE."},
-  {type:"choice", stage:"FASE 12 — AM / IS / ARE", q:"He ___ using the computer.", choices:["am","is","are","be"], answer:1, ok:"HE + IS.", bad:"Com HE usamos IS."},
-  {type:"choice", stage:"FASE 12 — AM / IS / ARE", q:"We ___ listening to music.", choices:["am","is","are","be"], answer:2, ok:"WE + ARE.", bad:"Com WE usamos ARE."},
-
-  {type:"choice", stage:"FASE 13 — NEGATIVAS", q:"Qual é a negativa correta?", hint:"She is studying.", choices:["She isn't studying.","She aren't studying.","She not studying.","She doesn't studying."], answer:0, ok:"She isn't studying.", bad:"A forma correta é She isn't studying."},
-  {type:"choice", stage:"FASE 13 — NEGATIVAS", q:"Qual é a negativa correta?", hint:"They are cooking.", choices:["They isn't cooking.","They aren't cooking.","They not cooking.","They don't cooking."], answer:1, ok:"They aren't cooking.", bad:"A forma correta é They aren't cooking."},
-  {type:"choice", stage:"FASE 13 — NEGATIVAS", q:"Qual é a negativa correta?", hint:"I am sleeping.", choices:["I am not sleeping.","I isn't sleeping.","I aren't sleeping.","I don't sleeping."], answer:0, ok:"I am not sleeping.", bad:"A forma correta é I am not sleeping."},
-
-  {type:"order", stage:"FASE 14 — PERGUNTAS", q:"Monte a pergunta correta.", words:["she","Is","cooking"], answer:"Is she cooking", ok:"Is she cooking?", bad:"A ordem correta é: Is she cooking?"},
-  {type:"order", stage:"FASE 14 — PERGUNTAS", q:"Monte a pergunta correta.", words:["they","Are","studying"], answer:"Are they studying", ok:"Are they studying?", bad:"A ordem correta é: Are they studying?"},
-  {type:"order", stage:"FASE 14 — PERGUNTAS", q:"Monte a pergunta correta.", words:["he","Is","sleeping"], answer:"Is he sleeping", ok:"Is he sleeping?", bad:"A ordem correta é: Is he sleeping?"},
-
-  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", q:"Escolha a tradução correta de “She is cleaning.”", choices:["Ela está cozinhando.","Ela está limpando.","Ela está estudando.","Ela está dormindo."], answer:1, ok:"She is cleaning = Ela está limpando.", bad:"A tradução correta é Ela está limpando."},
-  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", q:"Escolha a frase correta para “Eles estão ouvindo música.”", choices:["They are listening to music.","They is listening to music.","They are listen to music.","They listening to music."], answer:0, ok:"Perfeito!", bad:"A correta é They are listening to music."},
-  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", q:"Qual opção está completamente correta?", choices:["He is useing the computer.","He are using the computer.","He is using the computer.","He using the computer."], answer:2, ok:"He is using the computer.", bad:"A correta é He is using the computer."},
-  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “cozinhar”", valid:["cook"], placeholder:"Digite o verbo...", ok:"COOK = cozinhar.", bad:"A resposta é COOK."},
-  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “dormir”", valid:["sleep"], placeholder:"Digite o verbo...", ok:"SLEEP = dormir.", bad:"A resposta é SLEEP."},
-  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “conversar”", valid:["talk"], placeholder:"Digite o verbo...", ok:"TALK = conversar.", bad:"A resposta é TALK."},
-  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", q:"Digite a forma com -ING de USE.", valid:["using"], placeholder:"Digite a forma correta...", ok:"USE USING.", bad:"A resposta é USING."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", ic:"bilhete", q:"What is the seat number?", choices:["7","B12","8:30 p.m.","$25.00"], answer:1, ok:"SEAT = assento. O assento é B12.", bad:"O assento é B12."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", ic:"bilhete", q:"How much is the ticket?", choices:["October 25th","London","$25.00","Gate 7"], answer:2, ok:"PRICE = preço. O ingresso custa $25.00.", bad:"O preço do ticket é $25.00."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", ic:"bilhete", q:"What time is the departure?", choices:["B12","8:30 p.m.","October 25th","London"], answer:1, ok:"TIME = horário: 8:30 p.m.", bad:"O horário é 8:30 p.m."},
+  {type:"ticketchoice", stage:"FASE 9 — TICKET INFORMATION", ic:"bilhete", q:"What is the destination?", choices:["London — 1888","Gate 7","B12","October 25th"], answer:0, ok:"DESTINATION = destino: London — 1888.", bad:"O destino é London — 1888."},
+  {type:"tf", stage:"FASE 9 — TICKET INFORMATION", ic:"porta", q:"No ticket, GATE significa assento.", answer:false, ok:"Certo! GATE = portão; SEAT = assento.", bad:"É falso. GATE significa portão."},
 
   
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa STAND?", choices:["sentar","ficar em pé","pular","correr"], answer:1, ok:"STAND = ficar em pé.", bad:"STAND significa ficar em pé."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa LIFT?", choices:["levantar","quebrar","perder","voar"], answer:0, ok:"LIFT = levantar.", bad:"LIFT significa levantar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa BLOW?", choices:["chorar","soprar","desenhar","ajudar"], answer:1, ok:"BLOW = soprar.", bad:"BLOW significa soprar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa CRY?", choices:["chorar","comprar","navegar","assistir"], answer:0, ok:"CRY = chorar.", bad:"CRY significa chorar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa PAINT?", choices:["pintar","desenhar","dirigir","discutir"], answer:0, ok:"PAINT = pintar.", bad:"PAINT significa pintar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa DISCUSS?", choices:["dormir","debater / discutir","emprestar","comprar"], answer:1, ok:"DISCUSS = discutir / debater.", bad:"DISCUSS significa discutir / debater."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa BORROW?", choices:["comprar","dar","pegar emprestado","quebrar"], answer:2, ok:"BORROW = pegar emprestado.", bad:"BORROW significa pegar emprestado."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa BUY?", choices:["vender","comprar","emprestar","encontrar"], answer:1, ok:"BUY = comprar.", bad:"BUY significa comprar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa DRAW?", choices:["desenhar","pintar","assistir","voar"], answer:0, ok:"DRAW = desenhar.", bad:"DRAW significa desenhar."},
-  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", q:"O que significa WATCH?", choices:["olhar / assistir","quebrar","levantar","conversar"], answer:0, ok:"WATCH = assistir / observar.", bad:"WATCH significa assistir / observar."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", ic:"cabeca", q:"O que significa CLEAN?", choices:["cozinhar","limpar","estudar","conversar"], answer:1, ok:"CLEAN = limpar.", bad:"CLEAN significa limpar."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", ic:"comida", q:"O que significa COOK?", choices:["dormir","comer","cozinhar","usar o computador"], answer:2, ok:"COOK = cozinhar.", bad:"COOK significa cozinhar."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", ic:"fone", q:"Qual expressão significa “ouvir música”?", choices:["talk","listen to music","use the computer","study"], answer:1, ok:"LISTEN TO MUSIC = ouvir música.", bad:"A expressão correta é LISTEN TO MUSIC."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", ic:"computador", q:"Qual expressão significa “usar o computador”?", choices:["use the computer","listen to music","clean","cook"], answer:0, ok:"USE THE COMPUTER = usar o computador.", bad:"A expressão correta é USE THE COMPUTER."},
+  {type:"choice", stage:"FASE 10 — SIGNIFICADOS", ic:"fala", q:"Qual verbo significa “conversar”?", choices:["talk","eat","sleep","clean"], answer:0, ok:"TALK = conversar.", bad:"TALK significa conversar."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", ic:"vassoura", q:"The room is dirty. She is ______.", choices:["cleaning","cooking","sleeping","studying"], answer:0, ok:"Se o quarto está sujo, ela está CLEANING.", bad:"A ação coerente é CLEANING."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", ic:"livro", q:"He has a test tomorrow. He is ______.", choices:["talking","studying","eating","sleeping"], answer:1, ok:"Para uma prova, ele está STUDYING.", bad:"A ação mais adequada é STUDYING."},
+  {type:"choice", stage:"FASE 10 — CONTEXTO", ic:"dormir", q:"It is midnight. The baby is ______.", choices:["cooking","sleeping","talking","cleaning"], answer:1, ok:"À meia-noite, o bebê está SLEEPING.", bad:"A ação coerente é SLEEPING."},
 
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"STAND vira:", choices:["standing","standding","standeing","stand"], answer:0, ok:"STAND STANDING.", bad:"A forma correta é STANDING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"LIFT vira:", choices:["lifting","liftting","lifteing","lift"], answer:0, ok:"LIFT LIFTING.", bad:"A forma correta é LIFTING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"BLOW vira:", choices:["blowing","blowwing","bloweing","blow"], answer:0, ok:"BLOW BLOWING.", bad:"A forma correta é BLOWING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"CRY vira:", choices:["crying","criying","cryying","crieing"], answer:0, ok:"CRY CRYING.", bad:"A forma correta é CRYING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"PLAY vira:", choices:["playing","plaing","playying","playeing"], answer:0, ok:"PLAY PLAYING.", bad:"A forma correta é PLAYING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"PAINT vira:", choices:["painting","paintting","painteing","paint"], answer:0, ok:"PAINT PAINTING.", bad:"A forma correta é PAINTING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"DISCUSS vira:", choices:["discussing","discusing","discussying","discusseing"], answer:0, ok:"DISCUSS DISCUSSING.", bad:"A forma correta é DISCUSSING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"BORROW vira:", choices:["borrowing","borrowwing","borroweing","borrow"], answer:0, ok:"BORROW BORROWING.", bad:"A forma correta é BORROWING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"BUY vira:", choices:["buying","buyying","buing","buyeing"], answer:0, ok:"BUY BUYING.", bad:"A forma correta é BUYING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"DRAW vira:", choices:["drawing","drawwing","draing","draweing"], answer:0, ok:"DRAW DRAWING.", bad:"A forma correta é DRAWING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"HELP vira:", choices:["helping","helpping","helpeing","help"], answer:0, ok:"HELP HELPING.", bad:"A forma correta é HELPING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"WATCH vira:", choices:["watching","watchhing","watcheing","watch"], answer:0, ok:"WATCH WATCHING.", bad:"A forma correta é WATCHING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"JUMP vira:", choices:["jumping","jumpping","jumpeing","jump"], answer:0, ok:"JUMP JUMPING.", bad:"A forma correta é JUMPING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"FLY vira:", choices:["flying","flyying","flieing","flyng"], answer:0, ok:"FLY FLYING.", bad:"A forma correta é FLYING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"SAIL vira:", choices:["sailing","sailling","saileing","sail"], answer:0, ok:"SAIL SAILING.", bad:"A forma correta é SAILING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"FIND vira:", choices:["finding","findding","findeing","find"], answer:0, ok:"FIND FINDING.", bad:"A forma correta é FINDING."},
-  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", q:"BREAK vira:", choices:["breaking","breakking","breakeing","break"], answer:0, ok:"BREAK BREAKING.", bad:"A forma correta é BREAKING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"letras", q:"Qual é a forma correta de CLEAN no Present Continuous?", choices:["cleaning","cleaninng","cleanning","clean"], answer:0, ok:"CLEAN CLEANING.", bad:"A forma correta é CLEANING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"comida", q:"COOK vira:", choices:["cooking","cookking","cookeing","cook"], answer:0, ok:"COOK COOKING.", bad:"A forma correta é COOKING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"comida", q:"EAT vira:", choices:["eating","eatting","eatin","eat"], answer:0, ok:"EAT EATING.", bad:"A forma correta é EATING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"livro", q:"STUDY vira:", choices:["studying","studyng","studyying","studing"], answer:0, ok:"STUDY STUDYING.", bad:"A forma correta é STUDYING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"fala", q:"TALK vira:", choices:["talking","talkking","talkeing","talk"], answer:0, ok:"TALK TALKING.", bad:"A forma correta é TALKING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"computador", q:"USE vira:", choices:["useing","using","ussing","use"], answer:1, ok:"USE USING. Tiramos o E final.", bad:"A forma correta é USING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"movimento", q:"RUN vira:", choices:["runing","running","runeing","runnning"], answer:1, ok:"RUN RUNNING. Dobramos o N.", bad:"A forma correta é RUNNING."},
+  {type:"choice", stage:"FASE 11 — BASE ING", ic:"movimento", q:"SWIM vira:", choices:["swiming","swimming","swimmming","swimingg"], answer:1, ok:"SWIM SWIMMING. Dobramos o M.", bad:"A forma correta é SWIMMING."},
 
-  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", q:"RIDE vira:", choices:["rideing","riding","ridding","rideng"], answer:1, ok:"RIDE RIDING.", bad:"Tiramos o E: RIDING."},
-  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", q:"DRIVE vira:", choices:["driveing","driving","drivving","drivinge"], answer:1, ok:"DRIVE DRIVING.", bad:"Tiramos o E: DRIVING."},
-  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", q:"LOSE vira:", choices:["loseing","losing","lossing","loosing"], answer:1, ok:"LOSE LOSING.", bad:"Tiramos o E: LOSING."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", ic:"pessoa", q:"I ___ studying.", choices:["am","is","are","be"], answer:0, ok:"I + AM.", bad:"Com I usamos AM."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", ic:"pessoa", q:"She ___ cooking.", choices:["am","is","are","be"], answer:1, ok:"SHE + IS.", bad:"Com SHE usamos IS."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", ic:"pessoas", q:"They ___ talking.", choices:["am","is","are","be"], answer:2, ok:"THEY + ARE.", bad:"Com THEY usamos ARE."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", ic:"pessoa", q:"He ___ using the computer.", choices:["am","is","are","be"], answer:1, ok:"HE + IS.", bad:"Com HE usamos IS."},
+  {type:"choice", stage:"FASE 12 — AM / IS / ARE", ic:"pessoas", q:"We ___ listening to music.", choices:["am","is","are","be"], answer:2, ok:"WE + ARE.", bad:"Com WE usamos ARE."},
 
-  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", q:"HOP vira:", choices:["hoping","hopping","hoppping","hopeing"], answer:1, ok:"HOP HOPPING.", bad:"Dobramos o P: HOPPING."},
-  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", q:"WIN vira:", choices:["wining","winning","winnig","wineing"], answer:1, ok:"WIN WINNING.", bad:"Dobramos o N: WINNING."},
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", ic:"xis", q:"Qual é a negativa correta?", hint:"She is studying.", choices:["She isn't studying.","She aren't studying.","She not studying.","She doesn't studying."], answer:0, ok:"She isn't studying.", bad:"A forma correta é She isn't studying."},
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", ic:"xis", q:"Qual é a negativa correta?", hint:"They are cooking.", choices:["They isn't cooking.","They aren't cooking.","They not cooking.","They don't cooking."], answer:1, ok:"They aren't cooking.", bad:"A forma correta é They aren't cooking."},
+  {type:"choice", stage:"FASE 13 — NEGATIVAS", ic:"xis", q:"Qual é a negativa correta?", hint:"I am sleeping.", choices:["I am not sleeping.","I isn't sleeping.","I aren't sleeping.","I don't sleeping."], answer:0, ok:"I am not sleeping.", bad:"A forma correta é I am not sleeping."},
 
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"Qual frase significa “Ela está andando de bicicleta”?", choices:["She is driving a bike.","She is riding a bike.","She is sailing a bike.","She is flying a bike."], answer:1, ok:"RIDE = andar de / montar.", bad:"A frase correta é She is riding a bike."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"Qual frase significa “Ele está dirigindo”?", choices:["He is driving.","He is riding.","He is sailing.","He is watching."], answer:0, ok:"DRIVE = dirigir.", bad:"A frase correta é He is driving."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"The bird is ______.", hint:"O pássaro está voando.", choices:["sailing","flying","driving","riding"], answer:1, ok:"FLY FLYING.", bad:"Voar = FLY. A forma é FLYING."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"They are ______ across the sea.", hint:"Eles estão navegando pelo mar.", choices:["sailing","driving","hopping","standing"], answer:0, ok:"SAIL SAILING.", bad:"Navegar = SAIL. A forma é SAILING."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"Our team is ______ the game.", hint:"Nosso time está vencendo.", choices:["losing","winning","breaking","finding"], answer:1, ok:"WIN WINNING.", bad:"Vencer = WIN. A forma é WINNING."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"They are ______ the game.", hint:"Eles estão perdendo o jogo.", choices:["winning","losing","finding","buying"], answer:1, ok:"LOSE LOSING.", bad:"Perder = LOSE. A forma é LOSING."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"She is ______ the key.", hint:"Ela está encontrando a chave.", choices:["finding","breaking","buying","lifting"], answer:0, ok:"FIND FINDING.", bad:"Encontrar = FIND. A forma é FINDING."},
-  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", q:"He is ______ the toy.", hint:"Ele está quebrando o brinquedo.", choices:["finding","breaking","borrowing","drawing"], answer:1, ok:"BREAK BREAKING.", bad:"Quebrar = BREAK. A forma é BREAKING."},
+  {type:"order", stage:"FASE 14 — PERGUNTAS", ic:"pergunta", q:"Monte a pergunta correta.", words:["she","Is","cooking"], answer:"Is she cooking", ok:"Is she cooking?", bad:"A ordem correta é: Is she cooking?"},
+  {type:"order", stage:"FASE 14 — PERGUNTAS", ic:"pergunta", q:"Monte a pergunta correta.", words:["they","Are","studying"], answer:"Are they studying", ok:"Are they studying?", bad:"A ordem correta é: Are they studying?"},
+  {type:"order", stage:"FASE 14 — PERGUNTAS", ic:"pergunta", q:"Monte a pergunta correta.", words:["he","Is","sleeping"], answer:"Is he sleeping", ok:"Is he sleeping?", bad:"A ordem correta é: Is he sleeping?"},
 
-  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", q:"Associe o verbo ao significado.",
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", ic:"ciclo", q:"Escolha a tradução correta de “She is cleaning.”", choices:["Ela está cozinhando.","Ela está limpando.","Ela está estudando.","Ela está dormindo."], answer:1, ok:"She is cleaning = Ela está limpando.", bad:"A tradução correta é Ela está limpando."},
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", ic:"ciclo", q:"Escolha a frase correta para “Eles estão ouvindo música.”", choices:["They are listening to music.","They is listening to music.","They are listen to music.","They listening to music."], answer:0, ok:"Perfeito!", bad:"A correta é They are listening to music."},
+  {type:"choice", stage:"FASE 15 — REVISÃO ESPAÇADA", ic:"ciclo", q:"Qual opção está completamente correta?", choices:["He is useing the computer.","He are using the computer.","He is using the computer.","He using the computer."], answer:2, ok:"He is using the computer.", bad:"A correta é He is using the computer."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “cozinhar”", valid:["cook"], placeholder:"Digite o verbo...", ok:"COOK = cozinhar.", bad:"A resposta é COOK."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “dormir”", valid:["sleep"], placeholder:"Digite o verbo...", ok:"SLEEP = dormir.", bad:"A resposta é SLEEP."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “conversar”", valid:["talk"], placeholder:"Digite o verbo...", ok:"TALK = conversar.", bad:"A resposta é TALK."},
+  {type:"text", stage:"FASE 15 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite a forma com -ING de USE.", valid:["using"], placeholder:"Digite a forma correta...", ok:"USE USING.", bad:"A resposta é USING."},
+
+  
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"pessoa", q:"O que significa STAND?", choices:["sentar","ficar em pé","pular","correr"], answer:1, ok:"STAND = ficar em pé.", bad:"STAND significa ficar em pé."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"movimento", q:"O que significa LIFT?", choices:["levantar","quebrar","perder","voar"], answer:0, ok:"LIFT = levantar.", bad:"LIFT significa levantar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"vento", q:"O que significa BLOW?", choices:["chorar","soprar","desenhar","ajudar"], answer:1, ok:"BLOW = soprar.", bad:"BLOW significa soprar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"triste", q:"O que significa CRY?", choices:["chorar","comprar","navegar","assistir"], answer:0, ok:"CRY = chorar.", bad:"CRY significa chorar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"pincel", q:"O que significa PAINT?", choices:["pintar","desenhar","dirigir","discutir"], answer:0, ok:"PAINT = pintar.", bad:"PAINT significa pintar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"fala", q:"O que significa DISCUSS?", choices:["dormir","debater / discutir","emprestar","comprar"], answer:1, ok:"DISCUSS = discutir / debater.", bad:"DISCUSS significa discutir / debater."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"mao", q:"O que significa BORROW?", choices:["comprar","dar","pegar emprestado","quebrar"], answer:2, ok:"BORROW = pegar emprestado.", bad:"BORROW significa pegar emprestado."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"sacola", q:"O que significa BUY?", choices:["vender","comprar","emprestar","encontrar"], answer:1, ok:"BUY = comprar.", bad:"BUY significa comprar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"escrever", q:"O que significa DRAW?", choices:["desenhar","pintar","assistir","voar"], answer:0, ok:"DRAW = desenhar.", bad:"DRAW significa desenhar."},
+  {type:"choice", stage:"FASE 16 — SIGNIFICADOS NOVOS", ic:"tv", q:"O que significa WATCH?", choices:["olhar / assistir","quebrar","levantar","conversar"], answer:0, ok:"WATCH = assistir / observar.", bad:"WATCH significa assistir / observar."},
+
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"pessoa", q:"STAND vira:", choices:["standing","standding","standeing","stand"], answer:0, ok:"STAND STANDING.", bad:"A forma correta é STANDING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"movimento", q:"LIFT vira:", choices:["lifting","liftting","lifteing","lift"], answer:0, ok:"LIFT LIFTING.", bad:"A forma correta é LIFTING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"vento", q:"BLOW vira:", choices:["blowing","blowwing","bloweing","blow"], answer:0, ok:"BLOW BLOWING.", bad:"A forma correta é BLOWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"triste", q:"CRY vira:", choices:["crying","criying","cryying","crieing"], answer:0, ok:"CRY CRYING.", bad:"A forma correta é CRYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"bola", q:"PLAY vira:", choices:["playing","plaing","playying","playeing"], answer:0, ok:"PLAY PLAYING.", bad:"A forma correta é PLAYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"pincel", q:"PAINT vira:", choices:["painting","paintting","painteing","paint"], answer:0, ok:"PAINT PAINTING.", bad:"A forma correta é PAINTING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"fala", q:"DISCUSS vira:", choices:["discussing","discusing","discussying","discusseing"], answer:0, ok:"DISCUSS DISCUSSING.", bad:"A forma correta é DISCUSSING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"mao", q:"BORROW vira:", choices:["borrowing","borrowwing","borroweing","borrow"], answer:0, ok:"BORROW BORROWING.", bad:"A forma correta é BORROWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"sacola", q:"BUY vira:", choices:["buying","buyying","buing","buyeing"], answer:0, ok:"BUY BUYING.", bad:"A forma correta é BUYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"escrever", q:"DRAW vira:", choices:["drawing","drawwing","draing","draweing"], answer:0, ok:"DRAW DRAWING.", bad:"A forma correta é DRAWING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"mao", q:"HELP vira:", choices:["helping","helpping","helpeing","help"], answer:0, ok:"HELP HELPING.", bad:"A forma correta é HELPING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"tv", q:"WATCH vira:", choices:["watching","watchhing","watcheing","watch"], answer:0, ok:"WATCH WATCHING.", bad:"A forma correta é WATCHING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"seta-cima", q:"JUMP vira:", choices:["jumping","jumpping","jumpeing","jump"], answer:0, ok:"JUMP JUMPING.", bad:"A forma correta é JUMPING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"aviao", q:"FLY vira:", choices:["flying","flyying","flieing","flyng"], answer:0, ok:"FLY FLYING.", bad:"A forma correta é FLYING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"barco", q:"SAIL vira:", choices:["sailing","sailling","saileing","sail"], answer:0, ok:"SAIL SAILING.", bad:"A forma correta é SAILING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"lupa", q:"FIND vira:", choices:["finding","findding","findeing","find"], answer:0, ok:"FIND FINDING.", bad:"A forma correta é FINDING."},
+  {type:"choice", stage:"FASE 17 — REGRA 1: +ING", ic:"quebrado", q:"BREAK vira:", choices:["breaking","breakking","breakeing","break"], answer:0, ok:"BREAK BREAKING.", bad:"A forma correta é BREAKING."},
+
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", ic:"bicicleta", q:"RIDE vira:", choices:["rideing","riding","ridding","rideng"], answer:1, ok:"RIDE RIDING.", bad:"Tiramos o E: RIDING."},
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", ic:"carro", q:"DRIVE vira:", choices:["driveing","driving","drivving","drivinge"], answer:1, ok:"DRIVE DRIVING.", bad:"Tiramos o E: DRIVING."},
+  {type:"choice", stage:"FASE 18 — REGRA 2: TIRA O E", ic:"triste", q:"LOSE vira:", choices:["loseing","losing","lossing","loosing"], answer:1, ok:"LOSE LOSING.", bad:"Tiramos o E: LOSING."},
+
+  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", ic:"animal", q:"HOP vira:", choices:["hoping","hopping","hoppping","hopeing"], answer:1, ok:"HOP HOPPING.", bad:"Dobramos o P: HOPPING."},
+  {type:"choice", stage:"FASE 19 — REGRA 3: DOBRA A CONSOANTE", ic:"trofeu", q:"WIN vira:", choices:["wining","winning","winnig","wineing"], answer:1, ok:"WIN WINNING.", bad:"Dobramos o N: WINNING."},
+
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"bicicleta", q:"Qual frase significa “Ela está andando de bicicleta”?", choices:["She is driving a bike.","She is riding a bike.","She is sailing a bike.","She is flying a bike."], answer:1, ok:"RIDE = andar de / montar.", bad:"A frase correta é She is riding a bike."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"carro", q:"Qual frase significa “Ele está dirigindo”?", choices:["He is driving.","He is riding.","He is sailing.","He is watching."], answer:0, ok:"DRIVE = dirigir.", bad:"A frase correta é He is driving."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"aviao", q:"The bird is ______.", hint:"O pássaro está voando.", choices:["sailing","flying","driving","riding"], answer:1, ok:"FLY FLYING.", bad:"Voar = FLY. A forma é FLYING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"barco", q:"They are ______ across the sea.", hint:"Eles estão navegando pelo mar.", choices:["sailing","driving","hopping","standing"], answer:0, ok:"SAIL SAILING.", bad:"Navegar = SAIL. A forma é SAILING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"trofeu", q:"Our team is ______ the game.", hint:"Nosso time está vencendo.", choices:["losing","winning","breaking","finding"], answer:1, ok:"WIN WINNING.", bad:"Vencer = WIN. A forma é WINNING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"triste", q:"They are ______ the game.", hint:"Eles estão perdendo o jogo.", choices:["winning","losing","finding","buying"], answer:1, ok:"LOSE LOSING.", bad:"Perder = LOSE. A forma é LOSING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"lupa", q:"She is ______ the key.", hint:"Ela está encontrando a chave.", choices:["finding","breaking","buying","lifting"], answer:0, ok:"FIND FINDING.", bad:"Encontrar = FIND. A forma é FINDING."},
+  {type:"choice", stage:"FASE 20 — SIGNIFICADO + FRASE", ic:"quebrado", q:"He is ______ the toy.", hint:"Ele está quebrando o brinquedo.", choices:["finding","breaking","borrowing","drawing"], answer:1, ok:"BREAK BREAKING.", bad:"Quebrar = BREAK. A forma é BREAKING."},
+
+  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", ic:"elos", q:"Associe o verbo ao significado.",
    pairs:[["ride","andar de / montar"],["drive","dirigir"],["fly","voar"],["sail","navegar"]]},
-  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", q:"Associe o verbo ao significado.",
+  {type:"match", stage:"FASE 21 — ASSOCIAÇÃO INTENSIVA", ic:"elos", q:"Associe o verbo ao significado.",
    pairs:[["borrow","pegar emprestado"],["buy","comprar"],["find","encontrar"],["break","quebrar"]]},
-  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", q:"Encontre os pares inglês português.",
+  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", ic:"cabeca", q:"Encontre os pares inglês português.",
    pairs:[["win","vencer"],["lose","perder"],["draw","desenhar"],["paint","pintar"]]},
-  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", q:"Encontre os pares inglês português.",
+  {type:"memory", stage:"FASE 22 — MEMÓRIA DE SIGNIFICADOS", ic:"cabeca", q:"Encontre os pares inglês português.",
    pairs:[["stand","ficar em pé"],["lift","levantar"],["blow","soprar"],["cry","chorar"]]},
 
-  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", q:"Monte a frase: “Ele está dirigindo.”", words:["driving","He","is"], answer:"He is driving", ok:"He is driving.", bad:"A ordem correta é He is driving."},
-  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", q:"Monte a frase: “Eles estão vencendo.”", words:["winning","They","are"], answer:"They are winning", ok:"They are winning.", bad:"A ordem correta é They are winning."},
-  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", q:"Monte a frase: “Ela está chorando.”", words:["crying","She","is"], answer:"She is crying", ok:"She is crying.", bad:"A ordem correta é She is crying."},
-  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", q:"Monte a frase: “Nós estamos assistindo TV.”", words:["TV","watching","We","are"], answer:"We are watching TV", ok:"We are watching TV.", bad:"A ordem correta é We are watching TV."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", ic:"peca", q:"Monte a frase: “Ele está dirigindo.”", words:["driving","He","is"], answer:"He is driving", ok:"He is driving.", bad:"A ordem correta é He is driving."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", ic:"peca", q:"Monte a frase: “Eles estão vencendo.”", words:["winning","They","are"], answer:"They are winning", ok:"They are winning.", bad:"A ordem correta é They are winning."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", ic:"peca", q:"Monte a frase: “Ela está chorando.”", words:["crying","She","is"], answer:"She is crying", ok:"She is crying.", bad:"A ordem correta é She is crying."},
+  {type:"order", stage:"FASE 23 — CONJUGAÇÃO EM FRASES", ic:"peca", q:"Monte a frase: “Nós estamos assistindo TV.”", words:["TV","watching","We","are"], answer:"We are watching TV", ok:"We are watching TV.", bad:"A ordem correta é We are watching TV."},
 
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “dirigir”", valid:["drive"], placeholder:"Digite o verbo...", ok:"DRIVE = dirigir.", bad:"A resposta é DRIVE."},
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “voar”", valid:["fly"], placeholder:"Digite o verbo...", ok:"FLY = voar.", bad:"A resposta é FLY."},
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite em inglês: “vencer”", valid:["win"], placeholder:"Digite o verbo...", ok:"WIN = vencer.", bad:"A resposta é WIN."},
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite a forma com -ING de RIDE.", valid:["riding"], placeholder:"Digite a forma correta...", ok:"RIDE RIDING.", bad:"A resposta é RIDING."},
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite a forma com -ING de HOP.", valid:["hopping"], placeholder:"Digite a forma correta...", ok:"HOP HOPPING.", bad:"A resposta é HOPPING."},
-  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", q:"Digite a forma com -ING de WIN.", valid:["winning"], placeholder:"Digite a forma correta...", ok:"WIN WINNING.", bad:"A resposta é WINNING."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “dirigir”", valid:["drive"], placeholder:"Digite o verbo...", ok:"DRIVE = dirigir.", bad:"A resposta é DRIVE."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “voar”", valid:["fly"], placeholder:"Digite o verbo...", ok:"FLY = voar.", bad:"A resposta é FLY."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite em inglês: “vencer”", valid:["win"], placeholder:"Digite o verbo...", ok:"WIN = vencer.", bad:"A resposta é WIN."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite a forma com -ING de RIDE.", valid:["riding"], placeholder:"Digite a forma correta...", ok:"RIDE RIDING.", bad:"A resposta é RIDING."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite a forma com -ING de HOP.", valid:["hopping"], placeholder:"Digite a forma correta...", ok:"HOP HOPPING.", bad:"A resposta é HOPPING."},
+  {type:"text", stage:"FASE 24 — RECUPERAÇÃO ATIVA", ic:"cabeca", q:"Digite a forma com -ING de WIN.", valid:["winning"], placeholder:"Digite a forma correta...", ok:"WIN WINNING.", bad:"A resposta é WINNING."},
 
-  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", q:"Qual frase está correta?", choices:["She are reading.","She is reading.","She reading.","She am reading."], answer:1, ok:"Correto!", bad:"A correta é She is reading."},
-  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", q:"Qual palavra NÃO é uma ação?", choices:["running","ticket","sleeping","writing"], answer:1, ok:"TICKET não é uma ação.", bad:"A palavra que não é ação é TICKET."},
-  {type:"order", stage:"FASE FINAL — DESAFIO DE ORDEM", q:"Monte: “Ela está ouvindo música.”", words:["music","to","She","listening","is"], answer:"She is listening to music", ok:"Perfeito!", bad:"A ordem correta é: She is listening to music."},
-  {type:"text", stage:"FASE FINAL — CÓDIGO FINAL", q:"Complete: I ___ traveling through time!", valid:["am"], placeholder:"Digite a palavra correta...", ok:"CÓDIGO ACEITO! I AM traveling through time!", bad:"Com I usamos AM."}
+  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", ic:"estrela", q:"Qual frase está correta?", choices:["She are reading.","She is reading.","She reading.","She am reading."], answer:1, ok:"Correto!", bad:"A correta é She is reading."},
+  {type:"choice", stage:"FASE FINAL — MIXED CHALLENGE", ic:"raio", q:"Qual palavra NÃO é uma ação?", choices:["running","ticket","sleeping","writing"], answer:1, ok:"TICKET não é uma ação.", bad:"A palavra que não é ação é TICKET."},
+  {type:"order", stage:"FASE FINAL — DESAFIO DE ORDEM", ic:"peca", q:"Monte: “Ela está ouvindo música.”", words:["music","to","She","listening","is"], answer:"She is listening to music", ok:"Perfeito!", bad:"A ordem correta é: She is listening to music."},
+  {type:"text", stage:"FASE FINAL — CÓDIGO FINAL", ic:"foguete", q:"Complete: I ___ traveling through time!", valid:["am"], placeholder:"Digite a palavra correta...", ok:"CÓDIGO ACEITO! I AM traveling through time!", bad:"Com I usamos AM."}
 ]
 
 
@@ -1091,141 +1104,141 @@ const baseQuestionPool = [
    ============================================================ */
 const unit5Pool = [
   // ---- contracoes (livro p.9, 10) ----
-  {type:"choice", stage:"CONTRACTIONS", src:"livro p.9", q:"Qual é a forma contraída de “I am studying”?", choices:["I'm studying","Im studying","I's studying","I am'studying"], answer:0, ok:"I am I'm. O apóstrofo substitui o A.", bad:"É I'M studying. O apóstrofo entra no lugar do A de AM."},
-  {type:"choice", stage:"CONTRACTIONS", src:"livro p.9", q:"Qual é a forma contraída de “She is studying at home”?", choices:["She's studying at home","Shes studying at home","She're studying at home","She'is studying"], answer:0, ok:"She is She's.", bad:"É SHE'S studying at home."},
-  {type:"choice", stage:"CONTRACTIONS", src:"livro p.9", q:"Qual é a forma contraída de “They are watching TV”?", choices:["They're watching TV","Theyre watching TV","They's watching TV","They'are watching TV"], answer:0, ok:"They are They're.", bad:"É THEY'RE watching TV."},
-  {type:"choice", stage:"CONTRACTIONS", src:"livro p.9", q:"Complete: “Lilly ______ studying at school.” (negativa)", choices:["isn't","aren't","am not","don't"], answer:0, ok:"Lilly isn't studying — com um nome no singular usamos IS NOT = ISN'T.", bad:"É ISN'T. Lilly é uma pessoa só: is + not = isn't."},
-  {type:"choice", stage:"CONTRACTIONS", src:"livro p.9", q:"Complete: “Joe and Jill ______ dancing.” (negativa)", choices:["aren't","isn't","am not","doesn't"], answer:0, ok:"Joe and Jill aren't dancing — duas pessoas, ARE NOT = AREN'T.", bad:"É AREN'T. São duas pessoas: are + not = aren't."},
-  {type:"match", stage:"CONTRACTIONS", src:"livro p.9", q:"Associe a forma completa à contraída.", pairs:[["I am","I'm"],["She is","She's"],["They are","They're"],["is not","isn't"],["are not","aren't"]]},
-  {type:"text", stage:"CONTRACTIONS", q:"Escreva a contração de “We are”.", valid:["we're"], placeholder:"Digite a contração...", ok:"We are We're.", bad:"A resposta é WE'RE (com apóstrofo)."},
-  {type:"text", stage:"CONTRACTIONS", q:"Escreva a contração de “He is”.", valid:["he's"], placeholder:"Digite a contração...", ok:"He is He's.", bad:"A resposta é HE'S (com apóstrofo)."},
+  {type:"choice", stage:"CONTRACTIONS", ic:"pessoa", src:"livro p.9", q:"Qual é a forma contraída de “I am studying”?", choices:["I'm studying","Im studying","I's studying","I am'studying"], answer:0, ok:"I am I'm. O apóstrofo substitui o A.", bad:"É I'M studying. O apóstrofo entra no lugar do A de AM."},
+  {type:"choice", stage:"CONTRACTIONS", ic:"pessoa", src:"livro p.9", q:"Qual é a forma contraída de “She is studying at home”?", choices:["She's studying at home","Shes studying at home","She're studying at home","She'is studying"], answer:0, ok:"She is She's.", bad:"É SHE'S studying at home."},
+  {type:"choice", stage:"CONTRACTIONS", ic:"pessoas", src:"livro p.9", q:"Qual é a forma contraída de “They are watching TV”?", choices:["They're watching TV","Theyre watching TV","They's watching TV","They'are watching TV"], answer:0, ok:"They are They're.", bad:"É THEY'RE watching TV."},
+  {type:"choice", stage:"CONTRACTIONS", ic:"xis", src:"livro p.9", q:"Complete: “Lilly ______ studying at school.” (negativa)", choices:["isn't","aren't","am not","don't"], answer:0, ok:"Lilly isn't studying — com um nome no singular usamos IS NOT = ISN'T.", bad:"É ISN'T. Lilly é uma pessoa só: is + not = isn't."},
+  {type:"choice", stage:"CONTRACTIONS", ic:"xis", src:"livro p.9", q:"Complete: “Joe and Jill ______ dancing.” (negativa)", choices:["aren't","isn't","am not","doesn't"], answer:0, ok:"Joe and Jill aren't dancing — duas pessoas, ARE NOT = AREN'T.", bad:"É AREN'T. São duas pessoas: are + not = aren't."},
+  {type:"match", stage:"CONTRACTIONS", ic:"elos", src:"livro p.9", q:"Associe a forma completa à contraída.", pairs:[["I am","I'm"],["She is","She's"],["They are","They're"],["is not","isn't"],["are not","aren't"]]},
+  {type:"text", stage:"CONTRACTIONS", ic:"escrever", q:"Escreva a contração de “We are”.", valid:["we're"], placeholder:"Digite a contração...", ok:"We are We're.", bad:"A resposta é WE'RE (com apóstrofo)."},
+  {type:"text", stage:"CONTRACTIONS", ic:"escrever", q:"Escreva a contração de “He is”.", valid:["he's"], placeholder:"Digite a contração...", ok:"He is He's.", bad:"A resposta é HE'S (com apóstrofo)."},
 
   // ---- What are you doing? ----
-  {type:"choice", stage:"WHAT ARE YOU DOING?", src:"livro p.10", q:"Como se pergunta “o que você está fazendo?” em inglês?", choices:["What are you doing?","What you are doing?","What do you doing?","What are you do?"], answer:0, ok:"What are you doing? — a pergunta padrão do Present Continuous.", bad:"É WHAT ARE YOU DOING? O verbo to be vem antes do sujeito."},
-  {type:"choice", stage:"WHAT ARE YOU DOING?", src:"livro p.10", q:"“What are you doing?” Qual é uma resposta correta?", choices:["I'm studying at home.","I study at home.","I am study at home.","Yes, I am."], answer:0, ok:"I'm studying at home — responde com o verbo em -ING.", bad:"A resposta usa Present Continuous: I'm studying at home."},
-  {type:"listenchoice", stage:"LISTENING — UNIT 5", audio:"What are you doing? I'm doing homework.", q:"Ouça o diálogo e escolha o que foi dito.", choices:["What are you doing? I'm doing homework.","What are you doing? I'm having lunch.","What time is it? I'm doing homework.","Where are you? I'm at home."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: What are you doing? I'm doing homework."},
-  {type:"order", stage:"WHAT ARE YOU DOING?", q:"Monte a pergunta: “O que ela está fazendo?”", words:["What","is","she","doing"], answer:"What is she doing", ok:"What is she doing? — palavra interrogativa + to be + sujeito + verbo-ING.", bad:"A ordem é: What is she doing?"},
+  {type:"choice", stage:"WHAT ARE YOU DOING?", ic:"fala", src:"livro p.10", q:"Como se pergunta “o que você está fazendo?” em inglês?", choices:["What are you doing?","What you are doing?","What do you doing?","What are you do?"], answer:0, ok:"What are you doing? — a pergunta padrão do Present Continuous.", bad:"É WHAT ARE YOU DOING? O verbo to be vem antes do sujeito."},
+  {type:"choice", stage:"WHAT ARE YOU DOING?", ic:"casa", src:"livro p.10", q:"“What are you doing?” Qual é uma resposta correta?", choices:["I'm studying at home.","I study at home.","I am study at home.","Yes, I am."], answer:0, ok:"I'm studying at home — responde com o verbo em -ING.", bad:"A resposta usa Present Continuous: I'm studying at home."},
+  {type:"listenchoice", stage:"LISTENING — UNIT 5", ic:"fone", audio:"What are you doing? I'm doing homework.", q:"Ouça o diálogo e escolha o que foi dito.", choices:["What are you doing? I'm doing homework.","What are you doing? I'm having lunch.","What time is it? I'm doing homework.","Where are you? I'm at home."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: What are you doing? I'm doing homework."},
+  {type:"order", stage:"WHAT ARE YOU DOING?", ic:"peca", q:"Monte a pergunta: “O que ela está fazendo?”", words:["What","is","she","doing"], answer:"What is she doing", ok:"What is she doing? — palavra interrogativa + to be + sujeito + verbo-ING.", bad:"A ordem é: What is she doing?"},
 
   // ---- can / can't ----
-  {type:"choice", stage:"CAN / CAN'T", src:"livro p.12", q:"Complete: “We ______ learn more about different time machines.”", choices:["can","can't","are","aren't"], answer:0, ok:"We CAN learn — can indica que é possível.", bad:"É CAN: We can learn more about different time machines."},
-  {type:"choice", stage:"CAN / CAN'T", src:"livro p.12", q:"Complete: “We ______ travel to the future now.”", choices:["can't","can","don't","aren't"], answer:0, ok:"We CAN'T travel — can't indica que não é possível.", bad:"É CAN'T: We can't travel to the future now."},
-  {type:"tf", stage:"CAN / CAN'T", q:"Depois de “can” usamos o verbo com -ING. Ex.: “I can climbing”.", answer:false, ok:"Correto, é falso! Depois de can o verbo fica no infinitivo sem to: I can climb.", bad:"É falso. O certo é I CAN CLIMB, sem -ING."},
-  {type:"choice", stage:"CAN / CAN'T", src:"livro p.33", q:"Na história, o que Leo diz enquanto sobe as escadas de Big Ben?", choices:["I can climb fast.","I can't climb.","I am climbing slowly.","I climb fast."], answer:0, ok:"I can climb fast! Look! 58, 59, 60...", bad:"Ele diz: I CAN CLIMB FAST."},
+  {type:"choice", stage:"CAN / CAN'T", ic:"check", src:"livro p.12", q:"Complete: “We ______ learn more about different time machines.”", choices:["can","can't","are","aren't"], answer:0, ok:"We CAN learn — can indica que é possível.", bad:"É CAN: We can learn more about different time machines."},
+  {type:"choice", stage:"CAN / CAN'T", ic:"xis", src:"livro p.12", q:"Complete: “We ______ travel to the future now.”", choices:["can't","can","don't","aren't"], answer:0, ok:"We CAN'T travel — can't indica que não é possível.", bad:"É CAN'T: We can't travel to the future now."},
+  {type:"tf", stage:"CAN / CAN'T", ic:"pergunta", q:"Depois de “can” usamos o verbo com -ING. Ex.: “I can climbing”.", answer:false, ok:"Correto, é falso! Depois de can o verbo fica no infinitivo sem to: I can climb.", bad:"É falso. O certo é I CAN CLIMB, sem -ING."},
+  {type:"choice", stage:"CAN / CAN'T", ic:"movimento", src:"livro p.33", q:"Na história, o que Leo diz enquanto sobe as escadas de Big Ben?", choices:["I can climb fast.","I can't climb.","I am climbing slowly.","I climb fast."], answer:0, ok:"I can climb fast! Look! 58, 59, 60...", bad:"Ele diz: I CAN CLIMB FAST."},
 
   // ---- telling the time, do jeito do livro ----
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.30", q:"12:00 p.m. é...", choices:["midday","midnight","o'clock","a quarter"], answer:0, ok:"12:00 p.m. = midday (meio-dia).", bad:"12:00 p.m. = MIDDAY, meio-dia. Meia-noite é midnight."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.30", q:"12:00 a.m. é...", choices:["midnight","midday","noon","o'clock"], answer:0, ok:"12:00 a.m. = midnight (meia-noite).", bad:"12:00 a.m. = MIDNIGHT, meia-noite."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.31", q:"Como o livro lê o horário 8:30?", choices:["It's eight thirty.","It's thirty eight.","It's eight and half.","It's half eight."], answer:0, ok:"It's eight thirty — o livro lê a hora e depois os minutos.", bad:"É IT'S EIGHT THIRTY: primeiro a hora, depois os minutos."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.31", q:"Como o livro lê o horário 3:45?", choices:["It's three forty-five.","It's forty-five three.","It's four fifteen.","It's a quarter three."], answer:0, ok:"It's three forty-five.", bad:"É IT'S THREE FORTY-FIVE: a hora e depois os minutos."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.31", q:"Como o livro lê o horário 7:15?", choices:["It's seven fifteen.","It's fifteen seven.","It's a quarter seven.","It's seven and fifteen."], answer:0, ok:"It's seven fifteen.", bad:"É IT'S SEVEN FIFTEEN."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"livro p.31", q:"O que significa a.m.?", choices:["Da meia-noite ao meio-dia (manhã)","Do meio-dia à meia-noite (tarde e noite)","Só à noite","Só ao meio-dia"], answer:0, ok:"a.m. = da meia-noite ao meio-dia. Ex.: It's eleven a.m.", bad:"a.m. é a parte da manhã, da meia-noite ao meio-dia. p.m. é depois do meio-dia."},
-  {type:"listenchoice", stage:"LISTENING — THE TIME", audio:"It's eleven p.m.", q:"Ouça e escolha o horário.", choices:["11:00 p.m.","11:00 a.m.","1:00 p.m.","10:00 p.m."], answer:0, ok:"It's eleven p.m. — onze da noite.", bad:"O áudio diz: It's eleven p.m."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"livro p.30", q:"12:00 p.m. é...", choices:["midday","midnight","o'clock","a quarter"], answer:0, ok:"12:00 p.m. = midday (meio-dia).", bad:"12:00 p.m. = MIDDAY, meio-dia. Meia-noite é midnight."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"lua", src:"livro p.30", q:"12:00 a.m. é...", choices:["midnight","midday","noon","o'clock"], answer:0, ok:"12:00 a.m. = midnight (meia-noite).", bad:"12:00 a.m. = MIDNIGHT, meia-noite."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"livro p.31", q:"Como o livro lê o horário 8:30?", choices:["It's eight thirty.","It's thirty eight.","It's eight and half.","It's half eight."], answer:0, ok:"It's eight thirty — o livro lê a hora e depois os minutos.", bad:"É IT'S EIGHT THIRTY: primeiro a hora, depois os minutos."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"livro p.31", q:"Como o livro lê o horário 3:45?", choices:["It's three forty-five.","It's forty-five three.","It's four fifteen.","It's a quarter three."], answer:0, ok:"It's three forty-five.", bad:"É IT'S THREE FORTY-FIVE: a hora e depois os minutos."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"livro p.31", q:"Como o livro lê o horário 7:15?", choices:["It's seven fifteen.","It's fifteen seven.","It's a quarter seven.","It's seven and fifteen."], answer:0, ok:"It's seven fifteen.", bad:"É IT'S SEVEN FIFTEEN."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"sol", src:"livro p.31", q:"O que significa a.m.?", choices:["Da meia-noite ao meio-dia (manhã)","Do meio-dia à meia-noite (tarde e noite)","Só à noite","Só ao meio-dia"], answer:0, ok:"a.m. = da meia-noite ao meio-dia. Ex.: It's eleven a.m.", bad:"a.m. é a parte da manhã, da meia-noite ao meio-dia. p.m. é depois do meio-dia."},
+  {type:"listenchoice", stage:"LISTENING — THE TIME", ic:"fone", audio:"It's eleven p.m.", q:"Ouça e escolha o horário.", choices:["11:00 p.m.","11:00 a.m.","1:00 p.m.","10:00 p.m."], answer:0, ok:"It's eleven p.m. — onze da noite.", bad:"O áudio diz: It's eleven p.m."},
 
   // ---- rotina diaria (livro p.32, 36) ----
-  {type:"match", stage:"DAILY ROUTINE", src:"livro p.32", q:"Associe cada ação da rotina ao seu significado.", pairs:[["get up","levantar da cama"],["have breakfast","tomar café da manhã"],["do homework","fazer a lição"],["have lunch","almoçar"],["go to bed","ir dormir"]]},
-  {type:"order", stage:"DAILY ROUTINE", src:"livro p.32", q:"Coloque a rotina do dia na ordem, do começo ao fim.", words:["getting up","having breakfast","having lunch","having dinner","going to bed"], answer:"getting up having breakfast having lunch having dinner going to bed", ok:"É a ordem do dia: acordar, café, almoço, jantar e dormir.", bad:"A ordem é: getting up having breakfast having lunch having dinner going to bed."},
-  {type:"text", stage:"DAILY ROUTINE", src:"livro p.32", q:"Complete: “It's 7:00 a.m. and I am ______ breakfast.”", valid:["having"], placeholder:"Digite o verbo com -ING...", ok:"I am HAVING breakfast.", bad:"É HAVING. Em inglês “tomar café da manhã” é have breakfast."},
-  {type:"choice", stage:"DAILY ROUTINE", src:"livro p.32", q:"“It's 10:00 p.m. and I am ______.”", choices:["going to bed","getting up","having lunch","doing homework"], answer:0, ok:"Às 22h a gente vai dormir: going to bed.", bad:"Às 10 da noite é GOING TO BED."},
+  {type:"match", stage:"DAILY ROUTINE", ic:"elos", src:"livro p.32", q:"Associe cada ação da rotina ao seu significado.", pairs:[["get up","levantar da cama"],["have breakfast","tomar café da manhã"],["do homework","fazer a lição"],["have lunch","almoçar"],["go to bed","ir dormir"]]},
+  {type:"order", stage:"DAILY ROUTINE", ic:"relogio", src:"livro p.32", q:"Coloque a rotina do dia na ordem, do começo ao fim.", words:["getting up","having breakfast","having lunch","having dinner","going to bed"], answer:"getting up having breakfast having lunch having dinner going to bed", ok:"É a ordem do dia: acordar, café, almoço, jantar e dormir.", bad:"A ordem é: getting up having breakfast having lunch having dinner going to bed."},
+  {type:"text", stage:"DAILY ROUTINE", ic:"escrever", src:"livro p.32", q:"Complete: “It's 7:00 a.m. and I am ______ breakfast.”", valid:["having"], placeholder:"Digite o verbo com -ING...", ok:"I am HAVING breakfast.", bad:"É HAVING. Em inglês “tomar café da manhã” é have breakfast."},
+  {type:"choice", stage:"DAILY ROUTINE", ic:"cama", src:"livro p.32", q:"“It's 10:00 p.m. and I am ______.”", choices:["going to bed","getting up","having lunch","doing homework"], answer:0, ok:"Às 22h a gente vai dormir: going to bed.", bad:"Às 10 da noite é GOING TO BED."},
 
   // ---- Rock Around the Clock (livro p.35) ----
-  {type:"choice", stage:"SONG", src:"livro p.35", q:"Qual é o nome da música da Unit?", choices:["Rock Around the Clock","Time After Time","Big Ben Rock","Around the World"], answer:0, ok:"Rock Around the Clock, de Bill Haley & His Comets.", bad:"É ROCK AROUND THE CLOCK."},
-  {type:"choice", stage:"SONG", src:"livro p.35", q:"Complete a letra: “One, two, three o'clock, four ______ rock.”", choices:["o'clock","clock","hour","time"], answer:0, ok:"“One, two, three o'clock, four o'clock rock.”", bad:"A letra repete O'CLOCK: four o'clock rock."}
+  {type:"choice", stage:"SONG", ic:"instrumento", src:"livro p.35", q:"Qual é o nome da música da Unit?", choices:["Rock Around the Clock","Time After Time","Big Ben Rock","Around the World"], answer:0, ok:"Rock Around the Clock, de Bill Haley & His Comets.", bad:"É ROCK AROUND THE CLOCK."},
+  {type:"choice", stage:"SONG", ic:"partitura", src:"livro p.35", q:"Complete a letra: “One, two, three o'clock, four ______ rock.”", choices:["o'clock","clock","hour","time"], answer:0, ok:"“One, two, three o'clock, four o'clock rock.”", bad:"A letra repete O'CLOCK: four o'clock rock."}
 ];
 
 const extraPool = [
   // ---- numbers ----
-  {type:"choice", stage:"NUMBERS", src:"folha q8", q:"How do you write 40 in English?", choices:["forty","fourty","fourteen","fivety"], answer:0, ok:"FORTY — sem o U. É a pegadinha clássica.", bad:"É FORTY, sem U. Cuidado: FOURTEEN é 14."},
-  {type:"choice", stage:"NUMBERS", src:"folha q8", q:"Qual número é “fifty”?", choices:["15","50","5","500"], answer:1, ok:"Fifty = 50. Quinze é fifteen.", bad:"Fifty = 50. Não confunda com fifteen, que é 15."},
-  {type:"choice", stage:"NUMBERS", src:"folha q9", q:"Which number is “fifty-nine”?", choices:["49","56","59","95"], answer:2, ok:"Fifty-nine = 59.", bad:"Fifty (50) + nine (9) = 59."},
-  {type:"choice", stage:"NUMBERS", src:"folha q9", q:"Which number is “twenty-one”?", choices:["21","22","12","20"], answer:0, ok:"Twenty-one = 21.", bad:"Twenty (20) + one (1) = 21. Doze é twelve."},
-  {type:"choice", stage:"NUMBERS", src:"folha q9", q:"Which number is “fourteen”?", choices:["40","14","41","4"], answer:1, ok:"Fourteen = 14.", bad:"Fourteen = 14. Quarenta é forty, e 41 é forty-one."},
-  {type:"text", stage:"NUMBERS", q:"Escreva em inglês o número 80.", valid:["eighty"], placeholder:"Digite em inglês...", ok:"Eighty = 80.", bad:"A resposta é EIGHTY."},
-  {type:"text", stage:"NUMBERS", q:"Escreva em inglês o número 100.", valid:["one hundred","a hundred","hundred"], placeholder:"Digite em inglês...", ok:"One hundred = 100.", bad:"A resposta é ONE HUNDRED."},
-  {type:"tf", stage:"NUMBERS", q:"“Fifteen” e “fifty” são o mesmo número.", answer:false, ok:"Isso! Fifteen é 15 e fifty é 50.", bad:"São diferentes: fifteen = 15, fifty = 50. O som parecido confunde muita gente."},
-  {type:"match", stage:"NUMBERS", src:"folha q8", q:"Associe o número por extenso ao algarismo.", pairs:[["twenty","20"],["fifty","50"],["eighty","80"],["one hundred","100"]]},
+  {type:"choice", stage:"NUMBERS", ic:"numeros", src:"folha q8", q:"How do you write 40 in English?", choices:["forty","fourty","fourteen","fivety"], answer:0, ok:"FORTY — sem o U. É a pegadinha clássica.", bad:"É FORTY, sem U. Cuidado: FOURTEEN é 14."},
+  {type:"choice", stage:"NUMBERS", ic:"numeros", src:"folha q8", q:"Qual número é “fifty”?", choices:["15","50","5","500"], answer:1, ok:"Fifty = 50. Quinze é fifteen.", bad:"Fifty = 50. Não confunda com fifteen, que é 15."},
+  {type:"choice", stage:"NUMBERS", ic:"numeros", src:"folha q9", q:"Which number is “fifty-nine”?", choices:["49","56","59","95"], answer:2, ok:"Fifty-nine = 59.", bad:"Fifty (50) + nine (9) = 59."},
+  {type:"choice", stage:"NUMBERS", ic:"numeros", src:"folha q9", q:"Which number is “twenty-one”?", choices:["21","22","12","20"], answer:0, ok:"Twenty-one = 21.", bad:"Twenty (20) + one (1) = 21. Doze é twelve."},
+  {type:"choice", stage:"NUMBERS", ic:"numeros", src:"folha q9", q:"Which number is “fourteen”?", choices:["40","14","41","4"], answer:1, ok:"Fourteen = 14.", bad:"Fourteen = 14. Quarenta é forty, e 41 é forty-one."},
+  {type:"text", stage:"NUMBERS", ic:"escrever", q:"Escreva em inglês o número 80.", valid:["eighty"], placeholder:"Digite em inglês...", ok:"Eighty = 80.", bad:"A resposta é EIGHTY."},
+  {type:"text", stage:"NUMBERS", ic:"escrever", q:"Escreva em inglês o número 100.", valid:["one hundred","a hundred","hundred"], placeholder:"Digite em inglês...", ok:"One hundred = 100.", bad:"A resposta é ONE HUNDRED."},
+  {type:"tf", stage:"NUMBERS", ic:"pergunta", q:"“Fifteen” e “fifty” são o mesmo número.", answer:false, ok:"Isso! Fifteen é 15 e fifty é 50.", bad:"São diferentes: fifteen = 15, fifty = 50. O som parecido confunde muita gente."},
+  {type:"match", stage:"NUMBERS", ic:"elos", src:"folha q8", q:"Associe o número por extenso ao algarismo.", pairs:[["twenty","20"],["fifty","50"],["eighty","80"],["one hundred","100"]]},
 
   // ---- telling the time ----
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"folha q5", q:"O relógio marca 5:00. What time is it?", choices:["It's five o'clock.","It's five thirty.","It's four o'clock.","It's eleven o'clock."], answer:0, ok:"It's five o'clock — usamos o'clock nas horas exatas.", bad:"5:00 = It's five o'clock."},
-  {type:"choice", stage:"WHAT TIME IS IT?", q:"São 2:30. Como se diz em inglês?", choices:["It's half past two.","It's half past three.","It's two o'clock.","It's a quarter past two."], answer:0, ok:"Half past two = duas e meia. HALF PAST = e meia.", bad:"2:30 = It's half past two (ou two thirty). Half past = e meia."},
-  {type:"choice", stage:"WHAT TIME IS IT?", q:"São 2:15. Como se diz em inglês?", choices:["It's a quarter past two.","It's a quarter to two.","It's half past two.","It's two fifty."], answer:0, ok:"A quarter past two = duas e quinze. QUARTER PAST = e quinze.", bad:"2:15 = a quarter past two. “Past” é depois da hora."},
-  {type:"choice", stage:"WHAT TIME IS IT?", q:"São 7:45. Como se diz em inglês?", choices:["It's a quarter to eight.","It's a quarter past seven.","It's half past seven.","It's seven o'clock."], answer:0, ok:"A quarter to eight = quinze para as oito. TO = para a próxima hora.", bad:"7:45 = a quarter to eight. Faltam 15 minutos para as 8."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"folha q6", q:"Which hand shows the hours?", choices:["The hour hand — the short one","The minute hand — the long one","The second hand","The hour number"], answer:0, ok:"Hour hand é o ponteiro curto, das horas.", bad:"É o HOUR HAND, o ponteiro curto."},
-  {type:"choice", stage:"WHAT TIME IS IT?", src:"folha q6", q:"Which hand is the longest and shows the minutes?", choices:["The minute hand","The hour hand","The second hand","The minute line"], answer:0, ok:"Minute hand é o ponteiro comprido, dos minutos.", bad:"É o MINUTE HAND, o mais comprido."},
-  {type:"match", stage:"WHAT TIME IS IT?", src:"folha q6", q:"Associe cada parte do relógio ao seu nome em português.", pairs:[["hour hand","ponteiro das horas"],["minute hand","ponteiro dos minutos"],["second hand","ponteiro dos segundos"],["hour number","número das horas"]]},
-  {type:"text", stage:"WHAT TIME IS IT?", q:"Como se diz “ponteiro dos minutos” em inglês?", valid:["minute hand","the minute hand"], placeholder:"Digite em inglês...", ok:"Minute hand.", bad:"A resposta é MINUTE HAND."},
-  {type:"listenchoice", stage:"LISTENING — THE TIME", audio:"It's half past nine.", q:"Ouça e escolha o horário correto.", choices:["9:30","9:15","8:30","10:30"], answer:0, ok:"Half past nine = 9:30.", bad:"O áudio diz: It's half past nine — 9:30."},
-  {type:"listenchoice", stage:"LISTENING — THE TIME", audio:"It's a quarter to six.", q:"Ouça e escolha o horário correto.", choices:["5:45","6:15","6:45","5:15"], answer:0, ok:"A quarter to six = 5:45.", bad:"O áudio diz: It's a quarter to six — quinze para as seis, ou seja, 5:45."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"folha q5", q:"O relógio marca 5:00. What time is it?", choices:["It's five o'clock.","It's five thirty.","It's four o'clock.","It's eleven o'clock."], answer:0, ok:"It's five o'clock — usamos o'clock nas horas exatas.", bad:"5:00 = It's five o'clock."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", q:"São 2:30. Como se diz em inglês?", choices:["It's half past two.","It's half past three.","It's two o'clock.","It's a quarter past two."], answer:0, ok:"Half past two = duas e meia. HALF PAST = e meia.", bad:"2:30 = It's half past two (ou two thirty). Half past = e meia."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", q:"São 2:15. Como se diz em inglês?", choices:["It's a quarter past two.","It's a quarter to two.","It's half past two.","It's two fifty."], answer:0, ok:"A quarter past two = duas e quinze. QUARTER PAST = e quinze.", bad:"2:15 = a quarter past two. “Past” é depois da hora."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", q:"São 7:45. Como se diz em inglês?", choices:["It's a quarter to eight.","It's a quarter past seven.","It's half past seven.","It's seven o'clock."], answer:0, ok:"A quarter to eight = quinze para as oito. TO = para a próxima hora.", bad:"7:45 = a quarter to eight. Faltam 15 minutos para as 8."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"folha q6", q:"Which hand shows the hours?", choices:["The hour hand — the short one","The minute hand — the long one","The second hand","The hour number"], answer:0, ok:"Hour hand é o ponteiro curto, das horas.", bad:"É o HOUR HAND, o ponteiro curto."},
+  {type:"choice", stage:"WHAT TIME IS IT?", ic:"relogio", src:"folha q6", q:"Which hand is the longest and shows the minutes?", choices:["The minute hand","The hour hand","The second hand","The minute line"], answer:0, ok:"Minute hand é o ponteiro comprido, dos minutos.", bad:"É o MINUTE HAND, o mais comprido."},
+  {type:"match", stage:"WHAT TIME IS IT?", ic:"elos", src:"folha q6", q:"Associe cada parte do relógio ao seu nome em português.", pairs:[["hour hand","ponteiro das horas"],["minute hand","ponteiro dos minutos"],["second hand","ponteiro dos segundos"],["hour number","número das horas"]]},
+  {type:"text", stage:"WHAT TIME IS IT?", ic:"escrever", q:"Como se diz “ponteiro dos minutos” em inglês?", valid:["minute hand","the minute hand"], placeholder:"Digite em inglês...", ok:"Minute hand.", bad:"A resposta é MINUTE HAND."},
+  {type:"listenchoice", stage:"LISTENING — THE TIME", ic:"fone", audio:"It's half past nine.", q:"Ouça e escolha o horário correto.", choices:["9:30","9:15","8:30","10:30"], answer:0, ok:"Half past nine = 9:30.", bad:"O áudio diz: It's half past nine — 9:30."},
+  {type:"listenchoice", stage:"LISTENING — THE TIME", ic:"fone", audio:"It's a quarter to six.", q:"Ouça e escolha o horário correto.", choices:["5:45","6:15","6:45","5:15"], answer:0, ok:"A quarter to six = 5:45.", bad:"O áudio diz: It's a quarter to six — quinze para as seis, ou seja, 5:45."},
 
   // ---- solar system ----
-  {type:"order", stage:"SOLAR SYSTEM", src:"folha q1", q:"Coloque os planetas em ordem, a partir do Sol.", words:["Mercury","Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune"], answer:"Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune", ok:"Essa é a ordem a partir do Sol.", bad:"A ordem é: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."},
-  {type:"text", stage:"SOLAR SYSTEM", src:"folha q1", q:"UNSCRAMBLE: ERRMCYU", valid:["mercury"], placeholder:"Digite o nome do planeta...", ok:"Mercury — o planeta mais próximo do Sol.", bad:"A resposta é MERCURY."},
-  {type:"text", stage:"SOLAR SYSTEM", src:"folha q1", q:"UNSCRAMBLE: TPIRJEU", valid:["jupiter"], placeholder:"Digite o nome do planeta...", ok:"Jupiter — o maior planeta.", bad:"A resposta é JUPITER."},
-  {type:"text", stage:"SOLAR SYSTEM", src:"folha q1", q:"UNSCRAMBLE: ENUNERT", valid:["neptune"], placeholder:"Digite o nome do planeta...", ok:"Neptune — o mais distante do Sol.", bad:"A resposta é NEPTUNE."},
-  {type:"choice", stage:"SOLAR SYSTEM", src:"folha q2", q:"How many planets do we have?", choices:["Eight planets","Nine planets","Seven planets","Ten planets"], answer:0, ok:"Eight planets.", bad:"Are eight planets: de Mercury a Neptune."},
-  {type:"choice", stage:"SOLAR SYSTEM", src:"folha q2", q:"What's the name of your planet?", choices:["Earth","Mars","Venus","Saturn"], answer:0, ok:"Earth — a Terra.", bad:"O nosso planeta é a EARTH."},
-  {type:"text", stage:"SOLAR SYSTEM", src:"folha q2", q:"What big star can you see during the day?", valid:["sun","the sun"], placeholder:"Digite em inglês...", ok:"The Sun! Escreve-se S-U-N.", bad:"É THE SUN, escrito S-U-N (não “sum”)."},
-  {type:"choice", stage:"SOLAR SYSTEM", q:"Which planet has big rings around it?", choices:["Saturn","Mars","Venus","Mercury"], answer:0, ok:"Saturn — famoso pelos anéis.", bad:"É SATURN, o planeta dos anéis."},
+  {type:"order", stage:"SOLAR SYSTEM", ic:"planeta", src:"folha q1", q:"Coloque os planetas em ordem, a partir do Sol.", words:["Mercury","Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune"], answer:"Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune", ok:"Essa é a ordem a partir do Sol.", bad:"A ordem é: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."},
+  {type:"text", stage:"SOLAR SYSTEM", ic:"letras", src:"folha q1", q:"UNSCRAMBLE: ERRMCYU", valid:["mercury"], placeholder:"Digite o nome do planeta...", ok:"Mercury — o planeta mais próximo do Sol.", bad:"A resposta é MERCURY."},
+  {type:"text", stage:"SOLAR SYSTEM", ic:"letras", src:"folha q1", q:"UNSCRAMBLE: TPIRJEU", valid:["jupiter"], placeholder:"Digite o nome do planeta...", ok:"Jupiter — o maior planeta.", bad:"A resposta é JUPITER."},
+  {type:"text", stage:"SOLAR SYSTEM", ic:"letras", src:"folha q1", q:"UNSCRAMBLE: ENUNERT", valid:["neptune"], placeholder:"Digite o nome do planeta...", ok:"Neptune — o mais distante do Sol.", bad:"A resposta é NEPTUNE."},
+  {type:"choice", stage:"SOLAR SYSTEM", ic:"globo", src:"folha q2", q:"How many planets do we have?", choices:["Eight planets","Nine planets","Seven planets","Ten planets"], answer:0, ok:"Eight planets.", bad:"Are eight planets: de Mercury a Neptune."},
+  {type:"choice", stage:"SOLAR SYSTEM", ic:"globo", src:"folha q2", q:"What's the name of your planet?", choices:["Earth","Mars","Venus","Saturn"], answer:0, ok:"Earth — a Terra.", bad:"O nosso planeta é a EARTH."},
+  {type:"text", stage:"SOLAR SYSTEM", ic:"sol", src:"folha q2", q:"What big star can you see during the day?", valid:["sun","the sun"], placeholder:"Digite em inglês...", ok:"The Sun! Escreve-se S-U-N.", bad:"É THE SUN, escrito S-U-N (não “sum”)."},
+  {type:"choice", stage:"SOLAR SYSTEM", ic:"planeta", q:"Which planet has big rings around it?", choices:["Saturn","Mars","Venus","Mercury"], answer:0, ok:"Saturn — famoso pelos anéis.", bad:"É SATURN, o planeta dos anéis."},
 
   // ---- culture ----
-  {type:"choice", stage:"CULTURE", src:"livro p.33", q:"No livro, o que a guia diz que Big Ben realmente é?", choices:["It's a bell!","It's a clock.","It's a bridge.","It's a palace."], answer:0, ok:"“This is Big Ben! It's a bell!” — Big Ben é o SINO, não o relógio nem a torre.", bad:"Surpresa do livro: Big Ben é o SINO. O menino aponta para o relógio e a guia responde “Not really. Follow me.”"},
-  {type:"choice", stage:"CULTURE", src:"livro p.33", q:"Na história, o que acontece quando o sino toca ao meio-dia?", choices:["The bell is striking midday. DING DONG!","The bell is broken.","The kids go home.","Nothing happens."], answer:0, ok:"“Listen! The bell is striking midday.” DING DONG!", bad:"The bell is striking midday — o sino bate o meio-dia."},
-  {type:"choice", stage:"CULTURE", src:"folha q3", q:"Where is Big Ben from?", choices:["It is in London.","It is in Lisbon.","It is in New York.","It is in Paris."], answer:0, ok:"It is IN London — não esqueça o “in”.", bad:"It is IN London. A preposição IN é obrigatória."},
-  {type:"choice", stage:"CULTURE", src:"folha q3", q:"What time is tea time in Britain?", choices:["Between 4 and 5 o'clock","Between 4 and 6 o'clock","Between 3 and 4 o'clock","At 8 o'clock"], answer:0, ok:"Between 4 and 5 o'clock.", bad:"É entre 4 e 5 horas — between 4 and 5 o'clock."},
-  {type:"choice", stage:"CULTURE", src:"folha q3", q:"What time did the Queen have her tea?", choices:["At 4 o'clock","At 5 o'clock","At 6 o'clock","At noon"], answer:0, ok:"The Queen has tea at 4 o'clock, too!", bad:"At 4 o'clock."},
-  {type:"tf", stage:"CULTURE", q:"Big Ben is in New York.", answer:false, ok:"Correto, é falso: Big Ben fica em Londres.", bad:"É falso. Big Ben is in London, England."},
-  {type:"listenchoice", stage:"LISTENING — CULTURE", audio:"Big Ben is a very famous clock in London.", q:"Ouça e escolha a frase que você ouviu.", choices:["Big Ben is a very famous clock in London.","Big Ben is a very famous bridge in London.","Big Ben is a very famous clock in Lisbon.","Big Ben is a very old park in London."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: Big Ben is a very famous clock in London."}
+  {type:"choice", stage:"CULTURE", ic:"sino", src:"livro p.33", q:"No livro, o que a guia diz que Big Ben realmente é?", choices:["It's a bell!","It's a clock.","It's a bridge.","It's a palace."], answer:0, ok:"“This is Big Ben! It's a bell!” — Big Ben é o SINO, não o relógio nem a torre.", bad:"Surpresa do livro: Big Ben é o SINO. O menino aponta para o relógio e a guia responde “Not really. Follow me.”"},
+  {type:"choice", stage:"CULTURE", ic:"relogio", src:"livro p.33", q:"Na história, o que acontece quando o sino toca ao meio-dia?", choices:["The bell is striking midday. DING DONG!","The bell is broken.","The kids go home.","Nothing happens."], answer:0, ok:"“Listen! The bell is striking midday.” DING DONG!", bad:"The bell is striking midday — o sino bate o meio-dia."},
+  {type:"choice", stage:"CULTURE", ic:"pino", src:"folha q3", q:"Where is Big Ben from?", choices:["It is in London.","It is in Lisbon.","It is in New York.","It is in Paris."], answer:0, ok:"It is IN London — não esqueça o “in”.", bad:"It is IN London. A preposição IN é obrigatória."},
+  {type:"choice", stage:"CULTURE", ic:"bebida", src:"folha q3", q:"What time is tea time in Britain?", choices:["Between 4 and 5 o'clock","Between 4 and 6 o'clock","Between 3 and 4 o'clock","At 8 o'clock"], answer:0, ok:"Between 4 and 5 o'clock.", bad:"É entre 4 e 5 horas — between 4 and 5 o'clock."},
+  {type:"choice", stage:"CULTURE", ic:"coroa", src:"folha q3", q:"What time did the Queen have her tea?", choices:["At 4 o'clock","At 5 o'clock","At 6 o'clock","At noon"], answer:0, ok:"The Queen has tea at 4 o'clock, too!", bad:"At 4 o'clock."},
+  {type:"tf", stage:"CULTURE", ic:"mapa", q:"Big Ben is in New York.", answer:false, ok:"Correto, é falso: Big Ben fica em Londres.", bad:"É falso. Big Ben is in London, England."},
+  {type:"listenchoice", stage:"LISTENING — CULTURE", ic:"fone", audio:"Big Ben is a very famous clock in London.", q:"Ouça e escolha a frase que você ouviu.", choices:["Big Ben is a very famous clock in London.","Big Ben is a very famous bridge in London.","Big Ben is a very famous clock in Lisbon.","Big Ben is a very old park in London."], answer:0, ok:"Isso mesmo!", bad:"O áudio diz: Big Ben is a very famous clock in London."}
 ];
 
 const verbBank = [
-  {base:"clean",ing:"cleaning",pt:"limpar",rule:"add"},
-  {base:"cook",ing:"cooking",pt:"cozinhar",rule:"add"},
-  {base:"eat",ing:"eating",pt:"comer",rule:"add"},
-  {base:"listen to music",ing:"listening to music",pt:"ouvir música",rule:"add"},
-  {base:"sleep",ing:"sleeping",pt:"dormir",rule:"add"},
-  {base:"study",ing:"studying",pt:"estudar",rule:"add"},
-  {base:"talk",ing:"talking",pt:"conversar",rule:"add"},
-  {base:"use the computer",ing:"using the computer",pt:"usar o computador",rule:"drop_e"},
-  {base:"stand",ing:"standing",pt:"ficar em pé",rule:"add"},
-  {base:"ride",ing:"riding",pt:"andar de / montar",rule:"drop_e"},
-  {base:"lift",ing:"lifting",pt:"levantar",rule:"add"},
-  {base:"blow",ing:"blowing",pt:"soprar",rule:"add"},
-  {base:"cry",ing:"crying",pt:"chorar",rule:"add"},
-  {base:"play",ing:"playing",pt:"jogar / brincar",rule:"add"},
-  {base:"paint",ing:"painting",pt:"pintar",rule:"add"},
-  {base:"discuss",ing:"discussing",pt:"discutir / debater",rule:"add"},
-  {base:"borrow",ing:"borrowing",pt:"pegar emprestado",rule:"add"},
-  {base:"buy",ing:"buying",pt:"comprar",rule:"add"},
-  {base:"draw",ing:"drawing",pt:"desenhar",rule:"add"},
-  {base:"help",ing:"helping",pt:"ajudar",rule:"add"},
-  {base:"watch",ing:"watching",pt:"assistir / observar",rule:"add"},
-  {base:"jump",ing:"jumping",pt:"pular",rule:"add"},
-  {base:"hop",ing:"hopping",pt:"saltar / pular em um pé",rule:"double"},
-  {base:"drive",ing:"driving",pt:"dirigir",rule:"drop_e"},
-  {base:"fly",ing:"flying",pt:"voar",rule:"add"},
-  {base:"sail",ing:"sailing",pt:"navegar / velejar",rule:"add"},
-  {base:"find",ing:"finding",pt:"encontrar",rule:"add"},
-  {base:"break",ing:"breaking",pt:"quebrar",rule:"add"},
-  {base:"win",ing:"winning",pt:"vencer / ganhar",rule:"double"},
-  {base:"lose",ing:"losing",pt:"perder",rule:"drop_e"},
-  {base:"run",ing:"running",pt:"correr",rule:"double"},
-  {base:"swim",ing:"swimming",pt:"nadar",rule:"double"},
-  {base:"sit",ing:"sitting",pt:"sentar",rule:"double"},
-  {base:"stop",ing:"stopping",pt:"parar",rule:"double"},
-  {base:"write",ing:"writing",pt:"escrever",rule:"drop_e"},
-  {base:"dance",ing:"dancing",pt:"dançar",rule:"drop_e"},
-  {base:"read a book",ing:"reading a book",pt:"ler um livro",rule:"add"},
-  {base:"work",ing:"working",pt:"trabalhar",rule:"add"},
-  {base:"drink",ing:"drinking",pt:"beber",rule:"add"},
-  {base:"take a shower",ing:"taking a shower",pt:"tomar banho",rule:"drop_e"},
-  {base:"play video games",ing:"playing video games",pt:"jogar videogame",rule:"add"},
-  {base:"ride a bike",ing:"riding a bike",pt:"andar de bicicleta",rule:"drop_e"},
-  {base:"play soccer",ing:"playing soccer",pt:"jogar futebol",rule:"add"},
-  {base:"get up",ing:"getting up",pt:"levantar da cama",rule:"double"},
-  {base:"have breakfast",ing:"having breakfast",pt:"tomar café da manhã",rule:"drop_e"},
-  {base:"have lunch",ing:"having lunch",pt:"almoçar",rule:"drop_e"},
-  {base:"have dinner",ing:"having dinner",pt:"jantar",rule:"drop_e"},
-  {base:"do homework",ing:"doing homework",pt:"fazer a lição de casa",rule:"add"},
-  {base:"go to bed",ing:"going to bed",pt:"ir dormir",rule:"add"}
+  {base:"clean",ing:"cleaning",pt:"limpar", ic:"vassoura",rule:"add"},
+  {base:"cook",ing:"cooking",pt:"cozinhar", ic:"comida",rule:"add"},
+  {base:"eat",ing:"eating",pt:"comer", ic:"comida",rule:"add"},
+  {base:"listen to music",ing:"listening to music",pt:"ouvir música", ic:"fone",rule:"add"},
+  {base:"sleep",ing:"sleeping",pt:"dormir", ic:"dormir",rule:"add"},
+  {base:"study",ing:"studying",pt:"estudar", ic:"livro",rule:"add"},
+  {base:"talk",ing:"talking",pt:"conversar", ic:"fala",rule:"add"},
+  {base:"use the computer",ing:"using the computer",pt:"usar o computador", ic:"computador",rule:"drop_e"},
+  {base:"stand",ing:"standing",pt:"ficar em pé", ic:"pessoa",rule:"add"},
+  {base:"ride",ing:"riding",pt:"andar de / montar", ic:"bicicleta",rule:"drop_e"},
+  {base:"lift",ing:"lifting",pt:"levantar", ic:"movimento",rule:"add"},
+  {base:"blow",ing:"blowing",pt:"soprar", ic:"vento",rule:"add"},
+  {base:"cry",ing:"crying",pt:"chorar", ic:"triste",rule:"add"},
+  {base:"play",ing:"playing",pt:"jogar / brincar", ic:"bola",rule:"add"},
+  {base:"paint",ing:"painting",pt:"pintar", ic:"pincel",rule:"add"},
+  {base:"discuss",ing:"discussing",pt:"discutir / debater", ic:"fala",rule:"add"},
+  {base:"borrow",ing:"borrowing",pt:"pegar emprestado", ic:"mao",rule:"add"},
+  {base:"buy",ing:"buying",pt:"comprar", ic:"sacola",rule:"add"},
+  {base:"draw",ing:"drawing",pt:"desenhar", ic:"escrever",rule:"add"},
+  {base:"help",ing:"helping",pt:"ajudar", ic:"mao",rule:"add"},
+  {base:"watch",ing:"watching",pt:"assistir / observar", ic:"tv",rule:"add"},
+  {base:"jump",ing:"jumping",pt:"pular", ic:"seta-cima",rule:"add"},
+  {base:"hop",ing:"hopping",pt:"saltar / pular em um pé", ic:"animal",rule:"double"},
+  {base:"drive",ing:"driving",pt:"dirigir", ic:"carro",rule:"drop_e"},
+  {base:"fly",ing:"flying",pt:"voar", ic:"aviao",rule:"add"},
+  {base:"sail",ing:"sailing",pt:"navegar / velejar", ic:"barco",rule:"add"},
+  {base:"find",ing:"finding",pt:"encontrar", ic:"lupa",rule:"add"},
+  {base:"break",ing:"breaking",pt:"quebrar", ic:"quebrado",rule:"add"},
+  {base:"win",ing:"winning",pt:"vencer / ganhar", ic:"trofeu",rule:"double"},
+  {base:"lose",ing:"losing",pt:"perder", ic:"triste",rule:"drop_e"},
+  {base:"run",ing:"running",pt:"correr", ic:"movimento",rule:"double"},
+  {base:"swim",ing:"swimming",pt:"nadar", ic:"movimento",rule:"double"},
+  {base:"sit",ing:"sitting",pt:"sentar", ic:"cadeira",rule:"double"},
+  {base:"stop",ing:"stopping",pt:"parar", ic:"parar",rule:"double"},
+  {base:"write",ing:"writing",pt:"escrever", ic:"escrever",rule:"drop_e"},
+  {base:"dance",ing:"dancing",pt:"dançar", ic:"movimento",rule:"drop_e"},
+  {base:"read a book",ing:"reading a book",pt:"ler um livro", ic:"livro",rule:"add"},
+  {base:"work",ing:"working",pt:"trabalhar", ic:"trabalho",rule:"add"},
+  {base:"drink",ing:"drinking",pt:"beber", ic:"bebida",rule:"add"},
+  {base:"take a shower",ing:"taking a shower",pt:"tomar banho", ic:"chuveiro",rule:"drop_e"},
+  {base:"play video games",ing:"playing video games",pt:"jogar videogame", ic:"controle",rule:"add"},
+  {base:"ride a bike",ing:"riding a bike",pt:"andar de bicicleta", ic:"bicicleta",rule:"drop_e"},
+  {base:"play soccer",ing:"playing soccer",pt:"jogar futebol", ic:"bola",rule:"add"},
+  {base:"get up",ing:"getting up",pt:"levantar da cama", ic:"cama",rule:"double"},
+  {base:"have breakfast",ing:"having breakfast",pt:"tomar café da manhã", ic:"comida",rule:"drop_e"},
+  {base:"have lunch",ing:"having lunch",pt:"almoçar", ic:"comida",rule:"drop_e"},
+  {base:"have dinner",ing:"having dinner",pt:"jantar", ic:"comida",rule:"drop_e"},
+  {base:"do homework",ing:"doing homework",pt:"fazer a lição de casa", ic:"escrever",rule:"add"},
+  {base:"go to bed",ing:"going to bed",pt:"ir dormir", ic:"dormir",rule:"add"}
 ];
 
 const subjects = [
@@ -1746,7 +1759,7 @@ function generateMatchGame(){
   const subset=pickWeighted(verbBank,4);
   return [{
     type:"match",
-    stage:"POOL — ASSOCIAÇÃO",
+    stage:"POOL — ASSOCIAÇÃO", ic:"elos",
     q:"Associe cada verbo ao significado.",
     verbs:subset.map(v=>v.base),
     pairs:subset.map(v=>[v.base,v.pt])
@@ -1757,7 +1770,7 @@ function generateMemoryGame(){
   const subset=pickWeighted(verbBank,4);
   return [{
     type:"memory",
-    stage:"POOL — MEMÓRIA",
+    stage:"POOL — MEMÓRIA", ic:"cabeca",
     q:"Encontre os pares inglês português.",
     verbs:subset.map(v=>v.base),
     pairs:subset.map(v=>[v.base,v.pt])
@@ -1956,36 +1969,36 @@ const trails={
   essential:{
     name:"Trilha Essencial",
     steps:[
-      {cat:"vocabulary",label:"Vocabulário"},
-      {cat:"ing_add",label:"+ING"},
-      {cat:"ing_drop_e",label:"Tirar E"},
-      {cat:"ing_double",label:"Dobrar"},
-      {cat:"be",label:"AM/IS/ARE"},
-      {cat:"affirmative",label:"Frases"},
-      {cat:"contractions",label:"Contrações"},
-      {cat:"listening",label:"Listening"},
-      {cat:"negative_questions",label:"Neg./Perg."}
+      {cat:"vocabulary",label:"Vocabulário", ic:"cabeca"},
+      {cat:"ing_add",label:"+ING", ic:"mais"},
+      {cat:"ing_drop_e",label:"Tirar E", ic:"tesoura"},
+      {cat:"ing_double",label:"Dobrar", ic:"numeros"},
+      {cat:"be",label:"AM/IS/ARE", ic:"engrenagem"},
+      {cat:"affirmative",label:"Frases", ic:"check"},
+      {cat:"contractions",label:"Contrações", ic:"tesoura"},
+      {cat:"listening",label:"Listening", ic:"fone"},
+      {cat:"negative_questions",label:"Neg./Perg.", ic:"xis"}
     ]
   },
   verbs:{
     name:"Trilha dos Verbos",
     steps:[
-      {cat:"vocabulary",label:"Significados"},
-      {cat:"ing_add",label:"+ING"},
-      {cat:"ing_drop_e",label:"Tirar E"},
-      {cat:"ing_double",label:"Dobrar"},
-      {cat:"daily_actions",label:"Dia a dia"},
-      {cat:"movement",label:"Movimento"},
-      {cat:"results_actions",label:"Outras"}
+      {cat:"vocabulary",label:"Significados", ic:"cabeca"},
+      {cat:"ing_add",label:"+ING", ic:"mais"},
+      {cat:"ing_drop_e",label:"Tirar E", ic:"tesoura"},
+      {cat:"ing_double",label:"Dobrar", ic:"numeros"},
+      {cat:"daily_actions",label:"Dia a dia", ic:"casa"},
+      {cat:"movement",label:"Movimento", ic:"bicicleta"},
+      {cat:"results_actions",label:"Outras", ic:"trofeu"}
     ]
   },
   grammar:{
     name:"Trilha da Gramática",
     steps:[
-      {cat:"be",label:"AM/IS/ARE"},
-      {cat:"affirmative",label:"Afirmativas"},
-      {cat:"negative_questions",label:"Neg./Perg."},
-      {cat:"all",label:"Revisão"}
+      {cat:"be",label:"AM/IS/ARE", ic:"engrenagem"},
+      {cat:"affirmative",label:"Afirmativas", ic:"check"},
+      {cat:"negative_questions",label:"Neg./Perg.", ic:"xis"},
+      {cat:"all",label:"Revisão", ic:"dado"}
     ]
   }
 };
@@ -2446,7 +2459,10 @@ function renderQuestion(){
   document.getElementById("feedback").className="feedback";
   document.getElementById("feedback").textContent="";
   document.getElementById("nextBtn").style.display="none";
-  document.getElementById("illustration").textContent=q.icon || "";
+  const il=document.getElementById("illustration");
+  il.innerHTML = q.ic
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+q.ic+'"/></svg>' : "";
+  il.style.display = q.ic ? "" : "none";
   clearZones();
 
   // O audio e ortogonal ao tipo: qualquer questao com `audio` ganha os botoes,

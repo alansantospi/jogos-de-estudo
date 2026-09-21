@@ -29,9 +29,14 @@ def aplicar(arq, materia):
     s=io.open(arq,encoding="utf-8").read()
     mapa=ICO[materia]; n={}
 
-    # 1. campo de ícone das questões sai dos dados
-    s,k=re.subn(r'\bi:"[^"]*",\s*','',s);            n["i: nas questões"]=k
-    s,k=re.subn(r',\s*icon:"[^"]*"','',s);           n["icon: nas questões"]=n.get("i: nas questões",0)+k
+    # 1. a ilustração da questão deixa de ser emoji e vira nome de ícone
+    from mapa import nome as icone_de
+    c1=[0]; c2=[0]
+    def _i(m): c1[0]+=1; return 'ic:"%s",' % icone_de(m.group(1))
+    def _ic(m): c2[0]+=1; return ', ic:"%s"' % icone_de(m.group(1))
+    s=re.sub(r'\bi:"([^"]*)",', _i, s)
+    s=re.sub(r',\s*icon:"([^"]*)"', _ic, s)
+    n["ilustrações das questões"]=c1[0]+c2[0]
 
     # 2. ícone dos cards vira SVG, escolhido pela categoria/trilha do próprio botão
     def troca_ico(m):
@@ -46,8 +51,13 @@ def aplicar(arq, materia):
     s=re.sub(r'(id="reviewCard"[^>]*>)\s*<(?:div|span) class="(?:ico|category-icon)">[^<]*</(?:div|span)>',
              r'\1'+icons.uso("remendo","",22),s)
 
-    # 3. ícones decorativos das lições saem
-    s,k=re.subn(r'<div class="pic">[^<]*</div>','',s);   n["ícones da lição"]=k
+    # 3. ícones das lições também viram desenho
+    c3=[0]
+    def _pic(m):
+        c3[0]+=1
+        return '<div class="pic">'+icons.uso(icone_de(m.group(1)),"",26)+'</div>'
+    s=re.sub(r'<div class="pic">([^<]*)</div>', _pic, s)
+    n["ilustrações das lições"]=c3[0]
 
     # 4. HUD com rótulos em texto
     for ident,rot in (("score","Pontos"),("lives","Vidas"),("combo","Sequência")):
@@ -94,7 +104,8 @@ def aplicar(arq, materia):
     # 9. visual: fontes, sprite e folha de estilo
     s=re.sub(r'<style>.*?</style>','<style>'+TOKENS.replace("%MATERIA%",MATERIAS[materia])+COMP+'</style>',s,flags=re.S)
     s=s.replace("</head>",FONTS+"</head>",1)
-    usados=sorted(set(mapa.values())|{"som","mudo"})
+    usados=sorted(set(mapa.values())|{"som","mudo"}|set(re.findall(r'href="#i-([a-z-]+)"',s))|
+                  set(re.findall(r'\bic:"([a-z-]+)"',s)))
     s=re.sub(r'(<body[^>]*>)',r'\1'+icons.sprite(usados),s,count=1)
     s=s.replace("<script>",
       '<script>\nconst SVG_SOM=\'%s\',SVG_MUDO=\'%s\';\n'%(icons.uso("som","",20),icons.uso("mudo","",20)),1)

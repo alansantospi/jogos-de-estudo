@@ -46,7 +46,12 @@ Escala fixa, de 0.8125 a 2.375 rem. Números com `tabular-nums`.
   grossa e selo de estado.
 - **Retorno**: bloco com borda inteira, fundo tingido e rótulo grande
   ("Certo" / "Ainda não"). Sem filete lateral.
-- **Ícones**: sprite SVG de linha, 24×24. Nenhum emoji em lugar nenhum.
+- **Ilustrações**: toda questão e todo termo da lição têm um desenho, como
+  antes tinham um emoji. São **125 ícones de linha** (24×24, traço 2), num
+  chip com a cor da matéria. `build/mapa.py` liga cada uma das 223 antigas
+  ilustrações a um desses ícones — conceitos próximos compartilham o mesmo
+  desenho (☀️ 🌅 🌇 viram `sol`; 🎻 🎹 🥁 viram `instrumento`).
+  Nenhum emoji em lugar nenhum, mas nenhuma ilustração foi perdida.
 - **HUD**: pílulas translúcidas sobre a faixa colorida, com número e rótulo.
 
 ## Movimento

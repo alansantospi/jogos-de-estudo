@@ -45,7 +45,8 @@ peso e retorno ao toque — nenhuma delas depende de emoji para ser divertida.
 
 ## Anti-referências
 
-- **Emoji como ícone.** Nenhum, em lugar nenhum. Forma e cor fazem esse papel.
+- **Emoji como ícone.** Nenhum, em lugar nenhum — mas *substituído* por
+  desenho, não removido. Toda questão continua tendo sua ilustração.
 - **Cara de IA.** Herói centralizado com emoji gigante, gradiente roxo-azul,
   eyebrow em caixa alta acima de cada seção, glassmorphism decorativo.
 - **Gamificação barulhenta.** Confete, mascote, "Parabéns!!!".
