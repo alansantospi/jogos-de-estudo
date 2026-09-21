@@ -160,10 +160,19 @@ function _carregarPeer(){
   });
 }
 
+/* Cada motor batizou o aviso flutuante de um jeito: showAchievement no de
+   inglês, mostrarConquista nos do céu. Referenciar o nome que não existe
+   lança ReferenceError — foi o que travava a entrada na sala logo depois de
+   escrever "Conectando...". `typeof` não lança para identificador não
+   declarado; comparar direto, sim. */
+function _flutuante(txt){
+  if(typeof showAchievement === "function") showAchievement(txt);
+  else if(typeof mostrarConquista === "function") mostrarConquista(txt);
+}
 function _avisoSala(txt){
   const e = document.getElementById("salaEstado");
   if(e) e.textContent = txt;
-  showAchievement ? showAchievement(txt) : null;
+  _flutuante(txt);
 }
 
 /* ---------- lado do telão ---------- */
@@ -332,13 +341,18 @@ function fecharSala(){
 async function entrarSala(){
   const codigo = (document.getElementById("salaCodigo").value || "").replace(/\D/g, "");
   const nome = (document.getElementById("salaNome").value || "").trim() || "Jogador";
-  if(codigo.length !== 4){ showAchievement("O código tem 4 números."); return; }
+  if(codigo.length !== 4){ _flutuante("O código tem 4 números."); return; }
   _tela("salaJogador");
   _avisoSala("Conectando...");
   try{ await _carregarPeer(); }
   catch(e){ _avisoSala("Sem internet. Este modo precisa de conexão."); return; }
+  // Se o peer não abrir, não há nem conexão para dar erro: sem este prazo a
+  // tela fica em "Conectando..." para sempre.
+  let peerPronto = false;
+  setTimeout(() => { if(!peerPronto) _avisoSala("Não consegui falar com o servidor de encontro. Verifique a internet."); }, 12000);
   _peer = new Peer();
   _peer.on("open", () => {
+    peerPronto = true;
     _conAnfitriao = _peer.connect(SALA_PREFIXO + codigo);
     let abriu = false;
     _conAnfitriao.on("open", () => { abriu = true; _conAnfitriao.send({t: "entrar", nome}); });

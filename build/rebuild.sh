@@ -20,3 +20,4 @@ python3 build/medir_alternativas.py
 python3 build/medir_plausibilidade.py
 python3 build/extras.py
 python3 build/sala.py
+python3 build/verificar.py

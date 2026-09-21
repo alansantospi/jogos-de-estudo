@@ -104,6 +104,17 @@ PeerJS traz por padrão **não resolvem em DNS**, e o relé público mais conhec
 jogador que não conecta em 12 s recebe um aviso dizendo para pôr todo mundo no
 mesmo Wi-Fi. Resolver de verdade exigiria um TURN com conta.
 
+### Os dois motores não têm os mesmos nomes
+
+O de inglês chama o aviso flutuante de `showAchievement`; os do céu, de
+`mostrarConquista`. Código compartilhado entre eles não pode citar nenhum dos
+dois direto: referenciar identificador não declarado lança `ReferenceError` e
+mata a função inteira — foi assim que a entrada na sala travou em
+"Conectando...", tendo escrito a mensagem uma linha antes de morrer.
+
+`build/verificar.py` derruba o build quando um motor usa um nome que só
+existe no outro sem guardar com `typeof`.
+
 ## Texto
 
 Menos palavras do que parece necessário. Três regras:
