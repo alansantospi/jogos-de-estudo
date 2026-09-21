@@ -68,8 +68,11 @@
   --saida:cubic-bezier(0.22,1,0.36,1);
 }
 
+/* O tema escuro vale por dois caminhos: o do sistema (a menos que o botão
+   force o claro) e o do próprio botão. As declarações são as mesmas, escritas
+   uma vez só e repetidas pelo build — duplicar à mão é convidar à divergência. */
 @media (prefers-color-scheme:dark){
-  :root{
+  :root:not([data-tema="claro"]){
     --fundo:  oklch(0.205 0.028 272);
     --carta:  oklch(0.262 0.030 272);
     --risco:  oklch(0.365 0.030 272);
@@ -87,6 +90,24 @@
     --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
     --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
   }
+}
+:root[data-tema="escuro"]{
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, oklch(0.525 0.15 195) 68%, white);
+    --materia-solida:oklch(0.525 0.15 195);
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, oklch(0.525 0.15 195) 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, oklch(0.525 0.15 195) 55%, white);
+    --materia-borda:color-mix(in oklch, oklch(0.525 0.15 195) 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -560,16 +581,77 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
     transition-duration:.01ms!important}
   button:active,.answer:active{transform:none}
 }
+
+/* ---------- estímulos ---------- */
+/* O foguinho substitui o número quando a sequência passa de três. */
+.pill.em-chamas{background:color-mix(in oklch,var(--alt-2) 70%,var(--materia-solida));
+  animation:pulsa-fogo 1.1s ease-in-out infinite}
+.pill.em-chamas .rot{opacity:.95}
+#foguinho{width:1.05rem;height:1.05rem;margin-right:2px}
+@keyframes pulsa-fogo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.festa{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.confete{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;
+  animation:cai linear forwards}
+@keyframes cai{
+  to{transform:translate(var(--desvio),105vh) rotate(var(--giro));opacity:.15}}
+@media (prefers-reduced-motion:reduce){
+  .pill.em-chamas{animation:none}
+  .confete{display:none}
+}
+
+/* ---------- sala em rede ---------- */
+.sala-escolha{display:grid;gap:var(--s-3);max-width:24rem}
+.sala-caixa{display:grid;gap:var(--s-4);max-width:32rem;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-5);box-shadow:0 var(--labio) 0 var(--risco)}
+.sala-campo{display:grid;gap:var(--s-1);font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-campo input,.sala-campo select{
+  min-height:3rem;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:700;-webkit-appearance:none}
+.sala-campo input:focus-visible,.sala-campo select:focus-visible{
+  outline:3px solid var(--materia);outline-offset:2px}
+#salaCodigo{font-family:var(--display);font-size:var(--t-2xl);letter-spacing:.35em;text-align:center}
+.sala-codigo{display:grid;gap:2px;justify-items:center;padding:var(--s-4);
+  background:var(--materia-clara);border-radius:var(--r)}
+.sala-codigo strong{font-family:var(--display);font-size:var(--t-3xl);
+  letter-spacing:.3em;color:var(--materia-forte);font-variant-numeric:tabular-nums}
+.sala-dica{margin:0;font-size:var(--t-sm);color:var(--texto-2)}
+.sala-jogadores{display:flex;flex-wrap:wrap;gap:var(--s-2);min-height:2.5rem}
+.sala-jogador{display:inline-flex;align-items:center;gap:var(--s-1);
+  background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);
+  font-family:var(--display);font-weight:600;font-size:var(--t-sm)}
+.sala-topo{display:flex;justify-content:space-between;align-items:center;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-tempo{font-family:var(--display);font-size:var(--t-2xl);color:var(--materia-forte);
+  font-variant-numeric:tabular-nums}
+.sala-tempo.urgente{color:var(--errado-solida);animation:pulsa-fogo .7s ease-in-out infinite}
+.sala-placar{display:grid;gap:var(--s-2)}
+.sala-linha{display:grid;grid-template-columns:1.5rem 1fr auto auto;gap:var(--s-3);
+  align-items:center;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);border-radius:var(--r);font-weight:700}
+.sala-linha b{font-family:var(--display)}
+.sala-linha .ganho{color:var(--certo-solida);font-variant-numeric:tabular-nums}
+.sala-linha.errou .ganho{color:var(--texto-3)}
+.sala-estado{font-family:var(--display);font-size:var(--t-xl);text-align:center;
+  padding:var(--s-5) 0}
+.sala-botoes .answer{min-height:5.5rem;justify-content:center;font-size:var(--t-xl)}
+.sala-botoes .answer .letra{width:3rem;height:3rem;font-size:var(--t-xl)}
+.sala-botoes .answer.escolhida{border-color:var(--materia);box-shadow:0 0 0 3px var(--materia-borda)}
+@media(max-width:44rem){ .sala-caixa{padding:var(--s-4)} }
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"></head>
-<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3.5 22 20H2z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></symbol><symbol id="i-ampulheta" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 4 5 6 5 9s-5 5-5 9"/><path d="M17 3c0 4-5 6-5 9s5 5 5 9"/></symbol><symbol id="i-anzol" viewBox="0 0 24 24"><path d="M14 3v9a5 5 0 0 1-10 0"/><path d="M11 6h6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-barco" viewBox="0 0 24 24"><path d="M3 17h18l-2.5 4h-13z"/><path d="M12 15V3l7 12z"/><path d="M10 15H5l5-8z"/></symbol><symbol id="i-bussola" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></symbol><symbol id="i-caixa-ferramentas" viewBox="0 0 24 24"><path d="M3 9h18v11H3z"/><path d="M9 9V6h6v3"/><path d="M3 14h18"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-ciclo" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v5h-5"/></symbol><symbol id="i-cruzeiro" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.4" fill="currentColor"/><circle cx="12" cy="20" r="1.4" fill="currentColor"/><circle cx="6" cy="11" r="1.4" fill="currentColor"/><circle cx="17.5" cy="13.5" r="1.4" fill="currentColor"/><path d="M12 6v12M7.4 11.4l8.7 1.8" stroke-dasharray="2 2"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.3 7.4l2.3 1.3M17.4 15.3l2.3 1.3M4.3 16.6l2.3-1.3M17.4 8.7l2.3-1.3"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-espelho" viewBox="0 0 24 24"><ellipse cx="12" cy="9.5" rx="6" ry="7"/><path d="M12 16.5V21M9 21h6"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-ima" viewBox="0 0 24 24"><path d="M6 3v9a6 6 0 0 0 12 0V3"/><path d="M6 8h4M14 8h4"/></symbol><symbol id="i-lampada" viewBox="0 0 24 24"><path d="M9 17a6 6 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-luneta" viewBox="0 0 24 24"><path d="m3 14 13-8 3 5-13 8z"/><path d="m8 16 2 4.5"/><path d="m14.5 12 4 2"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mala" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/><path d="M9 11v5M15 11v5"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-mapa" viewBox="0 0 24 24"><path d="m3 6 6-2.5 6 2.5 6-2.5v15L15 21l-6-2.5L3 21z"/><path d="M9 3.5v15M15 6v15"/></symbol><symbol id="i-menos" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-montanha" viewBox="0 0 24 24"><path d="m2.5 19 6.5-11 4 6 2.5-3.5L21.5 19z"/><path d="m7 12 2-1.5"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-olho" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-parar" viewBox="0 0 24 24"><path d="M8.2 3.5h7.6l5.7 5.7v7.6l-5.7 5.7H8.2L2.5 16.8V9.2z"/></symbol><symbol id="i-pergaminho" viewBox="0 0 24 24"><path d="M6 4h12v14a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V4z"/><path d="M10 8h5M10 12h5"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-planeta" viewBox="0 0 24 24"><circle cx="12" cy="11" r="6"/><ellipse cx="12" cy="11" rx="11" ry="3.4" transform="rotate(-18 12 11)"/></symbol><symbol id="i-planta" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 15c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z"/></symbol><symbol id="i-predios" viewBox="0 0 24 24"><path d="M3 21V9h7v12"/><path d="M10 21V4h11v17"/><path d="M13.5 8h4M13.5 12h4M13.5 16h4M6 13h1"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-rosa-ventos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 3 2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/></symbol><symbol id="i-satelite" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m7.5 7.5-3 3 3 3 3-3z" /><path d="m16.5 10.5 3 3-3 3-3-3z"/><path d="M14 9.5 16 7.5M10 14.5 8 16.5"/></symbol><symbol id="i-seta-baixo" viewBox="0 0 24 24"><path d="M12 4.5v15"/><path d="m6 13.5 6 6 6-6"/></symbol><symbol id="i-seta-cima" viewBox="0 0 24 24"><path d="M12 19.5v-15"/><path d="m6 10.5 6-6 6 6"/></symbol><symbol id="i-seta-diagonal" viewBox="0 0 24 24"><path d="M6.5 17.5 17.5 6.5"/><path d="M10 6.5h7.5V14"/></symbol><symbol id="i-seta-dupla" viewBox="0 0 24 24"><path d="M3.5 12h17"/><path d="m7.5 8 -4 4 4 4M16.5 8l4 4-4 4"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-termometro" viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4.5 4.5 0 1 0 4 0z"/><circle cx="12" cy="17.5" r="1.8" fill="currentColor"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-tomada" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="9.5" cy="10" r="1.2" fill="currentColor"/><circle cx="14.5" cy="10" r="1.2" fill="currentColor"/><path d="M9 15h6"/></symbol><symbol id="i-torre" viewBox="0 0 24 24"><path d="M8 21V8l4-5 4 5v13"/><path d="M6 21h12"/><circle cx="12" cy="10.5" r="2.4"/><path d="M12 9.2v1.3l1 .6"/></symbol><symbol id="i-vaso" viewBox="0 0 24 24"><path d="M8 3h8l-1.5 3.5a6 6 0 0 1 3.5 5.5 6 6 0 0 1-12 0 6 6 0 0 1 3.5-5.5z"/><path d="M6.5 15h11"/></symbol><symbol id="i-voltar" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></symbol><symbol id="i-xis" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"><script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script></head>
+<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3.5 22 20H2z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></symbol><symbol id="i-ampulheta" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 4 5 6 5 9s-5 5-5 9"/><path d="M17 3c0 4-5 6-5 9s5 5 5 9"/></symbol><symbol id="i-anzol" viewBox="0 0 24 24"><path d="M14 3v9a5 5 0 0 1-10 0"/><path d="M11 6h6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-barco" viewBox="0 0 24 24"><path d="M3 17h18l-2.5 4h-13z"/><path d="M12 15V3l7 12z"/><path d="M10 15H5l5-8z"/></symbol><symbol id="i-bussola" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></symbol><symbol id="i-caixa-ferramentas" viewBox="0 0 24 24"><path d="M3 9h18v11H3z"/><path d="M9 9V6h6v3"/><path d="M3 14h18"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-ciclo" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v5h-5"/></symbol><symbol id="i-cruzeiro" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.4" fill="currentColor"/><circle cx="12" cy="20" r="1.4" fill="currentColor"/><circle cx="6" cy="11" r="1.4" fill="currentColor"/><circle cx="17.5" cy="13.5" r="1.4" fill="currentColor"/><path d="M12 6v12M7.4 11.4l8.7 1.8" stroke-dasharray="2 2"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-encolher" viewBox="0 0 24 24"><path d="M3.5 9H9V3.5M20.5 9H15V3.5M3.5 15H9v5.5M20.5 15H15v5.5"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.3 7.4l2.3 1.3M17.4 15.3l2.3 1.3M4.3 16.6l2.3-1.3M17.4 8.7l2.3-1.3"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-espelho" viewBox="0 0 24 24"><ellipse cx="12" cy="9.5" rx="6" ry="7"/><path d="M12 16.5V21M9 21h6"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-expandir" viewBox="0 0 24 24"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></symbol><symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-festa" viewBox="0 0 24 24"><path d="M3 21 8 9l7 7z"/><path d="m14.5 9.5 5.5-5.5"/><circle cx="18" cy="10.5" r="1" fill="currentColor"/><circle cx="12.5" cy="4" r="1" fill="currentColor"/><circle cx="20.5" cy="15" r="1" fill="currentColor"/></symbol><symbol id="i-fogo" viewBox="0 0 24 24"><path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-4.5-4-6.5-3-11-3 1.5-5.5 4.5-5.5 7.5 0 0-1-.8-1.5-2.5-1.3 1.8-2 3.8-2 6A5.5 5.5 0 0 0 12 21z"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-ima" viewBox="0 0 24 24"><path d="M6 3v9a6 6 0 0 0 12 0V3"/><path d="M6 8h4M14 8h4"/></symbol><symbol id="i-lampada" viewBox="0 0 24 24"><path d="M9 17a6 6 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-luneta" viewBox="0 0 24 24"><path d="m3 14 13-8 3 5-13 8z"/><path d="m8 16 2 4.5"/><path d="m14.5 12 4 2"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mala" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/><path d="M9 11v5M15 11v5"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-mapa" viewBox="0 0 24 24"><path d="m3 6 6-2.5 6 2.5 6-2.5v15L15 21l-6-2.5L3 21z"/><path d="M9 3.5v15M15 6v15"/></symbol><symbol id="i-menos" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-montanha" viewBox="0 0 24 24"><path d="m2.5 19 6.5-11 4 6 2.5-3.5L21.5 19z"/><path d="m7 12 2-1.5"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-olho" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-palmas" viewBox="0 0 24 24"><path d="M11 21a5 5 0 0 1-5-5V9.5a1.5 1.5 0 0 1 3 0V13"/><path d="M13 21a5 5 0 0 0 5-5V9.5a1.5 1.5 0 0 0-3 0V13"/><path d="M12 2v3M7.5 3.5 9 6M16.5 3.5 15 6"/></symbol><symbol id="i-parar" viewBox="0 0 24 24"><path d="M8.2 3.5h7.6l5.7 5.7v7.6l-5.7 5.7H8.2L2.5 16.8V9.2z"/></symbol><symbol id="i-pergaminho" viewBox="0 0 24 24"><path d="M6 4h12v14a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V4z"/><path d="M10 8h5M10 12h5"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-planeta" viewBox="0 0 24 24"><circle cx="12" cy="11" r="6"/><ellipse cx="12" cy="11" rx="11" ry="3.4" transform="rotate(-18 12 11)"/></symbol><symbol id="i-planta" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 15c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z"/></symbol><symbol id="i-predios" viewBox="0 0 24 24"><path d="M3 21V9h7v12"/><path d="M10 21V4h11v17"/><path d="M13.5 8h4M13.5 12h4M13.5 16h4M6 13h1"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-rosa-ventos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 3 2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/></symbol><symbol id="i-satelite" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m7.5 7.5-3 3 3 3 3-3z" /><path d="m16.5 10.5 3 3-3 3-3-3z"/><path d="M14 9.5 16 7.5M10 14.5 8 16.5"/></symbol><symbol id="i-seta-baixo" viewBox="0 0 24 24"><path d="M12 4.5v15"/><path d="m6 13.5 6 6 6-6"/></symbol><symbol id="i-seta-cima" viewBox="0 0 24 24"><path d="M12 19.5v-15"/><path d="m6 10.5 6-6 6 6"/></symbol><symbol id="i-seta-diagonal" viewBox="0 0 24 24"><path d="M6.5 17.5 17.5 6.5"/><path d="M10 6.5h7.5V14"/></symbol><symbol id="i-seta-dupla" viewBox="0 0 24 24"><path d="M3.5 12h17"/><path d="m7.5 8 -4 4 4 4M16.5 8l4 4-4 4"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-termometro" viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4.5 4.5 0 1 0 4 0z"/><circle cx="12" cy="17.5" r="1.8" fill="currentColor"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-tomada" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="9.5" cy="10" r="1.2" fill="currentColor"/><circle cx="14.5" cy="10" r="1.2" fill="currentColor"/><path d="M9 15h6"/></symbol><symbol id="i-torre" viewBox="0 0 24 24"><path d="M8 21V8l4-5 4 5v13"/><path d="M6 21h12"/><circle cx="12" cy="10.5" r="2.4"/><path d="M12 9.2v1.3l1 .6"/></symbol><symbol id="i-vaso" viewBox="0 0 24 24"><path d="M8 3h8l-1.5 3.5a6 6 0 0 1 3.5 5.5 6 6 0 0 1-12 0 6 6 0 0 1 3.5-5.5z"/><path d="M6.5 15h11"/></symbol><symbol id="i-voltar" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></symbol><symbol id="i-xis" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
 <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casa"/></svg>Jogos</a>
 <span class="migalha-sep" aria-hidden="true">/</span>
 <a href="#inicio">Ciências</a>
 <span id="migalhaAqui"></span>
 </nav>
-<div class="wrap"><div class="app"><header><div class="top"><div><h1>Exploradores do Céu</h1><div class="subtitle">Terra, Sol, orientação espacial e estrelas</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button></div></div></header><main>
-<section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Missão: entender o céu</h2><p>Movimento da Terra, fases da Lua, calendários e estrelas.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
+<div id="festaBox" class="festa" aria-hidden="true"></div>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>Exploradores do Céu</h1><div class="subtitle">Terra, Sol, orientação espacial e estrelas</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button></div></div></header><main>
+<section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Missão: entender o céu</h2><p>Movimento da Terra, fases da Lua, calendários e estrelas.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button><button type="button" class="ghost sala-abrir" onclick="irPara('sala')"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg> Jogar com outras pessoas</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
 <section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1</span><h2>A Terra está em movimento</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg></div><strong>Rotação</strong>Movimento da Terra em torno de seu próprio eixo.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sol"/></svg></div><strong>Dia e noite</strong>A rotação faz diferentes regiões da Terra receberem luz solar em momentos diferentes.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-bussola"/></svg></div><strong>Movimento aparente</strong>O Sol parece atravessar o céu, mas esse efeito está relacionado principalmente à rotação da Terra.</div></div><div class="example">O Sol nasce aproximadamente no lado <b>leste</b> e se põe aproximadamente no lado <b>oeste</b> — porque a Terra gira de <b>oeste para leste</b>.</div><div class="example"><b>Consequências da rotação:</b> a sucessão dos dias e das noites, o movimento aparente do Sol e os <b>fusos horários</b>.</div><div class="example warning">Dizemos “aproximadamente” porque a posição exata do nascer e do pôr do Sol varia ao longo do ano e conforme o local.</div></div><div class="lesson-nav"><span class="small">1 de 10</span><button class="primary" onclick="openLesson('lesson1b')">Continuar →</button></div></div>
 <div id="lesson1b" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 2</span><h2>Translação e as estações do ano</h2><p>Além de girar em torno do próprio eixo, a Terra também percorre um caminho ao redor do Sol.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-globo"/></svg></div><strong>Translação</strong>Movimento da Terra ao redor do Sol, que dura cerca de <b>365 dias</b> — um ano. A trajetória é <b>elíptica</b>, como um círculo achatado.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg></div><strong>Rotação</strong>Giro em torno do próprio eixo, que dura cerca de <b>24 horas</b> — um dia.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planeta"/></svg></div><strong>Eixo inclinado</strong>O eixo da Terra não é vertical: ele é inclinado em relação ao plano da órbita.</div></div><div class="example">As <b>estações do ano</b> acontecem porque o eixo inclinado faz a luz do Sol chegar de maneira diferente às regiões ao longo da translação.</div><div class="example"><b>Consequências da translação:</b> a sucessão das estações do ano e a variação da duração dos dias e das noites.</div><div class="example warning">Cuidado com um engano comum: as estações <b>não</b> são causadas pela Terra ficar mais perto ou mais longe do Sol.</div></div><div class="lesson-nav"><span class="small">2 de 10</span><div><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button> <button class="primary" onclick="openLesson('lesson1c')">Continuar →</button></div></div></div>
 <div id="lesson1c" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 3</span><h2>Hemisférios e a linha do Equador</h2><p>Para localizar lugares, dividimos a Terra em partes usando linhas imaginárias.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-menos"/></svg></div><strong>Linha do Equador</strong>Linha imaginária que divide a Terra ao meio, na horizontal. É o ponto de partida para medir a latitude.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-seta-cima"/></svg></div><strong>Hemisfério Norte</strong>Metade da Terra que fica acima da linha do Equador.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-seta-baixo"/></svg></div><strong>Hemisfério Sul</strong>Metade que fica abaixo da linha do Equador. O Brasil fica quase todo aqui.</div></div><div class="example">O Brasil é cortado pela linha do Equador no norte do país, mas a maior parte do território está no <b>Hemisfério Sul</b>.</div><div class="example">Quando é verão no Hemisfério Sul, é inverno no Hemisfério Norte — as estações são <b>opostas</b> nos dois hemisférios.</div><div class="example warning">O hemisfério em que você está muda o que se vê no céu: no Norte usa-se a <b>Estrela Polar</b>; no Sul, o <b>Cruzeiro do Sul</b>.</div></div><div class="lesson-nav"><span class="small">3 de 10</span><div><button class="secondary" onclick="openLesson('lesson1b')">← Voltar</button> <button class="primary" onclick="openLesson('lesson1d')">Continuar →</button></div></div></div>
@@ -599,6 +681,58 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <p id="semResultado" class="sem-resultado" hidden>Nenhuma missão com esse nome.</p>
 </div><div style="margin-top:18px"><button class="secondary" onclick="goHome()">← Voltar</button></div></div></section>
 <section id="quiz" class="screen"><div class="quiz-top"><button class="exit-btn" onclick="sairDaPartida()">Sair da missão</button></div><div class="question-card"><div class="progress-panel"><div class="progress-head"><span id="progressText">Questão 1</span><span id="progressPct">0%</span></div><div class="track"><div id="fill" class="fill"></div></div><div id="trailMap" class="trail-map"></div></div><div id="stage" class="stage"></div><div id="fonte" class="fonte" style="display:none"></div><div id="illustration" class="illustration"></div><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="special" class="special"></div><div id="feedback" class="feedback" role="status" aria-live="polite"></div><div class="controls"><button id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próxima →</button></div></div></section>
+
+<section id="sala" class="screen">
+  <div class="hero">
+    <h2>Jogar com outras pessoas</h2>
+    <p>Um aparelho vira o telão e mostra as perguntas. Os outros entram pelo
+    código e respondem no próprio celular. <b>Este modo precisa de internet.</b></p>
+  </div>
+
+  <div id="salaEscolha" class="sala-escolha">
+    <button type="button" class="primary" onclick="criarSala()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tv"/></svg> Ser o telão</button>
+    <button type="button" class="ghost" onclick="mostrarEntrada()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-celular"/></svg> Entrar numa sala</button>
+    <button type="button" class="ghost" onclick="goHome()">Voltar ao início</button>
+  </div>
+
+  <div id="salaEntrada" class="sala-caixa" hidden>
+    <label class="sala-campo"><span>Código da sala</span>
+      <input id="salaCodigo" type="text" inputmode="numeric" maxlength="4"
+             autocomplete="off" placeholder="0000"></label>
+    <label class="sala-campo"><span>Seu nome</span>
+      <input id="salaNome" type="text" maxlength="12" autocomplete="off"
+             placeholder="Anne"></label>
+    <button type="button" class="primary" onclick="entrarSala()">Entrar</button>
+    <button type="button" class="ghost" onclick="voltarEscolha()">Voltar</button>
+  </div>
+
+  <div id="salaAnfitriao" class="sala-caixa" hidden>
+    <div class="sala-codigo"><span class="rot">Código da sala</span>
+      <strong id="salaCodigoTela">----</strong></div>
+    <p id="salaDica" class="sala-dica">Abra o mesmo endereço no celular de cada
+    jogador, toque em <b>Entrar numa sala</b> e digite o código.</p>
+    <div id="salaJogadores" class="sala-jogadores"></div>
+    <label class="sala-campo"><span>Missão</span>
+      <select id="salaMissao"></select></label>
+    <button type="button" id="salaComecar" class="primary" onclick="comecarSala()" disabled>
+      Começar</button>
+    <button type="button" class="ghost" onclick="fecharSala()">Encerrar sala</button>
+  </div>
+
+  <div id="salaJogo" class="sala-caixa" hidden>
+    <div class="sala-topo"><span id="salaProgresso"></span>
+      <span id="salaTempo" class="sala-tempo">20</span></div>
+    <div id="salaPergunta" class="question"></div>
+    <div id="salaOpcoes" class="answers"></div>
+    <div id="salaPlacar" class="sala-placar"></div>
+  </div>
+
+  <div id="salaJogador" class="sala-caixa" hidden>
+    <div id="salaEstado" class="sala-estado">Esperando o telão começar...</div>
+    <div id="salaBotoes" class="answers sala-botoes"></div>
+    <div id="salaMeuPlacar" class="sala-placar"></div>
+  </div>
+</section>
 <section id="end" class="screen"><div class="result"><div class="trophy"></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
 </main></div></div>
 <script>
@@ -1073,7 +1207,7 @@ function startTrailStep(){
   questions=makeQuestions(currentCategory,TAM_ETAPA);
   index=0;locked=false;updateHud();show('quiz');renderQuestion();
 }
-function updateHud(){document.getElementById('score').textContent=score;renderLives();document.getElementById('combo').textContent=combo}
+function updateHud(){document.getElementById('score').textContent=score;renderLives();document.getElementById('combo').textContent=combo;_acenderFoguinho(combo)}
 
 /* ---------- progresso da partida ---------- */
 function updateProgress(){
@@ -1345,6 +1479,7 @@ document.addEventListener('keydown',ev=>{
 
 /* ---------- fim de partida ---------- */
 function endGame(){
+  setTimeout(() => comemorar(hits, answered), 260);
   if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
   // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
   if(answered&&(lives>0||practiceMode)){
@@ -1468,7 +1603,8 @@ function startTrail(t){ irPara("trilha/" + encodeURIComponent(t)); }
 addEventListener("hashchange", rota);
 
 /* ---------- trilha de migalhas ---------- */
-const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado"};
+const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado",
+              sala:"Sala em rede"};
 function migalhas(id){
   const el = document.getElementById("migalhaAqui");
   if(!el) return;
@@ -1492,4 +1628,389 @@ function _nomeDaMissao(c){ return (typeof nomes !== "undefined" && nomes[c]) || 
 
 if(document.readyState !== 'loading') rota();
 else addEventListener('DOMContentLoaded', rota);
+
+/* ---------- tema: sistema, claro, escuro ---------- */
+const TEMAS = ["sistema", "claro", "escuro"];
+const _ICONE_TEMA = {sistema: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tema"/></svg>', claro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sol"/></svg>', escuro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-lua"/></svg>'};
+const _ROTULO_TEMA = {sistema: "Tema: seguir o sistema",
+                      claro: "Tema: claro", escuro: "Tema: escuro"};
+function temaAtual(){
+  try{ return localStorage.getItem("tema") || "sistema"; }catch(e){ return "sistema"; }
+}
+function aplicarTema(t){
+  if(t === "sistema") delete document.documentElement.dataset.tema;
+  else document.documentElement.dataset.tema = t;
+  try{ localStorage.setItem("tema", t); }catch(e){}
+  const b = document.getElementById("btnTema");
+  if(b){ b.innerHTML = _ICONE_TEMA[t]; b.setAttribute("aria-label", _ROTULO_TEMA[t]); }
+}
+function alternarTema(){
+  aplicarTema(TEMAS[(TEMAS.indexOf(temaAtual()) + 1) % TEMAS.length]);
+  if(typeof sfx !== "undefined") sfx.toque();
+}
+
+/* ---------- tela cheia ---------- */
+/* O iPhone não expõe requestFullscreen em elementos: lá o botão nem aparece,
+   em vez de aparecer e não fazer nada. */
+function _temTelaCheia(){
+  return !!(document.documentElement.requestFullscreen);
+}
+function alternarTela(){
+  try{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }catch(e){}
+}
+function _pintarBotaoTela(){
+  const b = document.getElementById("btnTela");
+  if(!b) return;
+  const cheia = !!document.fullscreenElement;
+  b.innerHTML = cheia ? '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-encolher"/></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-expandir"/></svg>';
+  b.setAttribute("aria-label", cheia ? "Sair da tela cheia" : "Tela cheia");
+}
+
+/* ---------- estímulos ---------- */
+/* O foguinho troca o número da pílula de sequência por chama a partir de 3:
+   a criança vê a sequência crescer sem precisar ler. */
+function _acenderFoguinho(n){
+  const p = document.getElementById("combo");
+  if(!p) return;
+  const caixa = p.closest(".pill");
+  if(caixa) caixa.classList.toggle("em-chamas", n >= 3);
+  // `hidden` é propriedade de HTMLElement, não de SVGElement: atribuir a
+  // `.hidden` num <svg> cria uma propriedade solta e deixa o atributo no DOM.
+  const fogo = document.getElementById("foguinho");
+  if(fogo) fogo.toggleAttribute("hidden", n < 3);
+}
+
+function _ruido(dur, corte, vol){
+  /* Palmas são ruído filtrado, não nota: um estalo curto e seco. */
+  if(!audioCtx || mudo) return;
+  const n = Math.floor(audioCtx.sampleRate * dur);
+  const buf = audioCtx.createBuffer(1, n, audioCtx.sampleRate);
+  const dados = buf.getChannelData(0);
+  for(let i = 0; i < n; i++) dados[i] = (Math.random() * 2 - 1) * (1 - i / n);
+  const src = audioCtx.createBufferSource(); src.buffer = buf;
+  const f = audioCtx.createBiquadFilter(); f.type = "bandpass";
+  f.frequency.value = corte; f.Q.value = 0.8;
+  const g = audioCtx.createGain(); g.gain.value = vol;
+  src.connect(f).connect(g).connect(audioCtx.destination);
+  src.start();
+}
+function palmas(){
+  /* Doze palmas com intervalo irregular: regular demais vira metrônomo. */
+  try{
+    if(typeof ensureAudio === "function") ensureAudio();
+    for(let i = 0; i < 12; i++){
+      const atraso = i * 95 + Math.random() * 55;
+      setTimeout(() => _ruido(0.07, 1400 + Math.random() * 900, 0.16), atraso);
+    }
+  }catch(e){}
+}
+
+const _CORES_FESTA = ["--materia-solida", "--alt-1", "--alt-2", "--alt-3", "--alt-4", "--certo"];
+function festa(quantidade){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const caixa = document.getElementById("festaBox");
+  if(!caixa) return;
+  const n = quantidade || 44;
+  for(let i = 0; i < n; i++){
+    const p = document.createElement("i");
+    p.className = "confete";
+    p.style.left = (Math.random() * 100) + "vw";
+    p.style.background = "var(" + _CORES_FESTA[i % _CORES_FESTA.length] + ")";
+    p.style.animationDelay = (Math.random() * 0.45) + "s";
+    p.style.animationDuration = (1.5 + Math.random() * 1.1) + "s";
+    p.style.setProperty("--giro", (Math.random() * 720 - 360) + "deg");
+    p.style.setProperty("--desvio", (Math.random() * 120 - 60) + "px");
+    caixa.appendChild(p);
+    setTimeout(() => p.remove(), 3000);
+  }
+}
+
+/* Chamado no fim da partida: festa e palmas só quando houve o que comemorar. */
+function comemorar(acertos, total){
+  const pct = total ? acertos / total : 0;
+  if(pct >= 0.9){ festa(70); palmas(); }
+  else if(pct >= 0.6){ festa(36); }
+}
+
+addEventListener("DOMContentLoaded", () => {
+  aplicarTema(temaAtual());
+  const b = document.getElementById("btnTela");
+  if(b && _temTelaCheia()){ b.hidden = false; _pintarBotaoTela(); }
+  addEventListener("fullscreenchange", _pintarBotaoTela);
+});
+
+/* ---------- sala em rede ---------- */
+/* WebRTC direto entre os aparelhos: nenhum servidor nosso no meio. O único
+   intermediário é o broker público do PeerJS, e só para eles se acharem. */
+const SALA_PREFIXO = "jogosdeestudo-cien-";
+const SALA_PRAZO = 20000;       // por pergunta
+const SALA_MAX = 8;
+const SALA_LIB = "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js";
+
+let _peer = null, _souTelao = false, _conexoes = [], _conAnfitriao = null;
+let _jogadores = new Map();     // id -> {nome, pontos, respondeu, con}
+let _perguntas = [], _iPergunta = -1, _tInicio = 0, _relogio = null;
+
+function _tela(id){
+  ["salaEscolha","salaEntrada","salaAnfitriao","salaJogo","salaJogador"]
+    .forEach(x => { const e = document.getElementById(x); if(e) e.hidden = x !== id; });
+}
+function mostrarEntrada(){ _tela("salaEntrada"); }
+function voltarEscolha(){ _tela("salaEscolha"); }
+
+function _carregarPeer(){
+  if(window.Peer) return Promise.resolve();
+  return new Promise((ok, falha) => {
+    const s = document.createElement("script");
+    s.src = SALA_LIB;
+    s.onload = ok;
+    s.onerror = () => falha(new Error("sem rede"));
+    document.head.appendChild(s);
+  });
+}
+
+function _avisoSala(txt){
+  const e = document.getElementById("salaEstado");
+  if(e) e.textContent = txt;
+  showAchievement ? showAchievement(txt) : null;
+}
+
+/* ---------- lado do telão ---------- */
+async function criarSala(){
+  _tela("salaAnfitriao");
+  document.getElementById("salaCodigoTela").textContent = "....";
+  try{ await _carregarPeer(); }
+  catch(e){
+    document.getElementById("salaCodigoTela").textContent = "!";
+    document.getElementById("salaDica").innerHTML =
+      "<b>Sem internet.</b> Este modo precisa de conexão; o resto do jogo funciona offline.";
+    return;
+  }
+  _souTelao = true;
+  _montarMissoes();
+  _tentarCodigo(0);
+}
+
+function _tentarCodigo(tentativa){
+  if(tentativa > 5){
+    document.getElementById("salaDica").textContent =
+      "Não consegui abrir uma sala agora. Tente de novo em alguns segundos.";
+    return;
+  }
+  const codigo = String(Math.floor(1000 + Math.random() * 9000));
+  if(_peer) try{ _peer.destroy(); }catch(e){}
+  _peer = new Peer(SALA_PREFIXO + codigo);
+  _peer.on("open", () => {
+    document.getElementById("salaCodigoTela").textContent = codigo;
+    location.hash = "sala/" + codigo;
+  });
+  // Código já em uso (ou por outra família): sorteia outro.
+  _peer.on("error", err => {
+    if(err && err.type === "unavailable-id") _tentarCodigo(tentativa + 1);
+  });
+  _peer.on("connection", con => {
+    con.on("data", d => _doJogador(con, d));
+    con.on("close", () => { _jogadores.delete(con.peer); _pintarJogadores(); });
+  });
+}
+
+function _doJogador(con, d){
+  if(d.t === "entrar"){
+    if(_iPergunta >= 0){ con.send({t: "recusado", motivo: "A partida já começou."}); return; }
+    if(_jogadores.size >= SALA_MAX){ con.send({t: "recusado", motivo: "A sala está cheia."}); return; }
+    _jogadores.set(con.peer, {nome: (d.nome || "Jogador").slice(0, 12), pontos: 0, con});
+    con.send({t: "aceito"});
+    _pintarJogadores();
+    if(typeof sfx !== "undefined") sfx.toque();
+  }
+  if(d.t === "resposta"){
+    const j = _jogadores.get(con.peer);
+    if(!j || j.respondeu || d.i !== _iPergunta) return;
+    j.respondeu = true;
+    const q = _perguntas[_iPergunta];
+    const certo = d.escolha === q.answer;
+    // Fórmula do Kahoot: acertar vale 1000, e a demora come até metade.
+    j.ganho = certo ? Math.max(1, Math.round(1000 * (1 - (d.ms / SALA_PRAZO) / 2))) : 0;
+    j.pontos += j.ganho;
+    con.send({t: "recebido", certo});
+    if([..._jogadores.values()].every(x => x.respondeu)) _fecharPergunta();
+  }
+}
+
+function _pintarJogadores(){
+  const c = document.getElementById("salaJogadores");
+  c.innerHTML = [..._jogadores.values()]
+    .map(j => '<span class="sala-jogador">' + _escapar(j.nome) + "</span>").join("")
+    || '<span class="sala-dica">Ninguém entrou ainda.</span>';
+  document.getElementById("salaComecar").disabled = _jogadores.size === 0;
+}
+function _escapar(t){
+  return String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+}
+function _enviarTodos(m){ _jogadores.forEach(j => { try{ j.con.send(m); }catch(e){} }); }
+
+function _montarMissoes(){
+  const sel = document.getElementById("salaMissao");
+  sel.innerHTML = "";
+  _catalogoMissoes().forEach(([id, nome]) => {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = nome; sel.appendChild(o);
+  });
+}
+
+function comecarSala(){
+  const cat = document.getElementById("salaMissao").value;
+  _perguntas = _perguntasSala(cat).filter(q => q.choices && q.answer != null).slice(0, 10);
+  if(!_perguntas.length){ _avisoSala("Essa missão não tem perguntas de escolha."); return; }
+  _iPergunta = -1;
+  _tela("salaJogo");
+  _proximaPergunta();
+}
+
+function _proximaPergunta(){
+  _iPergunta++;
+  if(_iPergunta >= _perguntas.length) return _fimSala();
+  const q = _perguntas[_iPergunta];
+  _jogadores.forEach(j => { j.respondeu = false; j.ganho = 0; });
+  document.getElementById("salaProgresso").textContent =
+    "Pergunta " + (_iPergunta + 1) + " de " + _perguntas.length;
+  document.getElementById("salaPergunta").textContent = q.q;
+  document.getElementById("salaOpcoes").innerHTML = q.choices.map((c, i) =>
+    '<div class="answer"><span class="letra">' + FORMAS[i % 4] + "</span><span>"
+    + _escapar(c) + "</span></div>").join("");
+  document.getElementById("salaPlacar").innerHTML = "";
+  _enviarTodos({t: "pergunta", i: _iPergunta, n: q.choices.length, prazo: SALA_PRAZO});
+  _tInicio = Date.now();
+  _contar();
+}
+
+function _contar(){
+  clearInterval(_relogio);
+  const el = document.getElementById("salaTempo");
+  const tique = () => {
+    const resta = Math.max(0, SALA_PRAZO - (Date.now() - _tInicio));
+    el.textContent = Math.ceil(resta / 1000);
+    el.classList.toggle("urgente", resta <= 5000);
+    if(resta <= 0) _fecharPergunta();
+  };
+  tique();
+  _relogio = setInterval(tique, 250);
+}
+
+function _fecharPergunta(){
+  clearInterval(_relogio);
+  const q = _perguntas[_iPergunta];
+  document.getElementById("salaOpcoes").querySelectorAll(".answer")
+    .forEach((e, i) => e.classList.add(i === q.answer ? "correct" : "wrong"));
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaPlacar").innerHTML = ordem.map((j, i) =>
+    '<div class="sala-linha' + (j.ganho ? "" : " errou") + '"><span>' + (i + 1)
+    + "</span><b>" + _escapar(j.nome) + "</b><span class=\"ganho\">+" + (j.ganho || 0)
+    + "</span><span>" + j.pontos + "</span></div>").join("");
+  _enviarTodos({t: "resultado", certa: q.answer,
+                placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos, ganho: j.ganho || 0}))});
+  if(typeof sfx !== "undefined") sfx.etapa();
+  setTimeout(_proximaPergunta, 4000);
+}
+
+function _fimSala(){
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaProgresso").textContent = "Fim!";
+  document.getElementById("salaTempo").textContent = "";
+  document.getElementById("salaPergunta").textContent =
+    ordem.length ? ordem[0].nome + " venceu!" : "Fim da partida";
+  document.getElementById("salaOpcoes").innerHTML = "";
+  _enviarTodos({t: "fim", placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos}))});
+  if(typeof festa === "function"){ festa(80); palmas(); }
+}
+
+function fecharSala(){
+  clearInterval(_relogio);
+  _enviarTodos({t: "encerrada"});
+  try{ _peer && _peer.destroy(); }catch(e){}
+  _peer = null; _souTelao = false; _jogadores.clear(); _iPergunta = -1;
+  goHome();
+}
+
+/* ---------- lado do jogador ---------- */
+async function entrarSala(){
+  const codigo = (document.getElementById("salaCodigo").value || "").replace(/\D/g, "");
+  const nome = (document.getElementById("salaNome").value || "").trim() || "Jogador";
+  if(codigo.length !== 4){ showAchievement("O código tem 4 números."); return; }
+  _tela("salaJogador");
+  _avisoSala("Conectando...");
+  try{ await _carregarPeer(); }
+  catch(e){ _avisoSala("Sem internet. Este modo precisa de conexão."); return; }
+  _peer = new Peer();
+  _peer.on("open", () => {
+    _conAnfitriao = _peer.connect(SALA_PREFIXO + codigo);
+    _conAnfitriao.on("open", () => _conAnfitriao.send({t: "entrar", nome}));
+    _conAnfitriao.on("data", d => _doTelao(d));
+    _conAnfitriao.on("close", () => _avisoSala("O telão encerrou a sala."));
+  });
+  _peer.on("error", () => _avisoSala("Não achei essa sala. Confira o código."));
+}
+
+function _doTelao(d){
+  const estado = document.getElementById("salaEstado");
+  const botoes = document.getElementById("salaBotoes");
+  const placar = document.getElementById("salaMeuPlacar");
+  if(d.t === "aceito"){ _avisoSala("Você entrou! Esperando começar..."); }
+  if(d.t === "recusado"){ _avisoSala(d.motivo); }
+  if(d.t === "pergunta"){
+    placar.innerHTML = "";
+    estado.textContent = "Responda!";
+    botoes.innerHTML = "";
+    const t0 = Date.now();
+    for(let i = 0; i < d.n; i++){
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "answer";
+      b.innerHTML = '<span class="letra">' + FORMAS[i % 4] + "</span>";
+      b.setAttribute("aria-label", "Alternativa " + FORMAS[i % 4]);
+      b.onclick = () => {
+        botoes.querySelectorAll(".answer").forEach(x => { x.disabled = true; });
+        b.classList.add("escolhida");
+        estado.textContent = "Resposta enviada!";
+        _conAnfitriao.send({t: "resposta", i: d.i, escolha: i, ms: Date.now() - t0});
+        if(typeof sfx !== "undefined") sfx.toque();
+      };
+      botoes.appendChild(b);
+    }
+  }
+  if(d.t === "recebido"){
+    estado.textContent = d.certo ? "Acertou!" : "Dessa vez não.";
+    if(typeof sfx !== "undefined") d.certo ? sfx.acerto() : sfx.erro();
+  }
+  if(d.t === "resultado" || d.t === "fim"){
+    botoes.innerHTML = "";
+    if(d.t === "fim"){
+      estado.textContent = d.placar.length ? d.placar[0].nome + " venceu!" : "Fim";
+      if(typeof festa === "function") festa(50);
+    }
+    placar.innerHTML = d.placar.map((j, i) =>
+      '<div class="sala-linha"><span>' + (i + 1) + "</span><b>" + _escapar(j.nome)
+      + '</b><span class="ganho">' + (j.ganho ? "+" + j.ganho : "") + "</span><span>"
+      + j.pontos + "</span></div>").join("");
+  }
+  if(d.t === "encerrada"){ _avisoSala("O telão encerrou a sala."); }
+}
+
+/* ---------- entrada pela rota ---------- */
+function abrirSala(codigo){
+  show("sala");
+  _tela(_souTelao ? "salaAnfitriao" : "salaEscolha");
+  if(codigo && !_souTelao){
+    mostrarEntrada();
+    document.getElementById("salaCodigo").value = codigo;
+  }
+}
+ROTAS.sala = abrirSala;
+
+function _catalogoMissoes(){
+  return Object.keys(nomes).filter(c => c !== "review").map(c => [c, nomes[c]]);
+}
+function _perguntasSala(cat){ return makeQuestions(cat, 10); }
 </script></body></html>

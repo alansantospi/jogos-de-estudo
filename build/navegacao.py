@@ -61,7 +61,8 @@ function startTrail(t){ irPara("trilha/" + encodeURIComponent(t)); }
 addEventListener("hashchange", rota);
 
 /* ---------- trilha de migalhas ---------- */
-const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado"};
+const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado",
+              sala:"Sala em rede"};
 function migalhas(id){
   const el = document.getElementById("migalhaAqui");
   if(!el) return;

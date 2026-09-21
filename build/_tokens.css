@@ -62,8 +62,11 @@
   --saida:cubic-bezier(0.22,1,0.36,1);
 }
 
+/* O tema escuro vale por dois caminhos: o do sistema (a menos que o botão
+   force o claro) e o do próprio botão. As declarações são as mesmas, escritas
+   uma vez só e repetidas pelo build — duplicar à mão é convidar à divergência. */
 @media (prefers-color-scheme:dark){
-  :root{
+  :root:not([data-tema="claro"]){
     --fundo:  oklch(0.205 0.028 272);
     --carta:  oklch(0.262 0.030 272);
     --risco:  oklch(0.365 0.030 272);
@@ -81,4 +84,22 @@
     --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
     --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
   }
+}
+:root[data-tema="escuro"]{
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, %MATERIA% 68%, white);
+    --materia-solida:%MATERIA%;
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, %MATERIA% 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, %MATERIA% 55%, white);
+    --materia-borda:color-mix(in oklch, %MATERIA% 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
 }

@@ -68,6 +68,32 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   percorrer. Categoria que não está em nenhum grupo cai em "Conteúdos", no
   fim — conteúdo novo nunca some da tela por esquecimento.
 
+## Controles e estímulos
+
+- **Tema** em três estados: sistema, claro, escuro. Gravado no aparelho e
+  aplicado no `<head>`, antes da primeira pintura — senão a tela pisca na cor
+  errada ao abrir. As declarações escuras existem uma vez em `_tokens.css` e o
+  build as repete sob `@media` e sob `[data-tema="escuro"]`.
+- **Tela cheia** pelo botão. No iPhone o botão nem aparece, em vez de aparecer
+  e não fazer nada.
+- **Foguinho** na pílula de sequência a partir de três acertos: a criança vê a
+  sequência crescer sem precisar ler o número.
+- **Palmas** são ruído filtrado, não nota — doze estalos de intervalo
+  irregular. **Festa** são confetes em DOM. Ambos entram no fim da partida:
+  festa a partir de 60% de acerto, festa e palmas a partir de 90%.
+- `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
+  tudo.
+
+## Sala em rede
+
+Um aparelho vira telão e mostra a pergunta; os outros entram por um código de
+quatro dígitos e veem só os botões A/B/C/D. Quem acerta mais rápido pontua
+mais (1000 menos a demora, até metade).
+
+A conexão é direta entre os aparelhos, por WebRTC via PeerJS — sem servidor
+nosso, sem conta. **É o único modo que exige internet**, e a tela diz isso: o
+resto do jogo roda do arquivo baixado.
+
 ## Texto
 
 Menos palavras do que parece necessário. Três regras:
