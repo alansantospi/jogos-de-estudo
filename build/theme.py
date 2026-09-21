@@ -15,8 +15,8 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 # Cor de cada matéria: caneta que um estudante realmente tem no estojo.
 MATERIAS = {
     "ingles":   "oklch(0.55 0.20 265)",   # azul-violeta vivo
-    "ciencias": "oklch(0.60 0.15 195)",   # turquesa
-    "historia": "oklch(0.60 0.18 40)",    # laranja-terra
+    "ciencias": "oklch(0.525 0.15 195)",   # turquesa
+    "historia": "oklch(0.575 0.18 40)",    # laranja-terra
     "arte":     "oklch(0.56 0.22 330)",   # magenta
 }
 

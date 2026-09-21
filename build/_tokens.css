@@ -3,6 +3,10 @@
   color-scheme:light dark;
 
   --materia:      %MATERIA%;
+  /* Superfície preenchida que recebe texto branco. No escuro a matéria clareia
+     para servir de texto, então a versão sólida é mantida à parte. */
+  --materia-solida:%MATERIA%;
+  --sobre-materia:#fff;
   --materia-forte:color-mix(in oklch, var(--materia) 82%, black);
   --materia-clara:color-mix(in oklch, var(--materia) 12%, white);
   --materia-borda:color-mix(in oklch, var(--materia) 45%, white);
@@ -12,16 +16,16 @@
   --risco:    oklch(0.905 0.012 265);
   --texto:    oklch(0.28 0.030 268);
   --texto-2:  oklch(0.50 0.028 268);
-  --texto-3:  oklch(0.63 0.022 268);
+  --texto-3:  oklch(0.545 0.022 268);
 
   /* Quatro cores de alternativa, no espírito do Kahoot, fugindo de
      vermelho e verde puros para não brigar com certo/errado. */
   /* Quatro cores bem distintas entre si e distantes de vermelho e verde,
      que já significam errado e certo. */
-  --alt-1:oklch(0.54 0.19 268);   /* índigo   */
-  --alt-2:oklch(0.70 0.15 75);    /* âmbar    */
-  --alt-3:oklch(0.57 0.13 200);   /* turquesa */
-  --alt-4:oklch(0.55 0.21 322);   /* violeta  */
+  --alt-1:oklch(0.540 0.19 268);  /* índigo   */
+  --alt-2:oklch(0.570 0.15 75);   /* âmbar    */
+  --alt-3:oklch(0.535 0.13 200);  /* turquesa */
+  --alt-4:oklch(0.550 0.21 322);  /* violeta  */
 
   --certo:      oklch(0.64 0.18 148);
   --certo-forte:oklch(0.50 0.16 148);
@@ -54,14 +58,14 @@
     --texto-2:oklch(0.800 0.020 272);
     --texto-3:oklch(0.660 0.020 272);
     --materia:      color-mix(in oklch, %MATERIA% 68%, white);
-    --materia-forte:color-mix(in oklch, %MATERIA% 55%, black);
+    --materia-solida:%MATERIA%;
+    --sobre-materia:#fff;
     --materia-clara:color-mix(in oklch, %MATERIA% 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, %MATERIA% 55%, white);
     --materia-borda:color-mix(in oklch, %MATERIA% 55%, var(--carta));
-    --alt-1:oklch(0.68 0.17 268); --alt-2:oklch(0.78 0.14 75);
-    --alt-3:oklch(0.70 0.12 200); --alt-4:oklch(0.68 0.19 322);
-    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.56 0.16 148);
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
     --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
-    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.54 0.19 22);
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
     --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
   }
 }

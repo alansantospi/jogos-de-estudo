@@ -15,6 +15,21 @@ retorno físico ao toque.
 
 ## Cor
 
+Todos os 44 pares de texto e fundo foram medidos em WCAG e passam em **AA
+(4,5:1)** nos dois temas. `build/contraste.py` converte OKLCH em sRGB e mede;
+`python3 build/contraste.py` pode ser rodado de novo a qualquer mudança.
+
+Duas regras que saíram dessa medição:
+
+- **`--materia` e `--materia-solida` são tokens diferentes.** No tema escuro a
+  cor da matéria clareia para servir de texto sobre o card; a versão sólida,
+  usada em faixa e botão preenchido, continua escura o bastante para o texto
+  branco. Misturar os dois derrubava o contraste para 1,5:1.
+- **As quatro cores de alternativa não mudam entre os temas.** São
+  preenchimentos que recebem a forma branca, não texto; clareá-las no escuro
+  derrubava o contraste para 2:1.
+
+
 Estratégia **comprometida**: a cor da matéria carrega a faixa do topo, os
 botões primários e os selos.
 
