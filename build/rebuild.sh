@@ -15,3 +15,5 @@ python3 build/aviso.py
 python3 build/texto.py
 python3 build/navegacao.py
 python3 build/busca.py
+python3 build/alternativas.py
+python3 build/medir_alternativas.py

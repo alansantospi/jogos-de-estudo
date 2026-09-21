@@ -137,7 +137,11 @@ remoção de emoji), `build/letras.py` (formas das alternativas),
 inglês, que nomeia o campo do ícone de outro jeito), `build/trilha.py`
 (rolar até o nó atual), `build/aviso.py` (o aviso e a virada de etapa),
 `build/texto.py` (nomes das trilhas e enxugamento), `build/navegacao.py`
-(rotas e migalhas) e `build/busca.py` (busca e grupos).
+(rotas e migalhas), `build/busca.py` (busca e grupos) e
+`build/alternativas.py` (alternativas do mesmo tamanho).
+
+No fim, `build/medir_alternativas.py` derruba o build se o comprimento voltar
+a entregar a resposta certa — ver PRODUCT.md.
 
 A varredura de emoji do `aplicar.py` remove **só pictogramas**. Setas
 (`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo:

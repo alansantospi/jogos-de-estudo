@@ -25,6 +25,23 @@ sabe que aquilo cai na prova.
 **Segundo usuário:** o pai, que adiciona o material fotografado e acompanha o
 que ela erra.
 
+## A questão precisa ser honesta
+
+A alternativa certa não pode se entregar pela forma. É fácil errar isso sem
+perceber: eu escrevia a certa como explicação completa e as erradas como
+descartes curtos, e o resultado media assim — em História a certa era a mais
+longa em 70% das questões, com o dobro do tamanho médio das erradas. Quem
+sempre escolhesse a maior acertaria 70% sem saber nada. O jogo premiava a
+habilidade errada e dava à Anne uma falsa sensação de que sabia.
+
+A regra: **quem responder só pelo comprimento tem de acertar como o acaso,
+perto de 25%.** As quatro alternativas ficam no mesmo registro e no mesmo
+tamanho aproximado; o detalhe que a certa não comporta vai para a explicação,
+que aparece no retorno — onde ensina mais.
+
+`build/medir_alternativas.py` mede e derruba o build fora da faixa de 15% a
+35%. Vale para cada conteúdo novo.
+
 ## Escopo
 
 A base é um modelo reaproveitável. Cada prova nova vira um jogo novo com o
