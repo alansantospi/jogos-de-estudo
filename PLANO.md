@@ -191,7 +191,7 @@ Três coisas custaram retrabalho neste projeto e viram requisito:
 
 Cada fase diz **o que quebra**, porque é isso que decide a ordem.
 
-### Fase 0 — Congelar o comportamento em teste `~2 dias`
+### Fase 0 — Congelar o comportamento em teste ✔ feita em 22/09/2026
 
 Os ~25 roteiros de regressão vivem no meu rascunho e somem quando a sessão
 acaba. Viram testes versionados, rodando num comando:
@@ -204,8 +204,13 @@ acaba. Viram testes versionados, rodando num comando:
 - perfis: isolamento entre alunos, migração, lixeira;
 - os três medidores que já existem.
 
-**Quebra:** nada. **Sem isto, todas as fases seguintes são às cegas.** É a
-única fase que eu faria mesmo que o produto não saia.
+**Quebra:** nada. **Sem isto, todas as fases seguintes são às cegas.**
+
+Entregue em `teste/`, com `sh teste/rodar.sh`. Nove execuções de caso mais os
+três medidores, e um verificador de mutação que reinjeta quatro defeitos reais
+do projeto e cobra que a suíte falhe — porque suíte que passa não prova nada.
+Limites conhecidos estão em `teste/LEIA.md`: o botão voltar do navegador e a
+sala em rede não dão para automatizar no tempo virtual.
 
 ### Fase 1 — Tirar o conteúdo do código `~3 dias`
 
