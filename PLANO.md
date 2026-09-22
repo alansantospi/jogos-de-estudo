@@ -1,8 +1,9 @@
 # Plano técnico: de projeto de família a produto
 
-Escrito em 22/09/2026, com o cliente ainda indefinido. Por isso trata só do
-que precisa existir **nos três casos** (pais, escolas, ou ferramenta de
-autoria) e marca explicitamente o que depende dessa escolha.
+Escrito em 22/09/2026. Revisado no mesmo dia, quando o modelo ficou
+definido: **banco próprio + gerar questões do material que o usuário insere**.
+
+Quem paga ainda não está decidido, então o que depende disso continua marcado.
 
 Os números aqui foram medidos no repositório, não estimados.
 
@@ -38,20 +39,27 @@ com internet ruim. Deve continuar sendo um **alvo de build**, não um acidente.
 
 ## 2. O que trava, em ordem de gravidade
 
-### 2.1 Procedência do conteúdo — decisão de negócio, não de engenharia
+### 2.1 Procedência do conteúdo — resolvida pelo modelo, não eliminada
 
-220 questões carregam a fonte declarada (`livro p.37`, `folha q18`) e derivam
-das fotos do livro didático e das folhas da escola. Para o estudo de uma
-criança, tudo bem. Para vender, é conteúdo derivado de obra de terceiro.
+220 das 514 questões declaram fonte no livro didático e nas folhas da escola
+(`livro p.37`, `folha q18`). Com o modelo definido, isso deixa de ser um gate
+e vira uma separação a fazer:
 
-**Isto gate tudo o mais.** Não adianta refatorar por três meses e descobrir
-que o banco não pode ir junto. Saídas: reescrever como conteúdo próprio
-alinhado à BNCC, licenciar, ou mudar o modelo para que o conteúdo venha do
-cliente (ver a opção "ferramenta de autoria").
+- **o banco que acompanha o produto** tem de ser originário. As questões
+  derivadas ou saem, ou são reescritas, ou viram exemplo privado;
+- **o que o usuário gera do próprio material** é responsabilidade dele, como
+  em qualquer ferramenta de estudo — desde que o produto não redistribua
+  isso para outros usuários.
 
-Engenharia relacionada: manter o campo `src` de cada questão, que hoje serve
-para a Anne reconhecer a página do livro, passa a servir de rastreamento de
-procedência. Vale marcar cada questão como `propria` ou `derivada`.
+Duas obrigações de engenharia decorrem disso, e nenhuma é opcional:
+
+1. **Cada questão carrega a procedência.** O campo `src`, que hoje serve para
+   a Anne reconhecer a página do livro, passa a marcar `propria` ou
+   `derivada`, e de que material veio. Sem isso não dá para separar o que pode
+   ser publicado do que não pode.
+2. **Conteúdo gerado nasce privado.** Nada que sai do material de um usuário
+   aparece para outro sem ele mandar. Compartilhar é escolha explícita, e aí
+   a responsabilidade é de quem compartilha — o produto precisa registrar isso.
 
 ### 2.2 O conteúdo é código
 
@@ -133,6 +141,50 @@ que ele passa a ser *gerado* de fontes separadas, não *emendado* por regex.
 `geradores` é o que absorve o caso do inglês, que hoje fabrica questões por
 regra a partir de um banco de verbos em vez de listá-las.
 
+### A esteira de geração — o coração do produto
+
+O usuário insere material (texto colado, foto de página, PDF) e recebe
+questões no esquema acima. É exatamente o que eu fiz à mão para a Anne, lendo
+as fotos do livro dela; agora vira funcionalidade.
+
+```
+material do usuário
+   │
+   ├─ extrair texto        (OCR na foto, texto do PDF)
+   ├─ segmentar            trechos com sentido próprio
+   ├─ gerar                questões + alternativas + explicação,
+   │                       cada uma citando o trecho de origem
+   ├─ MEDIR                os dois medidores que já existem,
+   │                       agora dentro do fluxo
+   ├─ regerar              só as que reprovaram
+   └─ revisar              o usuário aprova, edita ou descarta
+```
+
+**O passo MEDIR é o diferencial.** Gerar questão com um modelo de linguagem
+qualquer um faz; gerar e provar que a resposta certa não se entrega pelo
+comprimento nem pela plausibilidade, não. `build/medir_alternativas.py` (70
+linhas) e `build/medir_plausibilidade.py` (128 linhas) já fazem essa conta —
+hoje sobre HTML, o que a Fase 1 resolve. Depois disso eles rodam sobre dados e
+cabem num serviço.
+
+**Isto tira o produto do estático.** Hoje não há servidor nosso: HTML no
+GitHub Pages mais Supabase. Gerar exige chave de API, que não pode ir para o
+navegador — então entra uma função de servidor (Supabase Edge Function serve),
+que guarda a chave, limita uso e registra custo.
+
+### O que aprendi gerando questão à mão, e que a esteira precisa respeitar
+
+Três coisas custaram retrabalho neste projeto e viram requisito:
+
+- **Toda questão cita o trecho de origem.** Escrevi que o Big Ben "é um
+  relógio", vindo de uma folha de exercícios; o livro dizia "it's a bell!". Sem
+  a citação não há como conferir, e questão errada ensina errado.
+- **A revisão humana não é opcional.** Aprovar, editar ou descartar é parte do
+  fluxo, não um extra.
+- **Foto de celular falha.** Duas imagens chegaram com 0 byte neste projeto e
+  só se descobriu depois. A esteira precisa avisar na hora quando não
+  conseguiu ler o material.
+
 ---
 
 ## 4. Ordem do trabalho
@@ -190,10 +242,31 @@ texto exato somem.
 **Destrava:** um segundo desenvolvedor consegue trabalhar; jogo novo deixa de
 exigir passo de build novo.
 
-### Fase 4 — Modelo de dados `~4 dias, depende do cliente`
+### Fase 4 — A esteira de geração `~8 dias`
 
-Contas → perfis → progresso, com papéis. Só faz sentido com o cliente
-definido: turma e professor só existem no modelo B2B.
+A funcionalidade que define o produto. Depende da Fase 1 (o esquema é a saída
+do gerador) e da Fase 0 (é o único jeito de saber que o gerado presta).
+
+Em três pedaços, cada um entregável sozinho:
+
+1. **Colar texto → questões** `~3 dias`. Nada de OCR ainda. Função de servidor
+   com a chave, geração, os dois medidores no caminho, regeração do que
+   reprovar, e a tela de revisão. Já é útil: professor cola o resumo da aula e
+   sai com um jogo.
+2. **Foto e PDF** `~3 dias`. OCR, segmentação, e o aviso claro quando o
+   material não deu para ler.
+3. **Biblioteca do usuário** `~2 dias`. O material inserido e as questões
+   geradas ficam guardados, privados, com a procedência marcada.
+
+**Quebra:** nada do que existe. É adição.
+
+**Custo novo:** cada geração chama um modelo e custa. Precisa de limite por
+conta desde o primeiro dia, ou a conta chega antes do cliente.
+
+### Fase 5 — Modelo de dados `~4 dias, depende do cliente`
+
+Contas → perfis → progresso → biblioteca de material, com papéis. Turma e
+professor só existem no modelo B2B; a biblioteca, em todos.
 
 ---
 
@@ -205,20 +278,26 @@ definido: turma e professor só existem no modelo B2B.
   vale com cliente na mão.
 - **Aplicativo nativo.** O que existe já instala como PWA se for preciso; não
   há motivo antes de haver demanda.
-- **Mais conteúdo.** Enquanto 2.1 não se resolve, escrever mais questões
-  derivadas do livro aumenta o passivo, não o produto.
+- **Escrever mais questões derivadas à mão.** Com a esteira, isso deixa de ser
+  trabalho meu ou seu: passa a ser o que o produto faz. O banco próprio que
+  acompanha o produto é a exceção, e esse precisa ser originário.
+- **Gerar e publicar conteúdo de outros.** O que sai do material de um usuário
+  fica privado a ele. Virar biblioteca pública é outro produto, com outro
+  risco.
 
 ---
 
 ## 6. Decisões que só você pode tomar
 
-1. **Procedência do conteúdo.** É o gate. Antes de qualquer refatoração
-   longa, decidir se o banco atual vai junto, é reescrito, ou vem do cliente.
-2. **Quem paga.** Muda a Fase 4 inteira e a prioridade da ferramenta de
-   autoria.
+1. **Quem paga.** Muda a Fase 5 inteira e a ordem dentro da Fase 4.
+2. **O que acontece com as 220 questões derivadas.** Reescrever como próprias,
+   tirar do banco publicado, ou deixar como exemplo privado da sua conta. É
+   trabalho de conteúdo, não de código, e dá para fazer em paralelo.
 3. **O offline é promessa ou detalhe?** Se for promessa (escola sem internet),
-   ele restringe as escolhas de arquitetura daqui para frente — e vale a pena,
-   porque é diferencial.
+   restringe a arquitetura daqui para frente — e vale a pena, porque é
+   diferencial. Note que a geração **não** funciona offline: jogar sim, criar
+   não. Isso precisa estar claro na interface.
+4. **Quanto custa deixar gerar.** Limite por conta, desde o primeiro dia.
 
 ---
 
@@ -226,8 +305,14 @@ definido: turma e professor só existem no modelo B2B.
 
 Faria a **Fase 0 agora**, independentemente de tudo. Os testes que garantem as
 414 questões e a navegação hoje existem só na minha sessão de trabalho; quando
-ela acabar, some a única rede de segurança que este código tem. É meio dia de
-trabalho que protege tudo o mais.
+ela acabar, some a única rede de segurança que este código tem.
 
-Depois pararia e resolveria 2.1, porque é o que decide se as fases seguintes
-valem alguma coisa.
+Depois **Fase 1 e o pedaço 1 da Fase 4**, nessa ordem, pulando a unificação
+dos motores por enquanto. Motivo: "colar um texto e sair com um jogo jogável,
+com as questões medidas" é a menor coisa que já prova a tese do produto. Dá
+para mostrar a um professor e ver a cara dele. As Fases 2 e 3 são dívida
+técnica real, mas dívida que só cobra juros quando houver um segundo
+desenvolvedor — e nenhuma delas muda o que o cliente vê.
+
+O risco de inverter essa ordem é conhecido: construir três semanas de
+arquitetura bonita para uma tese que ninguém validou.
