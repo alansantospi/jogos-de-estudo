@@ -438,47 +438,78 @@ function pintarJogos(){
     e.textContent = feitas ? feitas + " de " + total + " missões" : "";
   });
 
-  /* Retomar: as três últimas partidas, para continuar com um toque. */
-  const ult = historico().slice(-3).reverse();
+  /* Retomar: as últimas partidas quando existem; senão, as missões que
+     ficaram começadas e não concluídas — que o progresso guarda desde
+     sempre, mesmo sem nenhuma partida registrada. */
+  let itens = historico().slice(-3).reverse().map(x => ({
+    j: x.j, m: x.m, nota: pct(x.a, x.n) + "% em " + dia(x.q)}));
+  if(!itens.length){
+    Object.keys(BASES).forEach(j => {
+      const ms = progressoDe(j).missions || {};
+      Object.entries(ms).forEach(([m, d]) => {
+        if(d && d.iniciada && !d.concluidas)
+          itens.push({j, m, nota: "começada, ainda não concluída"});
+      });
+    });
+    itens = itens.slice(0, 3);
+  }
   const c = document.getElementById("retomar");
-  c.innerHTML = ult.length
-    ? '<h3>Continuar de onde parou</h3><div class="retomar">' + ult.map(x =>
+  c.innerHTML = itens.length
+    ? '<h3>Continuar de onde parou</h3><div class="retomar">' + itens.map(x =>
         '<a class="retomar-item" href="' + PAGINA[x.j] + "#missao/" + encodeURIComponent(x.m) + '">'
         + '<b>' + esc(nomeMissao(x.j, x.m)) + "</b>"
-        + '<span>' + MATERIA[x.j] + " · " + pct(x.a, x.n) + "% em " + dia(x.q) + "</span></a>").join("")
+        + '<span>' + MATERIA[x.j] + " · " + x.nota + "</span></a>").join("")
       + "</div>"
     : "";
 }
 
 function pintarHistorico(){
-  const todas = noPeriodo(historico());
-  /* Resumo por matéria — é o que a professora olha. */
-  const porJogo = {};
-  todas.forEach(x => {
-    const d = porJogo[x.j] || (porJogo[x.j] = {a: 0, n: 0, partidas: 0});
-    d.a += x.a; d.n += x.n; d.partidas++;
-  });
-  const res = document.getElementById("resumo");
-  res.innerHTML = Object.keys(porJogo).length
-    ? Object.entries(porJogo).map(([j, d]) =>
-        '<div class="cartao-resumo ' + j + '"><b>' + MATERIA[j] + "</b>"
-        + '<span class="grande">' + pct(d.a, d.n) + "%</span>"
-        + "<span>" + d.partidas + (d.partidas === 1 ? " partida" : " partidas")
-        + " · " + d.a + "/" + d.n + " acertos</span></div>").join("")
-    : '<p class="vazio">Nenhuma partida neste período.</p>';
+  /* Duas fontes, com papéis diferentes:
+     - o PROGRESSO é o registro acumulado que os jogos sempre mantiveram:
+       missões concluídas, melhor acerto por missão, questões dominadas;
+     - o REGISTRO DE PARTIDAS só existe desde que o histórico foi criado, e
+       é o único que tem data.
+     Quem lia só o segundo mostrava tela vazia para quem tinha meses de
+     progresso — foi o que aconteceu depois de restaurar. */
+  const partidas = noPeriodo(historico());
+  const jogos = Object.keys(BASES);
 
-  /* Evolução: acerto por dia. Barras, não linha — são poucos pontos e dias
-     sem jogo não devem virar uma reta inventada entre dois pontos. */
+  /* ---- resumo por matéria: acumulado, sempre disponível ---- */
+  const res = document.getElementById("resumo");
+  const cartoes = jogos.map(j => {
+    const pr = progressoDe(j);
+    const ms = pr.missions || {};
+    const feitas = Object.values(ms).filter(m => m && m.concluidas).length;
+    const total = Object.keys(MISSOES[j] || {}).length;
+    const accs = Object.values(ms).map(m => m && m.melhorAcc).filter(a => a > 0);
+    const melhor = accs.length ? Math.round(accs.reduce((a, b) => a + b, 0) / accs.length) : null;
+    const noPer = partidas.filter(x => x.j === j);
+    if(!feitas && !accs.length && !noPer.length) return "";
+    const a = noPer.reduce((s, x) => s + x.a, 0), n = noPer.reduce((s, x) => s + x.n, 0);
+    return '<div class="cartao-resumo ' + j + '"><b>' + MATERIA[j] + "</b>"
+      + '<span class="grande">' + (melhor !== null ? melhor + "%" : "—") + "</span>"
+      + "<span>" + feitas + " de " + total + " missões</span>"
+      + "<span>" + (noPer.length
+          ? noPer.length + (noPer.length === 1 ? " partida" : " partidas") + " no período · " + pct(a, n) + "%"
+          : "sem partidas no período") + "</span></div>";
+  }).filter(Boolean);
+  res.innerHTML = cartoes.length ? cartoes.join("")
+    : '<p class="vazio">Nenhum progresso guardado para este aluno.</p>';
+
+  /* ---- evolução: só o registro de partidas tem data ---- */
   const porDia = {};
-  todas.forEach(x => {
+  partidas.forEach(x => {
     const k = new Date(x.q).toISOString().slice(0, 10);
     const d = porDia[k] || (porDia[k] = {a: 0, n: 0});
     d.a += x.a; d.n += x.n;
   });
   const dias = Object.keys(porDia).sort().slice(-14);
   const g = document.getElementById("grafico");
-  if(!dias.length){ g.innerHTML = '<p class="vazio">Ainda sem partidas para comparar.</p>'; }
-  else{
+  if(!dias.length){
+    g.innerHTML = '<p class="vazio">O gráfico compara partida com partida, e só '
+      + "conta as jogadas de agora em diante — o progresso antigo não guardava a data. "
+      + "Depois de algumas partidas ele aparece aqui.</p>";
+  }else{
     const larg = 100 / dias.length;
     g.innerHTML = '<div class="barras">' + dias.map(k => {
       const v = pct(porDia[k].a, porDia[k].n);
@@ -489,34 +520,49 @@ function pintarHistorico(){
     }).join("") + "</div>";
   }
 
-  /* O que ainda erra: por missão, onde o acerto está mais baixo. */
+  /* ---- o que ainda erra: do progresso, que é cumulativo ---- */
+  const fracos = [];
+  jogos.forEach(j => {
+    const ms = progressoDe(j).missions || {};
+    Object.entries(ms).forEach(([m, d]) => {
+      if(d && d.iniciada && d.melhorAcc > 0 && d.melhorAcc < 75)
+        fracos.push({j, m, acc: d.melhorAcc, fonte: "melhor acerto"});
+    });
+  });
+  /* As partidas do período afinam, quando existem. */
   const porMissao = {};
-  todas.forEach(x => {
+  partidas.forEach(x => {
     const k = x.j + "|" + x.m;
     const d = porMissao[k] || (porMissao[k] = {j: x.j, m: x.m, a: 0, n: 0});
     d.a += x.a; d.n += x.n;
   });
-  const fracos = Object.values(porMissao).filter(d => d.n >= 4 && pct(d.a, d.n) < 75)
-                   .sort((x, y) => pct(x.a, x.n) - pct(y.a, y.n)).slice(0, 6);
+  Object.values(porMissao).forEach(d => {
+    if(d.n < 4) return;
+    const p = pct(d.a, d.n);
+    const ja = fracos.find(f => f.j === d.j && f.m === d.m);
+    if(ja){ ja.acc = p; ja.fonte = "no período"; }
+    else if(p < 75) fracos.push({j: d.j, m: d.m, acc: p, fonte: "no período"});
+  });
+  fracos.sort((a, b) => a.acc - b.acc);
   const f = document.getElementById("fracos");
   f.innerHTML = fracos.length
-    ? fracos.map(d =>
+    ? fracos.slice(0, 6).map(d =>
         '<a class="fraco" href="' + PAGINA[d.j] + "#missao/" + encodeURIComponent(d.m) + '">'
-        + '<span class="fraco-pct">' + pct(d.a, d.n) + "%</span>"
+        + '<span class="fraco-pct">' + d.acc + "%</span>"
         + "<b>" + esc(nomeMissao(d.j, d.m)) + "</b>"
-        + "<span>" + MATERIA[d.j] + " · revisar</span></a>").join("")
-    : '<p class="vazio">Nada abaixo de 75% neste período. Bom sinal.</p>';
+        + "<span>" + MATERIA[d.j] + " · " + d.fonte + "</span></a>").join("")
+    : '<p class="vazio">Nada abaixo de 75%. Bom sinal.</p>';
 
-  /* Lista crua, a mais recente primeiro. */
+  /* ---- partidas: a lista crua ---- */
   const l = document.getElementById("partidas");
-  l.innerHTML = todas.length
+  l.innerHTML = partidas.length
     ? '<table class="tabela"><thead><tr><th>Quando</th><th>Matéria</th><th>Missão</th><th>Acerto</th></tr></thead><tbody>'
-      + todas.slice().reverse().slice(0, 40).map(x =>
+      + partidas.slice().reverse().slice(0, 40).map(x =>
         "<tr><td>" + dia(x.q) + "</td><td>" + MATERIA[x.j] + "</td><td>"
         + esc(nomeMissao(x.j, x.m)) + "</td><td>" + pct(x.a, x.n) + "% <small>("
         + x.a + "/" + x.n + ")</small></td></tr>").join("")
       + "</tbody></table>"
-    : "";
+    : '<p class="vazio">Nenhuma partida registrada neste período.</p>';
 }
 
 /* ---------- navegação por aba ---------- */

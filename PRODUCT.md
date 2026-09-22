@@ -73,9 +73,21 @@ não estiver ligada, tudo funciona igual, só sem passar de um aparelho para
 outro.
 
 **O histórico responde quatro perguntas**, que foi o que se pediu dele:
-está melhorando (acerto por dia), o que ainda erra (missões abaixo de 75%,
-com atalho para revisar), de onde retomar (últimas partidas) e o que mostrar
-para a professora (resumo por matéria e período, com botão de imprimir).
+está melhorando, o que ainda erra, de onde retomar e o que mostrar para a
+professora.
+
+Ele bebe de **duas fontes com papéis diferentes**, e confundir as duas já
+causou uma tela vazia para quem tinha meses de estudo:
+
+- o **progresso** é o registro acumulado que os jogos sempre mantiveram —
+  missões concluídas, melhor acerto por missão, questões dominadas. Não tem
+  data, mas existe desde o primeiro dia.
+- o **registro de partidas** só existe desde que o histórico foi criado, e é
+  o único que tem data.
+
+Resumo, "o que ainda erra" e "retomar" saem do progresso, e as partidas
+afinam quando existem. Só o gráfico de evolução depende das partidas — e,
+quando não há nenhuma, diz isso em vez de parecer que ninguém jogou.
 
 ## Escopo
 
