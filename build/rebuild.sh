@@ -11,6 +11,7 @@ cd "$(dirname "$0")/.."
 
 echo "== conteúdo"
 python3 build/esquema.py
+python3 build/documentos.py
 
 echo "== montagem"
 python3 build/montar.py
