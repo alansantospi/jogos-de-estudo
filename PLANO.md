@@ -236,10 +236,24 @@ para a missão por expressão regular sobre o texto da fase, em três
 reservatórios, mais geradores por regra. Desembaraçar é trabalho da Fase 2;
 tentar aqui misturaria as duas e tiraria a garantia de "saída idêntica".
 
-### Fase 2 — Unificar os dois motores `~5 dias`
+### Fase 2 — Unificar os dois motores  `parcial: conteúdo feito, código não`
 
 Normalizar os nomes divergentes, fundir num motor só, absorver o inglês como
 `geradores`.
+
+**Feito em 22/09/2026 — o lado do dado.** As 186 questões estáticas do inglês
+e os 49 verbos saíram para `conteudo/ingles-4ano.json`, no mesmo esquema dos
+outros. O mapeamento de questão para missão, que vivia como expressão regular
+sobre o texto da fase dentro de um `switch`, virou campo explícito — e foi
+conferido rodando os filtros antigos e comparando conjunto a conjunto: os
+quatro filtros puros dão exatamente o mesmo. Com isso são **499 questões como
+dado, 162 derivadas**, e os dois medidores de viés cobrem os quatro jogos.
+
+**Falta o lado do código**, que é onde mora o risco: fundir os dois motores
+num só e declarar os 12 geradores por regra no esquema. É o que muda o
+formato do progresso salvo e exige migração — e migração mal feita já custou
+o progresso da Anne uma vez. Não faço isso no mesmo passo em que mexi no
+conteúdo, para que cada um possa ser conferido sozinho.
 
 **Quebra:** o formato do progresso salvo muda. Precisa de migração — já
 fizemos uma (perfis) e o risco conhecido é perder o progresso da criança, que

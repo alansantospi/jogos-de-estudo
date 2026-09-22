@@ -1,0 +1,3954 @@
+{
+ "id": "ingles-4ano",
+ "materia": "Inglês",
+ "titulo": "Time Travel English",
+ "motor": "ingles",
+ "missoes": [
+  {
+   "id": "vocabulary",
+   "nome": "Arquivo de Vocabulário"
+  },
+  {
+   "id": "ing_add",
+   "nome": "Portal +ING"
+  },
+  {
+   "id": "ing_drop_e",
+   "nome": "Portal do E Perdido"
+  },
+  {
+   "id": "ing_double",
+   "nome": "Portal da Consoante Dupla"
+  },
+  {
+   "id": "be",
+   "nome": "Núcleo AM / IS / ARE"
+  },
+  {
+   "id": "affirmative",
+   "nome": "Linha das Frases Afirmativas"
+  },
+  {
+   "id": "negative_questions",
+   "nome": "Zona de Negativas e Perguntas"
+  },
+  {
+   "id": "contractions",
+   "nome": "Central das Contrações"
+  },
+  {
+   "id": "clock_routine",
+   "nome": "Estação do Relógio"
+  },
+  {
+   "id": "time_numbers",
+   "nome": "Relógio do Tempo"
+  },
+  {
+   "id": "world",
+   "nome": "Volta ao Mundo e ao Espaço"
+  },
+  {
+   "id": "listening",
+   "nome": "Sala de Escuta"
+  },
+  {
+   "id": "ticket",
+   "nome": "Terminal Temporal"
+  },
+  {
+   "id": "movement",
+   "nome": "Rota do Movimento"
+  },
+  {
+   "id": "daily_actions",
+   "nome": "Rotina Temporal"
+  },
+  {
+   "id": "results_actions",
+   "nome": "Arquivo de Ações Especiais"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "essential",
+   "nome": "Do Começo ao Fim",
+   "etapas": [
+    "vocabulary",
+    "ing_add",
+    "ing_drop_e",
+    "ing_double",
+    "be",
+    "affirmative",
+    "contractions",
+    "listening",
+    "negative_questions"
+   ]
+  },
+  {
+   "id": "verbs",
+   "nome": "Verbos e o -ING",
+   "etapas": [
+    "vocabulary",
+    "ing_add",
+    "ing_drop_e",
+    "ing_double",
+    "daily_actions",
+    "movement",
+    "results_actions"
+   ]
+  },
+  {
+   "id": "grammar",
+   "nome": "Montar as Frases",
+   "etapas": [
+    "be",
+    "affirmative",
+    "negative_questions",
+    "all"
+   ]
+  }
+ ],
+ "verbos": [
+  {
+   "base": "clean",
+   "ing": "cleaning",
+   "pt": "limpar",
+   "ic": "vassoura",
+   "rule": "add"
+  },
+  {
+   "base": "cook",
+   "ing": "cooking",
+   "pt": "cozinhar",
+   "ic": "comida",
+   "rule": "add"
+  },
+  {
+   "base": "eat",
+   "ing": "eating",
+   "pt": "comer",
+   "ic": "comida",
+   "rule": "add"
+  },
+  {
+   "base": "listen to music",
+   "ing": "listening to music",
+   "pt": "ouvir música",
+   "ic": "fone",
+   "rule": "add"
+  },
+  {
+   "base": "sleep",
+   "ing": "sleeping",
+   "pt": "dormir",
+   "ic": "dormir",
+   "rule": "add"
+  },
+  {
+   "base": "study",
+   "ing": "studying",
+   "pt": "estudar",
+   "ic": "livro",
+   "rule": "add"
+  },
+  {
+   "base": "talk",
+   "ing": "talking",
+   "pt": "conversar",
+   "ic": "fala",
+   "rule": "add"
+  },
+  {
+   "base": "use the computer",
+   "ing": "using the computer",
+   "pt": "usar o computador",
+   "ic": "computador",
+   "rule": "drop_e"
+  },
+  {
+   "base": "stand",
+   "ing": "standing",
+   "pt": "ficar em pé",
+   "ic": "pessoa",
+   "rule": "add"
+  },
+  {
+   "base": "ride",
+   "ing": "riding",
+   "pt": "andar de / montar",
+   "ic": "bicicleta",
+   "rule": "drop_e"
+  },
+  {
+   "base": "lift",
+   "ing": "lifting",
+   "pt": "levantar",
+   "ic": "movimento",
+   "rule": "add"
+  },
+  {
+   "base": "blow",
+   "ing": "blowing",
+   "pt": "soprar",
+   "ic": "vento",
+   "rule": "add"
+  },
+  {
+   "base": "cry",
+   "ing": "crying",
+   "pt": "chorar",
+   "ic": "triste",
+   "rule": "add"
+  },
+  {
+   "base": "play",
+   "ing": "playing",
+   "pt": "jogar / brincar",
+   "ic": "bola",
+   "rule": "add"
+  },
+  {
+   "base": "paint",
+   "ing": "painting",
+   "pt": "pintar",
+   "ic": "pincel",
+   "rule": "add"
+  },
+  {
+   "base": "discuss",
+   "ing": "discussing",
+   "pt": "discutir / debater",
+   "ic": "fala",
+   "rule": "add"
+  },
+  {
+   "base": "borrow",
+   "ing": "borrowing",
+   "pt": "pegar emprestado",
+   "ic": "mao",
+   "rule": "add"
+  },
+  {
+   "base": "buy",
+   "ing": "buying",
+   "pt": "comprar",
+   "ic": "sacola",
+   "rule": "add"
+  },
+  {
+   "base": "draw",
+   "ing": "drawing",
+   "pt": "desenhar",
+   "ic": "escrever",
+   "rule": "add"
+  },
+  {
+   "base": "help",
+   "ing": "helping",
+   "pt": "ajudar",
+   "ic": "mao",
+   "rule": "add"
+  },
+  {
+   "base": "watch",
+   "ing": "watching",
+   "pt": "assistir / observar",
+   "ic": "tv",
+   "rule": "add"
+  },
+  {
+   "base": "jump",
+   "ing": "jumping",
+   "pt": "pular",
+   "ic": "seta-cima",
+   "rule": "add"
+  },
+  {
+   "base": "hop",
+   "ing": "hopping",
+   "pt": "saltar / pular em um pé",
+   "ic": "animal",
+   "rule": "double"
+  },
+  {
+   "base": "drive",
+   "ing": "driving",
+   "pt": "dirigir",
+   "ic": "carro",
+   "rule": "drop_e"
+  },
+  {
+   "base": "fly",
+   "ing": "flying",
+   "pt": "voar",
+   "ic": "aviao",
+   "rule": "add"
+  },
+  {
+   "base": "sail",
+   "ing": "sailing",
+   "pt": "navegar / velejar",
+   "ic": "barco",
+   "rule": "add"
+  },
+  {
+   "base": "find",
+   "ing": "finding",
+   "pt": "encontrar",
+   "ic": "lupa",
+   "rule": "add"
+  },
+  {
+   "base": "break",
+   "ing": "breaking",
+   "pt": "quebrar",
+   "ic": "quebrado",
+   "rule": "add"
+  },
+  {
+   "base": "win",
+   "ing": "winning",
+   "pt": "vencer / ganhar",
+   "ic": "trofeu",
+   "rule": "double"
+  },
+  {
+   "base": "lose",
+   "ing": "losing",
+   "pt": "perder",
+   "ic": "triste",
+   "rule": "drop_e"
+  },
+  {
+   "base": "run",
+   "ing": "running",
+   "pt": "correr",
+   "ic": "movimento",
+   "rule": "double"
+  },
+  {
+   "base": "swim",
+   "ing": "swimming",
+   "pt": "nadar",
+   "ic": "movimento",
+   "rule": "double"
+  },
+  {
+   "base": "sit",
+   "ing": "sitting",
+   "pt": "sentar",
+   "ic": "cadeira",
+   "rule": "double"
+  },
+  {
+   "base": "stop",
+   "ing": "stopping",
+   "pt": "parar",
+   "ic": "parar",
+   "rule": "double"
+  },
+  {
+   "base": "write",
+   "ing": "writing",
+   "pt": "escrever",
+   "ic": "escrever",
+   "rule": "drop_e"
+  },
+  {
+   "base": "dance",
+   "ing": "dancing",
+   "pt": "dançar",
+   "ic": "movimento",
+   "rule": "drop_e"
+  },
+  {
+   "base": "read a book",
+   "ing": "reading a book",
+   "pt": "ler um livro",
+   "ic": "livro",
+   "rule": "add"
+  },
+  {
+   "base": "work",
+   "ing": "working",
+   "pt": "trabalhar",
+   "ic": "trabalho",
+   "rule": "add"
+  },
+  {
+   "base": "drink",
+   "ing": "drinking",
+   "pt": "beber",
+   "ic": "bebida",
+   "rule": "add"
+  },
+  {
+   "base": "take a shower",
+   "ing": "taking a shower",
+   "pt": "tomar banho",
+   "ic": "chuveiro",
+   "rule": "drop_e"
+  },
+  {
+   "base": "play video games",
+   "ing": "playing video games",
+   "pt": "jogar videogame",
+   "ic": "controle",
+   "rule": "add"
+  },
+  {
+   "base": "ride a bike",
+   "ing": "riding a bike",
+   "pt": "andar de bicicleta",
+   "ic": "bicicleta",
+   "rule": "drop_e"
+  },
+  {
+   "base": "play soccer",
+   "ing": "playing soccer",
+   "pt": "jogar futebol",
+   "ic": "bola",
+   "rule": "add"
+  },
+  {
+   "base": "get up",
+   "ing": "getting up",
+   "pt": "levantar da cama",
+   "ic": "cama",
+   "rule": "double"
+  },
+  {
+   "base": "have breakfast",
+   "ing": "having breakfast",
+   "pt": "tomar café da manhã",
+   "ic": "comida",
+   "rule": "drop_e"
+  },
+  {
+   "base": "have lunch",
+   "ing": "having lunch",
+   "pt": "almoçar",
+   "ic": "comida",
+   "rule": "drop_e"
+  },
+  {
+   "base": "have dinner",
+   "ing": "having dinner",
+   "pt": "jantar",
+   "ic": "comida",
+   "rule": "drop_e"
+  },
+  {
+   "base": "do homework",
+   "ing": "doing homework",
+   "pt": "fazer a lição de casa",
+   "ic": "escrever",
+   "rule": "add"
+  },
+  {
+   "base": "go to bed",
+   "ing": "going to bed",
+   "pt": "ir dormir",
+   "ic": "dormir",
+   "rule": "add"
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "livro",
+   "enunciado": "Complete: She ___ reading a book.",
+   "fase": "FASE 1 — PRESENT CONTINUOUS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Use am, is ou are.",
+   "certa": "is",
+   "erradas": [
+    "am",
+    "are",
+    "be"
+   ],
+   "explicacao": "Com SHE usamos IS.",
+   "explicacaoErro": "A resposta correta é IS: She is reading."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "bola",
+   "enunciado": "Qual frase está correta?",
+   "fase": "FASE 1 — PRESENT CONTINUOUS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "They are playing.",
+   "erradas": [
+    "They is playing.",
+    "They playing.",
+    "They are play."
+   ],
+   "explicacao": "THEY + ARE + VERB-ING.",
+   "explicacaoErro": "A estrutura correta é: They are playing."
+  },
+  {
+   "tipo": "vf",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "“I are studying English.” está correto.",
+   "fase": "FASE 1 — VERDADEIRO OU FALSO",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Certo! Com I usamos AM.",
+   "explicacaoErro": "É falso. O correto é: I am studying English."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "foguete",
+   "enunciado": "Complete: We ___ traveling in time.",
+   "fase": "FASE 1 — COMPLETE A FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "are"
+   ],
+   "exemplo": "Digite uma palavra...",
+   "explicacao": "Perfeito! We ARE traveling.",
+   "explicacaoErro": "A palavra correta é ARE."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "xis",
+   "enunciado": "Qual é a negativa correta de “He is running”?",
+   "fase": "FASE 1 — NEGATIVE MODE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "He isn't running.",
+   "erradas": [
+    "He not running.",
+    "He aren't running.",
+    "He doesn't running."
+   ],
+   "explicacao": "Correto: He isn't running.",
+   "explicacaoErro": "A forma correta é He isn't running."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "pergunta",
+   "enunciado": "Transforme em pergunta: She is dancing.",
+   "fase": "FASE 1 — QUESTION MODE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "is she dancing",
+    "is she dancing?"
+   ],
+   "exemplo": "Digite a pergunta...",
+   "explicacao": "Excelente! Is she dancing?",
+   "explicacaoErro": "A resposta esperada é: Is she dancing?"
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Organize as palavras para formar uma frase correta.",
+   "fase": "FASE 2 — ORGANIZE A FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "playing",
+    "They",
+    "soccer",
+    "are"
+   ],
+   "sequencia": [
+    "They",
+    "are",
+    "playing",
+    "soccer"
+   ],
+   "explicacao": "Muito bem! They are playing soccer.",
+   "explicacaoErro": "A ordem correta é: They are playing soccer."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "Qual verbo significa “nadar”?",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "swim",
+   "erradas": [
+    "dance",
+    "write",
+    "sleep"
+   ],
+   "explicacao": "SWIM = nadar.",
+   "explicacaoErro": "A resposta correta é SWIM."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "Qual é a forma correta de RUN + ING?",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "running",
+   "erradas": [
+    "runing",
+    "runeing",
+    "runinng"
+   ],
+   "explicacao": "RUN → RUNNING.",
+   "explicacaoErro": "A forma correta é RUNNING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "escrever",
+   "enunciado": "The girl is ___ a letter.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "A garota está escrevendo uma carta.",
+   "certa": "writing",
+   "erradas": [
+    "reading",
+    "drinking",
+    "running"
+   ],
+   "explicacao": "WRITE → WRITING.",
+   "explicacaoErro": "Escrever = WRITE. No Present Continuous: WRITING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "vassoura",
+   "enunciado": "Qual verbo significa “limpar”?",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "clean",
+   "erradas": [
+    "cook",
+    "talk",
+    "sleep"
+   ],
+   "explicacao": "CLEAN = limpar.",
+   "explicacaoErro": "A resposta correta é CLEAN."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "comida",
+   "enunciado": "Complete: My mother is ___ dinner.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "cooking",
+   "erradas": [
+    "cleaning",
+    "talking",
+    "sleeping"
+   ],
+   "explicacao": "COOK → COOKING.",
+   "explicacaoErro": "Cozinhar = COOK. No Present Continuous: COOKING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "comida",
+   "enunciado": "Complete: The boy is ___ pizza.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "eating",
+   "erradas": [
+    "studying",
+    "cleaning",
+    "talking"
+   ],
+   "explicacao": "EAT → EATING.",
+   "explicacaoErro": "Comer = EAT. A forma correta é EATING."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Complete: She is ______ to music.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "listening",
+    "listening to music"
+   ],
+   "exemplo": "Digite a palavra...",
+   "explicacao": "Muito bem! She is listening to music.",
+   "explicacaoErro": "A forma correta é LISTENING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "dormir",
+   "enunciado": "Qual frase significa “Ele está dormindo”?",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "He is sleeping.",
+   "erradas": [
+    "He is studying.",
+    "He is talking.",
+    "He is cleaning."
+   ],
+   "explicacao": "SLEEP → SLEEPING.",
+   "explicacaoErro": "Dormir = SLEEP. O correto é He is sleeping."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "livro",
+   "enunciado": "Qual frase significa “Nós estamos estudando”?",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "We are studying.",
+   "erradas": [
+    "We are talking.",
+    "We are cooking.",
+    "We are sleeping."
+   ],
+   "explicacao": "STUDY → STUDYING.",
+   "explicacaoErro": "Estudar = STUDY. O correto é We are studying."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fala",
+   "enunciado": "Complete: They are ___ in the classroom.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "talking",
+   "erradas": [
+    "using",
+    "cooking",
+    "sleeping"
+   ],
+   "explicacao": "TALK → TALKING.",
+   "explicacaoErro": "Conversar = TALK. A forma correta é TALKING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "computador",
+   "enunciado": "Complete: I am ___ the computer.",
+   "fase": "FASE 3 — ACTIONS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "using",
+   "erradas": [
+    "use",
+    "useing",
+    "used"
+   ],
+   "explicacao": "USE → USING.",
+   "explicacaoErro": "A forma correta é USING."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [],
+   "icone": "elos",
+   "enunciado": "Associe cada verbo ao significado em português.",
+   "fase": "FASE 4 — ASSOCIAÇÃO DE ITENS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "pares": [
+    [
+     "clean",
+     "limpar"
+    ],
+    [
+     "cook",
+     "cozinhar"
+    ],
+    [
+     "sleep",
+     "dormir"
+    ],
+    [
+     "talk",
+     "conversar"
+    ]
+   ]
+  },
+  {
+   "tipo": "memoria",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Encontre os pares: verbo em inglês + significado em português.",
+   "fase": "FASE 5 — JOGO DA MEMÓRIA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "extra": {
+    "pairs": [
+     [
+      "eat",
+      "comer"
+     ],
+     [
+      "study",
+      "estudar"
+     ],
+     [
+      "cook",
+      "cozinhar"
+     ],
+     [
+      "sleep",
+      "dormir"
+     ]
+    ]
+   }
+  },
+  {
+   "tipo": "cruzada",
+   "missoes": [],
+   "icone": "escrever",
+   "enunciado": "Complete as palavras cruzadas com verbos de ações.",
+   "fase": "FASE 6 — PALAVRAS CRUZADAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "extra": {
+    "answers": {
+     "clean": "limpar",
+     "cook": "cozinhar",
+     "sleep": "dormir"
+    }
+   }
+  },
+  {
+   "tipo": "cacapalavras",
+   "missoes": [],
+   "icone": "lupa",
+   "enunciado": "Encontre 4 ações escondidas: EAT, TALK, COOK e SLEEP.",
+   "fase": "FASE 7 — CAÇA-PALAVRAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha a ação correta.",
+   "fase": "FASE 8 — LISTEN AND CHOOSE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "audio": "She is cooking dinner.",
+   "certa": "She is cooking.",
+   "erradas": [
+    "She is cleaning.",
+    "She is sleeping.",
+    "She is studying."
+   ],
+   "explicacao": "Você ouviu corretamente: She is cooking dinner.",
+   "explicacaoErro": "O áudio diz: She is cooking dinner."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha a frase correta.",
+   "fase": "FASE 8 — LISTEN AND CHOOSE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "audio": "They are studying English.",
+   "certa": "They are studying English.",
+   "erradas": [
+    "They are talking.",
+    "They are using the computer.",
+    "They are sleeping."
+   ],
+   "explicacao": "Correto! They are studying English.",
+   "explicacaoErro": "O áudio diz: They are studying English."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha a ação correta.",
+   "fase": "FASE 8 — LISTEN AND CHOOSE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "audio": "He is using the computer.",
+   "certa": "He is using the computer.",
+   "erradas": [
+    "He is eating.",
+    "He is cleaning.",
+    "He is cooking."
+   ],
+   "explicacao": "Muito bem! He is using the computer.",
+   "explicacaoErro": "O áudio diz: He is using the computer."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha a frase correta.",
+   "fase": "FASE 8 — LISTEN AND CHOOSE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "audio": "She is listening to music.",
+   "certa": "She is listening to music.",
+   "erradas": [
+    "She is talking.",
+    "She is reading.",
+    "She is sleeping."
+   ],
+   "explicacao": "Correto! She is listening to music.",
+   "explicacaoErro": "O áudio diz: She is listening to music."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "ticket"
+   ],
+   "icone": "bilhete",
+   "enunciado": "What is the seat number?",
+   "fase": "FASE 9 — TICKET INFORMATION",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "B12",
+   "erradas": [
+    "7",
+    "8:30 p.m.",
+    "$25.00"
+   ],
+   "explicacao": "SEAT = assento. O assento é B12.",
+   "explicacaoErro": "O assento é B12."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "ticket"
+   ],
+   "icone": "bilhete",
+   "enunciado": "How much is the ticket?",
+   "fase": "FASE 9 — TICKET INFORMATION",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "$25.00",
+   "erradas": [
+    "October 25th",
+    "London",
+    "Gate 7"
+   ],
+   "explicacao": "PRICE = preço. O ingresso custa $25.00.",
+   "explicacaoErro": "O preço do ticket é $25.00."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "ticket"
+   ],
+   "icone": "bilhete",
+   "enunciado": "What time is the departure?",
+   "fase": "FASE 9 — TICKET INFORMATION",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "8:30 p.m.",
+   "erradas": [
+    "B12",
+    "October 25th",
+    "London"
+   ],
+   "explicacao": "TIME = horário: 8:30 p.m.",
+   "explicacaoErro": "O horário é 8:30 p.m."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "ticket"
+   ],
+   "icone": "bilhete",
+   "enunciado": "What is the destination?",
+   "fase": "FASE 9 — TICKET INFORMATION",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "London — 1888",
+   "erradas": [
+    "Gate 7",
+    "B12",
+    "October 25th"
+   ],
+   "explicacao": "DESTINATION = destino: London — 1888.",
+   "explicacaoErro": "O destino é London — 1888."
+  },
+  {
+   "tipo": "vf",
+   "missoes": [
+    "ticket"
+   ],
+   "icone": "porta",
+   "enunciado": "No ticket, GATE significa assento.",
+   "fase": "FASE 9 — TICKET INFORMATION",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Certo! GATE = portão; SEAT = assento.",
+   "explicacaoErro": "É falso. GATE significa portão."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "O que significa CLEAN?",
+   "fase": "FASE 10 — SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "limpar",
+   "erradas": [
+    "cozinhar",
+    "estudar",
+    "conversar"
+   ],
+   "explicacao": "CLEAN = limpar.",
+   "explicacaoErro": "CLEAN significa limpar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "comida",
+   "enunciado": "O que significa COOK?",
+   "fase": "FASE 10 — SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "cozinhar",
+   "erradas": [
+    "dormir",
+    "comer",
+    "usar o computador"
+   ],
+   "explicacao": "COOK = cozinhar.",
+   "explicacaoErro": "COOK significa cozinhar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fone",
+   "enunciado": "Qual expressão significa “ouvir música”?",
+   "fase": "FASE 10 — SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "listen to music",
+   "erradas": [
+    "talk",
+    "use the computer",
+    "study"
+   ],
+   "explicacao": "LISTEN TO MUSIC = ouvir música.",
+   "explicacaoErro": "A expressão correta é LISTEN TO MUSIC."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "computador",
+   "enunciado": "Qual expressão significa “usar o computador”?",
+   "fase": "FASE 10 — SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "use the computer",
+   "erradas": [
+    "listen to music",
+    "clean",
+    "cook"
+   ],
+   "explicacao": "USE THE COMPUTER = usar o computador.",
+   "explicacaoErro": "A expressão correta é USE THE COMPUTER."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fala",
+   "enunciado": "Qual verbo significa “conversar”?",
+   "fase": "FASE 10 — SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "talk",
+   "erradas": [
+    "eat",
+    "sleep",
+    "clean"
+   ],
+   "explicacao": "TALK = conversar.",
+   "explicacaoErro": "TALK significa conversar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "vassoura",
+   "enunciado": "The room is dirty. She is ______.",
+   "fase": "FASE 10 — CONTEXTO",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "cleaning",
+   "erradas": [
+    "cooking",
+    "sleeping",
+    "studying"
+   ],
+   "explicacao": "Se o quarto está sujo, ela está CLEANING.",
+   "explicacaoErro": "A ação coerente é CLEANING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "livro",
+   "enunciado": "He has a test tomorrow. He is ______.",
+   "fase": "FASE 10 — CONTEXTO",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "studying",
+   "erradas": [
+    "talking",
+    "eating",
+    "sleeping"
+   ],
+   "explicacao": "Para uma prova, ele está STUDYING.",
+   "explicacaoErro": "A ação mais adequada é STUDYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "dormir",
+   "enunciado": "It is midnight. The baby is ______.",
+   "fase": "FASE 10 — CONTEXTO",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "sleeping",
+   "erradas": [
+    "cooking",
+    "talking",
+    "cleaning"
+   ],
+   "explicacao": "À meia-noite, o bebê está SLEEPING.",
+   "explicacaoErro": "A ação coerente é SLEEPING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "letras",
+   "enunciado": "Qual é a forma correta de CLEAN no Present Continuous?",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "cleaning",
+   "erradas": [
+    "cleaninng",
+    "cleanning",
+    "clean"
+   ],
+   "explicacao": "CLEAN → CLEANING.",
+   "explicacaoErro": "A forma correta é CLEANING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "comida",
+   "enunciado": "COOK vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "cooking",
+   "erradas": [
+    "cookking",
+    "cookeing",
+    "cook"
+   ],
+   "explicacao": "COOK → COOKING.",
+   "explicacaoErro": "A forma correta é COOKING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "comida",
+   "enunciado": "EAT vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "eating",
+   "erradas": [
+    "eatting",
+    "eatin",
+    "eat"
+   ],
+   "explicacao": "EAT → EATING.",
+   "explicacaoErro": "A forma correta é EATING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "livro",
+   "enunciado": "STUDY vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "studying",
+   "erradas": [
+    "studyng",
+    "studyying",
+    "studing"
+   ],
+   "explicacao": "STUDY → STUDYING.",
+   "explicacaoErro": "A forma correta é STUDYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fala",
+   "enunciado": "TALK vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "talking",
+   "erradas": [
+    "talkking",
+    "talkeing",
+    "talk"
+   ],
+   "explicacao": "TALK → TALKING.",
+   "explicacaoErro": "A forma correta é TALKING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "computador",
+   "enunciado": "USE vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "using",
+   "erradas": [
+    "useing",
+    "ussing",
+    "use"
+   ],
+   "explicacao": "USE → USING. Tiramos o E final.",
+   "explicacaoErro": "A forma correta é USING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "RUN vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "running",
+   "erradas": [
+    "runing",
+    "runeing",
+    "runnning"
+   ],
+   "explicacao": "RUN → RUNNING. Dobramos o N.",
+   "explicacaoErro": "A forma correta é RUNNING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "SWIM vira:",
+   "fase": "FASE 11 — BASE → ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "swimming",
+   "erradas": [
+    "swiming",
+    "swimmming",
+    "swimingg"
+   ],
+   "explicacao": "SWIM → SWIMMING. Dobramos o M.",
+   "explicacaoErro": "A forma correta é SWIMMING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoa",
+   "enunciado": "I ___ studying.",
+   "fase": "FASE 12 — AM / IS / ARE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "am",
+   "erradas": [
+    "is",
+    "are",
+    "be"
+   ],
+   "explicacao": "I + AM.",
+   "explicacaoErro": "Com I usamos AM."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoa",
+   "enunciado": "She ___ cooking.",
+   "fase": "FASE 12 — AM / IS / ARE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "is",
+   "erradas": [
+    "am",
+    "are",
+    "be"
+   ],
+   "explicacao": "SHE + IS.",
+   "explicacaoErro": "Com SHE usamos IS."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoas",
+   "enunciado": "They ___ talking.",
+   "fase": "FASE 12 — AM / IS / ARE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "are",
+   "erradas": [
+    "am",
+    "is",
+    "be"
+   ],
+   "explicacao": "THEY + ARE.",
+   "explicacaoErro": "Com THEY usamos ARE."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoa",
+   "enunciado": "He ___ using the computer.",
+   "fase": "FASE 12 — AM / IS / ARE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "is",
+   "erradas": [
+    "am",
+    "are",
+    "be"
+   ],
+   "explicacao": "HE + IS.",
+   "explicacaoErro": "Com HE usamos IS."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoas",
+   "enunciado": "We ___ listening to music.",
+   "fase": "FASE 12 — AM / IS / ARE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "are",
+   "erradas": [
+    "am",
+    "is",
+    "be"
+   ],
+   "explicacao": "WE + ARE.",
+   "explicacaoErro": "Com WE usamos ARE."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "xis",
+   "enunciado": "Qual é a negativa correta?",
+   "fase": "FASE 13 — NEGATIVAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "She is studying.",
+   "certa": "She isn't studying.",
+   "erradas": [
+    "She aren't studying.",
+    "She not studying.",
+    "She doesn't studying."
+   ],
+   "explicacao": "She isn't studying.",
+   "explicacaoErro": "A forma correta é She isn't studying."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "xis",
+   "enunciado": "Qual é a negativa correta?",
+   "fase": "FASE 13 — NEGATIVAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "They are cooking.",
+   "certa": "They aren't cooking.",
+   "erradas": [
+    "They isn't cooking.",
+    "They not cooking.",
+    "They don't cooking."
+   ],
+   "explicacao": "They aren't cooking.",
+   "explicacaoErro": "A forma correta é They aren't cooking."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "xis",
+   "enunciado": "Qual é a negativa correta?",
+   "fase": "FASE 13 — NEGATIVAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "I am sleeping.",
+   "certa": "I am not sleeping.",
+   "erradas": [
+    "I isn't sleeping.",
+    "I aren't sleeping.",
+    "I don't sleeping."
+   ],
+   "explicacao": "I am not sleeping.",
+   "explicacaoErro": "A forma correta é I am not sleeping."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "pergunta",
+   "enunciado": "Monte a pergunta correta.",
+   "fase": "FASE 14 — PERGUNTAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "she",
+    "Is",
+    "cooking"
+   ],
+   "sequencia": [
+    "Is",
+    "she",
+    "cooking"
+   ],
+   "explicacao": "Is she cooking?",
+   "explicacaoErro": "A ordem correta é: Is she cooking?"
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "pergunta",
+   "enunciado": "Monte a pergunta correta.",
+   "fase": "FASE 14 — PERGUNTAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "they",
+    "Are",
+    "studying"
+   ],
+   "sequencia": [
+    "Are",
+    "they",
+    "studying"
+   ],
+   "explicacao": "Are they studying?",
+   "explicacaoErro": "A ordem correta é: Are they studying?"
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "negative_questions"
+   ],
+   "icone": "pergunta",
+   "enunciado": "Monte a pergunta correta.",
+   "fase": "FASE 14 — PERGUNTAS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "he",
+    "Is",
+    "sleeping"
+   ],
+   "sequencia": [
+    "Is",
+    "he",
+    "sleeping"
+   ],
+   "explicacao": "Is he sleeping?",
+   "explicacaoErro": "A ordem correta é: Is he sleeping?"
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "ciclo",
+   "enunciado": "Escolha a tradução correta de “She is cleaning.”",
+   "fase": "FASE 15 — REVISÃO ESPAÇADA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "Ela está limpando.",
+   "erradas": [
+    "Ela está cozinhando.",
+    "Ela está estudando.",
+    "Ela está dormindo."
+   ],
+   "explicacao": "She is cleaning = Ela está limpando.",
+   "explicacaoErro": "A tradução correta é Ela está limpando."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "ciclo",
+   "enunciado": "Escolha a frase correta para “Eles estão ouvindo música.”",
+   "fase": "FASE 15 — REVISÃO ESPAÇADA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "They are listening to music.",
+   "erradas": [
+    "They is listening to music.",
+    "They are listen to music.",
+    "They listening to music."
+   ],
+   "explicacao": "Perfeito!",
+   "explicacaoErro": "A correta é They are listening to music."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "ciclo",
+   "enunciado": "Qual opção está completamente correta?",
+   "fase": "FASE 15 — REVISÃO ESPAÇADA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "He is using the computer.",
+   "erradas": [
+    "He is useing the computer.",
+    "He are using the computer.",
+    "He using the computer."
+   ],
+   "explicacao": "He is using the computer.",
+   "explicacaoErro": "A correta é He is using the computer."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “cozinhar”",
+   "fase": "FASE 15 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "cook"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "COOK = cozinhar.",
+   "explicacaoErro": "A resposta é COOK."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “dormir”",
+   "fase": "FASE 15 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "sleep"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "SLEEP = dormir.",
+   "explicacaoErro": "A resposta é SLEEP."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “conversar”",
+   "fase": "FASE 15 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "talk"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "TALK = conversar.",
+   "explicacaoErro": "A resposta é TALK."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite a forma com -ING de USE.",
+   "fase": "FASE 15 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "using"
+   ],
+   "exemplo": "Digite a forma correta...",
+   "explicacao": "USE → USING.",
+   "explicacaoErro": "A resposta é USING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoa",
+   "enunciado": "O que significa STAND?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "ficar em pé",
+   "erradas": [
+    "sentar",
+    "pular",
+    "correr"
+   ],
+   "explicacao": "STAND = ficar em pé.",
+   "explicacaoErro": "STAND significa ficar em pé."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "O que significa LIFT?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "levantar",
+   "erradas": [
+    "quebrar",
+    "perder",
+    "voar"
+   ],
+   "explicacao": "LIFT = levantar.",
+   "explicacaoErro": "LIFT significa levantar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "vento",
+   "enunciado": "O que significa BLOW?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "soprar",
+   "erradas": [
+    "chorar",
+    "desenhar",
+    "ajudar"
+   ],
+   "explicacao": "BLOW = soprar.",
+   "explicacaoErro": "BLOW significa soprar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "triste",
+   "enunciado": "O que significa CRY?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "chorar",
+   "erradas": [
+    "comprar",
+    "navegar",
+    "assistir"
+   ],
+   "explicacao": "CRY = chorar.",
+   "explicacaoErro": "CRY significa chorar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pincel",
+   "enunciado": "O que significa PAINT?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "pintar",
+   "erradas": [
+    "desenhar",
+    "dirigir",
+    "discutir"
+   ],
+   "explicacao": "PAINT = pintar.",
+   "explicacaoErro": "PAINT significa pintar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fala",
+   "enunciado": "O que significa DISCUSS?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "debater / discutir",
+   "erradas": [
+    "dormir",
+    "emprestar",
+    "comprar"
+   ],
+   "explicacao": "DISCUSS = discutir / debater.",
+   "explicacaoErro": "DISCUSS significa discutir / debater."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "mao",
+   "enunciado": "O que significa BORROW?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "pegar emprestado",
+   "erradas": [
+    "comprar",
+    "dar",
+    "quebrar"
+   ],
+   "explicacao": "BORROW = pegar emprestado.",
+   "explicacaoErro": "BORROW significa pegar emprestado."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "sacola",
+   "enunciado": "O que significa BUY?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "comprar",
+   "erradas": [
+    "vender",
+    "emprestar",
+    "encontrar"
+   ],
+   "explicacao": "BUY = comprar.",
+   "explicacaoErro": "BUY significa comprar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "escrever",
+   "enunciado": "O que significa DRAW?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "desenhar",
+   "erradas": [
+    "pintar",
+    "assistir",
+    "voar"
+   ],
+   "explicacao": "DRAW = desenhar.",
+   "explicacaoErro": "DRAW significa desenhar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "tv",
+   "enunciado": "O que significa WATCH?",
+   "fase": "FASE 16 — SIGNIFICADOS NOVOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "olhar / assistir",
+   "erradas": [
+    "quebrar",
+    "levantar",
+    "conversar"
+   ],
+   "explicacao": "WATCH = assistir / observar.",
+   "explicacaoErro": "WATCH significa assistir / observar."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pessoa",
+   "enunciado": "STAND vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "standing",
+   "erradas": [
+    "standding",
+    "standeing",
+    "stand"
+   ],
+   "explicacao": "STAND → STANDING.",
+   "explicacaoErro": "A forma correta é STANDING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "movimento",
+   "enunciado": "LIFT vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "lifting",
+   "erradas": [
+    "liftting",
+    "lifteing",
+    "lift"
+   ],
+   "explicacao": "LIFT → LIFTING.",
+   "explicacaoErro": "A forma correta é LIFTING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "vento",
+   "enunciado": "BLOW vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "blowing",
+   "erradas": [
+    "blowwing",
+    "bloweing",
+    "blow"
+   ],
+   "explicacao": "BLOW → BLOWING.",
+   "explicacaoErro": "A forma correta é BLOWING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "triste",
+   "enunciado": "CRY vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "crying",
+   "erradas": [
+    "criying",
+    "cryying",
+    "crieing"
+   ],
+   "explicacao": "CRY → CRYING.",
+   "explicacaoErro": "A forma correta é CRYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "bola",
+   "enunciado": "PLAY vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "playing",
+   "erradas": [
+    "plaing",
+    "playying",
+    "playeing"
+   ],
+   "explicacao": "PLAY → PLAYING.",
+   "explicacaoErro": "A forma correta é PLAYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "pincel",
+   "enunciado": "PAINT vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "painting",
+   "erradas": [
+    "paintting",
+    "painteing",
+    "paint"
+   ],
+   "explicacao": "PAINT → PAINTING.",
+   "explicacaoErro": "A forma correta é PAINTING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "fala",
+   "enunciado": "DISCUSS vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "discussing",
+   "erradas": [
+    "discusing",
+    "discussying",
+    "discusseing"
+   ],
+   "explicacao": "DISCUSS → DISCUSSING.",
+   "explicacaoErro": "A forma correta é DISCUSSING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "mao",
+   "enunciado": "BORROW vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "borrowing",
+   "erradas": [
+    "borrowwing",
+    "borroweing",
+    "borrow"
+   ],
+   "explicacao": "BORROW → BORROWING.",
+   "explicacaoErro": "A forma correta é BORROWING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "sacola",
+   "enunciado": "BUY vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "buying",
+   "erradas": [
+    "buyying",
+    "buing",
+    "buyeing"
+   ],
+   "explicacao": "BUY → BUYING.",
+   "explicacaoErro": "A forma correta é BUYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "escrever",
+   "enunciado": "DRAW vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "drawing",
+   "erradas": [
+    "drawwing",
+    "draing",
+    "draweing"
+   ],
+   "explicacao": "DRAW → DRAWING.",
+   "explicacaoErro": "A forma correta é DRAWING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "mao",
+   "enunciado": "HELP vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "helping",
+   "erradas": [
+    "helpping",
+    "helpeing",
+    "help"
+   ],
+   "explicacao": "HELP → HELPING.",
+   "explicacaoErro": "A forma correta é HELPING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "tv",
+   "enunciado": "WATCH vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "watching",
+   "erradas": [
+    "watchhing",
+    "watcheing",
+    "watch"
+   ],
+   "explicacao": "WATCH → WATCHING.",
+   "explicacaoErro": "A forma correta é WATCHING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "seta-cima",
+   "enunciado": "JUMP vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "jumping",
+   "erradas": [
+    "jumpping",
+    "jumpeing",
+    "jump"
+   ],
+   "explicacao": "JUMP → JUMPING.",
+   "explicacaoErro": "A forma correta é JUMPING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "aviao",
+   "enunciado": "FLY vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "flying",
+   "erradas": [
+    "flyying",
+    "flieing",
+    "flyng"
+   ],
+   "explicacao": "FLY → FLYING.",
+   "explicacaoErro": "A forma correta é FLYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "barco",
+   "enunciado": "SAIL vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "sailing",
+   "erradas": [
+    "sailling",
+    "saileing",
+    "sail"
+   ],
+   "explicacao": "SAIL → SAILING.",
+   "explicacaoErro": "A forma correta é SAILING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "lupa",
+   "enunciado": "FIND vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "finding",
+   "erradas": [
+    "findding",
+    "findeing",
+    "find"
+   ],
+   "explicacao": "FIND → FINDING.",
+   "explicacaoErro": "A forma correta é FINDING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "quebrado",
+   "enunciado": "BREAK vira:",
+   "fase": "FASE 17 — REGRA 1: +ING",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "breaking",
+   "erradas": [
+    "breakking",
+    "breakeing",
+    "break"
+   ],
+   "explicacao": "BREAK → BREAKING.",
+   "explicacaoErro": "A forma correta é BREAKING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "bicicleta",
+   "enunciado": "RIDE vira:",
+   "fase": "FASE 18 — REGRA 2: TIRA O E",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "riding",
+   "erradas": [
+    "rideing",
+    "ridding",
+    "rideng"
+   ],
+   "explicacao": "RIDE → RIDING.",
+   "explicacaoErro": "Tiramos o E: RIDING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "carro",
+   "enunciado": "DRIVE vira:",
+   "fase": "FASE 18 — REGRA 2: TIRA O E",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "driving",
+   "erradas": [
+    "driveing",
+    "drivving",
+    "drivinge"
+   ],
+   "explicacao": "DRIVE → DRIVING.",
+   "explicacaoErro": "Tiramos o E: DRIVING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "triste",
+   "enunciado": "LOSE vira:",
+   "fase": "FASE 18 — REGRA 2: TIRA O E",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "losing",
+   "erradas": [
+    "loseing",
+    "lossing",
+    "loosing"
+   ],
+   "explicacao": "LOSE → LOSING.",
+   "explicacaoErro": "Tiramos o E: LOSING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "animal",
+   "enunciado": "HOP vira:",
+   "fase": "FASE 19 — REGRA 3: DOBRA A CONSOANTE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "hopping",
+   "erradas": [
+    "hoping",
+    "hoppping",
+    "hopeing"
+   ],
+   "explicacao": "HOP → HOPPING.",
+   "explicacaoErro": "Dobramos o P: HOPPING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "trofeu",
+   "enunciado": "WIN vira:",
+   "fase": "FASE 19 — REGRA 3: DOBRA A CONSOANTE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "winning",
+   "erradas": [
+    "wining",
+    "winnig",
+    "wineing"
+   ],
+   "explicacao": "WIN → WINNING.",
+   "explicacaoErro": "Dobramos o N: WINNING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "bicicleta",
+   "enunciado": "Qual frase significa “Ela está andando de bicicleta”?",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "She is riding a bike.",
+   "erradas": [
+    "She is driving a bike.",
+    "She is sailing a bike.",
+    "She is flying a bike."
+   ],
+   "explicacao": "RIDE = andar de / montar.",
+   "explicacaoErro": "A frase correta é She is riding a bike."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "carro",
+   "enunciado": "Qual frase significa “Ele está dirigindo”?",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "He is driving.",
+   "erradas": [
+    "He is riding.",
+    "He is sailing.",
+    "He is watching."
+   ],
+   "explicacao": "DRIVE = dirigir.",
+   "explicacaoErro": "A frase correta é He is driving."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "aviao",
+   "enunciado": "The bird is ______.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "O pássaro está voando.",
+   "certa": "flying",
+   "erradas": [
+    "sailing",
+    "driving",
+    "riding"
+   ],
+   "explicacao": "FLY → FLYING.",
+   "explicacaoErro": "Voar = FLY. A forma é FLYING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "barco",
+   "enunciado": "They are ______ across the sea.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Eles estão navegando pelo mar.",
+   "certa": "sailing",
+   "erradas": [
+    "driving",
+    "hopping",
+    "standing"
+   ],
+   "explicacao": "SAIL → SAILING.",
+   "explicacaoErro": "Navegar = SAIL. A forma é SAILING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "trofeu",
+   "enunciado": "Our team is ______ the game.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Nosso time está vencendo.",
+   "certa": "winning",
+   "erradas": [
+    "losing",
+    "breaking",
+    "finding"
+   ],
+   "explicacao": "WIN → WINNING.",
+   "explicacaoErro": "Vencer = WIN. A forma é WINNING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "triste",
+   "enunciado": "They are ______ the game.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Eles estão perdendo o jogo.",
+   "certa": "losing",
+   "erradas": [
+    "winning",
+    "finding",
+    "buying"
+   ],
+   "explicacao": "LOSE → LOSING.",
+   "explicacaoErro": "Perder = LOSE. A forma é LOSING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "lupa",
+   "enunciado": "She is ______ the key.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Ela está encontrando a chave.",
+   "certa": "finding",
+   "erradas": [
+    "breaking",
+    "buying",
+    "lifting"
+   ],
+   "explicacao": "FIND → FINDING.",
+   "explicacaoErro": "Encontrar = FIND. A forma é FINDING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "quebrado",
+   "enunciado": "He is ______ the toy.",
+   "fase": "FASE 20 — SIGNIFICADO + FRASE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "dica": "Ele está quebrando o brinquedo.",
+   "certa": "breaking",
+   "erradas": [
+    "finding",
+    "borrowing",
+    "drawing"
+   ],
+   "explicacao": "BREAK → BREAKING.",
+   "explicacaoErro": "Quebrar = BREAK. A forma é BREAKING."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [],
+   "icone": "elos",
+   "enunciado": "Associe o verbo ao significado.",
+   "fase": "FASE 21 — ASSOCIAÇÃO INTENSIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "pares": [
+    [
+     "ride",
+     "andar de / montar"
+    ],
+    [
+     "drive",
+     "dirigir"
+    ],
+    [
+     "fly",
+     "voar"
+    ],
+    [
+     "sail",
+     "navegar"
+    ]
+   ]
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [],
+   "icone": "elos",
+   "enunciado": "Associe o verbo ao significado.",
+   "fase": "FASE 21 — ASSOCIAÇÃO INTENSIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "pares": [
+    [
+     "borrow",
+     "pegar emprestado"
+    ],
+    [
+     "buy",
+     "comprar"
+    ],
+    [
+     "find",
+     "encontrar"
+    ],
+    [
+     "break",
+     "quebrar"
+    ]
+   ]
+  },
+  {
+   "tipo": "memoria",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Encontre os pares inglês ↔ português.",
+   "fase": "FASE 22 — MEMÓRIA DE SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "extra": {
+    "pairs": [
+     [
+      "win",
+      "vencer"
+     ],
+     [
+      "lose",
+      "perder"
+     ],
+     [
+      "draw",
+      "desenhar"
+     ],
+     [
+      "paint",
+      "pintar"
+     ]
+    ]
+   }
+  },
+  {
+   "tipo": "memoria",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Encontre os pares inglês ↔ português.",
+   "fase": "FASE 22 — MEMÓRIA DE SIGNIFICADOS",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "extra": {
+    "pairs": [
+     [
+      "stand",
+      "ficar em pé"
+     ],
+     [
+      "lift",
+      "levantar"
+     ],
+     [
+      "blow",
+      "soprar"
+     ],
+     [
+      "cry",
+      "chorar"
+     ]
+    ]
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Monte a frase: “Ele está dirigindo.”",
+   "fase": "FASE 23 — CONJUGAÇÃO EM FRASES",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "driving",
+    "He",
+    "is"
+   ],
+   "sequencia": [
+    "He",
+    "is",
+    "driving"
+   ],
+   "explicacao": "He is driving.",
+   "explicacaoErro": "A ordem correta é He is driving."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Monte a frase: “Eles estão vencendo.”",
+   "fase": "FASE 23 — CONJUGAÇÃO EM FRASES",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "winning",
+    "They",
+    "are"
+   ],
+   "sequencia": [
+    "They",
+    "are",
+    "winning"
+   ],
+   "explicacao": "They are winning.",
+   "explicacaoErro": "A ordem correta é They are winning."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Monte a frase: “Ela está chorando.”",
+   "fase": "FASE 23 — CONJUGAÇÃO EM FRASES",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "crying",
+    "She",
+    "is"
+   ],
+   "sequencia": [
+    "She",
+    "is",
+    "crying"
+   ],
+   "explicacao": "She is crying.",
+   "explicacaoErro": "A ordem correta é She is crying."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Monte a frase: “Nós estamos assistindo TV.”",
+   "fase": "FASE 23 — CONJUGAÇÃO EM FRASES",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "TV",
+    "watching",
+    "We",
+    "are"
+   ],
+   "sequencia": [
+    "We",
+    "are",
+    "watching",
+    "TV"
+   ],
+   "explicacao": "We are watching TV.",
+   "explicacaoErro": "A ordem correta é We are watching TV."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “dirigir”",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "drive"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "DRIVE = dirigir.",
+   "explicacaoErro": "A resposta é DRIVE."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “voar”",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "fly"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "FLY = voar.",
+   "explicacaoErro": "A resposta é FLY."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite em inglês: “vencer”",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "win"
+   ],
+   "exemplo": "Digite o verbo...",
+   "explicacao": "WIN = vencer.",
+   "explicacaoErro": "A resposta é WIN."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite a forma com -ING de RIDE.",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "riding"
+   ],
+   "exemplo": "Digite a forma correta...",
+   "explicacao": "RIDE → RIDING.",
+   "explicacaoErro": "A resposta é RIDING."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite a forma com -ING de HOP.",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "hopping"
+   ],
+   "exemplo": "Digite a forma correta...",
+   "explicacao": "HOP → HOPPING.",
+   "explicacaoErro": "A resposta é HOPPING."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "cabeca",
+   "enunciado": "Digite a forma com -ING de WIN.",
+   "fase": "FASE 24 — RECUPERAÇÃO ATIVA",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "winning"
+   ],
+   "exemplo": "Digite a forma correta...",
+   "explicacao": "WIN → WINNING.",
+   "explicacaoErro": "A resposta é WINNING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "estrela",
+   "enunciado": "Qual frase está correta?",
+   "fase": "FASE FINAL — MIXED CHALLENGE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "She is reading.",
+   "erradas": [
+    "She are reading.",
+    "She reading.",
+    "She am reading."
+   ],
+   "explicacao": "Correto!",
+   "explicacaoErro": "A correta é She is reading."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [],
+   "icone": "raio",
+   "enunciado": "Qual palavra NÃO é uma ação?",
+   "fase": "FASE FINAL — MIXED CHALLENGE",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "certa": "ticket",
+   "erradas": [
+    "running",
+    "sleeping",
+    "writing"
+   ],
+   "explicacao": "TICKET não é uma ação.",
+   "explicacaoErro": "A palavra que não é ação é TICKET."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [],
+   "icone": "peca",
+   "enunciado": "Monte: “Ela está ouvindo música.”",
+   "fase": "FASE FINAL — DESAFIO DE ORDEM",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "palavras": [
+    "music",
+    "to",
+    "She",
+    "listening",
+    "is"
+   ],
+   "sequencia": [
+    "She",
+    "is",
+    "listening",
+    "to",
+    "music"
+   ],
+   "explicacao": "Perfeito!",
+   "explicacaoErro": "A ordem correta é: She is listening to music."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [],
+   "icone": "foguete",
+   "enunciado": "Complete: I ___ traveling through time!",
+   "fase": "FASE FINAL — CÓDIGO FINAL",
+   "reservatorio": "baseQuestionPool",
+   "origem": "propria",
+   "aceitas": [
+    "am"
+   ],
+   "exemplo": "Digite a palavra correta...",
+   "explicacao": "CÓDIGO ACEITO! I AM traveling through time!",
+   "explicacaoErro": "Com I usamos AM."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "pessoa",
+   "enunciado": "Qual é a forma contraída de “I am studying”?",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "certa": "I'm studying",
+   "erradas": [
+    "Im studying",
+    "I's studying",
+    "I am'studying"
+   ],
+   "explicacao": "I am → I'm. O apóstrofo substitui o A.",
+   "explicacaoErro": "É I'M studying. O apóstrofo entra no lugar do A de AM."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "pessoa",
+   "enunciado": "Qual é a forma contraída de “She is studying at home”?",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "certa": "She's studying at home",
+   "erradas": [
+    "Shes studying at home",
+    "She're studying at home",
+    "She'is studying"
+   ],
+   "explicacao": "She is → She's.",
+   "explicacaoErro": "É SHE'S studying at home."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "pessoas",
+   "enunciado": "Qual é a forma contraída de “They are watching TV”?",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "certa": "They're watching TV",
+   "erradas": [
+    "Theyre watching TV",
+    "They's watching TV",
+    "They'are watching TV"
+   ],
+   "explicacao": "They are → They're.",
+   "explicacaoErro": "É THEY'RE watching TV."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "xis",
+   "enunciado": "Complete: “Lilly ______ studying at school.” (negativa)",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "certa": "isn't",
+   "erradas": [
+    "aren't",
+    "am not",
+    "don't"
+   ],
+   "explicacao": "Lilly isn't studying — com um nome no singular usamos IS NOT = ISN'T.",
+   "explicacaoErro": "É ISN'T. Lilly é uma pessoa só: is + not = isn't."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "xis",
+   "enunciado": "Complete: “Joe and Jill ______ dancing.” (negativa)",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "certa": "aren't",
+   "erradas": [
+    "isn't",
+    "am not",
+    "doesn't"
+   ],
+   "explicacao": "Joe and Jill aren't dancing — duas pessoas, ARE NOT = AREN'T.",
+   "explicacaoErro": "É AREN'T. São duas pessoas: are + not = aren't."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "elos",
+   "enunciado": "Associe a forma completa à contraída.",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.9",
+   "origem": "derivada",
+   "pares": [
+    [
+     "I am",
+     "I'm"
+    ],
+    [
+     "She is",
+     "She's"
+    ],
+    [
+     "They are",
+     "They're"
+    ],
+    [
+     "is not",
+     "isn't"
+    ],
+    [
+     "are not",
+     "aren't"
+    ]
+   ]
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "escrever",
+   "enunciado": "Escreva a contração de “We are”.",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "aceitas": [
+    "we're"
+   ],
+   "exemplo": "Digite a contração...",
+   "explicacao": "We are → We're.",
+   "explicacaoErro": "A resposta é WE'RE (com apóstrofo)."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "escrever",
+   "enunciado": "Escreva a contração de “He is”.",
+   "fase": "CONTRACTIONS",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "aceitas": [
+    "he's"
+   ],
+   "exemplo": "Digite a contração...",
+   "explicacao": "He is → He's.",
+   "explicacaoErro": "A resposta é HE'S (com apóstrofo)."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "fala",
+   "enunciado": "Como se pergunta “o que você está fazendo?” em inglês?",
+   "fase": "WHAT ARE YOU DOING?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.10",
+   "origem": "derivada",
+   "certa": "What are you doing?",
+   "erradas": [
+    "What you are doing?",
+    "What do you doing?",
+    "What are you do?"
+   ],
+   "explicacao": "What are you doing? — a pergunta padrão do Present Continuous.",
+   "explicacaoErro": "É WHAT ARE YOU DOING? O verbo to be vem antes do sujeito."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "casa",
+   "enunciado": "“What are you doing?” Qual é uma resposta correta?",
+   "fase": "WHAT ARE YOU DOING?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.10",
+   "origem": "derivada",
+   "certa": "I'm studying at home.",
+   "erradas": [
+    "I study at home.",
+    "I am study at home.",
+    "Yes, I am."
+   ],
+   "explicacao": "I'm studying at home — responde com o verbo em -ING.",
+   "explicacaoErro": "A resposta usa Present Continuous: I'm studying at home."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "fone",
+   "enunciado": "Ouça o diálogo e escolha o que foi dito.",
+   "fase": "LISTENING — UNIT 5",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "audio": "What are you doing? I'm doing homework.",
+   "certa": "What are you doing? I'm doing homework.",
+   "erradas": [
+    "What are you doing? I'm having lunch.",
+    "What time is it? I'm doing homework.",
+    "Where are you? I'm at home."
+   ],
+   "explicacao": "Isso mesmo!",
+   "explicacaoErro": "O áudio diz: What are you doing? I'm doing homework."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "peca",
+   "enunciado": "Monte a pergunta: “O que ela está fazendo?”",
+   "fase": "WHAT ARE YOU DOING?",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "palavras": [
+    "What",
+    "is",
+    "she",
+    "doing"
+   ],
+   "sequencia": [
+    "What",
+    "is",
+    "she",
+    "doing"
+   ],
+   "explicacao": "What is she doing? — palavra interrogativa + to be + sujeito + verbo-ING.",
+   "explicacaoErro": "A ordem é: What is she doing?"
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "check",
+   "enunciado": "Complete: “We ______ learn more about different time machines.”",
+   "fase": "CAN / CAN'T",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.12",
+   "origem": "derivada",
+   "certa": "can",
+   "erradas": [
+    "can't",
+    "are",
+    "aren't"
+   ],
+   "explicacao": "We CAN learn — can indica que é possível.",
+   "explicacaoErro": "É CAN: We can learn more about different time machines."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "xis",
+   "enunciado": "Complete: “We ______ travel to the future now.”",
+   "fase": "CAN / CAN'T",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.12",
+   "origem": "derivada",
+   "certa": "can't",
+   "erradas": [
+    "can",
+    "don't",
+    "aren't"
+   ],
+   "explicacao": "We CAN'T travel — can't indica que não é possível.",
+   "explicacaoErro": "É CAN'T: We can't travel to the future now."
+  },
+  {
+   "tipo": "vf",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "pergunta",
+   "enunciado": "Depois de “can” usamos o verbo com -ING. Ex.: “I can climbing”.",
+   "fase": "CAN / CAN'T",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Correto, é falso! Depois de can o verbo fica no infinitivo sem to: I can climb.",
+   "explicacaoErro": "É falso. O certo é I CAN CLIMB, sem -ING."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "contractions"
+   ],
+   "icone": "movimento",
+   "enunciado": "Na história, o que Leo diz enquanto sobe as escadas de Big Ben?",
+   "fase": "CAN / CAN'T",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.33",
+   "origem": "derivada",
+   "certa": "I can climb fast.",
+   "erradas": [
+    "I can't climb.",
+    "I am climbing slowly.",
+    "I climb fast."
+   ],
+   "explicacao": "I can climb fast! Look! 58, 59, 60...",
+   "explicacaoErro": "Ele diz: I CAN CLIMB FAST."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "relogio",
+   "enunciado": "12:00 p.m. é...",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.30",
+   "origem": "derivada",
+   "certa": "midday",
+   "erradas": [
+    "midnight",
+    "o'clock",
+    "a quarter"
+   ],
+   "explicacao": "12:00 p.m. = midday (meio-dia).",
+   "explicacaoErro": "12:00 p.m. = MIDDAY, meio-dia. Meia-noite é midnight."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "lua",
+   "enunciado": "12:00 a.m. é...",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.30",
+   "origem": "derivada",
+   "certa": "midnight",
+   "erradas": [
+    "midday",
+    "noon",
+    "o'clock"
+   ],
+   "explicacao": "12:00 a.m. = midnight (meia-noite).",
+   "explicacaoErro": "12:00 a.m. = MIDNIGHT, meia-noite."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "relogio",
+   "enunciado": "Como o livro lê o horário 8:30?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.31",
+   "origem": "derivada",
+   "certa": "It's eight thirty.",
+   "erradas": [
+    "It's thirty eight.",
+    "It's eight and half.",
+    "It's half eight."
+   ],
+   "explicacao": "It's eight thirty — o livro lê a hora e depois os minutos.",
+   "explicacaoErro": "É IT'S EIGHT THIRTY: primeiro a hora, depois os minutos."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "relogio",
+   "enunciado": "Como o livro lê o horário 3:45?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.31",
+   "origem": "derivada",
+   "certa": "It's three forty-five.",
+   "erradas": [
+    "It's forty-five three.",
+    "It's four fifteen.",
+    "It's a quarter three."
+   ],
+   "explicacao": "It's three forty-five.",
+   "explicacaoErro": "É IT'S THREE FORTY-FIVE: a hora e depois os minutos."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "relogio",
+   "enunciado": "Como o livro lê o horário 7:15?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.31",
+   "origem": "derivada",
+   "certa": "It's seven fifteen.",
+   "erradas": [
+    "It's fifteen seven.",
+    "It's a quarter seven.",
+    "It's seven and fifteen."
+   ],
+   "explicacao": "It's seven fifteen.",
+   "explicacaoErro": "É IT'S SEVEN FIFTEEN."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "sol",
+   "enunciado": "O que significa a.m.?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.31",
+   "origem": "derivada",
+   "certa": "Da meia-noite ao meio-dia (manhã)",
+   "erradas": [
+    "Do meio-dia à meia-noite (tarde e noite)",
+    "Só à noite",
+    "Só ao meio-dia"
+   ],
+   "explicacao": "a.m. = da meia-noite ao meio-dia. Ex.: It's eleven a.m.",
+   "explicacaoErro": "a.m. é a parte da manhã, da meia-noite ao meio-dia. p.m. é depois do meio-dia."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha o horário.",
+   "fase": "LISTENING — THE TIME",
+   "reservatorio": "unit5Pool",
+   "origem": "propria",
+   "audio": "It's eleven p.m.",
+   "certa": "11:00 p.m.",
+   "erradas": [
+    "11:00 a.m.",
+    "1:00 p.m.",
+    "10:00 p.m."
+   ],
+   "explicacao": "It's eleven p.m. — onze da noite.",
+   "explicacaoErro": "O áudio diz: It's eleven p.m."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "elos",
+   "enunciado": "Associe cada ação da rotina ao seu significado.",
+   "fase": "DAILY ROUTINE",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.32",
+   "origem": "derivada",
+   "pares": [
+    [
+     "get up",
+     "levantar da cama"
+    ],
+    [
+     "have breakfast",
+     "tomar café da manhã"
+    ],
+    [
+     "do homework",
+     "fazer a lição"
+    ],
+    [
+     "have lunch",
+     "almoçar"
+    ],
+    [
+     "go to bed",
+     "ir dormir"
+    ]
+   ]
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "relogio",
+   "enunciado": "Coloque a rotina do dia na ordem, do começo ao fim.",
+   "fase": "DAILY ROUTINE",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.32",
+   "origem": "derivada",
+   "palavras": [
+    "getting up",
+    "having breakfast",
+    "having lunch",
+    "having dinner",
+    "going to bed"
+   ],
+   "sequencia": [
+    "getting",
+    "up",
+    "having",
+    "breakfast",
+    "having",
+    "lunch",
+    "having",
+    "dinner",
+    "going",
+    "to",
+    "bed"
+   ],
+   "explicacao": "É a ordem do dia: acordar, café, almoço, jantar e dormir.",
+   "explicacaoErro": "A ordem é: getting up → having breakfast → having lunch → having dinner → going to bed."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "escrever",
+   "enunciado": "Complete: “It's 7:00 a.m. and I am ______ breakfast.”",
+   "fase": "DAILY ROUTINE",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.32",
+   "origem": "derivada",
+   "aceitas": [
+    "having"
+   ],
+   "exemplo": "Digite o verbo com -ING...",
+   "explicacao": "I am HAVING breakfast.",
+   "explicacaoErro": "É HAVING. Em inglês “tomar café da manhã” é have breakfast."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "cama",
+   "enunciado": "“It's 10:00 p.m. and I am ______.”",
+   "fase": "DAILY ROUTINE",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.32",
+   "origem": "derivada",
+   "certa": "going to bed",
+   "erradas": [
+    "getting up",
+    "having lunch",
+    "doing homework"
+   ],
+   "explicacao": "Às 22h a gente vai dormir: going to bed.",
+   "explicacaoErro": "Às 10 da noite é GOING TO BED."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "instrumento",
+   "enunciado": "Qual é o nome da música da Unit?",
+   "fase": "SONG",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.35",
+   "origem": "derivada",
+   "certa": "Rock Around the Clock",
+   "erradas": [
+    "Time After Time",
+    "Big Ben Rock",
+    "Around the World"
+   ],
+   "explicacao": "Rock Around the Clock, de Bill Haley & His Comets.",
+   "explicacaoErro": "É ROCK AROUND THE CLOCK."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "clock_routine"
+   ],
+   "icone": "partitura",
+   "enunciado": "Complete a letra: “One, two, three o'clock, four ______ rock.”",
+   "fase": "SONG",
+   "reservatorio": "unit5Pool",
+   "fonte": "livro p.35",
+   "origem": "derivada",
+   "certa": "o'clock",
+   "erradas": [
+    "clock",
+    "hour",
+    "time"
+   ],
+   "explicacao": "“One, two, three o'clock, four o'clock rock.”",
+   "explicacaoErro": "A letra repete O'CLOCK: four o'clock rock."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "numeros",
+   "enunciado": "How do you write 40 in English?",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q8",
+   "origem": "derivada",
+   "certa": "forty",
+   "erradas": [
+    "fourty",
+    "fourteen",
+    "fivety"
+   ],
+   "explicacao": "FORTY — sem o U. É a pegadinha clássica.",
+   "explicacaoErro": "É FORTY, sem U. Cuidado: FOURTEEN é 14."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "numeros",
+   "enunciado": "Qual número é “fifty”?",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q8",
+   "origem": "derivada",
+   "certa": "50",
+   "erradas": [
+    "15",
+    "5",
+    "500"
+   ],
+   "explicacao": "Fifty = 50. Quinze é fifteen.",
+   "explicacaoErro": "Fifty = 50. Não confunda com fifteen, que é 15."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "numeros",
+   "enunciado": "Which number is “fifty-nine”?",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q9",
+   "origem": "derivada",
+   "certa": "59",
+   "erradas": [
+    "49",
+    "56",
+    "95"
+   ],
+   "explicacao": "Fifty-nine = 59.",
+   "explicacaoErro": "Fifty (50) + nine (9) = 59."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "numeros",
+   "enunciado": "Which number is “twenty-one”?",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q9",
+   "origem": "derivada",
+   "certa": "21",
+   "erradas": [
+    "22",
+    "12",
+    "20"
+   ],
+   "explicacao": "Twenty-one = 21.",
+   "explicacaoErro": "Twenty (20) + one (1) = 21. Doze é twelve."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "numeros",
+   "enunciado": "Which number is “fourteen”?",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q9",
+   "origem": "derivada",
+   "certa": "14",
+   "erradas": [
+    "40",
+    "41",
+    "4"
+   ],
+   "explicacao": "Fourteen = 14.",
+   "explicacaoErro": "Fourteen = 14. Quarenta é forty, e 41 é forty-one."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "escrever",
+   "enunciado": "Escreva em inglês o número 80.",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "aceitas": [
+    "eighty"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Eighty = 80.",
+   "explicacaoErro": "A resposta é EIGHTY."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "escrever",
+   "enunciado": "Escreva em inglês o número 100.",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "aceitas": [
+    "one hundred",
+    "a hundred",
+    "hundred"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "One hundred = 100.",
+   "explicacaoErro": "A resposta é ONE HUNDRED."
+  },
+  {
+   "tipo": "vf",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "pergunta",
+   "enunciado": "“Fifteen” e “fifty” são o mesmo número.",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Isso! Fifteen é 15 e fifty é 50.",
+   "explicacaoErro": "São diferentes: fifteen = 15, fifty = 50. O som parecido confunde muita gente."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "elos",
+   "enunciado": "Associe o número por extenso ao algarismo.",
+   "fase": "NUMBERS",
+   "reservatorio": "extraPool",
+   "fonte": "folha q8",
+   "origem": "derivada",
+   "pares": [
+    [
+     "twenty",
+     "20"
+    ],
+    [
+     "fifty",
+     "50"
+    ],
+    [
+     "eighty",
+     "80"
+    ],
+    [
+     "one hundred",
+     "100"
+    ]
+   ]
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "O relógio marca 5:00. What time is it?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "fonte": "folha q5",
+   "origem": "derivada",
+   "certa": "It's five o'clock.",
+   "erradas": [
+    "It's five thirty.",
+    "It's four o'clock.",
+    "It's eleven o'clock."
+   ],
+   "explicacao": "It's five o'clock — usamos o'clock nas horas exatas.",
+   "explicacaoErro": "5:00 = It's five o'clock."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "São 2:30. Como se diz em inglês?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": "It's half past two.",
+   "erradas": [
+    "It's half past three.",
+    "It's two o'clock.",
+    "It's a quarter past two."
+   ],
+   "explicacao": "Half past two = duas e meia. HALF PAST = e meia.",
+   "explicacaoErro": "2:30 = It's half past two (ou two thirty). Half past = e meia."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "São 2:15. Como se diz em inglês?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": "It's a quarter past two.",
+   "erradas": [
+    "It's a quarter to two.",
+    "It's half past two.",
+    "It's two fifty."
+   ],
+   "explicacao": "A quarter past two = duas e quinze. QUARTER PAST = e quinze.",
+   "explicacaoErro": "2:15 = a quarter past two. “Past” é depois da hora."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "São 7:45. Como se diz em inglês?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": "It's a quarter to eight.",
+   "erradas": [
+    "It's a quarter past seven.",
+    "It's half past seven.",
+    "It's seven o'clock."
+   ],
+   "explicacao": "A quarter to eight = quinze para as oito. TO = para a próxima hora.",
+   "explicacaoErro": "7:45 = a quarter to eight. Faltam 15 minutos para as 8."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "Which hand shows the hours?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "fonte": "folha q6",
+   "origem": "derivada",
+   "certa": "The hour hand — the short one",
+   "erradas": [
+    "The minute hand — the long one",
+    "The second hand",
+    "The hour number"
+   ],
+   "explicacao": "Hour hand é o ponteiro curto, das horas.",
+   "explicacaoErro": "É o HOUR HAND, o ponteiro curto."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "relogio",
+   "enunciado": "Which hand is the longest and shows the minutes?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "fonte": "folha q6",
+   "origem": "derivada",
+   "certa": "The minute hand",
+   "erradas": [
+    "The hour hand",
+    "The second hand",
+    "The minute line"
+   ],
+   "explicacao": "Minute hand é o ponteiro comprido, dos minutos.",
+   "explicacaoErro": "É o MINUTE HAND, o mais comprido."
+  },
+  {
+   "tipo": "ligar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "elos",
+   "enunciado": "Associe cada parte do relógio ao seu nome em português.",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "fonte": "folha q6",
+   "origem": "derivada",
+   "pares": [
+    [
+     "hour hand",
+     "ponteiro das horas"
+    ],
+    [
+     "minute hand",
+     "ponteiro dos minutos"
+    ],
+    [
+     "second hand",
+     "ponteiro dos segundos"
+    ],
+    [
+     "hour number",
+     "número das horas"
+    ]
+   ]
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "escrever",
+   "enunciado": "Como se diz “ponteiro dos minutos” em inglês?",
+   "fase": "WHAT TIME IS IT?",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "aceitas": [
+    "minute hand",
+    "the minute hand"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Minute hand.",
+   "explicacaoErro": "A resposta é MINUTE HAND."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha o horário correto.",
+   "fase": "LISTENING — THE TIME",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "audio": "It's half past nine.",
+   "certa": "9:30",
+   "erradas": [
+    "9:15",
+    "8:30",
+    "10:30"
+   ],
+   "explicacao": "Half past nine = 9:30.",
+   "explicacaoErro": "O áudio diz: It's half past nine — 9:30."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [
+    "time_numbers"
+   ],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha o horário correto.",
+   "fase": "LISTENING — THE TIME",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "audio": "It's a quarter to six.",
+   "certa": "5:45",
+   "erradas": [
+    "6:15",
+    "6:45",
+    "5:15"
+   ],
+   "explicacao": "A quarter to six = 5:45.",
+   "explicacaoErro": "O áudio diz: It's a quarter to six — quinze para as seis, ou seja, 5:45."
+  },
+  {
+   "tipo": "ordenar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "planeta",
+   "enunciado": "Coloque os planetas em ordem, a partir do Sol.",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q1",
+   "origem": "derivada",
+   "palavras": [
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune"
+   ],
+   "sequencia": [
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune"
+   ],
+   "explicacao": "Essa é a ordem a partir do Sol.",
+   "explicacaoErro": "A ordem é: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "letras",
+   "enunciado": "UNSCRAMBLE: ERRMCYU",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q1",
+   "origem": "derivada",
+   "aceitas": [
+    "mercury"
+   ],
+   "exemplo": "Digite o nome do planeta...",
+   "explicacao": "Mercury — o planeta mais próximo do Sol.",
+   "explicacaoErro": "A resposta é MERCURY."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "letras",
+   "enunciado": "UNSCRAMBLE: TPIRJEU",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q1",
+   "origem": "derivada",
+   "aceitas": [
+    "jupiter"
+   ],
+   "exemplo": "Digite o nome do planeta...",
+   "explicacao": "Jupiter — o maior planeta.",
+   "explicacaoErro": "A resposta é JUPITER."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "letras",
+   "enunciado": "UNSCRAMBLE: ENUNERT",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q1",
+   "origem": "derivada",
+   "aceitas": [
+    "neptune"
+   ],
+   "exemplo": "Digite o nome do planeta...",
+   "explicacao": "Neptune — o mais distante do Sol.",
+   "explicacaoErro": "A resposta é NEPTUNE."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "globo",
+   "enunciado": "How many planets do we have?",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q2",
+   "origem": "derivada",
+   "certa": "Eight planets",
+   "erradas": [
+    "Nine planets",
+    "Seven planets",
+    "Ten planets"
+   ],
+   "explicacao": "Eight planets.",
+   "explicacaoErro": "Are eight planets: de Mercury a Neptune."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "globo",
+   "enunciado": "What's the name of your planet?",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q2",
+   "origem": "derivada",
+   "certa": "Earth",
+   "erradas": [
+    "Mars",
+    "Venus",
+    "Saturn"
+   ],
+   "explicacao": "Earth — a Terra.",
+   "explicacaoErro": "O nosso planeta é a EARTH."
+  },
+  {
+   "tipo": "digitar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "sol",
+   "enunciado": "What big star can you see during the day?",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "fonte": "folha q2",
+   "origem": "derivada",
+   "aceitas": [
+    "sun",
+    "the sun"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "The Sun! Escreve-se S-U-N.",
+   "explicacaoErro": "É THE SUN, escrito S-U-N (não “sum”)."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "planeta",
+   "enunciado": "Which planet has big rings around it?",
+   "fase": "SOLAR SYSTEM",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": "Saturn",
+   "erradas": [
+    "Mars",
+    "Venus",
+    "Mercury"
+   ],
+   "explicacao": "Saturn — famoso pelos anéis.",
+   "explicacaoErro": "É SATURN, o planeta dos anéis."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "sino",
+   "enunciado": "No livro, o que a guia diz que Big Ben realmente é?",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "fonte": "livro p.33",
+   "origem": "derivada",
+   "certa": "It's a bell!",
+   "erradas": [
+    "It's a clock.",
+    "It's a bridge.",
+    "It's a palace."
+   ],
+   "explicacao": "“This is Big Ben! It's a bell!” — Big Ben é o SINO, não o relógio nem a torre.",
+   "explicacaoErro": "Surpresa do livro: Big Ben é o SINO. O menino aponta para o relógio e a guia responde “Not really. Follow me.”"
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "relogio",
+   "enunciado": "Na história, o que acontece quando o sino toca ao meio-dia?",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "fonte": "livro p.33",
+   "origem": "derivada",
+   "certa": "The bell is striking midday. DING DONG!",
+   "erradas": [
+    "The bell is broken.",
+    "The kids go home.",
+    "Nothing happens."
+   ],
+   "explicacao": "“Listen! The bell is striking midday.” DING DONG!",
+   "explicacaoErro": "The bell is striking midday — o sino bate o meio-dia."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "pino",
+   "enunciado": "Where is Big Ben from?",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "fonte": "folha q3",
+   "origem": "derivada",
+   "certa": "It is in London.",
+   "erradas": [
+    "It is in Lisbon.",
+    "It is in New York.",
+    "It is in Paris."
+   ],
+   "explicacao": "It is IN London — não esqueça o “in”.",
+   "explicacaoErro": "It is IN London. A preposição IN é obrigatória."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "bebida",
+   "enunciado": "What time is tea time in Britain?",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "fonte": "folha q3",
+   "origem": "derivada",
+   "certa": "Between 4 and 5 o'clock",
+   "erradas": [
+    "Between 4 and 6 o'clock",
+    "Between 3 and 4 o'clock",
+    "At 8 o'clock"
+   ],
+   "explicacao": "Between 4 and 5 o'clock.",
+   "explicacaoErro": "É entre 4 e 5 horas — between 4 and 5 o'clock."
+  },
+  {
+   "tipo": "escolha",
+   "missoes": [
+    "world"
+   ],
+   "icone": "coroa",
+   "enunciado": "What time did the Queen have her tea?",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "fonte": "folha q3",
+   "origem": "derivada",
+   "certa": "At 4 o'clock",
+   "erradas": [
+    "At 5 o'clock",
+    "At 6 o'clock",
+    "At noon"
+   ],
+   "explicacao": "The Queen has tea at 4 o'clock, too!",
+   "explicacaoErro": "At 4 o'clock."
+  },
+  {
+   "tipo": "vf",
+   "missoes": [
+    "world"
+   ],
+   "icone": "mapa",
+   "enunciado": "Big Ben is in New York.",
+   "fase": "CULTURE",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Correto, é falso: Big Ben fica em Londres.",
+   "explicacaoErro": "É falso. Big Ben is in London, England."
+  },
+  {
+   "tipo": "escutar",
+   "missoes": [
+    "world"
+   ],
+   "icone": "fone",
+   "enunciado": "Ouça e escolha a frase que você ouviu.",
+   "fase": "LISTENING — CULTURE",
+   "reservatorio": "extraPool",
+   "origem": "propria",
+   "audio": "Big Ben is a very famous clock in London.",
+   "certa": "Big Ben is a very famous clock in London.",
+   "erradas": [
+    "Big Ben is a very famous bridge in London.",
+    "Big Ben is a very famous clock in Lisbon.",
+    "Big Ben is a very old park in London."
+   ],
+   "explicacao": "Isso mesmo!",
+   "explicacaoErro": "O áudio diz: Big Ben is a very famous clock in London."
+  }
+ ]
+}

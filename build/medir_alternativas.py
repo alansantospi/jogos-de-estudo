@@ -8,7 +8,8 @@ import io, json, os, re, sys
 
 ARQUIVOS = {"artes.html": "artes-4ano",
             "historia.html": "historia-4ano",
-            "exploradores-do-ceu.html": "ciencias-4ano"}
+            "exploradores-do-ceu.html": "ciencias-4ano",
+            "time-travel-english.html": "ingles-4ano"}
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -33,7 +34,7 @@ def questoes(arq):
         return []
     jogo = json.load(io.open(caminho, encoding="utf-8"))
     return [(q["enunciado"], q["certa"], q["erradas"])
-            for q in jogo["questoes"] if q["tipo"] == "escolha"]
+            for q in jogo["questoes"] if q["tipo"] in ("escolha", "escutar")]
 
 
 def estrategia(it, escolher):
@@ -56,7 +57,8 @@ def medir(arq):
 
 
 ruim = 0
-for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html"):
+for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html",
+            "time-travel-english.html"):
     it, pmaior, pmenor, mc, me = medir(arq)
     mal = not (PISO <= pmaior <= TETO) or not (PISO <= pmenor <= TETO)
     print("  %-22s n=%-4d  sempre-a-maior=%4.1f%%  sempre-a-menor=%4.1f%%"

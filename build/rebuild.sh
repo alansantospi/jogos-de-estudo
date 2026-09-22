@@ -12,6 +12,7 @@ python3 build/aplicar.py > /dev/null
 # seguintes trabalhem sobre o banco definitivo.
 python3 build/esquema.py
 python3 build/conteudo.py
+python3 build/conteudo_ingles.py
 python3 build/letras.py
 python3 build/ilustracao.py
 python3 build/ingles.py

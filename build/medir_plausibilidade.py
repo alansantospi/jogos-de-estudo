@@ -17,7 +17,8 @@ import io, json, os, re, sys, unicodedata
 
 ARQUIVOS = {"artes.html": "artes-4ano",
             "historia.html": "historia-4ano",
-            "exploradores-do-ceu.html": "ciencias-4ano"}
+            "exploradores-do-ceu.html": "ciencias-4ano",
+            "time-travel-english.html": "ingles-4ano"}
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -63,7 +64,7 @@ def questoes(arq):
         return []
     jogo = json.load(io.open(caminho, encoding="utf-8"))
     return [(q["enunciado"], q["certa"], q["erradas"])
-            for q in jogo["questoes"] if q["tipo"] == "escolha"]
+            for q in jogo["questoes"] if q["tipo"] in ("escolha", "escutar")]
 
 
 def pontua(it, escolhe):
@@ -129,7 +130,8 @@ def relatorio(arq):
 
 if __name__ == "__main__":
     ruim = 0
-    for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html"):
+    for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html",
+            "time-travel-english.html"):
         v = relatorio(arq)
         if v is not None and not (PISO <= v <= TETO):
             ruim += 1

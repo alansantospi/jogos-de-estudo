@@ -11,13 +11,19 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # tipo -> campos obrigatórios além dos comuns
 CAMPOS = {
     "escolha": ["certa", "erradas"],
+    "escutar": ["certa", "erradas"],
     "vf":      ["certa"],
     "digitar": ["aceitas"],
     "ordenar": ["sequencia"],
     "ligar":   ["pares"],
     "bussola": ["alvo"],
+    # Tipos do motor de inglês cujo miolo fica em `extra`, verbatim, até a
+    # fusão dos motores. Declarados para não passarem por tipo desconhecido.
+    "memoria": [],
+    "cruzada": [],
+    "cacapalavras": [],
 }
-COMUNS = ["tipo", "missao", "icone", "enunciado", "origem"]
+COMUNS = ["tipo", "icone", "enunciado", "origem"]
 ORIGENS = {"propria", "derivada"}
 
 
@@ -46,15 +52,21 @@ def conferir(caminho):
                 erros.append("%s: falta %s" % (onde, c))
         if q.get("origem") not in ORIGENS:
             erros.append("%s: origem deve ser propria ou derivada" % onde)
-        if q.get("missao") not in missoes:
-            erros.append("%s: missão desconhecida %r" % (onde, q.get("missao")))
+        # Um motor diz `missao`; o outro, `missoes` (uma questão pode servir
+        # a mais de uma). Aceita os dois até a fusão.
+        suas = [q["missao"]] if "missao" in q else q.get("missoes", [])
+        if "missao" not in q and "missoes" not in q:
+            erros.append("%s: não diz a que missão pertence" % onde)
+        for m in suas:
+            if m not in missoes:
+                erros.append("%s: missão desconhecida %r" % (onde, m))
         if q.get("tipo") not in CAMPOS:
             erros.append("%s: tipo desconhecido %r" % (onde, q.get("tipo")))
             continue
         for c in CAMPOS[q["tipo"]]:
             if c not in q:
                 erros.append("%s: tipo %s exige %s" % (onde, q["tipo"], c))
-        if q["tipo"] == "escolha":
+        if q["tipo"] in ("escolha", "escutar"):
             if len(q.get("erradas", [])) < 2:
                 erros.append("%s: menos de duas alternativas erradas" % onde)
             if q.get("certa") in q.get("erradas", []):

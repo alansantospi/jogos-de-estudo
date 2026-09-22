@@ -6,7 +6,10 @@ entende. A conversão é aqui, e é conferida por ida e volta em
 `build/conferir_conteudo.py` — se o que sai não for igual ao que entrou,
 o build cai.
 """
-import io, json, os, re
+import io, json, os, sys, re
+import recorte
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,29 +84,14 @@ def _bloco_trilhas(jogo):
         for t in jogo["trilhas"]) + "};"
 
 
-def _trocar(s, inicio, bloco, arq):
-    """Substitui uma declaração `const X=...;` inteira, contando chaves."""
-    i = s.index(inicio)
-    n, j = 0, s.index("{", i)
-    for k in range(j, len(s)):
-        if s[k] == "{":
-            n += 1
-        elif s[k] == "}":
-            n -= 1
-            if n == 0:
-                fim = s.index(";", k) + 1
-                return s[:i] + bloco + s[fim:]
-    raise AssertionError("%s: %s sem fechamento" % (arq, inicio))
-
-
 def aplicar():
     for ident, arq in ARQUIVOS.items():
         jogo = json.load(io.open(os.path.join(RAIZ, "conteudo", ident + ".json"),
                                  encoding="utf-8"))
         s = io.open(os.path.join(RAIZ, arq), encoding="utf-8").read()
-        s = _trocar(s, "const bank=", _bloco_bank(jogo), arq)
-        s = _trocar(s, "const nomes=", _bloco_nomes(jogo), arq)
-        s = _trocar(s, "const trails=", _bloco_trilhas(jogo), arq)
+        s = recorte.trocar(s, "const bank=", _bloco_bank(jogo), "{", "}")
+        s = recorte.trocar(s, "const nomes=", _bloco_nomes(jogo), "{", "}")
+        s = recorte.trocar(s, "const trails=", _bloco_trilhas(jogo), "{", "}")
         io.open(os.path.join(RAIZ, arq), "w", encoding="utf-8").write(s)
         print("  %-24s %d questões do JSON" % (arq.replace(".html", ""),
                                                len(jogo["questoes"])))
