@@ -29,6 +29,7 @@ ALVOS = {
     "navegacao": JOGOS,
     "fim": JOGOS,
     "perfis": ["index.html"],
+    "migracao": ["time-travel-english.html"],
 }
 
 # Injetado antes de cada caso: entrega o resultado e captura erro de JS.

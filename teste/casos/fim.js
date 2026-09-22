@@ -11,7 +11,8 @@ if (ceu) {
   allItems.slice(0, 5).forEach(q => { record(q, false); record(q, false); });
   if (typeof renderMissed === "function") renderMissed();
 } else {
-  verbBank.slice(0, 5).forEach(v => { const e = verbStat(v.base); e.errors = 3; e.hits = 0; });
+  /* Desde a unificação do progresso, este motor guarda {e,h} como o outro. */
+  verbBank.slice(0, 5).forEach(v => { const t = verbStat(v.base); t.e = 3; t.h = 0; });
   if (typeof renderMissedList === "function") renderMissedList();
 }
 

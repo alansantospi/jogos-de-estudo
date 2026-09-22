@@ -1507,7 +1507,7 @@ const STORE_KEY_BASE="ttg_progress_v1";
 const STORE_KEY=(migrarProgresso("ttg_progress_v1"), chaveProgresso("ttg_progress_v1"));
 
 function defaultProgress(){
-  return {verbs:{}, best:{score:0,accuracy:0}, trails:{}, missions:{}, practice:true, mudo:false};
+  return {items:{}, best:{score:0,acc:0}, trails:{}, missions:{}, practice:true, mudo:false};
 }
 
 // Estado de uma missao: nunca jogada, comecada, concluida ou dominada.
@@ -1530,7 +1530,7 @@ function verbosDaMissao(cat){
 function missionInfo(cat){
   const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
   const lista=verbosDaMissao(cat);
-  const dominados=lista.filter(v=>{const t=progress.verbs[v.base];return t&&t.hits>=3&&t.hits>t.errors}).length;
+  const dominados=lista.filter(v=>{const t=progress.items[v.base];return t&&t.h>=3&&t.h>t.e}).length;
   const pct=lista.length?Math.round(dominados/lista.length*100):0;
   let estado="nova",rotulo="",icone="";
   if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="";rotulo="Dominada"}
@@ -1542,6 +1542,28 @@ function missionInfo(cat){
 let progress=defaultProgress();
 let practiceMode=true;
 
+
+/* ---------- migração do formato antigo ---------- */
+/* Este motor guardava o progresso com outros nomes de campo. Agora usa a
+   mesma forma do outro motor, e converter na leitura é o que impede um
+   aparelho com progresso antigo de aparecer zerado.
+   Nunca descarta: na dúvida entre dois valores, fica o maior. */
+function migrarItens(p){
+  if(!p) return null;
+  const saida = Object.assign({}, p.items || {});
+  Object.entries(p.verbs || {}).forEach(([k, v]) => {
+    const atual = saida[k] || {e: 0, h: 0};
+    saida[k] = {e: Math.max(atual.e | 0, v.errors | 0, v.e | 0),
+                h: Math.max(atual.h | 0, v.hits | 0, v.h | 0)};
+  });
+  return saida;
+}
+function migrarMelhor(b){
+  if(!b) return null;
+  const acc = Math.max(b.acc | 0, b.accuracy | 0);
+  return {score: b.score | 0, acc: acc};
+}
+
 function loadProgress(){
   // localStorage pode lancar em file:// ou com cookies bloqueados: nunca quebrar o jogo por isso.
   try{
@@ -1549,8 +1571,8 @@ function loadProgress(){
     if(!raw) return defaultProgress();
     const p=JSON.parse(raw);
     const d=defaultProgress();
-    return {verbs:p.verbs||d.verbs, best:p.best||d.best, trails:p.trails||d.trails,
-            missions:p.missions||d.missions,
+    return {items:migrarItens(p)||d.items, best:migrarMelhor(p.best)||d.best,
+            trails:p.trails||d.trails, missions:p.missions||d.missions,
             practice:typeof p.practice==="boolean"?p.practice:d.practice,
             mudo:!!p.mudo};
   }catch(e){ return defaultProgress(); }
@@ -1561,36 +1583,36 @@ function saveProgress(){
 }
 
 function verbStat(base){
-  return progress.verbs[base] || (progress.verbs[base]={errors:0,hits:0});
+  return progress.items[base] || (progress.items[base]={e:0,h:0});
 }
 
 // Verbos com erro pendente = os que ainda precisam de revisao.
 function weakVerbs(){
   return verbBank
-    .filter(v=>{ const e=progress.verbs[v.base]; return e && e.errors>e.hits; })
-    .sort((a,b)=>(progress.verbs[b.base].errors-progress.verbs[b.base].hits)
-                -(progress.verbs[a.base].errors-progress.verbs[a.base].hits));
+    .filter(v=>{ const t=progress.items[v.base]; return t && t.e>t.h; })
+    .sort((a,b)=>(progress.items[b.base].e-progress.items[b.base].h)
+                -(progress.items[a.base].e-progress.items[a.base].h));
 }
 
 function masteredVerbs(){
-  return verbBank.filter(v=>{ const e=progress.verbs[v.base]; return e && e.hits>=3 && e.hits>e.errors; });
+  return verbBank.filter(v=>{ const t=progress.items[v.base]; return t && t.h>=3 && t.h>t.e; });
 }
 
 function recordAnswer(q,ok){
   if(!q) return;
   const bases=q.verb ? [q.verb] : (q.verbs||[]);
   if(!bases.length) return;
-  bases.forEach(b=>{ const e=verbStat(b); if(ok) e.hits++; else e.errors++; });
+  bases.forEach(b=>{ const t=verbStat(b); if(ok) t.h++; else t.e++; });
   saveProgress();
 }
 
 // Sorteio enviesado para os verbos fracos: e daqui que sai a repeticao espacada.
 function verbWeight(v){
-  const e=progress.verbs[v.base];
-  if(!e) return 3;                       // nunca visto: prioridade alta
-  const net=e.errors-e.hits;
+  const t=progress.items[v.base];
+  if(!t) return 3;                       // nunca visto: prioridade alta
+  const net=t.e-t.h;
   if(net>0) return Math.min(12,3+net*3); // errando mais do que acerta
-  if(e.hits>=3) return 1;                // dominado: aparece pouco
+  if(t.h>=3) return 1;                   // dominado: aparece pouco
   return 2;
 }
 
@@ -2028,7 +2050,8 @@ function generateMemoryGame(){
 }
 
 
-function buildCategoryPool(category){
+function makeQuestions(category, limite){
+  const _corta = l => limite ? l.slice(0, limite) : l;
   const byBases=(bases)=>verbBank.filter(v=>bases.includes(v.base));
 
   function meaningFrom(list,count=10){
@@ -2087,107 +2110,107 @@ function buildCategoryPool(category){
         out.push(...meaningFrom([v],1));
         if(out.length<20) out.push(...contextFrom([v],1));
       });
-      return shuffle(out);
+      return _corta(shuffle(out));
     }
 
     case "contractions":
-      return shuffle(unit5Pool.filter(q=>/CONTRACTIONS|WHAT ARE YOU DOING|CAN \/ CAN'T|LISTENING — UNIT 5/.test(q.stage)));
+      return _corta(shuffle(unit5Pool.filter(q=>/CONTRACTIONS|WHAT ARE YOU DOING|CAN \/ CAN'T|LISTENING — UNIT 5/.test(q.stage))));
 
     case "clock_routine":
-      return shuffle(unit5Pool.filter(q=>/WHAT TIME IS IT|DAILY ROUTINE|SONG|LISTENING — THE TIME/.test(q.stage)));
+      return _corta(shuffle(unit5Pool.filter(q=>/WHAT TIME IS IT|DAILY ROUTINE|SONG|LISTENING — THE TIME/.test(q.stage))));
 
     case "time_numbers":
-      return shuffle(extraPool.filter(q=>/NUMBERS|WHAT TIME|LISTENING — THE TIME/.test(q.stage)));
+      return _corta(shuffle(extraPool.filter(q=>/NUMBERS|WHAT TIME|LISTENING — THE TIME/.test(q.stage))));
 
     case "world":
-      return shuffle(extraPool.filter(q=>/SOLAR SYSTEM|CULTURE/.test(q.stage)));
+      return _corta(shuffle(extraPool.filter(q=>/SOLAR SYSTEM|CULTURE/.test(q.stage))));
 
     case "listening":
-      return shuffle([
+      return _corta(shuffle([
         ...generateListeningQuestions(15),
         ...generateContextQuestions(4)
-      ]);
+      ]));
 
     case "vocabulary":
-      return shuffle([
+      return _corta(shuffle([
         ...generateMeaningQuestions(14),
         ...generateMatchGame(),
         ...generateMemoryGame(),
         ...generateTextRecall(5)
-      ]);
+      ]));
 
     case "ing_add":
-      return shuffle([
+      return _corta(shuffle([
         ...ingFrom(addList,14),
         ...meaningFrom(addList,5),
         ...contextFrom(addList,4)
-      ]);
+      ]));
 
     case "ing_drop_e":
-      return shuffle([
+      return _corta(shuffle([
         ...ingFrom(dropEList,10),
         ...meaningFrom(dropEList,5),
         ...contextFrom(dropEList,4)
-      ]);
+      ]));
 
     case "ing_double":
-      return shuffle([
+      return _corta(shuffle([
         ...ingFrom(doubleList,8),
         ...meaningFrom(doubleList,4),
         ...contextFrom(doubleList,3)
-      ]);
+      ]));
 
     case "be":
-      return shuffle([
+      return _corta(shuffle([
         ...generateBeQuestions(14),
         ...generateOrderQuestions(5)
-      ]);
+      ]));
 
     case "affirmative":
-      return shuffle([
+      return _corta(shuffle([
         ...generateOrderQuestions(12),
         ...generateBeQuestions(6),
         ...generateContextQuestions(6)
-      ]);
+      ]));
 
     case "negative_questions":
-      return shuffle([
+      return _corta(shuffle([
         ...generateNegativeQuestions(12),
         ...pick(baseQuestionPool.filter(q =>
           String(q.stage||"").includes("NEGATIV") ||
           String(q.stage||"").includes("PERGUNT") ||
           String(q.stage||"").includes("QUESTION")
         ),10)
-      ]);
+      ]));
 
     case "ticket":
-      return shuffle([
+      return _corta(shuffle([
         ...baseQuestionPool.filter(q=>String(q.stage||"").includes("TICKET"))
-      ]);
+      ]));
 
     case "movement":
-      return shuffle([
+      return _corta(shuffle([
         ...meaningFrom(movement,8),
         ...ingFrom(movement,8),
         ...contextFrom(movement,6)
-      ]);
+      ]));
 
     case "daily_actions":
-      return shuffle([
+      return _corta(shuffle([
         ...meaningFrom(daily,10),
         ...ingFrom(daily,10),
         ...contextFrom(daily,6)
-      ]);
+      ]));
 
     case "results_actions":
-      return shuffle([
+      return _corta(shuffle([
         ...meaningFrom(results,12),
         ...ingFrom(results,10),
         ...contextFrom(results,6)
-      ]);
+      ]));
 
     default:
-      buildQuestionPool();
+      makeTodasQuestions();
       return questions;
   }
 }
@@ -2306,9 +2329,9 @@ function startTrailStep(){
   missionStat(step.cat).iniciada=true;
 
   if(step.cat==="all"){
-    buildQuestionPool();
+    makeTodasQuestions();
   }else{
-    questions=buildCategoryPool(step.cat);
+    questions=makeQuestions(step.cat);
   }
   questions=shuffle(questions).slice(0,trailQuestionsPerStep);
 
@@ -2330,7 +2353,7 @@ function advanceTrail(){
     const fechada=trailStep;
     trailStep++;
     sfx.etapa();
-    showAchievement(
+    mostrarConquista(
       `<span class="aviso-t"><svg class=\"ic-txt\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#i-check\"/></svg> Etapa ${fechada+1} de ${trail.steps.length} concluída</span>`+
       `<span class="aviso-s">Agora: ${trail.steps[trailStep].label}</span>`, true);
     startTrailStep();
@@ -2434,7 +2457,7 @@ function resetProgress(){
   saveProgress();
   renderStartStats();
   renderCategoryBadges();
-  showAchievement("Progresso apagado.");
+  mostrarConquista("Progresso apagado.");
 }
 
 function posicionarAviso(pop){
@@ -2453,7 +2476,7 @@ function marcarEtapaFechada(i){
   setTimeout(()=>n.classList.remove("fechou"),700);
 }
 
-function showAchievement(text,etapa){
+function mostrarConquista(text,etapa){
   const pop=document.getElementById("achievementPop");
   if(!pop)return;
   pop.classList.toggle("etapa",!!etapa);
@@ -2470,9 +2493,9 @@ function updateCombo(ok){
   if(ok){
     combo++;
     if(combo>bestCombo) bestCombo=combo;
-    if(combo===3) showAchievement("Três seguidas");
-    if(combo===5) showAchievement("Cinco seguidas");
-    if(combo===8) showAchievement("Oito seguidas");
+    if(combo===3) mostrarConquista("Três seguidas");
+    if(combo===5) mostrarConquista("Cinco seguidas");
+    if(combo===8) mostrarConquista("Oito seguidas");
   }else{
     combo=0;
   }
@@ -2494,12 +2517,12 @@ function _startCategory(category){
   missionStat(category).iniciada=true;saveProgress();
   combo=0;bestCombo=0;answeredCount=0;
   if(category==="all"){
-    buildQuestionPool();
+    makeTodasQuestions();
   }else{
-    questions=buildCategoryPool(category);
+    questions=makeQuestions(category);
   }
   if(!questions.length){
-    showAchievement("Nada para revisar! Jogue uma missão para gerar revisões.");
+    mostrarConquista("Nada para revisar! Jogue uma missão para gerar revisões.");
     openCategories();
     return;
   }
@@ -2515,7 +2538,7 @@ function _startCategory(category){
   renderQuestion();
 }
 
-function buildQuestionPool(){
+function makeTodasQuestions(){
   // Keep a small random sample of handcrafted items, then combine with generated variations.
   const fixed = pick(baseQuestionPool,10);
   const generated = [
@@ -3195,7 +3218,7 @@ function endGame(){
   // Recorde so conta no modo desafio, onde o erro tem custo.
   if(!practiceMode && total){
     if(score>progress.best.score) progress.best.score=score;
-    if(acc>progress.best.accuracy) progress.best.accuracy=acc;
+    if(acc>progress.best.acc) progress.best.acc=acc;
   }
   // Registra a missao como concluida quando chegou ao fim com vidas.
   if(total&&(lives>0||practiceMode)){
@@ -3438,14 +3461,12 @@ function _carregarPeer(){
   });
 }
 
-/* Cada motor batizou o aviso flutuante de um jeito: showAchievement no de
-   inglês, mostrarConquista nos do céu. Referenciar o nome que não existe
-   lança ReferenceError — foi o que travava a entrada na sala logo depois de
-   escrever "Conectando...". `typeof` não lança para identificador não
-   declarado; comparar direto, sim. */
+/* O aviso flutuante hoje tem um nome só nos quatro motores. O `typeof` fica
+   porque referenciar identificador não declarado lança ReferenceError — foi
+   assim que a entrada na sala travou em "Conectando..." quando os nomes ainda
+   divergiam. */
 function _flutuante(txt){
-  if(typeof showAchievement === "function") showAchievement(txt);
-  else if(typeof mostrarConquista === "function") mostrarConquista(txt);
+  if(typeof mostrarConquista === "function") mostrarConquista(txt);
 }
 function _avisoSala(txt){
   const e = document.getElementById("salaEstado");
@@ -3710,8 +3731,8 @@ function _catalogoMissoes(){
          .map(c => [c, missionMeta[c].title]);
 }
 function _perguntasSala(cat){
-  const qs = cat === "all" ? (buildQuestionPool(), questions.slice())
-                           : buildCategoryPool(cat);
+  const qs = cat === "all" ? (makeTodasQuestions(), questions.slice())
+                           : makeQuestions(cat);
   return shuffle(qs).slice(0, 10);
 }
 

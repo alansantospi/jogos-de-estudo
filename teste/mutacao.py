@@ -16,6 +16,11 @@ MUTACOES = [
     ("artes.html", "navegacao", "motor limpando o endereço a cada tela",
      "function show(id){migalhas(id);",
      'function show(id){migalhas(id);try{history.replaceState(null,"",location.pathname)}catch(e){}'),
+    ("time-travel-english.html", "migracao", "migração descartando o progresso antigo",
+     "Object.entries(p.verbs || {}).forEach", "Object.entries({}).forEach"),
+    ("time-travel-english.html", "migracao", "migração ficando com o menor em vez do maior",
+     "h: Math.max(atual.h | 0, v.hits | 0, v.h | 0)",
+     "h: Math.min(atual.h | 999, v.hits | 999, v.h | 999)"),
     ("index.html", "perfis", "apagar destruindo em vez de ir para a lixeira",
      "const guardado = {};",
      'const guardado = {}; if(true){ Object.values(BASES).forEach(b => '

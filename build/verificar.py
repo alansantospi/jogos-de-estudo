@@ -10,9 +10,18 @@ derruba o build.
 import io, re, sys
 
 # Nomes que existem só em um dos motores: usar sem `typeof` é erro.
-SO_EM_UM = ["showAchievement", "mostrarConquista", "makeQuestions",
-            "buildCategoryPool", "buildQuestionPool", "allItems", "verbBank",
+SO_EM_UM = ["mostrarConquista", "makeQuestions", "allItems", "verbBank",
             "record", "weakItems", "weakVerbs", "nomes", "missionMeta"]
+
+# Nomes que os dois motores tinham para a mesma coisa e que já convergiram.
+# Voltar a usá-los é regressão, e a Fase 2 existiu para acabar com eles.
+APOSENTADOS = {
+    "showAchievement": "mostrarConquista",
+    "buildCategoryPool": "makeQuestions",
+    "buildQuestionPool": "makeTodasQuestions",
+    "progress.verbs": "progress.items",
+    "best.accuracy": "best.acc",
+}
 
 JOGOS = ("historia.html", "artes.html", "exploradores-do-ceu.html",
          "time-travel-english.html")
@@ -42,8 +51,16 @@ for arq in JOGOS:
                           % (arq.replace(".html", ""), nome, linha))
             break
 
+for arq in JOGOS:
+    js = _sem_comentarios("\n".join(re.findall(r"<script>(.*?)</script>",
+                          io.open(arq, encoding="utf-8").read(), re.S)))
+    for velho, novo_nome in APOSENTADOS.items():
+        if velho in js:
+            falhas.append("%s: usa %s, que virou %s"
+                          % (arq.replace(".html", ""), velho, novo_nome))
+
 for f in falhas:
     print("  " + f)
-print("  ok  nenhuma chamada a funcao de outro motor" if not falhas
+print("  ok  os dois motores falam a mesma lingua" if not falhas
       else "  %d problema(s)" % len(falhas))
 sys.exit(1 if falhas else 0)

@@ -16,6 +16,7 @@ python3 build/conteudo_ingles.py
 python3 build/letras.py
 python3 build/ilustracao.py
 python3 build/ingles.py
+python3 build/progresso.py
 python3 build/trilha.py
 python3 build/aviso.py
 python3 build/texto.py
@@ -24,6 +25,9 @@ python3 build/busca.py
 python3 build/alternativas.py
 python3 build/medir_alternativas.py
 python3 build/medir_plausibilidade.py
+# Os remendos por motor já rodaram; daqui para frente é código compartilhado,
+# então os nomes convergem primeiro.
+python3 build/nomes.py
 python3 build/extras.py
 python3 build/sala.py
 python3 build/verificar.py

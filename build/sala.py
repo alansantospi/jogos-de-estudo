@@ -160,14 +160,12 @@ function _carregarPeer(){
   });
 }
 
-/* Cada motor batizou o aviso flutuante de um jeito: showAchievement no de
-   inglês, mostrarConquista nos do céu. Referenciar o nome que não existe
-   lança ReferenceError — foi o que travava a entrada na sala logo depois de
-   escrever "Conectando...". `typeof` não lança para identificador não
-   declarado; comparar direto, sim. */
+/* O aviso flutuante hoje tem um nome só nos quatro motores. O `typeof` fica
+   porque referenciar identificador não declarado lança ReferenceError — foi
+   assim que a entrada na sala travou em "Conectando..." quando os nomes ainda
+   divergiam. */
 function _flutuante(txt){
-  if(typeof showAchievement === "function") showAchievement(txt);
-  else if(typeof mostrarConquista === "function") mostrarConquista(txt);
+  if(typeof mostrarConquista === "function") mostrarConquista(txt);
 }
 function _avisoSala(txt){
   const e = document.getElementById("salaEstado");
@@ -443,8 +441,8 @@ function _catalogoMissoes(){
          .map(c => [c, missionMeta[c].title]);
 }
 function _perguntasSala(cat){
-  const qs = cat === "all" ? (buildQuestionPool(), questions.slice())
-                           : buildCategoryPool(cat);
+  const qs = cat === "all" ? (makeTodasQuestions(), questions.slice())
+                           : makeQuestions(cat);
   return shuffle(qs).slice(0, 10);
 }
 """,

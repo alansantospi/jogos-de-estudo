@@ -236,7 +236,7 @@ para a missão por expressão regular sobre o texto da fase, em três
 reservatórios, mais geradores por regra. Desembaraçar é trabalho da Fase 2;
 tentar aqui misturaria as duas e tiraria a garantia de "saída idêntica".
 
-### Fase 2 — Unificar os dois motores  `parcial: conteúdo feito, código não`
+### Fase 2 — Unificar os dois motores ✔ feita em 22/09/2026
 
 Normalizar os nomes divergentes, fundir num motor só, absorver o inglês como
 `geradores`.
@@ -249,11 +249,26 @@ conferido rodando os filtros antigos e comparando conjunto a conjunto: os
 quatro filtros puros dão exatamente o mesmo. Com isso são **499 questões como
 dado, 162 derivadas**, e os dois medidores de viés cobrem os quatro jogos.
 
-**Falta o lado do código**, que é onde mora o risco: fundir os dois motores
-num só e declarar os 12 geradores por regra no esquema. É o que muda o
-formato do progresso salvo e exige migração — e migração mal feita já custou
-o progresso da Anne uma vez. Não faço isso no mesmo passo em que mexi no
-conteúdo, para que cada um possa ser conferido sozinho.
+**O lado do código, feito em seguida e em passo próprio.**
+
+O progresso salvo passou a ter um formato só: o de inglês guardava
+`verbs:{base:{errors,hits}}` e `best.accuracy`, agora usa `items:{id:{e,h}}` e
+`best.acc`, como os outros. **A migração é a parte perigosa**, e por isso tem
+teste próprio (`teste/casos/migracao.js`) contra os cinco formatos que existem
+num aparelho de verdade — o antigo, o novo, os dois misturados, o vazio e o
+caminho completo de gravar e carregar. Na dúvida entre dois valores ela fica
+com o maior: nunca descarta acerto.
+
+Os nomes divergentes convergiram (`showAchievement` → `mostrarConquista`,
+`buildCategoryPool` → `makeQuestions`, `buildQuestionPool` →
+`makeTodasQuestions`), com as assinaturas alinhadas. `build/verificar.py`
+derruba o build se algum voltar.
+
+**O que não foi feito e por quê.** Os 12 geradores por regra do inglês
+continuam código, não declaração no esquema. Fundir os quatro jogos num
+arquivo de motor só depende da montagem de verdade — que é a Fase 3. O que a
+Fase 2 entregou é o que ela precisava entregar: os dois motores falam a mesma
+língua, então um passo de build deixa de precisar de dois caminhos.
 
 **Quebra:** o formato do progresso salvo muda. Precisa de migração — já
 fizemos uma (perfis) e o risco conhecido é perder o progresso da criança, que
