@@ -680,18 +680,56 @@ function _aplicar(d){
   Object.entries(d.historico || {}).forEach(([id, h]) => gravar(HIST_CHAVE + ":" + id, h));
 }
 
+/* As mensagens do Supabase vêm em inglês e não dizem o que fazer. */
+function _emPortugues(msg){
+  const m = String(msg || "");
+  if(/email not confirmed/i.test(m))
+    return "A conta existe, mas falta confirmar o e-mail. Veja o passo 5 do CONTA.md.";
+  if(/invalid login/i.test(m))
+    return "E-mail ou senha não conferem.";
+  if(/already registered|user already/i.test(m))
+    return "Já existe conta com esse e-mail. Confira a senha.";
+  if(/password.*(6|8|short|least)/i.test(m))
+    return "A senha é curta demais. Use pelo menos 8 caracteres.";
+  if(/rate limit|too many/i.test(m))
+    return "Muitas tentativas seguidas. Espere um minuto.";
+  if(/fetch|network/i.test(m))
+    return "Sem resposta do servidor. Verifique a internet.";
+  return m;
+}
+
 async function entrarConta(ev){
   if(ev) ev.preventDefault();
   const email = document.getElementById("contaEmail").value.trim();
   const senha = document.getElementById("contaSenha").value;
-  const sb = await _cliente();
+  _recado("Entrando...");
+  let sb;
+  try{ sb = await _cliente(); }
+  catch(e){ return _recado("Não consegui carregar a biblioteca. Verifique a internet."); }
+
   let {data, error} = await sb.auth.signInWithPassword({email, password: senha});
+  let novaConta = false;
   if(error && /invalid login/i.test(error.message)){
+    novaConta = true;
     ({data, error} = await sb.auth.signUp({email, password: senha}));
-    if(!error) _recado("Conta criada. Confirme o e-mail se for pedido e entre de novo.");
   }
-  if(error) return _recado("Não entrou: " + error.message);
-  _sessao = data.session; await sincronizar(); desenhar();
+  if(error) return _recado(_emPortugues(error.message));
+
+  /* Com confirmação de e-mail ligada, o cadastro não devolve sessão: a
+     conta existe mas ainda não dá para entrar. Dizer isso é melhor do que
+     redesenhar a tela como se nada tivesse acontecido. */
+  if(!data || !data.session){
+    return _recado(novaConta
+      ? "Conta criada. Confirme pelo link no e-mail e entre de novo. Se o link "
+        + "levar a localhost, falta ajustar o Site URL — veja o CONTA.md."
+      : "Não foi possível abrir a sessão. Tente de novo.");
+  }
+  _sessao = data.session;
+  await sincronizar();
+  const recado = document.getElementById("contaRecado");
+  const texto = recado ? recado.textContent : "";
+  desenhar();
+  _recado(texto || "Entrou.");
 }
 async function entrarGoogle(){
   const sb = await _cliente();

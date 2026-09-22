@@ -85,13 +85,35 @@ Se algum dos dois estiver errado, a aba **Conta** diz qual e por quê — URL co
 `/rest/v1` no fim, ou a chave secreta no lugar da pública — em vez de dar erro
 de rede sem explicação.
 
-## 5. Opcional: entrar com Google
+## 5. Dizer ao Supabase qual é o endereço do jogo
 
-Em **Authentication → Providers → Google**, ligue o provedor e siga as
-instruções do Supabase (exige criar credenciais OAuth no Google Cloud). Em
-**Authentication → URL Configuration**, ponha
-`https://alansantospi.github.io/jogos-de-estudo/` como Site URL. Sem isso, o
-botão "Entrar com Google" não volta para o lugar certo.
+**Este passo não é opcional.** Por padrão o Supabase acha que o site roda em
+`http://localhost:3000`, e manda o link de confirmação de e-mail para lá — que
+no seu celular dá *conexão recusada*.
+
+Em **Authentication → URL Configuration**:
+
+- **Site URL**: `https://alansantospi.github.io/jogos-de-estudo/`
+- **Redirect URLs**: adicione o mesmo endereço
+
+### Mais simples: dispensar a confirmação
+
+Para um jogo de família, com uma conta só e o e-mail sendo seu, a confirmação
+não protege de nada. Em **Authentication → Sign In / Providers → Email**,
+desligue **Confirm email**. O cadastro passa a valer na hora.
+
+Se você já tentou criar a conta antes disso, ela ficou pendente. Em
+**Authentication → Users**, apague o usuário e cadastre de novo pelo jogo —
+ou confirme-o ali mesmo, pelo menu de três pontos.
+
+Mesmo desligando a confirmação, deixe o **Site URL** correto: ele também vale
+para recuperação de senha e para o login com Google.
+
+## 6. Opcional: entrar com Google
+
+Em **Authentication → Sign In / Providers → Google**, ligue o provedor e siga
+as instruções do Supabase — exige criar credenciais OAuth no Google Cloud. O
+Site URL do passo 5 já cobre o retorno.
 
 ## Como a sincronização se comporta
 
