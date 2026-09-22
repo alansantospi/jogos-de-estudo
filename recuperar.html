@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Recuperar progresso</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light dark;
+ --fundo:oklch(0.975 0.008 265);--carta:oklch(1 0 0);--risco:oklch(0.905 0.012 265);
+ --texto:oklch(0.28 0.030 268);--texto-2:oklch(0.50 0.028 268);
+ --acao:oklch(0.55 0.20 265);--certo:oklch(0.50 0.16 148);--alerta:oklch(0.47 0.19 22)}
+@media (prefers-color-scheme:dark){:root{
+ --fundo:oklch(0.205 0.028 272);--carta:oklch(0.262 0.030 272);--risco:oklch(0.365 0.030 272);
+ --texto:oklch(0.975 0.008 272);--texto-2:oklch(0.800 0.020 272);
+ --acao:oklch(0.72 0.17 265)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:Nunito,system-ui,sans-serif;
+ font-weight:600;line-height:1.55;padding:1.5rem}
+.wrap{max-width:46rem;margin:0 auto}
+h1{font-family:Fredoka,sans-serif;font-size:1.75rem;margin:0 0 .25rem}
+h2{font-family:Fredoka,sans-serif;font-size:1.125rem;margin:2rem 0 .75rem}
+p{color:var(--texto-2);margin:.25rem 0 1rem}
+.achado{background:var(--carta);border:2px solid var(--risco);border-radius:14px;
+ padding:1rem 1.25rem;margin-bottom:.75rem;display:grid;gap:.35rem}
+.achado.util{border-color:var(--certo)}
+.achado b{font-family:Fredoka,sans-serif;font-size:1.0625rem}
+.achado small{color:var(--texto-2)}
+.chave{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--texto-2);word-break:break-all}
+button{min-height:2.75rem;padding:0 1.25rem;border-radius:999px;cursor:pointer;
+ font-family:Fredoka,sans-serif;font-size:1rem;font-weight:600;border:0}
+.primario{background:var(--acao);color:#fff}
+.fantasma{background:none;color:var(--texto-2);border:2px solid var(--risco)}
+.linha{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+.aviso{background:var(--carta);border:2px solid var(--alerta);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+#recado{min-height:1.5em;font-weight:700;margin-top:1rem}
+textarea{width:100%;min-height:7rem;background:var(--carta);color:var(--texto);
+ border:2px solid var(--risco);border-radius:12px;padding:.75rem;font-family:ui-monospace,monospace;font-size:.75rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Recuperar progresso</h1>
+<p>Esta página só <b>lê</b> o que está guardado neste aparelho. Nada é alterado até você
+clicar em restaurar.</p>
+
+<div class="aviso">
+<b>Antes de mais nada:</b> não limpe os dados do navegador e não jogue nas matérias
+que quer recuperar — uma partida nova pode gravar por cima.
+</div>
+
+<h2>O que encontrei neste aparelho</h2>
+<div id="achados"></div>
+
+<h2>Guardar uma cópia</h2>
+<p>Copie este texto para um lugar seguro antes de mexer em qualquer coisa. Ele contém
+tudo o que foi encontrado.</p>
+<textarea id="copia" readonly></textarea>
+<div class="linha">
+  <button class="fantasma" onclick="copiar()">Copiar tudo</button>
+  <button class="fantasma" onclick="baixar()">Baixar arquivo</button>
+</div>
+
+<h2>Trazer de volta de uma cópia</h2>
+<p>Se você guardou um texto destes antes, cole aqui.</p>
+<textarea id="colar" placeholder="Cole aqui o texto salvo"></textarea>
+<div class="linha"><button class="primario" onclick="restaurarColado()">Restaurar da cópia</button></div>
+
+<p id="recado"></p>
+</div>
+
+<script>
+const BASES = {ing:"ttg_progress_v1", cien:"sky_progress_v1",
+               hist:"historia_progress_v1", arte:"artes_progress_v1"};
+const MATERIA = {ing:"Inglês", cien:"Ciências", hist:"História", arte:"Arte"};
+const PERFIS = "jogos_perfis_v1", HIST = "jogos_historico_v1", LIXO = "jogos_lixeira_v1";
+
+const ler = k => { try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } };
+const recado = t => document.getElementById("recado").textContent = t;
+
+/* Descreve um progresso em português, para dar para reconhecer qual é qual. */
+function resumir(p){
+  if(!p || typeof p !== "object") return "vazio";
+  const itens = Object.keys(p.items || {}).length;
+  const feitas = Object.values(p.missions || {}).filter(m => m && m.concluidas).length;
+  const trilhas = Object.values(p.trails || {}).filter(Boolean).length;
+  const rec = (p.best && p.best.score) || 0;
+  const partes = [];
+  if(feitas) partes.push(feitas + (feitas === 1 ? " missão concluída" : " missões concluídas"));
+  if(trilhas) partes.push(trilhas + (trilhas === 1 ? " trilha" : " trilhas"));
+  if(itens) partes.push(itens + (itens === 1 ? " questão" : " questões") + " com histórico");
+  if(rec) partes.push("recorde " + rec);
+  return partes.join(" · ") || "sem nada dentro";
+}
+function peso(p){
+  if(!p) return 0;
+  return Object.keys(p.items || {}).length
+       + 5 * Object.values(p.missions || {}).filter(m => m && m.concluidas).length;
+}
+
+function varrer(){
+  const achados = [];
+  const perfis = ler(PERFIS) || [];
+  const nomeDe = id => (perfis.find(p => p.id === id) || {}).nome || "perfil apagado";
+  for(let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i);
+    for(const [jogo, base] of Object.entries(BASES)){
+      if(k !== base && k.indexOf(base + ":") !== 0) continue;
+      const v = ler(k);
+      const sufixo = k === base ? null : k.slice(base.length + 1);
+      achados.push({k, jogo, v, peso: peso(v),
+        titulo: MATERIA[jogo],
+        origem: sufixo ? "perfil " + nomeDe(sufixo) : "antes dos perfis (cópia original)",
+        resumo: resumir(v)});
+    }
+    if(k === HIST || k.indexOf(HIST + ":") === 0){
+      const v = ler(k) || [];
+      achados.push({k, jogo: "hist", v, peso: v.length, titulo: "Histórico de partidas",
+        origem: k === HIST ? "sem perfil" : "perfil " + nomeDe(k.slice(HIST.length + 1)),
+        resumo: v.length + (v.length === 1 ? " partida" : " partidas")});
+    }
+  }
+  /* Lixeira: perfis apagados depois da correção guardam cópia aqui. */
+  const lixo = ler(LIXO) || [];
+  lixo.forEach((l, i) => achados.push({k: LIXO + "#" + i, lixo: l, peso: 999,
+    titulo: "Na lixeira: " + l.nome,
+    origem: "apagado em " + new Date(l.quando).toLocaleString("pt-BR"),
+    resumo: Object.keys(l.dados || {}).length + " itens guardados"}));
+  return achados.sort((a, b) => b.peso - a.peso);
+}
+
+function pintar(){
+  const achados = varrer();
+  const c = document.getElementById("achados");
+  c.innerHTML = achados.length ? achados.map((a, i) =>
+    '<div class="achado' + (a.peso > 0 ? " util" : "") + '">'
+    + "<b>" + a.titulo + "</b>"
+    + "<span>" + a.resumo + "</span>"
+    + "<small>" + a.origem + "</small>"
+    + '<span class="chave">' + a.k + "</span>"
+    + (a.peso > 0 ? '<div class="linha"><button class="primario" onclick="restaurar(' + i + ')">'
+        + "Restaurar isto para um aluno</button></div>" : "")
+    + "</div>").join("")
+    : '<div class="achado"><b>Nada encontrado</b><span>Não há progresso guardado neste '
+      + "navegador. Tente no aparelho onde ela costuma jogar, e no mesmo navegador.</span></div>";
+
+  const copia = {};
+  for(let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i);
+    if(k.startsWith("jogos_") || Object.values(BASES).some(b => k === b || k.startsWith(b + ":")))
+      copia[k] = localStorage.getItem(k);
+  }
+  document.getElementById("copia").value = JSON.stringify(copia, null, 1);
+  window._achados = achados;
+}
+
+function escolherPerfil(){
+  const perfis = ler(PERFIS) || [];
+  if(!perfis.length){
+    const nome = prompt("Nenhum aluno cadastrado. Nome do aluno:", "Anne");
+    if(nome === null) return null;
+    const p = {id: "p" + Date.now().toString(36), nome: nome.trim() || "Anne",
+               cor: "--alt-1", criado: Date.now()};
+    localStorage.setItem(PERFIS, JSON.stringify([p]));
+    localStorage.setItem("jogos_perfil_atual", p.id);
+    return p.id;
+  }
+  const lista = perfis.map((p, i) => (i + 1) + ") " + p.nome).join("\n");
+  const r = prompt("Restaurar para qual aluno?\n" + lista, "1");
+  const i = parseInt(r, 10) - 1;
+  return perfis[i] ? perfis[i].id : null;
+}
+
+function restaurar(i){
+  const a = window._achados[i];
+  const id = escolherPerfil();
+  if(!id) return;
+  if(a.lixo){
+    Object.entries(a.lixo.dados).forEach(([k, v]) => {
+      const base = k.split(":")[0];
+      localStorage.setItem(base + ":" + id, v);
+    });
+    recado("Restaurado da lixeira para o aluno escolhido.");
+  }else{
+    const base = a.k.split(":")[0];
+    localStorage.setItem(base + ":" + id, JSON.stringify(a.v));
+    recado("Restaurado: " + a.titulo + " → aluno escolhido.");
+  }
+  pintar();
+}
+
+function copiar(){
+  const t = document.getElementById("copia");
+  t.select(); try{ document.execCommand("copy"); recado("Copiado."); }
+  catch(e){ recado("Selecione o texto e copie à mão."); }
+}
+function baixar(){
+  const b = new Blob([document.getElementById("copia").value], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = "jogos-de-estudo-copia.json";
+  a.click();
+  recado("Arquivo gerado.");
+}
+function restaurarColado(){
+  let d;
+  try{ d = JSON.parse(document.getElementById("colar").value); }
+  catch(e){ return recado("Esse texto não é uma cópia válida."); }
+  let n = 0;
+  Object.entries(d).forEach(([k, v]) => { localStorage.setItem(k, v); n++; });
+  recado("Restaurados " + n + " itens. Volte para a página inicial.");
+  pintar();
+}
+pintar();
+</script>
+</body>
+</html>

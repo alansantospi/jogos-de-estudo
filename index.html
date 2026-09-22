@@ -167,6 +167,12 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
   body{background:#fff;color:#000}
   .cartao-resumo,.grafico,.fraco{border-color:#999;background:#fff}
 }
+
+.lixo-item{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3) var(--s-4);margin-bottom:var(--s-2)}
+.lixo-item span{color:var(--texto-2);font-size:0.8125rem;margin-right:auto}
+.vazio a{color:var(--ingles)}
 </style>
 </head>
 <body>
@@ -228,6 +234,8 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
   <section id="v-perfis" class="vista">
     <h2>Quem está jogando?</h2>
     <div id="listaPerfis" class="perfis"></div>
+    <div id="lixeira"></div>
+    <p class="vazio">Perdeu algum progresso? <a href="recuperar.html">Página de recuperação</a>.</p>
     <div class="cartao">
       <label class="campo"><span>Nome do novo aluno</span>
         <input id="novoNome" type="text" maxlength="16" autocomplete="off" placeholder="Anne"></label>
@@ -300,15 +308,69 @@ function renomearPerfil(id){
   p.nome = String(novo).trim().slice(0, 16) || p.nome;
   gravar(PERFIS_CHAVE, l); desenhar();
 }
+/* Apagar não destrói: guarda na lixeira. Meses de estudo não podem sumir
+   atrás de um clique e um "ok" — foi exatamente o que aconteceu uma vez. */
+const LIXO_CHAVE = "jogos_lixeira_v1";
+const LIXO_DIAS = 60;
+
 function apagarPerfil(id){
   const p = lerPerfis().find(x => x.id === id);
-  if(!p || !confirm("Apagar o perfil de " + p.nome + " e todo o progresso dele?")) return;
-  gravar(PERFIS_CHAVE, lerPerfis().filter(x => x.id !== id));
+  if(!p) return;
+  const resumo = _quantoTem(id);
+  const pergunta = "Apagar o perfil de " + p.nome + "?\n\n" + resumo
+    + "\n\nFica na lixeira por " + LIXO_DIAS + " dias e dá para trazer de volta."
+    + "\n\nPara confirmar, escreva o nome do aluno:";
+  const digitado = prompt(pergunta, "");
+  if(digitado === null) return;
+  if(digitado.trim().toLowerCase() !== p.nome.trim().toLowerCase()){
+    alert("O nome não confere. Nada foi apagado.");
+    return;
+  }
+  const guardado = {};
   try{
-    Object.values(BASES).forEach(b => localStorage.removeItem(b + ":" + id));
-    localStorage.removeItem(HIST_CHAVE + ":" + id);
+    Object.values(BASES).forEach(b => {
+      const v = localStorage.getItem(b + ":" + id);
+      if(v !== null){ guardado[b + ":" + id] = v; localStorage.removeItem(b + ":" + id); }
+    });
+    const h = localStorage.getItem(HIST_CHAVE + ":" + id);
+    if(h !== null){ guardado[HIST_CHAVE + ":" + id] = h; localStorage.removeItem(HIST_CHAVE + ":" + id); }
+    const lixo = (ler(LIXO_CHAVE) || [])
+      .filter(l => Date.now() - l.quando < LIXO_DIAS * 864e5);
+    lixo.push({id, nome: p.nome, cor: p.cor, quando: Date.now(), dados: guardado});
+    gravar(LIXO_CHAVE, lixo);
   }catch(e){}
+  gravar(PERFIS_CHAVE, lerPerfis().filter(x => x.id !== id));
   desenhar();
+}
+
+/* Diz em português o que se perde, antes de perguntar. */
+function _quantoTem(id){
+  let missoes = 0, questoes = 0;
+  Object.values(BASES).forEach(b => {
+    const p = ler(b + ":" + id);
+    if(!p) return;
+    missoes += Object.values(p.missions || {}).filter(m => m && m.concluidas).length;
+    questoes += Object.keys(p.items || {}).length;
+  });
+  const partidas = (ler(HIST_CHAVE + ":" + id) || []).length;
+  const partes = [];
+  if(missoes) partes.push(missoes + (missoes === 1 ? " missão concluída" : " missões concluídas"));
+  if(questoes) partes.push(questoes + (questoes === 1 ? " questão" : " questões") + " com histórico");
+  if(partidas) partes.push(partidas + (partidas === 1 ? " partida" : " partidas"));
+  return partes.length ? "Tem " + partes.join(", ") + "." : "Não há progresso guardado.";
+}
+
+function restaurarDaLixeira(i){
+  const lixo = ler(LIXO_CHAVE) || [];
+  const l = lixo[i];
+  if(!l) return;
+  const perfis = lerPerfis();
+  if(!perfis.some(p => p.id === l.id))
+    perfis.push({id: l.id, nome: l.nome, cor: l.cor, criado: l.quando});
+  gravar(PERFIS_CHAVE, perfis);
+  Object.entries(l.dados || {}).forEach(([k, v]) => { try{ localStorage.setItem(k, v); }catch(e){} });
+  gravar(LIXO_CHAVE, lixo.filter((_, n) => n !== i));
+  trocarPerfil(l.id);
 }
 
 /* ---------- leitura do que os jogos salvaram ---------- */
@@ -354,6 +416,16 @@ function pintarPerfis(){
     + '<button class="apagar" onclick="apagarPerfil(\'' + p.id + '\')" aria-label="Apagar ' + esc(p.nome) + '">remover</button>'
     + "</div>").join("")
     || '<p class="vazio">Nenhum aluno ainda. Crie o primeiro abaixo.</p>';
+
+  const lixo = (ler(LIXO_CHAVE) || []).filter(l => Date.now() - l.quando < LIXO_DIAS * 864e5);
+  const cx = document.getElementById("lixeira");
+  cx.innerHTML = lixo.length
+    ? "<h3>Na lixeira</h3>" + lixo.map((l, i) =>
+        '<div class="lixo-item"><b>' + esc(l.nome) + "</b>"
+        + "<span>apagado em " + new Date(l.quando).toLocaleDateString("pt-BR") + "</span>"
+        + '<button class="fantasma" onclick="restaurarDaLixeira(' + i + ')">Trazer de volta</button>'
+        + "</div>").join("")
+    : "";
 }
 function esc(t){ return String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
