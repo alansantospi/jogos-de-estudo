@@ -2661,7 +2661,10 @@
    "enunciado": "Qual é a forma contraída de “I am studying”?",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "certa": "I'm studying",
    "erradas": [
@@ -2681,7 +2684,10 @@
    "enunciado": "Qual é a forma contraída de “She is studying at home”?",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "certa": "She's studying at home",
    "erradas": [
@@ -2701,7 +2707,10 @@
    "enunciado": "Qual é a forma contraída de “They are watching TV”?",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "certa": "They're watching TV",
    "erradas": [
@@ -2721,7 +2730,10 @@
    "enunciado": "Complete: “Lilly ______ studying at school.” (negativa)",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "certa": "isn't",
    "erradas": [
@@ -2741,7 +2753,10 @@
    "enunciado": "Complete: “Joe and Jill ______ dancing.” (negativa)",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "certa": "aren't",
    "erradas": [
@@ -2761,7 +2776,10 @@
    "enunciado": "Associe a forma completa à contraída.",
    "fase": "CONTRACTIONS",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.9"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -2829,7 +2847,10 @@
    "enunciado": "Como se pergunta “o que você está fazendo?” em inglês?",
    "fase": "WHAT ARE YOU DOING?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.10",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.10"
+   },
    "origem": "derivada",
    "certa": "What are you doing?",
    "erradas": [
@@ -2849,7 +2870,10 @@
    "enunciado": "“What are you doing?” Qual é uma resposta correta?",
    "fase": "WHAT ARE YOU DOING?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.10",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.10"
+   },
    "origem": "derivada",
    "certa": "I'm studying at home.",
    "erradas": [
@@ -2914,7 +2938,10 @@
    "enunciado": "Complete: “We ______ learn more about different time machines.”",
    "fase": "CAN / CAN'T",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.12",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.12"
+   },
    "origem": "derivada",
    "certa": "can",
    "erradas": [
@@ -2934,7 +2961,10 @@
    "enunciado": "Complete: “We ______ travel to the future now.”",
    "fase": "CAN / CAN'T",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.12",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.12"
+   },
    "origem": "derivada",
    "certa": "can't",
    "erradas": [
@@ -2968,7 +2998,10 @@
    "enunciado": "Na história, o que Leo diz enquanto sobe as escadas de Big Ben?",
    "fase": "CAN / CAN'T",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.33",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.33"
+   },
    "origem": "derivada",
    "certa": "I can climb fast.",
    "erradas": [
@@ -2988,7 +3021,10 @@
    "enunciado": "12:00 p.m. é...",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.30",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.30"
+   },
    "origem": "derivada",
    "certa": "midday",
    "erradas": [
@@ -3008,7 +3044,10 @@
    "enunciado": "12:00 a.m. é...",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.30",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.30"
+   },
    "origem": "derivada",
    "certa": "midnight",
    "erradas": [
@@ -3028,7 +3067,10 @@
    "enunciado": "Como o livro lê o horário 8:30?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.31",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.31"
+   },
    "origem": "derivada",
    "certa": "It's eight thirty.",
    "erradas": [
@@ -3048,7 +3090,10 @@
    "enunciado": "Como o livro lê o horário 3:45?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.31",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.31"
+   },
    "origem": "derivada",
    "certa": "It's three forty-five.",
    "erradas": [
@@ -3068,7 +3113,10 @@
    "enunciado": "Como o livro lê o horário 7:15?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.31",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.31"
+   },
    "origem": "derivada",
    "certa": "It's seven fifteen.",
    "erradas": [
@@ -3088,7 +3136,10 @@
    "enunciado": "O que significa a.m.?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.31",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.31"
+   },
    "origem": "derivada",
    "certa": "Da meia-noite ao meio-dia (manhã)",
    "erradas": [
@@ -3128,7 +3179,10 @@
    "enunciado": "Associe cada ação da rotina ao seu significado.",
    "fase": "DAILY ROUTINE",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.32",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.32"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -3162,7 +3216,10 @@
    "enunciado": "Coloque a rotina do dia na ordem, do começo ao fim.",
    "fase": "DAILY ROUTINE",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.32",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.32"
+   },
    "origem": "derivada",
    "palavras": [
     "getting up",
@@ -3196,7 +3253,10 @@
    "enunciado": "Complete: “It's 7:00 a.m. and I am ______ breakfast.”",
    "fase": "DAILY ROUTINE",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.32",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.32"
+   },
    "origem": "derivada",
    "aceitas": [
     "having"
@@ -3214,7 +3274,10 @@
    "enunciado": "“It's 10:00 p.m. and I am ______.”",
    "fase": "DAILY ROUTINE",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.32",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.32"
+   },
    "origem": "derivada",
    "certa": "going to bed",
    "erradas": [
@@ -3234,7 +3297,10 @@
    "enunciado": "Qual é o nome da música da Unit?",
    "fase": "SONG",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.35",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.35"
+   },
    "origem": "derivada",
    "certa": "Rock Around the Clock",
    "erradas": [
@@ -3254,7 +3320,10 @@
    "enunciado": "Complete a letra: “One, two, three o'clock, four ______ rock.”",
    "fase": "SONG",
    "reservatorio": "unit5Pool",
-   "fonte": "livro p.35",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.35"
+   },
    "origem": "derivada",
    "certa": "o'clock",
    "erradas": [
@@ -3274,7 +3343,10 @@
    "enunciado": "How do you write 40 in English?",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q8",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   },
    "origem": "derivada",
    "certa": "forty",
    "erradas": [
@@ -3294,7 +3366,10 @@
    "enunciado": "Qual número é “fifty”?",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q8",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   },
    "origem": "derivada",
    "certa": "50",
    "erradas": [
@@ -3314,7 +3389,10 @@
    "enunciado": "Which number is “fifty-nine”?",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q9",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q9"
+   },
    "origem": "derivada",
    "certa": "59",
    "erradas": [
@@ -3334,7 +3412,10 @@
    "enunciado": "Which number is “twenty-one”?",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q9",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q9"
+   },
    "origem": "derivada",
    "certa": "21",
    "erradas": [
@@ -3354,7 +3435,10 @@
    "enunciado": "Which number is “fourteen”?",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q9",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q9"
+   },
    "origem": "derivada",
    "certa": "14",
    "erradas": [
@@ -3424,7 +3508,10 @@
    "enunciado": "Associe o número por extenso ao algarismo.",
    "fase": "NUMBERS",
    "reservatorio": "extraPool",
-   "fonte": "folha q8",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -3454,7 +3541,10 @@
    "enunciado": "O relógio marca 5:00. What time is it?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "extraPool",
-   "fonte": "folha q5",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q5"
+   },
    "origem": "derivada",
    "certa": "It's five o'clock.",
    "erradas": [
@@ -3531,7 +3621,10 @@
    "enunciado": "Which hand shows the hours?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "extraPool",
-   "fonte": "folha q6",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   },
    "origem": "derivada",
    "certa": "The hour hand — the short one",
    "erradas": [
@@ -3551,7 +3644,10 @@
    "enunciado": "Which hand is the longest and shows the minutes?",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "extraPool",
-   "fonte": "folha q6",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   },
    "origem": "derivada",
    "certa": "The minute hand",
    "erradas": [
@@ -3571,7 +3667,10 @@
    "enunciado": "Associe cada parte do relógio ao seu nome em português.",
    "fase": "WHAT TIME IS IT?",
    "reservatorio": "extraPool",
-   "fonte": "folha q6",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -3659,7 +3758,10 @@
    "enunciado": "Coloque os planetas em ordem, a partir do Sol.",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q1",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   },
    "origem": "derivada",
    "palavras": [
     "Mercury",
@@ -3693,7 +3795,10 @@
    "enunciado": "UNSCRAMBLE: ERRMCYU",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q1",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   },
    "origem": "derivada",
    "aceitas": [
     "mercury"
@@ -3711,7 +3816,10 @@
    "enunciado": "UNSCRAMBLE: TPIRJEU",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q1",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   },
    "origem": "derivada",
    "aceitas": [
     "jupiter"
@@ -3729,7 +3837,10 @@
    "enunciado": "UNSCRAMBLE: ENUNERT",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q1",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   },
    "origem": "derivada",
    "aceitas": [
     "neptune"
@@ -3747,7 +3858,10 @@
    "enunciado": "How many planets do we have?",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q2",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   },
    "origem": "derivada",
    "certa": "Eight planets",
    "erradas": [
@@ -3767,7 +3881,10 @@
    "enunciado": "What's the name of your planet?",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q2",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   },
    "origem": "derivada",
    "certa": "Earth",
    "erradas": [
@@ -3787,7 +3904,10 @@
    "enunciado": "What big star can you see during the day?",
    "fase": "SOLAR SYSTEM",
    "reservatorio": "extraPool",
-   "fonte": "folha q2",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   },
    "origem": "derivada",
    "aceitas": [
     "sun",
@@ -3825,7 +3945,10 @@
    "enunciado": "No livro, o que a guia diz que Big Ben realmente é?",
    "fase": "CULTURE",
    "reservatorio": "extraPool",
-   "fonte": "livro p.33",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.33"
+   },
    "origem": "derivada",
    "certa": "It's a bell!",
    "erradas": [
@@ -3845,7 +3968,10 @@
    "enunciado": "Na história, o que acontece quando o sino toca ao meio-dia?",
    "fase": "CULTURE",
    "reservatorio": "extraPool",
-   "fonte": "livro p.33",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.33"
+   },
    "origem": "derivada",
    "certa": "The bell is striking midday. DING DONG!",
    "erradas": [
@@ -3865,7 +3991,10 @@
    "enunciado": "Where is Big Ben from?",
    "fase": "CULTURE",
    "reservatorio": "extraPool",
-   "fonte": "folha q3",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q3"
+   },
    "origem": "derivada",
    "certa": "It is in London.",
    "erradas": [
@@ -3885,7 +4014,10 @@
    "enunciado": "What time is tea time in Britain?",
    "fase": "CULTURE",
    "reservatorio": "extraPool",
-   "fonte": "folha q3",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q3"
+   },
    "origem": "derivada",
    "certa": "Between 4 and 5 o'clock",
    "erradas": [
@@ -3905,7 +4037,10 @@
    "enunciado": "What time did the Queen have her tea?",
    "fase": "CULTURE",
    "reservatorio": "extraPool",
-   "fonte": "folha q3",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q3"
+   },
    "origem": "derivada",
    "certa": "At 4 o'clock",
    "erradas": [

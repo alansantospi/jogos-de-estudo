@@ -65,7 +65,10 @@
    "missao": "imprensa",
    "icone": "prensa",
    "enunciado": "Quem inventou a prensa de tipos móveis e em que país?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "Johannes Gutenberg, na Alemanha",
    "erradas": [
@@ -80,7 +83,10 @@
    "missao": "imprensa",
    "icone": "calendario",
    "enunciado": "Por volta de que ano Gutenberg criou a prensa de tipos móveis?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "1440",
    "erradas": [
@@ -95,7 +101,10 @@
    "missao": "imprensa",
    "icone": "escrever",
    "enunciado": "Antes da prensa de tipos móveis, como os livros eram produzidos?",
-   "fonte": "revisão q8",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   },
    "origem": "propria",
    "certa": "Copiados à mão, um a um, por escribas",
    "erradas": [
@@ -110,7 +119,10 @@
    "missao": "imprensa",
    "icone": "letras",
    "enunciado": "O que são os tipos móveis?",
-   "fonte": "livro p.58",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   },
    "origem": "derivada",
    "certa": "Peças de metal com uma letra em relevo",
    "erradas": [
@@ -125,7 +137,10 @@
    "missao": "imprensa",
    "icone": "xis",
    "enunciado": "Antes de 1808, o que era proibido no Brasil Colônia?",
-   "fonte": "livro p.51",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   },
    "origem": "derivada",
    "certa": "Ter máquinas de impressão",
    "erradas": [
@@ -140,7 +155,10 @@
    "missao": "imprensa",
    "icone": "coroa",
    "enunciado": "Quem era a rainha de Portugal na época da vinda para o Brasil?",
-   "fonte": "livro p.47",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.47"
+   },
    "origem": "derivada",
    "certa": "Dona Maria I",
    "erradas": [
@@ -155,7 +173,10 @@
    "missao": "imprensa",
    "icone": "coroa",
    "enunciado": "Quem governava de fato Portugal, no lugar da rainha doente?",
-   "fonte": "livro p.47",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.47"
+   },
    "origem": "derivada",
    "certa": "O príncipe D. João",
    "erradas": [
@@ -170,7 +191,10 @@
    "missao": "imprensa",
    "icone": "espadas",
    "enunciado": "O que motivou a transferência da família real portuguesa para o Brasil?",
-   "fonte": "revisão q1 / livro p.50",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1 / livro p.50"
+   },
    "origem": "derivada",
    "certa": "As guerras na Europa e a ameaça de invasão",
    "erradas": [
@@ -185,7 +209,10 @@
    "missao": "imprensa",
    "icone": "barco",
    "enunciado": "Quando a família real partiu do porto de Lisboa?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "Em 29 de novembro de 1807",
    "erradas": [
@@ -200,7 +227,10 @@
    "missao": "imprensa",
    "icone": "barco",
    "enunciado": "Em quantos navios a família real embarcou?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "16 navios",
    "erradas": [
@@ -215,7 +245,10 @@
    "missao": "imprensa",
    "icone": "pino",
    "enunciado": "Quando a família real chegou ao Rio de Janeiro?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "Em 8 de março de 1808",
    "erradas": [
@@ -230,7 +263,10 @@
    "missao": "imprensa",
    "icone": "templo",
    "enunciado": "Em que data D. João criou a Impressão Régia?",
-   "fonte": "livro p.51",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   },
    "origem": "derivada",
    "certa": "13 de maio de 1808",
    "erradas": [
@@ -245,7 +281,10 @@
    "missao": "imprensa",
    "icone": "livro",
    "enunciado": "O que foi a Impressão Régia?",
-   "fonte": "livro p.51",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   },
    "origem": "derivada",
    "certa": "A primeira gráfica oficial do Brasil",
    "erradas": [
@@ -260,7 +299,10 @@
    "missao": "imprensa",
    "icone": "check",
    "enunciado": "Qual foi uma consequência da criação da Impressão Régia?",
-   "fonte": "revisão q4",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q4"
+   },
    "origem": "propria",
    "certa": "Livros e jornais passaram a ser impressos aqui",
    "erradas": [
@@ -275,7 +317,10 @@
    "missao": "imprensa",
    "icone": "elos",
    "enunciado": "Associe cada suporte de escrita à sua descrição.",
-   "fonte": "livro p.61",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -302,7 +347,10 @@
    "missao": "imprensa",
    "icone": "ampulheta",
    "enunciado": "Coloque em ordem, do mais antigo para o mais recente.",
-   "fonte": "revisão / livro p.55",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "livro p.55"
+   },
    "origem": "derivada",
    "sequencia": [
     "Invenção da prensa de tipos móveis por Gutenberg",
@@ -330,7 +378,10 @@
    "missao": "imprensa",
    "icone": "globo",
    "enunciado": "A família real desembarcou no Rio de Janeiro no ano de 1814.",
-   "fonte": "revisão q2",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   },
    "origem": "propria",
    "certa": false,
    "explicacao": "Falso: foi em 1808. Em 1815 o Brasil passou a fazer parte do Reino Unido de Portugal, Brasil e Algarves."
@@ -340,7 +391,10 @@
    "missao": "imprensa",
    "icone": "mao",
    "enunciado": "Em 1815 o Brasil deixou de ser apenas colônia e passou a fazer parte do Reino Unido de Portugal, Brasil e Algarves.",
-   "fonte": "revisão q2",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "A chegada da corte mudou o status do Brasil."
@@ -350,7 +404,10 @@
    "missao": "imprensa",
    "icone": "predios",
    "enunciado": "Quantos habitantes o Rio de Janeiro tinha aproximadamente em 1808?",
-   "fonte": "livro p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "derivada",
    "certa": "Cerca de 60 mil",
    "erradas": [
@@ -365,7 +422,10 @@
    "missao": "jornais",
    "icone": "jornal",
    "enunciado": "Qual foi o primeiro jornal produzido no Brasil?",
-   "fonte": "livro p.52",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.52"
+   },
    "origem": "derivada",
    "certa": "A Gazeta do Rio de Janeiro",
    "erradas": [
@@ -380,7 +440,10 @@
    "missao": "jornais",
    "icone": "calendario",
    "enunciado": "Em que ano surgiu a Gazeta do Rio de Janeiro?",
-   "fonte": "livro p.53",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   },
    "origem": "derivada",
    "certa": "1808",
    "erradas": [
@@ -395,7 +458,10 @@
    "missao": "jornais",
    "icone": "jornal",
    "enunciado": "Qual jornal surgiu em 1827?",
-   "fonte": "livro p.52",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.52"
+   },
    "origem": "derivada",
    "certa": "O Jornal do Commercio",
    "erradas": [
@@ -410,7 +476,10 @@
    "missao": "jornais",
    "icone": "livro",
    "enunciado": "Qual era uma das principais funções do Almanaque Laemmert?",
-   "fonte": "revisão q7",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q7"
+   },
    "origem": "propria",
    "certa": "Divulgar informações úteis do dia a dia",
    "erradas": [
@@ -425,7 +494,10 @@
    "missao": "jornais",
    "icone": "templo",
    "enunciado": "Que instituição já guardava uma enorme coleção de livros trazida de Portugal?",
-   "fonte": "livro p.54",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   },
    "origem": "derivada",
    "certa": "A Biblioteca Nacional",
    "erradas": [
@@ -440,7 +512,10 @@
    "missao": "jornais",
    "icone": "predios",
    "enunciado": "Antes da vinda da família real, quantas livrarias existiam em todo o Brasil?",
-   "fonte": "livro p.52",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.52"
+   },
    "origem": "derivada",
    "certa": "Apenas duas",
    "erradas": [
@@ -455,7 +530,10 @@
    "missao": "jornais",
    "icone": "pergaminho",
    "enunciado": "Qual famoso livro de poemas foi impresso naquela época?",
-   "fonte": "livro p.52",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.52"
+   },
    "origem": "derivada",
    "certa": "Marília de Dirceu, de Tomás Gonzaga",
    "erradas": [
@@ -470,7 +548,10 @@
    "missao": "jornais",
    "icone": "livro",
    "enunciado": "Que tipos de texto a imprensa passou a produzir naquela época?",
-   "fonte": "revisão q5",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q5"
+   },
    "origem": "propria",
    "certa": "Literatura, textos religiosos e registros",
    "erradas": [
@@ -485,7 +566,10 @@
    "missao": "jornais",
    "icone": "relogio",
    "enunciado": "O que são fontes históricas?",
-   "fonte": "livro p.54",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   },
    "origem": "derivada",
    "certa": "Materiais do passado que sobraram",
    "erradas": [
@@ -500,7 +584,10 @@
    "missao": "jornais",
    "icone": "fala",
    "enunciado": "Por que boa parte da população não se informava pelos jornais naquela época?",
-   "fonte": "livro p.54",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   },
    "origem": "derivada",
    "certa": "Poucas pessoas sabiam ler e os jornais eram caros",
    "erradas": [
@@ -515,7 +602,10 @@
    "missao": "jornais",
    "icone": "livro",
    "enunciado": "Segundo o glossário, o que é uma Gazeta?",
-   "fonte": "livro p.53",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   },
    "origem": "derivada",
    "certa": "Uma revista com notícias",
    "erradas": [
@@ -530,7 +620,10 @@
    "missao": "jornais",
    "icone": "pessoa",
    "enunciado": "De que ano é a Revista Tico-tico, citada no livro?",
-   "fonte": "livro p.51",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   },
    "origem": "derivada",
    "certa": "1905",
    "erradas": [
@@ -585,7 +678,10 @@
    "missao": "jornais",
    "icone": "gota",
    "enunciado": "Segundo o glossário, o que envolve o saneamento básico?",
-   "fonte": "livro p.50",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   },
    "origem": "derivada",
    "certa": "Água, esgoto e coleta de lixo",
    "erradas": [
@@ -600,7 +696,10 @@
    "missao": "distancia",
    "icone": "carta",
    "enunciado": "No século XIX, o que passou a ser necessário para uma carta ser entregue?",
-   "fonte": "livro p.59",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.59"
+   },
    "origem": "derivada",
    "certa": "O pagamento de uma taxa, provado pelo selo",
    "erradas": [
@@ -615,7 +714,10 @@
    "missao": "distancia",
    "icone": "carta",
    "enunciado": "Qual era a função do selo no sistema de correios?",
-   "fonte": "revisão q10",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q10"
+   },
    "origem": "propria",
    "certa": "Comprovar o pagamento do envio",
    "erradas": [
@@ -630,7 +732,10 @@
    "missao": "distancia",
    "icone": "carta",
    "enunciado": "O que se tornou popular no final do século XIX, permitindo enviar imagens das viagens?",
-   "fonte": "livro p.59",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.59"
+   },
    "origem": "derivada",
    "certa": "Os cartões-postais",
    "erradas": [
@@ -645,7 +750,10 @@
    "missao": "distancia",
    "icone": "raio",
    "enunciado": "Quem criou o telégrafo e em que ano?",
-   "fonte": "livro p.59",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.59"
+   },
    "origem": "derivada",
    "certa": "Samuel Morse, em 1837",
    "erradas": [
@@ -660,7 +768,10 @@
    "missao": "distancia",
    "icone": "teclado",
    "enunciado": "O que é o Código Morse?",
-   "fonte": "livro p.59",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.59"
+   },
    "origem": "derivada",
    "certa": "Um alfabeto de pontos e traços",
    "erradas": [
@@ -675,7 +786,10 @@
    "missao": "distancia",
    "icone": "animal",
    "enunciado": "Antes do telégrafo, de que dependia a mensagem mais rápida do mundo?",
-   "fonte": "livro p.59",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.59"
+   },
    "origem": "derivada",
    "certa": "Da velocidade de um cavalo",
    "erradas": [
@@ -690,7 +804,10 @@
    "missao": "distancia",
    "icone": "telefone",
    "enunciado": "Quem inventou o telefone?",
-   "fonte": "livro p.60",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   },
    "origem": "derivada",
    "certa": "Alexander Graham Bell",
    "erradas": [
@@ -705,7 +822,10 @@
    "missao": "distancia",
    "icone": "fala",
    "enunciado": "Qual foi a grande novidade do telefone em relação ao telégrafo?",
-   "fonte": "revisão q11",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   },
    "origem": "propria",
    "certa": "Permitia ouvir a voz da outra pessoa",
    "erradas": [
@@ -720,7 +840,10 @@
    "missao": "distancia",
    "icone": "tomada",
    "enunciado": "Qual era a principal dificuldade dos primeiros telefones?",
-   "fonte": "revisão q11",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   },
    "origem": "propria",
    "certa": "Dependiam de fios que se rompiam",
    "erradas": [
@@ -735,7 +858,10 @@
    "missao": "distancia",
    "icone": "radio",
    "enunciado": "O que é a radiotelegrafia?",
-   "fonte": "livro p.60",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   },
    "origem": "derivada",
    "certa": "Código Morse pelo ar",
    "erradas": [
@@ -750,7 +876,10 @@
    "missao": "distancia",
    "icone": "letras",
    "enunciado": "O prefixo “tele”, de telefone e televisão, vem do grego e significa...",
-   "fonte": "livro p.60",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   },
    "origem": "derivada",
    "certa": "distância",
    "erradas": [
@@ -765,7 +894,10 @@
    "missao": "distancia",
    "icone": "lampada",
    "enunciado": "Qual descoberta científica foi essencial para o telégrafo, o rádio e a TV funcionarem?",
-   "fonte": "livro p.73",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.73"
+   },
    "origem": "derivada",
    "certa": "A eletricidade",
    "erradas": [
@@ -834,7 +966,10 @@
    "missao": "imagem",
    "icone": "camera",
    "enunciado": "Em que período surgiu a câmera fotográfica?",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": "Entre 1827 e 1839",
    "erradas": [
@@ -849,7 +984,10 @@
    "missao": "imagem",
    "icone": "camera",
    "enunciado": "Como o cinema criou a sensação de que as pessoas estavam se movendo na tela?",
-   "fonte": "revisão q12",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q12"
+   },
    "origem": "propria",
    "certa": "Projetando fotos em sequência rápida",
    "erradas": [
@@ -864,7 +1002,10 @@
    "missao": "imagem",
    "icone": "filme",
    "enunciado": "Quando o cinema se popularizou?",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": "No final do século XIX",
    "erradas": [
@@ -879,7 +1020,10 @@
    "missao": "imagem",
    "icone": "tv",
    "enunciado": "Qual é a diferença principal entre o cinema e a televisão?",
-   "fonte": "revisão q13",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q13"
+   },
    "origem": "propria",
    "certa": "O cinema projeta; a TV transmite para casa",
    "erradas": [
@@ -894,7 +1038,10 @@
    "missao": "imagem",
    "icone": "tomada",
    "enunciado": "Quais dois elementos eram fundamentais para a televisão funcionar?",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": "Eletricidade e câmera de vídeo",
    "erradas": [
@@ -909,7 +1056,10 @@
    "missao": "imagem",
    "icone": "filme",
    "enunciado": "Quando surgiram os primeiros aparelhos de televisão, as “TVs de tubo”?",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": "Por volta de 1907",
    "erradas": [
@@ -924,7 +1074,10 @@
    "missao": "imagem",
    "icone": "camera",
    "enunciado": "Qual é a diferença entre a função da câmera de vídeo e a do televisor?",
-   "fonte": "revisão q14",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q14"
+   },
    "origem": "propria",
    "certa": "A câmera grava; o televisor exibe",
    "erradas": [
@@ -939,7 +1092,10 @@
    "missao": "imagem",
    "icone": "elos",
    "enunciado": "Relacione cada invenção à sua principal característica.",
-   "fonte": "livro p.63",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.63"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -962,7 +1118,10 @@
    "missao": "imagem",
    "icone": "ampulheta",
    "enunciado": "Coloque em ordem de surgimento.",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "sequencia": [
     "Fotografia",
@@ -976,7 +1135,10 @@
    "missao": "imagem",
    "icone": "camera",
    "enunciado": "Os primeiros aparelhos de fotografia exigiam que a pessoa ficasse parada por muito tempo.",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": true,
    "explicacao": "Por isso as fotos antigas mostram pessoas tão sérias e imóveis."
@@ -986,7 +1148,10 @@
    "missao": "imagem",
    "icone": "camera",
    "enunciado": "No início, os filmes de cinema já eram coloridos e com som.",
-   "fonte": "livro p.62",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "Eram curtos, em preto e branco e mudos."
@@ -1010,7 +1175,10 @@
    "missao": "digital",
    "icone": "telefone",
    "enunciado": "Até a década de 1950, como se fazia uma ligação telefônica?",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "certa": "Falando com uma telefonista",
    "erradas": [
@@ -1025,7 +1193,10 @@
    "missao": "digital",
    "icone": "antena",
    "enunciado": "O que surgiu a partir da década de 1960 e permitiu ligações entre cidades sem tantos fios?",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "certa": "As micro-ondas entre torres",
    "erradas": [
@@ -1040,7 +1211,10 @@
    "missao": "digital",
    "icone": "computador",
    "enunciado": "Em que década e onde nasceu a internet?",
-   "fonte": "revisão / livro p.64",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "livro p.64"
+   },
    "origem": "derivada",
    "certa": "Na década de 1960, nos EUA",
    "erradas": [
@@ -1055,7 +1229,10 @@
    "missao": "digital",
    "icone": "alvo",
    "enunciado": "Qual era o objetivo original da internet?",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "certa": "Manter os computadores conectados",
    "erradas": [
@@ -1070,7 +1247,10 @@
    "missao": "digital",
    "icone": "globo",
    "enunciado": "Em que décadas a internet deixou de ser restrita ao governo e se tornou global?",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "certa": "Nas décadas de 1980 e 1990",
    "erradas": [
@@ -1085,7 +1265,10 @@
    "missao": "digital",
    "icone": "semaforo",
    "enunciado": "O que são os protocolos da internet?",
-   "fonte": "revisão / livro p.64",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "livro p.64"
+   },
    "origem": "derivada",
    "certa": "As regras de trânsito dos dados na rede",
    "erradas": [
@@ -1100,7 +1283,10 @@
    "missao": "digital",
    "icone": "bussola",
    "enunciado": "O que fazem os navegadores?",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "certa": "Traduzem os códigos da rede",
    "erradas": [
@@ -1115,7 +1301,10 @@
    "missao": "digital",
    "icone": "celular",
    "enunciado": "Por que o celular atual é chamado de “dispositivo convergente”?",
-   "fonte": "revisão q14 / livro p.65",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q14 / livro p.65"
+   },
    "origem": "derivada",
    "certa": "Porque reúne vários aparelhos em um",
    "erradas": [
@@ -1130,7 +1319,10 @@
    "missao": "digital",
    "icone": "satelite",
    "enunciado": "O que significa a sigla GPS?",
-   "fonte": "livro p.65",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.65"
+   },
    "origem": "derivada",
    "certa": "Global Positioning System",
    "erradas": [
@@ -1145,7 +1337,10 @@
    "missao": "digital",
    "icone": "nuvem",
    "enunciado": "O que é a “nuvem”?",
-   "fonte": "livro p.65",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.65"
+   },
    "origem": "derivada",
    "certa": "Dados guardados na internet",
    "erradas": [
@@ -1160,7 +1355,10 @@
    "missao": "digital",
    "icone": "pasta",
    "enunciado": "Qual é a diferença entre um arquivo físico e um arquivo na nuvem?",
-   "fonte": "revisão / livro p.66",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "livro p.66"
+   },
    "origem": "derivada",
    "certa": "O de papel estraga; o da nuvem fica protegido",
    "erradas": [
@@ -1175,7 +1373,10 @@
    "missao": "digital",
    "icone": "servidor",
    "enunciado": "O que são servidores?",
-   "fonte": "livro p.65",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.65"
+   },
    "origem": "derivada",
    "certa": "Computadores que guardam dados",
    "erradas": [
@@ -1190,7 +1391,10 @@
    "missao": "digital",
    "icone": "ampulheta",
    "enunciado": "Coloque a evolução da conexão em ordem.",
-   "fonte": "livro p.64",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64"
+   },
    "origem": "derivada",
    "sequencia": [
     "Telefonistas conectando fios manualmente",
@@ -1205,7 +1409,10 @@
    "missao": "digital",
    "icone": "sinal",
    "enunciado": "Coloque as fases do celular em ordem.",
-   "fonte": "livro p.73",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.73"
+   },
    "origem": "derivada",
    "sequencia": [
     "A ideia do telefone móvel começa a ser testada, no final da década de 1970",
@@ -1233,7 +1440,10 @@
    "missao": "inclusao",
    "icone": "mao",
    "enunciado": "Quem criou o sistema Braille e em que ano?",
-   "fonte": "livro p.67",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67"
+   },
    "origem": "derivada",
    "certa": "Louis Braille, em 1825",
    "erradas": [
@@ -1248,7 +1458,10 @@
    "missao": "inclusao",
    "icone": "bandeira",
    "enunciado": "De que país era Louis Braille?",
-   "fonte": "livro p.67",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67"
+   },
    "origem": "derivada",
    "certa": "França",
    "erradas": [
@@ -1263,7 +1476,10 @@
    "missao": "inclusao",
    "icone": "braille",
    "enunciado": "Como funciona o sistema Braille?",
-   "fonte": "livro p.67",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67"
+   },
    "origem": "derivada",
    "certa": "Por pontos em relevo, lidos pelo tato",
    "erradas": [
@@ -1278,7 +1494,10 @@
    "missao": "inclusao",
    "icone": "numeros",
    "enunciado": "Quantos pontos tem uma célula Braille?",
-   "fonte": "livro p.67",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67"
+   },
    "origem": "derivada",
    "certa": "Seis, em duas colunas de três",
    "erradas": [
@@ -1293,7 +1512,10 @@
    "missao": "inclusao",
    "icone": "templo",
    "enunciado": "Quando o Braille chegou ao Brasil e com a fundação de qual instituição?",
-   "fonte": "livro p.67",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67"
+   },
    "origem": "derivada",
    "certa": "Em 1854, com o Instituto Benjamin Constant",
    "erradas": [
@@ -1308,7 +1530,10 @@
    "missao": "inclusao",
    "icone": "sinais",
    "enunciado": "O que significa a sigla Libras?",
-   "fonte": "livro p.68",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.68"
+   },
    "origem": "derivada",
    "certa": "Língua Brasileira de Sinais",
    "erradas": [
@@ -1323,7 +1548,10 @@
    "missao": "inclusao",
    "icone": "calendario",
    "enunciado": "Em que ano começou a organização da Libras no Brasil?",
-   "fonte": "livro p.68",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.68"
+   },
    "origem": "derivada",
    "certa": "1857, ainda no Império",
    "erradas": [
@@ -1338,7 +1566,10 @@
    "missao": "inclusao",
    "icone": "balanca",
    "enunciado": "Em que ano a Libras foi reconhecida por lei como a segunda língua oficial do Brasil?",
-   "fonte": "livro p.72",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.72"
+   },
    "origem": "derivada",
    "certa": "2002",
    "erradas": [
@@ -1353,7 +1584,10 @@
    "missao": "inclusao",
    "icone": "check",
    "enunciado": "A Libras e o Braille são importantes tecnologias de comunicação porque...",
-   "fonte": "revisão q16",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q16"
+   },
    "origem": "propria",
    "certa": "dão a surdos e cegos acesso à informação e à participação na sociedade",
    "erradas": [
@@ -1368,7 +1602,10 @@
    "missao": "inclusao",
    "icone": "computador",
    "enunciado": "Como a Libras e o Braille estão presentes no mundo digital?",
-   "fonte": "livro p.68",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.68"
+   },
    "origem": "derivada",
    "certa": "Em leitores de tela e em vídeos",
    "erradas": [
@@ -1432,7 +1669,10 @@
    "missao": "inclusao",
    "icone": "livro",
    "enunciado": "O que eram as epístolas bíblicas?",
-   "fonte": "revisão q9",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q9"
+   },
    "origem": "propria",
    "certa": "Cartas às comunidades cristãs",
    "erradas": [
@@ -1447,7 +1687,10 @@
    "missao": "inclusao",
    "icone": "carta",
    "enunciado": "Quantas epístolas são atribuídas ao apóstolo Paulo?",
-   "fonte": "livro p.58",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   },
    "origem": "derivada",
    "certa": "Treze",
    "erradas": [

@@ -36,7 +36,9 @@ def _questao(q):
     """Devolve a questão na ordem de campos que o motor sempre teve."""
     p = ['ic:' + _js(q["icone"])]
     if q.get("fonte"):
-        p.append('src:' + _js(q["fonte"]))
+        # Já normalizada em {t,d}: um formatador só serve os quatro jogos.
+        f = q["fonte"]
+        p.append('src:' + _js({"t": f["tipo"], "d": f["detalhe"]} if isinstance(f, dict) else f))
     tipo = TIPOS.get(q["tipo"])
     if tipo:
         p.append('t:' + _js(tipo))

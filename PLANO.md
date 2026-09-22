@@ -278,7 +278,7 @@ dados reais antes de subir.
 **Destrava:** um caminho só em cada passo de build; fim da classe de defeito
 "função existe num motor e não no outro".
 
-### Fase 3 — Trocar o build `~4 dias`
+### Fase 3 — Trocar o build ✔ feita em 22/09/2026
 
 Motor em módulos, conteúdo em dados, montagem de verdade. As 19 âncoras de
 texto exato somem.
@@ -287,6 +287,23 @@ texto exato somem.
 
 **Destrava:** um segundo desenvolvedor consegue trabalhar; jogo novo deixa de
 exigir passo de build novo.
+
+**As 19 âncoras viraram 0.** O motor agora é fonte (`motor/*.molde.html`), o
+conteúdo é dado (`conteudo/*.json`), as partes próprias de cada jogo ficam em
+`jogo/<id>/`, e `build/montar.py` preenche fendas. Os 17 scripts de remendo
+foram para `build/aposentados/`, com o registro de por que existiram.
+
+A separação foi medida antes de ser feita: os três jogos do céu compartilhavam
+99,2% do script e 98,1% do estilo, e depois de parametrizar cor, título,
+matéria, chave, prefixo da sala e patentes o molde ficou **idêntico** nos três.
+A única divergência de lógica que restava — cada jogo formatava o rótulo de
+procedência à sua maneira — sumiu normalizando o dado, que a Fase 1 tinha
+tornado possível.
+
+O verificador de ida e volta também mudou: antes comparava com uma referência
+congelada em `/tmp`, que some entre sessões e acusa mudança deliberada de
+formato como se fosse perda. Agora fecha o ciclo lendo o jogo montado e
+comparando com o arquivo de conteúdo.
 
 ### Fase 4 — A esteira de geração `~8 dias`
 

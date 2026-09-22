@@ -47,7 +47,10 @@
    "missao": "melodia",
    "icone": "nota",
    "enunciado": "O que é uma melodia?",
-   "fonte": "livro p.13",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.13"
+   },
    "origem": "derivada",
    "certa": "Uma linha de notas organizadas em um ritmo",
    "erradas": [
@@ -62,7 +65,10 @@
    "missao": "melodia",
    "icone": "instrumento",
    "enunciado": "O que é o ritmo de uma música?",
-   "fonte": "livro p.13",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.13"
+   },
    "origem": "derivada",
    "certa": "A ordem do tempo da música",
    "erradas": [
@@ -77,7 +83,10 @@
    "missao": "melodia",
    "icone": "instrumento",
    "enunciado": "O que é o timbre?",
-   "fonte": "livro p.13",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.13"
+   },
    "origem": "derivada",
    "certa": "A “cor” única de cada instrumento",
    "erradas": [
@@ -92,7 +101,10 @@
    "missao": "melodia",
    "icone": "livro",
    "enunciado": "Como se chama a área de estudo que ensina a ouvir, ler e escrever música em uma partitura?",
-   "fonte": "livro p.13",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.13"
+   },
    "origem": "derivada",
    "certa": "Teoria musical",
    "erradas": [
@@ -107,7 +119,10 @@
    "missao": "melodia",
    "icone": "ondas-agua",
    "enunciado": "O que os compositores fazem com os sons dos instrumentos ao descrever o Rio Moldava, em Praga?",
-   "fonte": "livro p.21",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.21"
+   },
    "origem": "derivada",
    "certa": "Descrevem o movimento das águas",
    "erradas": [
@@ -144,7 +159,10 @@
    "missao": "harmonia",
    "icone": "mao",
    "enunciado": "A palavra harmonia vem do grego e significa...",
-   "fonte": "livro p.19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.19"
+   },
    "origem": "derivada",
    "certa": "união, concórdia ou ajuste",
    "erradas": [
@@ -159,7 +177,10 @@
    "missao": "harmonia",
    "icone": "partitura",
    "enunciado": "Quando dizemos que uma melodia está harmonizada?",
-   "fonte": "livro p.19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.19"
+   },
    "origem": "derivada",
    "certa": "Quando outras melodias soam bem com ela",
    "erradas": [
@@ -174,7 +195,10 @@
    "missao": "harmonia",
    "icone": "instrumento",
    "enunciado": "O que é um arranjo?",
-   "fonte": "livro p.19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.19"
+   },
    "origem": "derivada",
    "certa": "Uma nova roupa para a mesma melodia",
    "erradas": [
@@ -189,7 +213,10 @@
    "missao": "harmonia",
    "icone": "triste",
    "enunciado": "Segundo o livro, o que pode acontecer se uma única nota ficar fora do lugar?",
-   "fonte": "livro p.19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.19"
+   },
    "origem": "derivada",
    "certa": "Pode mudar a sensação da peça",
    "erradas": [
@@ -204,7 +231,10 @@
    "missao": "harmonia",
    "icone": "elos",
    "enunciado": "Associe cada elemento musical ao seu significado.",
-   "fonte": "livro p.13, 19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.13, 19"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -248,7 +278,10 @@
    "missao": "harmonia",
    "icone": "microfone",
    "enunciado": "As possibilidades de arranjo para uma mesma melodia são quase infinitas.",
-   "fonte": "livro p.19",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.19"
+   },
    "origem": "derivada",
    "certa": true,
    "explicacao": "A mesma melodia pode ganhar “roupas” muito diferentes."
@@ -258,7 +291,10 @@
    "missao": "pintura",
    "icone": "parede",
    "enunciado": "O que é uma Pintura Mural?",
-   "fonte": "livro p.36",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.36"
+   },
    "origem": "derivada",
    "certa": "Uma arte feita numa parede ou num teto",
    "erradas": [
@@ -273,7 +309,10 @@
    "missao": "pintura",
    "icone": "pincel",
    "enunciado": "Por que a Pintura Mural é considerada um ato de vocação e serviço?",
-   "fonte": "livro p.36",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.36"
+   },
    "origem": "derivada",
    "certa": "Porque o artista a cria para a comunidade",
    "erradas": [
@@ -288,7 +327,10 @@
    "missao": "pintura",
    "icone": "bandeira",
    "enunciado": "A palavra afresco vem do italiano e significa...",
-   "fonte": "livro p.36",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.36"
+   },
    "origem": "derivada",
    "certa": "fresco",
    "erradas": [
@@ -303,7 +345,10 @@
    "missao": "pintura",
    "icone": "gota",
    "enunciado": "Qual é a condição essencial da técnica do afresco?",
-   "fonte": "livro p.36",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.36"
+   },
    "origem": "derivada",
    "certa": "O gesso precisa estar úmido",
    "erradas": [
@@ -318,7 +363,10 @@
    "missao": "pintura",
    "icone": "tubo",
    "enunciado": "No afresco, as cores são misturadas apenas com...",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "água",
    "erradas": [
@@ -347,7 +395,10 @@
    "missao": "pintura",
    "icone": "relogio",
    "enunciado": "No afresco, o artista pode pintar com calma, pois a tinta demora muito para secar.",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "Falso: é uma corrida contra o tempo, porque a pintura só vale enquanto o gesso está úmido."
@@ -357,7 +408,10 @@
    "missao": "pintura",
    "icone": "templo",
    "enunciado": "Uma pintura mural é feita com materiais que resistem ao sol e à chuva ao longo do tempo.",
-   "fonte": "livro p.36",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.36"
+   },
    "origem": "derivada",
    "certa": true,
    "explicacao": "O muro funciona como tela, e a obra precisa durar."
@@ -367,7 +421,10 @@
    "missao": "michelangelo",
    "icone": "castelo",
    "enunciado": "Qual obra Michelangelo foi escolhido para pintar?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "O teto da Capela Sistina",
    "erradas": [
@@ -382,7 +439,10 @@
    "missao": "michelangelo",
    "icone": "regua",
    "enunciado": "A que altura ficava o teto da Capela Sistina?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "A mais de 20 metros",
    "erradas": [
@@ -397,7 +457,10 @@
    "missao": "michelangelo",
    "icone": "pessoa",
    "enunciado": "Qual era a profissão principal de Michelangelo, que o deixou receoso em aceitar o trabalho?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "Escultor",
    "erradas": [
@@ -412,7 +475,10 @@
    "missao": "michelangelo",
    "icone": "templo",
    "enunciado": "Quem pediu a Michelangelo que pintasse o teto da Capela Sistina?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "O Papa Júlio II",
    "erradas": [
@@ -427,7 +493,10 @@
    "missao": "michelangelo",
    "icone": "escada",
    "enunciado": "Como Michelangelo pintava o teto?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "Em pé sobre um andaime",
    "erradas": [
@@ -442,7 +511,10 @@
    "missao": "michelangelo",
    "icone": "calendario",
    "enunciado": "Entre que anos Michelangelo trabalhou no teto da Capela Sistina?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "Entre 1508 e 1512",
    "erradas": [
@@ -457,7 +529,10 @@
    "missao": "michelangelo",
    "icone": "pessoas",
    "enunciado": "Quantas figuras Michelangelo pintou no teto?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "Mais de 300",
    "erradas": [
@@ -472,7 +547,10 @@
    "missao": "michelangelo",
    "icone": "livro",
    "enunciado": "De qual livro bíblico o teto da Capela Sistina retrata diversas cenas?",
-   "fonte": "livro p.37",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.37"
+   },
    "origem": "derivada",
    "certa": "Gênesis",
    "erradas": [
@@ -487,7 +565,10 @@
    "missao": "michelangelo",
    "icone": "mao",
    "enunciado": "Qual é o afresco mais famoso do teto da Capela Sistina?",
-   "fonte": "livro p.38",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.38"
+   },
    "origem": "derivada",
    "certa": "A Criação de Adão",
    "erradas": [
@@ -502,7 +583,10 @@
    "missao": "michelangelo",
    "icone": "balanca",
    "enunciado": "O que Michelangelo pintou na parede do altar da Capela Sistina?",
-   "fonte": "livro p.38",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.38"
+   },
    "origem": "derivada",
    "certa": "O Juízo Final",
    "erradas": [
@@ -517,7 +601,10 @@
    "missao": "michelangelo",
    "icone": "elos",
    "enunciado": "Associe cada conjunto de painéis do teto ao seu tema.",
-   "fonte": "livro p.38",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.38"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -544,7 +631,10 @@
    "missao": "michelangelo",
    "icone": "estrela",
    "enunciado": "Por que a pintura da Capela Sistina é uma das obras mais importantes da história da arte?",
-   "fonte": "livro p.38",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.38"
+   },
    "origem": "derivada",
    "certa": "Pela inovação técnica e a extensão da obra",
    "erradas": [

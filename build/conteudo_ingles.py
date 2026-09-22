@@ -30,7 +30,8 @@ def _questao(q):
 
     p = ["type:" + _js(tipo), "stage:" + _js(q.get("fase", "")), "ic:" + _js(q["icone"])]
     if q.get("fonte"):
-        p.append("src:" + _js(q["fonte"]))
+        f = q["fonte"]
+        p.append("src:" + _js({"t": f["tipo"], "d": f["detalhe"]} if isinstance(f, dict) else f))
     p.append("q:" + _js(q["enunciado"]))
     if q.get("dica"):
         p.append("hint:" + _js(q["dica"]))

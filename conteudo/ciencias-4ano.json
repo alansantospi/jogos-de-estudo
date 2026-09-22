@@ -353,7 +353,10 @@
    "missao": "earth",
    "icone": "sol",
    "enunciado": "Qual é a alternativa CORRETA sobre o Solstício?",
-   "fonte": "p.68 q11",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.68 q11"
+   },
    "origem": "propria",
    "certa": "É o dia mais longo do verão",
    "erradas": [
@@ -368,7 +371,10 @@
    "missao": "earth",
    "icone": "fala",
    "enunciado": "João diz: “Por causa da rotação, quando é verão no Brasil é outono no Canadá.” Lavínia diz: “Por causa da inclinação do eixo, quando um hemisfério está em uma estação, o outro está em outra.” Quem está certo?",
-   "fonte": "p.68 q12",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.68 q12"
+   },
    "origem": "propria",
    "certa": "Lavínia está correta e João está errado",
    "erradas": [
@@ -383,7 +389,10 @@
    "missao": "earth",
    "icone": "planta",
    "enunciado": "Qual é o principal evento que o movimento de translação ajuda a provocar e que organiza nosso ano?",
-   "fonte": "p.67 q9",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67 q9"
+   },
    "origem": "propria",
    "certa": "As quatro estações do ano",
    "erradas": [
@@ -398,7 +407,10 @@
    "missao": "earth",
    "icone": "elos",
    "enunciado": "Associe cada movimento ao ciclo temporal que ele marca.",
-   "fonte": "p.67 q8",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67 q8"
+   },
    "origem": "propria",
    "pares": [
     [
@@ -421,7 +433,10 @@
    "missao": "earth",
    "icone": "elos",
    "enunciado": "Associe cada descrição à estação ou ao momento do ano.",
-   "fonte": "p.51",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   },
    "origem": "propria",
    "pares": [
     [
@@ -448,7 +463,10 @@
    "missao": "earth",
    "icone": "mala",
    "enunciado": "Rebeca mora em Palmas (TO) e vai visitar Lisboa em janeiro. Como faz calor em Palmas, ela levou só roupas leves. Foi uma boa escolha?",
-   "fonte": "p.61 q5",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61 q5"
+   },
    "origem": "propria",
    "certa": "Não: em janeiro é inverno em Portugal, que fica no Hemisfério Norte",
    "erradas": [
@@ -463,7 +481,10 @@
    "missao": "earth",
    "icone": "planta",
    "enunciado": "No Hemisfério Sul, quando acontece o equinócio de primavera?",
-   "fonte": "p.50",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   },
    "origem": "propria",
    "certa": "22 ou 23 de setembro",
    "erradas": [
@@ -478,7 +499,10 @@
    "missao": "earth",
    "icone": "nuvem",
    "enunciado": "Nos Polos Norte e Sul há apenas duas estações: um longo verão e um longo inverno.",
-   "fonte": "p.49",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.49"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "Por causa da inclinação do eixo, um polo fica meses iluminado enquanto o outro fica meses no escuro."
@@ -488,7 +512,10 @@
    "missao": "earth",
    "icone": "globo",
    "enunciado": "Quando Maiara acorda às 6h no Brasil, sua amiga Ana já está jantando na Coreia do Sul. Por quê?",
-   "fonte": "p.38 q3",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.38 q3"
+   },
    "origem": "propria",
    "certa": "Por causa da rotação da Terra",
    "erradas": [
@@ -503,7 +530,10 @@
    "missao": "earth",
    "icone": "bussola",
    "enunciado": "Em que sentido a Terra gira no movimento de rotação?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "De oeste para leste",
    "erradas": [
@@ -518,7 +548,10 @@
    "missao": "earth",
    "icone": "relogio",
    "enunciado": "Qual destas NÃO é uma consequência da rotação da Terra?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "A sucessão das estações do ano",
    "erradas": [
@@ -533,7 +566,10 @@
    "missao": "earth",
    "icone": "globo",
    "enunciado": "Qual é o formato da trajetória que a Terra faz ao redor do Sol?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "Elíptica",
    "erradas": [
@@ -548,7 +584,10 @@
    "missao": "earth",
    "icone": "check",
    "enunciado": "A Terra leva 24 horas para realizar uma volta completa em torno do seu eixo.",
-   "fonte": "folha q18",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q18"
+   },
    "origem": "derivada",
    "certa": true,
    "explicacao": "É a rotação, que dá origem ao dia e à noite."
@@ -558,7 +597,10 @@
    "missao": "earth",
    "icone": "check",
    "enunciado": "Rotação é o movimento que a Terra realiza ao redor do Sol.",
-   "fonte": "folha q18",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q18"
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "Ao redor do Sol é a translação. Rotação é o giro em torno do próprio eixo."
@@ -568,7 +610,10 @@
    "missao": "earth",
    "icone": "check",
    "enunciado": "O movimento de translação é responsável pela sucessão dos dias e das noites.",
-   "fonte": "folha q18",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q18"
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "Dias e noites vêm da rotação. A translação dá origem às estações do ano."
@@ -578,7 +623,10 @@
    "missao": "earth",
    "icone": "check",
    "enunciado": "O movimento de rotação é responsável pelas estações do ano.",
-   "fonte": "folha q18",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q18"
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "As estações vêm da translação somada à inclinação do eixo."
@@ -588,7 +636,10 @@
    "missao": "earth",
    "icone": "planta",
    "enunciado": "A ocorrência das estações do ano tem origem na...",
-   "fonte": "folha q19",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q19"
+   },
    "origem": "derivada",
    "certa": "inclinação do eixo terrestre e no movimento de translação da Terra",
    "erradas": [
@@ -603,7 +654,10 @@
    "missao": "earth",
    "icone": "sol",
    "enunciado": "Qual fenômeno é marcado pela diferença de incidência solar entre os hemisférios e dá origem ao inverno e ao verão?",
-   "fonte": "folha q20",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q20"
+   },
    "origem": "derivada",
    "certa": "Solstício",
    "erradas": [
@@ -618,7 +672,10 @@
    "missao": "earth",
    "icone": "calendario",
    "enunciado": "Associe cada estação ao período em que acontece no Brasil.",
-   "fonte": "folha q15",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q15"
+   },
    "origem": "derivada",
    "pares": [
     [
@@ -645,7 +702,10 @@
    "missao": "earth",
    "icone": "luneta",
    "enunciado": "Quais eram os principais astros observados pelo ser humano para se orientar no passado?",
-   "fonte": "folha q8",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   },
    "origem": "derivada",
    "certa": "O Sol e a Lua",
    "erradas": [
@@ -1215,7 +1275,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "As fases da Lua mudam porque:",
-   "fonte": "p.69 q14",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.69 q14"
+   },
    "origem": "propria",
    "certa": "a Lua gira ao redor da Terra e vemos partes diferentes iluminadas pelo Sol",
    "erradas": [
@@ -1230,7 +1293,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "O que acontece com a Lua na fase de Quarto Crescente?",
-   "fonte": "p.69 q13",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.69 q13"
+   },
    "origem": "propria",
    "certa": "Parece uma letra “C” e a parte iluminada aumenta a cada noite até a Lua Cheia",
    "erradas": [
@@ -1245,7 +1311,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "Sobre a Lua Cheia e a Lua Nova, qual é a ordem correta das posições?",
-   "fonte": "p.69 q15",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.69 q15"
+   },
    "origem": "propria",
    "certa": "Lua Cheia: a Terra fica entre o Sol e a Lua. Lua Nova: a Lua fica entre o Sol e a Terra",
    "erradas": [
@@ -1260,7 +1329,10 @@
    "missao": "moon",
    "icone": "elos",
    "enunciado": "Associe cada fase da Lua à sua descrição.",
-   "fonte": "p.61 q3",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61 q3"
+   },
    "origem": "propria",
    "pares": [
     [
@@ -1287,7 +1359,10 @@
    "missao": "moon",
    "icone": "ciclo",
    "enunciado": "Coloque as quatro fases principais da Lua na ordem em que acontecem.",
-   "fonte": "p.57",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   },
    "origem": "propria",
    "sequencia": [
     "Lua Nova",
@@ -1302,7 +1377,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "Um amigo diz que a parte escura da Lua é a sombra da Terra. Como corrigir essa informação?",
-   "fonte": "p.44 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.44 q2"
+   },
    "origem": "propria",
    "certa": "Ela não está voltada para o Sol",
    "erradas": [
@@ -1317,7 +1395,10 @@
    "missao": "moon",
    "icone": "calendario",
    "enunciado": "Por que um mês lunar tem cerca de 29 dias?",
-   "fonte": "p.58 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58 q2"
+   },
    "origem": "propria",
    "certa": "É o tempo de um ciclo completo de fases",
    "erradas": [
@@ -1332,7 +1413,10 @@
    "missao": "moon",
    "icone": "satelite",
    "enunciado": "A Lua é classificada como...",
-   "fonte": "p.39",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.39"
+   },
    "origem": "propria",
    "certa": "o satélite natural da Terra",
    "erradas": [
@@ -1356,7 +1440,10 @@
    "missao": "moon",
    "icone": "numeros",
    "enunciado": "Quantas fases da Lua são identificadas ao todo?",
-   "fonte": "p.44",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.44"
+   },
    "origem": "propria",
    "certa": "Oito ao todo",
    "erradas": [
@@ -1371,7 +1458,10 @@
    "missao": "moon",
    "icone": "ampulheta",
    "enunciado": "A translação da Lua dura cerca de 27 dias, mas da nossa perspectiva ela parece orbitar a Terra a cada 29 dias.",
-   "fonte": "p.39",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.39"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "A diferença existe porque a Terra também se move enquanto a Lua a orbita."
@@ -1395,7 +1485,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "A Lua também gira em torno do próprio eixo?",
-   "fonte": "p.39",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.39"
+   },
    "origem": "propria",
    "certa": "Sim, e dura o mesmo que a translação",
    "erradas": [
@@ -1410,7 +1503,10 @@
    "missao": "moon",
    "icone": "predios",
    "enunciado": "Em qual fase acontece a noite mais escura do mês?",
-   "fonte": "p.43",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.43"
+   },
    "origem": "propria",
    "certa": "Lua Nova",
    "erradas": [
@@ -1425,7 +1521,10 @@
    "missao": "moon",
    "icone": "calendario",
    "enunciado": "O Quarto Minguante acontece aproximadamente sete dias depois da Lua Cheia.",
-   "fonte": "p.40",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.40"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "E o Quarto Crescente acontece cerca de sete dias depois da Lua Nova."
@@ -1523,7 +1622,10 @@
    "missao": "moon",
    "icone": "lua",
    "enunciado": "Coloque as seis fases na ordem mostrada na folha da escola.",
-   "fonte": "folha, Movimentos da Lua",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "Movimentos da Lua"
+   },
    "origem": "derivada",
    "sequencia": [
     "Lua Nova",
@@ -1554,7 +1656,10 @@
    "missao": "calendars",
    "icone": "calendario",
    "enunciado": "Qual é o calendário mais usado no mundo atualmente?",
-   "fonte": "p.55 q1c",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q1c"
+   },
    "origem": "propria",
    "certa": "O calendário gregoriano",
    "erradas": [
@@ -1569,7 +1674,10 @@
    "missao": "calendars",
    "icone": "sol",
    "enunciado": "O calendário gregoriano é de que tipo?",
-   "fonte": "p.55 q1c",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q1c"
+   },
    "origem": "propria",
    "certa": "Solar",
    "erradas": [
@@ -1584,7 +1692,10 @@
    "missao": "calendars",
    "icone": "lua",
    "enunciado": "O calendário lunar é aquele em que o tempo é contado a partir dos ciclos da Lua.",
-   "fonte": "p.55 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q2"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "Correto. A soma desses ciclos dá um ano de 354 a 355 dias."
@@ -1594,7 +1705,10 @@
    "missao": "calendars",
    "icone": "vaso",
    "enunciado": "Os egípcios só utilizavam o calendário solar para contabilizar o tempo.",
-   "fonte": "p.55 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q2"
+   },
    "origem": "propria",
    "certa": false,
    "explicacao": "Eles usaram primeiro o calendário lunar e só depois criaram o solar, por causa das cheias do rio Nilo."
@@ -1604,7 +1718,10 @@
    "missao": "calendars",
    "icone": "relogio",
    "enunciado": "Os calendários foram criados para nos ajudar a contabilizar a passagem do tempo.",
-   "fonte": "p.55 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q2"
+   },
    "origem": "propria",
    "certa": true,
    "explicacao": "E também para organizar plantio, colheita, festas e eventos religiosos."
@@ -1614,7 +1731,10 @@
    "missao": "calendars",
    "icone": "anzol",
    "enunciado": "Os calendários dos povos antigos serviam apenas para determinar os melhores períodos de pesca e caça.",
-   "fonte": "p.55 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q2"
+   },
    "origem": "propria",
    "certa": false,
    "explicacao": "Serviam para muito mais: lavoura, registro de eventos históricos e religiosos."
@@ -1624,7 +1744,10 @@
    "missao": "calendars",
    "icone": "xis",
    "enunciado": "Qual afirmação sobre o ano bissexto está ERRADA?",
-   "fonte": "p.67 q10",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.67 q10"
+   },
    "origem": "propria",
    "certa": "Em um ano bissexto, dois meses ganham um dia a mais",
    "erradas": [
@@ -1639,7 +1762,10 @@
    "missao": "calendars",
    "icone": "alerta",
    "enunciado": "Qual afirmação sobre o ano bissexto está INCORRETA?",
-   "fonte": "p.55 q3",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q3"
+   },
    "origem": "propria",
    "certa": "Possui dois dias a mais no mês de fevereiro",
    "erradas": [
@@ -1654,7 +1780,10 @@
    "missao": "calendars",
    "icone": "lua",
    "enunciado": "Quantos dias tem o ano no calendário lunar?",
-   "fonte": "p.55 q1b",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q1b"
+   },
    "origem": "propria",
    "certa": "Entre 354 e 355 dias",
    "erradas": [
@@ -1669,7 +1798,10 @@
    "missao": "calendars",
    "icone": "sol",
    "enunciado": "E quantos dias tem o ano no calendário solar?",
-   "fonte": "p.55 q1b",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55 q1b"
+   },
    "origem": "propria",
    "certa": "Cerca de 365 dias",
    "erradas": [
@@ -1684,7 +1816,10 @@
    "missao": "calendars",
    "icone": "vaso",
    "enunciado": "Como era formado o ano do calendário egípcio?",
-   "fonte": "p.53",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   },
    "origem": "propria",
    "certa": "12 meses de 30 dias e 5 de festa",
    "erradas": [
@@ -1699,7 +1834,10 @@
    "missao": "calendars",
    "icone": "pergaminho",
    "enunciado": "Em que ano foi publicado o calendário gregoriano?",
-   "fonte": "p.54",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   },
    "origem": "propria",
    "certa": "1582",
    "erradas": [
@@ -1714,7 +1852,10 @@
    "missao": "calendars",
    "icone": "relogio",
    "enunciado": "Quantas horas sobram a cada ano e acabam formando o dia extra do ano bissexto?",
-   "fonte": "p.63",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.63"
+   },
    "origem": "propria",
    "certa": "6 horas",
    "erradas": [
@@ -1729,7 +1870,10 @@
    "missao": "calendars",
    "icone": "escrever",
    "enunciado": "Qual mês recebe um dia extra nos anos bissextos?",
-   "fonte": "p.63",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.63"
+   },
    "origem": "propria",
    "aceitas": [
     "fevereiro",
@@ -1744,7 +1888,10 @@
    "missao": "calendars",
    "icone": "escrever",
    "enunciado": "Como se chama o ano em que fevereiro tem 29 dias?",
-   "fonte": "p.63",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.63"
+   },
    "origem": "propria",
    "aceitas": [
     "bissexto",
@@ -1759,7 +1906,10 @@
    "missao": "calendars",
    "icone": "ampulheta",
    "enunciado": "Coloque os calendários na ordem em que surgiram na história.",
-   "fonte": "p.53-54",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53-54"
+   },
    "origem": "propria",
    "sequencia": [
     "Calendário lunar",
@@ -1800,7 +1950,10 @@
    "missao": "calendars",
    "icone": "templo",
    "enunciado": "Qual é um exemplo de calendário lunar ainda usado hoje?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "O calendário islâmico",
    "erradas": [
@@ -1815,7 +1968,10 @@
    "missao": "calendars",
    "icone": "cruzeiro",
    "enunciado": "Qual acontecimento é o marco inicial do calendário cristão, usado no Brasil?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "O nascimento de Cristo",
    "erradas": [
@@ -1830,7 +1986,10 @@
    "missao": "calendars",
    "icone": "letras",
    "enunciado": "A palavra “calendário” vem do latim calendas, que significava...",
-   "fonte": "folha q11",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   },
    "origem": "derivada",
    "certa": "o primeiro dia do mês romano",
    "erradas": [
@@ -1845,7 +2004,10 @@
    "missao": "calendars",
    "icone": "xis",
    "enunciado": "Sobre os calendários, qual afirmação é INCORRETA?",
-   "fonte": "folha q11",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   },
    "origem": "derivada",
    "certa": "Todos os povos do planeta utilizam o mesmo calendário",
    "erradas": [
@@ -1860,7 +2022,10 @@
    "missao": "calendars",
    "icone": "calendario",
    "enunciado": "Quantos meses do ano têm 31 dias?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "Sete",
    "erradas": [
@@ -1875,7 +2040,10 @@
    "missao": "calendars",
    "icone": "calendario",
    "enunciado": "No calendário gregoriano, todos os meses têm a mesma quantidade de dias.",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": false,
    "explicacao": "Os meses variam entre 28 e 31 dias — é justamente um dos defeitos apontados nesse calendário."
@@ -1885,7 +2053,10 @@
    "missao": "calendars",
    "icone": "planta",
    "enunciado": "Em quantas estações o ano do calendário egípcio era dividido?",
-   "fonte": "livro p.53 / folha",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53 / folha"
+   },
    "origem": "derivada",
    "certa": "Três",
    "erradas": [
@@ -1900,7 +2071,10 @@
    "missao": "calendars",
    "icone": "balanca",
    "enunciado": "Qual é a diferença de dias entre o ano do calendário lunar e o do solar?",
-   "fonte": "folha",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": ""
+   },
    "origem": "derivada",
    "certa": "Cerca de 11 dias",
    "erradas": [
@@ -2404,7 +2578,10 @@
    "missao": "instruments",
    "icone": "torre",
    "enunciado": "Sobre as funções do gnômon, qual alternativa está INCORRETA?",
-   "fonte": "p.64 q1",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64 q1"
+   },
    "origem": "propria",
    "certa": "Pode ser utilizado para verificação das temperaturas do dia",
    "erradas": [
@@ -2419,7 +2596,10 @@
    "missao": "instruments",
    "icone": "lua",
    "enunciado": "Rebeca viu que a sombra de um poste era longa de manhã, curta ao meio-dia e voltou a crescer à tarde. O que explica isso?",
-   "fonte": "p.64 q2",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.64 q2"
+   },
    "origem": "propria",
    "certa": "Quanto mais alto o Sol está no céu, mais curta fica a sombra",
    "erradas": [
@@ -2434,7 +2614,10 @@
    "missao": "instruments",
    "icone": "bussola",
    "enunciado": "Qual instrumento usa a sombra do Sol para mostrar as direções e ajudar a medir o tempo, como um relógio solar?",
-   "fonte": "p.66 q6",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.66 q6"
+   },
    "origem": "propria",
    "certa": "O gnômon, que observa a sombra",
    "erradas": [
@@ -2449,7 +2632,10 @@
    "missao": "instruments",
    "icone": "ima",
    "enunciado": "A bússola funciona de forma diferente do astrolábio e do sextante. Qual é a principal diferença?",
-   "fonte": "p.66 q7",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.66 q7"
+   },
    "origem": "propria",
    "certa": "A bússola usa o campo magnético",
    "erradas": [
@@ -2672,7 +2858,10 @@
    "missao": "hemispheres",
    "icone": "cruzeiro",
    "enunciado": "Complete: “A constelação ______ pode ser vista no Brasil e a estrela da ponta inferior é utilizada para identificar a direção ______.”",
-   "fonte": "p.65 q4",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.65 q4"
+   },
    "origem": "propria",
    "certa": "Cruzeiro do Sul; Sul",
    "erradas": [
@@ -2687,7 +2876,10 @@
    "missao": "hemispheres",
    "icone": "check",
    "enunciado": "Analise: I. A linha do Equador divide a Terra em duas partes iguais. II. Um navegador no Brasil consegue usar a Estrela Polar para se orientar sem dificuldade. III. O Cruzeiro do Sul pode ser visto no Hemisfério Sul. Qual a sequência CORRETA?",
-   "fonte": "p.66 q5",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.66 q5"
+   },
    "origem": "propria",
    "certa": "V – F – V",
    "erradas": [

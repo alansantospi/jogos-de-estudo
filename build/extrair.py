@@ -52,11 +52,13 @@ def converter(q, missao):
     """Do formato do motor para o do esquema, sem perder campo nenhum."""
     tipo = TIPOS[q.get("t", "choice")]
     fora = {"tipo": tipo, "missao": missao, "icone": q["ic"], "enunciado": q["q"]}
-    if q.get("src"):
-        fora["fonte"] = q["src"]
-        # Marcação de procedência: o que cita livro ou folha da escola é
-        # derivado. Decide o que pode ser publicado com o produto.
-        fora["origem"] = "derivada" if re.search(r"livro|folha", q["src"], re.I) else "propria"
+    src = q.get("src")
+    if src:
+        # A fonte viaja pelo motor como {t,d}; no esquema é {tipo,detalhe}.
+        fora["fonte"] = ({"tipo": src["t"], "detalhe": src.get("d", "")}
+                         if isinstance(src, dict) else src)
+        alvo = src.get("t", "") if isinstance(src, dict) else src
+        fora["origem"] = "derivada" if re.search(r"livro|folha", alvo, re.I) else "propria"
     else:
         fora["origem"] = "propria"
     if tipo == "escolha":

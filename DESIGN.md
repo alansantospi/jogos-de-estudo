@@ -174,24 +174,25 @@ afundamento.
 ## Como reconstruir
 
 ```sh
-sh build/rebuild.sh
+sh build/rebuild.sh      # valida o conteúdo, monta os quatro jogos, confere
+sh teste/rodar.sh        # e o comportamento
 ```
 
-Regenera os quatro jogos a partir do commit `3ef9591`, o último antes do
-redesenho, aplicando em ordem: `build/aplicar.py` (folha de estilo, ícones,
-remoção de emoji), `build/letras.py` (formas das alternativas),
-`build/ilustracao.py` (o desenho da questão), `build/ingles.py` (o motor de
-inglês, que nomeia o campo do ícone de outro jeito), `build/trilha.py`
-(rolar até o nó atual), `build/aviso.py` (o aviso e a virada de etapa),
-`build/texto.py` (nomes das trilhas e enxugamento), `build/navegacao.py`
-(rotas e migalhas), `build/busca.py` (busca e grupos) e
-`build/alternativas.py` (alternativas do mesmo tamanho).
+O motor é fonte em `motor/*.molde.html`, o conteúdo é dado em
+`conteudo/*.json`, as partes próprias de cada jogo ficam em `jogo/<id>/`, e
+`build/montar.py` preenche as fendas. Mexer no motor é editar o molde: não há
+passo de build que o reescreva.
+
+Até setembro de 2026 isto funcionava ao contrário — o build restaurava o HTML
+de um commit antigo e aplicava vinte remendos que casavam trechos literais do
+fonte. Os scripts estão em `build/aposentados/`, com o registro do que cada um
+resolveu e de como a fragilidade cobrou o preço.
+
+A varredura de emoji daquele tempo removia **só pictogramas**. Setas
+(`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo: uma
+versão anterior apagou 192 setas e transformou `CLEAN → CLEANING` em
+`CLEAN CLEANING`.
 
 No fim, `build/medir_alternativas.py` e `build/medir_plausibilidade.py`
 derrubam o build se a alternativa certa voltar a se entregar pelo tamanho,
 pelos absolutos ou pelo eco do enunciado — ver PRODUCT.md.
-
-A varredura de emoji do `aplicar.py` remove **só pictogramas**. Setas
-(`→ ↔ ←`), sinais de conferido (`✓ ✗`) e formas geométricas são conteúdo:
-uma versão anterior apagou 192 setas e transformou `CLEAN → CLEANING` em
-`CLEAN CLEANING`.
