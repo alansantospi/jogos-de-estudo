@@ -1,0 +1,52 @@
+{
+ "cien": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "earth": "Movimento da Terra",
+  "sun": "Sol e orientação",
+  "orientation": "Orientação espacial",
+  "stars": "Observando as estrelas",
+  "instruments": "Instrumentos de orientação",
+  "hemispheres": "Hemisférios e Equador",
+  "moon": "Fases da Lua",
+  "calendars": "Calendários e ano bissexto"
+ },
+ "hist": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "imprensa": "A chegada da imprensa",
+  "jornais": "Jornais e fontes históricas",
+  "distancia": "Correio, telégrafo e telefone",
+  "imagem": "Fotografia, cinema e TV",
+  "digital": "Internet e mundo digital",
+  "inclusao": "Braille e Libras"
+ },
+ "arte": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "melodia": "Melodia, ritmo e timbre",
+  "harmonia": "Harmonia e arranjo",
+  "pintura": "Pintura mural e afresco",
+  "michelangelo": "Michelangelo e a Capela Sistina"
+ },
+ "ing": {
+  "review": "Sala de Reparos",
+  "all": "Portal Completo",
+  "vocabulary": "Arquivo de Vocabulário",
+  "ing_add": "Portal +ING",
+  "ing_drop_e": "Portal do E Perdido",
+  "ing_double": "Portal da Consoante Dupla",
+  "be": "Núcleo AM / IS / ARE",
+  "affirmative": "Linha das Frases Afirmativas",
+  "negative_questions": "Zona de Negativas e Perguntas",
+  "contractions": "Central das Contrações",
+  "clock_routine": "Estação do Relógio",
+  "time_numbers": "Relógio do Tempo",
+  "world": "Volta ao Mundo e ao Espaço",
+  "listening": "Sala de Escuta",
+  "ticket": "Terminal Temporal",
+  "movement": "Rota do Movimento",
+  "daily_actions": "Rotina Temporal",
+  "results_actions": "Arquivo de Ações Especiais"
+ }
+}

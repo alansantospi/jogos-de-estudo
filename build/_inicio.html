@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Jogos de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap">
+<script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script>
+<style>/*TOKENS*/</style>
+</head>
+<body>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>/*SPRITE*/</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="cabeca">
+      <div>
+        <h1>Jogos de Estudo</h1>
+        <p class="sub" id="subtitulo">Escolha a matéria e comece.</p>
+      </div>
+      <button id="chipPerfil" class="chip-perfil" onclick="ir('perfis')" aria-label="Trocar de aluno"></button>
+    </div>
+    <nav class="abas" role="tablist">
+      <button class="aba" data-vista="jogos"     onclick="ir('jogos')">Jogos</button>
+      <button class="aba" data-vista="historico" onclick="ir('historico')">Histórico</button>
+      <button class="aba" data-vista="conta"     onclick="ir('conta')">Conta</button>
+    </nav>
+  </header>
+
+  <!-- ---------------- jogos ---------------- -->
+  <section id="v-jogos" class="vista">
+    <div id="retomar"></div>
+    <ul class="grade">
+      <li class="ingles"><a class="jogo" href="time-travel-english.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>
+        <span class="materia">Inglês</span>
+        <span><span class="nome">Time Travel English</span>
+        <span class="desc">Present continuous, contrações, horas e rotina.</span></span>
+        <span class="mini" data-jogo="ing"></span>
+      </a></li>
+      <li class="ciencias"><a class="jogo" href="exploradores-do-ceu.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-terra"/></svg>
+        <span class="materia">Ciências</span>
+        <span><span class="nome">Exploradores do Céu</span>
+        <span class="desc">Movimento da Terra, fases da Lua, calendários e estrelas.</span></span>
+        <span class="mini" data-jogo="cien"></span>
+      </a></li>
+      <li class="historia"><a class="jogo" href="historia.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prensa"/></svg>
+        <span class="materia">História</span>
+        <span><span class="nome">Linhas do Tempo</span>
+        <span class="desc">Da imprensa de Gutenberg ao celular: telégrafo, cinema, internet.</span></span>
+        <span class="mini" data-jogo="hist"></span>
+      </a></li>
+      <li class="arte"><a class="jogo" href="artes.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
+        <span class="materia">Arte</span>
+        <span><span class="nome">Ateliê</span>
+        <span class="desc">Melodia, harmonia e arranjo — e a pintura mural, até a Capela Sistina.</span></span>
+        <span class="mini" data-jogo="arte"></span>
+      </a></li>
+    </ul>
+    <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>
+  </section>
+
+  <!-- ---------------- perfis ---------------- -->
+  <section id="v-perfis" class="vista">
+    <h2>Quem está jogando?</h2>
+    <div id="listaPerfis" class="perfis"></div>
+    <div class="cartao">
+      <label class="campo"><span>Nome do novo aluno</span>
+        <input id="novoNome" type="text" maxlength="16" autocomplete="off" placeholder="Anne"></label>
+      <button class="primario" onclick="adicionarPerfil()">Adicionar aluno</button>
+    </div>
+  </section>
+
+  <!-- ---------------- histórico ---------------- -->
+  <section id="v-historico" class="vista">
+    <div class="filtro">
+      <button class="pilula" data-dias="7"   onclick="periodo(7)">7 dias</button>
+      <button class="pilula" data-dias="30"  onclick="periodo(30)">30 dias</button>
+      <button class="pilula" data-dias="0"   onclick="periodo(0)">Tudo</button>
+      <button class="pilula fim" onclick="window.print()">Imprimir</button>
+    </div>
+    <div id="resumo" class="resumo"></div>
+    <h3>Está melhorando?</h3>
+    <div id="grafico" class="grafico"></div>
+    <h3>O que ainda erra</h3>
+    <div id="fracos" class="fracos"></div>
+    <h3>Partidas</h3>
+    <div id="partidas" class="partidas"></div>
+  </section>
+
+  <!-- ---------------- conta ---------------- -->
+  <section id="v-conta" class="vista">
+    <div id="conta"></div>
+  </section>
+</div>
+<script>/*MISSOES*/</script>
+<script>/*JS*/</script>
+</body>
+</html>

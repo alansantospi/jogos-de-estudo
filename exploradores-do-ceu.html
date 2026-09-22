@@ -641,6 +641,14 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .sala-botoes .answer .letra{width:3rem;height:3rem;font-size:var(--t-xl)}
 .sala-botoes .answer.escolhida{border-color:var(--materia);box-shadow:0 0 0 3px var(--materia-borda)}
 @media(max-width:44rem){ .sala-caixa{padding:var(--s-4)} }
+
+/* ---------- perfil ---------- */
+.perfil-btn{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;
+  border:2px solid rgba(255,255,255,.55);border-radius:999px;
+  background:var(--alt-1);color:#fff;
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.perfil-btn:hover{border-color:#fff}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"><script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script></head>
 <body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3.5 22 20H2z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></symbol><symbol id="i-ampulheta" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 4 5 6 5 9s-5 5-5 9"/><path d="M17 3c0 4-5 6-5 9s5 5 5 9"/></symbol><symbol id="i-anzol" viewBox="0 0 24 24"><path d="M14 3v9a5 5 0 0 1-10 0"/><path d="M11 6h6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-barco" viewBox="0 0 24 24"><path d="M3 17h18l-2.5 4h-13z"/><path d="M12 15V3l7 12z"/><path d="M10 15H5l5-8z"/></symbol><symbol id="i-bussola" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></symbol><symbol id="i-caixa-ferramentas" viewBox="0 0 24 24"><path d="M3 9h18v11H3z"/><path d="M9 9V6h6v3"/><path d="M3 14h18"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-ciclo" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v5h-5"/></symbol><symbol id="i-cruzeiro" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.4" fill="currentColor"/><circle cx="12" cy="20" r="1.4" fill="currentColor"/><circle cx="6" cy="11" r="1.4" fill="currentColor"/><circle cx="17.5" cy="13.5" r="1.4" fill="currentColor"/><path d="M12 6v12M7.4 11.4l8.7 1.8" stroke-dasharray="2 2"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-encolher" viewBox="0 0 24 24"><path d="M3.5 9H9V3.5M20.5 9H15V3.5M3.5 15H9v5.5M20.5 15H15v5.5"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.3 7.4l2.3 1.3M17.4 15.3l2.3 1.3M4.3 16.6l2.3-1.3M17.4 8.7l2.3-1.3"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-espelho" viewBox="0 0 24 24"><ellipse cx="12" cy="9.5" rx="6" ry="7"/><path d="M12 16.5V21M9 21h6"/></symbol><symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></symbol><symbol id="i-expandir" viewBox="0 0 24 24"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></symbol><symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-festa" viewBox="0 0 24 24"><path d="M3 21 8 9l7 7z"/><path d="m14.5 9.5 5.5-5.5"/><circle cx="18" cy="10.5" r="1" fill="currentColor"/><circle cx="12.5" cy="4" r="1" fill="currentColor"/><circle cx="20.5" cy="15" r="1" fill="currentColor"/></symbol><symbol id="i-fogo" viewBox="0 0 24 24"><path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-4.5-4-6.5-3-11-3 1.5-5.5 4.5-5.5 7.5 0 0-1-.8-1.5-2.5-1.3 1.8-2 3.8-2 6A5.5 5.5 0 0 0 12 21z"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-ima" viewBox="0 0 24 24"><path d="M6 3v9a6 6 0 0 0 12 0V3"/><path d="M6 8h4M14 8h4"/></symbol><symbol id="i-lampada" viewBox="0 0 24 24"><path d="M9 17a6 6 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-luneta" viewBox="0 0 24 24"><path d="m3 14 13-8 3 5-13 8z"/><path d="m8 16 2 4.5"/><path d="m14.5 12 4 2"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mala" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/><path d="M9 11v5M15 11v5"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-mapa" viewBox="0 0 24 24"><path d="m3 6 6-2.5 6 2.5 6-2.5v15L15 21l-6-2.5L3 21z"/><path d="M9 3.5v15M15 6v15"/></symbol><symbol id="i-menos" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-montanha" viewBox="0 0 24 24"><path d="m2.5 19 6.5-11 4 6 2.5-3.5L21.5 19z"/><path d="m7 12 2-1.5"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-olho" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-palmas" viewBox="0 0 24 24"><path d="M11 21a5 5 0 0 1-5-5V9.5a1.5 1.5 0 0 1 3 0V13"/><path d="M13 21a5 5 0 0 0 5-5V9.5a1.5 1.5 0 0 0-3 0V13"/><path d="M12 2v3M7.5 3.5 9 6M16.5 3.5 15 6"/></symbol><symbol id="i-parar" viewBox="0 0 24 24"><path d="M8.2 3.5h7.6l5.7 5.7v7.6l-5.7 5.7H8.2L2.5 16.8V9.2z"/></symbol><symbol id="i-pergaminho" viewBox="0 0 24 24"><path d="M6 4h12v14a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V4z"/><path d="M10 8h5M10 12h5"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pincel" viewBox="0 0 24 24"><path d="M4 20c0-3 1.5-4 3-4s3 1 3 3-2 3-6 3c1-1 0-2 0-2z"/><path d="m9 16 10-11 3 3L11 18"/></symbol><symbol id="i-planeta" viewBox="0 0 24 24"><circle cx="12" cy="11" r="6"/><ellipse cx="12" cy="11" rx="11" ry="3.4" transform="rotate(-18 12 11)"/></symbol><symbol id="i-planta" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 15c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z"/></symbol><symbol id="i-predios" viewBox="0 0 24 24"><path d="M3 21V9h7v12"/><path d="M10 21V4h11v17"/><path d="M13.5 8h4M13.5 12h4M13.5 16h4M6 13h1"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-rosa-ventos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 3 2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/></symbol><symbol id="i-satelite" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m7.5 7.5-3 3 3 3 3-3z" /><path d="m16.5 10.5 3 3-3 3-3-3z"/><path d="M14 9.5 16 7.5M10 14.5 8 16.5"/></symbol><symbol id="i-seta-baixo" viewBox="0 0 24 24"><path d="M12 4.5v15"/><path d="m6 13.5 6 6 6-6"/></symbol><symbol id="i-seta-cima" viewBox="0 0 24 24"><path d="M12 19.5v-15"/><path d="m6 10.5 6-6 6 6"/></symbol><symbol id="i-seta-diagonal" viewBox="0 0 24 24"><path d="M6.5 17.5 17.5 6.5"/><path d="M10 6.5h7.5V14"/></symbol><symbol id="i-seta-dupla" viewBox="0 0 24 24"><path d="M3.5 12h17"/><path d="m7.5 8 -4 4 4 4M16.5 8l4 4-4 4"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-termometro" viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4.5 4.5 0 1 0 4 0z"/><circle cx="12" cy="17.5" r="1.8" fill="currentColor"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-tomada" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="9.5" cy="10" r="1.2" fill="currentColor"/><circle cx="14.5" cy="10" r="1.2" fill="currentColor"/><path d="M9 15h6"/></symbol><symbol id="i-torre" viewBox="0 0 24 24"><path d="M8 21V8l4-5 4 5v13"/><path d="M6 21h12"/><circle cx="12" cy="10.5" r="2.4"/><path d="M12 9.2v1.3l1 .6"/></symbol><symbol id="i-vaso" viewBox="0 0 24 24"><path d="M8 3h8l-1.5 3.5a6 6 0 0 1 3.5 5.5 6 6 0 0 1-12 0 6 6 0 0 1 3.5-5.5z"/><path d="M6.5 15h11"/></symbol><symbol id="i-voltar" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></symbol><symbol id="i-xis" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
@@ -650,7 +658,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <span id="migalhaAqui"></span>
 </nav>
 <div id="festaBox" class="festa" aria-hidden="true"></div>
-<div class="wrap"><div class="app"><header><div class="top"><div><h1>Exploradores do Céu</h1><div class="subtitle">Terra, Sol, orientação espacial e estrelas</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button></div></div></header><main>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>Exploradores do Céu</h1><div class="subtitle">Terra, Sol, orientação espacial e estrelas</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
 <section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Missão: entender o céu</h2><p>Movimento da Terra, fases da Lua, calendários e estrelas.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button><button type="button" class="ghost sala-abrir" onclick="irPara('sala')"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg> Jogar com outras pessoas</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
 <section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1</span><h2>A Terra está em movimento</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg></div><strong>Rotação</strong>Movimento da Terra em torno de seu próprio eixo.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sol"/></svg></div><strong>Dia e noite</strong>A rotação faz diferentes regiões da Terra receberem luz solar em momentos diferentes.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-bussola"/></svg></div><strong>Movimento aparente</strong>O Sol parece atravessar o céu, mas esse efeito está relacionado principalmente à rotação da Terra.</div></div><div class="example">O Sol nasce aproximadamente no lado <b>leste</b> e se põe aproximadamente no lado <b>oeste</b> — porque a Terra gira de <b>oeste para leste</b>.</div><div class="example"><b>Consequências da rotação:</b> a sucessão dos dias e das noites, o movimento aparente do Sol e os <b>fusos horários</b>.</div><div class="example warning">Dizemos “aproximadamente” porque a posição exata do nascer e do pôr do Sol varia ao longo do ano e conforme o local.</div></div><div class="lesson-nav"><span class="small">1 de 10</span><button class="primary" onclick="openLesson('lesson1b')">Continuar →</button></div></div>
 <div id="lesson1b" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 2</span><h2>Translação e as estações do ano</h2><p>Além de girar em torno do próprio eixo, a Terra também percorre um caminho ao redor do Sol.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-globo"/></svg></div><strong>Translação</strong>Movimento da Terra ao redor do Sol, que dura cerca de <b>365 dias</b> — um ano. A trajetória é <b>elíptica</b>, como um círculo achatado.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg></div><strong>Rotação</strong>Giro em torno do próprio eixo, que dura cerca de <b>24 horas</b> — um dia.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planeta"/></svg></div><strong>Eixo inclinado</strong>O eixo da Terra não é vertical: ele é inclinado em relação ao plano da órbita.</div></div><div class="example">As <b>estações do ano</b> acontecem porque o eixo inclinado faz a luz do Sol chegar de maneira diferente às regiões ao longo da translação.</div><div class="example"><b>Consequências da translação:</b> a sucessão das estações do ano e a variação da duração dos dias e das noites.</div><div class="example warning">Cuidado com um engano comum: as estações <b>não</b> são causadas pela Terra ficar mais perto ou mais longe do Sol.</div></div><div class="lesson-nav"><span class="small">2 de 10</span><div><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button> <button class="primary" onclick="openLesson('lesson1c')">Continuar →</button></div></div></div>
@@ -740,6 +748,60 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <section id="end" class="screen"><div class="result"><div class="trophy"></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
 </main></div></div>
 <script>
+
+/* ---------- perfis ---------- */
+/* A lista de perfis é a mesma nos quatro jogos e na página inicial. Cada
+   perfil tem a sua chave de progresso: trocar de aluno não apaga o do outro. */
+const PERFIS_CHAVE = "jogos_perfis_v1";
+const PERFIL_ATUAL = "jogos_perfil_atual";
+const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
+
+function lerPerfis(){
+  try{ return JSON.parse(localStorage.getItem(PERFIS_CHAVE)) || []; }
+  catch(e){ return []; }
+}
+function gravarPerfis(lista){
+  try{ localStorage.setItem(PERFIS_CHAVE, JSON.stringify(lista)); }catch(e){}
+}
+function perfilAtual(){
+  const lista = lerPerfis();
+  if(!lista.length) return null;
+  let id;
+  try{ id = localStorage.getItem(PERFIL_ATUAL); }catch(e){}
+  return lista.find(p => p.id === id) || lista[0];
+}
+function trocarPerfil(id){
+  try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){}
+}
+function criarPerfil(nome){
+  const lista = lerPerfis();
+  const p = {id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+             nome: String(nome).trim().slice(0, 16) || "Aluno",
+             cor: CORES_PERFIL[lista.length % CORES_PERFIL.length],
+             criado: Date.now()};
+  lista.push(p); gravarPerfis(lista); trocarPerfil(p.id);
+  return p;
+}
+function inicialDe(nome){ return (nome || "?").trim().charAt(0).toUpperCase(); }
+
+/* A chave de progresso passa a levar o perfil. Sem perfil escolhido, o jogo
+   usa a chave antiga — é o progresso que já existia neste aparelho. */
+function chaveProgresso(base){
+  const p = perfilAtual();
+  return p ? base + ":" + p.id : base;
+}
+
+/* Primeira vez com perfis: o que já estava salvo vira o perfil inicial, em
+   vez de a criança perder tudo o que fez. */
+function migrarProgresso(base){
+  try{
+    const antigo = localStorage.getItem(base);
+    if(!antigo) return;
+    if(!lerPerfis().length) criarPerfil("Aluno");
+    const nova = chaveProgresso(base);
+    if(!localStorage.getItem(nova)) localStorage.setItem(nova, antigo);
+  }catch(e){}
+}
 const FORMAS=["A","B","C","D"];
 const NOMES_FORMA=FORMAS;
 const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
@@ -964,7 +1026,8 @@ let questions=[],index=0,score=0,lives=5,hits=0,answered=0,combo=0,bestCombo=0,
     locked=false,activeTrail=null,trailStep=0,currentCategory="all",practiceMode=true;
 
 /* ---------- progresso persistente ---------- */
-const STORE="sky_progress_v1";
+const STORE_BASE="sky_progress_v1";
+const STORE=(migrarProgresso("sky_progress_v1"), chaveProgresso("sky_progress_v1"));
 function defaultProgress(){return{items:{},best:{score:0,acc:0},trails:{},missions:{},practice:true,mudo:false}}
 
 // Estado de uma missão: nunca jogada, começada, concluída ou dominada.
@@ -1483,6 +1546,7 @@ document.addEventListener('keydown',ev=>{
 
 /* ---------- fim de partida ---------- */
 function endGame(){
+  registrarPartida(hits, answered, score);
   setTimeout(() => comemorar(hits, answered), 260);
   if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
   // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
@@ -2047,4 +2111,37 @@ function _catalogoMissoes(){
   return Object.keys(nomes).filter(c => c !== "review").map(c => [c, nomes[c]]);
 }
 function _perguntasSala(cat){ return makeQuestions(cat, 10); }
+
+/* ---------- seletor de perfil no cabeçalho ---------- */
+function pintarPerfil(){
+  const b = document.getElementById("btnPerfil");
+  if(!b) return;
+  const p = perfilAtual();
+  b.textContent = p ? inicialDe(p.nome) : "?";
+  b.style.background = p ? "var(" + p.cor + ")" : "";
+  b.setAttribute("aria-label", p ? "Perfil: " + p.nome + ". Trocar de aluno"
+                                 : "Escolher quem está jogando");
+  b.title = p ? p.nome : "Escolher aluno";
+}
+function abrirPerfis(){ location.href = "index.html#perfis"; }
+addEventListener("DOMContentLoaded", pintarPerfil);
+
+/* ---------- histórico de partidas ---------- */
+/* Uma linha por partida terminada. Campos curtos: isto cresce sem parar e
+   divide os 5 MB do localStorage com o progresso. */
+const HIST_CHAVE = "jogos_historico_v1";
+const HIST_MAX = 400;
+
+function registrarPartida(acertos, total, pontos){
+  if(!total) return;                       // saiu antes de responder: não conta
+  try{
+    const p = perfilAtual();
+    const k = HIST_CHAVE + (p ? ":" + p.id : "");
+    const lista = JSON.parse(localStorage.getItem(k) || "[]");
+    lista.push({q: Date.now(), j: "cien", m: currentCategory || "all",
+                t: activeTrail || null, a: acertos, n: total, p: pontos || 0});
+    while(lista.length > HIST_MAX) lista.shift();
+    localStorage.setItem(k, JSON.stringify(lista));
+  }catch(e){}
+}
 </script></body></html>

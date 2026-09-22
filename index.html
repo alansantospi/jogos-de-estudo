@@ -7,12 +7,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap">
+<script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script>
 <style>
 :root{
   color-scheme:light dark;
   --fundo:oklch(0.975 0.008 265); --carta:oklch(1 0 0);
   --risco:oklch(0.905 0.012 265);
   --texto:oklch(0.28 0.030 268); --texto-2:oklch(0.50 0.028 268);
+  /* As mesmas quatro cores que marcam as alternativas nos jogos; aqui
+     distinguem os perfis. Sem elas o avatar sai sem cor nenhuma. */
+  --alt-1:oklch(0.540 0.19 268); --alt-2:oklch(0.570 0.15 75);
+  --alt-3:oklch(0.535 0.13 200); --alt-4:oklch(0.550 0.21 322);
   --ingles:oklch(0.55 0.20 265); --ciencias:oklch(0.525 0.15 195);
   --historia:oklch(0.575 0.18 40); --arte:oklch(0.56 0.22 330);
   --display:'Fredoka',ui-rounded,system-ui,sans-serif;
@@ -74,54 +79,537 @@ footer b{color:var(--texto)}
   h1{font-size:1.875rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}a.jogo:active{transform:none}}
+/* ---------- cabeçalho, abas ---------- */
+.cabeca{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s-4)}
+.chip-perfil{flex:none;width:2.75rem;height:2.75rem;border-radius:999px;border:2px solid var(--risco);
+  color:#fff;font-family:var(--display);font-size:1.125rem;font-weight:700;cursor:pointer}
+.chip-perfil:hover{border-color:var(--texto)}
+.abas{display:flex;gap:var(--s-2);margin-top:var(--s-4);flex-wrap:wrap}
+.aba{background:none;border:2px solid var(--risco);border-radius:999px;
+  padding:var(--s-2) var(--s-4);color:var(--texto-2);cursor:pointer;
+  font-family:var(--display);font-size:0.9375rem;font-weight:600}
+.aba:hover{color:var(--texto);border-color:var(--texto-2)}
+.aba.atual{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
+.vista[hidden]{display:none}
+h2{font-family:var(--display);font-size:1.5rem;margin:0 0 var(--s-4)}
+h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
+
+/* ---------- cartões e campos ---------- */
+.cartao{display:grid;gap:var(--s-3);background:var(--carta);border:2px solid var(--risco);
+  border-radius:var(--r-g);padding:var(--s-5);margin-bottom:var(--s-4);max-width:32rem}
+.cartao h2,.cartao p{margin:0}
+.cartao p{color:var(--texto-2);font-size:0.9375rem}
+.campo{display:grid;gap:4px;font-size:0.875rem;font-weight:700;color:var(--texto-2)}
+.campo input{min-height:2.75rem;padding:var(--s-2) var(--s-3);background:var(--fundo);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);font-family:var(--corpo);font-size:1rem;font-weight:600}
+.campo input:focus-visible{outline:3px solid var(--ingles);outline-offset:2px}
+.primario,.fantasma{min-height:2.75rem;border-radius:999px;cursor:pointer;
+  font-family:var(--display);font-size:1rem;font-weight:600;padding:0 var(--s-5)}
+.primario{background:var(--ingles);color:#fff;border:0;box-shadow:0 var(--labio) 0 color-mix(in oklch,var(--ingles) 70%,black)}
+.primario:active{transform:translateY(var(--labio));box-shadow:none}
+.fantasma{background:none;color:var(--texto-2);border:2px solid var(--risco)}
+.recado{min-height:1.2em;color:var(--texto-2);font-size:0.875rem}
+
+/* ---------- perfis ---------- */
+.perfis{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-bottom:var(--s-5)}
+.perfil{display:grid;justify-items:center;gap:4px}
+.perfil .avatar{width:4rem;height:4rem;border-radius:999px;border:3px solid transparent;color:#fff;
+  font-family:var(--display);font-size:1.75rem;font-weight:700;cursor:pointer}
+.perfil.atual .avatar{border-color:var(--texto)}
+.perfil-nome{font-weight:700;font-size:0.9375rem;background:none;border:0;
+  color:var(--texto);cursor:pointer;font-family:var(--corpo);padding:2px 4px;
+  border-radius:6px}
+.perfil-nome:hover{background:var(--risco)}
+.apagar{background:none;border:0;color:var(--texto-2);font-size:0.75rem;cursor:pointer;text-decoration:underline}
+.vazio{color:var(--texto-2);font-size:0.9375rem}
+
+/* ---------- retomar ---------- */
+.retomar{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:var(--s-3);margin-bottom:var(--s-5)}
+.retomar-item{display:grid;gap:2px;padding:var(--s-3) var(--s-4);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r);text-decoration:none;color:var(--texto)}
+.retomar-item:hover{border-color:var(--texto-2)}
+.retomar-item span{font-size:0.8125rem;color:var(--texto-2)}
+.mini{grid-column:1/-1;font-size:0.8125rem;color:var(--texto-2);font-weight:700}
+
+/* ---------- histórico ---------- */
+.filtro{display:flex;gap:var(--s-2);margin-bottom:var(--s-4);flex-wrap:wrap}
+.pilula{background:none;border:2px solid var(--risco);border-radius:999px;padding:4px var(--s-3);
+  color:var(--texto-2);cursor:pointer;font-weight:700;font-size:0.875rem}
+.pilula.fim{margin-left:auto}
+.resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--s-3)}
+.cartao-resumo{display:grid;gap:2px;padding:var(--s-4);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r)}
+.cartao-resumo span{font-size:0.8125rem;color:var(--texto-2)}
+.cartao-resumo .grande{font-family:var(--display);font-size:2rem;font-weight:700;color:var(--texto)}
+.cartao-resumo.ing .grande{color:var(--ingles)} .cartao-resumo.cien .grande{color:var(--ciencias)}
+.cartao-resumo.hist .grande{color:var(--historia)} .cartao-resumo.arte .grande{color:var(--arte)}
+.grafico{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);padding:var(--s-4)}
+.barras{display:flex;align-items:flex-end;gap:2px;height:9rem}
+.barra-col{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0}
+.barra{width:70%;background:var(--ingles);border-radius:3px 3px 0 0;min-height:3px}
+.barra-v{font-size:0.6875rem;color:var(--texto-2);font-weight:700}
+.barra-d{font-size:0.625rem;color:var(--texto-2);white-space:nowrap}
+.fracos{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:var(--s-3)}
+.fraco{display:grid;gap:2px;padding:var(--s-3) var(--s-4);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r);text-decoration:none;color:var(--texto)}
+.fraco:hover{border-color:var(--historia)}
+.fraco-pct{font-family:var(--display);font-size:1.375rem;font-weight:700;color:var(--historia)}
+.fraco span:last-child{font-size:0.8125rem;color:var(--texto-2)}
+.tabela{width:100%;border-collapse:collapse;font-size:0.875rem}
+.tabela th{text-align:left;color:var(--texto-2);font-size:0.75rem;text-transform:uppercase;
+  letter-spacing:.04em;padding:var(--s-2);border-bottom:2px solid var(--risco)}
+.tabela td{padding:var(--s-2);border-bottom:1px solid var(--risco)}
+.tabela small{color:var(--texto-2)}
+
+@media print{
+  .abas,.filtro,.retomar,footer,.chip-perfil,.grade{display:none!important}
+  .vista{display:block!important}
+  body{background:#fff;color:#000}
+  .cartao-resumo,.grafico,.fraco{border-color:#999;background:#fff}
+}
 </style>
 </head>
 <body>
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-<defs>
-<symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol>
-<symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol>
-<symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol>
-<symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol>
-</defs>
-</svg>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol></defs></svg>
 
 <div class="wrap">
   <header>
-    <h1>Jogos de Estudo</h1>
-    <p class="sub">Escolha a matéria e comece. O progresso fica salvo neste aparelho.</p>
+    <div class="cabeca">
+      <div>
+        <h1>Jogos de Estudo</h1>
+        <p class="sub" id="subtitulo">Escolha a matéria e comece.</p>
+      </div>
+      <button id="chipPerfil" class="chip-perfil" onclick="ir('perfis')" aria-label="Trocar de aluno"></button>
+    </div>
+    <nav class="abas" role="tablist">
+      <button class="aba" data-vista="jogos"     onclick="ir('jogos')">Jogos</button>
+      <button class="aba" data-vista="historico" onclick="ir('historico')">Histórico</button>
+      <button class="aba" data-vista="conta"     onclick="ir('conta')">Conta</button>
+    </nav>
   </header>
 
-  <ul class="grade">
-    <li class="ingles"><a class="jogo" href="time-travel-english.html">
-      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>
-      <span class="materia">Inglês</span>
-      <span><span class="nome">Time Travel English</span>
-      <span class="desc">Present continuous, contrações, horas e rotina.</span></span>
-    </a></li>
-    <li class="ciencias"><a class="jogo" href="exploradores-do-ceu.html">
-      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-terra"/></svg>
-      <span class="materia">Ciências</span>
-      <span><span class="nome">Exploradores do Céu</span>
-      <span class="desc">Movimento da Terra, fases da Lua, calendários e estrelas.</span></span>
-    </a></li>
-    <li class="historia"><a class="jogo" href="historia.html">
-      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prensa"/></svg>
-      <span class="materia">História</span>
-      <span><span class="nome">Linhas do Tempo</span>
-      <span class="desc">Da imprensa de Gutenberg ao celular: telégrafo, cinema, internet.</span></span>
-    </a></li>
-    <li class="arte"><a class="jogo" href="artes.html">
-      <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
-      <span class="materia">Arte</span>
-      <span><span class="nome">Ateliê</span>
-      <span class="desc">Melodia, harmonia e arranjo — e a pintura mural, até a Capela Sistina.</span></span>
-    </a></li>
-  </ul>
+  <!-- ---------------- jogos ---------------- -->
+  <section id="v-jogos" class="vista">
+    <div id="retomar"></div>
+    <ul class="grade">
+      <li class="ingles"><a class="jogo" href="time-travel-english.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>
+        <span class="materia">Inglês</span>
+        <span><span class="nome">Time Travel English</span>
+        <span class="desc">Present continuous, contrações, horas e rotina.</span></span>
+        <span class="mini" data-jogo="ing"></span>
+      </a></li>
+      <li class="ciencias"><a class="jogo" href="exploradores-do-ceu.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-terra"/></svg>
+        <span class="materia">Ciências</span>
+        <span><span class="nome">Exploradores do Céu</span>
+        <span class="desc">Movimento da Terra, fases da Lua, calendários e estrelas.</span></span>
+        <span class="mini" data-jogo="cien"></span>
+      </a></li>
+      <li class="historia"><a class="jogo" href="historia.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prensa"/></svg>
+        <span class="materia">História</span>
+        <span><span class="nome">Linhas do Tempo</span>
+        <span class="desc">Da imprensa de Gutenberg ao celular: telégrafo, cinema, internet.</span></span>
+        <span class="mini" data-jogo="hist"></span>
+      </a></li>
+      <li class="arte"><a class="jogo" href="artes.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
+        <span class="materia">Arte</span>
+        <span><span class="nome">Ateliê</span>
+        <span class="desc">Melodia, harmonia e arranjo — e a pintura mural, até a Capela Sistina.</span></span>
+        <span class="mini" data-jogo="arte"></span>
+      </a></li>
+    </ul>
+    <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>
+  </section>
 
-  <footer>
-    Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.
-  </footer>
+  <!-- ---------------- perfis ---------------- -->
+  <section id="v-perfis" class="vista">
+    <h2>Quem está jogando?</h2>
+    <div id="listaPerfis" class="perfis"></div>
+    <div class="cartao">
+      <label class="campo"><span>Nome do novo aluno</span>
+        <input id="novoNome" type="text" maxlength="16" autocomplete="off" placeholder="Anne"></label>
+      <button class="primario" onclick="adicionarPerfil()">Adicionar aluno</button>
+    </div>
+  </section>
+
+  <!-- ---------------- histórico ---------------- -->
+  <section id="v-historico" class="vista">
+    <div class="filtro">
+      <button class="pilula" data-dias="7"   onclick="periodo(7)">7 dias</button>
+      <button class="pilula" data-dias="30"  onclick="periodo(30)">30 dias</button>
+      <button class="pilula" data-dias="0"   onclick="periodo(0)">Tudo</button>
+      <button class="pilula fim" onclick="window.print()">Imprimir</button>
+    </div>
+    <div id="resumo" class="resumo"></div>
+    <h3>Está melhorando?</h3>
+    <div id="grafico" class="grafico"></div>
+    <h3>O que ainda erra</h3>
+    <div id="fracos" class="fracos"></div>
+    <h3>Partidas</h3>
+    <div id="partidas" class="partidas"></div>
+  </section>
+
+  <!-- ---------------- conta ---------------- -->
+  <section id="v-conta" class="vista">
+    <div id="conta"></div>
+  </section>
 </div>
+<script>const MISSOES = {"cien": {"all": "Desafio misto", "review": "Revisão dos meus erros", "earth": "Movimento da Terra", "sun": "Sol e orientação", "orientation": "Orientação espacial", "stars": "Observando as estrelas", "instruments": "Instrumentos de orientação", "hemispheres": "Hemisférios e Equador", "moon": "Fases da Lua", "calendars": "Calendários e ano bissexto"}, "hist": {"all": "Desafio misto", "review": "Revisão dos meus erros", "imprensa": "A chegada da imprensa", "jornais": "Jornais e fontes históricas", "distancia": "Correio, telégrafo e telefone", "imagem": "Fotografia, cinema e TV", "digital": "Internet e mundo digital", "inclusao": "Braille e Libras"}, "arte": {"all": "Desafio misto", "review": "Revisão dos meus erros", "melodia": "Melodia, ritmo e timbre", "harmonia": "Harmonia e arranjo", "pintura": "Pintura mural e afresco", "michelangelo": "Michelangelo e a Capela Sistina"}, "ing": {"review": "Sala de Reparos", "all": "Portal Completo", "vocabulary": "Arquivo de Vocabulário", "ing_add": "Portal +ING", "ing_drop_e": "Portal do E Perdido", "ing_double": "Portal da Consoante Dupla", "be": "Núcleo AM / IS / ARE", "affirmative": "Linha das Frases Afirmativas", "negative_questions": "Zona de Negativas e Perguntas", "contractions": "Central das Contrações", "clock_routine": "Estação do Relógio", "time_numbers": "Relógio do Tempo", "world": "Volta ao Mundo e ao Espaço", "listening": "Sala de Escuta", "ticket": "Terminal Temporal", "movement": "Rota do Movimento", "daily_actions": "Rotina Temporal", "results_actions": "Arquivo de Ações Especiais"}};</script>
+<script>/* ---------- perfis ---------- */
+const PERFIS_CHAVE = "jogos_perfis_v1";
+const PERFIL_ATUAL = "jogos_perfil_atual";
+const HIST_CHAVE = "jogos_historico_v1";
+const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
+const BASES = {ing: "ttg_progress_v1", cien: "sky_progress_v1",
+               hist: "historia_progress_v1", arte: "artes_progress_v1"};
+const MATERIA = {ing: "Inglês", cien: "Ciências", hist: "História", arte: "Arte"};
+const PAGINA = {ing: "time-travel-english.html", cien: "exploradores-do-ceu.html",
+                hist: "historia.html", arte: "artes.html"};
+
+const ler = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } };
+const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
+
+function lerPerfis(){ return ler(PERFIS_CHAVE) || []; }
+function perfilAtual(){
+  const l = lerPerfis(); if(!l.length) return null;
+  let id; try{ id = localStorage.getItem(PERFIL_ATUAL); }catch(e){}
+  return l.find(p => p.id === id) || l[0];
+}
+function trocarPerfil(id){ try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){} desenhar(); }
+function inicialDe(n){ return (n || "?").trim().charAt(0).toUpperCase(); }
+function criarPerfil(nome){
+  const l = lerPerfis();
+  const p = {id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+             nome: String(nome).trim().slice(0, 16) || "Aluno",
+             cor: CORES_PERFIL[l.length % CORES_PERFIL.length], criado: Date.now()};
+  l.push(p); gravar(PERFIS_CHAVE, l); trocarPerfil(p.id); return p;
+}
+function adicionarPerfil(){
+  const c = document.getElementById("novoNome");
+  if(!c.value.trim()) return c.focus();
+  criarPerfil(c.value); c.value = ""; ir("jogos");
+}
+function renomearPerfil(id){
+  const l = lerPerfis(); const p = l.find(x => x.id === id);
+  if(!p) return;
+  const novo = prompt("Nome do aluno:", p.nome);
+  if(novo === null) return;
+  p.nome = String(novo).trim().slice(0, 16) || p.nome;
+  gravar(PERFIS_CHAVE, l); desenhar();
+}
+function apagarPerfil(id){
+  const p = lerPerfis().find(x => x.id === id);
+  if(!p || !confirm("Apagar o perfil de " + p.nome + " e todo o progresso dele?")) return;
+  gravar(PERFIS_CHAVE, lerPerfis().filter(x => x.id !== id));
+  try{
+    Object.values(BASES).forEach(b => localStorage.removeItem(b + ":" + id));
+    localStorage.removeItem(HIST_CHAVE + ":" + id);
+  }catch(e){}
+  desenhar();
+}
+
+/* ---------- leitura do que os jogos salvaram ---------- */
+/* Mesma origem, então a página inicial lê o progresso dos quatro. */
+function sufixo(){ const p = perfilAtual(); return p ? ":" + p.id : ""; }
+function progressoDe(jogo){ return ler(BASES[jogo] + sufixo()) || {items:{}, missions:{}, trails:{}}; }
+function historico(){ return ler(HIST_CHAVE + sufixo()) || []; }
+
+let DIAS = 30;
+function periodo(d){ DIAS = d; desenhar(); }
+function noPeriodo(l){
+  if(!DIAS) return l;
+  const corte = Date.now() - DIAS * 864e5;
+  return l.filter(x => x.q >= corte);
+}
+const pct = (a, n) => n ? Math.round(a / n * 100) : 0;
+const dia = q => new Date(q).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"});
+const nomeMissao = (j, m) => (MISSOES[j] && MISSOES[j][m]) || m;
+
+/* ---------- desenho ---------- */
+function desenhar(){
+  const p = perfilAtual();
+  const chip = document.getElementById("chipPerfil");
+  chip.textContent = p ? inicialDe(p.nome) : "+";
+  chip.style.background = p ? "var(" + p.cor + ")" : "var(--texto-2)";
+  chip.title = p ? p.nome : "Escolher aluno";
+  document.getElementById("subtitulo").textContent = p
+    ? "Jogando como " + p.nome + ". O progresso fica salvo neste aparelho."
+    : "Escolha quem está jogando para o progresso ficar separado.";
+  pintarPerfis(); pintarJogos(); pintarHistorico(); pintarConta();
+}
+
+function pintarPerfis(){
+  const c = document.getElementById("listaPerfis");
+  const atual = perfilAtual();
+  const l = lerPerfis();
+  c.innerHTML = l.map(p =>
+    '<div class="perfil' + (atual && atual.id === p.id ? " atual" : "") + '">'
+    + '<button class="avatar" style="background:var(' + p.cor + ')" onclick="trocarPerfil(\'' + p.id + '\')">'
+    + inicialDe(p.nome) + "</button>"
+    + '<button class="perfil-nome" onclick="renomearPerfil(\'' + p.id + '\')"'
+    + ' aria-label="Renomear ' + esc(p.nome) + '">' + esc(p.nome) + "</button>"
+    + '<button class="apagar" onclick="apagarPerfil(\'' + p.id + '\')" aria-label="Apagar ' + esc(p.nome) + '">remover</button>'
+    + "</div>").join("")
+    || '<p class="vazio">Nenhum aluno ainda. Crie o primeiro abaixo.</p>';
+}
+function esc(t){ return String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function pintarJogos(){
+  /* Selo por matéria: quantas missões já foram concluídas. */
+  document.querySelectorAll(".mini").forEach(e => {
+    const g = e.dataset.jogo, pr = progressoDe(g);
+    const feitas = Object.values(pr.missions || {}).filter(m => m.concluidas).length;
+    const total = Object.keys(MISSOES[g] || {}).length;
+    e.textContent = feitas ? feitas + " de " + total + " missões" : "";
+  });
+
+  /* Retomar: as três últimas partidas, para continuar com um toque. */
+  const ult = historico().slice(-3).reverse();
+  const c = document.getElementById("retomar");
+  c.innerHTML = ult.length
+    ? '<h3>Continuar de onde parou</h3><div class="retomar">' + ult.map(x =>
+        '<a class="retomar-item" href="' + PAGINA[x.j] + "#missao/" + encodeURIComponent(x.m) + '">'
+        + '<b>' + esc(nomeMissao(x.j, x.m)) + "</b>"
+        + '<span>' + MATERIA[x.j] + " · " + pct(x.a, x.n) + "% em " + dia(x.q) + "</span></a>").join("")
+      + "</div>"
+    : "";
+}
+
+function pintarHistorico(){
+  const todas = noPeriodo(historico());
+  /* Resumo por matéria — é o que a professora olha. */
+  const porJogo = {};
+  todas.forEach(x => {
+    const d = porJogo[x.j] || (porJogo[x.j] = {a: 0, n: 0, partidas: 0});
+    d.a += x.a; d.n += x.n; d.partidas++;
+  });
+  const res = document.getElementById("resumo");
+  res.innerHTML = Object.keys(porJogo).length
+    ? Object.entries(porJogo).map(([j, d]) =>
+        '<div class="cartao-resumo ' + j + '"><b>' + MATERIA[j] + "</b>"
+        + '<span class="grande">' + pct(d.a, d.n) + "%</span>"
+        + "<span>" + d.partidas + (d.partidas === 1 ? " partida" : " partidas")
+        + " · " + d.a + "/" + d.n + " acertos</span></div>").join("")
+    : '<p class="vazio">Nenhuma partida neste período.</p>';
+
+  /* Evolução: acerto por dia. Barras, não linha — são poucos pontos e dias
+     sem jogo não devem virar uma reta inventada entre dois pontos. */
+  const porDia = {};
+  todas.forEach(x => {
+    const k = new Date(x.q).toISOString().slice(0, 10);
+    const d = porDia[k] || (porDia[k] = {a: 0, n: 0});
+    d.a += x.a; d.n += x.n;
+  });
+  const dias = Object.keys(porDia).sort().slice(-14);
+  const g = document.getElementById("grafico");
+  if(!dias.length){ g.innerHTML = '<p class="vazio">Ainda sem partidas para comparar.</p>'; }
+  else{
+    const larg = 100 / dias.length;
+    g.innerHTML = '<div class="barras">' + dias.map(k => {
+      const v = pct(porDia[k].a, porDia[k].n);
+      return '<div class="barra-col" style="width:' + larg + '%">'
+        + '<div class="barra" style="height:' + Math.max(v, 3) + '%" title="' + v + '%"></div>'
+        + '<span class="barra-v">' + v + "</span>"
+        + '<span class="barra-d">' + k.slice(8) + "/" + k.slice(5, 7) + "</span></div>";
+    }).join("") + "</div>";
+  }
+
+  /* O que ainda erra: por missão, onde o acerto está mais baixo. */
+  const porMissao = {};
+  todas.forEach(x => {
+    const k = x.j + "|" + x.m;
+    const d = porMissao[k] || (porMissao[k] = {j: x.j, m: x.m, a: 0, n: 0});
+    d.a += x.a; d.n += x.n;
+  });
+  const fracos = Object.values(porMissao).filter(d => d.n >= 4 && pct(d.a, d.n) < 75)
+                   .sort((x, y) => pct(x.a, x.n) - pct(y.a, y.n)).slice(0, 6);
+  const f = document.getElementById("fracos");
+  f.innerHTML = fracos.length
+    ? fracos.map(d =>
+        '<a class="fraco" href="' + PAGINA[d.j] + "#missao/" + encodeURIComponent(d.m) + '">'
+        + '<span class="fraco-pct">' + pct(d.a, d.n) + "%</span>"
+        + "<b>" + esc(nomeMissao(d.j, d.m)) + "</b>"
+        + "<span>" + MATERIA[d.j] + " · revisar</span></a>").join("")
+    : '<p class="vazio">Nada abaixo de 75% neste período. Bom sinal.</p>';
+
+  /* Lista crua, a mais recente primeiro. */
+  const l = document.getElementById("partidas");
+  l.innerHTML = todas.length
+    ? '<table class="tabela"><thead><tr><th>Quando</th><th>Matéria</th><th>Missão</th><th>Acerto</th></tr></thead><tbody>'
+      + todas.slice().reverse().slice(0, 40).map(x =>
+        "<tr><td>" + dia(x.q) + "</td><td>" + MATERIA[x.j] + "</td><td>"
+        + esc(nomeMissao(x.j, x.m)) + "</td><td>" + pct(x.a, x.n) + "% <small>("
+        + x.a + "/" + x.n + ")</small></td></tr>").join("")
+      + "</tbody></table>"
+    : "";
+}
+
+/* ---------- navegação por aba ---------- */
+function ir(v){
+  location.hash = v;
+  document.querySelectorAll(".vista").forEach(s => s.hidden = s.id !== "v-" + v);
+  document.querySelectorAll(".aba").forEach(b => b.classList.toggle("atual", b.dataset.vista === v));
+  scrollTo(0, 0);
+}
+addEventListener("hashchange", () => ir((location.hash || "#jogos").slice(1)));
+addEventListener("DOMContentLoaded", () => {
+  desenhar();
+  const v = (location.hash || "#jogos").slice(1);
+  ir(document.getElementById("v-" + v) ? v : "jogos");
+});
+
+/* ---------- conta e sincronização ---------- */
+/* A conta é da família; os perfis são os alunos dentro dela. Assim a criança
+   não precisa de senha e o pai sincroniza uma vez só.
+
+   Enquanto CONTA.url estiver vazio, tudo funciona igual — só sem sincronizar.
+   Os dois valores abaixo são os de um projeto Supabase; a chave `anon` é
+   pública por desenho, e quem protege os dados é a política de acesso por
+   linha (RLS), não o segredo da chave. As instruções estão em CONTA.md. */
+const CONTA = {
+  url: "",     /* https://xxxxx.supabase.co */
+  chave: "",   /* chave anon (public) */
+};
+const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm";
+
+let _sb = null, _sessao = null;
+
+function contaLigada(){ return !!(CONTA.url && CONTA.chave); }
+
+async function _cliente(){
+  if(_sb) return _sb;
+  const {createClient} = await import(CONTA_LIB);
+  _sb = createClient(CONTA.url, CONTA.chave);
+  return _sb;
+}
+
+/* Tudo o que vale a pena levar de um aparelho para outro. */
+function _tudo(){
+  const d = {perfis: lerPerfis(), progresso: {}, historico: {}};
+  lerPerfis().forEach(p => {
+    Object.entries(BASES).forEach(([j, b]) => {
+      const v = ler(b + ":" + p.id);
+      if(v) (d.progresso[p.id] = d.progresso[p.id] || {})[j] = v;
+    });
+    const h = ler(HIST_CHAVE + ":" + p.id);
+    if(h) d.historico[p.id] = h;
+  });
+  return d;
+}
+
+/* O histórico é só acrescentado, nunca reescrito: fundir por carimbo de
+   tempo evita que jogar no celular apague o que foi feito no tablet. */
+function _fundir(local, remoto){
+  const perfis = [...local.perfis];
+  (remoto.perfis || []).forEach(r => { if(!perfis.some(p => p.id === r.id)) perfis.push(r); });
+  const historico = {};
+  new Set([...Object.keys(local.historico), ...Object.keys(remoto.historico || {})])
+    .forEach(id => {
+      const vistos = new Set();
+      historico[id] = [...(local.historico[id] || []), ...((remoto.historico || {})[id] || [])]
+        .filter(x => { const k = x.q + "|" + x.j + "|" + x.m; 
+                       if(vistos.has(k)) return false; vistos.add(k); return true; })
+        .sort((a, b) => a.q - b.q);
+    });
+  /* No progresso não dá para fundir contagem sem inventar: fica o maior
+     número de acertos e de erros por item, que é o mais fiel aos dois lados. */
+  const progresso = {};
+  new Set([...Object.keys(local.progresso), ...Object.keys(remoto.progresso || {})])
+    .forEach(id => {
+      progresso[id] = {};
+      const L = local.progresso[id] || {}, R = (remoto.progresso || {})[id] || {};
+      new Set([...Object.keys(L), ...Object.keys(R)]).forEach(j => {
+        const a = L[j] || {}, b = R[j] || {};
+        const itens = {};
+        new Set([...Object.keys(a.items || {}), ...Object.keys(b.items || {})]).forEach(k => {
+          const x = (a.items || {})[k] || {e:0,h:0}, y = (b.items || {})[k] || {e:0,h:0};
+          itens[k] = {e: Math.max(x.e, y.e), h: Math.max(x.h, y.h)};
+        });
+        progresso[id][j] = {...a, ...b, items: itens,
+          missions: {...(a.missions||{}), ...(b.missions||{})},
+          trails: {...(a.trails||{}), ...(b.trails||{})}};
+      });
+    });
+  return {perfis, progresso, historico};
+}
+
+function _aplicar(d){
+  gravar(PERFIS_CHAVE, d.perfis || []);
+  Object.entries(d.progresso || {}).forEach(([id, jogos]) =>
+    Object.entries(jogos).forEach(([j, v]) => gravar(BASES[j] + ":" + id, v)));
+  Object.entries(d.historico || {}).forEach(([id, h]) => gravar(HIST_CHAVE + ":" + id, h));
+}
+
+async function entrarConta(ev){
+  if(ev) ev.preventDefault();
+  const email = document.getElementById("contaEmail").value.trim();
+  const senha = document.getElementById("contaSenha").value;
+  const sb = await _cliente();
+  let {data, error} = await sb.auth.signInWithPassword({email, password: senha});
+  if(error && /invalid login/i.test(error.message)){
+    ({data, error} = await sb.auth.signUp({email, password: senha}));
+    if(!error) _recado("Conta criada. Confirme o e-mail se for pedido e entre de novo.");
+  }
+  if(error) return _recado("Não entrou: " + error.message);
+  _sessao = data.session; await sincronizar(); desenhar();
+}
+async function entrarGoogle(){
+  const sb = await _cliente();
+  await sb.auth.signInWithOAuth({provider: "google", options: {redirectTo: location.href}});
+}
+async function sairConta(){
+  const sb = await _cliente(); await sb.auth.signOut(); _sessao = null; desenhar();
+}
+
+async function sincronizar(){
+  if(!_sessao) return;
+  const sb = await _cliente();
+  const uid = _sessao.user.id;
+  const {data} = await sb.from("familias").select("dados").eq("id", uid).maybeSingle();
+  const juntos = _fundir(_tudo(), (data && data.dados) || {perfis: [], progresso: {}, historico: {}});
+  _aplicar(juntos);
+  await sb.from("familias").upsert({id: uid, dados: juntos, atualizado: new Date().toISOString()});
+  _recado("Sincronizado agora.");
+}
+
+function _recado(t){ const e = document.getElementById("contaRecado"); if(e) e.textContent = t; }
+
+function pintarConta(){
+  const c = document.getElementById("conta");
+  if(!contaLigada()){
+    c.innerHTML = '<div class="cartao">'
+      + "<h2>Entrar na conta</h2>"
+      + "<p>Ainda não há conta ligada. Hoje o progresso de cada aluno fica "
+      + "<b>neste aparelho</b> — funciona sem internet, mas não passa para o celular.</p>"
+      + "<p>Para sincronizar entre aparelhos falta criar um projeto gratuito e "
+      + "colar dois valores no código. O passo a passo está em "
+      + "<b>CONTA.md</b>, no repositório.</p></div>";
+    return;
+  }
+  c.innerHTML = _sessao
+    ? '<div class="cartao"><h2>Conta</h2><p>Entrou como <b>' + esc(_sessao.user.email) + "</b></p>"
+      + '<button class="primario" onclick="sincronizar()">Sincronizar agora</button>'
+      + '<button class="fantasma" onclick="sairConta()">Sair</button>'
+      + '<p id="contaRecado" class="recado"></p></div>'
+    : '<form class="cartao" onsubmit="entrarConta(event)"><h2>Entrar na conta</h2>'
+      + '<p>Para o progresso ser o mesmo no celular, no tablet e no notebook.</p>'
+      + '<label class="campo"><span>E-mail</span><input id="contaEmail" type="email" required autocomplete="email"></label>'
+      + '<label class="campo"><span>Senha</span><input id="contaSenha" type="password" required autocomplete="current-password" minlength="8"></label>'
+      + '<button class="primario" type="submit">Entrar ou criar conta</button>'
+      + '<button class="fantasma" type="button" onclick="entrarGoogle()">Entrar com Google</button>'
+      + '<p id="contaRecado" class="recado"></p></form>';
+}
+
+/* Se voltou de um login do Google, a sessão já existe. */
+if(contaLigada()){
+  _cliente().then(sb => sb.auth.getSession()).then(r => {
+    _sessao = r && r.data && r.data.session;
+    if(_sessao){ sincronizar().then(desenhar); }
+  }).catch(() => {});
+}
+</script>
 </body>
 </html>

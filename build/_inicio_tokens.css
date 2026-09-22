@@ -1,0 +1,71 @@
+
+:root{
+  color-scheme:light dark;
+  --fundo:oklch(0.975 0.008 265); --carta:oklch(1 0 0);
+  --risco:oklch(0.905 0.012 265);
+  --texto:oklch(0.28 0.030 268); --texto-2:oklch(0.50 0.028 268);
+  /* As mesmas quatro cores que marcam as alternativas nos jogos; aqui
+     distinguem os perfis. Sem elas o avatar sai sem cor nenhuma. */
+  --alt-1:oklch(0.540 0.19 268); --alt-2:oklch(0.570 0.15 75);
+  --alt-3:oklch(0.535 0.13 200); --alt-4:oklch(0.550 0.21 322);
+  --ingles:oklch(0.55 0.20 265); --ciencias:oklch(0.525 0.15 195);
+  --historia:oklch(0.575 0.18 40); --arte:oklch(0.56 0.22 330);
+  --display:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem;
+  --r:14px; --r-g:20px; --labio:4px;
+  --saida:cubic-bezier(0.22,1,0.36,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --fundo:oklch(0.205 0.028 272); --carta:oklch(0.262 0.030 272);
+    --risco:oklch(0.365 0.030 272);
+    --texto:oklch(0.975 0.008 272); --texto-2:oklch(0.800 0.020 272);
+    --ingles:oklch(0.72 0.17 265); --ciencias:oklch(0.75 0.13 195);
+    --historia:oklch(0.74 0.15 40); --arte:oklch(0.72 0.19 330);
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fundo);color:var(--texto);
+  font-family:var(--corpo);font-size:1.0625rem;font-weight:600;line-height:1.55;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right)
+          calc(env(safe-area-inset-bottom) + var(--s-5)) env(safe-area-inset-left)}
+svg{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wrap{max-width:52rem;margin:0 auto;padding:var(--s-6) var(--s-4)}
+header{margin-bottom:var(--s-5)}
+h1{font-family:var(--display);font-size:2.375rem;font-weight:700;margin:0 0 var(--s-2);letter-spacing:-0.01em}
+.sub{color:var(--texto-2);max-width:48ch;margin:0}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:var(--s-4);margin:0;padding:0;list-style:none}
+a.jogo{
+  --cor:var(--ingles);
+  display:grid;grid-template-rows:auto auto 1fr;gap:var(--s-2);height:100%;
+  padding:var(--s-5);text-decoration:none;color:inherit;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  transition:transform 120ms var(--saida),box-shadow 120ms var(--saida),border-color 140ms var(--saida)}
+a.jogo:hover{transform:translateY(-3px);border-color:var(--cor);
+  box-shadow:0 calc(var(--labio) + 3px) 0 color-mix(in oklch,var(--cor) 45%,var(--carta))}
+a.jogo:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+a.jogo:focus-visible{outline:3px solid var(--cor);outline-offset:3px}
+.marca{width:3.25rem;height:3.25rem;padding:0.7rem;border-radius:var(--r);
+  background:color-mix(in oklch,var(--cor) 14%,var(--carta));
+  color:color-mix(in oklch,var(--cor) 80%,black)}
+@media (prefers-color-scheme:dark){.marca{color:var(--cor)}}
+.materia{display:inline-block;align-self:start;justify-self:start;
+  background:var(--cor);color:#fff;border-radius:999px;padding:2px var(--s-3);
+  font-family:var(--display);font-size:0.8125rem;font-weight:600}
+.nome{font-family:var(--display);font-size:1.375rem;font-weight:600;display:block;line-height:1.2;margin-top:var(--s-2)}
+.desc{font-size:0.9375rem;color:var(--texto-2);display:block;line-height:1.45}
+li.ingles a{--cor:var(--ingles)} li.ciencias a{--cor:var(--ciencias)}
+li.historia a{--cor:var(--historia)} li.arte a{--cor:var(--arte)}
+footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r-g);
+  color:var(--texto-2);font-size:0.9375rem;max-width:56ch}
+footer b{color:var(--texto)}
+@media(max-width:34rem){
+  .wrap{padding:var(--s-5) var(--s-3)}
+  h1{font-size:1.875rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}a.jogo:active{transform:none}}

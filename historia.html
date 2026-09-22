@@ -641,6 +641,14 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .sala-botoes .answer .letra{width:3rem;height:3rem;font-size:var(--t-xl)}
 .sala-botoes .answer.escolhida{border-color:var(--materia);box-shadow:0 0 0 3px var(--materia-borda)}
 @media(max-width:44rem){ .sala-caixa{padding:var(--s-4)} }
+
+/* ---------- perfil ---------- */
+.perfil-btn{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;
+  border:2px solid rgba(255,255,255,.55);border-radius:999px;
+  background:var(--alt-1);color:#fff;
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.perfil-btn:hover{border-color:#fff}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"><script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script></head>
 <body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-alvo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol><symbol id="i-ampulheta" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12"/><path d="M7 3c0 4 5 6 5 9s-5 5-5 9"/><path d="M17 3c0 4-5 6-5 9s5 5 5 9"/></symbol><symbol id="i-animal" viewBox="0 0 24 24"><path d="M5 17c0-4 3-7 7-7s7 3 7 7"/><circle cx="8.5" cy="7" r="2"/><circle cx="15.5" cy="7" r="2"/><path d="M9 17v3M15 17v3"/></symbol><symbol id="i-antena" viewBox="0 0 24 24"><path d="M12 12v9"/><path d="M8 21h8"/><path d="M8.5 8.5a5 5 0 0 1 7 0"/><path d="M5.5 5.5a9 9 0 0 1 13 0"/><circle cx="12" cy="12" r="1.6"/></symbol><symbol id="i-balanca" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M4 9h16"/><path d="M4 9 1.5 15h5zM20 9l2.5 6h-5z"/></symbol><symbol id="i-bandeira" viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 4h12l-2.5 4L18 12H6z"/></symbol><symbol id="i-barco" viewBox="0 0 24 24"><path d="M3 17h18l-2.5 4h-13z"/><path d="M12 15V3l7 12z"/><path d="M10 15H5l5-8z"/></symbol><symbol id="i-braille" viewBox="0 0 24 24"><circle cx="9" cy="6.5" r="1.4" fill="currentColor"/><circle cx="9" cy="12" r="1.4" fill="currentColor"/><circle cx="9" cy="17.5" r="1.4"/><circle cx="15" cy="6.5" r="1.4" fill="currentColor"/><circle cx="15" cy="12" r="1.4"/><circle cx="15" cy="17.5" r="1.4" fill="currentColor"/></symbol><symbol id="i-bussola" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></symbol><symbol id="i-calendario" viewBox="0 0 24 24"><path d="M4 6h16v14H4z"/><path d="M4 10.5h16"/><path d="M8.5 3.5V6M15.5 3.5V6"/><path d="M8 14.5h3"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8h4l1.5-2h7L17 8h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></symbol><symbol id="i-carta" viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-computador" viewBox="0 0 24 24"><path d="M3 5h18v11H3z"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-coroa" viewBox="0 0 24 24"><path d="M4 18h16"/><path d="m4 18-1-9 5 3.5L12 5l4 7.5L21 9l-1 9z"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-encolher" viewBox="0 0 24 24"><path d="M3.5 9H9V3.5M20.5 9H15V3.5M3.5 15H9v5.5M20.5 15H15v5.5"/></symbol><symbol id="i-escrever" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20l-4.5.5L4 16z"/><path d="m13.5 6.5 4 4"/></symbol><symbol id="i-espadas" viewBox="0 0 24 24"><path d="m4 4 10 12 3 3-1 1-3-3L4 4z"/><path d="m20 4-6.5 8M8 17l-2 2"/></symbol><symbol id="i-expandir" viewBox="0 0 24 24"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></symbol><symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h7"/></symbol><symbol id="i-festa" viewBox="0 0 24 24"><path d="M3 21 8 9l7 7z"/><path d="m14.5 9.5 5.5-5.5"/><circle cx="18" cy="10.5" r="1" fill="currentColor"/><circle cx="12.5" cy="4" r="1" fill="currentColor"/><circle cx="20.5" cy="15" r="1" fill="currentColor"/></symbol><symbol id="i-filme" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M7 5v14M17 5v14"/><path d="M2.5 12h19"/></symbol><symbol id="i-fogo" viewBox="0 0 24 24"><path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-4.5-4-6.5-3-11-3 1.5-5.5 4.5-5.5 7.5 0 0-1-.8-1.5-2.5-1.3 1.8-2 3.8-2 6A5.5 5.5 0 0 0 12 21z"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></symbol><symbol id="i-jornal" viewBox="0 0 24 24"><path d="M4 6h13v13H4z"/><path d="M17 9h3v8a2 2 0 0 1-2 2h-1"/><path d="M7 9h7M7 12h7M7 15h4"/></symbol><symbol id="i-lampada" viewBox="0 0 24 24"><path d="M9 17a6 6 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mao" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5v-6a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7c-3 0-4-1.5-5.5-4l-1.5-3a1.6 1.6 0 0 1 2.6-1.8L8 14"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-numeros" viewBox="0 0 24 24"><path d="M6.5 15V9l-2 1.4"/><path d="M11 10a2.2 2.2 0 1 1 3.8 1.5L11 15h4.2"/><path d="M18 9h2.5l-1.6 2.4a2.1 2.1 0 1 1-1.5 3.3"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 .6-8A5.5 5.5 0 0 1 18 11.2 3.5 3.5 0 0 1 17.5 18z"/></symbol><symbol id="i-palmas" viewBox="0 0 24 24"><path d="M11 21a5 5 0 0 1-5-5V9.5a1.5 1.5 0 0 1 3 0V13"/><path d="M13 21a5 5 0 0 0 5-5V9.5a1.5 1.5 0 0 0-3 0V13"/><path d="M12 2v3M7.5 3.5 9 6M16.5 3.5 15 6"/></symbol><symbol id="i-pasta" viewBox="0 0 24 24"><path d="M3 6h6l2 2.5h10V19H3z"/></symbol><symbol id="i-pergaminho" viewBox="0 0 24 24"><path d="M6 4h12v14a3 3 0 0 1-3 3H6a3 3 0 0 0 3-3V4z"/><path d="M10 8h5M10 12h5"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol><symbol id="i-pino" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></symbol><symbol id="i-pontos" viewBox="0 0 24 24"><circle cx="9" cy="6.5" r="1.3"/><circle cx="9" cy="12" r="1.3"/><circle cx="9" cy="17.5" r="1.3"/><circle cx="15" cy="6.5" r="1.3"/><circle cx="15" cy="17.5" r="1.3"/></symbol><symbol id="i-predios" viewBox="0 0 24 24"><path d="M3 21V9h7v12"/><path d="M10 21V4h11v17"/><path d="M13.5 8h4M13.5 12h4M13.5 16h4M6 13h1"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-radio" viewBox="0 0 24 24"><rect x="2.5" y="9" width="19" height="11" rx="2"/><path d="m8 9 10-5"/><circle cx="16.5" cy="14.5" r="2.5"/><path d="M6 13h5M6 16.5h5"/></symbol><symbol id="i-raio" viewBox="0 0 24 24"><path d="M13.5 2.5 5 13.5h6L10.5 21.5 19 10.5h-6z"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-satelite" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m7.5 7.5-3 3 3 3 3-3z" /><path d="m16.5 10.5 3 3-3 3-3-3z"/><path d="M14 9.5 16 7.5M10 14.5 8 16.5"/></symbol><symbol id="i-semaforo" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="3"/><circle cx="12" cy="7" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="17" r="1.6"/></symbol><symbol id="i-servidor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r=".9" fill="currentColor"/><circle cx="7" cy="17" r=".9" fill="currentColor"/></symbol><symbol id="i-sinais" viewBox="0 0 24 24"><path d="M8.5 12V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11.5 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14.5 11.5V7a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-13.6 2.3L3 14"/><path d="M19.5 5.5 21.5 3.5M20.5 9h2.5"/></symbol><symbol id="i-sinal" viewBox="0 0 24 24"><path d="M4 20V16M9 20v-7M14 20V9M19 20V4"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-teclado" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></symbol><symbol id="i-telefone" viewBox="0 0 24 24"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5L17 13l4 1.5v3a2.5 2.5 0 0 1-2.8 2.5C10 19 5 14 4 6.8A2.5 2.5 0 0 1 6.5 3z"/></symbol><symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></symbol><symbol id="i-templo" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V9h14v11"/><path d="m2.5 9 9.5-6 9.5 6"/><path d="M9.5 20v-6h5v6"/></symbol><symbol id="i-tomada" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="9.5" cy="10" r="1.2" fill="currentColor"/><circle cx="14.5" cy="10" r="1.2" fill="currentColor"/><path d="M9 15h6"/></symbol><symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2"/><path d="m8 3 4 3 4-3"/><path d="M9 21.5h6"/></symbol><symbol id="i-xis" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
@@ -650,7 +658,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <span id="migalhaAqui"></span>
 </nav>
 <div id="festaBox" class="festa" aria-hidden="true"></div>
-<div class="wrap"><div class="app"><header><div class="top"><div><h1>Linhas do Tempo</h1><div class="subtitle">História — as transformações nos meios de comunicação</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button></div></div></header><main>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>Linhas do Tempo</h1><div class="subtitle">História — as transformações nos meios de comunicação</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
 <section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Da carta ao celular</h2><p>Dos livros copiados à mão até a internet.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button><button type="button" class="ghost sala-abrir" onclick="irPara('sala')"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg> Jogar com outras pessoas</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section>
 <section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1</span><h2>Antes da imprensa: livros copiados à mão</h2><p>Há cerca de <b>5 mil anos</b> surgiu a escrita. No início, poucas pessoas sabiam ler e escrever: eram os <b>escribas</b>, que registravam contratos em tabletes de argila, pedras ou peles de animais.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pergaminho"/></svg></div><strong>Papiro e pergaminho</strong>Páginas costuradas em uma borda formavam um volume chamado <b>códice</b> — o “tataravô” do livro de hoje.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-escrever"/></svg></div><strong>Copiados à mão</strong>Cada exemplar precisava ser copiado inteirinho à mão. Levava meses.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-letras"/></svg></div><strong>Tipos móveis</strong>Peças de metal com uma letra em relevo, usadas como carimbos. Depois de imprimir, dava para desmontar e remontar outro texto.</div></div><div class="example">Por volta de <b>1440</b>, na Alemanha, <b>Johannes Gutenberg</b> criou a <b>prensa de tipos móveis</b>. O que levava meses para ser copiado passou a ser impresso em vários exemplares de uma só vez.</div><div class="example warning">Mesmo assim, essa tecnologia demorou <b>quase 400 anos</b> para ser autorizada no Brasil.</div></div><div class="lesson-nav"><span class="small">1 de 6</span><button class="primary" onclick="openLesson('lesson2')">Continuar →</button></div></div>
 <div id="lesson2" class="lesson-part" style="display:none"><div class="lesson-card"><span class="lesson-tag">Parte 2</span><h2>A família real e a Impressão Régia</h2><p>Durante o período colonial era <b>proibido</b> ter máquinas de impressão no Brasil. Tudo vinha de Portugal, de navio.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-coroa"/></svg></div><strong>Dona Maria I</strong>Rainha de Portugal. Como estava doente, quem governava de fato era seu filho.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-coroa"/></svg></div><strong>D. João</strong>O Príncipe Regente, que tomou a decisão de atravessar o Atlântico.</div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-espadas"/></svg></div><strong>Por que vieram</strong>Uma grande guerra na Europa: um exército liderado pela <b>França</b> invadia vários países.</div></div><div class="example">Partiram de Lisboa em <b>29 de novembro de 1807</b>, às pressas, em <b>16 navios</b>, com mais de <b>dez mil pessoas</b>. Chegaram ao Rio de Janeiro em <b>8 de março de 1808</b>.</div><div class="example">O Rio tinha então cerca de <b>60 mil habitantes</b>, e a população cresceu rápido. Faltava de tudo: casas, comida e, principalmente, <b>informação</b>.</div><div class="example warning">Em <b>13 de maio de 1808</b>, D. João criou a <b>Impressão Régia</b> — a primeira fábrica oficial de livros e jornais do Brasil, e a primeira imprensa oficial e permanente do país.</div><div class="example">Em <b>1815</b>, o Brasil deixou de ser apenas colônia e passou a fazer parte do <b>Reino Unido de Portugal, Brasil e Algarves</b>.</div></div><div class="lesson-nav"><span class="small">2 de 6</span><div><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button> <button class="primary" onclick="openLesson('lesson3')">Continuar →</button></div></div></div>
@@ -732,6 +740,60 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <section id="end" class="screen"><div class="result"><div class="trophy"></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
 </main></div></div>
 <script>
+
+/* ---------- perfis ---------- */
+/* A lista de perfis é a mesma nos quatro jogos e na página inicial. Cada
+   perfil tem a sua chave de progresso: trocar de aluno não apaga o do outro. */
+const PERFIS_CHAVE = "jogos_perfis_v1";
+const PERFIL_ATUAL = "jogos_perfil_atual";
+const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
+
+function lerPerfis(){
+  try{ return JSON.parse(localStorage.getItem(PERFIS_CHAVE)) || []; }
+  catch(e){ return []; }
+}
+function gravarPerfis(lista){
+  try{ localStorage.setItem(PERFIS_CHAVE, JSON.stringify(lista)); }catch(e){}
+}
+function perfilAtual(){
+  const lista = lerPerfis();
+  if(!lista.length) return null;
+  let id;
+  try{ id = localStorage.getItem(PERFIL_ATUAL); }catch(e){}
+  return lista.find(p => p.id === id) || lista[0];
+}
+function trocarPerfil(id){
+  try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){}
+}
+function criarPerfil(nome){
+  const lista = lerPerfis();
+  const p = {id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+             nome: String(nome).trim().slice(0, 16) || "Aluno",
+             cor: CORES_PERFIL[lista.length % CORES_PERFIL.length],
+             criado: Date.now()};
+  lista.push(p); gravarPerfis(lista); trocarPerfil(p.id);
+  return p;
+}
+function inicialDe(nome){ return (nome || "?").trim().charAt(0).toUpperCase(); }
+
+/* A chave de progresso passa a levar o perfil. Sem perfil escolhido, o jogo
+   usa a chave antiga — é o progresso que já existia neste aparelho. */
+function chaveProgresso(base){
+  const p = perfilAtual();
+  return p ? base + ":" + p.id : base;
+}
+
+/* Primeira vez com perfis: o que já estava salvo vira o perfil inicial, em
+   vez de a criança perder tudo o que fez. */
+function migrarProgresso(base){
+  try{
+    const antigo = localStorage.getItem(base);
+    if(!antigo) return;
+    if(!lerPerfis().length) criarPerfil("Aluno");
+    const nova = chaveProgresso(base);
+    if(!localStorage.getItem(nova)) localStorage.setItem(nova, antigo);
+  }catch(e){}
+}
 const FORMAS=["A","B","C","D"];
 const NOMES_FORMA=FORMAS;
 const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
@@ -855,7 +917,8 @@ let questions=[],index=0,score=0,lives=5,hits=0,answered=0,combo=0,bestCombo=0,
     locked=false,activeTrail=null,trailStep=0,currentCategory="all",practiceMode=true;
 
 /* ---------- progresso persistente ---------- */
-const STORE="historia_progress_v1";
+const STORE_BASE="historia_progress_v1";
+const STORE=(migrarProgresso("historia_progress_v1"), chaveProgresso("historia_progress_v1"));
 function defaultProgress(){return{items:{},best:{score:0,acc:0},trails:{},missions:{},practice:true,mudo:false}}
 
 // Estado de uma missão: nunca jogada, começada, concluída ou dominada.
@@ -1378,6 +1441,7 @@ document.addEventListener('keydown',ev=>{
 
 /* ---------- fim de partida ---------- */
 function endGame(){
+  registrarPartida(hits, answered, score);
   setTimeout(() => comemorar(hits, answered), 260);
   if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
   // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
@@ -1942,4 +2006,37 @@ function _catalogoMissoes(){
   return Object.keys(nomes).filter(c => c !== "review").map(c => [c, nomes[c]]);
 }
 function _perguntasSala(cat){ return makeQuestions(cat, 10); }
+
+/* ---------- seletor de perfil no cabeçalho ---------- */
+function pintarPerfil(){
+  const b = document.getElementById("btnPerfil");
+  if(!b) return;
+  const p = perfilAtual();
+  b.textContent = p ? inicialDe(p.nome) : "?";
+  b.style.background = p ? "var(" + p.cor + ")" : "";
+  b.setAttribute("aria-label", p ? "Perfil: " + p.nome + ". Trocar de aluno"
+                                 : "Escolher quem está jogando");
+  b.title = p ? p.nome : "Escolher aluno";
+}
+function abrirPerfis(){ location.href = "index.html#perfis"; }
+addEventListener("DOMContentLoaded", pintarPerfil);
+
+/* ---------- histórico de partidas ---------- */
+/* Uma linha por partida terminada. Campos curtos: isto cresce sem parar e
+   divide os 5 MB do localStorage com o progresso. */
+const HIST_CHAVE = "jogos_historico_v1";
+const HIST_MAX = 400;
+
+function registrarPartida(acertos, total, pontos){
+  if(!total) return;                       // saiu antes de responder: não conta
+  try{
+    const p = perfilAtual();
+    const k = HIST_CHAVE + (p ? ":" + p.id : "");
+    const lista = JSON.parse(localStorage.getItem(k) || "[]");
+    lista.push({q: Date.now(), j: "hist", m: currentCategory || "all",
+                t: activeTrail || null, a: acertos, n: total, p: pontos || 0});
+    while(lista.length > HIST_MAX) lista.shift();
+    localStorage.setItem(k, JSON.stringify(lista));
+  }catch(e){}
+}
 </script></body></html>

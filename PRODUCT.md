@@ -60,6 +60,23 @@ ser um engano que alguém poderia mesmo cometer.
 Os dois medidores derrubam o build fora da faixa de 15% a 35%. Valem para
 cada conteúdo novo.
 
+## Alunos, histórico e conta
+
+**Um perfil por aluno**, escolhido na página inicial. Cada um tem a própria
+chave de progresso e o próprio histórico; trocar de aluno não apaga o do
+outro. O que já estava salvo no aparelho vira o primeiro perfil, em vez de
+se perder.
+
+**A conta é da família, os perfis são os alunos.** Assim a criança nunca
+precisa de senha e o pai sincroniza uma vez só. Ver `CONTA.md` — enquanto
+não estiver ligada, tudo funciona igual, só sem passar de um aparelho para
+outro.
+
+**O histórico responde quatro perguntas**, que foi o que se pediu dele:
+está melhorando (acerto por dia), o que ainda erra (missões abaixo de 75%,
+com atalho para revisar), de onde retomar (últimas partidas) e o que mostrar
+para a professora (resumo por matéria e período, com botão de imprimir).
+
 ## Escopo
 
 A base é um modelo reaproveitável. Cada prova nova vira um jogo novo com o

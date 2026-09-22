@@ -21,3 +21,6 @@ python3 build/medir_plausibilidade.py
 python3 build/extras.py
 python3 build/sala.py
 python3 build/verificar.py
+python3 build/perfil.py
+python3 build/historico.py
+python3 build/inicio.py
