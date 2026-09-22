@@ -9,7 +9,8 @@ import io, json, os, re, sys
 ARQUIVOS = {"artes.html": "artes-4ano",
             "historia.html": "historia-4ano",
             "exploradores-do-ceu.html": "ciencias-4ano",
-            "time-travel-english.html": "ingles-4ano"}
+            "time-travel-english.html": "ingles-4ano",
+            "matematica.html": "matematica-4ano"}
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -58,7 +59,7 @@ def medir(arq):
 
 ruim = 0
 for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html",
-            "time-travel-english.html"):
+            "time-travel-english.html", "matematica.html"):
     it, pmaior, pmenor, mc, me = medir(arq)
     mal = not (PISO <= pmaior <= TETO) or not (PISO <= pmenor <= TETO)
     print("  %-22s n=%-4d  sempre-a-maior=%4.1f%%  sempre-a-menor=%4.1f%%"

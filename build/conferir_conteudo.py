@@ -18,6 +18,7 @@ PARES = {
     "exploradores-do-ceu.html": "ciencias-4ano",
     "historia.html": "historia-4ano",
     "artes.html": "artes-4ano",
+    "matematica.html": "matematica-4ano",
 }
 
 # Campos do esquema que o motor não carrega de volta: são só para nós.

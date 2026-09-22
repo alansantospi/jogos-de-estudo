@@ -18,7 +18,8 @@ import io, json, os, re, sys, unicodedata
 ARQUIVOS = {"artes.html": "artes-4ano",
             "historia.html": "historia-4ano",
             "exploradores-do-ceu.html": "ciencias-4ano",
-            "time-travel-english.html": "ingles-4ano"}
+            "time-travel-english.html": "ingles-4ano",
+            "matematica.html": "matematica-4ano"}
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -131,7 +132,7 @@ def relatorio(arq):
 if __name__ == "__main__":
     ruim = 0
     for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html",
-            "time-travel-english.html"):
+            "time-travel-english.html", "matematica.html"):
         v = relatorio(arq)
         if v is not None and not (PISO <= v <= TETO):
             ruim += 1

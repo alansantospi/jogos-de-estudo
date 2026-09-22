@@ -92,3 +92,5 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
   padding:var(--s-3) var(--s-4);margin-bottom:var(--s-2)}
 .lixo-item span{color:var(--texto-2);font-size:0.8125rem;margin-right:auto}
 .vazio a{color:var(--ingles)}
+
+.cartao-resumo.mat .grande{color:var(--matematica)}

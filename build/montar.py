@@ -30,6 +30,14 @@ JOGOS = {
         sala="jogosdeestudo-hist-",
         patente="lives<=0&&!practiceMode?'Aprendiz do Tempo':acc>=90?'Mestre das Linhas do Tempo'"
                 ":acc>=70?'Cronista':'Aprendiz do Tempo'"),
+    "matematica.html": dict(
+        id="matematica", conteudo="matematica-4ano", slug="mat",
+        cor="oklch(0.52 0.22 298)", titulo="Régua e Compasso",
+        chave="matematica_progress_v1", materia="Matemática",
+        subtitulo="Matemática — geometria plana e espacial",
+        sala="jogosdeestudo-mat-",
+        patente="lives<=0&&!practiceMode?'Aprendiz de Geometria':acc>=90?'Mestre de Régua e Compasso'"
+                ":acc>=70?'Geômetra':'Aprendiz de Geometria'"),
     "artes.html": dict(
         id="artes", conteudo="artes-4ano", slug="arte",
         cor="oklch(0.56 0.22 330)", titulo="Ateliê",

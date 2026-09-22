@@ -21,7 +21,7 @@ CHROME = next((c for c in [
 ] if os.path.exists(c)), None)
 
 JOGOS = ["exploradores-do-ceu.html", "historia.html", "artes.html",
-         "time-travel-english.html"]
+         "time-travel-english.html", "matematica.html"]
 
 # Cada caso diz em que página roda: os quatro jogos, ou só o índice.
 ALVOS = {

@@ -48,5 +48,19 @@
   "movement": "Rota do Movimento",
   "daily_actions": "Rotina Temporal",
   "results_actions": "Arquivo de Ações Especiais"
+ },
+ "mat": {
+  "retas": "Retas e segmentos",
+  "angulos": "Ângulos",
+  "posicao": "Paralelas e concorrentes",
+  "poligonos": "Polígonos",
+  "triangulos": "Triângulos",
+  "quadrilateros": "Quadriláteros",
+  "simetria": "Simetria",
+  "solidos": "Sólidos geométricos",
+  "planificacoes": "Planificações e sólidos do dia a dia",
+  "malha": "Trajetos na malha",
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros"
  }
 }

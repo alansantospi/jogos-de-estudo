@@ -4,10 +4,12 @@ const PERFIL_ATUAL = "jogos_perfil_atual";
 const HIST_CHAVE = "jogos_historico_v1";
 const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
 const BASES = {ing: "ttg_progress_v1", cien: "sky_progress_v1",
-               hist: "historia_progress_v1", arte: "artes_progress_v1"};
-const MATERIA = {ing: "Inglês", cien: "Ciências", hist: "História", arte: "Arte"};
+               hist: "historia_progress_v1", arte: "artes_progress_v1",
+               mat: "matematica_progress_v1"};
+const MATERIA = {ing: "Inglês", cien: "Ciências", hist: "História", arte: "Arte",
+                 mat: "Matemática"};
 const PAGINA = {ing: "time-travel-english.html", cien: "exploradores-do-ceu.html",
-                hist: "historia.html", arte: "artes.html"};
+                hist: "historia.html", arte: "artes.html", mat: "matematica.html"};
 
 const ler = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } };
 const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };

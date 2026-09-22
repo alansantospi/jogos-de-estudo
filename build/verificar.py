@@ -24,7 +24,7 @@ APOSENTADOS = {
 }
 
 JOGOS = ("historia.html", "artes.html", "exploradores-do-ceu.html",
-         "time-travel-english.html")
+         "time-travel-english.html", "matematica.html")
 
 def _sem_comentarios(js):
     """Comentários citam nomes de função; varrer texto é achar a si mesmo."""

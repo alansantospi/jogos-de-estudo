@@ -17,7 +17,8 @@ MATERIAS = {
     "ingles":   "oklch(0.55 0.20 265)",   # azul-violeta vivo
     "ciencias": "oklch(0.525 0.15 195)",   # turquesa
     "historia": "oklch(0.575 0.18 40)",    # laranja-terra
-    "arte":     "oklch(0.56 0.22 330)",   # magenta
+    "arte":     "oklch(0.56 0.22 330)",
+    "matematica": "oklch(0.52 0.22 298)",   # magenta
 }
 
 def css(materia: str) -> str:

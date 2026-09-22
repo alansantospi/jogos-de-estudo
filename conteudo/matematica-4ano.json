@@ -1,0 +1,1649 @@
+{
+ "id": "matematica-4ano",
+ "materia": "Matemática",
+ "titulo": "Régua e Compasso",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "retas",
+   "nome": "Retas e segmentos"
+  },
+  {
+   "id": "angulos",
+   "nome": "Ângulos"
+  },
+  {
+   "id": "posicao",
+   "nome": "Paralelas e concorrentes"
+  },
+  {
+   "id": "poligonos",
+   "nome": "Polígonos"
+  },
+  {
+   "id": "triangulos",
+   "nome": "Triângulos"
+  },
+  {
+   "id": "quadrilateros",
+   "nome": "Quadriláteros"
+  },
+  {
+   "id": "simetria",
+   "nome": "Simetria"
+  },
+  {
+   "id": "solidos",
+   "nome": "Sólidos geométricos"
+  },
+  {
+   "id": "planificacoes",
+   "nome": "Planificações e sólidos do dia a dia"
+  },
+  {
+   "id": "malha",
+   "nome": "Trajetos na malha"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "planas",
+   "nome": "Figuras Planas",
+   "etapas": [
+    "retas",
+    "angulos",
+    "posicao",
+    "poligonos",
+    "all"
+   ]
+  },
+  {
+   "id": "formas",
+   "nome": "Triângulos e Quadriláteros",
+   "etapas": [
+    "triangulos",
+    "quadrilateros",
+    "simetria",
+    "all"
+   ]
+  },
+  {
+   "id": "espaciais",
+   "nome": "Do Plano ao Espaço",
+   "etapas": [
+    "solidos",
+    "planificacoes",
+    "malha",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "reta",
+   "enunciado": "O que diferencia uma reta de um segmento de reta?",
+   "certa": "A reta não tem começo nem fim",
+   "erradas": [
+    "A reta é curva e o segmento é esticado",
+    "A reta é sempre maior que um segmento",
+    "A reta fica deitada e o segmento em pé"
+   ],
+   "explicacao": "A reta segue sem parar nos dois sentidos. O segmento é o pedaço entre dois pontos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.183"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "segmento",
+   "enunciado": "Como se nomeia o segmento que vai do ponto A ao ponto B?",
+   "certa": "AB",
+   "erradas": [
+    "A2B",
+    "A mais B",
+    "Segmento 1"
+   ],
+   "explicacao": "Escreve-se AB, com uma barra em cima, usando as letras das duas pontas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.183"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "quadrado",
+   "enunciado": "Quantos segmentos de reta formam um quadrilátero?",
+   "certa": "Quatro",
+   "erradas": [
+    "Três",
+    "Cinco",
+    "Seis"
+   ],
+   "explicacao": "Cada lado é um segmento, e o quadrilátero tem quatro lados.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "pentagono",
+   "enunciado": "Quantos segmentos de reta formam um pentágono?",
+   "certa": "Cinco",
+   "erradas": [
+    "Quatro",
+    "Seis",
+    "Sete"
+   ],
+   "explicacao": "Pentágono vem do grego penta, cinco: cinco lados, cinco segmentos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "octogono",
+   "enunciado": "Quantos segmentos de reta formam um octógono?",
+   "certa": "Oito",
+   "erradas": [
+    "Seis",
+    "Dez",
+    "Sete"
+   ],
+   "explicacao": "Octógono tem oito lados — mesma raiz de outubro, que já foi o oitavo mês.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "retas",
+   "icone": "reta",
+   "enunciado": "Uma semirreta é a parte da reta que...",
+   "certa": "começa num ponto e segue sem fim",
+   "erradas": [
+    "termina em dois pontos marcados",
+    "não tem começo nem fim",
+    "muda de direção no meio do caminho"
+   ],
+   "explicacao": "A semirreta tem origem mas não tem fim: é meia reta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.183"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "retas",
+   "icone": "reta",
+   "enunciado": "Uma reta pode ser medida com a régua do começo ao fim.",
+   "certa": false,
+   "explicacao": "Falso: a reta não termina, então não há o que medir. Mede-se o segmento.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.183"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "retas",
+   "icone": "hexagono",
+   "enunciado": "Um hexágono tem seis segmentos de reta.",
+   "certa": true,
+   "explicacao": "Verdadeiro: seis lados, seis segmentos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q1"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "retas",
+   "icone": "segmento",
+   "enunciado": "Como se chama o pedaço de reta que fica entre dois pontos?",
+   "aceitas": [
+    "segmento",
+    "segmento de reta",
+    "o segmento"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Segmento de reta: tem começo e fim marcados por dois pontos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.183"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-reto",
+   "enunciado": "Quanto mede um ângulo reto?",
+   "certa": "90 graus",
+   "erradas": [
+    "45 graus",
+    "180 graus",
+    "60 graus"
+   ],
+   "explicacao": "O ângulo reto mede 90°, como o canto de uma folha de papel.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-agudo",
+   "enunciado": "Um ângulo agudo é aquele que...",
+   "certa": "mede menos que o ângulo reto",
+   "erradas": [
+    "mede mais que o ângulo reto",
+    "mede o mesmo que o reto",
+    "tem os dois lados curvados"
+   ],
+   "explicacao": "Agudo é menor que 90°, como a ponta de uma fatia fina de pizza.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-obtuso",
+   "enunciado": "Um ângulo obtuso é aquele que...",
+   "certa": "mede mais que o ângulo reto",
+   "erradas": [
+    "mede menos que o ângulo reto",
+    "mede exatamente 90 graus",
+    "tem os dois lados iguais"
+   ],
+   "explicacao": "Obtuso fica entre 90° e 180°: mais aberto que o canto de uma folha.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-reto",
+   "enunciado": "Qual destes objetos tem ângulo reto nos cantos?",
+   "certa": "A folha de caderno",
+   "erradas": [
+    "A bola de futebol",
+    "O prato de sopa",
+    "O funil de cozinha"
+   ],
+   "explicacao": "Folha, porta, janela e mesa: os cantos retos estão em toda parte.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "reta",
+   "enunciado": "Um ângulo de 180 graus é chamado de...",
+   "certa": "raso",
+   "erradas": [
+    "reto",
+    "agudo",
+    "curvo"
+   ],
+   "explicacao": "No ângulo raso os dois lados formam uma reta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-obtuso",
+   "enunciado": "Um ângulo de 120 graus é classificado como...",
+   "certa": "obtuso",
+   "erradas": [
+    "agudo",
+    "reto",
+    "raso"
+   ],
+   "explicacao": "120° passa de 90° e não chega a 180°: é obtuso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "angulos",
+   "icone": "angulo-agudo",
+   "enunciado": "Um ângulo de 45 graus é classificado como...",
+   "certa": "agudo",
+   "erradas": [
+    "obtuso",
+    "reto",
+    "raso"
+   ],
+   "explicacao": "45° é metade do ângulo reto, portanto agudo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q2"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "angulos",
+   "icone": "angulo-agudo",
+   "enunciado": "Todo ângulo menor que 90 graus é chamado de agudo.",
+   "certa": true,
+   "explicacao": "Verdadeiro. Abaixo de 90° é agudo; acima, obtuso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "angulos",
+   "icone": "angulo-reto",
+   "enunciado": "O canto de uma porta forma um ângulo obtuso.",
+   "certa": false,
+   "explicacao": "Falso: o canto da porta é um ângulo reto, de 90°.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "angulos",
+   "icone": "angulo-reto",
+   "enunciado": "Ligue cada ângulo à sua medida.",
+   "pares": [
+    [
+     "Agudo",
+     "Menos de 90 graus"
+    ],
+    [
+     "Reto",
+     "Exatamente 90 graus"
+    ],
+    [
+     "Obtuso",
+     "Entre 90 e 180 graus"
+    ],
+    [
+     "Raso",
+     "Exatamente 180 graus"
+    ]
+   ],
+   "explicacao": "O ângulo raso é uma reta: os lados apontam para sentidos opostos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "angulos",
+   "icone": "angulo-reto",
+   "enunciado": "Como se chama o ângulo que mede exatamente 90 graus?",
+   "aceitas": [
+    "reto",
+    "angulo reto",
+    "ângulo reto",
+    "o reto"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Ângulo reto — o canto quadrado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.188"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "paralelas",
+   "enunciado": "Duas retas paralelas são aquelas que...",
+   "certa": "nunca se encontram, por mais que sigam",
+   "erradas": [
+    "cruzam-se formando quatro ângulos",
+    "encontram-se em um único ponto",
+    "mudam de direção no meio do caminho"
+   ],
+   "explicacao": "Paralelas mantêm sempre a mesma distância entre si — como os trilhos do trem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "concorrentes",
+   "enunciado": "Duas retas concorrentes são aquelas que...",
+   "certa": "têm um ponto em comum",
+   "erradas": [
+    "mantêm a mesma distância sempre",
+    "estão sempre na posição vertical",
+    "formam uma curva no encontro"
+   ],
+   "explicacao": "Concorrentes se cruzam, e o cruzamento é o ponto em comum.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "perpendiculares",
+   "enunciado": "Retas perpendiculares são concorrentes que formam...",
+   "certa": "ângulo de 90 graus",
+   "erradas": [
+    "ângulo de 45 graus",
+    "ângulo de 180 graus",
+    "ângulo de 60 graus"
+   ],
+   "explicacao": "Perpendicular é o caso especial da concorrente: o cruzamento dá ângulo reto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "concorrentes",
+   "enunciado": "Retas concorrentes que formam ângulos diferentes de 90 graus são...",
+   "certa": "oblíquas",
+   "erradas": [
+    "paralelas",
+    "coincidentes",
+    "perpendiculares"
+   ],
+   "explicacao": "Oblíquas cruzam-se de viés, formando ângulos agudos e obtusos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q3"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "mapa",
+   "enunciado": "Num mapa, duas ruas que se cruzam formando uma cruz são...",
+   "certa": "perpendiculares",
+   "erradas": [
+    "paralelas",
+    "oblíquas",
+    "concorrentes oblíquas"
+   ],
+   "explicacao": "Cruzamento em cruz significa ângulo reto: as ruas são perpendiculares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q5"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "posicao",
+   "icone": "paralelas",
+   "enunciado": "Duas ruas que seguem lado a lado sem nunca se cruzar são...",
+   "certa": "paralelas",
+   "erradas": [
+    "perpendiculares",
+    "concorrentes",
+    "oblíquas"
+   ],
+   "explicacao": "Lado a lado, à mesma distância, sem cruzar: paralelas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q5"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "posicao",
+   "icone": "paralelas",
+   "enunciado": "Retas paralelas se encontram quando são bem compridas.",
+   "certa": false,
+   "explicacao": "Falso: por mais que sigam, a distância entre elas não muda.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "posicao",
+   "icone": "perpendiculares",
+   "enunciado": "Toda reta perpendicular é também concorrente.",
+   "certa": true,
+   "explicacao": "Verdadeiro: ela cruza a outra, e ainda por cima formando 90°.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "posicao",
+   "icone": "paralelas",
+   "enunciado": "Ligue cada tipo de reta à sua característica.",
+   "pares": [
+    [
+     "Paralelas",
+     "Mantêm a mesma distância entre si"
+    ],
+    [
+     "Concorrentes",
+     "Têm um ponto em comum"
+    ],
+    [
+     "Perpendiculares",
+     "Cruzam-se formando 90 graus"
+    ]
+   ],
+   "explicacao": "Perpendicular é um tipo de concorrente, não algo à parte.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q4"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "triangulo",
+   "enunciado": "Um polígono de 3 lados chama-se...",
+   "certa": "triângulo",
+   "erradas": [
+    "quadrilátero",
+    "pentágono",
+    "hexágono"
+   ],
+   "explicacao": "Tri quer dizer três: três lados e três ângulos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "quadrado",
+   "enunciado": "Um polígono de 4 lados chama-se...",
+   "certa": "quadrilátero",
+   "erradas": [
+    "triângulo",
+    "pentágono",
+    "octógono"
+   ],
+   "explicacao": "Quadrilátero é o nome geral: quadrado, retângulo e losango são todos quadriláteros.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "pentagono",
+   "enunciado": "Um polígono de 5 lados chama-se...",
+   "certa": "pentágono",
+   "erradas": [
+    "hexágono",
+    "quadrilátero",
+    "decágono"
+   ],
+   "explicacao": "Penta é cinco em grego, como no Pentágono, o prédio de cinco lados.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "hexagono",
+   "enunciado": "Um polígono de 6 lados chama-se...",
+   "certa": "hexágono",
+   "erradas": [
+    "pentágono",
+    "octógono",
+    "triângulo"
+   ],
+   "explicacao": "Hexa é seis. O favo de mel é feito de hexágonos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "octogono",
+   "enunciado": "Um polígono de 8 lados chama-se...",
+   "certa": "octógono",
+   "erradas": [
+    "hexágono",
+    "decágono",
+    "pentágono"
+   ],
+   "explicacao": "Octo é oito, como no polvo, que tem oito braços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "octogono",
+   "enunciado": "Um polígono de 10 lados chama-se...",
+   "certa": "decágono",
+   "erradas": [
+    "octógono",
+    "hexágono",
+    "pentágono"
+   ],
+   "explicacao": "Deca é dez, como na década, que tem dez anos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "poligonos",
+   "icone": "triangulo",
+   "enunciado": "O que todo polígono tem em comum?",
+   "certa": "É fechado e feito só de segmentos de reta",
+   "erradas": [
+    "Tem exatamente quatro lados iguais",
+    "Tem pelo menos um lado curvo",
+    "Cabe sempre dentro de um quadrado"
+   ],
+   "explicacao": "Polígono é figura plana fechada, com lados retos. Círculo não é polígono.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.194"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "poligonos",
+   "icone": "esfera",
+   "enunciado": "O círculo é um polígono.",
+   "certa": false,
+   "explicacao": "Falso: polígono tem lados retos, e o círculo é uma curva só.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.194"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "poligonos",
+   "icone": "hexagono",
+   "enunciado": "Um hexágono tem o mesmo número de lados e de ângulos.",
+   "certa": true,
+   "explicacao": "Verdadeiro: em qualquer polígono, o número de lados é igual ao de ângulos.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "poligonos",
+   "icone": "pentagono",
+   "enunciado": "Ligue cada polígono ao número de lados.",
+   "pares": [
+    [
+     "Triângulo",
+     "3 lados"
+    ],
+    [
+     "Quadrilátero",
+     "4 lados"
+    ],
+    [
+     "Pentágono",
+     "5 lados"
+    ],
+    [
+     "Hexágono",
+     "6 lados"
+    ],
+    [
+     "Octógono",
+     "8 lados"
+    ],
+    [
+     "Decágono",
+     "10 lados"
+    ]
+   ],
+   "explicacao": "O prefixo grego conta os lados: tri, tetra, penta, hexa, octo, deca.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "poligonos",
+   "icone": "pentagono",
+   "enunciado": "Como se chama o polígono de cinco lados?",
+   "aceitas": [
+    "pentagono",
+    "pentágono",
+    "o pentagono",
+    "o pentágono"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Pentágono: penta, cinco.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q6"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "O triângulo equilátero tem...",
+   "certa": "os três lados do mesmo tamanho",
+   "erradas": [
+    "dois lados iguais e um diferente",
+    "os três lados de tamanhos diferentes",
+    "um ângulo de noventa graus"
+   ],
+   "explicacao": "Equi quer dizer igual: três lados iguais e três ângulos iguais.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.198"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "O triângulo isósceles tem...",
+   "certa": "dois lados do mesmo tamanho",
+   "erradas": [
+    "os três lados do mesmo tamanho",
+    "os três lados de tamanhos diferentes",
+    "todos os ângulos de noventa graus"
+   ],
+   "explicacao": "Isósceles: dois lados iguais, e os ângulos da base também são iguais.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.198"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "O triângulo escaleno tem...",
+   "certa": "os três lados de tamanhos diferentes",
+   "erradas": [
+    "os três lados do mesmo tamanho",
+    "dois lados do mesmo tamanho",
+    "dois ângulos retos"
+   ],
+   "explicacao": "Escaleno é o triângulo sem nenhum lado igual a outro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.198"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "triangulos",
+   "icone": "triangulo-retangulo",
+   "enunciado": "O triângulo retângulo é aquele que tem...",
+   "certa": "um ângulo reto",
+   "erradas": [
+    "três ângulos retos",
+    "todos os lados iguais",
+    "dois ângulos obtusos"
+   ],
+   "explicacao": "Um ângulo de 90° e mais dois agudos. O nome vem do ângulo, não dos lados.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q7"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "Um triângulo pode ter dois ângulos retos.",
+   "certa": false,
+   "explicacao": "Falso: dois ângulos de 90° já somam 180°, e não sobraria nada para o terceiro.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "vf",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "Todo triângulo equilátero também é isósceles.",
+   "certa": true,
+   "explicacao": "Verdadeiro: se os três lados são iguais, dois deles também são.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "Ligue cada triângulo à sua característica.",
+   "pares": [
+    [
+     "Equilátero",
+     "Três lados iguais"
+    ],
+    [
+     "Isósceles",
+     "Dois lados iguais"
+    ],
+    [
+     "Escaleno",
+     "Três lados diferentes"
+    ],
+    [
+     "Retângulo",
+     "Um ângulo de 90 graus"
+    ]
+   ],
+   "explicacao": "Os três primeiros olham para os lados; o retângulo olha para o ângulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.198"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "triangulos",
+   "icone": "triangulo",
+   "enunciado": "Como se chama o triângulo de três lados iguais?",
+   "aceitas": [
+    "equilatero",
+    "equilátero",
+    "triangulo equilatero",
+    "triângulo equilátero"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Equilátero: equi, igual.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.198"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "quadrilateros",
+   "icone": "quadrado",
+   "enunciado": "O quadrado é o quadrilátero que tem...",
+   "certa": "quatro lados iguais e quatro ângulos retos",
+   "erradas": [
+    "quatro lados iguais e nenhum ângulo reto",
+    "dois lados iguais e dois diferentes",
+    "quatro ângulos retos e lados de dois tamanhos"
+   ],
+   "explicacao": "Quadrado: tudo igual, e os quatro cantos retos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "quadrilateros",
+   "icone": "retangulo",
+   "enunciado": "O retângulo é o quadrilátero que tem...",
+   "certa": "quatro ângulos retos e lados iguais dois a dois",
+   "erradas": [
+    "quatro lados iguais e quatro ângulos retos",
+    "nenhum ângulo reto e lados iguais",
+    "três lados iguais e um diferente"
+   ],
+   "explicacao": "Retângulo tem os quatro cantos retos, mas comprimento e largura podem diferir.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "quadrilateros",
+   "icone": "losango",
+   "enunciado": "O losango é o quadrilátero que tem...",
+   "certa": "quatro lados iguais e cantos que não são retos",
+   "erradas": [
+    "quatro ângulos retos e lados diferentes",
+    "apenas dois lados paralelos",
+    "três lados iguais e um bem maior"
+   ],
+   "explicacao": "Losango é o quadrado 'inclinado': lados iguais, mas cantos agudos e obtusos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q7"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "quadrilateros",
+   "icone": "trapezio",
+   "enunciado": "O trapézio é o quadrilátero que tem...",
+   "certa": "apenas um par de lados paralelos",
+   "erradas": [
+    "os quatro lados paralelos dois a dois",
+    "quatro lados exatamente iguais",
+    "quatro ângulos retos nos cantos"
+   ],
+   "explicacao": "No trapézio só um par de lados é paralelo; nos outros quadriláteros, dois pares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q7"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "quadrilateros",
+   "icone": "quadrado",
+   "enunciado": "Todo quadrado também é um retângulo.",
+   "certa": true,
+   "explicacao": "Verdadeiro: tem os quatro ângulos retos, que é o que define o retângulo.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "vf",
+   "missao": "quadrilateros",
+   "icone": "trapezio",
+   "enunciado": "O trapézio tem os quatro lados do mesmo tamanho.",
+   "certa": false,
+   "explicacao": "Falso: isso é o losango. No trapézio só um par de lados é paralelo.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "quadrilateros",
+   "icone": "losango",
+   "enunciado": "Ligue cada quadrilátero à sua marca.",
+   "pares": [
+    [
+     "Quadrado",
+     "Lados iguais e cantos retos"
+    ],
+    [
+     "Retângulo",
+     "Cantos retos, lados dois a dois"
+    ],
+    [
+     "Losango",
+     "Lados iguais, cantos não retos"
+    ],
+    [
+     "Trapézio",
+     "Só um par de lados paralelos"
+    ]
+   ],
+   "explicacao": "Todos têm quatro lados; o que muda são lados iguais e ângulos retos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "quadrilateros",
+   "icone": "losango",
+   "enunciado": "Qual quadrilátero tem os quatro lados iguais mas nenhum ângulo reto?",
+   "aceitas": [
+    "losango",
+    "o losango"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Losango — o quadrado inclinado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q7"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "simetria",
+   "enunciado": "Uma figura tem eixo de simetria quando...",
+   "certa": "dobrada ao meio, os lados se encaixam",
+   "erradas": [
+    "tem todos os lados do mesmo tamanho",
+    "cabe inteira dentro de um quadrado",
+    "tem mais de quatro cantos marcados"
+   ],
+   "explicacao": "Dobrando pelo eixo, um lado cobre o outro exatamente.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.206"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "simetria",
+   "enunciado": "Qual destas figuras tem eixo de simetria?",
+   "certa": "A borboleta",
+   "erradas": [
+    "A mão direita sozinha",
+    "O mapa do Brasil",
+    "A letra R"
+   ],
+   "explicacao": "As duas asas da borboleta são iguais e espelhadas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q8"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "eixo",
+   "enunciado": "Quantos eixos de simetria tem um quadrado?",
+   "certa": "Quatro",
+   "erradas": [
+    "Dois",
+    "Um",
+    "Oito"
+   ],
+   "explicacao": "Dois pelas diagonais e dois pelo meio dos lados.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "eixo",
+   "enunciado": "Quantos eixos de simetria tem um retângulo que não é quadrado?",
+   "certa": "Dois",
+   "erradas": [
+    "Quatro",
+    "Um",
+    "Nenhum"
+   ],
+   "explicacao": "Só os que passam pelo meio dos lados; as diagonais não servem.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "simetria",
+   "enunciado": "Duas figuras são simétricas em relação a um eixo quando...",
+   "certa": "uma é o reflexo da outra no espelho",
+   "erradas": [
+    "uma é maior que a outra na mesma forma",
+    "as duas têm a mesma cor",
+    "as duas estão viradas para o mesmo lado"
+   ],
+   "explicacao": "Simetria é reflexo: a mesma distância do eixo, do outro lado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q9"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "simetria",
+   "icone": "eixo",
+   "enunciado": "A letra A maiúscula tem eixo de simetria.",
+   "certa": true,
+   "explicacao": "Verdadeiro: dobrando ao meio na vertical, os dois lados coincidem.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "vf",
+   "missao": "simetria",
+   "icone": "simetria",
+   "enunciado": "Toda figura geométrica tem eixo de simetria.",
+   "certa": false,
+   "explicacao": "Falso: um triângulo escaleno, por exemplo, não tem nenhum.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "simetria",
+   "icone": "eixo",
+   "enunciado": "Quantos eixos de simetria tem um círculo?",
+   "certa": "Infinitos",
+   "erradas": [
+    "Apenas um",
+    "Exatamente quatro",
+    "Nenhum"
+   ],
+   "explicacao": "Qualquer reta que passe pelo centro divide o círculo em metades iguais.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "cubo",
+   "enunciado": "Quantas faces tem um cubo?",
+   "certa": "Seis",
+   "erradas": [
+    "Quatro",
+    "Oito",
+    "Doze"
+   ],
+   "explicacao": "Seis faces quadradas, como num dado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.92"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "cubo",
+   "enunciado": "Quantas arestas tem um cubo?",
+   "certa": "Doze",
+   "erradas": [
+    "Oito",
+    "Seis",
+    "Dezesseis"
+   ],
+   "explicacao": "Aresta é o encontro de duas faces: o cubo tem doze.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "vertice",
+   "enunciado": "Quantos vértices tem um cubo?",
+   "certa": "Oito",
+   "erradas": [
+    "Seis",
+    "Doze",
+    "Quatro"
+   ],
+   "explicacao": "Vértice é o canto, onde as arestas se encontram: são oito.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "aresta",
+   "enunciado": "O que é uma aresta de um sólido?",
+   "certa": "O encontro de duas faces",
+   "erradas": [
+    "O canto onde as arestas se juntam",
+    "A superfície plana do sólido",
+    "A medida do lado mais comprido"
+   ],
+   "explicacao": "Face é a superfície, aresta é a linha do encontro, vértice é o canto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.92"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "vertice",
+   "enunciado": "O que é um vértice de um sólido?",
+   "certa": "O ponto onde as arestas se juntam",
+   "erradas": [
+    "A linha entre duas faces planas",
+    "A superfície plana do sólido",
+    "O ponto bem no meio do sólido"
+   ],
+   "explicacao": "Vértice é o bico, o canto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.92"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "esfera",
+   "enunciado": "Qual destes NÃO é um poliedro?",
+   "certa": "A esfera",
+   "erradas": [
+    "O cubo",
+    "A pirâmide",
+    "O prisma"
+   ],
+   "explicacao": "Poliedro tem só faces planas. Esfera, cone e cilindro são corpos redondos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "cilindro",
+   "enunciado": "Cilindro, cone e esfera são chamados de...",
+   "certa": "corpos redondos",
+   "erradas": [
+    "poliedros",
+    "polígonos",
+    "prismas"
+   ],
+   "explicacao": "Têm superfície curva, por isso não entram nos poliedros.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.98"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "piramide",
+   "enunciado": "A pirâmide tem uma base e as outras faces são...",
+   "certa": "triângulos que sobem até um vértice",
+   "erradas": [
+    "quadrados todos do mesmo tamanho",
+    "retângulos em pé, lado a lado",
+    "círculos empilhados um sobre o outro"
+   ],
+   "explicacao": "Todas as faces laterais sobem até um único ponto, o ápice.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.95"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "prisma",
+   "enunciado": "O prisma tem duas bases iguais e as faces laterais são...",
+   "certa": "retângulos",
+   "erradas": [
+    "triângulos",
+    "círculos",
+    "losangos"
+   ],
+   "explicacao": "Duas bases iguais e paralelas, ligadas por retângulos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.95"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "solidos",
+   "icone": "cubo",
+   "enunciado": "O paralelepípedo tem quantas faces?",
+   "certa": "Seis",
+   "erradas": [
+    "Quatro",
+    "Oito",
+    "Cinco"
+   ],
+   "explicacao": "Seis faces retangulares — como uma caixa de sapato.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.92"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "solidos",
+   "icone": "esfera",
+   "enunciado": "A esfera tem faces, arestas e vértices.",
+   "certa": false,
+   "explicacao": "Falso: a esfera é toda curva, sem face plana, sem aresta e sem vértice.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q11"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "solidos",
+   "icone": "cubo",
+   "enunciado": "Todo cubo é também um paralelepípedo.",
+   "certa": true,
+   "explicacao": "Verdadeiro: o cubo é o paralelepípedo de faces todas quadradas.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "ligar",
+   "missao": "solidos",
+   "icone": "cubo",
+   "enunciado": "Ligue cada sólido ao número de faces.",
+   "pares": [
+    [
+     "Cubo",
+     "6 faces"
+    ],
+    [
+     "Pirâmide de base quadrada",
+     "5 faces"
+    ],
+    [
+     "Prisma de base triangular",
+     "5 faces"
+    ],
+    [
+     "Esfera",
+     "Nenhuma face plana"
+    ]
+   ],
+   "explicacao": "Contar face, aresta e vértice é o que separa um sólido do outro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q10"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "solidos",
+   "icone": "cilindro",
+   "enunciado": "Qual sólido tem duas bases circulares e lembra uma lata?",
+   "aceitas": [
+    "cilindro",
+    "o cilindro"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Cilindro — corpo redondo, não poliedro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.98"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "planificacao",
+   "enunciado": "A planificação de um sólido é...",
+   "certa": "o desenho dele aberto no plano",
+   "erradas": [
+    "a sombra que ele faz no chão",
+    "o corte dele feito ao meio",
+    "a vista dele olhando de cima"
+   ],
+   "explicacao": "É como o sólido fica se você desmontar a caixa e deixar tudo plano.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cubo",
+   "enunciado": "A planificação do cubo é formada por...",
+   "certa": "seis quadrados ligados",
+   "erradas": [
+    "quatro triângulos e um quadrado",
+    "dois círculos e um retângulo",
+    "seis triângulos ligados"
+   ],
+   "explicacao": "Seis quadrados, muitas vezes em forma de cruz.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q12"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cone-solido",
+   "enunciado": "A planificação do cone é formada por...",
+   "certa": "um círculo e um pedaço de círculo",
+   "erradas": [
+    "dois círculos e um retângulo",
+    "quatro triângulos e um quadrado",
+    "seis quadrados ligados"
+   ],
+   "explicacao": "A base é o círculo; a lateral, aberta, vira um setor.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q12"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cilindro",
+   "enunciado": "A planificação do cilindro é formada por...",
+   "certa": "dois círculos e um retângulo",
+   "erradas": [
+    "um círculo e um triângulo",
+    "seis quadrados ligados",
+    "dois triângulos e três retângulos"
+   ],
+   "explicacao": "As tampas são os círculos; a lateral, desenrolada, é um retângulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q12"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "piramide",
+   "enunciado": "A planificação da pirâmide de base quadrada tem...",
+   "certa": "um quadrado e quatro triângulos",
+   "erradas": [
+    "seis quadrados ligados",
+    "dois quadrados e quatro retângulos",
+    "um círculo e quatro triângulos"
+   ],
+   "explicacao": "A base quadrada e as quatro faces laterais triangulares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q12"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "esfera",
+   "enunciado": "Uma bola de futebol lembra qual sólido?",
+   "certa": "a esfera",
+   "erradas": [
+    "o cilindro",
+    "o cone",
+    "o cubo"
+   ],
+   "explicacao": "Esfera: toda curva, sem canto nenhum.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q13"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cone-solido",
+   "enunciado": "A casquinha de sorvete lembra qual sólido?",
+   "certa": "o cone",
+   "erradas": [
+    "o cilindro",
+    "a pirâmide",
+    "a esfera"
+   ],
+   "explicacao": "Cone: base redonda e uma ponta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q13"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cubo",
+   "enunciado": "Uma caixa de sapato lembra qual sólido?",
+   "certa": "o paralelepípedo",
+   "erradas": [
+    "o cubo",
+    "o prisma triangular",
+    "o cilindro"
+   ],
+   "explicacao": "Paralelepípedo: seis faces retangulares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q13"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "planificacoes",
+   "icone": "cilindro",
+   "enunciado": "Uma lata de refrigerante lembra qual sólido?",
+   "certa": "o cilindro",
+   "erradas": [
+    "o cone",
+    "a esfera",
+    "o paralelepípedo"
+   ],
+   "explicacao": "Cilindro: duas bases circulares e lateral curva.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q13"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "malha",
+   "icone": "malha",
+   "enunciado": "Numa malha quadriculada, o trajeto “3 para a direita e 2 para baixo” significa...",
+   "certa": "andar 3 quadradinhos e depois 2",
+   "erradas": [
+    "andar 3 passos e virar 2 vezes",
+    "andar 5 quadradinhos na diagonal",
+    "andar 2 para a direita e 3 para baixo"
+   ],
+   "explicacao": "Cada número conta quadradinhos, e a seta diz para que lado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q14"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "malha",
+   "icone": "malha",
+   "enunciado": "Ao descrever um trajeto na malha, o que a seta indica?",
+   "certa": "o sentido do movimento",
+   "erradas": [
+    "quantos quadradinhos andar",
+    "o tamanho de cada quadradinho",
+    "o nome do ponto de chegada"
+   ],
+   "explicacao": "O número diz quanto; a seta diz para onde.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "q14"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "malha",
+   "icone": "mapa",
+   "enunciado": "Para ir de um ponto a outro na malha usando só movimentos retos, você anda...",
+   "certa": "na horizontal e na vertical",
+   "erradas": [
+    "sempre pela diagonal do quadrado",
+    "fazendo curvas suaves no caminho",
+    "só para a direita, nunca para baixo"
+   ],
+   "explicacao": "Na malha quadriculada o caminho segue as linhas: para os lados e para cima ou baixo.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "vf",
+   "missao": "malha",
+   "icone": "malha",
+   "enunciado": "Dois trajetos diferentes podem levar ao mesmo ponto de chegada.",
+   "certa": true,
+   "explicacao": "Verdadeiro: o que importa é o total andado em cada direção.",
+   "origem": "propria"
+  }
+ ]
+}

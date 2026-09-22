@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Régua e Compasso</title>
+<style>
+:root{
+  color-scheme:light dark;
+
+  --materia:      oklch(0.52 0.22 298);
+  /* Superfície preenchida que recebe texto branco. No escuro a matéria clareia
+     para servir de texto, então a versão sólida é mantida à parte. */
+  --materia-solida:oklch(0.52 0.22 298);
+  --sobre-materia:#fff;
+  --materia-forte:color-mix(in oklch, var(--materia) 82%, black);
+  --materia-clara:color-mix(in oklch, var(--materia) 12%, white);
+  --materia-borda:color-mix(in oklch, var(--materia) 45%, white);
+
+  --fundo:    oklch(0.975 0.008 265);
+  --carta:    oklch(1 0 0);
+  --risco:    oklch(0.905 0.012 265);
+  --texto:    oklch(0.28 0.030 268);
+  --texto-2:  oklch(0.50 0.028 268);
+  --texto-3:  oklch(0.545 0.022 268);
+
+  /* Quatro cores de alternativa, no espírito do Kahoot, fugindo de
+     vermelho e verde puros para não brigar com certo/errado. */
+  /* Quatro cores bem distintas entre si e distantes de vermelho e verde,
+     que já significam errado e certo. */
+  --alt-1:oklch(0.540 0.19 268);  /* índigo   */
+  --alt-2:oklch(0.570 0.15 75);   /* âmbar    */
+  --alt-3:oklch(0.535 0.13 200);  /* turquesa */
+  --alt-4:oklch(0.550 0.21 322);  /* violeta  */
+
+  /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
+   cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
+   nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
+/* Superfícies sólidas de certo e errado, iguais nos dois temas, para quando
+   a cor vira fundo de um texto — a letra da alternativa marcada, o aviso.
+   As variantes --certo/--errado são claras demais para carregar texto
+   branco: 3,12:1 e 4,39:1. Estas dão 5,51:1 e 7,54:1. */
+--certo-solida:  oklch(0.50 0.16 148);
+--errado-solida: oklch(0.47 0.19 22);
+--sobre-solida:  oklch(1 0 0);
+--aviso:       var(--certo-solida);
+--aviso-fundo: oklch(0.38 0.13 148);
+--sobre-aviso: var(--sobre-solida);
+--certo:      oklch(0.64 0.18 148);
+  --certo-forte:oklch(0.50 0.16 148);
+  --certo-claro:oklch(0.95 0.055 148);
+  --errado:      oklch(0.60 0.21 22);
+  --errado-forte:oklch(0.47 0.19 22);
+  --errado-claro:oklch(0.95 0.045 22);
+
+  --display:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+
+  --t-xs:0.8125rem; --t-sm:0.9375rem; --t-md:1.0625rem; --t-lg:1.25rem;
+  --t-xl:1.5rem; --t-2xl:1.875rem; --t-3xl:2.375rem;
+
+  --s-1:0.25rem; --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem;
+  --s-5:1.5rem; --s-6:2rem; --s-7:3rem;
+
+  --r:14px; --r-g:20px; --r-p:8px;
+  --labio:4px;                       /* a "espessura" dos botões */
+  --mola:cubic-bezier(0.34,1.4,0.64,1);
+  --saida:cubic-bezier(0.22,1,0.36,1);
+}
+
+/* O tema escuro vale por dois caminhos: o do sistema (a menos que o botão
+   force o claro) e o do próprio botão. As declarações são as mesmas, escritas
+   uma vez só e repetidas pelo build — duplicar à mão é convidar à divergência. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]){
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, oklch(0.52 0.22 298) 68%, white);
+    --materia-solida:oklch(0.52 0.22 298);
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, oklch(0.52 0.22 298) 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, oklch(0.52 0.22 298) 55%, white);
+    --materia-borda:color-mix(in oklch, oklch(0.52 0.22 298) 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
+  }
+}
+:root[data-tema="escuro"]{
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, oklch(0.52 0.22 298) 68%, white);
+    --materia-solida:oklch(0.52 0.22 298);
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, oklch(0.52 0.22 298) 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, oklch(0.52 0.22 298) 55%, white);
+    --materia-borda:color-mix(in oklch, oklch(0.52 0.22 298) 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--fundo);color:var(--texto);
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:600;line-height:1.55;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right)
+          calc(env(safe-area-inset-bottom) + var(--s-4)) env(safe-area-inset-left);
+}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;letter-spacing:-0.01em;margin:0;text-wrap:balance}
+p{margin:0 0 var(--s-3);text-wrap:pretty}
+svg{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stars{display:none}
+:where(button,a,input,[tabindex]):focus-visible{outline:3px solid var(--materia);outline-offset:3px}
+
+.wrap{max-width:54rem;margin:0 auto;padding:var(--s-4) var(--s-4) var(--s-6)}
+.app{background:none;border:0;border-radius:0;box-shadow:none;overflow:visible}
+main{padding:0}
+.screen{display:none!important}
+.screen.active{display:block!important}
+
+/* ---------- faixa colorida no topo ---------- */
+header{
+  background:var(--materia-solida);color:var(--sobre-materia);border:0;
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);margin-bottom:var(--s-5);
+}
+.top{display:flex;justify-content:space-between;align-items:center;gap:var(--s-4);flex-wrap:wrap}
+h1{font-size:var(--t-xl);color:var(--sobre-materia);font-weight:700}
+.subtitle{font-size:var(--t-xs);font-weight:700;color:var(--sobre-materia);opacity:.88;margin-top:2px;letter-spacing:.01em}
+.hud{display:flex;gap:var(--s-2);align-items:center;flex-wrap:wrap}
+.pill{
+  display:flex;align-items:center;gap:var(--s-2);background:rgba(255,255,255,.22);
+  border:0;border-radius:999px;padding:var(--s-2) var(--s-3);color:var(--sobre-materia);
+  font-family:var(--display);font-weight:600;font-size:var(--t-md);
+  font-variant-numeric:tabular-nums;line-height:1;min-height:2.25rem
+}
+.pill .rot{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;opacity:.85}
+.som-btn,#btnSom{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;font-size:0;
+  background:rgba(255,255,255,.22);border:0;border-radius:999px;color:var(--sobre-materia)}
+.som-btn:hover,#btnSom:hover{background:rgba(255,255,255,.34);color:var(--sobre-materia)}
+.progress{display:none}
+
+/* ---------- botões com lábio, que afundam ao apertar ---------- */
+button,.btn{font:inherit;cursor:pointer;touch-action:manipulation}
+button,.btn,.primary,.secondary,.gold{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);
+  min-height:3rem;padding:var(--s-3) var(--s-5);
+  background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  font-family:var(--display);font-weight:600;font-size:var(--t-md);
+  transition:transform 90ms var(--saida),box-shadow 90ms var(--saida),
+             background 140ms var(--saida),border-color 140ms var(--saida);
+}
+button:hover,.btn:hover{border-color:var(--materia);color:var(--materia)}
+button:active,.btn:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(--labio) 0 var(--risco)}
+.primary,.gold{
+  background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);
+  box-shadow:0 var(--labio) 0 var(--materia-forte)}
+.primary:hover,.gold:hover{background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);filter:brightness(1.07)}
+.primary:active,.gold:active{box-shadow:0 0 0 var(--materia-forte)}
+.link-btn,.exit-btn{
+  background:none;border:0;box-shadow:none;color:var(--texto-2);min-height:2.5rem;
+  padding:var(--s-2) var(--s-3);font-family:var(--corpo);font-weight:700;font-size:var(--t-sm)}
+.link-btn:hover,.exit-btn:hover{color:var(--materia);transform:none;box-shadow:none}
+.link-btn:active,.exit-btn:active{transform:none;box-shadow:none}
+.quiz-top{display:flex;justify-content:flex-start;margin-bottom:var(--s-3)}
+
+/* ---------- abertura ---------- */
+.hero{padding:var(--s-5) 0;max-width:40rem}
+.hero .icon{display:none}
+.hero h2{font-size:var(--t-3xl);font-weight:700;margin-bottom:var(--s-3)}
+.hero p{color:var(--texto-2);font-weight:600;max-width:52ch;margin-bottom:var(--s-5)}
+.chips{display:flex;gap:var(--s-3);flex-wrap:wrap;margin:var(--s-5) 0}
+.chip{
+  display:flex;flex-direction:column;gap:2px;background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r);padding:var(--s-3) var(--s-4);
+  font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;color:var(--texto-2);min-width:6.5rem}
+.chip b{font-family:var(--display);font-size:var(--t-xl);font-weight:700;color:var(--materia);
+  font-variant-numeric:tabular-nums;line-height:1.05}
+
+/* ---------- lição ---------- */
+.lesson-card{background:none;border:0;padding:0;max-width:46rem}
+.lesson-tag{
+  display:inline-block;background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);margin-bottom:var(--s-3);
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;letter-spacing:.02em}
+#categories .lesson-tag{display:none}
+.lesson-card h2{font-size:var(--t-2xl);font-weight:700;margin-bottom:var(--s-4)}
+.lesson-card h3{font-size:var(--t-lg);margin:var(--s-5) 0 var(--s-2)}
+.content-grid,.grid2,.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
+  gap:var(--s-3);margin:var(--s-4) 0}
+.mini{
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-4);font-size:var(--t-sm);font-weight:600;color:var(--texto-2);line-height:1.5}
+/* Ilustração do termo, na lição. */
+.mini .pic{
+  display:grid;place-items:center;width:2.5rem;height:2.5rem;padding:0.5rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-2);box-sizing:border-box;font-size:0}
+.mini .pic svg{width:100%;height:100%;stroke-width:1.9}
+.mini strong{display:block;font-family:var(--display);font-size:var(--t-md);font-weight:600;
+  color:var(--texto);margin:0 0 var(--s-1)}
+.example{
+  background:var(--materia-clara);border:2px solid var(--materia-borda);border-radius:var(--r);
+  padding:var(--s-4);margin:var(--s-3) 0;font-size:var(--t-sm);font-weight:600;line-height:1.55}
+.example.warning{background:var(--carta);border-color:var(--risco)}
+.lesson-nav{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);
+  flex-wrap:wrap;margin-top:var(--s-6)}
+.lesson-nav .small,.small{font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  color:var(--texto-3);font-variant-numeric:tabular-nums}
+.formula{
+  background:var(--materia-solida);color:var(--sobre-materia);border:0;border-radius:var(--r);padding:var(--s-4);
+  text-align:center;font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin:var(--s-4) 0}
+.ticket{background:var(--carta);border:2px dashed var(--risco);border-radius:var(--r);padding:var(--s-4);margin:var(--s-4) 0}
+.ticket h3{font-size:var(--t-md);margin-bottom:var(--s-3)}
+.ticket-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s-2);font-size:var(--t-sm)}
+.rule-section{margin:var(--s-5) 0}
+.rule-title{font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-3)}
+.rule-chip{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;color:var(--materia);margin-left:var(--s-2)}
+.focus-box{font-size:var(--t-sm);color:var(--texto-2);margin:var(--s-2) 0}
+.rule-example{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--s-3);align-items:center;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3);margin-bottom:var(--s-2);font-size:var(--t-sm)}
+.rule-example .arrow{color:var(--materia);font-weight:900}
+.verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s-2)}
+.verb-card{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3);font-size:var(--t-sm);color:var(--texto-2)}
+.verb-card .pic{display:grid;place-items:center;width:2rem;height:2rem;padding:0.35rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-1);box-sizing:border-box;font-size:0}
+.verb-card .pic svg{width:100%;height:100%;stroke-width:1.9}
+.verb-card .base{font-family:var(--display);font-size:var(--t-md);font-weight:600;color:var(--texto)}
+.verb-card .ing{color:var(--materia);font-weight:700}
+.verb-card .sentence{font-style:italic}
+
+/* ---------- missões: cards com faixa da matéria ---------- */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.trail-grid,.trail-choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.category-card,.trail-card{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;
+  column-gap:var(--s-3);row-gap:var(--s-1);align-items:start;text-align:left;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  box-shadow:0 var(--labio) 0 var(--risco);padding:var(--s-4);min-height:0;
+  font-family:var(--corpo);font-weight:600;
+  transition:transform 120ms var(--saida),box-shadow 120ms var(--saida),border-color 140ms var(--saida)}
+.category-card:hover,.trail-card:hover{border-color:var(--materia);color:var(--texto);transform:translateY(-2px);
+  box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
+.category-card:active,.trail-card:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+.category-card>svg,.trail-card>svg{
+  grid-column:1;grid-row:1/span 2;width:2.75rem;height:2.75rem;padding:var(--s-2);
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);box-sizing:border-box}
+.category-card>strong,.trail-card>strong{
+  grid-column:2;grid-row:1;font-family:var(--display);font-size:var(--t-lg);font-weight:600;color:var(--texto)}
+.category-card>small,.trail-card>small{
+  grid-column:2;grid-row:2;font-size:var(--t-sm);font-weight:600;color:var(--texto-2);line-height:1.45}
+.selo{grid-column:1/-1;grid-row:3;display:none;justify-self:start;
+  border-radius:999px;padding:2px var(--s-3);font-family:var(--display);font-size:var(--t-xs);font-weight:600}
+.category-card.andamento .selo{background:var(--materia-clara);color:var(--materia-forte)}
+.category-card.concluida .selo{background:var(--certo-claro);color:var(--certo-forte)}
+.category-card.dominada .selo{background:var(--materia-solida);color:var(--sobre-materia)}
+.mini-bar{grid-column:1/-1;grid-row:4;height:10px;background:var(--fundo);border-radius:999px;
+  overflow:hidden;margin-top:var(--s-2)}
+.mini-bar span{display:block;height:100%;width:0;background:var(--materia);border-radius:999px;
+  transition:width 420ms var(--saida)}
+.mini-txt{grid-column:1/-1;grid-row:5;font-size:var(--t-xs);font-weight:700;color:var(--texto-3);
+  font-variant-numeric:tabular-nums}
+.review-count{grid-column:1/-1;grid-row:3;font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
+.trail-done{display:none;margin-left:var(--s-2);font-size:var(--t-xs);font-weight:700;color:var(--certo-forte)}
+.trail-card.done .trail-done{display:inline}
+/* A trilha recomendada se anuncia com uma etiqueta, não com uma frase
+   ("Recomendada para aprender do início") embaixo da que já descreve
+   o conteúdo. */
+.trail-card.recommended{position:relative}
+.trail-card.recommended::after{
+  content:"Comece aqui";position:absolute;top:calc(-1 * var(--s-2));right:var(--s-4);
+  background:var(--materia-solida);color:var(--sobre-materia);
+  padding:2px var(--s-3);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;line-height:1.5}
+#reviewCard.empty{opacity:.55}
+.secao-tit,#categories h2{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin:var(--s-6) 0 0}
+.mode-toggle{display:inline-flex;gap:var(--s-2);background:none;border:0;padding:0;margin-top:var(--s-3)}
+.mode-opt{border:2px solid var(--risco);border-radius:999px;background:var(--carta);color:var(--texto-2);
+  box-shadow:0 var(--labio) 0 var(--risco);padding:var(--s-2) var(--s-4);min-height:2.75rem;gap:var(--s-1)}
+.mode-opt small{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;opacity:.8}
+.mode-opt.active{background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);box-shadow:0 var(--labio) 0 var(--materia-forte)}
+.mode-opt:hover{color:var(--materia)}
+.mode-opt.active:hover{color:var(--sobre-materia)}
+.mode-hint{font-size:var(--t-sm);font-weight:600;color:var(--texto-2);margin-top:var(--s-3);max-width:58ch}
+.mission-banner{margin-bottom:var(--s-4)}
+.mission-title{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin-bottom:var(--s-1)}
+.mission-desc,.mission-progress{font-size:var(--t-sm);color:var(--texto-2)}
+.trail-icon{display:none}
+
+/* ---------- quiz ---------- */
+.question-card{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-5);box-shadow:0 var(--labio) 0 var(--risco);overflow:visible}
+.question-card::before{display:none}
+.progress-panel{background:none;border:0;padding:0;margin-bottom:var(--s-4)}
+.progress-head{display:flex;justify-content:space-between;font-family:var(--display);
+  font-size:var(--t-sm);font-weight:600;color:var(--texto-2);margin-bottom:var(--s-2);
+  font-variant-numeric:tabular-nums}
+.track,.progress-track{height:14px;background:var(--fundo);border-radius:999px;overflow:hidden}
+.fill,.progress-fill{height:100%;width:0;background:var(--materia);border-radius:999px;
+  transition:width 420ms var(--saida)}
+.trail-map{display:flex;align-items:center;gap:var(--s-1);overflow-x:auto;padding:var(--s-3) 0 0}
+.node,.trail-node{flex:none;width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;
+  background:var(--fundo);border:2px solid var(--risco);font-family:var(--display);
+  font-size:var(--t-xs);font-weight:600;color:var(--texto-3);transform:none}
+.trail-map{scrollbar-width:none}
+.trail-map::-webkit-scrollbar{display:none}
+.node svg,.trail-node svg{width:1.1rem;height:1.1rem}
+.node.current,.trail-node.current{border-color:var(--materia-solida);background:var(--materia-solida);color:var(--sobre-materia)}
+.node.done,.trail-node.done{border-color:var(--certo-escuro,var(--certo));background:var(--certo-escuro,var(--certo));color:#fff}
+.line,.trail-line{flex:none;width:1.25rem;height:3px;border-radius:999px;background:var(--risco)}
+.line.done,.trail-line.done{background:var(--certo)}
+.stage,.stage-label{display:inline-block;background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);margin-bottom:var(--s-3);
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600}
+.fonte{display:inline-block;margin-left:var(--s-2);margin-bottom:var(--s-3);
+  border:2px dashed var(--risco);border-radius:999px;padding:2px var(--s-3);
+  font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
+.storyline{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-3);
+  display:flex;align-items:baseline;gap:var(--s-2)}
+/* Ícone dentro de uma linha de texto. Sem tamanho próprio o <svg> estica
+   até preencher o contêiner — foi o que inchou a linha da missão. */
+.ic-txt{width:1.1em;height:1.1em;flex:none;align-self:center}
+/* Ilustração da questão: chip com a cor da matéria, acima do enunciado. */
+.illustration{
+  display:grid;justify-self:start;place-items:center;width:4rem;height:4rem;padding:0.85rem;
+  background:var(--materia-clara);border-radius:var(--r);color:var(--materia-forte);
+  margin-bottom:var(--s-3);box-sizing:border-box;min-height:0;font-size:0}
+.illustration svg{width:100%;height:100%;stroke-width:1.8}
+.question{position:relative;font-family:var(--display);font-size:var(--t-2xl);font-weight:600;
+  line-height:1.25;margin:0 0 var(--s-5);max-width:32ch}
+.hint{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-4)}
+
+/* Alternativas: bloco grande, forma própria, cor própria. */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+.answer{
+  display:flex;align-items:center;justify-content:flex-start;gap:var(--s-3);width:100%;
+  text-align:left;min-height:4.5rem;padding:var(--s-3) var(--s-4);
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  color:var(--texto);font-family:var(--corpo);font-size:var(--t-md);font-weight:700;line-height:1.35;
+  overflow:visible;position:relative}
+.answer::after{display:none}
+/* A letra é o marcador da alternativa: mesma função das formas do Kahoot,
+   sem a assinatura dele, e é como a professora se refere à resposta. */
+.answer .letra{
+  flex:none;width:2.5rem;height:2.5rem;display:grid;place-items:center;
+  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.answer:nth-child(2) .letra{background:var(--alt-2)}
+.answer:nth-child(3) .letra{background:var(--alt-3)}
+.answer:nth-child(4) .letra{background:var(--alt-4)}
+.answer:hover:not(.correct):not(.wrong){border-color:var(--materia);color:var(--texto);
+  transform:translateY(-2px);box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
+.answer:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+.answer.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte);
+  animation:pulo 420ms var(--mola)}
+.answer.correct .letra{background:var(--certo-solida);color:var(--sobre-solida)}
+.answer.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
+.answer.wrong .letra{background:var(--errado-solida);color:var(--sobre-solida)}
+@keyframes pulo{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+.feedback{display:none;margin-top:var(--s-4);padding:var(--s-4);border:2px solid var(--risco);
+  border-radius:var(--r);font-size:var(--t-sm);font-weight:600;line-height:1.55}
+.feedback.show{display:block;animation:sobe-bloco 240ms var(--saida)}
+@keyframes sobe-bloco{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.feedback .rotulo{display:block;font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-1)}
+.feedback.good{background:var(--certo-claro);border-color:var(--certo)}
+.feedback.good .rotulo{color:var(--certo-forte)}
+.feedback.bad{background:var(--errado-claro);border-color:var(--errado)}
+.feedback.bad .rotulo{color:var(--errado-forte)}
+.controls{display:flex;justify-content:flex-end;margin-top:var(--s-4)}
+.special,#special{margin-top:var(--s-3)}
+
+/* ---------- formatos especiais ---------- */
+.truefalse{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+.tf-true,.tf-false{justify-content:flex-start}
+.match,.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3);margin-top:var(--s-3)}
+.match-col{display:flex;flex-direction:column;gap:var(--s-2)}
+.match-item{justify-content:flex-start;text-align:left;min-height:3rem;padding:var(--s-3);
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;line-height:1.3}
+.match-item.sel,.match-item.selected{border-color:var(--materia);background:var(--materia-clara);
+  box-shadow:0 var(--labio) 0 var(--materia-borda)}
+.match-item.done{border-color:var(--certo);background:var(--certo-claro);
+  box-shadow:0 var(--labio) 0 var(--certo-forte);opacity:.75;cursor:default}
+.match-item.wrong{border-color:var(--errado);background:var(--errado-claro)}
+.order-slot,.sentence-box{min-height:3.5rem;background:var(--fundo);border:2px dashed var(--risco);
+  border-radius:var(--r);padding:var(--s-3);display:flex;flex-wrap:wrap;gap:var(--s-2);
+  align-items:center;margin-bottom:var(--s-3)}
+.order-chip,.selected-word{background:var(--materia-solida);color:var(--sobre-materia);border-radius:999px;
+  padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  min-height:2.5rem;display:inline-flex;align-items:center;cursor:pointer}
+.order-bank,.word-bank{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-3)}
+.order-btn,.word{min-height:3rem;padding:var(--s-2) var(--s-4);font-size:var(--t-sm);width:auto}
+.order-btn:disabled,.word.used{opacity:.3}
+.text-row,.input-row{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-2)}
+.text-row input,.input-row input{flex:1 1 14rem;min-width:0;min-height:3rem;padding:var(--s-2) var(--s-4);
+  font-family:var(--corpo);font-size:16px;font-weight:700;background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r)}
+.text-row input::placeholder,.input-row input::placeholder{color:var(--texto-3);font-weight:600}
+.text-row input:focus,.input-row input:focus{outline:none;border-color:var(--materia)}
+.rosa{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-2);max-width:20rem;margin:var(--s-3) auto 0}
+.rosa-btn{aspect-ratio:1;display:grid;place-items:center;min-height:3.5rem;height:auto;padding:0;width:auto;
+  font-family:var(--display);font-weight:600;font-size:var(--t-md)}
+.rosa-btn.card{color:var(--materia)}
+.rosa-btn.centro{border-color:transparent;background:none;box-shadow:none;cursor:default;font-size:0}
+.rosa-btn.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte)}
+.rosa-btn.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
+.memory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(6.5rem,1fr));gap:var(--s-2);margin-top:var(--s-3)}
+.memory-card{min-height:5rem;font-size:var(--t-sm);justify-content:center;text-align:center}
+.memory-card.revealed{border-color:var(--materia);background:var(--materia-clara)}
+.memory-card.matched{border-color:var(--certo);background:var(--certo-claro);opacity:.75;cursor:default}
+.crossword{display:grid;grid-template-columns:repeat(7,2.75rem);gap:3px;margin:var(--s-3) 0;justify-content:center}
+.cw-cell{width:2.75rem;height:2.75rem;border:2px solid var(--risco);border-radius:var(--r-p);background:var(--carta)}
+.cw-cell.cw-block{background:var(--fundo);border-color:var(--fundo)}
+.cw-cell input{width:100%;height:100%;min-height:0;border:0;background:none;text-align:center;
+  font-family:var(--display);font-size:var(--t-md);font-weight:600;text-transform:uppercase;color:var(--texto);padding:0}
+.clues{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-3);line-height:1.7}
+.wordsearch{display:grid;grid-template-columns:repeat(8,2.75rem);gap:3px;margin:var(--s-3) 0;justify-content:center}
+.ws-cell{width:2.75rem;height:2.75rem;display:grid;place-items:center;border:2px solid var(--risco);
+  border-radius:var(--r-p);background:var(--carta);font-family:var(--display);font-size:var(--t-md);
+  font-weight:600;cursor:pointer;user-select:none;touch-action:manipulation}
+.ws-cell.sel{border-color:var(--materia);background:var(--materia-clara)}
+.ws-cell.found{border-color:var(--certo);background:var(--certo-claro);color:var(--certo-forte)}
+.badge-row{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-3)}
+.badge{font-family:var(--display);font-size:var(--t-xs);font-weight:600;color:var(--materia-forte);
+  background:var(--materia-clara);border-radius:999px;padding:var(--s-1) var(--s-3)}
+.audio-row{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-4)}
+.audio-btn{min-height:2.75rem;padding:var(--s-2) var(--s-4);font-size:var(--t-sm);width:auto}
+
+/* ---------- fim de partida ---------- */
+.result{padding:var(--s-5) 0;max-width:40rem}
+.trophy{display:none}
+.result h2{font-size:var(--t-3xl);font-weight:700;margin-bottom:var(--s-2)}
+.rank{display:inline-block;background:var(--materia-solida);color:var(--sobre-materia);border-radius:999px;
+  padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin:0 0 var(--s-4)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));gap:var(--s-3);margin:var(--s-5) 0}
+.stat{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:2px;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);padding:var(--s-3) var(--s-4)}
+.stat strong{font-family:var(--display);font-size:var(--t-2xl);font-weight:700;
+  font-variant-numeric:tabular-nums;line-height:1.05;color:var(--materia)}
+.stat .small{font-size:var(--t-xs);color:var(--texto-2)}
+.missed{margin:var(--s-5) 0 0;padding:var(--s-4);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r-g)}
+.missed-title{font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-3)}
+.missed-list{margin:0 0 var(--s-3);padding:0;list-style:none;
+  color:var(--texto-2);font-size:var(--t-sm);line-height:1.5}
+.missed-list li{display:flex;align-items:flex-start;gap:var(--s-2);
+  padding:var(--s-1) 0}
+.missed-list .ic-txt{margin-top:.15em;color:var(--materia-forte)}
+.missed-chips{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-3)}
+.missed-chip{background:var(--materia-clara);color:var(--materia-forte);border-radius:999px;
+  padding:var(--s-1) var(--s-3);font-size:var(--t-xs);font-weight:700;
+  display:inline-flex;align-items:center;gap:var(--s-1)}
+
+/* ---------- navegação ---------- */
+/* Onde a criança está e como sair dali. Fica acima da faixa da matéria,
+   discreta, e some para trás do conteúdo em vez de competir com ele. */
+.migalhas{
+  display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-2);
+  max-width:56rem;margin:0 auto;padding:var(--s-3) var(--s-4) 0;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.migalhas a{display:inline-flex;align-items:center;gap:var(--s-1);
+  color:var(--texto-2);text-decoration:none;border-radius:var(--r-p);
+  padding:2px 4px;margin:-2px -4px}
+.migalhas a:hover{color:var(--materia-forte);text-decoration:underline}
+.migalhas a:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.migalhas svg{width:1rem;height:1rem}
+.migalhas b{color:var(--texto);font-weight:800}
+.migalha-sep{color:var(--texto-3);user-select:none}
+
+/* ---------- busca de missão ---------- */
+/* Com 18 missões a lista já tem três telas de altura. Buscar é o que
+   escala sozinho: cada conteúdo novo entra sem manutenção nenhuma. */
+.busca{position:relative;margin:0 0 var(--s-4)}
+.busca svg{position:absolute;left:var(--s-3);top:50%;transform:translateY(-50%);
+  width:1.15rem;height:1.15rem;color:var(--texto-3);pointer-events:none}
+.busca input{
+  width:100%;min-height:3rem;padding:var(--s-2) var(--s-3) var(--s-2) 2.75rem;
+  background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:999px;
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:600;
+  -webkit-appearance:none;appearance:none}
+.busca input::placeholder{color:var(--texto-3)}
+.busca input:focus{outline:none;border-color:var(--materia)}
+.busca input:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.grupo{
+  grid-column:1/-1;margin:var(--s-4) 0 0;
+  font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  color:var(--texto-2);letter-spacing:.02em}
+.grupo:first-child{margin-top:0}
+.sem-resultado{grid-column:1/-1;color:var(--texto-2);padding:var(--s-4) 0}
+[hidden]{display:none!important}
+
+/* ---------- avisos ---------- */
+/* O aviso nasce logo abaixo do cabeçalho — o JS mede e escreve --aviso-topo.
+   Antes ficava colado no topo da janela, em cima do cabeçalho, e como usava a
+   cor da matéria era azul sobre azul: 1,09:1, praticamente invisível. */
+.conquista,.achievement-pop{
+  position:fixed;left:50%;top:var(--aviso-topo,var(--s-4));
+  transform:translateX(-50%) translateY(-1.5rem) scale(.9);
+  z-index:20;background:var(--aviso);color:var(--sobre-aviso);
+  padding:var(--s-3) var(--s-5);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-md);font-weight:600;
+  box-shadow:0 var(--labio) 0 var(--aviso-fundo),
+             0 0 0 2px rgb(255 255 255 / .16),
+             0 14px 30px rgb(0 0 0 / .34);
+  opacity:0;pointer-events:none;
+  transition:opacity 180ms var(--saida),transform 340ms var(--mola);
+  max-width:min(92vw,26rem);text-align:center}
+.conquista.show,.achievement-pop.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+
+/* Fim de etapa é uma virada de página, não um recado de passagem: diz onde a
+   criança estava e para onde vai. */
+.conquista.etapa,.achievement-pop.etapa{
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);
+  display:grid;justify-items:center;gap:2px;max-width:min(94vw,25rem)}
+.conquista.etapa .aviso-t,.achievement-pop.etapa .aviso-t{
+  display:flex;align-items:center;gap:var(--s-2);white-space:nowrap;
+  font-size:var(--t-md);font-weight:700}
+.conquista.etapa .aviso-s,.achievement-pop.etapa .aviso-s{
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;opacity:.92}
+.conquista .ic-txt,.achievement-pop .ic-txt{width:1.2em;height:1.2em}
+
+/* O nó que acabou de fechar pisca ao virar verde: é o sinal de que a etapa
+   mudou, e não só o texto do aviso. */
+.node.fechou,.trail-node.fechou{animation:fechou 620ms var(--mola)}
+@keyframes fechou{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.35)}
+  60%{transform:scale(.94)}
+  to{transform:scale(1)}}
+.floater{position:absolute;right:0;top:-0.75rem;font-family:var(--display);font-size:var(--t-xl);
+  font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none;
+  animation:sobe 950ms var(--saida) forwards;z-index:5}
+.floater.bom{color:var(--certo-forte)}
+.floater.ruim{color:var(--errado-forte)}
+@keyframes sobe{from{opacity:0;transform:translateY(8px) scale(.9)}
+  25%{opacity:1;transform:translateY(-2px) scale(1.06)}
+  to{opacity:0;transform:translateY(-2rem) scale(1)}}
+.combo-pulse{animation:pulo 420ms var(--mola)}
+.shake{animation:tremor 320ms var(--saida)}
+@keyframes tremor{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+@media(max-width:44rem){
+  .wrap{padding:var(--s-3) var(--s-3) var(--s-6)}
+  header{padding:var(--s-3) var(--s-4);border-radius:var(--r)}
+  .top{align-items:flex-start}
+  .hud{width:100%}
+  .pill{flex:1;justify-content:center;padding:var(--s-2)}
+  .answers,.truefalse,.match,.match-grid{grid-template-columns:1fr}
+  .question{font-size:var(--t-xl);max-width:none}
+  .question-card{padding:var(--s-4)}
+  .hero h2,.result h2{font-size:var(--t-2xl)}
+  .summary{grid-template-columns:1fr 1fr}
+  .crossword{grid-template-columns:repeat(7,2.2rem)}
+  .cw-cell{width:2.2rem;height:2.2rem}
+  .wordsearch{grid-template-columns:repeat(8,2.4rem)}
+  .ws-cell{width:2.4rem;height:2.4rem}
+  button,.btn{width:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important}
+  button:active,.answer:active{transform:none}
+}
+
+/* ---------- estímulos ---------- */
+/* O foguinho substitui o número quando a sequência passa de três. */
+.pill.em-chamas{background:color-mix(in oklch,var(--alt-2) 70%,var(--materia-solida));
+  animation:pulsa-fogo 1.1s ease-in-out infinite}
+.pill.em-chamas .rot{opacity:.95}
+#foguinho{width:1.05rem;height:1.05rem;margin-right:2px}
+@keyframes pulsa-fogo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.festa{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.confete{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;
+  animation:cai linear forwards}
+@keyframes cai{
+  to{transform:translate(var(--desvio),105vh) rotate(var(--giro));opacity:.15}}
+@media (prefers-reduced-motion:reduce){
+  .pill.em-chamas{animation:none}
+  .confete{display:none}
+}
+
+/* ---------- sala em rede ---------- */
+.sala-escolha{display:grid;gap:var(--s-3);max-width:24rem}
+.sala-caixa{display:grid;gap:var(--s-4);max-width:32rem;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-5);box-shadow:0 var(--labio) 0 var(--risco)}
+.sala-campo{display:grid;gap:var(--s-1);font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-campo input,.sala-campo select{
+  min-height:3rem;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:700;-webkit-appearance:none}
+.sala-campo input:focus-visible,.sala-campo select:focus-visible{
+  outline:3px solid var(--materia);outline-offset:2px}
+#salaCodigo{font-family:var(--display);font-size:var(--t-2xl);letter-spacing:.35em;text-align:center}
+.sala-codigo{display:grid;gap:2px;justify-items:center;padding:var(--s-4);
+  background:var(--materia-clara);border-radius:var(--r)}
+.sala-codigo strong{font-family:var(--display);font-size:var(--t-3xl);
+  letter-spacing:.3em;color:var(--materia-forte);font-variant-numeric:tabular-nums}
+.sala-dica{margin:0;font-size:var(--t-sm);color:var(--texto-2)}
+.sala-jogadores{display:flex;flex-wrap:wrap;gap:var(--s-2);min-height:2.5rem}
+.sala-jogador{display:inline-flex;align-items:center;gap:var(--s-1);
+  background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);
+  font-family:var(--display);font-weight:600;font-size:var(--t-sm)}
+.sala-topo{display:flex;justify-content:space-between;align-items:center;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-tempo{font-family:var(--display);font-size:var(--t-2xl);color:var(--materia-forte);
+  font-variant-numeric:tabular-nums}
+.sala-tempo.urgente{color:var(--errado-solida);animation:pulsa-fogo .7s ease-in-out infinite}
+.sala-placar{display:grid;gap:var(--s-2)}
+.sala-linha{display:grid;grid-template-columns:1.5rem 1fr auto auto;gap:var(--s-3);
+  align-items:center;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);border-radius:var(--r);font-weight:700}
+.sala-linha b{font-family:var(--display)}
+.sala-linha .ganho{color:var(--certo-solida);font-variant-numeric:tabular-nums}
+.sala-linha.errou .ganho{color:var(--texto-3)}
+.sala-estado{font-family:var(--display);font-size:var(--t-xl);text-align:center;
+  padding:var(--s-5) 0}
+.sala-botoes .answer{min-height:5.5rem;justify-content:center;font-size:var(--t-xl)}
+.sala-botoes .answer .letra{width:3rem;height:3rem;font-size:var(--t-xl)}
+.sala-botoes .answer.escolhida{border-color:var(--materia);box-shadow:0 0 0 3px var(--materia-borda)}
+@media(max-width:44rem){ .sala-caixa{padding:var(--s-4)} }
+
+/* ---------- perfil ---------- */
+.perfil-btn{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;
+  border:2px solid rgba(255,255,255,.55);border-radius:999px;
+  background:var(--alt-1);color:#fff;
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.perfil-btn:hover{border-color:#fff}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"><script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script></head>
+<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-angulo-agudo" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M4 19 17 7"/><path d="M9 19a6 6 0 0 0 1.6-4"/></symbol><symbol id="i-angulo-obtuso" viewBox="0 0 24 24"><path d="M4 18h17"/><path d="M4 18 17 6"/><path d="M13 18a9 9 0 0 0-1.6-5"/></symbol><symbol id="i-angulo-reto" viewBox="0 0 24 24"><path d="M5 19h15M5 19V5"/><path d="M5 15h4v4"/></symbol><symbol id="i-aresta" viewBox="0 0 24 24"><path d="M5 18 19 6"/><circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="6" r="1.8"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-cilindro" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12a7 2.8 0 0 0 14 0V6"/></symbol><symbol id="i-concorrentes" viewBox="0 0 24 24"><path d="m4 19 16-14M4 5l16 14"/></symbol><symbol id="i-cone-solido" viewBox="0 0 24 24"><path d="M12 3 4.5 18"/><path d="M12 3 19.5 18"/><ellipse cx="12" cy="18" rx="7.5" ry="2.8"/></symbol><symbol id="i-cubo" viewBox="0 0 24 24"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5z"/><path d="m4 7.5 8 3.5 8-3.5M12 11v9"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-eixo" viewBox="0 0 24 24"><path d="M12 2v20" stroke-dasharray="3 2"/><path d="M8 7h-4v10h4z"/><path d="M16 7h4v10h-4z"/></symbol><symbol id="i-encolher" viewBox="0 0 24 24"><path d="M3.5 9H9V3.5M20.5 9H15V3.5M3.5 15H9v5.5M20.5 15H15v5.5"/></symbol><symbol id="i-esfera" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.5" ry="8.5"/></symbol><symbol id="i-expandir" viewBox="0 0 24 24"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></symbol><symbol id="i-festa" viewBox="0 0 24 24"><path d="M3 21 8 9l7 7z"/><path d="m14.5 9.5 5.5-5.5"/><circle cx="18" cy="10.5" r="1" fill="currentColor"/><circle cx="12.5" cy="4" r="1" fill="currentColor"/><circle cx="20.5" cy="15" r="1" fill="currentColor"/></symbol><symbol id="i-fogo" viewBox="0 0 24 24"><path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-4.5-4-6.5-3-11-3 1.5-5.5 4.5-5.5 7.5 0 0-1-.8-1.5-2.5-1.3 1.8-2 3.8-2 6A5.5 5.5 0 0 0 12 21z"/></symbol><symbol id="i-hexagono" viewBox="0 0 24 24"><path d="m12 3 7.8 4.5v9L12 21l-7.8-4.5v-9z"/></symbol><symbol id="i-losango" viewBox="0 0 24 24"><path d="M12 3 21 12l-9 9-9-9z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-malha" viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18" opacity=".85"/></symbol><symbol id="i-mapa" viewBox="0 0 24 24"><path d="m3 6 6-2.5 6 2.5 6-2.5v15L15 21l-6-2.5L3 21z"/><path d="M9 3.5v15M15 6v15"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-octogono" viewBox="0 0 24 24"><path d="M8.5 3.5h7L20.5 8.5v7l-5 5h-7l-5-5v-7z"/></symbol><symbol id="i-palmas" viewBox="0 0 24 24"><path d="M11 21a5 5 0 0 1-5-5V9.5a1.5 1.5 0 0 1 3 0V13"/><path d="M13 21a5 5 0 0 0 5-5V9.5a1.5 1.5 0 0 0-3 0V13"/><path d="M12 2v3M7.5 3.5 9 6M16.5 3.5 15 6"/></symbol><symbol id="i-paralelas" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/></symbol><symbol id="i-pentagono" viewBox="0 0 24 24"><path d="m12 3 9 6.6-3.4 10.4H6.4L3 9.6z"/></symbol><symbol id="i-perpendiculares" viewBox="0 0 24 24"><path d="M4 18h16M12 3v15"/><path d="M12 15h3v3"/></symbol><symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1a5.5 5.5 0 0 1 11 0v1"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17 14.5a5.5 5.5 0 0 1 4 5.3V20"/></symbol><symbol id="i-piramide" viewBox="0 0 24 24"><path d="M12 3 3 19h18z"/><path d="M12 3v16M3 19l9-4 9 4" opacity=".8"/></symbol><symbol id="i-planificacao" viewBox="0 0 24 24"><path d="M9 3h6v6h6v6H9v6H3V9h6z" opacity=".9"/><path d="M9 9h6v6H9z"/></symbol><symbol id="i-prisma" viewBox="0 0 24 24"><path d="M3 9v7l6 4 12-4V9l-6-4z"/><path d="m3 9 6 4 12-4M9 13v7"/></symbol><symbol id="i-quadrado" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="1"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-reta" viewBox="0 0 24 24"><path d="M3 12h18"/><path d="m6 9-3 3 3 3M18 9l3 3-3 3"/></symbol><symbol id="i-retangulo" viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="19" height="11" rx="1"/></symbol><symbol id="i-segmento" viewBox="0 0 24 24"><path d="M5 12h14"/><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol><symbol id="i-simetria" viewBox="0 0 24 24"><path d="M12 3v18" stroke-dasharray="3 2"/><path d="M10 6 4 12l6 6zM14 6l6 6-6 6"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></symbol><symbol id="i-trapezio" viewBox="0 0 24 24"><path d="M6.5 5.5h11l3.5 13H3z"/></symbol><symbol id="i-triangulo" viewBox="0 0 24 24"><path d="M12 4 21 19H3z"/></symbol><symbol id="i-triangulo-retangulo" viewBox="0 0 24 24"><path d="M5 4v15h14z"/><path d="M5 16h3v3"/></symbol><symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2"/><path d="m8 3 4 3 4-3"/><path d="M9 21.5h6"/></symbol><symbol id="i-vertice" viewBox="0 0 24 24"><path d="m5 19 7-14 7 14"/><circle cx="12" cy="5" r="2.2" fill="currentColor"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
+<a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casa"/></svg>Jogos</a>
+<span class="migalha-sep" aria-hidden="true">/</span>
+<a href="#inicio">Matemática</a>
+<span id="migalhaAqui"></span>
+</nav>
+<div id="festaBox" class="festa" aria-hidden="true"></div>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>Régua e Compasso</h1><div class="subtitle">Matemática — geometria plana e espacial</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
+<section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Geometria do 4º ano</h2><p>Retas e ângulos, polígonos, simetria e os sólidos geométricos.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar a lição</button><button class="gold" onclick="openCategories()">Ir aos desafios</button><button type="button" class="ghost sala-abrir" onclick="irPara('sala')"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg> Jogar com outras pessoas</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section><section id="lesson" class="screen"><div id="lesson1" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 1 de 5</span><h2>Retas, segmentos e ângulos</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-reta"/></svg></div><div><b>Reta</b><span>Não tem começo nem fim: segue nos dois sentidos, para sempre.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-segmento"/></svg></div><div><b>Segmento</b><span>O pedaço entre dois pontos. É o que dá para medir com a régua.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-reta"/></svg></div><div><b>Semirreta</b><span>Começa num ponto e segue sem fim para um lado só.</span></div></div></div><div class="example">O lado de um polígono é sempre um <b>segmento</b>: tem as duas pontas marcadas. Por isso dá para contar quantos lados a figura tem.</div><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-angulo-agudo"/></svg></div><div><b>Agudo</b><span>Menos de 90°. A ponta fina de uma fatia de pizza.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-angulo-reto"/></svg></div><div><b>Reto</b><span>Exatamente 90°. O canto de uma folha de caderno.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-angulo-obtuso"/></svg></div><div><b>Obtuso</b><span>Entre 90° e 180°. Mais aberto que o canto da folha.</span></div></div></div><div class="example">O ângulo de <b>180°</b> chama-se <b>raso</b>: os dois lados formam uma reta.</div><div class="example warning">Para saber se um ângulo é reto, encoste o canto de uma folha nele. Se encaixar certinho, é reto.</div><div class="lesson-nav"><button class="primary" onclick="openLesson('lesson2')">Continuar →</button></div></div></div><div id="lesson2" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 2 de 5</span><h2>Como duas retas se encontram</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-paralelas"/></svg></div><div><b>Paralelas</b><span>Nunca se encontram. A distância entre elas não muda.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-concorrentes"/></svg></div><div><b>Concorrentes</b><span>Cruzam-se: têm um ponto em comum.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-perpendiculares"/></svg></div><div><b>Perpendiculares</b><span>Cruzam-se formando quatro ângulos de 90°.</span></div></div></div><div class="example"><b>Perpendicular é um tipo de concorrente</b>, não uma terceira coisa. Quando as concorrentes formam ângulos diferentes de 90°, chamam-se <b>oblíquas</b>.</div><div class="example">Trilhos de trem são paralelos. O cruzamento de duas ruas em cruz é perpendicular. Uma rua que corta outra de viés é oblíqua.</div><div class="lesson-nav"><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button><button class="primary" onclick="openLesson('lesson3')">Continuar →</button></div></div></div><div id="lesson3" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 3 de 5</span><h2>Polígonos, triângulos e quadriláteros</h2><div class="example"><b>Polígono</b> é figura plana, fechada e feita só de segmentos de reta. O círculo não é polígono: é curva.</div><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-triangulo"/></svg></div><div><b>3 lados</b><span>Triângulo</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-quadrado"/></svg></div><div><b>4 lados</b><span>Quadrilátero</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pentagono"/></svg></div><div><b>5 lados</b><span>Pentágono</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-hexagono"/></svg></div><div><b>6 lados</b><span>Hexágono</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-octogono"/></svg></div><div><b>8 lados</b><span>Octógono</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-octogono"/></svg></div><div><b>10 lados</b><span>Decágono</span></div></div></div><div class="example">Os <b>triângulos</b> se classificam pelos lados — equilátero (três iguais), isósceles (dois iguais), escaleno (três diferentes) — ou pelo ângulo: <b>retângulo</b> é o que tem um ângulo de 90°.</div><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-quadrado"/></svg></div><div><b>Quadrado</b><span>Quatro lados iguais e quatro ângulos retos.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-retangulo"/></svg></div><div><b>Retângulo</b><span>Quatro ângulos retos, lados iguais dois a dois.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-losango"/></svg></div><div><b>Losango</b><span>Quatro lados iguais, mas os cantos não são retos.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-trapezio"/></svg></div><div><b>Trapézio</b><span>Só um par de lados paralelos.</span></div></div></div><div class="example warning">Todo <b>quadrado é também um retângulo</b>: tem os quatro ângulos retos. O contrário não vale.</div><div class="lesson-nav"><button class="secondary" onclick="openLesson('lesson2')">← Voltar</button><button class="primary" onclick="openLesson('lesson4')">Continuar →</button></div></div></div><div id="lesson4" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 4 de 5</span><h2>Simetria</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-eixo"/></svg></div><div><b>Eixo de simetria</b><span>A linha que divide a figura em duas partes que se encaixam.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-simetria"/></svg></div><div><b>Figuras simétricas</b><span>Uma é o reflexo da outra, à mesma distância do eixo.</span></div></div></div><div class="example">Para testar: dobre pelo eixo. Se um lado cobrir o outro exatamente, há simetria.</div><div class="example">O quadrado tem <b>quatro</b> eixos; o retângulo que não é quadrado tem <b>dois</b>; o círculo tem <b>infinitos</b>.</div><div class="example warning">Nem toda figura tem eixo de simetria. Um triângulo escaleno não tem nenhum.</div><div class="lesson-nav"><button class="secondary" onclick="openLesson('lesson3')">← Voltar</button><button class="primary" onclick="openLesson('lesson5')">Continuar →</button></div></div></div><div id="lesson5" class="lesson-part"><div class="lesson-card"><span class="lesson-tag">Parte 5 de 5</span><h2>Sólidos geométricos</h2><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-vertice"/></svg></div><div><b>Vértice</b><span>O canto, onde as arestas se encontram.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-aresta"/></svg></div><div><b>Aresta</b><span>A linha onde duas faces se encontram.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planificacao"/></svg></div><div><b>Face</b><span>Cada superfície plana do sólido.</span></div></div></div><div class="example"><b>Poliedros</b> têm só faces planas: cubo, paralelepípedo, prisma e pirâmide. <b>Corpos redondos</b> têm superfície curva: cilindro, cone e esfera.</div><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-cubo"/></svg></div><div><b>Cubo</b><span>6 faces quadradas, 12 arestas, 8 vértices.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-piramide"/></svg></div><div><b>Pirâmide</b><span>Uma base e faces triangulares que sobem a um ponto.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-prisma"/></svg></div><div><b>Prisma</b><span>Duas bases iguais ligadas por retângulos.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-cilindro"/></svg></div><div><b>Cilindro</b><span>Duas bases circulares e lateral curva.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-cone-solido"/></svg></div><div><b>Cone</b><span>Base circular e uma ponta.</span></div></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-esfera"/></svg></div><div><b>Esfera</b><span>Toda curva: sem face, sem aresta, sem vértice.</span></div></div></div><div class="example">A <b>planificação</b> é o sólido aberto e esticado no plano. A do cubo são seis quadrados; a do cilindro, dois círculos e um retângulo.</div><div class="example">Na malha quadriculada, um trajeto se descreve contando quadradinhos e indicando o sentido: <b>3 →</b> depois <b>2 ↓</b>.</div><div class="lesson-nav"><button class="secondary" onclick="openLesson('lesson4')">← Voltar</button><button class="gold" onclick="openCategories()">Ir aos desafios →</button></div></div></div></section><section id="categories" class="screen"><div class="lesson-card"><span class="lesson-tag">Escolha o conteúdo</span><div class="mode-toggle"><button class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">Treino <small>sem vidas</small></button><button class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">Desafio <small>5 vidas</small></button></div><div class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="buscaMissao" oninput="filtrarMissoes()" autocomplete="off" placeholder="Buscar assunto..." aria-label="Buscar missão" aria-controls="gradeMissoes"></div><h2 style="margin-top:20px">Trilhas</h2><div class="trail-grid"><button class="trail-card recommended" data-trail="planas" onclick="startTrail('planas')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-reta"/></svg><strong>Figuras Planas<span class="trail-done">✓ concluída</span></strong><small>Retas e segmentos → Ângulos → Paralelas e concorrentes → Polígonos e revisão.</small></button><button class="trail-card" data-trail="formas" onclick="startTrail('formas')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-quadrado"/></svg><strong>Triângulos e Quadriláteros<span class="trail-done">✓ concluída</span></strong><small>Triângulos → Quadriláteros → Simetria e revisão.</small></button><button class="trail-card" data-trail="espaciais" onclick="startTrail('espaciais')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-cubo"/></svg><strong>Do Plano ao Espaço<span class="trail-done">✓ concluída</span></strong><small>Sólidos geométricos → Planificações e sólidos do dia a dia → Trajetos na malha e revisão.</small></button></div><h2 style="margin-top:24px">Ou escolha um conteúdo</h2><div class="category-grid" id="gradeMissoes">
+<h3 class="grupo">Atalhos</h3><button class="category-card" data-cat="review" onclick="startCategory('review')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-remendo"/></svg><strong>Revisar meus erros</strong><small>Só o que você vem errando, para atacar o ponto fraco.</small><span class="review-count"></span></button><button class="category-card" data-cat="all" onclick="startCategory('all')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-dado"/></svg><strong>Tudo misturado</strong><small>Todos os conteúdos em uma única partida.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">Figuras planas</h3><button class="category-card" data-cat="retas" onclick="startCategory('retas')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-segmento"/></svg><strong>Retas e segmentos</strong><small>Reta, semirreta e segmento; contar e nomear os lados.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="angulos" onclick="startCategory('angulos')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-angulo-reto"/></svg><strong>Ângulos</strong><small>Agudo, reto, obtuso e raso — e onde cada um aparece.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="posicao" onclick="startCategory('posicao')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-paralelas"/></svg><strong>Paralelas e concorrentes</strong><small>Paralelas, concorrentes, perpendiculares e oblíquas.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="poligonos" onclick="startCategory('poligonos')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-hexagono"/></svg><strong>Polígonos</strong><small>Do triângulo ao decágono, pelo número de lados.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">Triângulos e quadriláteros</h3><button class="category-card" data-cat="triangulos" onclick="startCategory('triangulos')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-triangulo"/></svg><strong>Triângulos</strong><small>Equilátero, isósceles, escaleno e retângulo.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="quadrilateros" onclick="startCategory('quadrilateros')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-losango"/></svg><strong>Quadriláteros</strong><small>Quadrado, retângulo, losango e trapézio.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="simetria" onclick="startCategory('simetria')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-simetria"/></svg><strong>Simetria</strong><small>Eixo de simetria e figuras espelhadas.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">Do plano ao espaço</h3><button class="category-card" data-cat="solidos" onclick="startCategory('solidos')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-cubo"/></svg><strong>Sólidos geométricos</strong><small>Faces, arestas e vértices; poliedro ou corpo redondo.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="planificacoes" onclick="startCategory('planificacoes')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planificacao"/></svg><strong>Planificações e sólidos do dia a dia</strong><small>O sólido aberto no plano, e as formas do dia a dia.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="malha" onclick="startCategory('malha')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-malha"/></svg><strong>Trajetos na malha</strong><small>Descrever e seguir um trajeto na malha quadriculada.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<p id="semResultado" class="sem-resultado" hidden>Nenhuma missão com esse nome.</p>
+</div><div style="margin-top:18px"><button class="secondary" onclick="goHome()">← Voltar</button></div></div></section>
+<section id="quiz" class="screen"><div class="quiz-top"><button class="exit-btn" onclick="sairDaPartida()">Sair da missão</button></div><div class="question-card"><div class="progress-panel"><div class="progress-head"><span id="progressText">Questão 1</span><span id="progressPct">0%</span></div><div class="track"><div id="fill" class="fill"></div></div><div id="trailMap" class="trail-map"></div></div><div id="stage" class="stage"></div><div id="fonte" class="fonte" style="display:none"></div><div id="illustration" class="illustration"></div><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="special" class="special"></div><div id="feedback" class="feedback" role="status" aria-live="polite"></div><div class="controls"><button id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próxima →</button></div></div></section>
+
+<section id="sala" class="screen">
+  <div class="hero">
+    <h2>Jogar com outras pessoas</h2>
+    <p>Um aparelho vira o telão e mostra as perguntas. Os outros entram pelo
+    código e respondem no próprio celular. <b>Este modo precisa de internet.</b></p>
+  </div>
+
+  <div id="salaEscolha" class="sala-escolha">
+    <button type="button" class="primary" onclick="criarSala()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tv"/></svg> Ser o telão</button>
+    <button type="button" class="ghost" onclick="mostrarEntrada()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-celular"/></svg> Entrar numa sala</button>
+    <button type="button" class="ghost" onclick="goHome()">Voltar ao início</button>
+  </div>
+
+  <div id="salaEntrada" class="sala-caixa" hidden>
+    <label class="sala-campo"><span>Código da sala</span>
+      <input id="salaCodigo" type="text" inputmode="numeric" maxlength="4"
+             autocomplete="off" placeholder="0000"></label>
+    <label class="sala-campo"><span>Seu nome</span>
+      <input id="salaNome" type="text" maxlength="12" autocomplete="off"
+             placeholder="Anne"></label>
+    <button type="button" class="primary" onclick="entrarSala()">Entrar</button>
+    <button type="button" class="ghost" onclick="voltarEscolha()">Voltar</button>
+  </div>
+
+  <div id="salaAnfitriao" class="sala-caixa" hidden>
+    <div class="sala-codigo"><span class="rot">Código da sala</span>
+      <strong id="salaCodigoTela">----</strong></div>
+    <p id="salaDica" class="sala-dica">Abra o mesmo endereço no celular de cada
+    jogador, toque em <b>Entrar numa sala</b> e digite o código.<br>
+    <b>Melhor com todos no mesmo Wi-Fi.</b> Em redes diferentes costuma
+    funcionar, mas em dados móveis pode não conectar.<br>
+    O telão não responde às perguntas: é preciso pelo menos um jogador para
+    começar.</p>
+    <div id="salaJogadores" class="sala-jogadores"></div>
+    <label class="sala-campo"><span>Missão</span>
+      <select id="salaMissao"></select></label>
+    <button type="button" id="salaComecar" class="primary" onclick="comecarSala()" disabled>
+      Esperando jogadores...</button>
+    <button type="button" class="ghost" onclick="fecharSala()">Encerrar sala</button>
+  </div>
+
+  <div id="salaJogo" class="sala-caixa" hidden>
+    <div class="sala-topo"><span id="salaProgresso"></span>
+      <span id="salaTempo" class="sala-tempo">20</span></div>
+    <div id="salaPergunta" class="question"></div>
+    <div id="salaOpcoes" class="answers"></div>
+    <div id="salaPlacar" class="sala-placar"></div>
+  </div>
+
+  <div id="salaJogador" class="sala-caixa" hidden>
+    <div id="salaEstado" class="sala-estado">Esperando o telão começar...</div>
+    <div id="salaBotoes" class="answers sala-botoes"></div>
+    <div id="salaMeuPlacar" class="sala-placar"></div>
+  </div>
+</section>
+<section id="end" class="screen"><div class="result"><div class="trophy"></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
+</main></div></div>
+<script>
+
+/* ---------- perfis ---------- */
+/* A lista de perfis é a mesma nos quatro jogos e na página inicial. Cada
+   perfil tem a sua chave de progresso: trocar de aluno não apaga o do outro. */
+const PERFIS_CHAVE = "jogos_perfis_v1";
+const PERFIL_ATUAL = "jogos_perfil_atual";
+const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
+
+function lerPerfis(){
+  try{ return JSON.parse(localStorage.getItem(PERFIS_CHAVE)) || []; }
+  catch(e){ return []; }
+}
+function gravarPerfis(lista){
+  try{ localStorage.setItem(PERFIS_CHAVE, JSON.stringify(lista)); }catch(e){}
+}
+function perfilAtual(){
+  const lista = lerPerfis();
+  if(!lista.length) return null;
+  let id;
+  try{ id = localStorage.getItem(PERFIL_ATUAL); }catch(e){}
+  return lista.find(p => p.id === id) || lista[0];
+}
+function trocarPerfil(id){
+  try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){}
+}
+function criarPerfil(nome){
+  const lista = lerPerfis();
+  const p = {id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+             nome: String(nome).trim().slice(0, 16) || "Aluno",
+             cor: CORES_PERFIL[lista.length % CORES_PERFIL.length],
+             criado: Date.now()};
+  lista.push(p); gravarPerfis(lista); trocarPerfil(p.id);
+  return p;
+}
+function inicialDe(nome){ return (nome || "?").trim().charAt(0).toUpperCase(); }
+
+/* A chave de progresso passa a levar o perfil. Sem perfil escolhido, o jogo
+   usa a chave antiga — é o progresso que já existia neste aparelho. */
+function chaveProgresso(base){
+  const p = perfilAtual();
+  return p ? base + ":" + p.id : base;
+}
+
+/* Primeira vez com perfis: o que já estava salvo vira o perfil inicial, em
+   vez de a criança perder tudo o que fez. */
+function migrarProgresso(base){
+  try{
+    const antigo = localStorage.getItem(base);
+    if(!antigo) return;
+    if(!lerPerfis().length) criarPerfil("Aluno");
+    const nova = chaveProgresso(base);
+    if(!localStorage.getItem(nova)) localStorage.setItem(nova, antigo);
+  }catch(e){}
+}
+const FORMAS=["A","B","C","D"];
+const NOMES_FORMA=FORMAS;
+const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
+
+const bank={
+retas:[
+{ic:"reta",src:{"t": "livro", "d": "p.183"},q:"O que diferencia uma reta de um segmento de reta?",c:"A reta não tem começo nem fim",d:["A reta é curva e o segmento é esticado", "A reta é sempre maior que um segmento", "A reta fica deitada e o segmento em pé"],e:"A reta segue sem parar nos dois sentidos. O segmento é o pedaço entre dois pontos."},
+{ic:"segmento",src:{"t": "livro", "d": "p.183"},q:"Como se nomeia o segmento que vai do ponto A ao ponto B?",c:"AB",d:["A2B", "A mais B", "Segmento 1"],e:"Escreve-se AB, com uma barra em cima, usando as letras das duas pontas."},
+{ic:"quadrado",src:{"t": "folha", "d": "q1"},q:"Quantos segmentos de reta formam um quadrilátero?",c:"Quatro",d:["Três", "Cinco", "Seis"],e:"Cada lado é um segmento, e o quadrilátero tem quatro lados."},
+{ic:"pentagono",src:{"t": "folha", "d": "q1"},q:"Quantos segmentos de reta formam um pentágono?",c:"Cinco",d:["Quatro", "Seis", "Sete"],e:"Pentágono vem do grego penta, cinco: cinco lados, cinco segmentos."},
+{ic:"octogono",src:{"t": "folha", "d": "q1"},q:"Quantos segmentos de reta formam um octógono?",c:"Oito",d:["Seis", "Dez", "Sete"],e:"Octógono tem oito lados — mesma raiz de outubro, que já foi o oitavo mês."},
+{ic:"reta",src:{"t": "livro", "d": "p.183"},q:"Uma semirreta é a parte da reta que...",c:"começa num ponto e segue sem fim",d:["termina em dois pontos marcados", "não tem começo nem fim", "muda de direção no meio do caminho"],e:"A semirreta tem origem mas não tem fim: é meia reta."},
+{ic:"reta",src:{"t": "livro", "d": "p.183"},t:"tf",q:"Uma reta pode ser medida com a régua do começo ao fim.",c:false,e:"Falso: a reta não termina, então não há o que medir. Mede-se o segmento."},
+{ic:"hexagono",src:{"t": "folha", "d": "q1"},t:"tf",q:"Um hexágono tem seis segmentos de reta.",c:true,e:"Verdadeiro: seis lados, seis segmentos."},
+{ic:"segmento",src:{"t": "livro", "d": "p.183"},t:"text",q:"Como se chama o pedaço de reta que fica entre dois pontos?",valid:["segmento", "segmento de reta", "o segmento"],ph:"Digite o nome...",e:"Segmento de reta: tem começo e fim marcados por dois pontos."}],
+angulos:[
+{ic:"angulo-reto",src:{"t": "livro", "d": "p.188"},q:"Quanto mede um ângulo reto?",c:"90 graus",d:["45 graus", "180 graus", "60 graus"],e:"O ângulo reto mede 90°, como o canto de uma folha de papel."},
+{ic:"angulo-agudo",src:{"t": "livro", "d": "p.188"},q:"Um ângulo agudo é aquele que...",c:"mede menos que o ângulo reto",d:["mede mais que o ângulo reto", "mede o mesmo que o reto", "tem os dois lados curvados"],e:"Agudo é menor que 90°, como a ponta de uma fatia fina de pizza."},
+{ic:"angulo-obtuso",src:{"t": "livro", "d": "p.188"},q:"Um ângulo obtuso é aquele que...",c:"mede mais que o ângulo reto",d:["mede menos que o ângulo reto", "mede exatamente 90 graus", "tem os dois lados iguais"],e:"Obtuso fica entre 90° e 180°: mais aberto que o canto de uma folha."},
+{ic:"angulo-reto",q:"Qual destes objetos tem ângulo reto nos cantos?",c:"A folha de caderno",d:["A bola de futebol", "O prato de sopa", "O funil de cozinha"],e:"Folha, porta, janela e mesa: os cantos retos estão em toda parte."},
+{ic:"reta",src:{"t": "livro", "d": "p.188"},q:"Um ângulo de 180 graus é chamado de...",c:"raso",d:["reto", "agudo", "curvo"],e:"No ângulo raso os dois lados formam uma reta."},
+{ic:"angulo-obtuso",src:{"t": "folha", "d": "q2"},q:"Um ângulo de 120 graus é classificado como...",c:"obtuso",d:["agudo", "reto", "raso"],e:"120° passa de 90° e não chega a 180°: é obtuso."},
+{ic:"angulo-agudo",src:{"t": "folha", "d": "q2"},q:"Um ângulo de 45 graus é classificado como...",c:"agudo",d:["obtuso", "reto", "raso"],e:"45° é metade do ângulo reto, portanto agudo."},
+{ic:"angulo-agudo",src:{"t": "livro", "d": "p.188"},t:"tf",q:"Todo ângulo menor que 90 graus é chamado de agudo.",c:true,e:"Verdadeiro. Abaixo de 90° é agudo; acima, obtuso."},
+{ic:"angulo-reto",t:"tf",q:"O canto de uma porta forma um ângulo obtuso.",c:false,e:"Falso: o canto da porta é um ângulo reto, de 90°."},
+{ic:"angulo-reto",src:{"t": "livro", "d": "p.188"},t:"match",q:"Ligue cada ângulo à sua medida.",pairs:[["Agudo", "Menos de 90 graus"], ["Reto", "Exatamente 90 graus"], ["Obtuso", "Entre 90 e 180 graus"], ["Raso", "Exatamente 180 graus"]],e:"O ângulo raso é uma reta: os lados apontam para sentidos opostos."},
+{ic:"angulo-reto",src:{"t": "livro", "d": "p.188"},t:"text",q:"Como se chama o ângulo que mede exatamente 90 graus?",valid:["reto", "angulo reto", "ângulo reto", "o reto"],ph:"Digite o nome...",e:"Ângulo reto — o canto quadrado."}],
+posicao:[
+{ic:"paralelas",src:{"t": "livro", "d": "p.190"},q:"Duas retas paralelas são aquelas que...",c:"nunca se encontram, por mais que sigam",d:["cruzam-se formando quatro ângulos", "encontram-se em um único ponto", "mudam de direção no meio do caminho"],e:"Paralelas mantêm sempre a mesma distância entre si — como os trilhos do trem."},
+{ic:"concorrentes",src:{"t": "livro", "d": "p.190"},q:"Duas retas concorrentes são aquelas que...",c:"têm um ponto em comum",d:["mantêm a mesma distância sempre", "estão sempre na posição vertical", "formam uma curva no encontro"],e:"Concorrentes se cruzam, e o cruzamento é o ponto em comum."},
+{ic:"perpendiculares",src:{"t": "livro", "d": "p.190"},q:"Retas perpendiculares são concorrentes que formam...",c:"ângulo de 90 graus",d:["ângulo de 45 graus", "ângulo de 180 graus", "ângulo de 60 graus"],e:"Perpendicular é o caso especial da concorrente: o cruzamento dá ângulo reto."},
+{ic:"concorrentes",src:{"t": "folha", "d": "q3"},q:"Retas concorrentes que formam ângulos diferentes de 90 graus são...",c:"oblíquas",d:["paralelas", "coincidentes", "perpendiculares"],e:"Oblíquas cruzam-se de viés, formando ângulos agudos e obtusos."},
+{ic:"mapa",src:{"t": "folha", "d": "q5"},q:"Num mapa, duas ruas que se cruzam formando uma cruz são...",c:"perpendiculares",d:["paralelas", "oblíquas", "concorrentes oblíquas"],e:"Cruzamento em cruz significa ângulo reto: as ruas são perpendiculares."},
+{ic:"paralelas",src:{"t": "folha", "d": "q5"},q:"Duas ruas que seguem lado a lado sem nunca se cruzar são...",c:"paralelas",d:["perpendiculares", "concorrentes", "oblíquas"],e:"Lado a lado, à mesma distância, sem cruzar: paralelas."},
+{ic:"paralelas",src:{"t": "livro", "d": "p.190"},t:"tf",q:"Retas paralelas se encontram quando são bem compridas.",c:false,e:"Falso: por mais que sigam, a distância entre elas não muda."},
+{ic:"perpendiculares",t:"tf",q:"Toda reta perpendicular é também concorrente.",c:true,e:"Verdadeiro: ela cruza a outra, e ainda por cima formando 90°."},
+{ic:"paralelas",src:{"t": "folha", "d": "q4"},t:"match",q:"Ligue cada tipo de reta à sua característica.",pairs:[["Paralelas", "Mantêm a mesma distância entre si"], ["Concorrentes", "Têm um ponto em comum"], ["Perpendiculares", "Cruzam-se formando 90 graus"]],e:"Perpendicular é um tipo de concorrente, não algo à parte."}],
+poligonos:[
+{ic:"triangulo",src:{"t": "folha", "d": "q6"},q:"Um polígono de 3 lados chama-se...",c:"triângulo",d:["quadrilátero", "pentágono", "hexágono"],e:"Tri quer dizer três: três lados e três ângulos."},
+{ic:"quadrado",src:{"t": "folha", "d": "q6"},q:"Um polígono de 4 lados chama-se...",c:"quadrilátero",d:["triângulo", "pentágono", "octógono"],e:"Quadrilátero é o nome geral: quadrado, retângulo e losango são todos quadriláteros."},
+{ic:"pentagono",src:{"t": "folha", "d": "q6"},q:"Um polígono de 5 lados chama-se...",c:"pentágono",d:["hexágono", "quadrilátero", "decágono"],e:"Penta é cinco em grego, como no Pentágono, o prédio de cinco lados."},
+{ic:"hexagono",src:{"t": "folha", "d": "q6"},q:"Um polígono de 6 lados chama-se...",c:"hexágono",d:["pentágono", "octógono", "triângulo"],e:"Hexa é seis. O favo de mel é feito de hexágonos."},
+{ic:"octogono",src:{"t": "folha", "d": "q6"},q:"Um polígono de 8 lados chama-se...",c:"octógono",d:["hexágono", "decágono", "pentágono"],e:"Octo é oito, como no polvo, que tem oito braços."},
+{ic:"octogono",src:{"t": "folha", "d": "q6"},q:"Um polígono de 10 lados chama-se...",c:"decágono",d:["octógono", "hexágono", "pentágono"],e:"Deca é dez, como na década, que tem dez anos."},
+{ic:"triangulo",src:{"t": "livro", "d": "p.194"},q:"O que todo polígono tem em comum?",c:"É fechado e feito só de segmentos de reta",d:["Tem exatamente quatro lados iguais", "Tem pelo menos um lado curvo", "Cabe sempre dentro de um quadrado"],e:"Polígono é figura plana fechada, com lados retos. Círculo não é polígono."},
+{ic:"esfera",src:{"t": "livro", "d": "p.194"},t:"tf",q:"O círculo é um polígono.",c:false,e:"Falso: polígono tem lados retos, e o círculo é uma curva só."},
+{ic:"hexagono",t:"tf",q:"Um hexágono tem o mesmo número de lados e de ângulos.",c:true,e:"Verdadeiro: em qualquer polígono, o número de lados é igual ao de ângulos."},
+{ic:"pentagono",src:{"t": "folha", "d": "q6"},t:"match",q:"Ligue cada polígono ao número de lados.",pairs:[["Triângulo", "3 lados"], ["Quadrilátero", "4 lados"], ["Pentágono", "5 lados"], ["Hexágono", "6 lados"], ["Octógono", "8 lados"], ["Decágono", "10 lados"]],e:"O prefixo grego conta os lados: tri, tetra, penta, hexa, octo, deca."},
+{ic:"pentagono",src:{"t": "folha", "d": "q6"},t:"text",q:"Como se chama o polígono de cinco lados?",valid:["pentagono", "pentágono", "o pentagono", "o pentágono"],ph:"Digite o nome...",e:"Pentágono: penta, cinco."}],
+triangulos:[
+{ic:"triangulo",src:{"t": "livro", "d": "p.198"},q:"O triângulo equilátero tem...",c:"os três lados do mesmo tamanho",d:["dois lados iguais e um diferente", "os três lados de tamanhos diferentes", "um ângulo de noventa graus"],e:"Equi quer dizer igual: três lados iguais e três ângulos iguais."},
+{ic:"triangulo",src:{"t": "livro", "d": "p.198"},q:"O triângulo isósceles tem...",c:"dois lados do mesmo tamanho",d:["os três lados do mesmo tamanho", "os três lados de tamanhos diferentes", "todos os ângulos de noventa graus"],e:"Isósceles: dois lados iguais, e os ângulos da base também são iguais."},
+{ic:"triangulo",src:{"t": "livro", "d": "p.198"},q:"O triângulo escaleno tem...",c:"os três lados de tamanhos diferentes",d:["os três lados do mesmo tamanho", "dois lados do mesmo tamanho", "dois ângulos retos"],e:"Escaleno é o triângulo sem nenhum lado igual a outro."},
+{ic:"triangulo-retangulo",src:{"t": "folha", "d": "q7"},q:"O triângulo retângulo é aquele que tem...",c:"um ângulo reto",d:["três ângulos retos", "todos os lados iguais", "dois ângulos obtusos"],e:"Um ângulo de 90° e mais dois agudos. O nome vem do ângulo, não dos lados."},
+{ic:"triangulo",t:"tf",q:"Um triângulo pode ter dois ângulos retos.",c:false,e:"Falso: dois ângulos de 90° já somam 180°, e não sobraria nada para o terceiro."},
+{ic:"triangulo",t:"tf",q:"Todo triângulo equilátero também é isósceles.",c:true,e:"Verdadeiro: se os três lados são iguais, dois deles também são."},
+{ic:"triangulo",src:{"t": "livro", "d": "p.198"},t:"match",q:"Ligue cada triângulo à sua característica.",pairs:[["Equilátero", "Três lados iguais"], ["Isósceles", "Dois lados iguais"], ["Escaleno", "Três lados diferentes"], ["Retângulo", "Um ângulo de 90 graus"]],e:"Os três primeiros olham para os lados; o retângulo olha para o ângulo."},
+{ic:"triangulo",src:{"t": "livro", "d": "p.198"},t:"text",q:"Como se chama o triângulo de três lados iguais?",valid:["equilatero", "equilátero", "triangulo equilatero", "triângulo equilátero"],ph:"Digite o nome...",e:"Equilátero: equi, igual."}],
+quadrilateros:[
+{ic:"quadrado",src:{"t": "livro", "d": "p.202"},q:"O quadrado é o quadrilátero que tem...",c:"quatro lados iguais e quatro ângulos retos",d:["quatro lados iguais e nenhum ângulo reto", "dois lados iguais e dois diferentes", "quatro ângulos retos e lados de dois tamanhos"],e:"Quadrado: tudo igual, e os quatro cantos retos."},
+{ic:"retangulo",src:{"t": "livro", "d": "p.202"},q:"O retângulo é o quadrilátero que tem...",c:"quatro ângulos retos e lados iguais dois a dois",d:["quatro lados iguais e quatro ângulos retos", "nenhum ângulo reto e lados iguais", "três lados iguais e um diferente"],e:"Retângulo tem os quatro cantos retos, mas comprimento e largura podem diferir."},
+{ic:"losango",src:{"t": "folha", "d": "q7"},q:"O losango é o quadrilátero que tem...",c:"quatro lados iguais e cantos que não são retos",d:["quatro ângulos retos e lados diferentes", "apenas dois lados paralelos", "três lados iguais e um bem maior"],e:"Losango é o quadrado 'inclinado': lados iguais, mas cantos agudos e obtusos."},
+{ic:"trapezio",src:{"t": "folha", "d": "q7"},q:"O trapézio é o quadrilátero que tem...",c:"apenas um par de lados paralelos",d:["os quatro lados paralelos dois a dois", "quatro lados exatamente iguais", "quatro ângulos retos nos cantos"],e:"No trapézio só um par de lados é paralelo; nos outros quadriláteros, dois pares."},
+{ic:"quadrado",t:"tf",q:"Todo quadrado também é um retângulo.",c:true,e:"Verdadeiro: tem os quatro ângulos retos, que é o que define o retângulo."},
+{ic:"trapezio",t:"tf",q:"O trapézio tem os quatro lados do mesmo tamanho.",c:false,e:"Falso: isso é o losango. No trapézio só um par de lados é paralelo."},
+{ic:"losango",src:{"t": "livro", "d": "p.202"},t:"match",q:"Ligue cada quadrilátero à sua marca.",pairs:[["Quadrado", "Lados iguais e cantos retos"], ["Retângulo", "Cantos retos, lados dois a dois"], ["Losango", "Lados iguais, cantos não retos"], ["Trapézio", "Só um par de lados paralelos"]],e:"Todos têm quatro lados; o que muda são lados iguais e ângulos retos."},
+{ic:"losango",src:{"t": "folha", "d": "q7"},t:"text",q:"Qual quadrilátero tem os quatro lados iguais mas nenhum ângulo reto?",valid:["losango", "o losango"],ph:"Digite o nome...",e:"Losango — o quadrado inclinado."}],
+simetria:[
+{ic:"simetria",src:{"t": "livro", "d": "p.206"},q:"Uma figura tem eixo de simetria quando...",c:"dobrada ao meio, os lados se encaixam",d:["tem todos os lados do mesmo tamanho", "cabe inteira dentro de um quadrado", "tem mais de quatro cantos marcados"],e:"Dobrando pelo eixo, um lado cobre o outro exatamente."},
+{ic:"simetria",src:{"t": "folha", "d": "q8"},q:"Qual destas figuras tem eixo de simetria?",c:"A borboleta",d:["A mão direita sozinha", "O mapa do Brasil", "A letra R"],e:"As duas asas da borboleta são iguais e espelhadas."},
+{ic:"eixo",q:"Quantos eixos de simetria tem um quadrado?",c:"Quatro",d:["Dois", "Um", "Oito"],e:"Dois pelas diagonais e dois pelo meio dos lados."},
+{ic:"eixo",q:"Quantos eixos de simetria tem um retângulo que não é quadrado?",c:"Dois",d:["Quatro", "Um", "Nenhum"],e:"Só os que passam pelo meio dos lados; as diagonais não servem."},
+{ic:"simetria",src:{"t": "folha", "d": "q9"},q:"Duas figuras são simétricas em relação a um eixo quando...",c:"uma é o reflexo da outra no espelho",d:["uma é maior que a outra na mesma forma", "as duas têm a mesma cor", "as duas estão viradas para o mesmo lado"],e:"Simetria é reflexo: a mesma distância do eixo, do outro lado."},
+{ic:"eixo",t:"tf",q:"A letra A maiúscula tem eixo de simetria.",c:true,e:"Verdadeiro: dobrando ao meio na vertical, os dois lados coincidem."},
+{ic:"simetria",t:"tf",q:"Toda figura geométrica tem eixo de simetria.",c:false,e:"Falso: um triângulo escaleno, por exemplo, não tem nenhum."},
+{ic:"eixo",q:"Quantos eixos de simetria tem um círculo?",c:"Infinitos",d:["Apenas um", "Exatamente quatro", "Nenhum"],e:"Qualquer reta que passe pelo centro divide o círculo em metades iguais."}],
+solidos:[
+{ic:"cubo",src:{"t": "livro", "d": "p.92"},q:"Quantas faces tem um cubo?",c:"Seis",d:["Quatro", "Oito", "Doze"],e:"Seis faces quadradas, como num dado."},
+{ic:"cubo",src:{"t": "folha", "d": "q10"},q:"Quantas arestas tem um cubo?",c:"Doze",d:["Oito", "Seis", "Dezesseis"],e:"Aresta é o encontro de duas faces: o cubo tem doze."},
+{ic:"vertice",src:{"t": "folha", "d": "q10"},q:"Quantos vértices tem um cubo?",c:"Oito",d:["Seis", "Doze", "Quatro"],e:"Vértice é o canto, onde as arestas se encontram: são oito."},
+{ic:"aresta",src:{"t": "livro", "d": "p.92"},q:"O que é uma aresta de um sólido?",c:"O encontro de duas faces",d:["O canto onde as arestas se juntam", "A superfície plana do sólido", "A medida do lado mais comprido"],e:"Face é a superfície, aresta é a linha do encontro, vértice é o canto."},
+{ic:"vertice",src:{"t": "livro", "d": "p.92"},q:"O que é um vértice de um sólido?",c:"O ponto onde as arestas se juntam",d:["A linha entre duas faces planas", "A superfície plana do sólido", "O ponto bem no meio do sólido"],e:"Vértice é o bico, o canto."},
+{ic:"esfera",src:{"t": "folha", "d": "q11"},q:"Qual destes NÃO é um poliedro?",c:"A esfera",d:["O cubo", "A pirâmide", "O prisma"],e:"Poliedro tem só faces planas. Esfera, cone e cilindro são corpos redondos."},
+{ic:"cilindro",src:{"t": "livro", "d": "p.98"},q:"Cilindro, cone e esfera são chamados de...",c:"corpos redondos",d:["poliedros", "polígonos", "prismas"],e:"Têm superfície curva, por isso não entram nos poliedros."},
+{ic:"piramide",src:{"t": "livro", "d": "p.95"},q:"A pirâmide tem uma base e as outras faces são...",c:"triângulos que sobem até um vértice",d:["quadrados todos do mesmo tamanho", "retângulos em pé, lado a lado", "círculos empilhados um sobre o outro"],e:"Todas as faces laterais sobem até um único ponto, o ápice."},
+{ic:"prisma",src:{"t": "livro", "d": "p.95"},q:"O prisma tem duas bases iguais e as faces laterais são...",c:"retângulos",d:["triângulos", "círculos", "losangos"],e:"Duas bases iguais e paralelas, ligadas por retângulos."},
+{ic:"cubo",src:{"t": "livro", "d": "p.92"},q:"O paralelepípedo tem quantas faces?",c:"Seis",d:["Quatro", "Oito", "Cinco"],e:"Seis faces retangulares — como uma caixa de sapato."},
+{ic:"esfera",src:{"t": "folha", "d": "q11"},t:"tf",q:"A esfera tem faces, arestas e vértices.",c:false,e:"Falso: a esfera é toda curva, sem face plana, sem aresta e sem vértice."},
+{ic:"cubo",t:"tf",q:"Todo cubo é também um paralelepípedo.",c:true,e:"Verdadeiro: o cubo é o paralelepípedo de faces todas quadradas."},
+{ic:"cubo",src:{"t": "folha", "d": "q10"},t:"match",q:"Ligue cada sólido ao número de faces.",pairs:[["Cubo", "6 faces"], ["Pirâmide de base quadrada", "5 faces"], ["Prisma de base triangular", "5 faces"], ["Esfera", "Nenhuma face plana"]],e:"Contar face, aresta e vértice é o que separa um sólido do outro."},
+{ic:"cilindro",src:{"t": "livro", "d": "p.98"},t:"text",q:"Qual sólido tem duas bases circulares e lembra uma lata?",valid:["cilindro", "o cilindro"],ph:"Digite o nome...",e:"Cilindro — corpo redondo, não poliedro."}],
+planificacoes:[
+{ic:"planificacao",src:{"t": "livro", "d": "p.100"},q:"A planificação de um sólido é...",c:"o desenho dele aberto no plano",d:["a sombra que ele faz no chão", "o corte dele feito ao meio", "a vista dele olhando de cima"],e:"É como o sólido fica se você desmontar a caixa e deixar tudo plano."},
+{ic:"cubo",src:{"t": "folha", "d": "q12"},q:"A planificação do cubo é formada por...",c:"seis quadrados ligados",d:["quatro triângulos e um quadrado", "dois círculos e um retângulo", "seis triângulos ligados"],e:"Seis quadrados, muitas vezes em forma de cruz."},
+{ic:"cone-solido",src:{"t": "folha", "d": "q12"},q:"A planificação do cone é formada por...",c:"um círculo e um pedaço de círculo",d:["dois círculos e um retângulo", "quatro triângulos e um quadrado", "seis quadrados ligados"],e:"A base é o círculo; a lateral, aberta, vira um setor."},
+{ic:"cilindro",src:{"t": "folha", "d": "q12"},q:"A planificação do cilindro é formada por...",c:"dois círculos e um retângulo",d:["um círculo e um triângulo", "seis quadrados ligados", "dois triângulos e três retângulos"],e:"As tampas são os círculos; a lateral, desenrolada, é um retângulo."},
+{ic:"piramide",src:{"t": "folha", "d": "q12"},q:"A planificação da pirâmide de base quadrada tem...",c:"um quadrado e quatro triângulos",d:["seis quadrados ligados", "dois quadrados e quatro retângulos", "um círculo e quatro triângulos"],e:"A base quadrada e as quatro faces laterais triangulares."},
+{ic:"esfera",src:{"t": "folha", "d": "q13"},q:"Uma bola de futebol lembra qual sólido?",c:"a esfera",d:["o cilindro", "o cone", "o cubo"],e:"Esfera: toda curva, sem canto nenhum."},
+{ic:"cone-solido",src:{"t": "folha", "d": "q13"},q:"A casquinha de sorvete lembra qual sólido?",c:"o cone",d:["o cilindro", "a pirâmide", "a esfera"],e:"Cone: base redonda e uma ponta."},
+{ic:"cubo",src:{"t": "folha", "d": "q13"},q:"Uma caixa de sapato lembra qual sólido?",c:"o paralelepípedo",d:["o cubo", "o prisma triangular", "o cilindro"],e:"Paralelepípedo: seis faces retangulares."},
+{ic:"cilindro",src:{"t": "folha", "d": "q13"},q:"Uma lata de refrigerante lembra qual sólido?",c:"o cilindro",d:["o cone", "a esfera", "o paralelepípedo"],e:"Cilindro: duas bases circulares e lateral curva."}],
+malha:[
+{ic:"malha",src:{"t": "folha", "d": "q14"},q:"Numa malha quadriculada, o trajeto “3 para a direita e 2 para baixo” significa...",c:"andar 3 quadradinhos e depois 2",d:["andar 3 passos e virar 2 vezes", "andar 5 quadradinhos na diagonal", "andar 2 para a direita e 3 para baixo"],e:"Cada número conta quadradinhos, e a seta diz para que lado."},
+{ic:"malha",src:{"t": "folha", "d": "q14"},q:"Ao descrever um trajeto na malha, o que a seta indica?",c:"o sentido do movimento",d:["quantos quadradinhos andar", "o tamanho de cada quadradinho", "o nome do ponto de chegada"],e:"O número diz quanto; a seta diz para onde."},
+{ic:"mapa",q:"Para ir de um ponto a outro na malha usando só movimentos retos, você anda...",c:"na horizontal e na vertical",d:["sempre pela diagonal do quadrado", "fazendo curvas suaves no caminho", "só para a direita, nunca para baixo"],e:"Na malha quadriculada o caminho segue as linhas: para os lados e para cima ou baixo."},
+{ic:"malha",t:"tf",q:"Dois trajetos diferentes podem levar ao mesmo ponto de chegada.",c:true,e:"Verdadeiro: o que importa é o total andado em cada direção."}]
+};
+const trails={planas:{name:"Figuras Planas",steps:["retas", "angulos", "posicao", "poligonos", "all"]},formas:{name:"Triângulos e Quadriláteros",steps:["triangulos", "quadrilateros", "simetria", "all"]},espaciais:{name:"Do Plano ao Espaço",steps:["solidos", "planificacoes", "malha", "all"]}};
+
+/* ---------- identidade estavel de cada questao (para o progresso) ---------- */
+Object.keys(bank).forEach(cat=>bank[cat].forEach((q,i)=>{q.id=cat+i;q.cat=cat}));
+const allItems=Object.values(bank).flat();
+
+let questions=[],index=0,score=0,lives=5,hits=0,answered=0,combo=0,bestCombo=0,
+    locked=false,activeTrail=null,trailStep=0,currentCategory="all",practiceMode=true;
+
+/* ---------- progresso persistente ---------- */
+const STORE_BASE="matematica_progress_v1";
+const STORE=(migrarProgresso("matematica_progress_v1"), chaveProgresso("matematica_progress_v1"));
+function defaultProgress(){return{items:{},best:{score:0,acc:0},trails:{},missions:{},practice:true,mudo:false}}
+
+// Estado de uma missão: nunca jogada, começada, concluída ou dominada.
+function missionStat(cat){return progress.missions[cat]||(progress.missions[cat]={iniciada:false,concluidas:0,melhorAcc:0})}
+function missionInfo(cat){
+  const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
+  const itens = cat==="all" ? allItems : (bank[cat]||[]);
+  const dominadas = itens.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e}).length;
+  const pct = itens.length ? Math.round(dominadas/itens.length*100) : 0;
+  let estado="nova", rotulo="", icone="";
+  if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="";rotulo="Dominada"}
+  else if(m.concluidas){estado="concluida";icone="✓";rotulo="Concluída"}
+  else if(m.iniciada){estado="andamento";icone="▶";rotulo="Em andamento"}
+  return {...m,dominadas,total:itens.length,pct,estado,rotulo,icone};
+}
+let progress=defaultProgress();
+function loadProgress(){
+  try{
+    const raw=localStorage.getItem(STORE); if(!raw) return defaultProgress();
+    const p=JSON.parse(raw),d=defaultProgress();
+    return{items:p.items||d.items,best:p.best||d.best,trails:p.trails||d.trails,
+           missions:p.missions||d.missions,
+           practice:typeof p.practice==="boolean"?p.practice:d.practice,
+           mudo:!!p.mudo};
+  }catch(e){return defaultProgress()}
+}
+function saveProgress(){try{localStorage.setItem(STORE,JSON.stringify(progress))}catch(e){}}
+function stat(id){return progress.items[id]||(progress.items[id]={e:0,h:0})}
+function weakItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.e>t.h})
+                                    .sort((a,b)=>(progress.items[b.id].e-progress.items[b.id].h)-(progress.items[a.id].e-progress.items[a.id].h))}
+function masteredItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e})}
+function record(q,ok){if(!q||!q.id)return;const t=stat(q.id);ok?t.h++:t.e++;saveProgress()}
+
+/* ---------- sorteio: uniforme e enviesado para o que o aluno erra ---------- */
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function weight(q){const t=progress.items[q.id];if(!t)return 3;const n=t.e-t.h;if(n>0)return Math.min(12,3+n*3);if(t.h>=2)return 1;return 2}
+function pickWeighted(list,n){
+  const pool=[...list],out=[];n=Math.min(n,pool.length);
+  while(out.length<n&&pool.length){
+    const w=pool.map(weight),tot=w.reduce((a,b)=>a+b,0);
+    let r=Math.random()*tot,i=0;
+    while(i<pool.length-1&&(r-=w[i])>0)i++;
+    out.push(pool.splice(i,1)[0]);
+  }
+  return out;
+}
+
+/* ---------- montagem da partida: sem repetir questao ---------- */
+const TAM_PARTIDA=12, TAM_ETAPA=8;
+function makeQuestions(cat,limite){
+  let src;
+  if(cat==="review"){src=weakItems(); if(!src.length) return [];}
+  else src = cat==="all" ? allItems : bank[cat];
+  const alvo=Math.min(limite||TAM_PARTIDA, src.length);   // nunca pede mais do que existe
+  return pickWeighted(src,alvo).map(x=>{
+    const t=x.t||"choice";
+    if(t!=="choice") return {...x,t};
+    const choices=shuffle([x.c,...x.d]);
+    return {...x,t,choices,answer:choices.indexOf(x.c)};
+  });
+}
+
+/* ---------- telas ---------- */
+function show(id){migalhas(id);document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function _goHome(){renderStats();renderModeToggle();show('start')}
+
+/* ---------- busca de missão ---------- */
+/* Sem acento e sem caixa: a criança digita "relogio" e acha "Que horas são".
+   Filtra por título e descrição, esconde grupo que ficou vazio. */
+function _chave(t){
+  return (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+function filtrarMissoes(){
+  const campo = document.getElementById("buscaMissao");
+  const raiz  = document.getElementById("categories");
+  if(!campo || !raiz) return;
+  const q = _chave(campo.value.trim());
+  let achou = 0;
+  raiz.querySelectorAll(".category-card, .trail-card").forEach(c => {
+    const bate = !q || _chave(c.textContent).includes(q);
+    c.hidden = !bate;
+    if(bate) achou++;
+  });
+  // Um título — de seção ou de grupo — só aparece se sobrou cartão embaixo.
+  raiz.querySelectorAll("h2, h3.grupo").forEach(h => {
+    let vivo = false;
+    for(let n = h.nextElementSibling; n && !_ehTitulo(n); n = n.nextElementSibling){
+      if(_ehCartao(n)){ if(!n.hidden){ vivo = true; break; } continue; }
+      if(n.querySelector && n.querySelector(".category-card:not([hidden]), .trail-card:not([hidden])")){
+        vivo = true; break;
+      }
+    }
+    h.hidden = !vivo;
+  });
+  const vazio = document.getElementById("semResultado");
+  if(vazio) vazio.hidden = achou > 0;
+}
+function _ehTitulo(n){ return n.tagName === "H2" || n.classList.contains("grupo"); }
+function _ehCartao(n){
+  return n.classList.contains("category-card") || n.classList.contains("trail-card");
+}
+
+
+function _openCategories(){renderCards();renderModeToggle();show('categories')}
+function _openLesson(id){show('lesson');document.querySelectorAll('.lesson-part').forEach(x=>x.style.display='none');document.getElementById(id).style.display='block'}
+function sairDaPartida(){if(index>0&&!confirm("Sair da missão? O progresso desta partida será perdido."))return;activeTrail=null;openCategories()}
+
+/* ---------- modo treino x desafio ---------- */
+/* ============================================================
+   SOM E FEEDBACK
+   Tudo em try/catch: o jogo nunca pode quebrar por causa de áudio.
+   ============================================================ */
+
+let audioCtx=null, mudo=false;
+
+function ensureAudio(){
+  if(audioCtx) return audioCtx;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C) return null;
+    audioCtx=new C();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    return audioCtx;
+  }catch(e){ return null; }
+}
+
+// Uma nota. `quando` permite encadear arpejos sem setTimeout.
+function nota(freq,dur=0.12,vol=0.05,tipo="sine",quando=0){
+  if(mudo) return;
+  const ctx=ensureAudio(); if(!ctx) return;
+  try{
+    const t=ctx.currentTime+quando;
+    const osc=ctx.createOscillator(), g=ctx.createGain();
+    osc.type=tipo; osc.frequency.setValueAtTime(freq,t);
+    osc.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    osc.start(t); osc.stop(t+dur+0.02);
+  }catch(e){}
+}
+function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
+  freqs.forEach((f,i)=>nota(f,0.16,vol,tipo,i*passo));
+}
+
+const sfx={
+  toque(){ nota(320,0.05,0.02,"sine"); },
+  acerto(){ arpejo([660,880],0.07,0.045); },
+  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
+  // O combo sobe de tom: quanto maior a sequência, mais alto e mais brilhante.
+  combo(n){
+    const base=520+Math.min(n,8)*45;
+    arpejo([base,base*1.25,base*1.5],0.06,0.05,"triangle");
+  },
+  etapa(){ arpejo([523,659,784],0.09,0.05); },
+  missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
+  recorde(){ arpejo([784,988,1175,1568],0.09,0.06,"triangle"); },
+  fimDeVidas(){ arpejo([440,349,262],0.14,0.05,"triangle"); }
+};
+
+// Aviso flutuante no topo: conquistas, etapas concluídas, marcos de combo.
+function posicionarAviso(p){
+  // Abaixo do painel de progresso, para a trilha — que é o que o aviso está
+  // anunciando — continuar à vista. Fora da partida, abaixo do cabeçalho.
+  const alvo=document.querySelector("#quiz.active .progress-panel")
+          || document.querySelector("header");
+  const y=alvo?alvo.getBoundingClientRect().bottom+12:12;
+  p.style.setProperty("--aviso-topo",Math.round(Math.max(y,12))+"px");
+}
+
+function marcarEtapaFechada(i){
+  const n=document.querySelectorAll("#trailMap .node")[i];
+  if(!n) return;
+  n.classList.add("fechou");
+  setTimeout(()=>n.classList.remove("fechou"),700);
+}
+
+function mostrarConquista(txt,etapa){
+  const p=document.getElementById("conquista");
+  if(!p) return;
+  p.classList.toggle("etapa",!!etapa);
+  if(etapa) p.innerHTML=txt; else p.textContent=txt;
+  posicionarAviso(p);
+  p.classList.remove("show");
+  void p.offsetWidth;              // reinicia a animação se já estava na tela
+  p.classList.add("show");
+  clearTimeout(p._t);
+  p._t=setTimeout(()=>p.classList.remove("show"),etapa?2800:2200);
+}
+
+const MARCOS={3:"Três seguidas",5:"Cinco seguidas",8:"Oito seguidas",12:"Doze seguidas — impressionante"};
+function festeja(n){ if(MARCOS[n]) mostrarConquista(MARCOS[n]); }
+
+function setMudo(v){
+  mudo=!!v;
+  progress.mudo=mudo;
+  saveProgress();
+  const b=document.getElementById("btnSom");
+  if(b){ b.innerHTML=mudo?SVG_MUDO:SVG_SOM; b.setAttribute("aria-label",mudo?"Ativar som":"Desativar som"); }
+}
+function alternarSom(){ setMudo(!mudo); if(!mudo) sfx.toque(); }
+
+/* ---------- feedback visual ---------- */
+
+// Número que sobe e some, ancorado no card da questão.
+function pontosVoando(texto,bom){
+  try{
+    const alvo=document.getElementById("question")||document.body;
+    const el=document.createElement("div");
+    el.className="floater "+(bom?"bom":"ruim");
+    el.textContent=texto;
+    alvo.appendChild(el);
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },1100);
+  }catch(e){}
+}
+
+function pulsarCombo(){
+  const el=document.getElementById("combo");
+  if(!el||!el.parentNode) return;
+  const p=el.parentNode;
+  p.classList.remove("combo-pulse");
+  void p.offsetWidth;              // reinicia a animação
+  p.classList.add("combo-pulse");
+}
+
+function setPracticeMode(on){practiceMode=!!on;progress.practice=practiceMode;saveProgress();renderModeToggle();renderLives()}
+function renderModeToggle(){document.querySelectorAll('.mode-opt').forEach(b=>b.classList.toggle('active',(b.dataset.mode==='treino')===practiceMode))}
+function renderLives(){const e=document.getElementById('lives');if(e)e.textContent=practiceMode?'∞':String(lives)}
+function loseLife(){if(!practiceMode)lives--;renderLives()}
+
+/* ---------- inicio de partida ---------- */
+function reset(){index=0;score=0;lives=5;hits=0;answered=0;combo=0;bestCombo=0;locked=false}
+function _startCategory(cat){
+  activeTrail=null;trailStep=0;currentCategory=cat;
+  questions=makeQuestions(cat);
+  if(!questions.length){alert("Nada para revisar ainda. Jogue uma missão primeiro!");openCategories();return}
+  missionStat(cat).iniciada=true;saveProgress();
+  reset();updateHud();show('quiz');renderQuestion();
+}
+function _startTrail(name){activeTrail=name;trailStep=0;reset();startTrailStep()}
+function startTrailStep(){
+  currentCategory=trails[activeTrail].steps[trailStep];
+  missionStat(currentCategory).iniciada=true;
+  questions=makeQuestions(currentCategory,TAM_ETAPA);
+  index=0;locked=false;updateHud();show('quiz');renderQuestion();
+}
+function updateHud(){document.getElementById('score').textContent=score;renderLives();document.getElementById('combo').textContent=combo;_acenderFoguinho(combo)}
+
+/* ---------- progresso da partida ---------- */
+function updateProgress(){
+  const total=Math.max(questions.length,1),pct=Math.round(index/total*100),t=trails[activeTrail];
+  document.getElementById('progressText').textContent=activeTrail
+    ?`${t.name} • Etapa ${trailStep+1}/${t.steps.length} • Questão ${Math.min(index+1,total)}/${total}`
+    :`Questão ${Math.min(index+1,total)}/${total}`;
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('fill').style.width=pct+'%';
+  const map=document.getElementById('trailMap');
+  if(!activeTrail){map.innerHTML='';return}
+  map.innerHTML=t.steps.map((s,i)=>{
+    const cls=i<trailStep?'done':i===trailStep?'current':'';
+    const line=i<t.steps.length-1?`<div class="line ${i<trailStep?'done':''}"></div>`:'';
+    return `<div class="node ${cls}">${i<trailStep?'✓':i+1}</div>${line}`}).join('');
+  const atual=map.querySelector('.current');
+  if(atual) atual.scrollIntoView({block:'nearest',inline:'center'});
+}
+
+const nomes={all:"Desafio misto",review:"Revisão dos meus erros",retas:"Retas e segmentos",angulos:"Ângulos",posicao:"Paralelas e concorrentes",poligonos:"Polígonos",triangulos:"Triângulos",quadrilateros:"Quadriláteros",simetria:"Simetria",solidos:"Sólidos geométricos",planificacoes:"Planificações e sólidos do dia a dia",malha:"Trajetos na malha"};
+
+/* ---------- utilidades comuns a todos os formatos ---------- */
+function norm(x){return String(x||"").trim().toLowerCase().replace(/[.!?,;]/g,"")
+  .normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ")}
+
+function zonas(){document.getElementById('answers').innerHTML='';document.getElementById('special').innerHTML=''}
+
+// Ponto unico de pontuacao: todo formato termina aqui.
+function resolve(ok,msg){
+  const q=questions[index];
+  answered++;record(q,ok);
+  if(ok){
+    score+=100;hits++;combo++;bestCombo=Math.max(bestCombo,combo);
+    pontosVoando("+100",true);
+    if(combo>=3){sfx.combo(combo);pulsarCombo();festeja(combo)} else sfx.acerto();
+  }else{
+    loseLife();combo=0;
+    pontosVoando(practiceMode?"−":"−1 vida",false);
+    sfx.erro();
+  }
+  feedback(ok,(ok?'Muito bem! ':'')+(msg||q.e));
+  updateHud();
+}
+
+/* ---------- 1. múltipla escolha ---------- */
+function renderChoice(q){
+  const a=document.getElementById('answers');
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='answer';b.type='button';
+    const marca=document.createElement('span');
+    marca.className='letra';marca.textContent=FORMAS[i%4];
+    const txt=document.createElement('span');txt.textContent=c;
+    b.append(marca,txt);
+    b.setAttribute('aria-label',`Alternativa ${NOMES_FORMA[i%4]}: ${c}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      const buttons=[...document.querySelectorAll('.answer')];
+      b.classList.add(i===q.answer?'correct':'wrong');
+      if(i!==q.answer&&buttons[q.answer])buttons[q.answer].classList.add('correct');
+      resolve(i===q.answer);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 2. verdadeiro ou falso ---------- */
+function renderTF(q){
+  const a=document.getElementById('answers');
+  [['Verdadeiro',true],['Falso',false]].forEach(([label,val],i)=>{
+    const b=document.createElement('button');
+    b.className='answer tf-btn';b.type='button';
+    const mk=document.createElement('span');mk.className='letra';mk.textContent=FORMAS[i%4];
+    const tx=document.createElement('span');tx.textContent=label;b.append(mk,tx);
+    b.setAttribute('aria-label',`Alternativa ${i+1}: ${label}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      b.classList.add(val===q.c?'correct':'wrong');
+      if(val!==q.c){const cert=[...a.children].find((_,j)=>(j===0)===q.c);if(cert)cert.classList.add('correct')}
+      resolve(val===q.c);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 3. rosa dos ventos clicável ---------- */
+const ROSA=['NO','N','NE','O','','L','SO','S','SE'];
+const CARDEAIS=['N','S','L','O'];
+function renderCompass(q){
+  const sp=document.getElementById('special');
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique na direção correta na rosa dos ventos.';
+  const g=document.createElement('div');g.className='rosa';
+  ROSA.forEach(cell=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='rosa-btn'+(cell===''?' centro':CARDEAIS.includes(cell)?' card':'');
+    b.textContent=cell;
+    if(cell===''){b.disabled=true;b.setAttribute('aria-hidden','true')}
+    else{
+      b.setAttribute('aria-label',cell);
+      b.onclick=()=>{
+        if(locked)return;locked=true;
+        const acertou=cell===q.target;
+        b.classList.add(acertou?'correct':'wrong');
+        if(!acertou){const alvo=[...g.children].find(x=>x.textContent===q.target);if(alvo)alvo.classList.add('correct')}
+        resolve(acertou,acertou?undefined:`A direção correta é ${q.target}. ${q.e}`);
+      };
+    }
+    g.appendChild(b);
+  });
+  sp.appendChild(dica);sp.appendChild(g);
+}
+
+/* ---------- 4. associação (colunas) ---------- */
+function renderMatch(q){
+  const sp=document.getElementById('special');
+  let sel=null,feitos=0,erros=0;
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique em um item da esquerda e depois no par correspondente da direita.';
+  const wrap=document.createElement('div');wrap.className='match';
+  const esq=document.createElement('div');esq.className='match-col';
+  const dir=document.createElement('div');dir.className='match-col';
+  const criar=(txt,lado,col)=>{
+    const b=document.createElement('button');
+    b.className='match-item';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.classList.contains('done'))return;
+      if(lado==='e'){[...esq.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;return}
+      if(!sel)return;
+      if(q.pairs.some(p=>p[0]===sel.textContent&&p[1]===txt)){
+        sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;feitos++;
+        if(feitos===q.pairs.length){
+          locked=true;
+          resolve(erros===0,erros===0?undefined:`Você completou, mas com ${erros} tentativa${erros>1?'s':''} errada${erros>1?'s':''}. ${q.e}`);
+        }
+      }else{
+        erros++;b.classList.add('wrong');sel.classList.remove('sel');sel=null;
+        setTimeout(()=>b.classList.remove('wrong'),450);
+      }
+    };
+    col.appendChild(b);
+  };
+  shuffle(q.pairs.map(p=>p[0])).forEach(t=>criar(t,'e',esq));
+  shuffle(q.pairs.map(p=>p[1])).forEach(t=>criar(t,'d',dir));
+  wrap.appendChild(esq);wrap.appendChild(dir);
+  sp.appendChild(dica);sp.appendChild(wrap);
+}
+
+/* ---------- 5. ordenar a sequência ---------- */
+function renderOrder(q){
+  const sp=document.getElementById('special');
+  const escolha=[];
+  const slot=document.createElement('div');slot.className='order-slot';
+  const banco=document.createElement('div');banco.className='order-bank';
+  const redesenhar=()=>{
+    slot.innerHTML='';
+    if(!escolha.length){const v=document.createElement('span');v.className='small';v.textContent='Clique nos itens na ordem correta...';slot.appendChild(v);return}
+    escolha.forEach((txt,i)=>{const c=document.createElement('span');c.className='order-chip';c.textContent=`${i+1}. ${txt}`;slot.appendChild(c)});
+  };
+  shuffle(q.seq).forEach(txt=>{
+    const b=document.createElement('button');
+    b.className='order-btn';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.disabled)return;
+      b.disabled=true;escolha.push(txt);redesenhar();
+      if(escolha.length===q.seq.length){
+        locked=true;
+        const ok=escolha.every((x,i)=>x===q.seq[i]);
+        resolve(ok,ok?undefined:`A ordem correta é: ${q.seq.join(' → ')}. ${q.e}`);
+      }
+    };
+    banco.appendChild(b);
+  });
+  const limpar=document.createElement('button');
+  limpar.className='secondary';limpar.type='button';limpar.textContent='Limpar';
+  limpar.onclick=()=>{if(locked)return;escolha.length=0;[...banco.children].forEach(b=>b.disabled=false);redesenhar()};
+  redesenhar();
+  sp.appendChild(slot);sp.appendChild(banco);sp.appendChild(limpar);
+}
+
+/* ---------- 6. digitar a resposta ---------- */
+function renderText(q){
+  const sp=document.getElementById('special');
+  const row=document.createElement('div');row.className='text-row';
+  const inp=document.createElement('input');
+  inp.id='resp';inp.type='text';inp.placeholder=q.ph||'Digite sua resposta...';
+  inp.autocomplete='off';inp.setAttribute('autocapitalize','none');
+  const b=document.createElement('button');
+  b.className='primary';b.type='button';b.textContent='Confirmar';
+  const confirmar=()=>{
+    if(locked)return;locked=true;
+    const ok=q.valid.some(v=>norm(v)===norm(inp.value));
+    resolve(ok,ok?undefined:`A resposta é: ${q.valid[0]}. ${q.e}`);
+  };
+  b.onclick=confirmar;
+  inp.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();confirmar()}};
+  row.appendChild(inp);row.appendChild(b);sp.appendChild(row);
+  setTimeout(()=>{try{inp.focus()}catch(e){}},50);
+}
+
+const RENDER={choice:renderChoice,tf:renderTF,compass:renderCompass,match:renderMatch,order:renderOrder,text:renderText};
+
+
+/* ---------- rótulo de procedência ---------- */
+/* A fonte vem normalizada do conteúdo: {t:"livro"|"folha", d:"p.49"}. Antes
+   cada jogo escrevia à sua maneira e cada motor tinha o seu formatador. */
+function rotuloFonte(src){
+  if(!src) return "";
+  if(typeof src === "string") return src;          // conteúdo antigo, se houver
+  if(src.t === "livro") return "Livro, " + src.d;
+  if(src.t === "folha") return "Folha da escola" + (src.d ? ", " + src.d : "");
+  return src.d || "";
+}
+
+function renderQuestion(){
+  if(lives<=0){endGame();return}
+  if(index>=questions.length){
+    if(activeTrail&&trailStep<trails[activeTrail].steps.length-1){
+      const fechada=trailStep;
+      trailStep++;sfx.etapa();
+      const tr=trails[activeTrail];
+      mostrarConquista(
+        `<span class="aviso-t"><svg class=\"ic-txt\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#i-check\"/></svg> Etapa ${fechada+1} de ${tr.steps.length} concluída</span>`+
+        `<span class="aviso-s">Agora: ${nomes[tr.steps[trailStep]]||''}</span>`, true);
+      startTrailStep();marcarEtapaFechada(fechada);return;
+    }
+    endGame();return;
+  }
+  updateProgress();
+  const q=questions[index];
+  document.getElementById('stage').textContent=nomes[currentCategory]||currentCategory;
+  // Questões tiradas do capítulo do livro ganham um selo, para o aluno reconhecer o que já caiu.
+  const fonte=document.getElementById('fonte');
+  if(fonte){
+    // As questões vêm de duas fontes: o livro (p.NN) e a folha de revisão da escola.
+    fonte.innerHTML = rotuloFonte(q.src);
+    fonte.style.display = q.src ? 'inline-block' : 'none';
+  }
+  const il=document.getElementById('illustration');
+  il.innerHTML = q.ic
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+q.ic+'"/></svg>' : '';
+  il.style.display = q.ic ? '' : 'none';
+  document.getElementById('question').textContent=q.q;
+  const f=document.getElementById('feedback');f.className='feedback';f.textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  zonas();
+  locked=false;
+  (RENDER[q.t]||renderChoice)(q);
+}
+
+function feedback(ok,msg){
+  const f=document.getElementById('feedback');
+  f.className='feedback show '+(ok?'good':'bad');
+  f.innerHTML='<span class="rotulo">'+(ok?'Certo':'Ainda não')+'</span>';f.append(msg);
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+function nextQuestion(){index++;renderQuestion()}
+
+/* ---------- atalhos de teclado ---------- */
+document.addEventListener('keydown',ev=>{
+  if(!document.getElementById('quiz').classList.contains('active'))return;
+  if(ev.target&&ev.target.tagName==='INPUT')return;   // o campo de texto trata o Enter sozinho
+  const btn=document.getElementById('nextBtn');
+  if(ev.key==='Enter'||ev.key===' '){
+    if(btn.style.display!=='none'){ev.preventDefault();nextQuestion()}
+    return;
+  }
+  const n=parseInt(ev.key,10);
+  if(n>=1&&n<=4&&!locked){
+    const b=document.querySelectorAll('.answer')[n-1];
+    if(b){ev.preventDefault();b.click()}
+  }
+});
+
+/* ---------- fim de partida ---------- */
+function endGame(){
+  registrarPartida(hits, answered, score);
+  setTimeout(() => comemorar(hits, answered), 260);
+  if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
+  // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
+  if(answered&&(lives>0||practiceMode)){
+    const m=missionStat(currentCategory);
+    m.iniciada=true;m.concluidas++;
+    const a=Math.round(hits/answered*100);
+    if(a>m.melhorAcc)m.melhorAcc=a;
+  }
+  // denominador = questoes efetivamente respondidas (vale para trilhas de varias etapas
+  // e para partidas encerradas antes do fim)
+  const acc=answered?Math.round(hits/answered*100):0;
+  if(!practiceMode&&answered){
+    if(score>progress.best.score)progress.best.score=score;
+    if(acc>progress.best.acc)progress.best.acc=acc;
+  }
+  saveProgress();
+  if(lives<=0&&!practiceMode) sfx.fimDeVidas();
+  else if(!practiceMode&&score>0&&score>=progress.best.score) sfx.recorde();
+  else sfx.missao();
+  show('end');
+  document.getElementById('finalScore').textContent=score;
+  document.getElementById('finalHits').textContent=hits+'/'+answered;
+  document.getElementById('accuracy').textContent=acc+'%';
+  document.getElementById('bestCombo').textContent=bestCombo;
+  const rank=lives<=0&&!practiceMode?'Aprendiz de Geometria':acc>=90?'Mestre de Régua e Compasso':acc>=70?'Geômetra':'Aprendiz de Geometria';
+  document.getElementById('rank').textContent=rank;
+  document.getElementById('endText').textContent=
+    lives<=0&&!practiceMode?'As energias acabaram! Revise a lição e tente de novo.':
+    acc>=90?'Excelente domínio dos conteúdos!':
+    acc>=70?'Muito bom! Você já compreende bem o céu e a orientação.':
+    'Continue explorando e tente novamente para consolidar o conteúdo.';
+  renderMissed();
+}
+
+/* ---------- paineis de progresso ---------- */
+function renderStats(){
+  const el=document.getElementById('startStats');if(!el)return;
+  const feitas=Object.keys(trails).filter(k=>progress.trails[k]).length;
+  el.innerHTML=`<span class="chip">Recorde <b>${progress.best.score}</b></span>`+
+    `<span class="chip">Dominadas <b>${masteredItems().length}/${allItems.length}</b></span>`+
+    `<span class="chip">A revisar <b>${weakItems().length}</b></span>`+
+    `<span class="chip">Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+}
+function renderCards(){
+  // Cada card mostra em que pé está a missão e quanto do conteúdo já foi dominado.
+  document.querySelectorAll('[data-cat]').forEach(card=>{
+    const info=missionInfo(card.dataset.cat);
+    card.classList.remove('nova','andamento','concluida','dominada');
+    card.classList.add(info.estado);
+    const selo=card.querySelector('.selo');
+    if(selo){
+      selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:'';
+      selo.style.display=info.rotulo?'inline-block':'none';
+    }
+    const barra=card.querySelector('.mini-bar span');
+    if(barra) barra.style.width=info.pct+'%';
+    const txt=card.querySelector('.mini-txt');
+    if(txt) txt.textContent=info.total?`${info.dominadas}/${info.total} dominadas`+(info.melhorAcc?` • melhor ${info.melhorAcc}%`:''):'';
+  });
+  const n=weakItems().length,c=document.getElementById('reviewCard');
+  if(c){
+    const t=c.querySelector('.review-count');
+    if(t)t.textContent=n?`${n} questã${n>1?'ões':'o'} esperando revisão`:'Nada pendente — jogue uma missão primeiro';
+    c.classList.toggle('empty',n===0);
+  }
+  document.querySelectorAll('[data-trail]').forEach(b=>{
+    const d=!!progress.trails[b.dataset.trail];
+    b.classList.toggle('done',d);
+    const s=b.querySelector('.trail-done');if(s)s.style.display=d?'inline-block':'none';
+  });
+}
+function renderMissed(){
+  const box=document.getElementById('missed');if(!box)return;
+  const w=weakItems().slice(0,5);
+  if(!w.length){box.style.display='none';box.innerHTML='';return}
+  box.style.display='block';
+  box.innerHTML=`<div class="missed-title">Conteúdos que ainda pedem atenção</div>`+
+    `<ul class="missed-list">${w.map(q=>`<li>${q.ic ? '<svg class="ic-txt" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+q.ic+'"/></svg>' : ''}<span>${q.q}</span></li>`).join('')}</ul>`+
+    `<button type="button" class="gold" onclick="startCategory('review')">Revisar só esses</button>`;
+}
+function resetProgress(){
+  if(!confirm("Apagar todo o progresso salvo?"))return;
+  progress=defaultProgress();progress.practice=practiceMode;saveProgress();
+  renderStats();renderCards();
+}
+
+/* ---------- init ---------- */
+progress=loadProgress();practiceMode=progress.practice;mudo=!!progress.mudo;setMudo(mudo);
+renderModeToggle();renderLives();renderStats();
+
+
+/* ---------- rotas: a tela mora na URL ---------- */
+/* As funções públicas só escrevem o endereço; quem muda de tela é o
+   roteador. É o que faz o botão voltar do celular recuar uma tela em vez
+   de sair do jogo, e recarregar cair de volta onde estava. */
+const _PRIMEIRA_LICAO = "lesson1";
+const ROTAS = {
+  inicio:  function(){ _goHome(); },
+  licao:   function(a){ _openLesson(a || _PRIMEIRA_LICAO); },
+  missoes: function(){ _openCategories(); },
+  missao:  function(a){ a ? _startCategory(a) : _openCategories(); },
+  trilha:  function(a){ a ? _startTrail(a) : _openCategories(); }
+};
+
+function irPara(r){
+  // Mesmo endereço não dispara hashchange: refaz a rota (rejogar a missão).
+  if(location.hash === "#" + r) rota(); else location.hash = r;
+}
+function rota(){
+  const bruto = (location.hash || "#inicio").slice(1);
+  const barra = bruto.indexOf("/");
+  const tipo  = barra < 0 ? bruto : bruto.slice(0, barra);
+  const arg   = barra < 0 ? ""    : decodeURIComponent(bruto.slice(barra + 1));
+  (ROTAS[tipo] || ROTAS.inicio)(arg);
+}
+function goHome(){ irPara("inicio"); }
+function openCategories(){ irPara("missoes"); }
+function openLesson(id){ irPara("licao/" + id); }
+function startCategory(c){ irPara("missao/" + encodeURIComponent(c)); }
+function startTrail(t){ irPara("trilha/" + encodeURIComponent(t)); }
+addEventListener("hashchange", rota);
+
+/* ---------- trilha de migalhas ---------- */
+const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado",
+              sala:"Sala em rede"};
+function migalhas(id){
+  const el = document.getElementById("migalhaAqui");
+  if(!el) return;
+  let nome = _AQUI[id];
+  if(id === "quiz"){
+    // Na partida, a última migalha é a missão ou a trilha em curso.
+    nome = activeTrail ? (trails[activeTrail] && trails[activeTrail].name)
+                       : _nomeDaMissao(currentCategory);
+    el.innerHTML = ' <span class="migalha-sep" aria-hidden="true">/</span> '
+                 + '<a href="#missoes">Missões</a>'
+                 + ' <span class="migalha-sep" aria-hidden="true">/</span> '
+                 + '<b>' + (nome || "Missão") + '</b>';
+    return;
+  }
+  el.innerHTML = nome
+    ? ' <span class="migalha-sep" aria-hidden="true">/</span> <b>' + nome + '</b>'
+    : "";
+}
+
+function _nomeDaMissao(c){ return (typeof nomes !== "undefined" && nomes[c]) || c; }
+
+if(document.readyState !== 'loading') rota();
+else addEventListener('DOMContentLoaded', rota);
+
+/* ---------- tema: sistema, claro, escuro ---------- */
+const TEMAS = ["sistema", "claro", "escuro"];
+const _ICONE_TEMA = {sistema: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tema"/></svg>', claro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sol"/></svg>', escuro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-lua"/></svg>'};
+const _ROTULO_TEMA = {sistema: "Tema: seguir o sistema",
+                      claro: "Tema: claro", escuro: "Tema: escuro"};
+function temaAtual(){
+  try{ return localStorage.getItem("tema") || "sistema"; }catch(e){ return "sistema"; }
+}
+function aplicarTema(t){
+  if(t === "sistema") delete document.documentElement.dataset.tema;
+  else document.documentElement.dataset.tema = t;
+  try{ localStorage.setItem("tema", t); }catch(e){}
+  const b = document.getElementById("btnTema");
+  if(b){ b.innerHTML = _ICONE_TEMA[t]; b.setAttribute("aria-label", _ROTULO_TEMA[t]); }
+}
+function alternarTema(){
+  aplicarTema(TEMAS[(TEMAS.indexOf(temaAtual()) + 1) % TEMAS.length]);
+  if(typeof sfx !== "undefined") sfx.toque();
+}
+
+/* ---------- tela cheia ---------- */
+/* O iPhone não expõe requestFullscreen em elementos: lá o botão nem aparece,
+   em vez de aparecer e não fazer nada. */
+function _temTelaCheia(){
+  return !!(document.documentElement.requestFullscreen);
+}
+function alternarTela(){
+  try{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }catch(e){}
+}
+function _pintarBotaoTela(){
+  const b = document.getElementById("btnTela");
+  if(!b) return;
+  const cheia = !!document.fullscreenElement;
+  b.innerHTML = cheia ? '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-encolher"/></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-expandir"/></svg>';
+  b.setAttribute("aria-label", cheia ? "Sair da tela cheia" : "Tela cheia");
+}
+
+/* ---------- estímulos ---------- */
+/* O foguinho troca o número da pílula de sequência por chama a partir de 3:
+   a criança vê a sequência crescer sem precisar ler. */
+function _acenderFoguinho(n){
+  const p = document.getElementById("combo");
+  if(!p) return;
+  const caixa = p.closest(".pill");
+  if(caixa) caixa.classList.toggle("em-chamas", n >= 3);
+  // `hidden` é propriedade de HTMLElement, não de SVGElement: atribuir a
+  // `.hidden` num <svg> cria uma propriedade solta e deixa o atributo no DOM.
+  const fogo = document.getElementById("foguinho");
+  if(fogo) fogo.toggleAttribute("hidden", n < 3);
+}
+
+function _ruido(dur, corte, vol){
+  /* Palmas são ruído filtrado, não nota: um estalo curto e seco. */
+  if(!audioCtx || mudo) return;
+  const n = Math.floor(audioCtx.sampleRate * dur);
+  const buf = audioCtx.createBuffer(1, n, audioCtx.sampleRate);
+  const dados = buf.getChannelData(0);
+  for(let i = 0; i < n; i++) dados[i] = (Math.random() * 2 - 1) * (1 - i / n);
+  const src = audioCtx.createBufferSource(); src.buffer = buf;
+  const f = audioCtx.createBiquadFilter(); f.type = "bandpass";
+  f.frequency.value = corte; f.Q.value = 0.8;
+  const g = audioCtx.createGain(); g.gain.value = vol;
+  src.connect(f).connect(g).connect(audioCtx.destination);
+  src.start();
+}
+function palmas(){
+  /* Doze palmas com intervalo irregular: regular demais vira metrônomo. */
+  try{
+    if(typeof ensureAudio === "function") ensureAudio();
+    for(let i = 0; i < 12; i++){
+      const atraso = i * 95 + Math.random() * 55;
+      setTimeout(() => _ruido(0.07, 1400 + Math.random() * 900, 0.16), atraso);
+    }
+  }catch(e){}
+}
+
+const _CORES_FESTA = ["--materia-solida", "--alt-1", "--alt-2", "--alt-3", "--alt-4", "--certo"];
+function festa(quantidade){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const caixa = document.getElementById("festaBox");
+  if(!caixa) return;
+  const n = quantidade || 44;
+  for(let i = 0; i < n; i++){
+    const p = document.createElement("i");
+    p.className = "confete";
+    p.style.left = (Math.random() * 100) + "vw";
+    p.style.background = "var(" + _CORES_FESTA[i % _CORES_FESTA.length] + ")";
+    p.style.animationDelay = (Math.random() * 0.45) + "s";
+    p.style.animationDuration = (1.5 + Math.random() * 1.1) + "s";
+    p.style.setProperty("--giro", (Math.random() * 720 - 360) + "deg");
+    p.style.setProperty("--desvio", (Math.random() * 120 - 60) + "px");
+    caixa.appendChild(p);
+    setTimeout(() => p.remove(), 3000);
+  }
+}
+
+/* Chamado no fim da partida: festa e palmas só quando houve o que comemorar. */
+function comemorar(acertos, total){
+  const pct = total ? acertos / total : 0;
+  if(pct >= 0.9){ festa(70); palmas(); }
+  else if(pct >= 0.6){ festa(36); }
+}
+
+addEventListener("DOMContentLoaded", () => {
+  aplicarTema(temaAtual());
+  const b = document.getElementById("btnTela");
+  if(b && _temTelaCheia()){ b.hidden = false; _pintarBotaoTela(); }
+  addEventListener("fullscreenchange", _pintarBotaoTela);
+});
+
+/* ---------- sala em rede ---------- */
+/* WebRTC direto entre os aparelhos: nenhum servidor nosso no meio. O único
+   intermediário é o broker público do PeerJS, e só para eles se acharem. */
+const SALA_PREFIXO = "jogosdeestudo-mat-";
+const SALA_PRAZO = 20000;       // por pergunta
+const SALA_MAX = 8;
+const SALA_LIB = "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js";
+
+let _peer = null, _souTelao = false, _conexoes = [], _conAnfitriao = null;
+let _jogadores = new Map();     // id -> {nome, pontos, respondeu, con}
+let _perguntas = [], _iPergunta = -1, _tInicio = 0, _relogio = null;
+
+function _tela(id){
+  ["salaEscolha","salaEntrada","salaAnfitriao","salaJogo","salaJogador"]
+    .forEach(x => { const e = document.getElementById(x); if(e) e.hidden = x !== id; });
+}
+function mostrarEntrada(){ _tela("salaEntrada"); }
+function voltarEscolha(){ _tela("salaEscolha"); }
+
+function _carregarPeer(){
+  if(window.Peer) return Promise.resolve();
+  return new Promise((ok, falha) => {
+    const s = document.createElement("script");
+    s.src = SALA_LIB;
+    s.onload = ok;
+    s.onerror = () => falha(new Error("sem rede"));
+    document.head.appendChild(s);
+  });
+}
+
+/* O aviso flutuante hoje tem um nome só nos quatro motores. O `typeof` fica
+   porque referenciar identificador não declarado lança ReferenceError — foi
+   assim que a entrada na sala travou em "Conectando..." quando os nomes ainda
+   divergiam. */
+function _flutuante(txt){
+  if(typeof mostrarConquista === "function") mostrarConquista(txt);
+}
+function _avisoSala(txt){
+  const e = document.getElementById("salaEstado");
+  if(e) e.textContent = txt;
+  _flutuante(txt);
+}
+
+/* ---------- lado do telão ---------- */
+async function criarSala(){
+  _tela("salaAnfitriao");
+  document.getElementById("salaCodigoTela").textContent = "....";
+  try{ await _carregarPeer(); }
+  catch(e){
+    document.getElementById("salaCodigoTela").textContent = "!";
+    document.getElementById("salaDica").innerHTML =
+      "<b>Sem internet.</b> Este modo precisa de conexão; o resto do jogo funciona offline.";
+    return;
+  }
+  _souTelao = true;
+  _montarMissoes();
+  _pintarJogadores();   // sem isto a área fica vazia e ninguém entende a espera
+  _tentarCodigo(0);
+}
+
+function _tentarCodigo(tentativa){
+  if(tentativa > 5){
+    document.getElementById("salaDica").textContent =
+      "Não consegui abrir uma sala agora. Tente de novo em alguns segundos.";
+    return;
+  }
+  const codigo = String(Math.floor(1000 + Math.random() * 9000));
+  if(_peer) try{ _peer.destroy(); }catch(e){}
+  _peer = new Peer(SALA_PREFIXO + codigo);
+  _peer.on("open", () => {
+    document.getElementById("salaCodigoTela").textContent = codigo;
+    location.hash = "sala/" + codigo;
+  });
+  // Código já em uso (ou por outra família): sorteia outro.
+  _peer.on("error", err => {
+    if(err && err.type === "unavailable-id") _tentarCodigo(tentativa + 1);
+  });
+  _peer.on("connection", con => {
+    con.on("data", d => _doJogador(con, d));
+    con.on("close", () => { _jogadores.delete(con.peer); _pintarJogadores(); });
+  });
+}
+
+function _doJogador(con, d){
+  if(d.t === "entrar"){
+    if(_iPergunta >= 0){ con.send({t: "recusado", motivo: "A partida já começou."}); return; }
+    if(_jogadores.size >= SALA_MAX){ con.send({t: "recusado", motivo: "A sala está cheia."}); return; }
+    _jogadores.set(con.peer, {nome: (d.nome || "Jogador").slice(0, 12), pontos: 0, con});
+    con.send({t: "aceito"});
+    _pintarJogadores();
+    if(typeof sfx !== "undefined") sfx.toque();
+  }
+  if(d.t === "resposta"){
+    const j = _jogadores.get(con.peer);
+    if(!j || j.respondeu || d.i !== _iPergunta) return;
+    j.respondeu = true;
+    const q = _perguntas[_iPergunta];
+    const certo = d.escolha === q.answer;
+    // Fórmula do Kahoot: acertar vale 1000, e a demora come até metade.
+    j.ganho = certo ? Math.max(1, Math.round(1000 * (1 - (d.ms / SALA_PRAZO) / 2))) : 0;
+    j.pontos += j.ganho;
+    con.send({t: "recebido", certo});
+    if([..._jogadores.values()].every(x => x.respondeu)) _fecharPergunta();
+  }
+}
+
+function _pintarJogadores(){
+  const c = document.getElementById("salaJogadores");
+  c.innerHTML = [..._jogadores.values()]
+    .map(j => '<span class="sala-jogador">' + _escapar(j.nome) + "</span>").join("")
+    || '<span class="sala-dica">Ninguém entrou ainda.</span>';
+  // Um botão desativado sem motivo é um beco: o rótulo passa a dizer por que.
+  const b = document.getElementById("salaComecar");
+  b.disabled = _jogadores.size === 0;
+  b.textContent = _jogadores.size === 0 ? "Esperando jogadores..."
+    : "Começar com " + _jogadores.size + (_jogadores.size === 1 ? " jogador" : " jogadores");
+}
+function _escapar(t){
+  return String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+}
+function _enviarTodos(m){ _jogadores.forEach(j => { try{ j.con.send(m); }catch(e){} }); }
+
+function _montarMissoes(){
+  const sel = document.getElementById("salaMissao");
+  sel.innerHTML = "";
+  _catalogoMissoes().forEach(([id, nome]) => {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = nome; sel.appendChild(o);
+  });
+}
+
+function comecarSala(){
+  const cat = document.getElementById("salaMissao").value;
+  _perguntas = _perguntasSala(cat).filter(q => q.choices && q.answer != null).slice(0, 10);
+  if(!_perguntas.length){ _avisoSala("Essa missão não tem perguntas de escolha."); return; }
+  _iPergunta = -1;
+  _tela("salaJogo");
+  _proximaPergunta();
+}
+
+function _proximaPergunta(){
+  _iPergunta++;
+  if(_iPergunta >= _perguntas.length) return _fimSala();
+  const q = _perguntas[_iPergunta];
+  _jogadores.forEach(j => { j.respondeu = false; j.ganho = 0; });
+  document.getElementById("salaProgresso").textContent =
+    "Pergunta " + (_iPergunta + 1) + " de " + _perguntas.length;
+  document.getElementById("salaPergunta").textContent = q.q;
+  document.getElementById("salaOpcoes").innerHTML = q.choices.map((c, i) =>
+    '<div class="answer"><span class="letra">' + FORMAS[i % 4] + "</span><span>"
+    + _escapar(c) + "</span></div>").join("");
+  document.getElementById("salaPlacar").innerHTML = "";
+  _enviarTodos({t: "pergunta", i: _iPergunta, n: q.choices.length, prazo: SALA_PRAZO});
+  _tInicio = Date.now();
+  _contar();
+}
+
+function _contar(){
+  clearInterval(_relogio);
+  const el = document.getElementById("salaTempo");
+  const tique = () => {
+    const resta = Math.max(0, SALA_PRAZO - (Date.now() - _tInicio));
+    el.textContent = Math.ceil(resta / 1000);
+    el.classList.toggle("urgente", resta <= 5000);
+    if(resta <= 0) _fecharPergunta();
+  };
+  tique();
+  _relogio = setInterval(tique, 250);
+}
+
+function _fecharPergunta(){
+  clearInterval(_relogio);
+  const q = _perguntas[_iPergunta];
+  document.getElementById("salaOpcoes").querySelectorAll(".answer")
+    .forEach((e, i) => e.classList.add(i === q.answer ? "correct" : "wrong"));
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaPlacar").innerHTML = ordem.map((j, i) =>
+    '<div class="sala-linha' + (j.ganho ? "" : " errou") + '"><span>' + (i + 1)
+    + "</span><b>" + _escapar(j.nome) + "</b><span class=\"ganho\">+" + (j.ganho || 0)
+    + "</span><span>" + j.pontos + "</span></div>").join("");
+  _enviarTodos({t: "resultado", certa: q.answer,
+                placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos, ganho: j.ganho || 0}))});
+  if(typeof sfx !== "undefined") sfx.etapa();
+  setTimeout(_proximaPergunta, 4000);
+}
+
+function _fimSala(){
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaProgresso").textContent = "Fim!";
+  document.getElementById("salaTempo").textContent = "";
+  document.getElementById("salaPergunta").textContent =
+    ordem.length ? ordem[0].nome + " venceu!" : "Fim da partida";
+  document.getElementById("salaOpcoes").innerHTML = "";
+  _enviarTodos({t: "fim", placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos}))});
+  if(typeof festa === "function"){ festa(80); palmas(); }
+}
+
+function fecharSala(){
+  clearInterval(_relogio);
+  _enviarTodos({t: "encerrada"});
+  try{ _peer && _peer.destroy(); }catch(e){}
+  _peer = null; _souTelao = false; _jogadores.clear(); _iPergunta = -1;
+  goHome();
+}
+
+/* ---------- lado do jogador ---------- */
+async function entrarSala(){
+  const codigo = (document.getElementById("salaCodigo").value || "").replace(/\D/g, "");
+  const nome = (document.getElementById("salaNome").value || "").trim() || "Jogador";
+  if(codigo.length !== 4){ _flutuante("O código tem 4 números."); return; }
+  _tela("salaJogador");
+  _avisoSala("Conectando...");
+  try{ await _carregarPeer(); }
+  catch(e){ _avisoSala("Sem internet. Este modo precisa de conexão."); return; }
+  // Se o peer não abrir, não há nem conexão para dar erro: sem este prazo a
+  // tela fica em "Conectando..." para sempre.
+  let peerPronto = false;
+  setTimeout(() => { if(!peerPronto) _avisoSala("Não consegui falar com o servidor de encontro. Verifique a internet."); }, 12000);
+  _peer = new Peer();
+  _peer.on("open", () => {
+    peerPronto = true;
+    _conAnfitriao = _peer.connect(SALA_PREFIXO + codigo);
+    let abriu = false;
+    _conAnfitriao.on("open", () => { abriu = true; _conAnfitriao.send({t: "entrar", nome}); });
+    _conAnfitriao.on("data", d => _doTelao(d));
+    _conAnfitriao.on("close", () => _avisoSala("O telão encerrou a sala."));
+    // O telão respondeu mas o canal não abriu: é a rede no meio. Acontece
+    // quando os dois lados estão atrás de NAT restritivo — dados móveis, por
+    // exemplo. Sem um servidor de relé não há o que fazer daqui, então o
+    // aviso diz o que resolve na prática.
+    setTimeout(() => {
+      if(!abriu) _avisoSala("Não consegui conectar ao telão. "
+        + "Ponha os dois aparelhos no mesmo Wi-Fi e tente de novo.");
+    }, 12000);
+  });
+  _peer.on("error", e => _avisoSala(
+    e && e.type === "peer-unavailable" ? "Não achei essa sala. Confira o código."
+                                       : "Falha de conexão. Tente de novo."));
+}
+
+function _doTelao(d){
+  const estado = document.getElementById("salaEstado");
+  const botoes = document.getElementById("salaBotoes");
+  const placar = document.getElementById("salaMeuPlacar");
+  if(d.t === "aceito"){ _avisoSala("Você entrou! Esperando começar..."); }
+  if(d.t === "recusado"){ _avisoSala(d.motivo); }
+  if(d.t === "pergunta"){
+    placar.innerHTML = "";
+    estado.textContent = "Responda!";
+    botoes.innerHTML = "";
+    const t0 = Date.now();
+    for(let i = 0; i < d.n; i++){
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "answer";
+      b.innerHTML = '<span class="letra">' + FORMAS[i % 4] + "</span>";
+      b.setAttribute("aria-label", "Alternativa " + FORMAS[i % 4]);
+      b.onclick = () => {
+        botoes.querySelectorAll(".answer").forEach(x => { x.disabled = true; });
+        b.classList.add("escolhida");
+        estado.textContent = "Resposta enviada!";
+        _conAnfitriao.send({t: "resposta", i: d.i, escolha: i, ms: Date.now() - t0});
+        if(typeof sfx !== "undefined") sfx.toque();
+      };
+      botoes.appendChild(b);
+    }
+  }
+  if(d.t === "recebido"){
+    estado.textContent = d.certo ? "Acertou!" : "Dessa vez não.";
+    if(typeof sfx !== "undefined") d.certo ? sfx.acerto() : sfx.erro();
+  }
+  if(d.t === "resultado" || d.t === "fim"){
+    botoes.innerHTML = "";
+    if(d.t === "fim"){
+      estado.textContent = d.placar.length ? d.placar[0].nome + " venceu!" : "Fim";
+      if(typeof festa === "function") festa(50);
+    }
+    placar.innerHTML = d.placar.map((j, i) =>
+      '<div class="sala-linha"><span>' + (i + 1) + "</span><b>" + _escapar(j.nome)
+      + '</b><span class="ganho">' + (j.ganho ? "+" + j.ganho : "") + "</span><span>"
+      + j.pontos + "</span></div>").join("");
+  }
+  if(d.t === "encerrada"){ _avisoSala("O telão encerrou a sala."); }
+}
+
+/* ---------- entrada pela rota ---------- */
+function abrirSala(codigo){
+  show("sala");
+  _tela(_souTelao ? "salaAnfitriao" : "salaEscolha");
+  if(codigo && !_souTelao){
+    mostrarEntrada();
+    document.getElementById("salaCodigo").value = codigo;
+  }
+}
+ROTAS.sala = abrirSala;
+
+function _catalogoMissoes(){
+  return Object.keys(nomes).filter(c => c !== "review").map(c => [c, nomes[c]]);
+}
+function _perguntasSala(cat){ return makeQuestions(cat, 10); }
+
+/* ---------- seletor de perfil no cabeçalho ---------- */
+function pintarPerfil(){
+  const b = document.getElementById("btnPerfil");
+  if(!b) return;
+  const p = perfilAtual();
+  b.textContent = p ? inicialDe(p.nome) : "?";
+  b.style.background = p ? "var(" + p.cor + ")" : "";
+  b.setAttribute("aria-label", p ? "Perfil: " + p.nome + ". Trocar de aluno"
+                                 : "Escolher quem está jogando");
+  b.title = p ? p.nome : "Escolher aluno";
+}
+function abrirPerfis(){ location.href = "index.html#perfis"; }
+addEventListener("DOMContentLoaded", pintarPerfil);
+
+/* ---------- histórico de partidas ---------- */
+/* Uma linha por partida terminada. Campos curtos: isto cresce sem parar e
+   divide os 5 MB do localStorage com o progresso. */
+const HIST_CHAVE = "jogos_historico_v1";
+const HIST_MAX = 400;
+
+function registrarPartida(acertos, total, pontos){
+  if(!total) return;                       // saiu antes de responder: não conta
+  try{
+    const p = perfilAtual();
+    const k = HIST_CHAVE + (p ? ":" + p.id : "");
+    const lista = JSON.parse(localStorage.getItem(k) || "[]");
+    lista.push({q: Date.now(), j: "mat", m: currentCategory || "all",
+                t: activeTrail || null, a: acertos, n: total, p: pontos || 0});
+    while(lista.length > HIST_MAX) lista.shift();
+    localStorage.setItem(k, JSON.stringify(lista));
+  }catch(e){}
+}
+</script></body></html>
