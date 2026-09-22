@@ -19,6 +19,21 @@ const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+e
 
 let _sb = null, _sessao = null;
 
+/* O Supabase devolve a sessão no fragmento da URL (#access_token=...). Como
+   este índice usa o fragmento para navegar entre abas, a primeira troca de
+   aba apagaria o token antes de a biblioteca — que carrega sob demanda — ter
+   chance de vê-lo. Então o fragmento é lido e limpo AGORA, no início do
+   script, e a sessão é montada à mão depois. */
+const _VOLTA = (function(){
+  const h = location.hash || "";
+  if(h.indexOf("access_token=") < 0 && h.indexOf("error=") < 0
+     && h.indexOf("error_code=") < 0) return null;
+  const p = new URLSearchParams(h.slice(1));
+  try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+  return {token: p.get("access_token"), refresh: p.get("refresh_token"),
+          erro: p.get("error_description") || p.get("error_code") || p.get("error")};
+})();
+
 function contaLigada(){ return !!(CONTA.url && CONTA.chave); }
 
 /* Os dois enganos que a interface do Supabase induz: colar a URL com
@@ -103,6 +118,10 @@ function _aplicar(d){
 /* As mensagens do Supabase vêm em inglês e não dizem o que fazer. */
 function _emPortugues(msg){
   const m = String(msg || "");
+  if(/link is invalid|otp_expired|expired/i.test(m))
+    return "O link do e-mail expirou ou já foi usado. Entre abaixo com o mesmo e-mail e senha.";
+  if(/access_denied/i.test(m))
+    return "O link não foi aceito. Entre abaixo com o mesmo e-mail e senha.";
   if(/email not confirmed/i.test(m))
     return "A conta existe, mas falta confirmar o e-mail. Veja o passo 5 do CONTA.md.";
   if(/invalid login/i.test(m))
@@ -205,10 +224,35 @@ function pintarConta(){
       + '<p id="contaRecado" class="recado"></p></form>';
 }
 
-/* Se voltou de um login do Google, a sessão já existe. */
-if(contaLigada()){
-  _cliente().then(sb => sb.auth.getSession()).then(r => {
+/* Volta de uma confirmação de e-mail ou de um login do Google. */
+async function _retomarSessao(){
+  if(!contaLigada()) return;
+  let sb;
+  try{ sb = await _cliente(); }catch(e){ return; }
+  if(_VOLTA && _VOLTA.erro){
+    desenhar();
+    _recado(_emPortugues(_VOLTA.erro));
+    return;
+  }
+  if(_VOLTA && _VOLTA.token){
+    const {data, error} = await sb.auth.setSession(
+      {access_token: _VOLTA.token, refresh_token: _VOLTA.refresh || ""});
+    if(!error && data) _sessao = data.session;
+  }
+  if(!_sessao){
+    const r = await sb.auth.getSession();
     _sessao = r && r.data && r.data.session;
-    if(_sessao){ sincronizar().then(desenhar); }
-  }).catch(() => {});
+  }
+  if(_sessao){
+    await sincronizar();
+    desenhar();
+    _recado("Conta confirmada e sincronizada.");
+  }else if(_VOLTA && _VOLTA.token){
+    /* Veio com token e mesmo assim não abriu sessão: quase sempre link já
+       usado ou expirado. Sem isto, a tela de login aparece muda. */
+    desenhar();
+    _recado("O link de confirmação já foi usado ou expirou. "
+      + "Entre abaixo com o mesmo e-mail e senha.");
+  }
 }
+_retomarSessao().catch(() => {});

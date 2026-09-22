@@ -307,6 +307,7 @@ function ir(v){
 addEventListener("hashchange", () => ir((location.hash || "#jogos").slice(1)));
 addEventListener("DOMContentLoaded", () => {
   desenhar();
-  const v = (location.hash || "#jogos").slice(1);
+  const v = (typeof _VOLTA !== "undefined" && _VOLTA) ? "conta"
+          : (location.hash || "#jogos").slice(1);
   ir(document.getElementById("v-" + v) ? v : "jogos");
 });

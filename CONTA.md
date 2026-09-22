@@ -96,6 +96,11 @@ Em **Authentication → URL Configuration**:
 - **Site URL**: `https://alansantospi.github.io/jogos-de-estudo/`
 - **Redirect URLs**: adicione o mesmo endereço
 
+> **O caminho faz parte.** `https://alansantospi.github.io/` sozinho não
+> existe — o GitHub Pages só serve a raiz do domínio se houver um repositório
+> chamado `alansantospi.github.io`. Sem o `/jogos-de-estudo/` no fim, o link
+> de confirmação cai numa página inexistente.
+
 ### Mais simples: dispensar a confirmação
 
 Para um jogo de família, com uma conta só e o e-mail sendo seu, a confirmação
