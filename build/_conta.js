@@ -10,10 +10,10 @@
 const CONTA = {
   /* Project Settings > Data API > Project URL.
      Só a base: SEM o /rest/v1 que a documentação mostra. */
-  url: "",     /* https://xxxxxxxx.supabase.co */
+  url: "https://bjlbfstuossmxnaqblih.supabase.co",     /* https://xxxxxxxx.supabase.co */
   /* Project Settings > API Keys > "publishable key" (sb_publishable_...).
      Em projeto antigo pode ser a legada "anon public" (começa com eyJ). */
-  chave: "",
+  chave: "sb_publishable_lOr07N705_pZp6UQZmQLQg_EGjIAwgY",
 };
 const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
 
