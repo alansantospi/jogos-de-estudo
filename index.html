@@ -588,14 +588,33 @@ addEventListener("DOMContentLoaded", () => {
    pública por desenho, e quem protege os dados é a política de acesso por
    linha (RLS), não o segredo da chave. As instruções estão em CONTA.md. */
 const CONTA = {
-  url: "",     /* https://xxxxx.supabase.co */
-  chave: "",   /* chave anon (public) */
+  /* Project Settings > Data API > Project URL.
+     Só a base: SEM o /rest/v1 que a documentação mostra. */
+  url: "",     /* https://xxxxxxxx.supabase.co */
+  /* Project Settings > API Keys > "publishable key" (sb_publishable_...).
+     Em projeto antigo pode ser a legada "anon public" (começa com eyJ). */
+  chave: "",
 };
-const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm";
+const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
 
 let _sb = null, _sessao = null;
 
 function contaLigada(){ return !!(CONTA.url && CONTA.chave); }
+
+/* Os dois enganos que a interface do Supabase induz: colar a URL com
+   /rest/v1 no fim, e colar a chave secreta no lugar da pública. */
+function _conferirConfig(){
+  const u = CONTA.url.trim(), k = CONTA.chave.trim();
+  if(/\/rest\/v1/.test(u))
+    return "A URL veio com /rest/v1 no fim. Deixe só https://xxxx.supabase.co";
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(u))
+    return "A URL não parece a do projeto. Deve ser https://xxxx.supabase.co";
+  if(k.indexOf("sb_secret_") === 0)
+    return "Essa é a chave SECRETA. Use a publishable (sb_publishable_...) — a secreta nunca vai para o navegador.";
+  if(k.indexOf("sb_publishable_") !== 0 && k.indexOf("eyJ") !== 0)
+    return "A chave não parece a publishable nem a anon legada.";
+  return null;
+}
 
 async function _cliente(){
   if(_sb) return _sb;
@@ -697,6 +716,13 @@ function _recado(t){ const e = document.getElementById("contaRecado"); if(e) e.t
 
 function pintarConta(){
   const c = document.getElementById("conta");
+  const erro = contaLigada() ? _conferirConfig() : null;
+  if(erro){
+    c.innerHTML = '<div class="cartao"><h2>Conta</h2><p><b>Configuração incorreta.</b> '
+      + esc(erro) + "</p><p>Corrija em <b>build/_conta.js</b> e rode "
+      + "<code>sh build/rebuild.sh</code>.</p></div>";
+    return;
+  }
   if(!contaLigada()){
     c.innerHTML = '<div class="cartao">'
       + "<h2>Entrar na conta</h2>"

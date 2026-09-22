@@ -38,10 +38,34 @@ create policy "dono altera" on familias for update using (auth.uid() = id);
 
 ## 3. Pegar os dois valores
 
-Em **Project Settings → API**:
+O painel do Supabase mudou e agora são **duas seções separadas** em
+**Project Settings** — não existe mais uma única aba "API".
 
-- **Project URL** — algo como `https://abcdefgh.supabase.co`
-- **anon public** — a chave longa que começa com `eyJ...`
+**A URL** fica em **Project Settings → Data API**, no campo *Project URL*:
+
+```
+https://abcdefghijklm.supabase.co
+```
+
+> Cuidado: a documentação do Supabase mostra a URL terminando em `/rest/v1/`.
+> Aqui use **só a base**, sem o `/rest/v1`.
+
+**A chave** fica em **Project Settings → API Keys**, na aba *API keys*, campo
+**publishable key**:
+
+```
+sb_publishable_xxxxxxxxxxxxxxxxxxxxxx
+```
+
+É essa que vai no HTML — ela é pública por desenho, e quem protege os dados é
+a política de acesso por linha que você criou no passo 2.
+
+> **Nunca** use a *secret key* (`sb_secret_...`). Ela dá acesso total e
+> ignora as políticas. A página avisa se você colar a errada.
+
+> Projeto antigo? Pode haver só a aba **Legacy API keys**, com a chave
+> `anon public` (começa com `eyJ`). Essa também funciona. As legadas serão
+> desativadas até o fim de 2026.
 
 ## 4. Colar no código
 
@@ -49,13 +73,17 @@ Em `build/_conta.js`, no topo:
 
 ```js
 const CONTA = {
-  url:   "https://abcdefgh.supabase.co",
-  chave: "eyJ...",
+  url:   "https://abcdefghijklm.supabase.co",
+  chave: "sb_publishable_xxxxxxxxxxxxxxxxxxxxxx",
 };
 ```
 
 Depois rode `sh build/rebuild.sh` e publique. A aba **Conta** passa a mostrar
 o formulário de entrada.
+
+Se algum dos dois estiver errado, a aba **Conta** diz qual e por quê — URL com
+`/rest/v1` no fim, ou a chave secreta no lugar da pública — em vez de dar erro
+de rede sem explicação.
 
 ## 5. Opcional: entrar com Google
 
