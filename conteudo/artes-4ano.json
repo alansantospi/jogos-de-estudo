@@ -1,0 +1,558 @@
+{
+ "id": "artes-4ano",
+ "materia": "Arte",
+ "titulo": "Ateliê",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "melodia",
+   "nome": "Melodia, ritmo e timbre"
+  },
+  {
+   "id": "harmonia",
+   "nome": "Harmonia e arranjo"
+  },
+  {
+   "id": "pintura",
+   "nome": "Pintura mural e afresco"
+  },
+  {
+   "id": "michelangelo",
+   "nome": "Michelangelo e a Capela Sistina"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "musica",
+   "nome": "Melodia e Harmonia",
+   "etapas": [
+    "melodia",
+    "harmonia",
+    "all"
+   ]
+  },
+  {
+   "id": "pintura",
+   "nome": "Pintura e Afresco",
+   "etapas": [
+    "pintura",
+    "michelangelo",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "melodia",
+   "icone": "nota",
+   "enunciado": "O que é uma melodia?",
+   "fonte": "livro p.13",
+   "origem": "derivada",
+   "certa": "Uma linha de notas organizadas em um ritmo",
+   "erradas": [
+    "O conjunto dos instrumentos juntos",
+    "A cor do som de um instrumento tocado",
+    "O volume com que a música é tocada"
+   ],
+   "explicacao": "Geralmente é a parte da canção que você sabe cantar ou assobiar."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "melodia",
+   "icone": "instrumento",
+   "enunciado": "O que é o ritmo de uma música?",
+   "fonte": "livro p.13",
+   "origem": "derivada",
+   "certa": "A ordem do tempo da música",
+   "erradas": [
+    "A cor única de cada instrumento",
+    "A união de melodias diferentes",
+    "O nome dado ao compositor"
+   ],
+   "explicacao": "É o ritmo que organiza as notas da melodia."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "melodia",
+   "icone": "instrumento",
+   "enunciado": "O que é o timbre?",
+   "fonte": "livro p.13",
+   "origem": "derivada",
+   "certa": "A “cor” única de cada instrumento",
+   "erradas": [
+    "A velocidade da música",
+    "O número de notas da melodia",
+    "O nome que se dá a uma partitura"
+   ],
+   "explicacao": "É o timbre que faz um violino soar diferente de um piano tocando a mesma nota. O livro também o chama de voz única do instrumento."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "melodia",
+   "icone": "livro",
+   "enunciado": "Como se chama a área de estudo que ensina a ouvir, ler e escrever música em uma partitura?",
+   "fonte": "livro p.13",
+   "origem": "derivada",
+   "certa": "Teoria musical",
+   "erradas": [
+    "Arranjo musical",
+    "Harmonia vocal",
+    "Escala sonora"
+   ],
+   "explicacao": "É como aprender as regras da Língua Portuguesa para escrever melhor."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "melodia",
+   "icone": "ondas-agua",
+   "enunciado": "O que os compositores fazem com os sons dos instrumentos ao descrever o Rio Moldava, em Praga?",
+   "fonte": "livro p.21",
+   "origem": "derivada",
+   "certa": "Descrevem o movimento das águas",
+   "erradas": [
+    "Usam apenas o silêncio entre as notas",
+    "Repetem sempre a mesma nota do início",
+    "Cantam a letra que descreve o rio"
+   ],
+   "explicacao": "A música pode descrever imagens e criar cenas na nossa imaginação."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "melodia",
+   "icone": "escrever",
+   "enunciado": "Como se chama a “cor” ou voz única de cada instrumento?",
+   "origem": "propria",
+   "aceitas": [
+    "timbre",
+    "o timbre"
+   ],
+   "exemplo": "Digite o termo...",
+   "explicacao": "Timbre — é ele que diferencia um violino de um piano."
+  },
+  {
+   "tipo": "vf",
+   "missao": "melodia",
+   "icone": "instrumento",
+   "enunciado": "O compositor escolhe apenas as notas de uma música.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Falso: ele escolhe também o timbre, ou seja, quais instrumentos melhor se encaixam na obra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "harmonia",
+   "icone": "mao",
+   "enunciado": "A palavra harmonia vem do grego e significa...",
+   "fonte": "livro p.19",
+   "origem": "derivada",
+   "certa": "união, concórdia ou ajuste",
+   "erradas": [
+    "velocidade, pressa e cadência",
+    "cor, brilho e clareza",
+    "força, volume e peso"
+   ],
+   "explicacao": "A beleza na música depende da união e do ajuste perfeito de todas as partes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "harmonia",
+   "icone": "partitura",
+   "enunciado": "Quando dizemos que uma melodia está harmonizada?",
+   "fonte": "livro p.19",
+   "origem": "derivada",
+   "certa": "Quando outras melodias soam bem com ela",
+   "erradas": [
+    "Quando ela é tocada bem alto e rápido",
+    "Quando um instrumento sozinho a toca",
+    "Quando ela é escrita numa partitura certa"
+   ],
+   "explicacao": "Harmonia é o encaixe entre as partes: melodias diferentes soando bem junto com a principal."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "harmonia",
+   "icone": "instrumento",
+   "enunciado": "O que é um arranjo?",
+   "fonte": "livro p.19",
+   "origem": "derivada",
+   "certa": "Uma nova roupa para a mesma melodia",
+   "erradas": [
+    "O nome dado à nota mais aguda dela",
+    "O tempo que a música inteira dura",
+    "O título que a canção recebe no disco"
+   ],
+   "explicacao": "É uma nova maneira de organizar e vestir a mesma melodia: só com um violão, ou com coral, cordas, percussão e piano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "harmonia",
+   "icone": "triste",
+   "enunciado": "Segundo o livro, o que pode acontecer se uma única nota ficar fora do lugar?",
+   "fonte": "livro p.19",
+   "origem": "derivada",
+   "certa": "Pode mudar a sensação da peça",
+   "erradas": [
+    "Nada muda na música que se ouve",
+    "A música fica bem mais rápida",
+    "O instrumento sai do tom sozinho"
+   ],
+   "explicacao": "É como uma vírgula colocada no lugar errado em um texto — muda o sentido da frase."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "harmonia",
+   "icone": "elos",
+   "enunciado": "Associe cada elemento musical ao seu significado.",
+   "fonte": "livro p.13, 19",
+   "origem": "derivada",
+   "pares": [
+    [
+     "Melodia",
+     "Linha musical que dá vontade de cantar"
+    ],
+    [
+     "Ritmo",
+     "A ordem do tempo da música"
+    ],
+    [
+     "Timbre",
+     "A cor ou voz única de um instrumento"
+    ],
+    [
+     "Harmonia",
+     "União e ajuste entre as melodias"
+    ],
+    [
+     "Arranjo",
+     "Nova forma de organizar a mesma música"
+    ]
+   ],
+   "explicacao": "Juntos, esses elementos formam a estrutura de uma música."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "harmonia",
+   "icone": "escrever",
+   "enunciado": "Qual palavra vem do grego e significa união, concórdia ou ajuste?",
+   "origem": "propria",
+   "aceitas": [
+    "harmonia",
+    "a harmonia"
+   ],
+   "exemplo": "Digite a palavra...",
+   "explicacao": "Harmonia — a beleza na música depende do ajuste entre as partes."
+  },
+  {
+   "tipo": "vf",
+   "missao": "harmonia",
+   "icone": "microfone",
+   "enunciado": "As possibilidades de arranjo para uma mesma melodia são quase infinitas.",
+   "fonte": "livro p.19",
+   "origem": "derivada",
+   "certa": true,
+   "explicacao": "A mesma melodia pode ganhar “roupas” muito diferentes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pintura",
+   "icone": "parede",
+   "enunciado": "O que é uma Pintura Mural?",
+   "fonte": "livro p.36",
+   "origem": "derivada",
+   "certa": "Uma arte feita numa parede ou num teto",
+   "erradas": [
+    "Um quadro pequeno pintado sobre uma tela",
+    "Um desenho feito numa folha de papel",
+    "Uma escultura talhada em pedra dura"
+   ],
+   "explicacao": "É arte de grande escala, em parede, teto ou grande painel, quase sempre em local público — obra permanente, pensada para embelezar espaços."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pintura",
+   "icone": "pincel",
+   "enunciado": "Por que a Pintura Mural é considerada um ato de vocação e serviço?",
+   "fonte": "livro p.36",
+   "origem": "derivada",
+   "certa": "Porque o artista a cria para a comunidade",
+   "erradas": [
+    "Porque o artista ganha muito dinheiro",
+    "Porque é mais fácil que pintar em tela",
+    "Porque fica pronta em pouco tempo"
+   ],
+   "explicacao": "O artista não a cria para si, mas para a comunidade e para a história."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pintura",
+   "icone": "bandeira",
+   "enunciado": "A palavra afresco vem do italiano e significa...",
+   "fonte": "livro p.36",
+   "origem": "derivada",
+   "certa": "fresco",
+   "erradas": [
+    "parede",
+    "tinta",
+    "gigante"
+   ],
+   "explicacao": "O nome indica que a pintura só pode ser aplicada enquanto o gesso ainda está úmido."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pintura",
+   "icone": "gota",
+   "enunciado": "Qual é a condição essencial da técnica do afresco?",
+   "fonte": "livro p.36",
+   "origem": "derivada",
+   "certa": "O gesso precisa estar úmido",
+   "erradas": [
+    "A parede precisa estar totalmente seca",
+    "Só pode ser feita durante a noite",
+    "A tinta precisa ser misturada com óleo"
+   ],
+   "explicacao": "A pintura só pode ser aplicada enquanto o gesso está úmido. Por isso a técnica exige preparação meticulosa e é uma corrida contra o tempo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pintura",
+   "icone": "tubo",
+   "enunciado": "No afresco, as cores são misturadas apenas com...",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "água",
+   "erradas": [
+    "óleo",
+    "cola",
+    "areia"
+   ],
+   "explicacao": "Quando o gesso seca, a tinta fixa-se quimicamente a ele e vira parte da parede."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "pintura",
+   "icone": "escrever",
+   "enunciado": "Qual é a técnica de pintura mural aplicada sobre o gesso úmido?",
+   "origem": "propria",
+   "aceitas": [
+    "afresco",
+    "o afresco",
+    "fresco"
+   ],
+   "exemplo": "Digite o nome da técnica...",
+   "explicacao": "Afresco — do italiano fresco."
+  },
+  {
+   "tipo": "vf",
+   "missao": "pintura",
+   "icone": "relogio",
+   "enunciado": "No afresco, o artista pode pintar com calma, pois a tinta demora muito para secar.",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": false,
+   "explicacao": "Falso: é uma corrida contra o tempo, porque a pintura só vale enquanto o gesso está úmido."
+  },
+  {
+   "tipo": "vf",
+   "missao": "pintura",
+   "icone": "templo",
+   "enunciado": "Uma pintura mural é feita com materiais que resistem ao sol e à chuva ao longo do tempo.",
+   "fonte": "livro p.36",
+   "origem": "derivada",
+   "certa": true,
+   "explicacao": "O muro funciona como tela, e a obra precisa durar."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "castelo",
+   "enunciado": "Qual obra Michelangelo foi escolhido para pintar?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "O teto da Capela Sistina",
+   "erradas": [
+    "O teto do Museu do Louvre",
+    "A parede da Biblioteca Nacional",
+    "A cúpula da Torre de Pisa"
+   ],
+   "explicacao": "Fica no Palácio Apostólico, na Cidade do Vaticano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "regua",
+   "enunciado": "A que altura ficava o teto da Capela Sistina?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "A mais de 20 metros",
+   "erradas": [
+    "A pouco mais de 3 metros",
+    "A quase 100 metros",
+    "A menos de 5 metros"
+   ],
+   "explicacao": "Era um suporte enorme e curvo, o que tornava o trabalho ainda mais difícil."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "pessoa",
+   "enunciado": "Qual era a profissão principal de Michelangelo, que o deixou receoso em aceitar o trabalho?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "Escultor",
+   "erradas": [
+    "Arquiteto",
+    "Músico",
+    "Poeta"
+   ],
+   "explicacao": "Ele aceitou o pedido do Papa Júlio II mesmo sendo escultor, não pintor."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "templo",
+   "enunciado": "Quem pediu a Michelangelo que pintasse o teto da Capela Sistina?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "O Papa Júlio II",
+   "erradas": [
+    "O Papa Gregório XIII",
+    "Dom João VI",
+    "Leonardo da Vinci"
+   ],
+   "explicacao": "Michelangelo ficou bastante receoso em aceitar."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "escada",
+   "enunciado": "Como Michelangelo pintava o teto?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "Em pé sobre um andaime",
+   "erradas": [
+    "Deitado de costas no andaime",
+    "Sentado em uma cadeira alta",
+    "Pendurado por cordas"
+   ],
+   "explicacao": "É um engano comum imaginar que ele pintava deitado: pintava em pé, num andaime que ele mesmo projetou, com a cabeça inclinada para trás."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "calendario",
+   "enunciado": "Entre que anos Michelangelo trabalhou no teto da Capela Sistina?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "Entre 1508 e 1512",
+   "erradas": [
+    "Entre 1440 e 1444",
+    "Entre 1808 e 1812",
+    "Entre 1600 e 1604"
+   ],
+   "explicacao": "Foram cerca de quatro anos de trabalho."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "pessoas",
+   "enunciado": "Quantas figuras Michelangelo pintou no teto?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "Mais de 300",
+   "erradas": [
+    "Cerca de 30",
+    "Cerca de 50",
+    "Mais de 3.000"
+   ],
+   "explicacao": "Ao longo de uma superfície de cerca de 1000 metros quadrados."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "livro",
+   "enunciado": "De qual livro bíblico o teto da Capela Sistina retrata diversas cenas?",
+   "fonte": "livro p.37",
+   "origem": "derivada",
+   "certa": "Gênesis",
+   "erradas": [
+    "Apocalipse",
+    "Salmos",
+    "Êxodo"
+   ],
+   "explicacao": "Os três primeiros painéis tratam da Criação do mundo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "mao",
+   "enunciado": "Qual é o afresco mais famoso do teto da Capela Sistina?",
+   "fonte": "livro p.38",
+   "origem": "derivada",
+   "certa": "A Criação de Adão",
+   "erradas": [
+    "O Juízo Final",
+    "A Última Ceia",
+    "A Pietà"
+   ],
+   "explicacao": "Nela, Deus e Adão estendem as mãos. Faz parte dos três painéis centrais, que retratam a história de Adão e Eva."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "balanca",
+   "enunciado": "O que Michelangelo pintou na parede do altar da Capela Sistina?",
+   "fonte": "livro p.38",
+   "origem": "derivada",
+   "certa": "O Juízo Final",
+   "erradas": [
+    "A Criação de Adão",
+    "A história de Noé",
+    "A Última Ceia"
+   ],
+   "explicacao": "Além dos painéis do teto, há essa cena na parede do altar."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "michelangelo",
+   "icone": "elos",
+   "enunciado": "Associe cada conjunto de painéis do teto ao seu tema.",
+   "fonte": "livro p.38",
+   "origem": "derivada",
+   "pares": [
+    [
+     "Os três primeiros painéis",
+     "A Criação do mundo"
+    ],
+    [
+     "Os três painéis centrais",
+     "A história de Adão e Eva"
+    ],
+    [
+     "Os três últimos painéis",
+     "A história de Noé"
+    ],
+    [
+     "A parede do altar",
+     "O Juízo Final"
+    ]
+   ],
+   "explicacao": "O teto conta a história desde a Criação até Noé."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "michelangelo",
+   "icone": "estrela",
+   "enunciado": "Por que a pintura da Capela Sistina é uma das obras mais importantes da história da arte?",
+   "fonte": "livro p.38",
+   "origem": "derivada",
+   "certa": "Pela inovação técnica e a extensão da obra",
+   "erradas": [
+    "Porque foi a pintura mais rápida já feita",
+    "Porque usou tintas coloridas pela primeira vez",
+    "Porque foi pintada por vários artistas juntos"
+   ],
+   "explicacao": "O livro aponta três motivos: a inovação técnica, a extensão da obra e o domínio em retratar a forma humana."
+  }
+ ]
+}

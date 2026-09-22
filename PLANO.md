@@ -212,7 +212,7 @@ do projeto e cobra que a suíte falhe — porque suíte que passa não prova nad
 Limites conhecidos estão em `teste/LEIA.md`: o botão voltar do navegador e a
 sala em rede não dão para automatizar no tempo virtual.
 
-### Fase 1 — Tirar o conteúdo do código `~3 dias`
+### Fase 1 — Tirar o conteúdo do código ✔ feita em 22/09/2026 (3 de 4 jogos)
 
 Extrair os bancos para `conteudo/*.json`, escrever o esquema e o validador. O
 build passa a injetar o JSON. Saída byte a byte idêntica à de hoje, conferida
@@ -222,7 +222,19 @@ pelos testes da Fase 0.
 mais simples, deixam de depender de regex sobre HTML.
 
 **Destrava:** conteúdo revisável em pull request, por quem não programa;
-contagem de procedência (2.1) vira consulta trivial.
+contagem de procedência (2.1) virou consulta trivial — **117 derivadas de
+313** nos três jogos extraídos.
+
+Entregue em `conteudo/*.json`, com `build/esquema.py` validando e
+`build/conferir_conteudo.py` cobrando que a ida e volta não perca nada. A
+extração foi feita pelo próprio navegador (`build/extrair.py`), porque
+escrever um analisador de JavaScript em Python seria inventar uma classe de
+erro sem necessidade.
+
+**Inglês ficou de fora, e isso é deliberado.** Naquele motor a questão vai
+para a missão por expressão regular sobre o texto da fase, em três
+reservatórios, mais geradores por regra. Desembaraçar é trabalho da Fase 2;
+tentar aqui misturaria as duas e tiraria a garantia de "saída idêntica".
 
 ### Fase 2 — Unificar os dois motores `~5 dias`
 

@@ -4,7 +4,11 @@
 Sem viés, com quatro opções, a certa é a mais longa em ~25% das questões e
 a mais curta em ~25%. Longe disso, a criança pode acertar sem saber.
 """
-import io, re, sys
+import io, json, os, re, sys
+
+ARQUIVOS = {"artes.html": "artes-4ano",
+            "historia.html": "historia-4ano",
+            "exploradores-do-ceu.html": "ciencias-4ano"}
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -17,14 +21,19 @@ PISO, TETO = 15.0, 35.0
 
 
 def questoes(arq):
-    s = io.open(arq, encoding="utf-8").read()
-    i = s.index("const bank="); j = s.index("\n};", i) + 3
-    out = []
-    for l in s[i:j].split("\n"):
-        mq, mc, md = PERG.search(l), CERTA.search(l), ERRADAS.search(l)
-        if mq and mc and md:
-            out.append((mq.group(1), mc.group(1), STR.findall(md.group(1))))
-    return out
+    """As questões de escolha, lidas do conteúdo — não mais do HTML.
+
+    Enquanto estava tudo dentro do HTML, medir exigia regex sobre código. Com
+    o conteúdo em `conteudo/*.json`, é leitura direta: menos jeito de errar e
+    o mesmo medidor serve para questão gerada, que nunca vai passar por HTML.
+    """
+    caminho = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                           "conteudo", ARQUIVOS[arq] + ".json")
+    if not os.path.exists(caminho):
+        return []
+    jogo = json.load(io.open(caminho, encoding="utf-8"))
+    return [(q["enunciado"], q["certa"], q["erradas"])
+            for q in jogo["questoes"] if q["tipo"] == "escolha"]
 
 
 def estrategia(it, escolher):

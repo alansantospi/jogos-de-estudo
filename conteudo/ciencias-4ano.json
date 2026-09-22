@@ -1,0 +1,2701 @@
+{
+ "id": "ciencias-4ano",
+ "materia": "Ciências",
+ "titulo": "Exploradores do Céu",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "earth",
+   "nome": "Movimento da Terra"
+  },
+  {
+   "id": "sun",
+   "nome": "Sol e orientação"
+  },
+  {
+   "id": "orientation",
+   "nome": "Orientação espacial"
+  },
+  {
+   "id": "stars",
+   "nome": "Observando as estrelas"
+  },
+  {
+   "id": "instruments",
+   "nome": "Instrumentos de orientação"
+  },
+  {
+   "id": "hemispheres",
+   "nome": "Hemisférios e Equador"
+  },
+  {
+   "id": "moon",
+   "nome": "Fases da Lua"
+  },
+  {
+   "id": "calendars",
+   "nome": "Calendários e ano bissexto"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "earth",
+   "nome": "Terra em Movimento",
+   "etapas": [
+    "earth",
+    "hemispheres",
+    "sun",
+    "all"
+   ]
+  },
+  {
+   "id": "moon",
+   "nome": "Lua e Calendários",
+   "etapas": [
+    "moon",
+    "calendars",
+    "earth",
+    "all"
+   ]
+  },
+  {
+   "id": "orientation",
+   "nome": "Orientação",
+   "etapas": [
+    "sun",
+    "orientation",
+    "instruments",
+    "all"
+   ]
+  },
+  {
+   "id": "stars",
+   "nome": "Estrelas",
+   "etapas": [
+    "stars",
+    "hemispheres",
+    "orientation",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "Qual movimento da Terra está diretamente relacionado à alternância entre dia e noite?",
+   "origem": "propria",
+   "certa": "Rotação",
+   "erradas": [
+    "Translação",
+    "O movimento da Lua ao redor da Terra",
+    "O movimento das marés"
+   ],
+   "explicacao": "A rotação da Terra faz diferentes regiões receberem luz solar em momentos diferentes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "ciclo",
+   "enunciado": "A rotação é o movimento da Terra em torno de...",
+   "origem": "propria",
+   "certa": "seu próprio eixo",
+   "erradas": [
+    "do Sol e da Lua",
+    "da Lua apenas",
+    "do planeta Marte"
+   ],
+   "explicacao": "Rotação é o giro da Terra em torno do próprio eixo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "sol",
+   "enunciado": "Por que o Sol parece se deslocar pelo céu ao longo do dia?",
+   "origem": "propria",
+   "certa": "Principalmente por causa da rotação da Terra",
+   "erradas": [
+    "Porque o Sol gira ao redor da Terra todos os dias",
+    "Porque a Terra se afasta do Sol durante a tarde",
+    "Porque a inclinação do eixo muda ao longo do dia"
+   ],
+   "explicacao": "O movimento aparente diário do Sol está ligado à rotação terrestre."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "lua",
+   "enunciado": "Quando uma região da Terra está voltada para o Sol, ela está vivendo principalmente...",
+   "origem": "propria",
+   "certa": "o dia",
+   "erradas": [
+    "a noite",
+    "um eclipse",
+    "o inverno"
+   ],
+   "explicacao": "A região iluminada pelo Sol está no período diurno."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "relogio",
+   "enunciado": "Quanto tempo a Terra leva, aproximadamente, para dar uma volta completa em torno do próprio eixo?",
+   "origem": "propria",
+   "certa": "Cerca de 24 horas",
+   "erradas": [
+    "Cerca de 1 hora",
+    "Cerca de 7 dias",
+    "Cerca de 1 ano"
+   ],
+   "explicacao": "Uma rotação completa dura aproximadamente 24 horas — é o que chamamos de um dia."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "Como se chama o movimento da Terra ao redor do Sol?",
+   "origem": "propria",
+   "certa": "Translação",
+   "erradas": [
+    "Rotação",
+    "Maré",
+    "Eclipse"
+   ],
+   "explicacao": "Translação é o movimento da Terra ao redor do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "calendario",
+   "enunciado": "Quanto tempo dura aproximadamente uma volta completa da Terra ao redor do Sol?",
+   "origem": "propria",
+   "certa": "Cerca de 365 dias",
+   "erradas": [
+    "Cerca de 24 horas",
+    "Cerca de 30 dias",
+    "Cerca de 10 anos"
+   ],
+   "explicacao": "Uma translação completa dura cerca de 365 dias — é o que chamamos de um ano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "Enquanto é dia no Brasil, do outro lado do planeta geralmente é...",
+   "origem": "propria",
+   "certa": "noite",
+   "erradas": [
+    "dia também",
+    "inverno",
+    "verão"
+   ],
+   "explicacao": "A rotação deixa metade da Terra iluminada e metade no escuro ao mesmo tempo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "planeta",
+   "enunciado": "O eixo de rotação da Terra é...",
+   "origem": "propria",
+   "certa": "inclinado em relação à sua órbita",
+   "erradas": [
+    "perfeitamente vertical o ano todo",
+    "sempre apontado para o Sol",
+    "inexistente na prática"
+   ],
+   "explicacao": "A inclinação do eixo faz a luz do Sol chegar de maneira diferente às regiões ao longo do ano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "planta",
+   "enunciado": "As estações do ano estão relacionadas principalmente a...",
+   "origem": "propria",
+   "certa": "inclinação do eixo e translação",
+   "erradas": [
+    "distância da Terra até o Sol",
+    "velocidade da rotação da Terra",
+    "quantidade de estrelas visíveis"
+   ],
+   "explicacao": "É a inclinação do eixo, junto com a translação, que causa as estações — não a distância até o Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "parar",
+   "enunciado": "Se a Terra deixasse de girar em torno do próprio eixo, o que aconteceria?",
+   "origem": "propria",
+   "certa": "O dia e a noite não se alternariam",
+   "erradas": [
+    "Nada mudaria no planeta",
+    "O ano ficaria bem mais curto que hoje",
+    "As estações do ano deixariam de existir"
+   ],
+   "explicacao": "É a rotação que produz a alternância entre dia e noite."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "olho",
+   "enunciado": "O que significa dizer que o movimento do Sol no céu é “aparente”?",
+   "origem": "propria",
+   "certa": "Quem gira é a Terra, não o Sol",
+   "erradas": [
+    "O Sol dá mesmo uma volta na Terra",
+    "O Sol muda de tamanho durante o dia",
+    "O Sol muda de posição em sua própria órbita"
+   ],
+   "explicacao": "O movimento é aparente porque a mudança de posição vem do giro da Terra, não do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "termometro",
+   "enunciado": "Ao longo de um mesmo dia, a sombra de um poste...",
+   "origem": "propria",
+   "certa": "muda de posição e de tamanho",
+   "erradas": [
+    "fica sempre igual",
+    "aponta sempre para o norte",
+    "muda de posição, mas não de tamanho"
+   ],
+   "explicacao": "Como o Sol muda de posição aparente, a sombra muda junto ao longo do dia."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "ciclo",
+   "enunciado": "Com que frequência a Terra gira em torno do próprio eixo?",
+   "origem": "propria",
+   "certa": "Continuamente, todos os dias",
+   "erradas": [
+    "Apenas durante o dia",
+    "Apenas no verão",
+    "Apenas quando há lua cheia"
+   ],
+   "explicacao": "A rotação nunca para: ela acontece o tempo todo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "ciclo",
+   "enunciado": "O que de fato gira: a Terra ou o céu?",
+   "origem": "propria",
+   "certa": "A Terra gira, e por isso o céu parece girar",
+   "erradas": [
+    "O céu gira em volta da Terra parada",
+    "Os dois estão parados",
+    "O Sol gira em volta da Terra a cada 24 horas"
+   ],
+   "explicacao": "Quem gira é a Terra; o movimento do céu que observamos é aparente."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "ciclo",
+   "enunciado": "A rotação da Terra dura aproximadamente 24 horas.",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "Isso mesmo: uma rotação completa dura cerca de 24 horas — um dia."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "As estações do ano acontecem porque a Terra fica mais perto ou mais longe do Sol.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "É um engano comum. As estações vêm da inclinação do eixo da Terra somada à translação."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "earth",
+   "icone": "relogio",
+   "enunciado": "Coloque em ordem o que acontece ao longo de um dia.",
+   "origem": "propria",
+   "sequencia": [
+    "O Sol nasce no lado leste",
+    "O Sol fica mais alto por volta do meio-dia",
+    "O Sol se põe no lado oeste",
+    "As estrelas ficam visíveis"
+   ],
+   "explicacao": "O movimento aparente do Sol ao longo do dia é consequência da rotação da Terra."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "earth",
+   "icone": "elos",
+   "enunciado": "Associe cada movimento ou efeito à sua descrição.",
+   "origem": "propria",
+   "pares": [
+    [
+     "Rotação",
+     "Dura cerca de 24 horas"
+    ],
+    [
+     "Translação",
+     "Dura cerca de 365 dias"
+    ],
+    [
+     "Eixo inclinado",
+     "Causa as estações do ano"
+    ],
+    [
+     "Dia e noite",
+     "Resultado da rotação"
+    ]
+   ],
+   "explicacao": "Rotação gera o dia; translação com eixo inclinado gera as estações."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "sol",
+   "enunciado": "Qual é a alternativa CORRETA sobre o Solstício?",
+   "fonte": "p.68 q11",
+   "origem": "propria",
+   "certa": "É o dia mais longo do verão",
+   "erradas": [
+    "Acontece a cada quatro anos, no calendário",
+    "É quando a Terra fica mais longe do Sol",
+    "O dia e a noite duram 12 horas cada"
+   ],
+   "explicacao": "No solstício o Sol fica mais tempo no céu: é o dia mais longo do verão e a noite mais longa do inverno."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "fala",
+   "enunciado": "João diz: “Por causa da rotação, quando é verão no Brasil é outono no Canadá.” Lavínia diz: “Por causa da inclinação do eixo, quando um hemisfério está em uma estação, o outro está em outra.” Quem está certo?",
+   "fonte": "p.68 q12",
+   "origem": "propria",
+   "certa": "Lavínia está correta e João está errado",
+   "erradas": [
+    "Os dois estão corretos",
+    "João está correto e Lavínia está errada",
+    "Os dois estão errados"
+   ],
+   "explicacao": "As estações vêm da inclinação do eixo somada à translação, não da rotação. E quando é verão no Brasil, é inverno no Canadá."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "planta",
+   "enunciado": "Qual é o principal evento que o movimento de translação ajuda a provocar e que organiza nosso ano?",
+   "fonte": "p.67 q9",
+   "origem": "propria",
+   "certa": "As quatro estações do ano",
+   "erradas": [
+    "O caminho do Sol no céu todo dia",
+    "O ciclo das fases da Lua",
+    "A existência do dia e da noite"
+   ],
+   "explicacao": "As estações nascem da translação somada à inclinação do eixo da Terra."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "earth",
+   "icone": "elos",
+   "enunciado": "Associe cada movimento ao ciclo temporal que ele marca.",
+   "fonte": "p.67 q8",
+   "origem": "propria",
+   "pares": [
+    [
+     "A Terra girar em torno de si mesma",
+     "Um dia (24 horas)"
+    ],
+    [
+     "A Terra dar uma volta no Sol",
+     "Um ano (cerca de 365 dias)"
+    ],
+    [
+     "A Lua dar uma volta na Terra",
+     "Um mês (cerca de 30 dias)"
+    ]
+   ],
+   "explicacao": "Cada movimento dá origem a um ciclo temporal diferente."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "earth",
+   "icone": "elos",
+   "enunciado": "Associe cada descrição à estação ou ao momento do ano.",
+   "fonte": "p.51",
+   "origem": "propria",
+   "pares": [
+    [
+     "Chuvas intensas e dias mais longos",
+     "Verão"
+    ],
+    [
+     "As menores temperaturas do ano",
+     "Inverno"
+    ],
+    [
+     "As árvores perdem suas folhas",
+     "Outono"
+    ],
+    [
+     "Antecede o verão e florescem mais flores",
+     "Primavera"
+    ]
+   ],
+   "explicacao": "Cada estação dura cerca de três meses e volta sempre no mesmo período."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "mala",
+   "enunciado": "Rebeca mora em Palmas (TO) e vai visitar Lisboa em janeiro. Como faz calor em Palmas, ela levou só roupas leves. Foi uma boa escolha?",
+   "fonte": "p.61 q5",
+   "origem": "propria",
+   "certa": "Não: em janeiro é inverno em Portugal, que fica no Hemisfério Norte",
+   "erradas": [
+    "Sim: janeiro é verão nos dois lugares",
+    "Sim: em Portugal faz calor o ano inteiro",
+    "Não: em janeiro é verão em Portugal e faz calor demais para roupas leves"
+   ],
+   "explicacao": "Portugal fica no Hemisfério Norte, onde as estações são opostas às do Brasil. Em janeiro, lá é inverno."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "planta",
+   "enunciado": "No Hemisfério Sul, quando acontece o equinócio de primavera?",
+   "fonte": "p.50",
+   "origem": "propria",
+   "certa": "22 ou 23 de setembro",
+   "erradas": [
+    "20 ou 21 de março",
+    "21 ou 23 de dezembro",
+    "21 ou 23 de junho"
+   ],
+   "explicacao": "No Hemisfério Norte, essa mesma data marca o equinócio de outono."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "nuvem",
+   "enunciado": "Nos Polos Norte e Sul há apenas duas estações: um longo verão e um longo inverno.",
+   "fonte": "p.49",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "Por causa da inclinação do eixo, um polo fica meses iluminado enquanto o outro fica meses no escuro."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "Quando Maiara acorda às 6h no Brasil, sua amiga Ana já está jantando na Coreia do Sul. Por quê?",
+   "fonte": "p.38 q3",
+   "origem": "propria",
+   "certa": "Por causa da rotação da Terra",
+   "erradas": [
+    "Porque a Coreia do Sul fica mais perto do Sol",
+    "Porque na Coreia do Sul o dia dura menos horas",
+    "Porque a Lua ilumina a Coreia do Sul primeiro"
+   ],
+   "explicacao": "A rotação deixa cada região voltada para o Sol em momentos diferentes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "bussola",
+   "enunciado": "Em que sentido a Terra gira no movimento de rotação?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "De oeste para leste",
+   "erradas": [
+    "De leste para oeste",
+    "De norte para sul",
+    "De sul para norte"
+   ],
+   "explicacao": "É por girar de oeste para leste que o Sol parece nascer no leste e se pôr no oeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "relogio",
+   "enunciado": "Qual destas NÃO é uma consequência da rotação da Terra?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "A sucessão das estações do ano",
+   "erradas": [
+    "A sucessão dos dias e das noites",
+    "O movimento aparente do Sol",
+    "Os fusos horários"
+   ],
+   "explicacao": "As estações vêm da translação com o eixo inclinado, não da rotação."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "globo",
+   "enunciado": "Qual é o formato da trajetória que a Terra faz ao redor do Sol?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "Elíptica",
+   "erradas": [
+    "Circular perfeita",
+    "Espiral",
+    "Ondulada"
+   ],
+   "explicacao": "A órbita é uma elipse — uma espécie de círculo achatado."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "check",
+   "enunciado": "A Terra leva 24 horas para realizar uma volta completa em torno do seu eixo.",
+   "fonte": "folha q18",
+   "origem": "derivada",
+   "certa": true,
+   "explicacao": "É a rotação, que dá origem ao dia e à noite."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "check",
+   "enunciado": "Rotação é o movimento que a Terra realiza ao redor do Sol.",
+   "fonte": "folha q18",
+   "origem": "derivada",
+   "certa": false,
+   "explicacao": "Ao redor do Sol é a translação. Rotação é o giro em torno do próprio eixo."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "check",
+   "enunciado": "O movimento de translação é responsável pela sucessão dos dias e das noites.",
+   "fonte": "folha q18",
+   "origem": "derivada",
+   "certa": false,
+   "explicacao": "Dias e noites vêm da rotação. A translação dá origem às estações do ano."
+  },
+  {
+   "tipo": "vf",
+   "missao": "earth",
+   "icone": "check",
+   "enunciado": "O movimento de rotação é responsável pelas estações do ano.",
+   "fonte": "folha q18",
+   "origem": "derivada",
+   "certa": false,
+   "explicacao": "As estações vêm da translação somada à inclinação do eixo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "planta",
+   "enunciado": "A ocorrência das estações do ano tem origem na...",
+   "fonte": "folha q19",
+   "origem": "derivada",
+   "certa": "inclinação do eixo terrestre e no movimento de translação da Terra",
+   "erradas": [
+    "formação dos equinócios e no movimento de rotação da Terra",
+    "influência de satélites naturais e no movimento de nutação da Terra",
+    "faixa de latitude da Terra e no movimento de rotação da Terra"
+   ],
+   "explicacao": "São os dois fatores juntos: o eixo inclinado e a volta ao redor do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "sol",
+   "enunciado": "Qual fenômeno é marcado pela diferença de incidência solar entre os hemisférios e dá origem ao inverno e ao verão?",
+   "fonte": "folha q20",
+   "origem": "derivada",
+   "certa": "Solstício",
+   "erradas": [
+    "Equinócio",
+    "Afélio",
+    "Periélio"
+   ],
+   "explicacao": "No solstício, um hemisfério recebe muito mais luz que o outro. No equinócio, os dois recebem igual."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "earth",
+   "icone": "calendario",
+   "enunciado": "Associe cada estação ao período em que acontece no Brasil.",
+   "fonte": "folha q15",
+   "origem": "derivada",
+   "pares": [
+    [
+     "Primavera",
+     "De setembro a dezembro"
+    ],
+    [
+     "Verão",
+     "De dezembro a março"
+    ],
+    [
+     "Outono",
+     "De março a junho"
+    ],
+    [
+     "Inverno",
+     "De junho a setembro"
+    ]
+   ],
+   "explicacao": "Cada estação dura cerca de três meses e começa em um solstício ou equinócio."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "earth",
+   "icone": "luneta",
+   "enunciado": "Quais eram os principais astros observados pelo ser humano para se orientar no passado?",
+   "fonte": "folha q8",
+   "origem": "derivada",
+   "certa": "O Sol e a Lua",
+   "erradas": [
+    "Marte e Júpiter",
+    "Apenas os satélites artificiais",
+    "Os cometas"
+   ],
+   "explicacao": "Sol de dia, Lua e estrelas à noite — foi assim por milhares de anos."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "sol",
+   "enunciado": "O Sol nasce aproximadamente em qual direção?",
+   "origem": "propria",
+   "certa": "Leste",
+   "erradas": [
+    "Oeste",
+    "Norte",
+    "Sul"
+   ],
+   "explicacao": "O nascer do Sol ocorre aproximadamente no lado leste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "sol",
+   "enunciado": "O Sol se põe aproximadamente em qual direção?",
+   "origem": "propria",
+   "certa": "Oeste",
+   "erradas": [
+    "Leste",
+    "Norte",
+    "Sul"
+   ],
+   "explicacao": "O pôr do Sol ocorre aproximadamente no lado oeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "bussola",
+   "enunciado": "Observar o nascer do Sol pode ajudar principalmente a identificar...",
+   "origem": "propria",
+   "certa": "uma referência de direção",
+   "erradas": [
+    "a temperatura exata do ar",
+    "a idade da Terra",
+    "a distância até a Lua"
+   ],
+   "explicacao": "O Sol pode servir como referência natural para orientação."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "sol",
+   "enunciado": "A posição exata do nascer do Sol é idêntica todos os dias do ano?",
+   "origem": "propria",
+   "certa": "Não, ela muda ao longo do ano",
+   "erradas": [
+    "Sim, é sempre no mesmo ponto",
+    "Muda só nos anos bissextos",
+    "Muda só para quem mora perto dos polos"
+   ],
+   "explicacao": "A posição exata varia ao longo do ano e conforme o local."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "voltar",
+   "enunciado": "Se você está de frente para o lado onde o Sol nasce, o oeste estará...",
+   "origem": "propria",
+   "certa": "às suas costas",
+   "erradas": [
+    "à sua frente",
+    "à sua direita",
+    "acima de você"
+   ],
+   "explicacao": "Leste e Oeste são direções opostas: de frente para um, o outro fica atrás."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "pessoa",
+   "enunciado": "Se o braço direito aponta para o leste e o esquerdo para o oeste, sua frente está voltada para o...",
+   "origem": "propria",
+   "certa": "norte",
+   "erradas": [
+    "sul",
+    "leste",
+    "oeste"
+   ],
+   "explicacao": "Com o leste à direita e o oeste à esquerda, você está de frente para o norte."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "estrela",
+   "enunciado": "O Sol é classificado como...",
+   "origem": "propria",
+   "certa": "uma estrela",
+   "erradas": [
+    "um planeta",
+    "um satélite da Terra",
+    "uma constelação"
+   ],
+   "explicacao": "O Sol é a estrela mais próxima da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "lampada",
+   "enunciado": "De onde vem a luz que ilumina o dia na Terra?",
+   "origem": "propria",
+   "certa": "Do Sol",
+   "erradas": [
+    "Da Lua",
+    "Das estrelas mais distantes",
+    "Do brilho da própria atmosfera"
+   ],
+   "explicacao": "É a luz do Sol que ilumina o dia."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "relogio",
+   "enunciado": "Por volta do meio-dia, as sombras costumam ficar...",
+   "origem": "propria",
+   "certa": "mais curtas",
+   "erradas": [
+    "mais compridas",
+    "do mesmo tamanho da manhã",
+    "invisíveis no chão"
+   ],
+   "explicacao": "Quando o Sol está mais alto no céu, as sombras ficam mais curtas."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "olho",
+   "enunciado": "Olhar diretamente para o Sol...",
+   "origem": "propria",
+   "certa": "pode machucar os olhos",
+   "erradas": [
+    "é seguro com o céu nublado",
+    "ajuda a enxergar melhor",
+    "é perigoso ao entardecer"
+   ],
+   "explicacao": "Nunca olhe diretamente para o Sol: a luz intensa pode causar danos aos olhos."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "seta-dupla",
+   "enunciado": "Quais duas direções o Sol ajuda a identificar com mais facilidade?",
+   "origem": "propria",
+   "certa": "Leste e Oeste",
+   "erradas": [
+    "Norte e Sul",
+    "Nordeste e Sudoeste",
+    "Noroeste e Sudeste"
+   ],
+   "explicacao": "O nascer e o pôr do Sol indicam aproximadamente leste e oeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "predios",
+   "enunciado": "Por que o Sol some do céu à noite?",
+   "origem": "propria",
+   "certa": "Porque nossa região virou de costas",
+   "erradas": [
+    "Porque ele se apaga à noite",
+    "Porque ele vai para trás da Lua",
+    "Porque ele para de brilhar até de manhã"
+   ],
+   "explicacao": "A rotação leva nossa região para o lado da Terra que não está voltado ao Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "estrela",
+   "enunciado": "Além do Sol, o que também pode servir como referência natural de direção?",
+   "origem": "propria",
+   "certa": "Algumas estrelas e constelações",
+   "erradas": [
+    "As nuvens do fim da tarde",
+    "O vento, que sopra sempre do mesmo lado",
+    "A temperatura do ar à noite"
+   ],
+   "explicacao": "À noite, certas estrelas e constelações ajudam na orientação."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "nuvem",
+   "enunciado": "Em um dia muito nublado, dá para usar o Sol como referência de direção?",
+   "origem": "propria",
+   "certa": "Não, porque ele fica encoberto",
+   "erradas": [
+    "Sim, sempre com precisão total",
+    "Sim, porque as nuvens apontam o leste",
+    "Sim, porque o Sol muda de lugar"
+   ],
+   "explicacao": "Por isso é útil conhecer outras formas de orientação, como a bússola."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sun",
+   "icone": "ampulheta",
+   "enunciado": "Os horários do nascer e do pôr do Sol são os mesmos o ano inteiro?",
+   "origem": "propria",
+   "certa": "Não, mudam ao longo do ano",
+   "erradas": [
+    "Sim, sempre às 6h e às 18h",
+    "Sim, em todo o planeta",
+    "Mudam só em anos bissextos"
+   ],
+   "explicacao": "Os horários variam ao longo do ano e também de acordo com o local."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "sun",
+   "icone": "sol",
+   "enunciado": "Clique na direção em que o Sol nasce aproximadamente.",
+   "origem": "propria",
+   "alvo": "L",
+   "explicacao": "O Sol nasce aproximadamente no lado leste."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "sun",
+   "icone": "sol",
+   "enunciado": "Clique na direção em que o Sol se põe aproximadamente.",
+   "origem": "propria",
+   "alvo": "O",
+   "explicacao": "O Sol se põe aproximadamente no lado oeste."
+  },
+  {
+   "tipo": "vf",
+   "missao": "sun",
+   "icone": "olho",
+   "enunciado": "É seguro olhar diretamente para o Sol se for por poucos segundos.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Nunca olhe diretamente para o Sol: mesmo por pouco tempo, pode causar danos aos olhos."
+  },
+  {
+   "tipo": "vf",
+   "missao": "sun",
+   "icone": "relogio",
+   "enunciado": "Por volta do meio-dia as sombras costumam ficar mais curtas.",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "Quanto mais alto o Sol está no céu, mais curta fica a sombra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "bussola",
+   "enunciado": "Quais são os quatro pontos cardeais principais?",
+   "origem": "propria",
+   "certa": "Norte, Sul, Leste e Oeste",
+   "erradas": [
+    "Nordeste, Noroeste, Sudeste e Sudoeste",
+    "Norte, Sul, Nordeste e Sudoeste",
+    "Leste, Oeste, Sudeste e Noroeste"
+   ],
+   "explicacao": "Os pontos cardeais são Norte, Sul, Leste e Oeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "celular",
+   "enunciado": "Qual tecnologia usa sinais de satélites para ajudar na localização?",
+   "origem": "propria",
+   "certa": "GPS",
+   "erradas": [
+    "Bússola",
+    "Radar",
+    "Sonar"
+   ],
+   "explicacao": "O GPS usa sinais de satélites para determinar localização."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "mapa",
+   "enunciado": "Qual recurso representa lugares e ajuda a localizar posições e direções?",
+   "origem": "propria",
+   "certa": "Mapa",
+   "erradas": [
+    "Gráfico",
+    "Tabela",
+    "Fotografia"
+   ],
+   "explicacao": "Mapas representam o espaço e ajudam na orientação."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "bussola",
+   "enunciado": "A bússola ajuda principalmente a identificar...",
+   "origem": "propria",
+   "certa": "direções",
+   "erradas": [
+    "a fase da Lua",
+    "a altitude do lugar",
+    "a distância percorrida"
+   ],
+   "explicacao": "A bússola é um instrumento de orientação."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "montanha",
+   "enunciado": "Montanhas, rios e prédios podem ser usados como...",
+   "origem": "propria",
+   "certa": "pontos de referência",
+   "erradas": [
+    "pontos cardeais",
+    "linhas imaginárias",
+    "coordenadas geográficas"
+   ],
+   "explicacao": "Elementos visíveis da paisagem podem ajudar na localização."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "ima",
+   "enunciado": "A agulha da bússola se alinha principalmente por causa...",
+   "origem": "propria",
+   "certa": "do campo magnético da Terra",
+   "erradas": [
+    "da luz forte do Sol",
+    "do peso da agulha de metal",
+    "do vento que sopra no norte"
+   ],
+   "explicacao": "A Terra se comporta como um grande ímã, e a agulha da bússola responde a esse campo magnético."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "seta-cima",
+   "enunciado": "Na maioria dos mapas, o norte costuma ser representado...",
+   "origem": "propria",
+   "certa": "na parte de cima",
+   "erradas": [
+    "na parte de baixo",
+    "sempre à direita",
+    "no centro"
+   ],
+   "explicacao": "É uma convenção: a maioria dos mapas coloca o norte para cima, e a rosa dos ventos confirma isso."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "rosa-ventos",
+   "enunciado": "O que é a rosa dos ventos?",
+   "origem": "propria",
+   "certa": "Um desenho que indica as direções",
+   "erradas": [
+    "Um instrumento com agulha magnética",
+    "Um tipo de bússola eletrônica",
+    "Uma constelação do hemisfério sul"
+   ],
+   "explicacao": "A rosa dos ventos mostra os pontos cardeais e colaterais no mapa."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "seta-diagonal",
+   "enunciado": "Entre o Norte e o Leste fica qual ponto colateral?",
+   "origem": "propria",
+   "certa": "Nordeste",
+   "erradas": [
+    "Noroeste",
+    "Sudeste",
+    "Sudoeste"
+   ],
+   "explicacao": "Os pontos colaterais ficam entre os cardeais: Nordeste, Noroeste, Sudeste e Sudoeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "ciclo",
+   "enunciado": "Se você caminha para o norte e dá meia-volta, passa a caminhar para o...",
+   "origem": "propria",
+   "certa": "sul",
+   "erradas": [
+    "leste",
+    "oeste",
+    "norte ainda"
+   ],
+   "explicacao": "Norte e Sul são direções opostas."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "letras",
+   "enunciado": "Para que serve a legenda de um mapa?",
+   "origem": "propria",
+   "certa": "Explicar o que os símbolos significam",
+   "erradas": [
+    "Indicar a data em que o mapa foi feito",
+    "Mostrar o preço do mapa na loja",
+    "Contar a história do lugar"
+   ],
+   "explicacao": "Sem a legenda, os símbolos do mapa ficariam sem significado."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "termometro",
+   "enunciado": "Qual destes instrumentos NÃO serve para se orientar?",
+   "origem": "propria",
+   "certa": "O termômetro",
+   "erradas": [
+    "A bússola",
+    "O mapa",
+    "O GPS"
+   ],
+   "explicacao": "O termômetro mede temperatura, não indica direções."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "satelite",
+   "enunciado": "O funcionamento do GPS depende de...",
+   "origem": "propria",
+   "certa": "sinais enviados por satélites",
+   "erradas": [
+    "do campo magnético da Terra",
+    "da posição da Lua",
+    "do sentido do vento"
+   ],
+   "explicacao": "O GPS calcula a posição a partir de sinais de vários satélites."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "barco",
+   "enunciado": "Antes da bússola e do GPS, os navegadores se orientavam bastante...",
+   "origem": "propria",
+   "certa": "pelo Sol e pelas estrelas",
+   "erradas": [
+    "por mapas do fundo do mar",
+    "por satélites artificiais",
+    "pela direção constante dos ventos"
+   ],
+   "explicacao": "Durante séculos, o céu foi o principal guia de quem navegava."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "orientation",
+   "icone": "caixa-ferramentas",
+   "enunciado": "Por que é útil conhecer mais de uma forma de se orientar?",
+   "origem": "propria",
+   "certa": "Porque cada recurso pode falhar",
+   "erradas": [
+    "Porque funcionam de maneiras iguais",
+    "Porque a bússola é a mais confiável",
+    "Porque orientar-se ficou mais simples hoje"
+   ],
+   "explicacao": "Céu nublado, bateria acabada ou falta de sinal: ter alternativas ajuda."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "bussola",
+   "enunciado": "Clique no ponto cardeal NORTE.",
+   "origem": "propria",
+   "alvo": "N",
+   "explicacao": "O Norte é um dos quatro pontos cardeais e costuma aparecer no topo dos mapas."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "seta-diagonal",
+   "enunciado": "Clique no ponto colateral NORDESTE.",
+   "origem": "propria",
+   "alvo": "NE",
+   "explicacao": "O Nordeste fica entre o Norte e o Leste — o nome junta os dois cardeais vizinhos."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "seta-diagonal",
+   "enunciado": "Clique no ponto que fica entre o Sul e o Oeste.",
+   "origem": "propria",
+   "alvo": "SO",
+   "explicacao": "Entre Sul e Oeste fica o Sudoeste (SO)."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "seta-diagonal",
+   "enunciado": "Clique no ponto colateral entre o Norte e o Oeste.",
+   "origem": "propria",
+   "alvo": "NO",
+   "explicacao": "Entre Norte e Oeste fica o Noroeste (NO)."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "voltar",
+   "enunciado": "Você está de frente para o Norte. Clique na direção que está às suas costas.",
+   "origem": "propria",
+   "alvo": "S",
+   "explicacao": "Norte e Sul são opostos: de frente para um, o outro fica atrás."
+  },
+  {
+   "tipo": "bussola",
+   "missao": "orientation",
+   "icone": "seta-diagonal",
+   "enunciado": "Clique no ponto colateral entre o Sul e o Leste.",
+   "origem": "propria",
+   "alvo": "SE",
+   "explicacao": "Entre Sul e Leste fica o Sudeste (SE)."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "orientation",
+   "icone": "rosa-ventos",
+   "enunciado": "Coloque os pontos cardeais na ordem do sentido horário, começando pelo Norte.",
+   "origem": "propria",
+   "sequencia": [
+    "Norte",
+    "Leste",
+    "Sul",
+    "Oeste"
+   ],
+   "explicacao": "No sentido horário: Norte → Leste → Sul → Oeste."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "orientation",
+   "icone": "escrever",
+   "enunciado": "Qual é o nome do desenho que mostra as direções em um mapa?",
+   "origem": "propria",
+   "aceitas": [
+    "rosa dos ventos",
+    "rosa-dos-ventos"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "A rosa dos ventos mostra os pontos cardeais e colaterais."
+  },
+  {
+   "tipo": "vf",
+   "missao": "orientation",
+   "icone": "bussola",
+   "enunciado": "Nordeste, Noroeste, Sudeste e Sudoeste são pontos colaterais.",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "Os colaterais ficam entre os cardeais e seus nomes juntam os dois vizinhos."
+  },
+  {
+   "tipo": "vf",
+   "missao": "orientation",
+   "icone": "mapa",
+   "enunciado": "Em um mapa, o Norte costuma ser representado na parte de baixo.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Por convenção, o Norte costuma aparecer na parte de cima do mapa."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "As fases da Lua mudam porque:",
+   "fonte": "p.69 q14",
+   "origem": "propria",
+   "certa": "a Lua gira ao redor da Terra e vemos partes diferentes iluminadas pelo Sol",
+   "erradas": [
+    "a Lua se afasta muito da Terra, parecendo menor em algumas noites",
+    "a luz do Sol é completamente bloqueada pela Terra durante todo o mês",
+    "a Lua brilha com luz própria, e a quantidade dessa luz muda a cada semana"
+   ],
+   "explicacao": "A Lua é sempre iluminada pelo Sol. O que muda é quanto dessa parte iluminada conseguimos enxergar da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "O que acontece com a Lua na fase de Quarto Crescente?",
+   "fonte": "p.69 q13",
+   "origem": "propria",
+   "certa": "Parece uma letra “C” e a parte iluminada aumenta a cada noite até a Lua Cheia",
+   "erradas": [
+    "Está totalmente escura e não conseguimos vê-la, pois fica entre a Terra e o Sol",
+    "Está totalmente iluminada, parecendo um círculo completo no céu",
+    "Parece uma letra “D” e a parte iluminada diminui a cada noite"
+   ],
+   "explicacao": "No Hemisfério Sul, a Lua crescente tem o formato de um “C” e sua área iluminada vai aumentando."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "Sobre a Lua Cheia e a Lua Nova, qual é a ordem correta das posições?",
+   "fonte": "p.69 q15",
+   "origem": "propria",
+   "certa": "Lua Cheia: a Terra fica entre o Sol e a Lua. Lua Nova: a Lua fica entre o Sol e a Terra",
+   "erradas": [
+    "Na Lua Cheia, a Lua fica do lado da Terra que está de dia, por isso a vemos grande e clara",
+    "Na Lua Nova, a Lua se esconde atrás da Terra, e é por isso que não a vemos",
+    "Na Lua Nova, a Lua fica ao lado da Terra e é iluminada apenas na metade de cima"
+   ],
+   "explicacao": "É a posição relativa entre Sol, Terra e Lua que determina a fase que vemos."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "moon",
+   "icone": "elos",
+   "enunciado": "Associe cada fase da Lua à sua descrição.",
+   "fonte": "p.61 q3",
+   "origem": "propria",
+   "pares": [
+    [
+     "Lua Cheia",
+     "Vemos a Lua completamente iluminada"
+    ],
+    [
+     "Lua Nova",
+     "O lado voltado para a Terra está escuro"
+    ],
+    [
+     "Quarto Crescente",
+     "A parte iluminada parece um “C” e aumenta"
+    ],
+    [
+     "Quarto Minguante",
+     "A parte iluminada parece um “D” e diminui"
+    ]
+   ],
+   "explicacao": "Cheia e Nova são opostas; crescente e minguante são os meios do caminho."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "moon",
+   "icone": "ciclo",
+   "enunciado": "Coloque as quatro fases principais da Lua na ordem em que acontecem.",
+   "fonte": "p.57",
+   "origem": "propria",
+   "sequencia": [
+    "Lua Nova",
+    "Quarto Crescente",
+    "Lua Cheia",
+    "Quarto Minguante"
+   ],
+   "explicacao": "O ciclo sempre segue essa ordem e se repete a cada 29 dias aproximadamente."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "Um amigo diz que a parte escura da Lua é a sombra da Terra. Como corrigir essa informação?",
+   "fonte": "p.44 q2",
+   "origem": "propria",
+   "certa": "Ela não está voltada para o Sol",
+   "erradas": [
+    "Ele está certo: é a sombra da Terra",
+    "É a sombra da própria Lua no céu",
+    "É uma nuvem que cobre metade dela"
+   ],
+   "explicacao": "A sombra da Terra sobre a Lua só acontece em um eclipse lunar, que é raro. As fases são outra coisa."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "calendario",
+   "enunciado": "Por que um mês lunar tem cerca de 29 dias?",
+   "fonte": "p.58 q2",
+   "origem": "propria",
+   "certa": "É o tempo de um ciclo completo de fases",
+   "erradas": [
+    "É o tempo da volta da Lua ao redor do Sol",
+    "É o tempo que a Lua leva para girar no próprio eixo",
+    "É o número fixo de dias de todos os meses"
+   ],
+   "explicacao": "Da Terra, vemos a Lua repetir suas fases a cada 29 dias — é o ciclo mensal."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "satelite",
+   "enunciado": "A Lua é classificada como...",
+   "fonte": "p.39",
+   "origem": "propria",
+   "certa": "o satélite natural da Terra",
+   "erradas": [
+    "um planeta do Sistema Solar",
+    "uma estrela pequena",
+    "uma constelação"
+   ],
+   "explicacao": "Satélite é um corpo que orbita outro astro. A Lua orbita a Terra."
+  },
+  {
+   "tipo": "vf",
+   "missao": "moon",
+   "icone": "lampada",
+   "enunciado": "A Lua tem luz própria, como o Sol.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "A Lua não produz luz: ela reflete a luz que recebe do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "numeros",
+   "enunciado": "Quantas fases da Lua são identificadas ao todo?",
+   "fonte": "p.44",
+   "origem": "propria",
+   "certa": "Oito ao todo",
+   "erradas": [
+    "Quatro no total",
+    "Duas: cheia e nova",
+    "Vinte e nove, uma por dia"
+   ],
+   "explicacao": "São oito, mas normalmente só quatro aparecem nos calendários."
+  },
+  {
+   "tipo": "vf",
+   "missao": "moon",
+   "icone": "ampulheta",
+   "enunciado": "A translação da Lua dura cerca de 27 dias, mas da nossa perspectiva ela parece orbitar a Terra a cada 29 dias.",
+   "fonte": "p.39",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "A diferença existe porque a Terra também se move enquanto a Lua a orbita."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "moon",
+   "icone": "escrever",
+   "enunciado": "Qual fase acontece quando a Lua fica entre o Sol e a Terra e quase não é vista?",
+   "origem": "propria",
+   "aceitas": [
+    "lua nova",
+    "nova",
+    "a lua nova"
+   ],
+   "exemplo": "Digite o nome da fase...",
+   "explicacao": "Na Lua Nova o lado iluminado fica virado para o lado oposto ao nosso."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "A Lua também gira em torno do próprio eixo?",
+   "fonte": "p.39",
+   "origem": "propria",
+   "certa": "Sim, e dura o mesmo que a translação",
+   "erradas": [
+    "Não, a Lua não tem rotação",
+    "Sim, e dura 24 horas como a da Terra",
+    "Sim, mas dura apenas uma hora"
+   ],
+   "explicacao": "Por isso vemos sempre a mesma face da Lua."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "predios",
+   "enunciado": "Em qual fase acontece a noite mais escura do mês?",
+   "fonte": "p.43",
+   "origem": "propria",
+   "certa": "Lua Nova",
+   "erradas": [
+    "Lua Cheia",
+    "Quarto Crescente",
+    "Quarto Minguante"
+   ],
+   "explicacao": "Na Lua Nova ela praticamente não é vista no céu."
+  },
+  {
+   "tipo": "vf",
+   "missao": "moon",
+   "icone": "calendario",
+   "enunciado": "O Quarto Minguante acontece aproximadamente sete dias depois da Lua Cheia.",
+   "fonte": "p.40",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "E o Quarto Crescente acontece cerca de sete dias depois da Lua Nova."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "moon",
+   "icone": "escrever",
+   "enunciado": "Como se chama o ciclo completo das fases da Lua, que dura cerca de 29 dias?",
+   "origem": "propria",
+   "aceitas": [
+    "ciclo lunar",
+    "ciclo mensal",
+    "lunar",
+    "mensal"
+   ],
+   "exemplo": "Digite o nome do ciclo...",
+   "explicacao": "Ciclo lunar, ou ciclo mensal — é ele que deu origem à ideia de mês."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "globo",
+   "enunciado": "No Brasil, a Lua Quarto Crescente aparece iluminada de que lado?",
+   "origem": "propria",
+   "certa": "Do lado esquerdo, com formato de “C”",
+   "erradas": [
+    "Do lado direito, com formato de “D”",
+    "Por cima, como um arco",
+    "Por baixo, como uma tigela"
+   ],
+   "explicacao": "No Hemisfério Sul a crescente parece um “C”. No Hemisfério Norte é o contrário: lá a crescente é iluminada à direita. Atenção: algumas folhas de exercício usam a convenção do Norte."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "ciclo",
+   "enunciado": "Por que o mesmo formato de Lua pode ter nomes diferentes no Brasil e nos Estados Unidos?",
+   "origem": "propria",
+   "certa": "Porque os hemisférios a veem invertida",
+   "erradas": [
+    "Porque a Lua muda de fase mais rápido no Norte",
+    "Porque cada país escolheu um nome diferente",
+    "Porque nos Estados Unidos a Lua é vista de cabeça para baixo o tempo todo"
+   ],
+   "explicacao": "Uma Lua iluminada à direita é crescente no Hemisfério Norte e minguante no Hemisfério Sul."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "livro",
+   "enunciado": "Como se chama o movimento da Lua ao redor da Terra?",
+   "origem": "propria",
+   "certa": "Revolução",
+   "erradas": [
+    "Rotação",
+    "Nutação",
+    "Precessão"
+   ],
+   "explicacao": "Revolução — que o livro também chama de translação da Lua."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "ciclo",
+   "enunciado": "Segundo a folha da escola, quanto dura a REVOLUÇÃO da Lua (volta ao redor da Terra)?",
+   "origem": "propria",
+   "certa": "Cerca de 27,3 dias",
+   "erradas": [
+    "Cerca de 365 dias",
+    "Cerca de 24 horas",
+    "Cerca de 12 horas"
+   ],
+   "explicacao": "A rotação da Lua também dura 27,3 dias — por isso vemos sempre a mesma face."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "moon",
+   "icone": "escrever",
+   "enunciado": "Quanto tempo dura, aproximadamente, um ciclo completo das fases da Lua? (só o número de dias)",
+   "origem": "propria",
+   "aceitas": [
+    "29",
+    "29,5",
+    "29.5",
+    "30",
+    "29 dias",
+    "29,5 dias"
+   ],
+   "exemplo": "Digite o número de dias...",
+   "explicacao": "O livro diz cerca de 29 dias; a folha da escola é mais precisa: 29,5 dias, ou 29 dias e 12 horas. As duas estão certas."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "moon",
+   "icone": "lua",
+   "enunciado": "Coloque as seis fases na ordem mostrada na folha da escola.",
+   "fonte": "folha, Movimentos da Lua",
+   "origem": "derivada",
+   "sequencia": [
+    "Lua Nova",
+    "Crescente",
+    "Quarto Crescente",
+    "Lua Cheia",
+    "Quarto Minguante",
+    "Minguante"
+   ],
+   "explicacao": "Essa é a sequência completa; os calendários costumam mostrar só as quatro principais."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "moon",
+   "icone": "espelho",
+   "enunciado": "Por que vemos sempre a mesma face da Lua?",
+   "origem": "propria",
+   "certa": "Porque rotação e revolução duram igual",
+   "erradas": [
+    "Porque a Lua não gira nunca",
+    "Porque a Lua é achatada de um lado",
+    "Porque a Terra segura a Lua bem parada"
+   ],
+   "explicacao": "Os dois movimentos levam 27,3 dias, então a mesma face fica sempre virada para nós."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "calendario",
+   "enunciado": "Qual é o calendário mais usado no mundo atualmente?",
+   "fonte": "p.55 q1c",
+   "origem": "propria",
+   "certa": "O calendário gregoriano",
+   "erradas": [
+    "O calendário lunar",
+    "O calendário egípcio",
+    "O calendário juliano"
+   ],
+   "explicacao": "Publicado pelo Papa Gregório XIII em 1582, é o mais usado até hoje."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "sol",
+   "enunciado": "O calendário gregoriano é de que tipo?",
+   "fonte": "p.55 q1c",
+   "origem": "propria",
+   "certa": "Solar",
+   "erradas": [
+    "Lunar",
+    "Estelar",
+    "Magnético"
+   ],
+   "explicacao": "É solar porque se baseia no tempo que a Terra leva para dar uma volta ao redor do Sol."
+  },
+  {
+   "tipo": "vf",
+   "missao": "calendars",
+   "icone": "lua",
+   "enunciado": "O calendário lunar é aquele em que o tempo é contado a partir dos ciclos da Lua.",
+   "fonte": "p.55 q2",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "Correto. A soma desses ciclos dá um ano de 354 a 355 dias."
+  },
+  {
+   "tipo": "vf",
+   "missao": "calendars",
+   "icone": "vaso",
+   "enunciado": "Os egípcios só utilizavam o calendário solar para contabilizar o tempo.",
+   "fonte": "p.55 q2",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Eles usaram primeiro o calendário lunar e só depois criaram o solar, por causa das cheias do rio Nilo."
+  },
+  {
+   "tipo": "vf",
+   "missao": "calendars",
+   "icone": "relogio",
+   "enunciado": "Os calendários foram criados para nos ajudar a contabilizar a passagem do tempo.",
+   "fonte": "p.55 q2",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "E também para organizar plantio, colheita, festas e eventos religiosos."
+  },
+  {
+   "tipo": "vf",
+   "missao": "calendars",
+   "icone": "anzol",
+   "enunciado": "Os calendários dos povos antigos serviam apenas para determinar os melhores períodos de pesca e caça.",
+   "fonte": "p.55 q2",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Serviam para muito mais: lavoura, registro de eventos históricos e religiosos."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "xis",
+   "enunciado": "Qual afirmação sobre o ano bissexto está ERRADA?",
+   "fonte": "p.67 q10",
+   "origem": "propria",
+   "certa": "Em um ano bissexto, dois meses ganham um dia a mais",
+   "erradas": [
+    "Existe para somar as horas extras que a Terra leva para dar a volta no Sol",
+    "Tem 366 dias, um dia a mais que o ano comum",
+    "Fevereiro passa a ter 29 dias, em vez dos 28 normais"
+   ],
+   "explicacao": "Apenas um mês ganha o dia extra: fevereiro."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "alerta",
+   "enunciado": "Qual afirmação sobre o ano bissexto está INCORRETA?",
+   "fonte": "p.55 q3",
+   "origem": "propria",
+   "certa": "Possui dois dias a mais no mês de fevereiro",
+   "erradas": [
+    "Acontece a cada quatro anos",
+    "Acontece após a soma das horas excedentes de quatro anos",
+    "O ano bissexto possui 366 dias"
+   ],
+   "explicacao": "É apenas um dia a mais: fevereiro vai de 28 para 29 dias."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "lua",
+   "enunciado": "Quantos dias tem o ano no calendário lunar?",
+   "fonte": "p.55 q1b",
+   "origem": "propria",
+   "certa": "Entre 354 e 355 dias",
+   "erradas": [
+    "Exatamente 365 dias",
+    "366 dias",
+    "Entre 300 e 310 dias"
+   ],
+   "explicacao": "Por isso ele não acompanhava bem as estações e as cheias do Nilo."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "sol",
+   "enunciado": "E quantos dias tem o ano no calendário solar?",
+   "fonte": "p.55 q1b",
+   "origem": "propria",
+   "certa": "Cerca de 365 dias",
+   "erradas": [
+    "Cerca de 354 dias",
+    "Cerca de 300 dias",
+    "Cerca de 400 dias"
+   ],
+   "explicacao": "É o tempo aproximado de uma volta completa da Terra ao redor do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "vaso",
+   "enunciado": "Como era formado o ano do calendário egípcio?",
+   "fonte": "p.53",
+   "origem": "propria",
+   "certa": "12 meses de 30 dias e 5 de festa",
+   "erradas": [
+    "10 meses de 36 dias e 5 de festa",
+    "13 meses de 28 dias e 1 de festa",
+    "12 meses de 31 dias, sem festa"
+   ],
+   "explicacao": "12 × 30 = 360, mais 5 dias de festividades religiosas = 365 dias."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "pergaminho",
+   "enunciado": "Em que ano foi publicado o calendário gregoriano?",
+   "fonte": "p.54",
+   "origem": "propria",
+   "certa": "1582",
+   "erradas": [
+    "1500",
+    "1822",
+    "1900"
+   ],
+   "explicacao": "Foi publicado pelo Papa Gregório XIII e é usado no mundo inteiro até hoje."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "relogio",
+   "enunciado": "Quantas horas sobram a cada ano e acabam formando o dia extra do ano bissexto?",
+   "fonte": "p.63",
+   "origem": "propria",
+   "certa": "6 horas",
+   "erradas": [
+    "1 hora",
+    "12 horas",
+    "24 horas"
+   ],
+   "explicacao": "6 horas por ano × 4 anos = 24 horas, ou seja, um dia inteiro."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "calendars",
+   "icone": "escrever",
+   "enunciado": "Qual mês recebe um dia extra nos anos bissextos?",
+   "fonte": "p.63",
+   "origem": "propria",
+   "aceitas": [
+    "fevereiro",
+    "o fevereiro",
+    "mes de fevereiro"
+   ],
+   "exemplo": "Digite o nome do mês...",
+   "explicacao": "Em ano bissexto, fevereiro passa de 28 para 29 dias."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "calendars",
+   "icone": "escrever",
+   "enunciado": "Como se chama o ano em que fevereiro tem 29 dias?",
+   "fonte": "p.63",
+   "origem": "propria",
+   "aceitas": [
+    "bissexto",
+    "ano bissexto",
+    "o ano bissexto"
+   ],
+   "exemplo": "Digite o nome do ano...",
+   "explicacao": "Ano bissexto: acontece a cada quatro anos e tem 366 dias."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "calendars",
+   "icone": "ampulheta",
+   "enunciado": "Coloque os calendários na ordem em que surgiram na história.",
+   "fonte": "p.53-54",
+   "origem": "propria",
+   "sequencia": [
+    "Calendário lunar",
+    "Calendário solar egípcio",
+    "Calendário juliano",
+    "Calendário gregoriano"
+   ],
+   "explicacao": "Do mais antigo, baseado na Lua, ao gregoriano, usado até hoje."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "calendars",
+   "icone": "elos",
+   "enunciado": "Associe cada calendário à sua base.",
+   "origem": "propria",
+   "pares": [
+    [
+     "Calendário lunar",
+     "Os ciclos da Lua"
+    ],
+    [
+     "Calendário solar",
+     "A volta da Terra ao redor do Sol"
+    ],
+    [
+     "Calendário gregoriano",
+     "365 dias, criado em 1582"
+    ],
+    [
+     "Ano bissexto",
+     "366 dias, a cada quatro anos"
+    ]
+   ],
+   "explicacao": "Cada calendário tenta acompanhar melhor o tempo real de uma volta da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "templo",
+   "enunciado": "Qual é um exemplo de calendário lunar ainda usado hoje?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "O calendário islâmico",
+   "erradas": [
+    "O calendário gregoriano",
+    "O calendário juliano",
+    "O calendário cristão"
+   ],
+   "explicacao": "Ele tem 12 lunações de 29 dias e 12 horas, somando 354 ou 355 dias no ano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "cruzeiro",
+   "enunciado": "Qual acontecimento é o marco inicial do calendário cristão, usado no Brasil?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "O nascimento de Cristo",
+   "erradas": [
+    "A fundação de Roma",
+    "A criação do calendário egípcio",
+    "A chegada dos portugueses ao Brasil"
+   ],
+   "explicacao": "Por isso contamos os anos a partir do ano 1."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "letras",
+   "enunciado": "A palavra “calendário” vem do latim calendas, que significava...",
+   "fonte": "folha q11",
+   "origem": "derivada",
+   "certa": "o primeiro dia do mês romano",
+   "erradas": [
+    "a última semana do ano",
+    "o dia de descanso",
+    "a hora do nascer do Sol"
+   ],
+   "explicacao": "É daí que veio o nome do instrumento que usamos até hoje."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "xis",
+   "enunciado": "Sobre os calendários, qual afirmação é INCORRETA?",
+   "fonte": "folha q11",
+   "origem": "derivada",
+   "certa": "Todos os povos do planeta utilizam o mesmo calendário",
+   "erradas": [
+    "Em diferentes épocas as sociedades inventaram formas diferentes de medir o tempo",
+    "A palavra calendário vem do latim calendas",
+    "O calendário utilizado no Brasil é o cristão, que tem como marco o nascimento de Cristo"
+   ],
+   "explicacao": "Existem vários calendários em uso no mundo, como o islâmico e o judaico."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "calendario",
+   "enunciado": "Quantos meses do ano têm 31 dias?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "Sete",
+   "erradas": [
+    "Quatro",
+    "Cinco",
+    "Doze"
+   ],
+   "explicacao": "Sete meses têm 31 dias, quatro têm 30 e fevereiro tem 28 ou 29."
+  },
+  {
+   "tipo": "vf",
+   "missao": "calendars",
+   "icone": "calendario",
+   "enunciado": "No calendário gregoriano, todos os meses têm a mesma quantidade de dias.",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": false,
+   "explicacao": "Os meses variam entre 28 e 31 dias — é justamente um dos defeitos apontados nesse calendário."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "planta",
+   "enunciado": "Em quantas estações o ano do calendário egípcio era dividido?",
+   "fonte": "livro p.53 / folha",
+   "origem": "derivada",
+   "certa": "Três",
+   "erradas": [
+    "Duas",
+    "Quatro",
+    "Doze"
+   ],
+   "explicacao": "Eram três. O livro as chama de cheia, semeadura e colheita; a folha da escola usa inundação, inverno e verão."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "calendars",
+   "icone": "balanca",
+   "enunciado": "Qual é a diferença de dias entre o ano do calendário lunar e o do solar?",
+   "fonte": "folha",
+   "origem": "derivada",
+   "certa": "Cerca de 11 dias",
+   "erradas": [
+    "Cerca de 1 dia",
+    "Cerca de 30 dias",
+    "Cerca de 100 dias"
+   ],
+   "explicacao": "No calendário lunar essa diferença é corrigida com a inclusão de um mês extra no ano."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "As estrelas são corpos celestes que...",
+   "origem": "propria",
+   "certa": "emitem sua própria luz",
+   "erradas": [
+    "refletem a luz da Lua",
+    "recebem luz dos planetas",
+    "brilham por causa da atmosfera"
+   ],
+   "explicacao": "Estrelas produzem e emitem sua própria luz."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "O que é uma constelação?",
+   "origem": "propria",
+   "certa": "Um agrupamento aparente de estrelas",
+   "erradas": [
+    "Um único planeta muito brilhante",
+    "Uma nuvem que cobre as estrelas",
+    "Um satélite artificial em órbita"
+   ],
+   "explicacao": "Constelações são padrões aparentes formados por estrelas vistas da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "Por que as estrelas parecem mudar de posição ao longo da noite?",
+   "origem": "propria",
+   "certa": "Por causa da rotação da Terra",
+   "erradas": [
+    "Porque todas as estrelas orbitam a Terra em uma noite",
+    "Porque as estrelas se movem rápido no espaço",
+    "Porque a atmosfera desvia a luz delas"
+   ],
+   "explicacao": "A rotação da Terra muda nossa orientação em relação ao céu."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "predios",
+   "enunciado": "Qual ambiente favorece melhor a observação das estrelas?",
+   "origem": "propria",
+   "certa": "Um local escuro, longe das luzes",
+   "erradas": [
+    "Uma rua com muitos refletores",
+    "Um shopping muito iluminado",
+    "Um estádio com as luzes acesas"
+   ],
+   "explicacao": "Menos poluição luminosa facilita a observação do céu."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "No Hemisfério Sul, qual conjunto de estrelas pode servir como referência aproximada para orientação?",
+   "origem": "propria",
+   "certa": "Cruzeiro do Sul",
+   "erradas": [
+    "A Ursa Maior",
+    "O Cinturão de Órion",
+    "A Estrela Polar"
+   ],
+   "explicacao": "O Cruzeiro do Sul é uma referência tradicional para localizar aproximadamente o sul celeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "lua",
+   "enunciado": "Por que a Lua brilha no céu?",
+   "origem": "propria",
+   "certa": "Porque reflete a luz do Sol",
+   "erradas": [
+    "Porque produz luz própria como o Sol",
+    "Porque é feita de rocha clara que brilha",
+    "Porque é iluminada pelas estrelas distantes"
+   ],
+   "explicacao": "A Lua não tem luz própria: ela reflete a luz que recebe do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "planeta",
+   "enunciado": "Os planetas, diferentemente das estrelas...",
+   "origem": "propria",
+   "certa": "não produzem luz própria",
+   "erradas": [
+    "são maiores que as estrelas",
+    "brilham bem mais que o Sol",
+    "ficam parados no céu"
+   ],
+   "explicacao": "Os planetas apenas refletem a luz do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "predios",
+   "enunciado": "O excesso de iluminação artificial à noite atrapalha a observação do céu. Esse problema é chamado de...",
+   "origem": "propria",
+   "certa": "poluição luminosa",
+   "erradas": [
+    "poluição sonora",
+    "poluição do ar",
+    "erosão"
+   ],
+   "explicacao": "A poluição luminosa é um dos maiores obstáculos à observação do céu nas cidades."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "regua",
+   "enunciado": "As estrelas de uma constelação estão realmente próximas umas das outras no espaço?",
+   "origem": "propria",
+   "certa": "Não: a proximidade é aparente",
+   "erradas": [
+    "Sim, estão bem coladas",
+    "Sim, todas à mesma distância",
+    "Sim, presas em uma esfera"
+   ],
+   "explicacao": "A proximidade é só o que se vê daqui da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "sol",
+   "enunciado": "Por que não enxergamos estrelas durante o dia?",
+   "origem": "propria",
+   "certa": "Porque a luz do Sol as ofusca",
+   "erradas": [
+    "Porque elas se apagam de dia",
+    "Porque vão para o outro lado",
+    "Porque a Lua as esconde"
+   ],
+   "explicacao": "As estrelas continuam lá durante o dia; a luz do Sol é que impede de vê-las."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "luneta",
+   "enunciado": "Qual instrumento ajuda a observar melhor os astros distantes?",
+   "origem": "propria",
+   "certa": "O telescópio",
+   "erradas": [
+    "O periscópio",
+    "O microscópio",
+    "O caleidoscópio"
+   ],
+   "explicacao": "O telescópio amplia a imagem de astros distantes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "seta-baixo",
+   "enunciado": "O Cruzeiro do Sul ajuda a encontrar aproximadamente qual direção?",
+   "origem": "propria",
+   "certa": "O sul",
+   "erradas": [
+    "O norte",
+    "O leste",
+    "O oeste"
+   ],
+   "explicacao": "Por isso é uma referência tão usada no Hemisfério Sul."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "olho",
+   "enunciado": "O que ajuda a observar bem o céu noturno a olho nu?",
+   "origem": "propria",
+   "certa": "Céu limpo e local escuro",
+   "erradas": [
+    "Um dia bem ensolarado",
+    "Muitas luzes acesas ao redor",
+    "Um local fechado sem janelas"
+   ],
+   "explicacao": "Ajuda também dar alguns minutos para os olhos se acostumarem ao escuro."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "calendario",
+   "enunciado": "Por que as constelações visíveis mudam ao longo do ano?",
+   "origem": "propria",
+   "certa": "Porque a Terra muda de posição",
+   "erradas": [
+    "Porque as estrelas somem e voltam",
+    "Porque as constelações trocam de nome",
+    "Porque o céu muda de cor"
+   ],
+   "explicacao": "A Terra ocupa posições diferentes em sua órbita ao redor do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "pincel",
+   "enunciado": "Estrelas podem ter cores diferentes. Isso está relacionado principalmente...",
+   "origem": "propria",
+   "certa": "à temperatura de suas superfícies",
+   "erradas": [
+    "ao tamanho da Lua cheia",
+    "à distância até o Brasil",
+    "à quantidade de nuvens no céu"
+   ],
+   "explicacao": "Estrelas mais quentes tendem a parecer azuladas; as mais frias, avermelhadas."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "Qual estrela é usada como referência para achar o norte no Hemisfério Norte?",
+   "origem": "propria",
+   "certa": "A Estrela Polar",
+   "erradas": [
+    "O Cruzeiro do Sul",
+    "A estrela Sirius",
+    "O planeta Vênus"
+   ],
+   "explicacao": "A Estrela Polar, ou Polaris, fica quase alinhada com o eixo de rotação da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "stars",
+   "icone": "bussola",
+   "enunciado": "Por que a Estrela Polar parece quase parada no céu durante a noite?",
+   "origem": "propria",
+   "certa": "Porque fica alinhada com o eixo",
+   "erradas": [
+    "Porque é a mais brilhante do céu",
+    "Porque está muito perto da Terra",
+    "Porque na verdade é um satélite"
+   ],
+   "explicacao": "Como está quase sobre o eixo, as demais estrelas parecem girar em torno dela."
+  },
+  {
+   "tipo": "vf",
+   "missao": "stars",
+   "icone": "estrela",
+   "enunciado": "A Estrela Polar é a estrela mais brilhante de todo o céu.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Ela é conhecida pela posição, não pelo brilho. A mais brilhante do céu noturno é Sirius."
+  },
+  {
+   "tipo": "vf",
+   "missao": "stars",
+   "icone": "lua",
+   "enunciado": "A Lua tem luz própria, assim como o Sol.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "A Lua não tem luz própria: ela reflete a luz do Sol."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "stars",
+   "icone": "elos",
+   "enunciado": "Associe cada astro ou conceito à sua característica.",
+   "origem": "propria",
+   "pares": [
+    [
+     "Estrela",
+     "Tem luz própria"
+    ],
+    [
+     "Planeta",
+     "Reflete a luz do Sol"
+    ],
+    [
+     "Lua",
+     "Satélite natural da Terra"
+    ],
+    [
+     "Constelação",
+     "Agrupamento aparente de estrelas"
+    ]
+   ],
+   "explicacao": "Estrelas emitem luz; planetas e a Lua apenas refletem a luz do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "torre",
+   "enunciado": "O gnômon é basicamente...",
+   "origem": "propria",
+   "certa": "uma haste fincada no chão",
+   "erradas": [
+    "um tipo de bússola eletrônica",
+    "um telescópio bem pequeno",
+    "um mapa muito antigo"
+   ],
+   "explicacao": "É a haste que projeta sombra no chão."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "sol",
+   "enunciado": "O gnômon indica horários e direções usando...",
+   "origem": "propria",
+   "certa": "a sombra projetada pelo Sol",
+   "erradas": [
+    "o som do vento",
+    "o campo magnético da Terra",
+    "sinais de satélite"
+   ],
+   "explicacao": "Acompanhando a sombra da haste é possível perceber o movimento aparente do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "engrenagem",
+   "enunciado": "O astrolábio servia principalmente para...",
+   "origem": "propria",
+   "certa": "medir a altura dos astros no céu",
+   "erradas": [
+    "medir a temperatura do mar",
+    "desenhar mapas coloridos",
+    "prever a chuva do dia seguinte"
+   ],
+   "explicacao": "Com a altura dos astros era possível estimar posição e hora."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "regua",
+   "enunciado": "O sextante mede o ângulo entre...",
+   "origem": "propria",
+   "certa": "um astro e o horizonte",
+   "erradas": [
+    "duas montanhas",
+    "o norte e o sul magnéticos",
+    "a Lua e o Sol apenas"
+   ],
+   "explicacao": "Medindo esse ângulo, o navegador estimava sua posição no mar."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "barco",
+   "enunciado": "Qual instrumento foi muito usado nas grandes navegações marítimas?",
+   "origem": "propria",
+   "certa": "O sextante",
+   "erradas": [
+    "O telescópio de mão",
+    "A bússola solar",
+    "O barômetro de mercúrio"
+   ],
+   "explicacao": "O sextante foi essencial para a navegação em alto-mar."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "ima",
+   "enunciado": "Qual destes instrumentos NÃO depende de observar o céu?",
+   "origem": "propria",
+   "certa": "A bússola",
+   "erradas": [
+    "O gnômon",
+    "O astrolábio",
+    "O sextante"
+   ],
+   "explicacao": "A bússola usa o campo magnético da Terra, não a observação dos astros."
+  },
+  {
+   "tipo": "vf",
+   "missao": "instruments",
+   "icone": "tomada",
+   "enunciado": "O gnômon precisa de pilhas ou eletricidade para funcionar.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "O gnômon funciona só com a luz do Sol e a sombra da haste."
+  },
+  {
+   "tipo": "vf",
+   "missao": "instruments",
+   "icone": "ampulheta",
+   "enunciado": "O astrolábio é um instrumento antigo, muito anterior ao GPS.",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "O astrolábio já era usado há séculos, muito antes dos satélites existirem."
+  },
+  {
+   "tipo": "vf",
+   "missao": "instruments",
+   "icone": "regua",
+   "enunciado": "Para usar o sextante, aponta-se para um astro e para o horizonte ao mesmo tempo.",
+   "origem": "propria",
+   "certa": true,
+   "explicacao": "É exatamente assim que se mede o ângulo entre o astro e o horizonte."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "instruments",
+   "icone": "elos",
+   "enunciado": "Associe cada instrumento ao que ele utiliza para funcionar.",
+   "origem": "propria",
+   "pares": [
+    [
+     "Gnômon",
+     "A sombra do Sol"
+    ],
+    [
+     "Bússola",
+     "O campo magnético da Terra"
+    ],
+    [
+     "GPS",
+     "Sinais de satélites"
+    ],
+    [
+     "Sextante",
+     "O ângulo com o horizonte"
+    ]
+   ],
+   "explicacao": "Cada instrumento se apoia em um princípio diferente para orientar."
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "instruments",
+   "icone": "ampulheta",
+   "enunciado": "Coloque os instrumentos na ordem aproximada em que surgiram na história.",
+   "origem": "propria",
+   "sequencia": [
+    "Gnômon",
+    "Astrolábio",
+    "Sextante",
+    "GPS"
+   ],
+   "explicacao": "Do mais antigo e simples ao mais recente e tecnológico."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "instruments",
+   "icone": "escrever",
+   "enunciado": "Como se chama a haste fincada no chão que marca horários pela sombra do Sol?",
+   "origem": "propria",
+   "aceitas": [
+    "gnomon",
+    "gnômon",
+    "o gnomon",
+    "o gnômon"
+   ],
+   "exemplo": "Digite o nome do instrumento...",
+   "explicacao": "Gnômon — o instrumento de orientação mais simples que existe."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "instruments",
+   "icone": "escrever",
+   "enunciado": "Qual instrumento de navegação mede o ângulo entre um astro e o horizonte?",
+   "origem": "propria",
+   "aceitas": [
+    "sextante",
+    "o sextante"
+   ],
+   "exemplo": "Digite o nome do instrumento...",
+   "explicacao": "O sextante, muito usado nas viagens marítimas."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "nuvem",
+   "enunciado": "Em um dia totalmente nublado, o gnômon...",
+   "origem": "propria",
+   "certa": "não funciona, falta sombra",
+   "erradas": [
+    "funciona melhor que nunca",
+    "passa a indicar o norte",
+    "mostra as estrelas do céu"
+   ],
+   "explicacao": "Sem sol direto não há sombra, e sem sombra o gnômon não indica nada."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "mao",
+   "enunciado": "O que a bússola e o sextante têm em comum?",
+   "origem": "propria",
+   "certa": "Os dois ajudam a se orientar",
+   "erradas": [
+    "Os dois usam ímãs",
+    "Os dois medem distâncias",
+    "Os dois precisam ver o céu"
+   ],
+   "explicacao": "São instrumentos de orientação, embora funcionem de maneiras diferentes."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "torre",
+   "enunciado": "Sobre as funções do gnômon, qual alternativa está INCORRETA?",
+   "fonte": "p.64 q1",
+   "origem": "propria",
+   "certa": "Pode ser utilizado para verificação das temperaturas do dia",
+   "erradas": [
+    "É um instrumento utilizado para a localização dos pontos cardeais",
+    "Trata-se de uma haste fincada verticalmente em solo plano, em ambiente aberto",
+    "Foi muito usado por povos antigos"
+   ],
+   "explicacao": "O gnômon trabalha com a sombra do Sol — direções e horários. Temperatura é com o termômetro."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "lua",
+   "enunciado": "Rebeca viu que a sombra de um poste era longa de manhã, curta ao meio-dia e voltou a crescer à tarde. O que explica isso?",
+   "fonte": "p.64 q2",
+   "origem": "propria",
+   "certa": "Quanto mais alto o Sol está no céu, mais curta fica a sombra",
+   "erradas": [
+    "A sombra é sempre do mesmo tamanho, independentemente da hora",
+    "As sombras ficam maiores ao meio-dia",
+    "A posição da sombra não depende da posição do Sol"
+   ],
+   "explicacao": "O poste funciona como um gnômon natural: a sombra acompanha o movimento aparente do Sol."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "bussola",
+   "enunciado": "Qual instrumento usa a sombra do Sol para mostrar as direções e ajudar a medir o tempo, como um relógio solar?",
+   "fonte": "p.66 q6",
+   "origem": "propria",
+   "certa": "O gnômon, que observa a sombra",
+   "erradas": [
+    "O astrolábio, com discos que seguem o Sol",
+    "A bússola, com a sombra da agulha",
+    "O sextante, que mede o ângulo da sombra"
+   ],
+   "explicacao": "Só o gnômon funciona pela sombra. A bússola usa magnetismo; astrolábio e sextante, a posição dos astros."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "instruments",
+   "icone": "ima",
+   "enunciado": "A bússola funciona de forma diferente do astrolábio e do sextante. Qual é a principal diferença?",
+   "fonte": "p.66 q7",
+   "origem": "propria",
+   "certa": "A bússola usa o campo magnético",
+   "erradas": [
+    "Os outros medem a profundidade do oceano",
+    "Os outros medem o tempo de viagem",
+    "Os outros mostram todas as direções"
+   ],
+   "explicacao": "O astrolábio e o sextante usam a posição das estrelas; a bússola, o campo magnético da Terra."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "menos",
+   "enunciado": "Como se chama a linha imaginária que divide a Terra ao meio?",
+   "origem": "propria",
+   "certa": "Linha do Equador",
+   "erradas": [
+    "Linha do horizonte",
+    "Rosa dos ventos",
+    "Linha da órbita"
+   ],
+   "explicacao": "A linha do Equador divide a Terra em dois hemisférios."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "globo",
+   "enunciado": "A linha do Equador divide a Terra em...",
+   "origem": "propria",
+   "certa": "Hemisfério Norte e Hemisfério Sul",
+   "erradas": [
+    "Hemisfério Leste e Hemisfério Oeste",
+    "parte de dia e parte de noite",
+    "lado de verão e lado de inverno"
+   ],
+   "explicacao": "Norte acima da linha, Sul abaixo dela."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "bandeira",
+   "enunciado": "A maior parte do território brasileiro fica em qual hemisfério?",
+   "origem": "propria",
+   "certa": "Hemisfério Sul",
+   "erradas": [
+    "Hemisfério Norte",
+    "Nenhum dos dois",
+    "Exatamente metade em cada um"
+   ],
+   "explicacao": "A linha do Equador corta o norte do Brasil, mas quase todo o país está no Hemisfério Sul."
+  },
+  {
+   "tipo": "vf",
+   "missao": "hemispheres",
+   "icone": "olho",
+   "enunciado": "A linha do Equador é uma linha pintada no chão, que dá para ver de um avião.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Ela é uma linha imaginária: existe nos mapas e nos cálculos, não no chão."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "ciclo",
+   "enunciado": "Quando é verão no Hemisfério Sul, no Hemisfério Norte é...",
+   "origem": "propria",
+   "certa": "inverno",
+   "erradas": [
+    "verão também",
+    "primavera sempre",
+    "não há estações"
+   ],
+   "explicacao": "As estações são opostas nos dois hemisférios."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "estrela",
+   "enunciado": "Qual referência do céu é usada para achar o norte no Hemisfério Norte?",
+   "origem": "propria",
+   "certa": "A Estrela Polar",
+   "erradas": [
+    "O Cruzeiro do Sul",
+    "A Lua cheia",
+    "O planeta Marte"
+   ],
+   "explicacao": "A Estrela Polar indica aproximadamente o norte."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "estrela",
+   "enunciado": "E no Hemisfério Sul, qual conjunto de estrelas ajuda a encontrar o sul?",
+   "origem": "propria",
+   "certa": "O Cruzeiro do Sul",
+   "erradas": [
+    "A Estrela Polar",
+    "A Ursa Menor",
+    "O cinturão de Órion"
+   ],
+   "explicacao": "O Cruzeiro do Sul é a referência tradicional do Hemisfério Sul."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "estrela",
+   "enunciado": "A Estrela Polar também é conhecida pelo nome de...",
+   "origem": "propria",
+   "certa": "Polaris",
+   "erradas": [
+    "Sirius",
+    "Vênus",
+    "Antares"
+   ],
+   "explicacao": "Polaris é o nome pelo qual a Estrela Polar é conhecida."
+  },
+  {
+   "tipo": "vf",
+   "missao": "hemispheres",
+   "icone": "globo",
+   "enunciado": "Do Brasil é fácil enxergar a Estrela Polar em qualquer noite.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "Na maior parte do Brasil a Estrela Polar não é visível: ela fica no céu do Hemisfério Norte."
+  },
+  {
+   "tipo": "ligar",
+   "missao": "hemispheres",
+   "icone": "elos",
+   "enunciado": "Associe cada elemento à sua descrição.",
+   "origem": "propria",
+   "pares": [
+    [
+     "Hemisfério Norte",
+     "Onde se vê a Estrela Polar"
+    ],
+    [
+     "Hemisfério Sul",
+     "Onde se vê o Cruzeiro do Sul"
+    ],
+    [
+     "Linha do Equador",
+     "Divide a Terra em dois hemisférios"
+    ],
+    [
+     "Polaris",
+     "Outro nome da Estrela Polar"
+    ]
+   ],
+   "explicacao": "Cada hemisfério tem sua própria referência no céu noturno."
+  },
+  {
+   "tipo": "digitar",
+   "missao": "hemispheres",
+   "icone": "escrever",
+   "enunciado": "Qual é o nome da linha imaginária que divide a Terra em Hemisfério Norte e Sul?",
+   "origem": "propria",
+   "aceitas": [
+    "equador",
+    "linha do equador",
+    "a linha do equador",
+    "o equador"
+   ],
+   "exemplo": "Digite o nome da linha...",
+   "explicacao": "A linha do Equador é o ponto de partida para medir a latitude."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "seta-cima",
+   "enunciado": "A Estrela Polar indica aproximadamente qual direção?",
+   "origem": "propria",
+   "certa": "Norte",
+   "erradas": [
+    "Sul",
+    "Leste",
+    "Oeste"
+   ],
+   "explicacao": "Por isso ela é tão útil para quem se orienta no Hemisfério Norte."
+  },
+  {
+   "tipo": "vf",
+   "missao": "hemispheres",
+   "icone": "planta",
+   "enunciado": "As estações do ano acontecem nos mesmos meses nos dois hemisférios.",
+   "origem": "propria",
+   "certa": false,
+   "explicacao": "São opostas: dezembro é verão no Sul e inverno no Norte."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "termometro",
+   "enunciado": "Quem mora perto da linha do Equador percebe...",
+   "origem": "propria",
+   "certa": "pouca diferença na duração do dia",
+   "erradas": [
+    "seis meses de noite seguidos",
+    "quatro estações muito marcadas",
+    "o Sol a pino à meia-noite"
+   ],
+   "explicacao": "Perto do Equador os dias e as noites têm duração parecida o ano inteiro."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "bussola",
+   "enunciado": "Saber em que hemisfério você está ajuda a...",
+   "origem": "propria",
+   "certa": "escolher a referência certa no céu",
+   "erradas": [
+    "mudar a direção do norte magnético",
+    "usar o mesmo mapa em qualquer lugar",
+    "saber a hora exata do nascer do Sol"
+   ],
+   "explicacao": "No Norte usa-se a Estrela Polar; no Sul, o Cruzeiro do Sul."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "cruzeiro",
+   "enunciado": "Complete: “A constelação ______ pode ser vista no Brasil e a estrela da ponta inferior é utilizada para identificar a direção ______.”",
+   "fonte": "p.65 q4",
+   "origem": "propria",
+   "certa": "Cruzeiro do Sul; Sul",
+   "erradas": [
+    "Cruzeiro do Sul; Norte",
+    "Ursa Menor; Norte",
+    "Ursa Maior; Sul"
+   ],
+   "explicacao": "A ponta inferior do Cruzeiro do Sul aponta aproximadamente para o sul celeste."
+  },
+  {
+   "tipo": "escolha",
+   "missao": "hemispheres",
+   "icone": "check",
+   "enunciado": "Analise: I. A linha do Equador divide a Terra em duas partes iguais. II. Um navegador no Brasil consegue usar a Estrela Polar para se orientar sem dificuldade. III. O Cruzeiro do Sul pode ser visto no Hemisfério Sul. Qual a sequência CORRETA?",
+   "fonte": "p.66 q5",
+   "origem": "propria",
+   "certa": "V – F – V",
+   "erradas": [
+    "V – V – F",
+    "F – V – V",
+    "F – F – F"
+   ],
+   "explicacao": "A II é falsa: do Brasil, a Estrela Polar quase não é visível, porque ela fica no céu do Hemisfério Norte."
+  }
+ ]
+}
