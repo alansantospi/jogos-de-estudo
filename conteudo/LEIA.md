@@ -13,12 +13,13 @@ sh build/rebuild.sh          # valida, monta e confere que nada se perdeu
 | arquivo | questões | derivadas |
 |---|---:|---:|
 | `ciencias-4ano.json` | 187 | 20 |
+| `geografia-4ano.json` | 70 | 70 |
 | `gramatica-4ano.json` | 116 | 114 |
 | `historia-4ano.json` | 92 | 67 |
 | `artes-4ano.json` | 34 | 30 |
 | `ingles-4ano.json` | 186 | 45 |
 | `matematica-4ano.json` | 91 | 75 |
-| **total** | **706** | **351** |
+| **total** | **776** | **421** |
 
 O inglês guarda também `verbos` (49), de onde os geradores por regra fabricam
 questão na hora. Essas geradas não estão aqui — são código, e só viram dado
@@ -76,7 +77,7 @@ salva os tipos de memória e cruzada, cujo miolo ainda é próprio daquele motor
 
 Decide o que pode ser publicado com o produto. Questão marcada `derivada` veio
 do livro didático ou da folha da escola — serve para a Anne estudar, não para
-acompanhar um produto à venda. Hoje são **351 de 706**. Ver `PLANO.md`, §2.1.
+acompanhar um produto à venda. Hoje são **421 de 776**. Ver `PLANO.md`, §2.1.
 
 ## O que o validador cobra
 
@@ -92,7 +93,7 @@ enunciado entreguem a resposta.
 
 Foi o que a Matemática fez, e não exigiu passo de build novo:
 
-Foi o que a Matemática e a Gramática fizeram, e não exigiu passo de build novo:
+Foi o que a Matemática, a Gramática e a Geografia fizeram, e não exigiu passo de build novo:
 
 1. escrever `conteudo/<materia>-<ano>.json`;
 2. registrar o jogo na tabela `JOGOS` de `build/montar.py` — cor, título,
@@ -119,3 +120,14 @@ azul fica negativo. Ao procurar a cor da Gramática, o teste de gamut olhava o
 valor já clampeado, que sai exatamente 0,0, e por isso descartava toda a faixa
 dourada como se fosse impossível — quando o que faltava era baixar o croma.
 Teste o RGB **linear, antes do clamp**.
+
+*Os dois temas.* Cada matéria tem duas cores: a do tema claro e a do escuro,
+e **a paleta escura é mais apertada que a clara**. Na Geografia eu medi só a
+clara, achei 0,132 e dei por encerrado; a escura tinha caído a **0,065** do
+azul do Inglês, e os dois cartões ficaram parecidos no índice — que abre no
+escuro. Medir as duas.
+
+E a saída foi separar por **luminosidade**, não por matiz: travando a clareza
+em 0,70 o melhor possível era 0,097, e deixando-a livre chegou a 0,134, com um
+azul mais claro que todos os outros. Quando o círculo de matiz lota, é a
+clareza que ainda tem espaço.

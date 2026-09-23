@@ -46,6 +46,14 @@ JOGOS = {
         sala="jogosdeestudo-gram-",
         patente="lives<=0&&!practiceMode?'Aprendiz de Palavras':acc>=90?'Mestre da Oficina'"
                 ":acc>=70?'Gramático':'Aprendiz de Palavras'"),
+    "geografia.html": dict(
+        id="geografia", conteudo="geografia-4ano", slug="geo",
+        cor="oklch(0.46 0.12 245)", titulo="Campo e Cidade",
+        chave="geografia_progress_v1", materia="Geografia",
+        subtitulo="Geografia — o trabalho no campo e na cidade",
+        sala="jogosdeestudo-geo-",
+        patente="lives<=0&&!practiceMode?'Aprendiz de Geografia':acc>=90?'Mestre do Campo e da Cidade'"
+                ":acc>=70?'Geógrafo':'Aprendiz de Geografia'"),
     "artes.html": dict(
         id="artes", conteudo="artes-4ano", slug="arte",
         cor="oklch(0.56 0.22 330)", titulo="Ateliê",

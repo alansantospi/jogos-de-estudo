@@ -33,8 +33,8 @@ ALVOS = {
     "fim": JOGOS,
     "perfis": ["index.html"],
     "migracao": ["time-travel-english.html"],
-    # Só a Gramática tem lição interativa por enquanto.
-    "licao": ["gramatica.html"],
+    # Os jogos com lição em passos curtos. Quem entrar depois entra aqui.
+    "licao": ["gramatica.html", "geografia.html"],
 }
 
 # Injetado antes de cada caso: entrega o resultado e captura erro de JS.

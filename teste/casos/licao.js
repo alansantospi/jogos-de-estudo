@@ -46,7 +46,10 @@ if (!q1.querySelector('.mic-ops button[data-ok="1"]').classList.contains("certo"
 if (q1.querySelector(".mic-fb").hidden) falhas.push("a explicação continuou escondida");
 
 // --- revelar: abre e fecha -------------------------------------------
-const rev = $("#lesson1 .mic-rev");
+const comRev = passos.find(p => p.querySelector(".mic-rev"));
+if (!comRev) falhas.push("nenhum passo tem cartão de revelar");
+await vai("licao/" + comRev.id);
+const rev = comRev.querySelector(".mic-rev");
 const antes = rev.querySelector("i").textContent;
 rev.click();
 if (rev.getAttribute("aria-expanded") !== "true") falhas.push("revelar não abriu");
@@ -59,30 +62,40 @@ if (rev.getAttribute("aria-expanded") !== "false")
   falhas.push("revelar fechou o texto mas continuou anunciando aberto");
 
 // --- máquina: compor muda o resultado e o desenho ---------------------
-await vai("licao/lesson4");
-const maq = $("#lesson4 .mic-maq");
+// O passo com máquina e desenho: o primeiro que tiver os dois.
+const comFig = passos.find(p => p.querySelector(".mic-maq[data-fig]"));
+if (!comFig) falhas.push("nenhum passo liga máquina e desenho");
+await vai("licao/" + comFig.id);
+const maq = comFig.querySelector(".mic-maq");
 const res = maq.querySelector(".mic-res");
-const fig = document.getElementById("fgDist");
+const fig = document.getElementById(maq.dataset.fig);
 const inicial = res.textContent;
 if (!inicial || inicial === "—") falhas.push("a máquina abriu sem resultado");
-if (fig.getAttribute("data-estado") !== "este")
+const eixo1 = [...maq.querySelectorAll(".mic-eixo")[0].querySelectorAll("button")];
+if (fig.getAttribute("data-estado") !== eixo1[0].dataset.v)
   falhas.push("o desenho não começou no estado inicial");
-const outro = [...maq.querySelectorAll(".mic-eixo button")].find(b => b.dataset.v === "aquele");
+const outro = eixo1[eixo1.length - 1];
 outro.click();
 if (res.textContent === inicial) falhas.push("compor não mudou o resultado");
-if (fig.getAttribute("data-estado") !== "aquele")
+if (fig.getAttribute("data-estado") !== outro.dataset.v)
   falhas.push("compor não mudou o desenho: " + fig.getAttribute("data-estado"));
 if (outro.getAttribute("aria-pressed") !== "true") falhas.push("a escolha não ficou marcada");
-if (!$("#lesson4 .mic-nota").innerHTML.trim()) falhas.push("a máquina não explicou a escolha");
+if (!comFig.querySelector(".mic-nota").innerHTML.trim())
+  falhas.push("a máquina não explicou a escolha");
 
-// --- máquina de dois eixos (contração) --------------------------------
-await vai("licao/lesson14");
-const m14 = $("#lesson14 .mic-maq");
-const eixos = m14.querySelectorAll(".mic-eixo");
-if (eixos.length !== 2) falhas.push("a contração não tem dois eixos");
-[...eixos[1].querySelectorAll("button")].find(b => b.dataset.v === "aquela").click();
-const saida = m14.querySelector(".mic-res").textContent;
-if (!saida.includes("daquela")) falhas.push("de + aquela não deu daquela, e sim " + saida);
+// --- máquina de dois eixos, onde houver -------------------------------
+const doisEixos = passos.find(p =>
+  [...p.querySelectorAll(".mic-maq")].some(m => m.querySelectorAll(".mic-eixo").length === 2));
+if (doisEixos) {
+  await vai("licao/" + doisEixos.id);
+  const m2 = [...doisEixos.querySelectorAll(".mic-maq")]
+    .find(m => m.querySelectorAll(".mic-eixo").length === 2);
+  const antesR = m2.querySelector(".mic-res").textContent;
+  const segundo = m2.querySelectorAll(".mic-eixo")[1].querySelectorAll("button");
+  segundo[segundo.length - 1].click();
+  if (m2.querySelector(".mic-res").textContent === antesR)
+    falhas.push("mexer no segundo eixo não mudou o resultado");
+}
 
 // --- modo resumo: os dois modos saem do mesmo dado --------------------
 await vai("licao/resumo");
@@ -124,8 +137,13 @@ else {
 }
 
 // --- guarda onde parou ------------------------------------------------
+// O caso roda num arquivo temporário, então o nome do jogo não vem do
+// endereço. A chave é a única que termina em _licao_v1.
 let salvo = null;
-try { salvo = localStorage.getItem("gramatica_licao_v1"); } catch (e) {}
+try {
+  const k = Object.keys(localStorage).find(x => x.endsWith("_licao_v1"));
+  salvo = k ? localStorage.getItem(k) : null;
+} catch (e) {}
 if (salvo !== "1") falhas.push("não guardou o passo (guardou " + salvo + ")");
 // O resumo não é passo: visitá-lo não pode mexer em onde a criança parou.
 

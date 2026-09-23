@@ -18,3 +18,4 @@ preparar("historia.html",            "web/historia.html",            "Linhas do 
 preparar("artes.html",              "web/artes.html",              "Ateliê")
 preparar("matematica.html",         "web/matematica.html",         "Régua e Compasso")
 preparar("gramatica.html",          "web/gramatica.html",          "Oficina das Palavras")
+preparar("geografia.html",          "web/geografia.html",          "Campo e Cidade")

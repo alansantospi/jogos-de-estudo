@@ -15,6 +15,7 @@ python3 build/documentos.py
 
 echo "== partes geradas"
 python3 build/licao_gramatica.py
+python3 build/licao_geografia.py
 
 echo "== montagem"
 python3 build/montar.py

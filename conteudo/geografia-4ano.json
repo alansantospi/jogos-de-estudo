@@ -1,0 +1,1309 @@
+{
+ "id": "geografia-4ano",
+ "materia": "Geografia",
+ "titulo": "Campo e Cidade",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "atividades",
+   "nome": "Atividades econômicas"
+  },
+  {
+   "id": "primario",
+   "nome": "Setor primário"
+  },
+  {
+   "id": "secundario",
+   "nome": "Setor secundário"
+  },
+  {
+   "id": "terciario",
+   "nome": "Setor terciário"
+  },
+  {
+   "id": "agricultura",
+   "nome": "Agricultura"
+  },
+  {
+   "id": "pecuaria",
+   "nome": "Pecuária"
+  },
+  {
+   "id": "extrativismo",
+   "nome": "Extrativismo"
+  },
+  {
+   "id": "agroindustria",
+   "nome": "Agroindústria"
+  },
+  {
+   "id": "industrias",
+   "nome": "Indústrias e construção"
+  },
+  {
+   "id": "caminho",
+   "nome": "O caminho do produto"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "setores",
+   "nome": "Os Três Setores",
+   "etapas": [
+    "atividades",
+    "primario",
+    "secundario",
+    "terciario",
+    "all"
+   ]
+  },
+  {
+   "id": "campo",
+   "nome": "O Trabalho no Campo",
+   "etapas": [
+    "agricultura",
+    "pecuaria",
+    "extrativismo",
+    "all"
+   ]
+  },
+  {
+   "id": "cidade",
+   "nome": "Do Campo à Cidade",
+   "etapas": [
+    "agroindustria",
+    "industrias",
+    "caminho",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "O que são atividades econômicas?",
+   "certa": "Toda forma de trabalho que produz e oferece produtos e serviços",
+   "erradas": [
+    "O trabalho realizado dentro das fábricas e das oficinas",
+    "A compra e a venda de mercadorias nas lojas da cidade",
+    "O dinheiro que circula entre os bancos e as grandes empresas"
+   ],
+   "explicacao": "São todo trabalho que atende às necessidades da vida em sociedade.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "Em quantos setores principais as atividades econômicas se organizam?",
+   "certa": "Três",
+   "erradas": [
+    "Dois",
+    "Quatro",
+    "Cinco"
+   ],
+   "explicacao": "Primário, secundário e terciário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "As atividades econômicas acontecem:",
+   "certa": "No campo e na cidade",
+   "erradas": [
+    "Nas cidades, onde há indústria",
+    "No campo, onde há terra",
+    "Nos portos e nas fronteiras"
+   ],
+   "explicacao": "Estão presentes nos dois lugares, em setores diferentes.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "Os três setores da economia são independentes: um não usa o que o outro produz.",
+   "certa": false,
+   "explicacao": "Falso: o que é produzido num setor costuma ser usado por outro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "As atividades econômicas produzem tanto produtos quanto serviços.",
+   "certa": true,
+   "explicacao": "Verdadeiro: produzir, distribuir e oferecer — produtos e serviços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "Segundo o capítulo, as atividades econômicas devem ser feitas:",
+   "certa": "Com responsabilidade e sem desperdício",
+   "erradas": [
+    "Buscando o maior lucro possível",
+    "Deixando a natureza em segundo plano",
+    "Pelas pessoas das grandes cidades"
+   ],
+   "explicacao": "Usar os recursos com equilíbrio e evitar o desperdício faz parte do capítulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "Qual setor reúne o comércio e a prestação de serviços?",
+   "aceitas": [
+    "terciario",
+    "terciário",
+    "o terciario",
+    "o terciário",
+    "setor terciario",
+    "setor terciário"
+   ],
+   "exemplo": "Digite o setor...",
+   "explicacao": "O setor terciário: comércio e serviços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "atividades",
+   "icone": "ciclo",
+   "enunciado": "Coloque os setores na ordem em que o produto costuma passar.",
+   "sequencia": [
+    "primário",
+    "secundário",
+    "terciário"
+   ],
+   "explicacao": "A matéria-prima sai do primário, é transformada no secundário e vendida no terciário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "O setor primário reúne atividades ligadas:",
+   "certa": "Diretamente à natureza, de onde tiram tudo",
+   "erradas": [
+    "Ao comércio de lojas",
+    "À transformação em fábricas",
+    "Ao transporte de passageiros"
+   ],
+   "explicacao": "Agricultura, pecuária, pesca e extrativismo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "Qual destas NÃO faz parte do setor primário?",
+   "certa": "Refino de petróleo",
+   "erradas": [
+    "Agricultura de subsistência",
+    "Pesca comercial",
+    "Mineração de carvão"
+   ],
+   "explicacao": "Refinar é transformar: isso é setor secundário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "Quais são as quatro atividades do setor primário citadas no capítulo?",
+   "certa": "Agricultura, pecuária, pesca e extrativismo",
+   "erradas": [
+    "Comércio, serviços, indústria e transporte",
+    "Agricultura, indústria, comércio e turismo",
+    "Pesca, construção, educação e saúde"
+   ],
+   "explicacao": "Todas elas tiram algo diretamente da natureza.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "«Um agricultor cultiva milho e feijão em sua propriedade.» Que setor?",
+   "certa": "Primário",
+   "erradas": [
+    "Secundário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Cultivar é produzir matéria-prima: setor primário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "«Um pescador retira peixes do rio para comercialização.» Que setor?",
+   "certa": "Primário",
+   "erradas": [
+    "Secundário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Retirar da natureza é setor primário, mesmo que depois seja vendido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "O setor primário produz as matérias-primas que os outros setores usam.",
+   "certa": true,
+   "explicacao": "Verdadeiro: é dele que sai o que será transformado e vendido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "primario",
+   "icone": "planta",
+   "enunciado": "A mineração de carvão pertence ao setor secundário.",
+   "certa": false,
+   "explicacao": "Falso: extrair carvão do solo é extrativismo mineral, do setor primário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "O que o setor secundário faz?",
+   "certa": "Transforma as matérias-primas em produtos novos",
+   "erradas": [
+    "Retira recursos diretamente da natureza",
+    "Vende produtos prontos ao consumidor",
+    "Transporta passageiros pela cidade"
+   ],
+   "explicacao": "Principalmente por meio das indústrias e da construção.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "Além das indústrias, que atividade pertence ao setor secundário?",
+   "certa": "A construção",
+   "erradas": [
+    "O comércio",
+    "O turismo",
+    "A pesca"
+   ],
+   "explicacao": "Indústria e construção formam o setor secundário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "«Uma fábrica transforma o leite em queijo e iogurte.» Que setor?",
+   "certa": "Secundário",
+   "erradas": [
+    "Primário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Transformar matéria-prima é setor secundário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "«Uma indústria utiliza madeira para fabricar móveis.» Que setor?",
+   "certa": "Secundário",
+   "erradas": [
+    "Primário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "A madeira é matéria-prima; o móvel é o produto novo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "Que fator é associado aos problemas do setor secundário em países em desenvolvimento?",
+   "certa": "Escassez de mão de obra qualificada",
+   "erradas": [
+    "Alta produtividade e tecnologia avançada",
+    "Eficiência na gestão dos recursos naturais",
+    "Redução das desigualdades de renda"
+   ],
+   "explicacao": "Faltar gente preparada trava a indústria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "secundario",
+   "icone": "engrenagem",
+   "enunciado": "Toda atividade do setor secundário acontece dentro de uma fábrica.",
+   "certa": false,
+   "explicacao": "Falso: a construção civil também é setor secundário e acontece na obra.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "O setor terciário reúne:",
+   "certa": "O comércio e os serviços",
+   "erradas": [
+    "A agricultura e a pecuária",
+    "A indústria e a construção",
+    "A pesca e o extrativismo"
+   ],
+   "explicacao": "É o setor que conecta os outros dois ao consumidor.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "Qual destes profissionais trabalha no setor terciário?",
+   "certa": "Médico",
+   "erradas": [
+    "Agricultor",
+    "Pescador",
+    "Minerador"
+   ],
+   "explicacao": "Professores, médicos, motoristas e vendedores prestam serviços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "O que é comércio?",
+   "certa": "A venda de produtos em lojas, feiras e supermercados",
+   "erradas": [
+    "A transformação de matérias-primas dentro das fábricas",
+    "A retirada de recursos naturais do solo e do subsolo",
+    "A construção de prédios, estradas, pontes e moradias"
+   ],
+   "explicacao": "Lojas, feiras e shoppings são estabelecimentos comerciais.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "O que são serviços?",
+   "certa": "Atividades feitas para atender necessidades",
+   "erradas": [
+    "Produtos vendidos em lojas e supermercados",
+    "Matérias-primas retiradas do campo e do mar",
+    "Máquinas usadas dentro das grandes indústrias"
+   ],
+   "explicacao": "Educação, saúde e transporte são serviços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "Qual é o principal setor econômico do Brasil?",
+   "certa": "Terciário",
+   "erradas": [
+    "Primário",
+    "Secundário",
+    "Extrativismo"
+   ],
+   "explicacao": "O comércio e os serviços são o maior setor da economia brasileira.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "«Um motorista transporta passageiros pela cidade.» Que setor?",
+   "certa": "Terciário",
+   "erradas": [
+    "Primário",
+    "Secundário",
+    "Quaternário"
+   ],
+   "explicacao": "Transporte é prestação de serviço.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "«Uma professora trabalha ensinando crianças.» Que setor?",
+   "certa": "Terciário",
+   "erradas": [
+    "Primário",
+    "Secundário",
+    "Quaternário"
+   ],
+   "explicacao": "Educação é serviço, portanto setor terciário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "terciario",
+   "icone": "sacola",
+   "enunciado": "Ligue cada profissional ao seu setor.",
+   "pares": [
+    [
+     "Agricultor",
+     "Primário"
+    ],
+    [
+     "Operário de fábrica",
+     "Secundário"
+    ],
+    [
+     "Vendedor de loja",
+     "Terciário"
+    ],
+    [
+     "Pescador",
+     "Primário"
+    ]
+   ],
+   "explicacao": "O setor depende do que a pessoa faz, não de onde ela mora.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "A agricultura tradicional se caracteriza por:",
+   "certa": "Técnicas simples e trabalho da própria família",
+   "erradas": [
+    "Máquinas modernas e grandes áreas",
+    "Produção voltada para a exportação",
+    "Uso intenso de tecnologia e agrotóxicos"
+   ],
+   "explicacao": "Ferramentas simples, mão de obra da família, produção para o próprio consumo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "A agricultura moderna se caracteriza por:",
+   "certa": "Máquinas e grandes áreas",
+   "erradas": [
+    "Enxada e trabalho manual",
+    "Produção para a própria família",
+    "Ausência de comercialização"
+   ],
+   "explicacao": "É voltada ao comércio e produz em grande escala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "A agricultura de subsistência produz principalmente para:",
+   "certa": "O consumo da própria família",
+   "erradas": [
+    "A exportação",
+    "As grandes indústrias",
+    "Os supermercados das cidades"
+   ],
+   "explicacao": "Subsistência é sustentar quem produz.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "A agricultura pode ser classificada como tradicional e moderna.",
+   "certa": true,
+   "explicacao": "Verdadeiro: é a divisão que o capítulo apresenta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "Na agricultura tradicional predomina o uso de máquinas pesadas.",
+   "certa": false,
+   "explicacao": "Falso: as máquinas são a marca da agricultura moderna.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agricultura",
+   "icone": "trabalho",
+   "enunciado": "O homem cultiva a terra e cria animais para:",
+   "certa": "Ter alimento, materiais e recursos",
+   "erradas": [
+    "Vender nas cidades grandes",
+    "Exportar para outros países",
+    "Alimentar os outros animais"
+   ],
+   "explicacao": "O cultivo atende a alimento, matéria-prima e recursos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "O que é pecuária?",
+   "certa": "A criação de animais",
+   "erradas": [
+    "O cultivo de plantas",
+    "A retirada de minérios",
+    "A venda de alimentos"
+   ],
+   "explicacao": "Criar animais para alimento e outros produtos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "A pecuária extensiva acontece:",
+   "certa": "Em grandes áreas de pastagem, com os animais soltos",
+   "erradas": [
+    "Em espaços pequenos e fechados",
+    "Dentro das fábricas",
+    "Dentro das regiões urbanas"
+   ],
+   "explicacao": "Os animais criam-se soltos, com menos controle.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "A pecuária intensiva se caracteriza por:",
+   "certa": "Espaços menores e mais controle",
+   "erradas": [
+    "Grandes pastos abertos",
+    "Ausência de alimentação planejada",
+    "Criação solta na natureza"
+   ],
+   "explicacao": "Há confinamento, ração e acompanhamento de perto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "Na pecuária intensiva os animais recebem:",
+   "certa": "Alimentação com ração",
+   "erradas": [
+    "O capim que encontram no pasto",
+    "Acompanhamento de longe",
+    "Água da chuva acumulada"
+   ],
+   "explicacao": "A alimentação é controlada, o que acelera a criação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "A pecuária pode ser dividida em extensiva e intensiva.",
+   "certa": true,
+   "explicacao": "Verdadeiro: é a divisão apresentada no capítulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "Na pecuária extensiva há mais controle sobre os animais que na intensiva.",
+   "certa": false,
+   "explicacao": "Falso: é o contrário. A intensiva é a de maior controle.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "pecuaria",
+   "icone": "animal",
+   "enunciado": "Ligue cada tipo de pecuária à sua marca.",
+   "pares": [
+    [
+     "Extensiva",
+     "Grandes áreas de pastagem"
+    ],
+    [
+     "Intensiva",
+     "Confinamento e ração"
+    ]
+   ],
+   "explicacao": "Espaço grande e pouco controle, ou espaço pequeno e muito controle.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "O que é extrativismo?",
+   "certa": "Retirar recursos diretamente da natureza, sem cultivá-los",
+   "erradas": [
+    "Transformar matérias-primas nas indústrias",
+    "Vender produtos em lojas e supermercados",
+    "Criar animais para transporte"
+   ],
+   "explicacao": "É retirar da natureza para utilização ou comercialização.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "Quantos tipos de extrativismo existem?",
+   "certa": "Três",
+   "erradas": [
+    "Dois",
+    "Quatro",
+    "Cinco"
+   ],
+   "explicacao": "Vegetal, animal e mineral.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "O extrativismo vegetal retira recursos de:",
+   "certa": "Plantas",
+   "erradas": [
+    "Animais",
+    "Rochas do subsolo",
+    "Fábricas"
+   ],
+   "explicacao": "Madeira, látex e castanha vêm do extrativismo vegetal.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "O extrativismo animal inclui:",
+   "certa": "Pesca, caça e mel",
+   "erradas": [
+    "Corte de madeira e látex",
+    "Extração de petróleo bruto",
+    "Cultivo de milho e feijão"
+   ],
+   "explicacao": "Retira o que vem dos animais, sem criá-los.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "O extrativismo mineral retira recursos:",
+   "certa": "Do solo e do subsolo",
+   "erradas": [
+    "Das copas das árvores",
+    "Do fundo dos rios",
+    "Das plantações"
+   ],
+   "explicacao": "Minérios, carvão e petróleo saem do solo e do subsolo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "A extração de petróleo é exemplo de extrativismo:",
+   "certa": "Mineral",
+   "erradas": [
+    "Vegetal",
+    "Animal",
+    "Industrial"
+   ],
+   "explicacao": "Petróleo sai do subsolo: extrativismo mineral.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "A coleta de castanha na floresta é extrativismo vegetal.",
+   "certa": true,
+   "explicacao": "Verdadeiro: a castanha vem de uma planta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "extrativismo",
+   "icone": "montanha",
+   "enunciado": "Ligue cada exemplo ao tipo de extrativismo.",
+   "pares": [
+    [
+     "Madeira",
+     "Vegetal"
+    ],
+    [
+     "Mel",
+     "Animal"
+    ],
+    [
+     "Carvão",
+     "Mineral"
+    ],
+    [
+     "Pesca",
+     "Animal"
+    ]
+   ],
+   "explicacao": "Planta, animal ou solo: é a origem que decide.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "O que é agroindústria?",
+   "certa": "A ligação entre a produção do campo e a indústria",
+   "erradas": [
+    "A venda de produtos agrícolas em feiras e mercados",
+    "O cultivo de plantas com máquinas e tecnologia nova",
+    "O transporte de alimentos do campo até as cidades"
+   ],
+   "explicacao": "Ela acrescenta valor às matérias-primas produzidas no campo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "A transformação da cana-de-açúcar em açúcar é exemplo da relação entre:",
+   "certa": "O primário e o secundário",
+   "erradas": [
+    "O primário e o terciário",
+    "O secundário e o terciário",
+    "Dois setores primários"
+   ],
+   "explicacao": "A cana vem do campo; o açúcar sai da indústria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "Ao transformar a matéria-prima do campo, a agroindústria:",
+   "certa": "Aumenta o valor do produto e facilita a conservação",
+   "erradas": [
+    "Diminui o preço do produto final",
+    "Impede que o produto seja transportado",
+    "Elimina a necessidade do setor primário"
+   ],
+   "explicacao": "Também facilita a distribuição do produto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "O leite retirado da vaca e vendido sem transformação já é agroindústria.",
+   "certa": false,
+   "explicacao": "Falso: sem passar pela transformação industrial, não é agroindústria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "A agroindústria pode usar matérias-primas da agricultura e da pecuária.",
+   "certa": true,
+   "explicacao": "Verdadeiro: as duas alimentam a agroindústria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "Só grandes fábricas podem ser consideradas agroindústrias.",
+   "certa": false,
+   "explicacao": "Falso: pequenas unidades de processamento também são.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "agroindustria",
+   "icone": "comida",
+   "enunciado": "A transformação do tomate em molho é exemplo de:",
+   "certa": "Agroindústria",
+   "erradas": [
+    "Extrativismo vegetal",
+    "Pecuária intensiva",
+    "Comércio"
+   ],
+   "explicacao": "Matéria-prima do campo virando produto na indústria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "As indústrias extrativas fazem o quê?",
+   "certa": "Preparam a matéria-prima",
+   "erradas": [
+    "Vendem produtos prontos nas lojas",
+    "Transportam mercadorias entre cidades",
+    "Ensinam profissões aos trabalhadores"
+   ],
+   "explicacao": "Elas retiram e preparam o que será transformado depois.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "As indústrias de transformação fazem o quê?",
+   "certa": "Transformam matéria-prima em produto",
+   "erradas": [
+    "Retiram recursos do solo e do subsolo",
+    "Vendem as mercadorias ao consumidor",
+    "Constroem estradas, pontes e moradias"
+   ],
+   "explicacao": "É delas que saem os produtos prontos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "As atividades industriais geralmente se instalam:",
+   "certa": "Em áreas urbanas",
+   "erradas": [
+    "Nas áreas de floresta",
+    "No meio das plantações",
+    "Ao longo do litoral"
+   ],
+   "explicacao": "A indústria é uma atividade típica da cidade.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "Qual é a importância da construção civil?",
+   "certa": "Constrói moradias, prédios e estradas",
+   "erradas": [
+    "Produz os alimentos que a cidade consome",
+    "Vende materiais nas lojas e nos depósitos",
+    "Retira minérios do solo e do subsolo"
+   ],
+   "explicacao": "É ela que ergue a estrutura em que a cidade funciona.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "Existem dois tipos de indústria: extrativas e de transformação.",
+   "certa": true,
+   "explicacao": "Verdadeiro: é a divisão apresentada no capítulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "industrias",
+   "icone": "predios",
+   "enunciado": "A construção civil pertence a qual setor?",
+   "certa": "Secundário",
+   "erradas": [
+    "Primário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Construir é transformar materiais: setor secundário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "A criação das vacas e a produção do leite fazem parte do setor:",
+   "certa": "Primário",
+   "erradas": [
+    "Secundário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Estão ligadas à produção de matérias-primas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "A transformação do leite em queijo e iogurte ocorre no setor:",
+   "certa": "Secundário",
+   "erradas": [
+    "Primário",
+    "Terciário",
+    "Quaternário"
+   ],
+   "explicacao": "Envolve atividade industrial.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "O transporte e a venda do queijo no supermercado pertencem ao setor:",
+   "certa": "Terciário",
+   "erradas": [
+    "Primário",
+    "Secundário",
+    "Quaternário"
+   ],
+   "explicacao": "Envolvem comércio e prestação de serviços.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "Coloque o caminho do leite na ordem.",
+   "sequencia": [
+    "A vaca é ordenhada na propriedade rural",
+    "O leite vai para a indústria e vira queijo",
+    "O queijo é transportado até a cidade",
+    "O queijo é vendido no supermercado"
+   ],
+   "explicacao": "Primário, secundário e depois terciário — duas vezes: transporte e venda.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "Ligue cada etapa ao seu setor.",
+   "pares": [
+    [
+     "Ordenhar a vaca",
+     "Primário"
+    ],
+    [
+     "Fabricar o queijo",
+     "Secundário"
+    ],
+    [
+     "Vender no mercado",
+     "Terciário"
+    ]
+   ],
+   "explicacao": "O mesmo produto passa pelos três setores até a nossa mesa.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "Um mesmo produto pode passar pelos três setores da economia.",
+   "certa": true,
+   "explicacao": "Verdadeiro: o leite é o exemplo do capítulo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "caminho",
+   "icone": "elos",
+   "enunciado": "Em que setor o leite vira queijo?",
+   "aceitas": [
+    "secundario",
+    "secundário",
+    "o secundario",
+    "o secundário",
+    "setor secundario",
+    "setor secundário"
+   ],
+   "exemplo": "Digite o setor...",
+   "explicacao": "Transformar é setor secundário.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de setembro"
+   }
+  }
+ ]
+}

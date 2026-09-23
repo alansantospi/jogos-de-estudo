@@ -80,5 +80,19 @@
   "preposicao": "O que é preposição",
   "relacoes": "Relações de sentido",
   "contracao": "Contração e combinação"
+ },
+ "geo": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "atividades": "Atividades econômicas",
+  "primario": "Setor primário",
+  "secundario": "Setor secundário",
+  "terciario": "Setor terciário",
+  "agricultura": "Agricultura",
+  "pecuaria": "Pecuária",
+  "extrativismo": "Extrativismo",
+  "agroindustria": "Agroindústria",
+  "industrias": "Indústrias e construção",
+  "caminho": "O caminho do produto"
  }
 }

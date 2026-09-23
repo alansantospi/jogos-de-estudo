@@ -21,7 +21,7 @@
   --ingles:oklch(0.55 0.20 265); --ciencias:oklch(0.525 0.15 195);
   --matematica:oklch(0.52 0.22 298);
   --historia:oklch(0.575 0.18 40); --arte:oklch(0.56 0.22 330);
-  --gramatica:oklch(0.55 0.11 82);
+  --gramatica:oklch(0.55 0.11 82); --geografia:oklch(0.46 0.12 245);
   --display:'Fredoka',ui-rounded,system-ui,sans-serif;
   --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem;
@@ -36,7 +36,7 @@
     --ingles:oklch(0.72 0.17 265); --ciencias:oklch(0.75 0.13 195);
     --matematica:oklch(0.74 0.16 298);
     --historia:oklch(0.74 0.15 40); --arte:oklch(0.72 0.19 330);
-    --gramatica:oklch(0.78 0.13 80);
+    --gramatica:oklch(0.78 0.13 80); --geografia:oklch(0.84 0.09 245);
   }
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -76,6 +76,7 @@ li.ingles a{--cor:var(--ingles)} li.ciencias a{--cor:var(--ciencias)}
 li.historia a{--cor:var(--historia)} li.arte a{--cor:var(--arte)}
 li.matematica a{--cor:var(--matematica)}
 li.gramatica a{--cor:var(--gramatica)}
+li.geografia a{--cor:var(--geografia)}
 footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
   border:2px solid var(--risco);border-radius:var(--r-g);
   color:var(--texto-2);font-size:0.9375rem;max-width:56ch}
@@ -182,10 +183,11 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 
 .cartao-resumo.mat .grande{color:var(--matematica)}
 .cartao-resumo.gram .grande{color:var(--gramatica)}
+.cartao-resumo.geo .grande{color:var(--geografia)}
 </style>
 </head>
 <body>
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol></defs></svg>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol></defs></svg>
 
 <div class="wrap">
   <header>
@@ -242,6 +244,13 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
         <span class="desc">Pronomes, o verbo por dentro e as preposições que ligam.</span></span>
         <span class="mini" data-jogo="gram"></span>
       </a></li>
+      <li class="geografia"><a class="jogo" href="geografia.html">
+        <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-globo"/></svg>
+        <span class="materia">Geografia</span>
+        <span><span class="nome">Campo e Cidade</span>
+        <span class="desc">Os três setores da economia, do campo à cidade.</span></span>
+        <span class="mini" data-jogo="geo"></span>
+      </a></li>
     <li class="arte"><a class="jogo" href="artes.html">
         <svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nota"/></svg>
         <span class="materia">Arte</span>
@@ -288,7 +297,7 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
     <div id="conta"></div>
   </section>
 </div>
-<script>const MISSOES = {"cien": {"all": "Desafio misto", "review": "Revisão dos meus erros", "earth": "Movimento da Terra", "sun": "Sol e orientação", "orientation": "Orientação espacial", "stars": "Observando as estrelas", "instruments": "Instrumentos de orientação", "hemispheres": "Hemisférios e Equador", "moon": "Fases da Lua", "calendars": "Calendários e ano bissexto"}, "hist": {"all": "Desafio misto", "review": "Revisão dos meus erros", "imprensa": "A chegada da imprensa", "jornais": "Jornais e fontes históricas", "distancia": "Correio, telégrafo e telefone", "imagem": "Fotografia, cinema e TV", "digital": "Internet e mundo digital", "inclusao": "Braille e Libras"}, "arte": {"all": "Desafio misto", "review": "Revisão dos meus erros", "melodia": "Melodia, ritmo e timbre", "harmonia": "Harmonia e arranjo", "pintura": "Pintura mural e afresco", "michelangelo": "Michelangelo e a Capela Sistina"}, "ing": {"review": "Sala de Reparos", "all": "Portal Completo", "vocabulary": "Arquivo de Vocabulário", "ing_add": "Portal +ING", "ing_drop_e": "Portal do E Perdido", "ing_double": "Portal da Consoante Dupla", "be": "Núcleo AM / IS / ARE", "affirmative": "Linha das Frases Afirmativas", "negative_questions": "Zona de Negativas e Perguntas", "contractions": "Central das Contrações", "clock_routine": "Estação do Relógio", "time_numbers": "Relógio do Tempo", "world": "Volta ao Mundo e ao Espaço", "listening": "Sala de Escuta", "ticket": "Terminal Temporal", "movement": "Rota do Movimento", "daily_actions": "Rotina Temporal", "results_actions": "Arquivo de Ações Especiais"}, "mat": {"retas": "Retas e segmentos", "angulos": "Ângulos", "posicao": "Paralelas e concorrentes", "poligonos": "Polígonos", "triangulos": "Triângulos", "quadrilateros": "Quadriláteros", "simetria": "Simetria", "solidos": "Sólidos geométricos", "planificacoes": "Planificações e sólidos do dia a dia", "malha": "Trajetos na malha", "all": "Desafio misto", "review": "Revisão dos meus erros"}, "gram": {"all": "Desafio misto", "review": "Revisão dos meus erros", "pessoais": "Pronomes pessoais", "tratamento": "Pronomes de tratamento", "possessivos": "Pronomes possessivos", "demonstrativos": "Pronomes demonstrativos", "indefinidos": "Pronomes indefinidos", "interrogativos": "Pronomes interrogativos", "verbo": "O que é verbo", "modos": "Modos verbais", "tempos": "Tempos verbais", "conjugacao": "As três conjugações", "nominais": "Formas nominais", "preposicao": "O que é preposição", "relacoes": "Relações de sentido", "contracao": "Contração e combinação"}};</script>
+<script>const MISSOES = {"cien": {"all": "Desafio misto", "review": "Revisão dos meus erros", "earth": "Movimento da Terra", "sun": "Sol e orientação", "orientation": "Orientação espacial", "stars": "Observando as estrelas", "instruments": "Instrumentos de orientação", "hemispheres": "Hemisférios e Equador", "moon": "Fases da Lua", "calendars": "Calendários e ano bissexto"}, "hist": {"all": "Desafio misto", "review": "Revisão dos meus erros", "imprensa": "A chegada da imprensa", "jornais": "Jornais e fontes históricas", "distancia": "Correio, telégrafo e telefone", "imagem": "Fotografia, cinema e TV", "digital": "Internet e mundo digital", "inclusao": "Braille e Libras"}, "arte": {"all": "Desafio misto", "review": "Revisão dos meus erros", "melodia": "Melodia, ritmo e timbre", "harmonia": "Harmonia e arranjo", "pintura": "Pintura mural e afresco", "michelangelo": "Michelangelo e a Capela Sistina"}, "ing": {"review": "Sala de Reparos", "all": "Portal Completo", "vocabulary": "Arquivo de Vocabulário", "ing_add": "Portal +ING", "ing_drop_e": "Portal do E Perdido", "ing_double": "Portal da Consoante Dupla", "be": "Núcleo AM / IS / ARE", "affirmative": "Linha das Frases Afirmativas", "negative_questions": "Zona de Negativas e Perguntas", "contractions": "Central das Contrações", "clock_routine": "Estação do Relógio", "time_numbers": "Relógio do Tempo", "world": "Volta ao Mundo e ao Espaço", "listening": "Sala de Escuta", "ticket": "Terminal Temporal", "movement": "Rota do Movimento", "daily_actions": "Rotina Temporal", "results_actions": "Arquivo de Ações Especiais"}, "mat": {"retas": "Retas e segmentos", "angulos": "Ângulos", "posicao": "Paralelas e concorrentes", "poligonos": "Polígonos", "triangulos": "Triângulos", "quadrilateros": "Quadriláteros", "simetria": "Simetria", "solidos": "Sólidos geométricos", "planificacoes": "Planificações e sólidos do dia a dia", "malha": "Trajetos na malha", "all": "Desafio misto", "review": "Revisão dos meus erros"}, "gram": {"all": "Desafio misto", "review": "Revisão dos meus erros", "pessoais": "Pronomes pessoais", "tratamento": "Pronomes de tratamento", "possessivos": "Pronomes possessivos", "demonstrativos": "Pronomes demonstrativos", "indefinidos": "Pronomes indefinidos", "interrogativos": "Pronomes interrogativos", "verbo": "O que é verbo", "modos": "Modos verbais", "tempos": "Tempos verbais", "conjugacao": "As três conjugações", "nominais": "Formas nominais", "preposicao": "O que é preposição", "relacoes": "Relações de sentido", "contracao": "Contração e combinação"}, "geo": {"all": "Desafio misto", "review": "Revisão dos meus erros", "atividades": "Atividades econômicas", "primario": "Setor primário", "secundario": "Setor secundário", "terciario": "Setor terciário", "agricultura": "Agricultura", "pecuaria": "Pecuária", "extrativismo": "Extrativismo", "agroindustria": "Agroindústria", "industrias": "Indústrias e construção", "caminho": "O caminho do produto"}};</script>
 <script>/* ---------- perfis ---------- */
 const PERFIS_CHAVE = "jogos_perfis_v1";
 const PERFIL_ATUAL = "jogos_perfil_atual";
@@ -297,12 +306,13 @@ const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
 const BASES = {ing: "ttg_progress_v1", cien: "sky_progress_v1",
                hist: "historia_progress_v1", arte: "artes_progress_v1",
                mat: "matematica_progress_v1",
-               gram: "gramatica_progress_v1"};
+               gram: "gramatica_progress_v1",
+               geo: "geografia_progress_v1"};
 const MATERIA = {ing: "Inglês", cien: "Ciências", hist: "História", arte: "Arte",
-                 mat: "Matemática", gram: "Gramática"};
+                 mat: "Matemática", gram: "Gramática", geo: "Geografia"};
 const PAGINA = {ing: "time-travel-english.html", cien: "exploradores-do-ceu.html",
                 hist: "historia.html", arte: "artes.html", mat: "matematica.html",
-                gram: "gramatica.html"};
+                gram: "gramatica.html", geo: "geografia.html"};
 
 const ler = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } };
 const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };

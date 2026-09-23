@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Campo e Cidade</title>
+<style>
+:root{
+  color-scheme:light dark;
+
+  --materia:      oklch(0.46 0.12 245);
+  /* Superfície preenchida que recebe texto branco. No escuro a matéria clareia
+     para servir de texto, então a versão sólida é mantida à parte. */
+  --materia-solida:oklch(0.46 0.12 245);
+  --sobre-materia:#fff;
+  --materia-forte:color-mix(in oklch, var(--materia) 82%, black);
+  --materia-clara:color-mix(in oklch, var(--materia) 12%, white);
+  --materia-borda:color-mix(in oklch, var(--materia) 45%, white);
+
+  --fundo:    oklch(0.975 0.008 265);
+  --carta:    oklch(1 0 0);
+  --risco:    oklch(0.905 0.012 265);
+  --texto:    oklch(0.28 0.030 268);
+  --texto-2:  oklch(0.50 0.028 268);
+  --texto-3:  oklch(0.545 0.022 268);
+
+  /* Quatro cores de alternativa, no espírito do Kahoot, fugindo de
+     vermelho e verde puros para não brigar com certo/errado. */
+  /* Quatro cores bem distintas entre si e distantes de vermelho e verde,
+     que já significam errado e certo. */
+  --alt-1:oklch(0.540 0.19 268);  /* índigo   */
+  --alt-2:oklch(0.570 0.15 75);   /* âmbar    */
+  --alt-3:oklch(0.535 0.13 200);  /* turquesa */
+  --alt-4:oklch(0.550 0.21 322);  /* violeta  */
+
+  /* O aviso de conquista aparece por cima de qualquer superfície, inclusive do
+   cabeçalho, que usa a cor da matéria. Por isso tem cor própria e é a mesma
+   nos dois temas: verde sobre azul se enxerga, azul sobre azul não. */
+/* Superfícies sólidas de certo e errado, iguais nos dois temas, para quando
+   a cor vira fundo de um texto — a letra da alternativa marcada, o aviso.
+   As variantes --certo/--errado são claras demais para carregar texto
+   branco: 3,12:1 e 4,39:1. Estas dão 5,51:1 e 7,54:1. */
+--certo-solida:  oklch(0.50 0.16 148);
+--errado-solida: oklch(0.47 0.19 22);
+--sobre-solida:  oklch(1 0 0);
+--aviso:       var(--certo-solida);
+--aviso-fundo: oklch(0.38 0.13 148);
+--sobre-aviso: var(--sobre-solida);
+--certo:      oklch(0.64 0.18 148);
+  --certo-forte:oklch(0.50 0.16 148);
+  --certo-claro:oklch(0.95 0.055 148);
+  --errado:      oklch(0.60 0.21 22);
+  --errado-forte:oklch(0.47 0.19 22);
+  --errado-claro:oklch(0.95 0.045 22);
+
+  --display:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+
+  --t-xs:0.8125rem; --t-sm:0.9375rem; --t-md:1.0625rem; --t-lg:1.25rem;
+  --t-xl:1.5rem; --t-2xl:1.875rem; --t-3xl:2.375rem;
+
+  --s-1:0.25rem; --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem;
+  --s-5:1.5rem; --s-6:2rem; --s-7:3rem;
+
+  --r:14px; --r-g:20px; --r-p:8px;
+  --labio:4px;                       /* a "espessura" dos botões */
+  --mola:cubic-bezier(0.34,1.4,0.64,1);
+  --saida:cubic-bezier(0.22,1,0.36,1);
+}
+
+/* O tema escuro vale por dois caminhos: o do sistema (a menos que o botão
+   force o claro) e o do próprio botão. As declarações são as mesmas, escritas
+   uma vez só e repetidas pelo build — duplicar à mão é convidar à divergência. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]){
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, oklch(0.46 0.12 245) 68%, white);
+    --materia-solida:oklch(0.46 0.12 245);
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, oklch(0.46 0.12 245) 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, oklch(0.46 0.12 245) 55%, white);
+    --materia-borda:color-mix(in oklch, oklch(0.46 0.12 245) 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
+  }
+}
+:root[data-tema="escuro"]{
+    --fundo:  oklch(0.205 0.028 272);
+    --carta:  oklch(0.262 0.030 272);
+    --risco:  oklch(0.365 0.030 272);
+    --texto:  oklch(0.975 0.008 272);
+    --texto-2:oklch(0.800 0.020 272);
+    --texto-3:oklch(0.660 0.020 272);
+    --materia:      color-mix(in oklch, oklch(0.46 0.12 245) 68%, white);
+    --materia-solida:oklch(0.46 0.12 245);
+    --sobre-materia:#fff;
+    --materia-clara:color-mix(in oklch, oklch(0.46 0.12 245) 26%, var(--carta));
+    --materia-forte:color-mix(in oklch, oklch(0.46 0.12 245) 55%, white);
+    --materia-borda:color-mix(in oklch, oklch(0.46 0.12 245) 55%, var(--carta));
+    --certo:oklch(0.72 0.18 148); --certo-forte:oklch(0.78 0.14 148);
+    --certo-claro:color-mix(in oklch, oklch(0.58 0.17 148) 26%, var(--carta));
+    --errado:oklch(0.70 0.20 22); --errado-forte:oklch(0.78 0.16 22);
+    --errado-claro:color-mix(in oklch, oklch(0.58 0.20 22) 26%, var(--carta));
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--fundo);color:var(--texto);
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:600;line-height:1.55;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right)
+          calc(env(safe-area-inset-bottom) + var(--s-4)) env(safe-area-inset-left);
+}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;letter-spacing:-0.01em;margin:0;text-wrap:balance}
+p{margin:0 0 var(--s-3);text-wrap:pretty}
+svg{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stars{display:none}
+:where(button,a,input,[tabindex]):focus-visible{outline:3px solid var(--materia);outline-offset:3px}
+
+.wrap{max-width:54rem;margin:0 auto;padding:var(--s-4) var(--s-4) var(--s-6)}
+.app{background:none;border:0;border-radius:0;box-shadow:none;overflow:visible}
+main{padding:0}
+.screen{display:none!important}
+.screen.active{display:block!important}
+
+/* ---------- faixa colorida no topo ---------- */
+header{
+  background:var(--materia-solida);color:var(--sobre-materia);border:0;
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);margin-bottom:var(--s-5);
+}
+.top{display:flex;justify-content:space-between;align-items:center;gap:var(--s-4);flex-wrap:wrap}
+h1{font-size:var(--t-xl);color:var(--sobre-materia);font-weight:700}
+.subtitle{font-size:var(--t-xs);font-weight:700;color:var(--sobre-materia);opacity:.88;margin-top:2px;letter-spacing:.01em}
+.hud{display:flex;gap:var(--s-2);align-items:center;flex-wrap:wrap}
+.pill{
+  display:flex;align-items:center;gap:var(--s-2);background:rgba(255,255,255,.22);
+  border:0;border-radius:999px;padding:var(--s-2) var(--s-3);color:var(--sobre-materia);
+  font-family:var(--display);font-weight:600;font-size:var(--t-md);
+  font-variant-numeric:tabular-nums;line-height:1;min-height:2.25rem
+}
+.pill .rot{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;opacity:.85}
+.som-btn,#btnSom{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;font-size:0;
+  background:rgba(255,255,255,.22);border:0;border-radius:999px;color:var(--sobre-materia)}
+.som-btn:hover,#btnSom:hover{background:rgba(255,255,255,.34);color:var(--sobre-materia)}
+.progress{display:none}
+
+/* ---------- botões com lábio, que afundam ao apertar ---------- */
+button,.btn{font:inherit;cursor:pointer;touch-action:manipulation}
+button,.btn,.primary,.secondary,.gold{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);
+  min-height:3rem;padding:var(--s-3) var(--s-5);
+  background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  font-family:var(--display);font-weight:600;font-size:var(--t-md);
+  transition:transform 90ms var(--saida),box-shadow 90ms var(--saida),
+             background 140ms var(--saida),border-color 140ms var(--saida);
+}
+button:hover,.btn:hover{border-color:var(--materia);color:var(--materia)}
+button:active,.btn:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(--labio) 0 var(--risco)}
+.primary,.gold{
+  background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);
+  box-shadow:0 var(--labio) 0 var(--materia-forte)}
+.primary:hover,.gold:hover{background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);filter:brightness(1.07)}
+.primary:active,.gold:active{box-shadow:0 0 0 var(--materia-forte)}
+.link-btn,.exit-btn{
+  background:none;border:0;box-shadow:none;color:var(--texto-2);min-height:2.5rem;
+  padding:var(--s-2) var(--s-3);font-family:var(--corpo);font-weight:700;font-size:var(--t-sm)}
+.link-btn:hover,.exit-btn:hover{color:var(--materia);transform:none;box-shadow:none}
+.link-btn:active,.exit-btn:active{transform:none;box-shadow:none}
+.quiz-top{display:flex;justify-content:flex-start;margin-bottom:var(--s-3)}
+
+/* ---------- abertura ---------- */
+.hero{padding:var(--s-5) 0;max-width:40rem}
+.hero .icon{display:none}
+.hero h2{font-size:var(--t-3xl);font-weight:700;margin-bottom:var(--s-3)}
+.hero p{color:var(--texto-2);font-weight:600;max-width:52ch;margin-bottom:var(--s-5)}
+.chips{display:flex;gap:var(--s-3);flex-wrap:wrap;margin:var(--s-5) 0}
+.chip{
+  display:flex;flex-direction:column;gap:2px;background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r);padding:var(--s-3) var(--s-4);
+  font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;color:var(--texto-2);min-width:6.5rem}
+.chip b{font-family:var(--display);font-size:var(--t-xl);font-weight:700;color:var(--materia);
+  font-variant-numeric:tabular-nums;line-height:1.05}
+
+/* ---------- lição ---------- */
+.lesson-card{background:none;border:0;padding:0;max-width:46rem}
+.lesson-tag{
+  display:inline-block;background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);margin-bottom:var(--s-3);
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;letter-spacing:.02em}
+#categories .lesson-tag{display:none}
+.lesson-card h2{font-size:var(--t-2xl);font-weight:700;margin-bottom:var(--s-4)}
+.lesson-card h3{font-size:var(--t-lg);margin:var(--s-5) 0 var(--s-2)}
+.content-grid,.grid2,.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
+  gap:var(--s-3);margin:var(--s-4) 0}
+.mini{
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-4);font-size:var(--t-sm);font-weight:600;color:var(--texto-2);line-height:1.5}
+/* Ilustração do termo, na lição. */
+.mini .pic{
+  display:grid;place-items:center;width:2.5rem;height:2.5rem;padding:0.5rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-2);box-sizing:border-box;font-size:0}
+.mini .pic svg{width:100%;height:100%;stroke-width:1.9}
+.mini strong{display:block;font-family:var(--display);font-size:var(--t-md);font-weight:600;
+  color:var(--texto);margin:0 0 var(--s-1)}
+.example{
+  background:var(--materia-clara);border:2px solid var(--materia-borda);border-radius:var(--r);
+  padding:var(--s-4);margin:var(--s-3) 0;font-size:var(--t-sm);font-weight:600;line-height:1.55}
+.example.warning{background:var(--carta);border-color:var(--risco)}
+.lesson-nav{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);
+  flex-wrap:wrap;margin-top:var(--s-6)}
+.lesson-nav .small,.small{font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  color:var(--texto-3);font-variant-numeric:tabular-nums}
+.formula{
+  background:var(--materia-solida);color:var(--sobre-materia);border:0;border-radius:var(--r);padding:var(--s-4);
+  text-align:center;font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin:var(--s-4) 0}
+.ticket{background:var(--carta);border:2px dashed var(--risco);border-radius:var(--r);padding:var(--s-4);margin:var(--s-4) 0}
+.ticket h3{font-size:var(--t-md);margin-bottom:var(--s-3)}
+.ticket-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s-2);font-size:var(--t-sm)}
+.rule-section{margin:var(--s-5) 0}
+.rule-title{font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-3)}
+.rule-chip{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;color:var(--materia);margin-left:var(--s-2)}
+.focus-box{font-size:var(--t-sm);color:var(--texto-2);margin:var(--s-2) 0}
+.rule-example{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--s-3);align-items:center;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3);margin-bottom:var(--s-2);font-size:var(--t-sm)}
+.rule-example .arrow{color:var(--materia);font-weight:900}
+.verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s-2)}
+.verb-card{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3);font-size:var(--t-sm);color:var(--texto-2)}
+.verb-card .pic{display:grid;place-items:center;width:2rem;height:2rem;padding:0.35rem;
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);
+  margin-bottom:var(--s-1);box-sizing:border-box;font-size:0}
+.verb-card .pic svg{width:100%;height:100%;stroke-width:1.9}
+.verb-card .base{font-family:var(--display);font-size:var(--t-md);font-weight:600;color:var(--texto)}
+.verb-card .ing{color:var(--materia);font-weight:700}
+.verb-card .sentence{font-style:italic}
+
+/* ---------- missões: cards com faixa da matéria ---------- */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.trail-grid,.trail-choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.category-card,.trail-card{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;
+  column-gap:var(--s-3);row-gap:var(--s-1);align-items:start;text-align:left;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  box-shadow:0 var(--labio) 0 var(--risco);padding:var(--s-4);min-height:0;
+  font-family:var(--corpo);font-weight:600;
+  transition:transform 120ms var(--saida),box-shadow 120ms var(--saida),border-color 140ms var(--saida)}
+.category-card:hover,.trail-card:hover{border-color:var(--materia);color:var(--texto);transform:translateY(-2px);
+  box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
+.category-card:active,.trail-card:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+.category-card>svg,.trail-card>svg{
+  grid-column:1;grid-row:1/span 2;width:2.75rem;height:2.75rem;padding:var(--s-2);
+  background:var(--materia-clara);border-radius:var(--r-p);color:var(--materia-forte);box-sizing:border-box}
+.category-card>strong,.trail-card>strong{
+  grid-column:2;grid-row:1;font-family:var(--display);font-size:var(--t-lg);font-weight:600;color:var(--texto)}
+.category-card>small,.trail-card>small{
+  grid-column:2;grid-row:2;font-size:var(--t-sm);font-weight:600;color:var(--texto-2);line-height:1.45}
+.selo{grid-column:1/-1;grid-row:3;display:none;justify-self:start;
+  border-radius:999px;padding:2px var(--s-3);font-family:var(--display);font-size:var(--t-xs);font-weight:600}
+.category-card.andamento .selo{background:var(--materia-clara);color:var(--materia-forte)}
+.category-card.concluida .selo{background:var(--certo-claro);color:var(--certo-forte)}
+.category-card.dominada .selo{background:var(--materia-solida);color:var(--sobre-materia)}
+.mini-bar{grid-column:1/-1;grid-row:4;height:10px;background:var(--fundo);border-radius:999px;
+  overflow:hidden;margin-top:var(--s-2)}
+.mini-bar span{display:block;height:100%;width:0;background:var(--materia);border-radius:999px;
+  transition:width 420ms var(--saida)}
+.mini-txt{grid-column:1/-1;grid-row:5;font-size:var(--t-xs);font-weight:700;color:var(--texto-3);
+  font-variant-numeric:tabular-nums}
+.review-count{grid-column:1/-1;grid-row:3;font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
+.trail-done{display:none;margin-left:var(--s-2);font-size:var(--t-xs);font-weight:700;color:var(--certo-forte)}
+.trail-card.done .trail-done{display:inline}
+/* A trilha recomendada se anuncia com uma etiqueta, não com uma frase
+   ("Recomendada para aprender do início") embaixo da que já descreve
+   o conteúdo. */
+.trail-card.recommended{position:relative}
+.trail-card.recommended::after{
+  content:"Comece aqui";position:absolute;top:calc(-1 * var(--s-2));right:var(--s-4);
+  background:var(--materia-solida);color:var(--sobre-materia);
+  padding:2px var(--s-3);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;line-height:1.5}
+#reviewCard.empty{opacity:.55}
+.secao-tit,#categories h2{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin:var(--s-6) 0 0}
+.mode-toggle{display:inline-flex;gap:var(--s-2);background:none;border:0;padding:0;margin-top:var(--s-3)}
+.mode-opt{border:2px solid var(--risco);border-radius:999px;background:var(--carta);color:var(--texto-2);
+  box-shadow:0 var(--labio) 0 var(--risco);padding:var(--s-2) var(--s-4);min-height:2.75rem;gap:var(--s-1)}
+.mode-opt small{font-family:var(--corpo);font-size:var(--t-xs);font-weight:700;opacity:.8}
+.mode-opt.active{background:var(--materia-solida);border-color:var(--materia-solida);color:var(--sobre-materia);box-shadow:0 var(--labio) 0 var(--materia-forte)}
+.mode-opt:hover{color:var(--materia)}
+.mode-opt.active:hover{color:var(--sobre-materia)}
+.mode-hint{font-size:var(--t-sm);font-weight:600;color:var(--texto-2);margin-top:var(--s-3);max-width:58ch}
+.mission-banner{margin-bottom:var(--s-4)}
+.mission-title{font-family:var(--display);font-size:var(--t-xl);font-weight:700;margin-bottom:var(--s-1)}
+.mission-desc,.mission-progress{font-size:var(--t-sm);color:var(--texto-2)}
+.trail-icon{display:none}
+
+/* ---------- quiz ---------- */
+.question-card{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-5);box-shadow:0 var(--labio) 0 var(--risco);overflow:visible}
+.question-card::before{display:none}
+.progress-panel{background:none;border:0;padding:0;margin-bottom:var(--s-4)}
+.progress-head{display:flex;justify-content:space-between;font-family:var(--display);
+  font-size:var(--t-sm);font-weight:600;color:var(--texto-2);margin-bottom:var(--s-2);
+  font-variant-numeric:tabular-nums}
+.track,.progress-track{height:14px;background:var(--fundo);border-radius:999px;overflow:hidden}
+.fill,.progress-fill{height:100%;width:0;background:var(--materia);border-radius:999px;
+  transition:width 420ms var(--saida)}
+.trail-map{display:flex;align-items:center;gap:var(--s-1);overflow-x:auto;padding:var(--s-3) 0 0}
+.node,.trail-node{flex:none;width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;
+  background:var(--fundo);border:2px solid var(--risco);font-family:var(--display);
+  font-size:var(--t-xs);font-weight:600;color:var(--texto-3);transform:none}
+.trail-map{scrollbar-width:none}
+.trail-map::-webkit-scrollbar{display:none}
+.node svg,.trail-node svg{width:1.1rem;height:1.1rem}
+.node.current,.trail-node.current{border-color:var(--materia-solida);background:var(--materia-solida);color:var(--sobre-materia)}
+.node.done,.trail-node.done{border-color:var(--certo-escuro,var(--certo));background:var(--certo-escuro,var(--certo));color:#fff}
+.line,.trail-line{flex:none;width:1.25rem;height:3px;border-radius:999px;background:var(--risco)}
+.line.done,.trail-line.done{background:var(--certo)}
+.stage,.stage-label{display:inline-block;background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);margin-bottom:var(--s-3);
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600}
+.fonte{display:inline-block;margin-left:var(--s-2);margin-bottom:var(--s-3);
+  border:2px dashed var(--risco);border-radius:999px;padding:2px var(--s-3);
+  font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
+.storyline{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-3);
+  display:flex;align-items:baseline;gap:var(--s-2)}
+/* Ícone dentro de uma linha de texto. Sem tamanho próprio o <svg> estica
+   até preencher o contêiner — foi o que inchou a linha da missão. */
+.ic-txt{width:1.1em;height:1.1em;flex:none;align-self:center}
+/* Ilustração da questão: chip com a cor da matéria, acima do enunciado. */
+.illustration{
+  display:grid;justify-self:start;place-items:center;width:4rem;height:4rem;padding:0.85rem;
+  background:var(--materia-clara);border-radius:var(--r);color:var(--materia-forte);
+  margin-bottom:var(--s-3);box-sizing:border-box;min-height:0;font-size:0}
+.illustration svg{width:100%;height:100%;stroke-width:1.8}
+.question{position:relative;font-family:var(--display);font-size:var(--t-2xl);font-weight:600;
+  line-height:1.25;margin:0 0 var(--s-5);max-width:32ch}
+.hint{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-4)}
+
+/* Alternativas: bloco grande, forma própria, cor própria. */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+.answer{
+  display:flex;align-items:center;justify-content:flex-start;gap:var(--s-3);width:100%;
+  text-align:left;min-height:4.5rem;padding:var(--s-3) var(--s-4);
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  box-shadow:0 var(--labio) 0 var(--risco);
+  color:var(--texto);font-family:var(--corpo);font-size:var(--t-md);font-weight:700;line-height:1.35;
+  overflow:visible;position:relative}
+.answer::after{display:none}
+/* A letra é o marcador da alternativa: mesma função das formas do Kahoot,
+   sem a assinatura dele, e é como a professora se refere à resposta. */
+.answer .letra{
+  flex:none;width:2.5rem;height:2.5rem;display:grid;place-items:center;
+  border:0;border-radius:var(--r-p);color:#fff;background:var(--alt-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.answer:nth-child(2) .letra{background:var(--alt-2)}
+.answer:nth-child(3) .letra{background:var(--alt-3)}
+.answer:nth-child(4) .letra{background:var(--alt-4)}
+.answer:hover:not(.correct):not(.wrong){border-color:var(--materia);color:var(--texto);
+  transform:translateY(-2px);box-shadow:0 calc(var(--labio) + 2px) 0 var(--materia-borda)}
+.answer:active{transform:translateY(var(--labio));box-shadow:0 0 0 var(--risco)}
+.answer.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte);
+  animation:pulo 420ms var(--mola)}
+.answer.correct .letra{background:var(--certo-solida);color:var(--sobre-solida)}
+.answer.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
+.answer.wrong .letra{background:var(--errado-solida);color:var(--sobre-solida)}
+@keyframes pulo{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+.feedback{display:none;margin-top:var(--s-4);padding:var(--s-4);border:2px solid var(--risco);
+  border-radius:var(--r);font-size:var(--t-sm);font-weight:600;line-height:1.55}
+.feedback.show{display:block;animation:sobe-bloco 240ms var(--saida)}
+@keyframes sobe-bloco{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.feedback .rotulo{display:block;font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-1)}
+.feedback.good{background:var(--certo-claro);border-color:var(--certo)}
+.feedback.good .rotulo{color:var(--certo-forte)}
+.feedback.bad{background:var(--errado-claro);border-color:var(--errado)}
+.feedback.bad .rotulo{color:var(--errado-forte)}
+.controls{display:flex;justify-content:flex-end;margin-top:var(--s-4)}
+.special,#special{margin-top:var(--s-3)}
+
+/* ---------- formatos especiais ---------- */
+.truefalse{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+.tf-true,.tf-false{justify-content:flex-start}
+.match,.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3);margin-top:var(--s-3)}
+.match-col{display:flex;flex-direction:column;gap:var(--s-2)}
+.match-item{justify-content:flex-start;text-align:left;min-height:3rem;padding:var(--s-3);
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;line-height:1.3}
+.match-item.sel,.match-item.selected{border-color:var(--materia);background:var(--materia-clara);
+  box-shadow:0 var(--labio) 0 var(--materia-borda)}
+.match-item.done{border-color:var(--certo);background:var(--certo-claro);
+  box-shadow:0 var(--labio) 0 var(--certo-forte);opacity:.75;cursor:default}
+.match-item.wrong{border-color:var(--errado);background:var(--errado-claro)}
+.order-slot,.sentence-box{min-height:3.5rem;background:var(--fundo);border:2px dashed var(--risco);
+  border-radius:var(--r);padding:var(--s-3);display:flex;flex-wrap:wrap;gap:var(--s-2);
+  align-items:center;margin-bottom:var(--s-3)}
+.order-chip,.selected-word{background:var(--materia-solida);color:var(--sobre-materia);border-radius:999px;
+  padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  min-height:2.5rem;display:inline-flex;align-items:center;cursor:pointer}
+.order-bank,.word-bank{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-3)}
+.order-btn,.word{min-height:3rem;padding:var(--s-2) var(--s-4);font-size:var(--t-sm);width:auto}
+.order-btn:disabled,.word.used{opacity:.3}
+.text-row,.input-row{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-2)}
+.text-row input,.input-row input{flex:1 1 14rem;min-width:0;min-height:3rem;padding:var(--s-2) var(--s-4);
+  font-family:var(--corpo);font-size:16px;font-weight:700;background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r)}
+.text-row input::placeholder,.input-row input::placeholder{color:var(--texto-3);font-weight:600}
+.text-row input:focus,.input-row input:focus{outline:none;border-color:var(--materia)}
+.rosa{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-2);max-width:20rem;margin:var(--s-3) auto 0}
+.rosa-btn{aspect-ratio:1;display:grid;place-items:center;min-height:3.5rem;height:auto;padding:0;width:auto;
+  font-family:var(--display);font-weight:600;font-size:var(--t-md)}
+.rosa-btn.card{color:var(--materia)}
+.rosa-btn.centro{border-color:transparent;background:none;box-shadow:none;cursor:default;font-size:0}
+.rosa-btn.correct{background:var(--certo-claro);border-color:var(--certo);box-shadow:0 var(--labio) 0 var(--certo-forte)}
+.rosa-btn.wrong{background:var(--errado-claro);border-color:var(--errado);box-shadow:0 var(--labio) 0 var(--errado-forte)}
+.memory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(6.5rem,1fr));gap:var(--s-2);margin-top:var(--s-3)}
+.memory-card{min-height:5rem;font-size:var(--t-sm);justify-content:center;text-align:center}
+.memory-card.revealed{border-color:var(--materia);background:var(--materia-clara)}
+.memory-card.matched{border-color:var(--certo);background:var(--certo-claro);opacity:.75;cursor:default}
+.crossword{display:grid;grid-template-columns:repeat(7,2.75rem);gap:3px;margin:var(--s-3) 0;justify-content:center}
+.cw-cell{width:2.75rem;height:2.75rem;border:2px solid var(--risco);border-radius:var(--r-p);background:var(--carta)}
+.cw-cell.cw-block{background:var(--fundo);border-color:var(--fundo)}
+.cw-cell input{width:100%;height:100%;min-height:0;border:0;background:none;text-align:center;
+  font-family:var(--display);font-size:var(--t-md);font-weight:600;text-transform:uppercase;color:var(--texto);padding:0}
+.clues{font-size:var(--t-sm);color:var(--texto-2);margin-bottom:var(--s-3);line-height:1.7}
+.wordsearch{display:grid;grid-template-columns:repeat(8,2.75rem);gap:3px;margin:var(--s-3) 0;justify-content:center}
+.ws-cell{width:2.75rem;height:2.75rem;display:grid;place-items:center;border:2px solid var(--risco);
+  border-radius:var(--r-p);background:var(--carta);font-family:var(--display);font-size:var(--t-md);
+  font-weight:600;cursor:pointer;user-select:none;touch-action:manipulation}
+.ws-cell.sel{border-color:var(--materia);background:var(--materia-clara)}
+.ws-cell.found{border-color:var(--certo);background:var(--certo-claro);color:var(--certo-forte)}
+.badge-row{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-3)}
+.badge{font-family:var(--display);font-size:var(--t-xs);font-weight:600;color:var(--materia-forte);
+  background:var(--materia-clara);border-radius:999px;padding:var(--s-1) var(--s-3)}
+.audio-row{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-4)}
+.audio-btn{min-height:2.75rem;padding:var(--s-2) var(--s-4);font-size:var(--t-sm);width:auto}
+
+/* ---------- fim de partida ---------- */
+.result{padding:var(--s-5) 0;max-width:40rem}
+.trophy{display:none}
+.result h2{font-size:var(--t-3xl);font-weight:700;margin-bottom:var(--s-2)}
+.rank{display:inline-block;background:var(--materia-solida);color:var(--sobre-materia);border-radius:999px;
+  padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin:0 0 var(--s-4)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));gap:var(--s-3);margin:var(--s-5) 0}
+.stat{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:2px;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);padding:var(--s-3) var(--s-4)}
+.stat strong{font-family:var(--display);font-size:var(--t-2xl);font-weight:700;
+  font-variant-numeric:tabular-nums;line-height:1.05;color:var(--materia)}
+.stat .small{font-size:var(--t-xs);color:var(--texto-2)}
+.missed{margin:var(--s-5) 0 0;padding:var(--s-4);background:var(--carta);
+  border:2px solid var(--risco);border-radius:var(--r-g)}
+.missed-title{font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin-bottom:var(--s-3)}
+.missed-list{margin:0 0 var(--s-3);padding:0;list-style:none;
+  color:var(--texto-2);font-size:var(--t-sm);line-height:1.5}
+.missed-list li{display:flex;align-items:flex-start;gap:var(--s-2);
+  padding:var(--s-1) 0}
+.missed-list .ic-txt{margin-top:.15em;color:var(--materia-forte)}
+.missed-chips{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-3)}
+.missed-chip{background:var(--materia-clara);color:var(--materia-forte);border-radius:999px;
+  padding:var(--s-1) var(--s-3);font-size:var(--t-xs);font-weight:700;
+  display:inline-flex;align-items:center;gap:var(--s-1)}
+
+/* ---------- navegação ---------- */
+/* Onde a criança está e como sair dali. Fica acima da faixa da matéria,
+   discreta, e some para trás do conteúdo em vez de competir com ele. */
+.migalhas{
+  display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-2);
+  max-width:56rem;margin:0 auto;padding:var(--s-3) var(--s-4) 0;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.migalhas a{display:inline-flex;align-items:center;gap:var(--s-1);
+  color:var(--texto-2);text-decoration:none;border-radius:var(--r-p);
+  padding:2px 4px;margin:-2px -4px}
+.migalhas a:hover{color:var(--materia-forte);text-decoration:underline}
+.migalhas a:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.migalhas svg{width:1rem;height:1rem}
+.migalhas b{color:var(--texto);font-weight:800}
+.migalha-sep{color:var(--texto-3);user-select:none}
+
+/* ---------- busca de missão ---------- */
+/* Com 18 missões a lista já tem três telas de altura. Buscar é o que
+   escala sozinho: cada conteúdo novo entra sem manutenção nenhuma. */
+.busca{position:relative;margin:0 0 var(--s-4)}
+.busca svg{position:absolute;left:var(--s-3);top:50%;transform:translateY(-50%);
+  width:1.15rem;height:1.15rem;color:var(--texto-3);pointer-events:none}
+.busca input{
+  width:100%;min-height:3rem;padding:var(--s-2) var(--s-3) var(--s-2) 2.75rem;
+  background:var(--carta);color:var(--texto);
+  border:2px solid var(--risco);border-radius:999px;
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:600;
+  -webkit-appearance:none;appearance:none}
+.busca input::placeholder{color:var(--texto-3)}
+.busca input:focus{outline:none;border-color:var(--materia)}
+.busca input:focus-visible{outline:3px solid var(--materia);outline-offset:2px}
+.grupo{
+  grid-column:1/-1;margin:var(--s-4) 0 0;
+  font-family:var(--display);font-size:var(--t-sm);font-weight:600;
+  color:var(--texto-2);letter-spacing:.02em}
+.grupo:first-child{margin-top:0}
+.sem-resultado{grid-column:1/-1;color:var(--texto-2);padding:var(--s-4) 0}
+[hidden]{display:none!important}
+
+/* ---------- avisos ---------- */
+/* O aviso nasce logo abaixo do cabeçalho — o JS mede e escreve --aviso-topo.
+   Antes ficava colado no topo da janela, em cima do cabeçalho, e como usava a
+   cor da matéria era azul sobre azul: 1,09:1, praticamente invisível. */
+.conquista,.achievement-pop{
+  position:fixed;left:50%;top:var(--aviso-topo,var(--s-4));
+  transform:translateX(-50%) translateY(-1.5rem) scale(.9);
+  z-index:20;background:var(--aviso);color:var(--sobre-aviso);
+  padding:var(--s-3) var(--s-5);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-md);font-weight:600;
+  box-shadow:0 var(--labio) 0 var(--aviso-fundo),
+             0 0 0 2px rgb(255 255 255 / .16),
+             0 14px 30px rgb(0 0 0 / .34);
+  opacity:0;pointer-events:none;
+  transition:opacity 180ms var(--saida),transform 340ms var(--mola);
+  max-width:min(92vw,26rem);text-align:center}
+.conquista.show,.achievement-pop.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+
+/* Fim de etapa é uma virada de página, não um recado de passagem: diz onde a
+   criança estava e para onde vai. */
+.conquista.etapa,.achievement-pop.etapa{
+  border-radius:var(--r-g);padding:var(--s-4) var(--s-5);
+  display:grid;justify-items:center;gap:2px;max-width:min(94vw,25rem)}
+.conquista.etapa .aviso-t,.achievement-pop.etapa .aviso-t{
+  display:flex;align-items:center;gap:var(--s-2);white-space:nowrap;
+  font-size:var(--t-md);font-weight:700}
+.conquista.etapa .aviso-s,.achievement-pop.etapa .aviso-s{
+  font-family:var(--corpo);font-size:var(--t-sm);font-weight:700;opacity:.92}
+.conquista .ic-txt,.achievement-pop .ic-txt{width:1.2em;height:1.2em}
+
+/* O nó que acabou de fechar pisca ao virar verde: é o sinal de que a etapa
+   mudou, e não só o texto do aviso. */
+.node.fechou,.trail-node.fechou{animation:fechou 620ms var(--mola)}
+@keyframes fechou{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.35)}
+  60%{transform:scale(.94)}
+  to{transform:scale(1)}}
+.floater{position:absolute;right:0;top:-0.75rem;font-family:var(--display);font-size:var(--t-xl);
+  font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none;
+  animation:sobe 950ms var(--saida) forwards;z-index:5}
+.floater.bom{color:var(--certo-forte)}
+.floater.ruim{color:var(--errado-forte)}
+@keyframes sobe{from{opacity:0;transform:translateY(8px) scale(.9)}
+  25%{opacity:1;transform:translateY(-2px) scale(1.06)}
+  to{opacity:0;transform:translateY(-2rem) scale(1)}}
+.combo-pulse{animation:pulo 420ms var(--mola)}
+.shake{animation:tremor 320ms var(--saida)}
+@keyframes tremor{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+@media(max-width:44rem){
+  .wrap{padding:var(--s-3) var(--s-3) var(--s-6)}
+  header{padding:var(--s-3) var(--s-4);border-radius:var(--r)}
+  .top{align-items:flex-start}
+  .hud{width:100%}
+  .pill{flex:1;justify-content:center;padding:var(--s-2)}
+  .answers,.truefalse,.match,.match-grid{grid-template-columns:1fr}
+  .question{font-size:var(--t-xl);max-width:none}
+  .question-card{padding:var(--s-4)}
+  .hero h2,.result h2{font-size:var(--t-2xl)}
+  .summary{grid-template-columns:1fr 1fr}
+  .crossword{grid-template-columns:repeat(7,2.2rem)}
+  .cw-cell{width:2.2rem;height:2.2rem}
+  .wordsearch{grid-template-columns:repeat(8,2.4rem)}
+  .ws-cell{width:2.4rem;height:2.4rem}
+  button,.btn{width:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important}
+  button:active,.answer:active{transform:none}
+}
+
+/* ---------- estímulos ---------- */
+/* O foguinho substitui o número quando a sequência passa de três. */
+.pill.em-chamas{background:color-mix(in oklch,var(--alt-2) 70%,var(--materia-solida));
+  animation:pulsa-fogo 1.1s ease-in-out infinite}
+.pill.em-chamas .rot{opacity:.95}
+#foguinho{width:1.05rem;height:1.05rem;margin-right:2px}
+@keyframes pulsa-fogo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.festa{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.confete{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;
+  animation:cai linear forwards}
+@keyframes cai{
+  to{transform:translate(var(--desvio),105vh) rotate(var(--giro));opacity:.15}}
+@media (prefers-reduced-motion:reduce){
+  .pill.em-chamas{animation:none}
+  .confete{display:none}
+}
+
+/* ---------- sala em rede ---------- */
+.sala-escolha{display:grid;gap:var(--s-3);max-width:24rem}
+.sala-caixa{display:grid;gap:var(--s-4);max-width:32rem;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-5);box-shadow:0 var(--labio) 0 var(--risco)}
+.sala-campo{display:grid;gap:var(--s-1);font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-campo input,.sala-campo select{
+  min-height:3rem;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);color:var(--texto);
+  border:2px solid var(--risco);border-radius:var(--r);
+  font-family:var(--corpo);font-size:var(--t-md);font-weight:700;-webkit-appearance:none}
+.sala-campo input:focus-visible,.sala-campo select:focus-visible{
+  outline:3px solid var(--materia);outline-offset:2px}
+#salaCodigo{font-family:var(--display);font-size:var(--t-2xl);letter-spacing:.35em;text-align:center}
+.sala-codigo{display:grid;gap:2px;justify-items:center;padding:var(--s-4);
+  background:var(--materia-clara);border-radius:var(--r)}
+.sala-codigo strong{font-family:var(--display);font-size:var(--t-3xl);
+  letter-spacing:.3em;color:var(--materia-forte);font-variant-numeric:tabular-nums}
+.sala-dica{margin:0;font-size:var(--t-sm);color:var(--texto-2)}
+.sala-jogadores{display:flex;flex-wrap:wrap;gap:var(--s-2);min-height:2.5rem}
+.sala-jogador{display:inline-flex;align-items:center;gap:var(--s-1);
+  background:var(--materia-clara);color:var(--materia-forte);
+  border-radius:999px;padding:var(--s-1) var(--s-3);
+  font-family:var(--display);font-weight:600;font-size:var(--t-sm)}
+.sala-topo{display:flex;justify-content:space-between;align-items:center;
+  font-size:var(--t-sm);font-weight:700;color:var(--texto-2)}
+.sala-tempo{font-family:var(--display);font-size:var(--t-2xl);color:var(--materia-forte);
+  font-variant-numeric:tabular-nums}
+.sala-tempo.urgente{color:var(--errado-solida);animation:pulsa-fogo .7s ease-in-out infinite}
+.sala-placar{display:grid;gap:var(--s-2)}
+.sala-linha{display:grid;grid-template-columns:1.5rem 1fr auto auto;gap:var(--s-3);
+  align-items:center;padding:var(--s-2) var(--s-3);
+  background:var(--fundo);border-radius:var(--r);font-weight:700}
+.sala-linha b{font-family:var(--display)}
+.sala-linha .ganho{color:var(--certo-solida);font-variant-numeric:tabular-nums}
+.sala-linha.errou .ganho{color:var(--texto-3)}
+.sala-estado{font-family:var(--display);font-size:var(--t-xl);text-align:center;
+  padding:var(--s-5) 0}
+.sala-botoes .answer{min-height:5.5rem;justify-content:center;font-size:var(--t-xl)}
+.sala-botoes .answer .letra{width:3rem;height:3rem;font-size:var(--t-xl)}
+.sala-botoes .answer.escolhida{border-color:var(--materia);box-shadow:0 0 0 3px var(--materia-borda)}
+@media(max-width:44rem){ .sala-caixa{padding:var(--s-4)} }
+
+/* ---------- perfil ---------- */
+.perfil-btn{
+  display:grid;place-items:center;min-width:2.5rem;min-height:2.5rem;padding:0;
+  border:2px solid rgba(255,255,255,.55);border-radius:999px;
+  background:var(--alt-1);color:#fff;
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;line-height:1}
+.perfil-btn:hover{border-color:#fff}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;900&display=swap"><script>try{var t=localStorage.getItem("tema");if(t&&t!=="sistema")document.documentElement.dataset.tema=t;}catch(e){}</script></head>
+<body><svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><defs><symbol id="i-animal" viewBox="0 0 24 24"><path d="M5 17c0-4 3-7 7-7s7 3 7 7"/><circle cx="8.5" cy="7" r="2"/><circle cx="15.5" cy="7" r="2"/><path d="M9 17v3M15 17v3"/></symbol><symbol id="i-casa" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol><symbol id="i-ciclo" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v5h-5"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-dado" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/></symbol><symbol id="i-elos" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.6l2-2a4 4 0 0 1 5.6 5.6L16.5 13"/><path d="M14 10a4 4 0 0 1 0 5.6l-2 2A4 4 0 0 1 6.4 12L7.5 11"/></symbol><symbol id="i-encolher" viewBox="0 0 24 24"><path d="M3.5 9H9V3.5M20.5 9H15V3.5M3.5 15H9v5.5M20.5 15H15v5.5"/></symbol><symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.3 7.4l2.3 1.3M17.4 15.3l2.3 1.3M4.3 16.6l2.3-1.3M17.4 8.7l2.3-1.3"/></symbol><symbol id="i-expandir" viewBox="0 0 24 24"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></symbol><symbol id="i-festa" viewBox="0 0 24 24"><path d="M3 21 8 9l7 7z"/><path d="m14.5 9.5 5.5-5.5"/><circle cx="18" cy="10.5" r="1" fill="currentColor"/><circle cx="12.5" cy="4" r="1" fill="currentColor"/><circle cx="20.5" cy="15" r="1" fill="currentColor"/></symbol><symbol id="i-fogo" viewBox="0 0 24 24"><path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-4.5-4-6.5-3-11-3 1.5-5.5 4.5-5.5 7.5 0 0-1-.8-1.5-2.5-1.3 1.8-2 3.8-2 6A5.5 5.5 0 0 0 12 21z"/></symbol><symbol id="i-lua" viewBox="0 0 24 24"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-montanha" viewBox="0 0 24 24"><path d="m2.5 19 6.5-11 4 6 2.5-3.5L21.5 19z"/><path d="m7 12 2-1.5"/></symbol><symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol><symbol id="i-palmas" viewBox="0 0 24 24"><path d="M11 21a5 5 0 0 1-5-5V9.5a1.5 1.5 0 0 1 3 0V13"/><path d="M13 21a5 5 0 0 0 5-5V9.5a1.5 1.5 0 0 0-3 0V13"/><path d="M12 2v3M7.5 3.5 9 6M16.5 3.5 15 6"/></symbol><symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1a5.5 5.5 0 0 1 11 0v1"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17 14.5a5.5 5.5 0 0 1 4 5.3V20"/></symbol><symbol id="i-planta" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 15c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2.5 5.5-6.5 5.5z"/></symbol><symbol id="i-predios" viewBox="0 0 24 24"><path d="M3 21V9h7v12"/><path d="M10 21V4h11v17"/><path d="M13.5 8h4M13.5 12h4M13.5 16h4M6 13h1"/></symbol><symbol id="i-remendo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol><symbol id="i-sacola" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></symbol><symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.5a4 4 0 0 1 0 5"/><path d="M18 7a7.5 7.5 0 0 1 0 10"/></symbol><symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></symbol><symbol id="i-trabalho" viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0"/><path d="M2.5 10h19"/><path d="M6 21v-5h12v5"/></symbol><symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2"/><path d="m8 3 4 3 4-3"/><path d="M9 21.5h6"/></symbol></defs></svg><div class="stars"></div><div id="conquista" class="conquista"></div><nav class="migalhas" aria-label="Você está em">
+<a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casa"/></svg>Jogos</a>
+<span class="migalha-sep" aria-hidden="true">/</span>
+<a href="#inicio">Geografia</a>
+<span id="migalhaAqui"></span>
+</nav>
+<div id="festaBox" class="festa" aria-hidden="true"></div>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>Campo e Cidade</h1><div class="subtitle">Geografia — o trabalho no campo e na cidade</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
+<section id="start" class="screen active"><div class="hero"><div class="icon"></div><h2>Geografia do 4º ano</h2><p>Os três setores da economia, o trabalho no campo e o trabalho na cidade.</p><div id="startStats" class="chips"></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="primary" onclick="openLesson('lesson1')">Estudar passo a passo</button><button class="secondary" onclick="openLesson('resumo')">Ver o resumo</button><button class="gold" onclick="openCategories()">Ir aos desafios</button><button type="button" class="ghost sala-abrir" onclick="irPara('sala')"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg> Jogar com outras pessoas</button></div><div style="margin-top:10px"><button class="link-btn" onclick="resetProgress()">apagar progresso salvo</button></div></div></section><section id="lesson" class="screen"><style>
+/* ---------- lição em passos curtos ----------
+   Um passo = uma ideia, um infográfico, uma checagem. O motor já mostra um
+   .lesson-part por vez; aqui cada passo é um deles, e o endereço (#licao/
+   lessonN) guarda onde a criança parou. */
+.mic-topo{display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-3)}
+.mic-barra{flex:1;height:6px;background:var(--risco);border-radius:999px;overflow:hidden}
+.mic-barra i{display:block;height:100%;background:var(--materia);border-radius:999px}
+.mic-ideia{font-size:var(--t-md);line-height:1.5;color:var(--texto-2);
+  margin:0 0 var(--s-4);max-width:42ch}
+.mic-ideia b{color:var(--texto)}
+
+/* quadro do infográfico */
+.mic-fig{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-4);margin:var(--s-4) 0}
+.mic-fig figcaption{font-size:var(--t-xs);color:var(--texto-3);margin-top:var(--s-3);
+  font-weight:600;text-align:center}
+.mic-fig svg{display:block;width:100%;height:auto;max-width:34rem;margin:0 auto}
+
+/* peças do desenho que mudam de estado */
+.mic-fig .z{fill:var(--risco);stroke:none;opacity:.35;transition:opacity .25s var(--saida)}
+.mic-fig .rot{stroke:var(--risco);stroke-width:2;fill:none}
+.mic-fig .marca{fill:var(--materia);stroke:none;transition:transform .35s var(--saida)}
+/* o motor dá stroke a todo svg, para os ícones; texto precisa desligar */
+.mic-fig text{fill:var(--texto-2);stroke:none;font-family:var(--corpo);font-size:13px;font-weight:700}
+.mic-fig text.forte{fill:var(--texto);font-family:var(--display);font-size:15px}
+.mic-fig text.fraca{fill:var(--texto-3);font-size:12px;font-weight:600}
+.mic-fig .bolha{fill:var(--carta);stroke:var(--risco);stroke-width:2}
+.mic-fig .bolha.on{fill:var(--materia-clara);stroke:var(--materia)}
+
+/* máquina de duas entradas */
+.mic-maq{display:flex;align-items:center;justify-content:center;gap:var(--s-2);
+  flex-wrap:wrap;margin-top:var(--s-3)}
+.mic-eixo{display:flex;gap:var(--s-2);flex-wrap:wrap;justify-content:center}
+.mic-eixo button{background:var(--carta);border:2px solid var(--risco);border-radius:999px;
+  padding:var(--s-2) var(--s-3);font-family:var(--display);font-size:var(--t-sm);
+  font-weight:600;color:var(--texto-2);cursor:pointer;transition:all .18s var(--saida)}
+.mic-eixo button:hover{border-color:var(--materia);color:var(--materia)}
+.mic-eixo button[aria-pressed="true"]{background:var(--materia-solida);
+  border-color:var(--materia-solida);color:var(--sobre-materia)}
+.mic-sinal{font-family:var(--display);font-size:var(--t-lg);color:var(--texto-3);font-weight:700}
+.mic-res{display:inline-block;min-width:7rem;text-align:center;
+  background:var(--materia-clara);border:2px solid var(--materia-borda);border-radius:var(--r);
+  padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-lg);
+  font-weight:700;color:var(--materia-forte)}
+.mic-res s{opacity:.45;font-weight:600}
+.mic-nota{font-size:var(--t-sm);color:var(--texto-2);text-align:center;
+  margin-top:var(--s-3);min-height:1.4em;line-height:1.45}
+.mic-nota b{color:var(--texto)}
+
+/* revelar */
+.mic-revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));
+  gap:var(--s-2);margin-top:var(--s-3)}
+/* o motor faz de todo button um inline-flex de 3rem com lábio; aqui é cartão */
+.mic-rev{display:block;min-height:0;box-shadow:none;
+  background:var(--carta);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-3);text-align:left;cursor:pointer;font:inherit;color:var(--texto-2);
+  transition:all .18s var(--saida)}
+.mic-rev:hover{border-color:var(--materia)}
+.mic-rev b{display:block;font-family:var(--display);font-size:var(--t-sm);
+  color:var(--texto);margin-bottom:var(--s-1)}
+.mic-rev i{display:block;font-style:normal;font-size:var(--t-sm);color:var(--texto-3)}
+.mic-rev[aria-expanded="true"]{background:var(--materia-clara);border-color:var(--materia-borda)}
+.mic-rev[aria-expanded="true"] i{color:var(--materia-forte);font-weight:700}
+
+/* checagem */
+.mic-q{background:var(--carta);border:2px solid var(--risco);border-radius:var(--r-g);
+  padding:var(--s-4);margin:var(--s-4) 0}
+.mic-ask{font-family:var(--display);font-size:var(--t-md);font-weight:600;
+  margin:0 0 var(--s-3);color:var(--texto)}
+.mic-ops{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+.mic-ops button{background:var(--fundo);border:2px solid var(--risco);border-radius:var(--r);
+  padding:var(--s-2) var(--s-3);font-family:var(--corpo);font-size:var(--t-sm);
+  font-weight:700;color:var(--texto);cursor:pointer;transition:all .18s var(--saida)}
+.mic-ops button:hover:not([data-feito]){border-color:var(--materia)}
+.mic-ops button.certo{background:var(--certo-claro);border-color:var(--certo);color:var(--texto)}
+.mic-ops button.errado{background:var(--errado-claro);border-color:var(--errado);color:var(--texto)}
+/* a mesma mecânica dentro de uma frase: tocar a palavra */
+.mic-ops.frase{gap:var(--s-1);align-items:baseline}
+.mic-ops.frase button{border-color:transparent;background:none;box-shadow:none;
+  min-height:0;padding:var(--s-1) var(--s-2);font-size:var(--t-md);font-weight:600}
+.mic-ops.frase button:hover:not([data-feito]){background:var(--materia-clara)}
+.mic-fb{margin:var(--s-3) 0 0;font-size:var(--t-sm);line-height:1.5;color:var(--texto-2)}
+.mic-fb b{color:var(--texto)}
+
+/* alternar entre os dois modos */
+.mic-modo{min-height:0;box-shadow:none;padding:var(--s-1) var(--s-3);
+  background:none;border:2px solid var(--risco);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;
+  color:var(--texto-3);white-space:nowrap}
+.mic-modo:hover{border-color:var(--materia);color:var(--materia)}
+
+/* modo resumo: tudo numa página, para reler na véspera */
+.mic-secao{font-family:var(--display);font-size:var(--t-lg);font-weight:700;
+  color:var(--materia);margin:var(--s-6) 0 var(--s-3);
+  padding-bottom:var(--s-2);border-bottom:2px solid var(--risco)}
+.mic-bloco{margin:var(--s-4) 0 var(--s-5)}
+.mic-titulo{display:flex;width:100%;min-height:0;box-shadow:none;
+  justify-content:space-between;align-items:baseline;gap:var(--s-3);
+  background:none;border:0;border-radius:0;padding:0 0 var(--s-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;
+  color:var(--texto);text-align:left}
+.mic-titulo span{font-size:var(--t-xs);font-weight:600;color:var(--texto-3);
+  opacity:0;transition:opacity .18s var(--saida)}
+.mic-titulo:hover{color:var(--materia)}
+.mic-titulo:hover span,.mic-titulo:focus-visible span{opacity:1}
+.mic-regra{margin:0 0 var(--s-3);font-size:var(--t-sm);line-height:1.5;
+  color:var(--texto-2);max-width:60ch}
+.mic-regra b{color:var(--texto)}
+.mic-bloco .content-grid{margin:var(--s-3) 0}
+.mic-bloco .mini{padding:var(--s-3)}
+.mic-bloco .example{margin:var(--s-2) 0;font-weight:600}
+
+/* rodapé do passo */
+.mic-nav{display:flex;align-items:center;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-5)}
+.mic-nav .cresce{flex:1}
+.mic-treinar{background:var(--materia-solida);color:var(--sobre-materia);border:2px solid var(--materia-solida)}
+.mic-treinar:hover{filter:brightness(1.08);color:var(--sobre-materia)}
+@media(max-width:34rem){
+  .mic-maq{gap:var(--s-1)} .mic-res{min-width:5.5rem;font-size:var(--t-md)}
+  .mic-nav .cresce{flex-basis:100%;order:9}
+}
+</style><div id="lesson1" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 1 de 10</span><span class="mic-barra"><i style="width:10%"></i></span><button type="button" id="micVoltar" class="link-btn" hidden></button><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>O que move o campo e a cidade</h2><p class="mic-ideia">Atividade econômica é <b>toda forma de trabalho</b> para produzir, distribuir e oferecer produtos e serviços.</p><figure class="mic-fig"><svg id="fgSet1" data-estado="primario" viewBox="0 0 480 130" role="img" aria-label="Os três setores: o primário tira da natureza, o secundário transforma, o terciário vende e serve"><style>#fgSet1[data-estado="primario"] .c1{fill:var(--materia);opacity:.28}#fgSet1[data-estado="primario"] .r1{fill:var(--texto);font-weight:800}#fgSet1[data-estado="secundario"] .c2{fill:var(--materia);opacity:.28}#fgSet1[data-estado="secundario"] .r2{fill:var(--texto);font-weight:800}#fgSet1[data-estado="terciario"] .c3{fill:var(--materia);opacity:.28}#fgSet1[data-estado="terciario"] .r3{fill:var(--texto);font-weight:800}</style><rect class="z c1" x="10" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="10" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r1" x="79" y="58" text-anchor="middle">primário</text><text class="fraca" x="79" y="78" text-anchor="middle">tira da natureza</text><path class="rot" d="M150 61h20"/><path class="rot" d="m164 55 6 6-6 6"/><rect class="z c2" x="172" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="172" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r2" x="241" y="58" text-anchor="middle">secundário</text><text class="fraca" x="241" y="78" text-anchor="middle">transforma</text><path class="rot" d="M312 61h20"/><path class="rot" d="m326 55 6 6-6 6"/><rect class="z c3" x="334" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="334" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r3" x="403" y="58" text-anchor="middle">terciário</text><text class="fraca" x="403" y="78" text-anchor="middle">vende e serve</text><text class="fraca" x="240" y="118" text-anchor="middle">o que um produz, o outro usa</text></svg><figcaption>Os três setores, na ordem em que o produto passa.</figcaption></figure><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;primario&quot;: &quot;agricultura, pecuária, pesca, extrativismo&quot;, &quot;secundario&quot;: &quot;indústria e construção&quot;, &quot;terciario&quot;: &quot;comércio e serviços&quot;}" data-nota="{&quot;primario&quot;: &quot;Ligado <b>diretamente à natureza</b>.&quot;, &quot;secundario&quot;: &quot;<b>Transforma</b> as matérias-primas em novos produtos.&quot;, &quot;terciario&quot;: &quot;<b>Vende e atende</b> — é o maior setor do Brasil.&quot;}" data-fig="fgSet1"><div class="mic-eixo"><button type="button" data-v="primario" aria-pressed="true">primário</button><button type="button" data-v="secundario" aria-pressed="false">secundário</button><button type="button" data-v="terciario" aria-pressed="false">terciário</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque um setor.</figcaption></figure><div class="example warning">Os três estão <b>ligados</b>: o que um setor produz, o outro usa.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">Em quantos setores as atividades econômicas se organizam?</p><div class="mic-ops"><button type="button" data-ok="1">Três</button><button type="button">Dois</button><button type="button">Quatro</button><button type="button">Cinco</button></div><p class="mic-fb" hidden>Primário, secundário e terciário.</p></div><div class="mic-nav"><button class="mic-treinar" onclick="startCategory('atividades')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson2')">Próximo →</button></div></div></div><div id="lesson2" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 2 de 10</span><span class="mic-barra"><i style="width:20%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>O que vem direto da natureza</h2><p class="mic-ideia">O setor primário reúne o que é tirado <b>diretamente da natureza</b>.</p><figure class="mic-fig"><div class="mic-revs"><button type="button" class="mic-rev" aria-expanded="false" data-resp="cultivar plantas" data-oculto="o que é?"><b>Agricultura</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="criar animais" data-oculto="o que é?"><b>Pecuária</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="retirar peixes" data-oculto="o que é?"><b>Pesca</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="retirar recursos naturais" data-oculto="o que é?"><b>Extrativismo</b><i>o que é?</i></button></div><figcaption>Toque cada atividade para ver o que ela faz.</figcaption></figure><div class="example warning">Cuidado: <b>refinar petróleo não é</b> setor primário. Extrair é primário; refinar já é transformar, logo é secundário.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">Qual destas NÃO faz parte do setor primário?</p><div class="mic-ops"><button type="button">Agricultura de subsistência</button><button type="button" data-ok="1">Refino de petróleo</button><button type="button">Pesca comercial</button><button type="button">Mineração de carvão</button></div><p class="mic-fb" hidden>Refinar é transformar: setor secundário.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson1')">← Voltar</button><button class="mic-treinar" onclick="startCategory('primario')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson3')">Próximo →</button></div></div></div><div id="lesson3" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 3 de 10</span><span class="mic-barra"><i style="width:30%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Onde a matéria-prima vira produto</h2><p class="mic-ideia">O setor secundário <b>transforma</b> matérias-primas em produtos novos — pela indústria e pela construção.</p><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;leite&quot;: &quot;queijo e iogurte&quot;, &quot;cana&quot;: &quot;açúcar&quot;, &quot;madeira&quot;: &quot;móveis&quot;, &quot;tomate&quot;: &quot;molho&quot;}" data-nota="{&quot;leite&quot;: &quot;A matéria-prima veio da <b>pecuária</b>.&quot;, &quot;cana&quot;: &quot;Veio da <b>agricultura</b>.&quot;, &quot;madeira&quot;: &quot;Veio do <b>extrativismo vegetal</b>.&quot;, &quot;tomate&quot;: &quot;Veio da <b>agricultura</b> — e virou outro produto.&quot;}"><div class="mic-eixo"><button type="button" data-v="leite" aria-pressed="true">leite</button><button type="button" data-v="cana" aria-pressed="false">cana</button><button type="button" data-v="madeira" aria-pressed="false">madeira</button><button type="button" data-v="tomate" aria-pressed="false">tomate</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque uma matéria-prima e veja no que ela vira.</figcaption></figure><div class="example warning">A <b>construção civil</b> também é setor secundário: ela transforma materiais em moradias, prédios, estradas e pontes.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">Que fator é associado aos problemas do setor secundário em países em desenvolvimento?</p><div class="mic-ops"><button type="button">Alta produtividade e tecnologia avançada</button><button type="button">Eficiência na gestão dos recursos naturais</button><button type="button" data-ok="1">Escassez de mão de obra qualificada</button><button type="button">Redução das desigualdades de renda</button></div><p class="mic-fb" hidden>Faltar gente preparada trava a indústria.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson2')">← Voltar</button><button class="mic-treinar" onclick="startCategory('secundario')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson4')">Próximo →</button></div></div></div><div id="lesson4" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 4 de 10</span><span class="mic-barra"><i style="width:40%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Comércio e serviços</h2><p class="mic-ideia">O setor terciário <b>vende</b> e <b>atende</b>: é ele que liga os outros dois setores às pessoas.</p><figure class="mic-fig"><div class="mic-revs"><button type="button" class="mic-rev" aria-expanded="false" data-resp="comércio" data-oculto="o que é?"><b>Loja, feira, shopping</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="serviço" data-oculto="o que é?"><b>Professor</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="serviço" data-oculto="o que é?"><b>Médico</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="serviço" data-oculto="o que é?"><b>Motorista</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="comércio" data-oculto="o que é?"><b>Vendedor</b><i>o que é?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="serviço" data-oculto="o que é?"><b>Banco, turismo</b><i>o que é?</i></button></div><figcaption>Toque para ver se é comércio ou serviço.</figcaption></figure><div class="example warning">O terciário é o <b>principal setor econômico do Brasil</b>.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">Qual é o principal setor econômico do Brasil?</p><div class="mic-ops"><button type="button">Primário</button><button type="button">Secundário</button><button type="button">Extrativismo</button><button type="button" data-ok="1">Terciário</button></div><p class="mic-fb" hidden>O comércio e os serviços são o maior setor da economia brasileira.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson3')">← Voltar</button><button class="mic-treinar" onclick="startCategory('terciario')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson5')">Próximo →</button></div></div></div><div id="lesson5" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 5 de 10</span><span class="mic-barra"><i style="width:50%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Da enxada à máquina</h2><p class="mic-ideia">A agricultura pode ser <b>tradicional</b> ou <b>moderna</b> — muda a técnica, o tamanho e para quem se produz.</p><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;tradicional&quot;: &quot;técnicas simples, trabalho familiar&quot;, &quot;moderna&quot;: &quot;máquinas, tecnologia, grandes áreas&quot;}" data-nota="{&quot;tradicional&quot;: &quot;Produz sobretudo para o <b>próprio consumo</b> — é a agricultura de subsistência.&quot;, &quot;moderna&quot;: &quot;Produz em grande escala, voltada ao <b>comércio</b>.&quot;}"><div class="mic-eixo"><button type="button" data-v="tradicional" aria-pressed="true">tradicional</button><button type="button" data-v="moderna" aria-pressed="false">moderna</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque um tipo de agricultura.</figcaption></figure><div class="mic-q" data-mic="escolher"><p class="mic-ask">A agricultura de subsistência produz principalmente para:</p><div class="mic-ops"><button type="button" data-ok="1">O consumo da própria família</button><button type="button">A exportação</button><button type="button">As grandes indústrias</button><button type="button">Os supermercados das cidades</button></div><p class="mic-fb" hidden>Subsistência é sustentar quem produz.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson4')">← Voltar</button><button class="mic-treinar" onclick="startCategory('agricultura')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson6')">Próximo →</button></div></div></div><div id="lesson6" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 6 de 10</span><span class="mic-barra"><i style="width:60%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Pasto aberto ou confinamento</h2><p class="mic-ideia">Pecuária é a <b>criação de animais</b>, e ela se divide pelo espaço e pelo controle.</p><figure class="mic-fig"><svg id="fgPasto" data-estado="extensiva" viewBox="0 0 480 140" role="img" aria-label="Pecuária extensiva no pasto aberto e intensiva no confinamento"><style>#fgPasto[data-estado="extensiva"] .ze,#fgPasto[data-estado="intensiva"] .zi{fill:var(--materia);opacity:.28}</style><rect class="z ze" x="10" y="18" width="220" height="86" rx="14"/><rect class="z zi" x="250" y="18" width="220" height="86" rx="14"/><path class="rot" d="M40 74h160"/><circle class="rot" cx="65" cy="58" r="9"/><circle class="rot" cx="120" cy="62" r="9"/><circle class="rot" cx="178" cy="56" r="9"/><text class="fraca" x="120" y="96" text-anchor="middle">pasto aberto</text><path class="rot" d="M280 44v40M300 44v40M320 44v40M340 44v40M360 44v40M380 44v40"/><path class="rot" d="M272 44h116M272 84h116"/><circle class="rot" cx="410" cy="58" r="8"/><circle class="rot" cx="432" cy="58" r="8"/><circle class="rot" cx="421" cy="76" r="8"/><text class="fraca" x="360" y="96" text-anchor="middle">confinamento</text><text class="forte" x="120" y="128" text-anchor="middle">extensiva</text><text class="forte" x="360" y="128" text-anchor="middle">intensiva</text></svg><figcaption>Muito espaço e pouco controle, ou pouco espaço e muito controle.</figcaption></figure><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;extensiva&quot;: &quot;grandes áreas de pastagem&quot;, &quot;intensiva&quot;: &quot;espaços menores, com ração&quot;}" data-nota="{&quot;extensiva&quot;: &quot;Os animais ficam soltos, com <b>menos controle</b>.&quot;, &quot;intensiva&quot;: &quot;Há confinamento, alimentação com ração e <b>mais controle</b>.&quot;}" data-fig="fgPasto"><div class="mic-eixo"><button type="button" data-v="extensiva" aria-pressed="true">extensiva</button><button type="button" data-v="intensiva" aria-pressed="false">intensiva</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque um tipo de pecuária.</figcaption></figure><div class="mic-q" data-mic="escolher"><p class="mic-ask">Na pecuária intensiva, os animais:</p><div class="mic-ops"><button type="button">Ficam soltos em grandes pastagens</button><button type="button" data-ok="1">Ficam em espaços menores e recebem ração</button><button type="button">Não recebem acompanhamento</button><button type="button">Vivem dentro das fábricas</button></div><p class="mic-fb" hidden>Espaço menor, alimentação controlada e acompanhamento de perto.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson5')">← Voltar</button><button class="mic-treinar" onclick="startCategory('pecuaria')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson7')">Próximo →</button></div></div></div><div id="lesson7" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 7 de 10</span><span class="mic-barra"><i style="width:70%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Tirar da natureza</h2><p class="mic-ideia">Extrativismo é <b>retirar recursos diretamente da natureza</b>. São três tipos, pela origem.</p><figure class="mic-fig"><svg id="fgOrig" data-estado="vegetal" viewBox="0 0 480 140" role="img" aria-label="Extrativismo vegetal das plantas, animal dos animais, mineral do subsolo"><style>#fgOrig[data-estado="vegetal"] .z1,#fgOrig[data-estado="animal"] .z2,#fgOrig[data-estado="mineral"] .z3{fill:var(--materia);opacity:.28}</style><rect class="z z1" x="10" y="14" width="146" height="86" rx="14"/><rect class="z z2" x="167" y="14" width="146" height="86" rx="14"/><rect class="z z3" x="324" y="14" width="146" height="86" rx="14"/><path class="rot" d="M83 88V62"/><path class="rot" d="M83 62a18 18 0 1 1 .1 0"/><path class="rot" d="M212 62c14-14 40-14 54 0-14 14-40 14-54 0z"/><path class="rot" d="m266 62 14-10v20z"/><path class="rot" d="M340 58h124"/><path class="rot" d="M356 80h20M392 76h22M428 84h16"/><text class="fraca" x="83" y="118" text-anchor="middle">das plantas</text><text class="fraca" x="240" y="118" text-anchor="middle">dos animais</text><text class="fraca" x="397" y="118" text-anchor="middle">do solo e do subsolo</text></svg><figcaption>É a origem que dá o nome ao extrativismo.</figcaption></figure><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;vegetal&quot;: &quot;madeira, látex, castanha&quot;, &quot;animal&quot;: &quot;pesca, caça, mel&quot;, &quot;mineral&quot;: &quot;minérios, carvão, petróleo&quot;}" data-nota="{&quot;vegetal&quot;: &quot;Retirado <b>das plantas</b>.&quot;, &quot;animal&quot;: &quot;Retirado <b>dos animais</b>, sem criá-los.&quot;, &quot;mineral&quot;: &quot;Retirado <b>do solo e do subsolo</b>.&quot;}" data-fig="fgOrig"><div class="mic-eixo"><button type="button" data-v="vegetal" aria-pressed="true">vegetal</button><button type="button" data-v="animal" aria-pressed="false">animal</button><button type="button" data-v="mineral" aria-pressed="false">mineral</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque um tipo de extrativismo.</figcaption></figure><div class="example warning"><b>Pecuária não é extrativismo.</b> Na pecuária o animal é criado; no extrativismo animal ele é retirado da natureza.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">A extração de petróleo é exemplo de extrativismo:</p><div class="mic-ops"><button type="button">Vegetal</button><button type="button">Animal</button><button type="button" data-ok="1">Mineral</button><button type="button">Industrial</button></div><p class="mic-fb" hidden>Petróleo sai do subsolo: extrativismo mineral.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson6')">← Voltar</button><button class="mic-treinar" onclick="startCategory('extrativismo')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson8')">Próximo →</button></div></div></div><div id="lesson8" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 8 de 10</span><span class="mic-barra"><i style="width:80%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Quando o campo passa pela fábrica</h2><p class="mic-ideia">A agroindústria liga a <b>produção do campo</b> à <b>atividade industrial</b>, acrescentando valor à matéria-prima.</p><figure class="mic-fig"><svg viewBox="0 0 480 110" role="img" aria-label="O leite do campo passa pela indústria e vira queijo, com mais valor"><rect class="bolha" x="8" y="26" width="120" height="50" rx="12"/><text class="forte" x="68" y="50" text-anchor="middle">leite</text><text class="fraca" x="68" y="68" text-anchor="middle">do campo</text><path class="rot" d="M136 51h38"/><path class="rot" d="m167 45 8 6-8 6"/><rect class="bolha on" x="182" y="26" width="116" height="50" rx="12"/><text class="forte" x="240" y="50" text-anchor="middle">indústria</text><text class="fraca" x="240" y="68" text-anchor="middle">transforma</text><path class="rot" d="M306 51h38"/><path class="rot" d="m337 45 8 6-8 6"/><rect class="bolha" x="352" y="26" width="120" height="50" rx="12"/><text class="forte" x="412" y="50" text-anchor="middle">queijo</text><text class="fraca" x="412" y="68" text-anchor="middle">vale mais</text><text class="fraca" x="240" y="100" text-anchor="middle">e dura mais, e viaja melhor</text></svg><figcaption>O mesmo leite, depois da indústria, vale mais. E dura e viaja melhor.</figcaption></figure><div class="example warning">Leite tirado da vaca e vendido <b>sem transformação</b> não é agroindústria. E ela <b>não precisa ser uma grande fábrica</b>.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">A transformação da cana-de-açúcar em açúcar mostra a relação entre:</p><div class="mic-ops"><button type="button">O primário e o terciário</button><button type="button">O secundário e o terciário</button><button type="button">Dois setores primários</button><button type="button" data-ok="1">O setor primário e o secundário</button></div><p class="mic-fb" hidden>A cana vem do campo; o açúcar sai da indústria.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson7')">← Voltar</button><button class="mic-treinar" onclick="startCategory('agroindustria')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson9')">Próximo →</button></div></div></div><div id="lesson9" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 9 de 10</span><span class="mic-barra"><i style="width:90%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>Dois tipos de indústria</h2><p class="mic-ideia">A indústria fica quase sempre na <b>cidade</b>, e é de dois tipos.</p><figure class="mic-fig"><div class="mic-revs"><button type="button" class="mic-rev" aria-expanded="false" data-resp="prepara a matéria-prima" data-oculto="o que faz?"><b>Indústria extrativa</b><i>o que faz?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="transforma em produto" data-oculto="o que faz?"><b>Indústria de transformação</b><i>o que faz?</i></button><button type="button" class="mic-rev" aria-expanded="false" data-resp="moradias, prédios, estradas e pontes" data-oculto="o que faz?"><b>Construção civil</b><i>o que faz?</i></button></div><figcaption>Toque cada uma para ver o que faz.</figcaption></figure><div class="example warning">A construção civil é o que <b>ergue a estrutura</b> em que a cidade funciona — e também é setor secundário.</div><div class="mic-q" data-mic="escolher"><p class="mic-ask">As indústrias de transformação:</p><div class="mic-ops"><button type="button" data-ok="1">Transformam matérias-primas em produtos</button><button type="button">Retiram recursos do solo</button><button type="button">Vendem mercadorias ao consumidor</button><button type="button">Constroem estradas e pontes</button></div><p class="mic-fb" hidden>É delas que saem os produtos prontos.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson8')">← Voltar</button><button class="mic-treinar" onclick="startCategory('industrias')">Treinar isto agora</button><span class="cresce"></span><button class="primary" onclick="openLesson('lesson10')">Próximo →</button></div></div></div><div id="lesson10" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Passo 10 de 10</span><span class="mic-barra"><i style="width:100%"></i></span><button type="button" class="mic-modo" onclick="openLesson('resumo')">Ver resumo</button></div><h2>O caminho do leite até a mesa</h2><p class="mic-ideia">Um mesmo produto costuma passar pelos <b>três setores</b> antes de chegar à nossa mesa.</p><figure class="mic-fig"><svg id="fgSet2" data-estado="primario" viewBox="0 0 480 130" role="img" aria-label="Os três setores: o primário tira da natureza, o secundário transforma, o terciário vende e serve"><style>#fgSet2[data-estado="primario"] .c1{fill:var(--materia);opacity:.28}#fgSet2[data-estado="primario"] .r1{fill:var(--texto);font-weight:800}#fgSet2[data-estado="secundario"] .c2{fill:var(--materia);opacity:.28}#fgSet2[data-estado="secundario"] .r2{fill:var(--texto);font-weight:800}#fgSet2[data-estado="terciario"] .c3{fill:var(--materia);opacity:.28}#fgSet2[data-estado="terciario"] .r3{fill:var(--texto);font-weight:800}</style><rect class="z c1" x="10" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="10" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r1" x="79" y="58" text-anchor="middle">primário</text><text class="fraca" x="79" y="78" text-anchor="middle">tira da natureza</text><path class="rot" d="M150 61h20"/><path class="rot" d="m164 55 6 6-6 6"/><rect class="z c2" x="172" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="172" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r2" x="241" y="58" text-anchor="middle">secundário</text><text class="fraca" x="241" y="78" text-anchor="middle">transforma</text><path class="rot" d="M312 61h20"/><path class="rot" d="m326 55 6 6-6 6"/><rect class="z c3" x="334" y="30" width="138" height="62" rx="14"/><rect class="bolha" x="334" y="30" width="138" height="62" rx="14" fill="none"/><text class="forte r3" x="403" y="58" text-anchor="middle">terciário</text><text class="fraca" x="403" y="78" text-anchor="middle">vende e serve</text><text class="fraca" x="240" y="118" text-anchor="middle">o que um produz, o outro usa</text></svg><figcaption>Siga o leite pelos três setores.</figcaption></figure><figure class="mic-fig"><div class="mic-maq" data-out="{&quot;primario&quot;: &quot;a vaca é ordenhada&quot;, &quot;secundario&quot;: &quot;o leite vira queijo&quot;, &quot;terciario&quot;: &quot;o queijo é transportado e vendido&quot;}" data-nota="{&quot;primario&quot;: &quot;Produção de <b>matéria-prima</b>: setor primário.&quot;, &quot;secundario&quot;: &quot;<b>Transformação</b> industrial: setor secundário.&quot;, &quot;terciario&quot;: &quot;<b>Transporte e venda</b>: setor terciário, duas vezes.&quot;}" data-fig="fgSet2"><div class="mic-eixo"><button type="button" data-v="primario" aria-pressed="true">na fazenda</button><button type="button" data-v="secundario" aria-pressed="false">na indústria</button><button type="button" data-v="terciario" aria-pressed="false">no mercado</button></div><span class="mic-sinal">=</span><output class="mic-res">—</output></div><p class="mic-nota"></p><figcaption>Toque cada etapa do caminho.</figcaption></figure><div class="mic-q" data-mic="escolher"><p class="mic-ask">O transporte e a venda do queijo no supermercado pertencem ao setor:</p><div class="mic-ops"><button type="button">Primário</button><button type="button" data-ok="1">Terciário</button><button type="button">Secundário</button><button type="button">Quaternário</button></div><p class="mic-fb" hidden>Envolvem comércio e prestação de serviços.</p></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson9')">← Voltar</button><button class="mic-treinar" onclick="startCategory('caminho')">Treinar isto agora</button><span class="cresce"></span><button class="gold" onclick="openCategories()">Ir aos desafios →</button></div></div></div><div id="resumo" class="lesson-part"><div class="lesson-card"><div class="mic-topo"><span class="lesson-tag">Resumo</span><span class="mic-barra"><i style="width:100%"></i></span><button type="button" class="mic-modo" onclick="openLesson('lesson1')">Ir ao passo a passo</button></div><h2>Gramática do 4º ano, tudo numa página</h2><p class="mic-ideia">Os catorze conteúdos da prova, para reler de ponta a ponta. Cada título leva às questões daquele conteúdo.</p><h3 class="mic-secao">Os Três Setores</h3><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('atividades')">Atividades econômicas<span>treinar →</span></button><p class="mic-regra">Atividade econômica é <b>toda forma de trabalho</b> para produzir, distribuir e oferecer produtos e serviços.</p><div class="example"><b>primário</b> → agricultura, pecuária, pesca, extrativismo &nbsp;·&nbsp; <b>secundário</b> → indústria e construção &nbsp;·&nbsp; <b>terciário</b> → comércio e serviços</div><div class="example warning">Os três estão <b>ligados</b>: o que um setor produz, o outro usa.</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('primario')">Setor primário<span>treinar →</span></button><p class="mic-regra">O setor primário reúne o que é tirado <b>diretamente da natureza</b>.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg></div><strong>Agricultura</strong><span>cultivar plantas</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg></div><strong>Pecuária</strong><span>criar animais</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg></div><strong>Pesca</strong><span>retirar peixes</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg></div><strong>Extrativismo</strong><span>retirar recursos naturais</span></div></div><div class="example warning">Cuidado: <b>refinar petróleo não é</b> setor primário. Extrair é primário; refinar já é transformar, logo é secundário.</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('secundario')">Setor secundário<span>treinar →</span></button><p class="mic-regra">O setor secundário <b>transforma</b> matérias-primas em produtos novos — pela indústria e pela construção.</p><div class="example"><b>leite</b> → queijo e iogurte &nbsp;·&nbsp; <b>cana</b> → açúcar &nbsp;·&nbsp; <b>madeira</b> → móveis &nbsp;·&nbsp; <b>tomate</b> → molho</div><div class="example warning">A <b>construção civil</b> também é setor secundário: ela transforma materiais em moradias, prédios, estradas e pontes.</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('terciario')">Setor terciário<span>treinar →</span></button><p class="mic-regra">O setor terciário <b>vende</b> e <b>atende</b>: é ele que liga os outros dois setores às pessoas.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Loja, feira, shopping</strong><span>comércio</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Professor</strong><span>serviço</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Médico</strong><span>serviço</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Motorista</strong><span>serviço</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Vendedor</strong><span>comércio</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg></div><strong>Banco, turismo</strong><span>serviço</span></div></div><div class="example warning">O terciário é o <b>principal setor econômico do Brasil</b>.</div></div><h3 class="mic-secao">O Trabalho no Campo</h3><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('agricultura')">Agricultura<span>treinar →</span></button><p class="mic-regra">A agricultura pode ser <b>tradicional</b> ou <b>moderna</b> — muda a técnica, o tamanho e para quem se produz.</p><div class="example"><b>tradicional</b> → técnicas simples, trabalho familiar &nbsp;·&nbsp; <b>moderna</b> → máquinas, tecnologia, grandes áreas</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('pecuaria')">Pecuária<span>treinar →</span></button><p class="mic-regra">Pecuária é a <b>criação de animais</b>, e ela se divide pelo espaço e pelo controle.</p><div class="example"><b>extensiva</b> → grandes áreas de pastagem &nbsp;·&nbsp; <b>intensiva</b> → espaços menores, com ração</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('extrativismo')">Extrativismo<span>treinar →</span></button><p class="mic-regra">Extrativismo é <b>retirar recursos diretamente da natureza</b>. São três tipos, pela origem.</p><div class="example"><b>vegetal</b> → madeira, látex, castanha &nbsp;·&nbsp; <b>animal</b> → pesca, caça, mel &nbsp;·&nbsp; <b>mineral</b> → minérios, carvão, petróleo</div><div class="example warning"><b>Pecuária não é extrativismo.</b> Na pecuária o animal é criado; no extrativismo animal ele é retirado da natureza.</div></div><h3 class="mic-secao">Do Campo à Cidade</h3><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('agroindustria')">Agroindústria<span>treinar →</span></button><p class="mic-regra">A agroindústria liga a <b>produção do campo</b> à <b>atividade industrial</b>, acrescentando valor à matéria-prima.</p><div class="example warning">Leite tirado da vaca e vendido <b>sem transformação</b> não é agroindústria. E ela <b>não precisa ser uma grande fábrica</b>.</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('industrias')">Indústrias e construção<span>treinar →</span></button><p class="mic-regra">A indústria fica quase sempre na <b>cidade</b>, e é de dois tipos.</p><div class="content-grid"><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-predios"/></svg></div><strong>Indústria extrativa</strong><span>prepara a matéria-prima</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-predios"/></svg></div><strong>Indústria de transformação</strong><span>transforma em produto</span></div><div class="mini"><div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-predios"/></svg></div><strong>Construção civil</strong><span>moradias, prédios, estradas e pontes</span></div></div><div class="example warning">A construção civil é o que <b>ergue a estrutura</b> em que a cidade funciona — e também é setor secundário.</div></div><div class="mic-bloco"><button type="button" class="mic-titulo" onclick="startCategory('caminho')">O caminho do produto<span>treinar →</span></button><p class="mic-regra">Um mesmo produto costuma passar pelos <b>três setores</b> antes de chegar à nossa mesa.</p><div class="example"><b>na fazenda</b> → a vaca é ordenhada &nbsp;·&nbsp; <b>na indústria</b> → o leite vira queijo &nbsp;·&nbsp; <b>no mercado</b> → o queijo é transportado e vendido</div></div><div class="mic-nav"><button class="secondary" onclick="openLesson('lesson1')">← Passo a passo</button><span class="cresce"></span><button class="gold" onclick="openCategories()">Ir aos desafios →</button></div></div></div><script>
+/* ---------- lição em passos curtos ----------
+   Três mecânicas, todas por delegação, todas guiadas por data-*:
+     escolher  tocar a opção certa (serve também para tocar a palavra na frase)
+     revelar   tocar para abrir a resposta
+     maquina   dois eixos de escolha que compõem um resultado
+   Nada aqui depende do motor; o motor só mostra um .lesson-part por vez. */
+(function(){
+  'use strict';
+
+  function mostrar(el){ if(el) el.hidden = false; }
+
+  function aoEscolher(botao, caixa){
+    if(botao.dataset.feito) return;
+    var certo = botao.dataset.ok === '1';
+    var ops = caixa.querySelectorAll('.mic-ops button');
+    for(var i=0;i<ops.length;i++){
+      ops[i].dataset.feito = '1';
+      if(ops[i].dataset.ok === '1') ops[i].classList.add('certo');
+    }
+    if(!certo) botao.classList.add('errado');
+    mostrar(caixa.querySelector('.mic-fb'));
+    try{
+      if(certo && typeof arpejo === 'function') arpejo([523,659,784]);
+      else if(!certo && typeof nota === 'function') nota(196,0.18,0.045);
+    }catch(e){}
+  }
+
+  function aoRevelar(botao){
+    var aberto = botao.getAttribute('aria-expanded') === 'true';
+    botao.setAttribute('aria-expanded', aberto ? 'false' : 'true');
+    var alvo = botao.querySelector('i');
+    if(alvo) alvo.textContent = aberto ? (botao.dataset.oculto || '\u00b7 \u00b7 \u00b7')
+                                       : botao.dataset.resp;
+  }
+
+  function aoCompor(botao, maq){
+    var eixo = botao.parentNode;
+    var irmaos = eixo.querySelectorAll('button');
+    for(var i=0;i<irmaos.length;i++) irmaos[i].setAttribute('aria-pressed','false');
+    botao.setAttribute('aria-pressed','true');
+    atualizar(maq);
+  }
+
+  function atualizar(maq){
+    var eixos = maq.querySelectorAll('.mic-eixo');
+    var partes = [];
+    for(var i=0;i<eixos.length;i++){
+      var m = eixos[i].querySelector('button[aria-pressed=\'true\']');
+      if(!m) return;
+      partes.push(m.dataset.v);
+    }
+    var chave = partes.join('|');
+    var saida = JSON.parse(maq.dataset.out || '{}');
+    var notas = JSON.parse(maq.dataset.nota || '{}');
+    var res = maq.querySelector('.mic-res');
+    if(res) res.innerHTML = saida[chave] || '\u2014';
+    var nota = maq.parentNode.querySelector('.mic-nota');
+    if(nota) nota.innerHTML = notas[chave] || '';
+    var fig = maq.dataset.fig ? document.getElementById(maq.dataset.fig) : null;
+    if(fig) fig.setAttribute('data-estado', partes[0]);
+  }
+
+  document.addEventListener('click', function(ev){
+    var botao = ev.target.closest ? ev.target.closest('button') : null;
+    if(!botao) return;
+    var caixa = botao.closest('[data-mic=\'escolher\']');
+    if(caixa && botao.closest('.mic-ops')){ aoEscolher(botao, caixa); return; }
+    if(botao.classList.contains('mic-rev')){ aoRevelar(botao); return; }
+    var maq = botao.closest('.mic-maq');
+    if(maq && botao.dataset.v !== undefined){ aoCompor(botao, maq); return; }
+  });
+
+  /* Onde a criança parou. Microlearning só funciona se der para voltar. */
+  var CHAVE = 'geografia_licao_v1';
+  function marcar(){
+    var m = /#licao\/lesson(\d+)/.exec(location.hash || '');
+    if(m){ try{ localStorage.setItem(CHAVE, m[1]); }catch(e){} }
+    var volta = document.getElementById('micVoltar');
+    if(!volta) return;
+    var salvo = 0;
+    try{ salvo = parseInt(localStorage.getItem(CHAVE) || '0', 10); }catch(e){}
+    var noPrimeiro = !m || m[1] === '1';
+    volta.hidden = !(noPrimeiro && salvo > 1);
+    if(!volta.hidden){
+      volta.textContent = 'Continuar do passo ' + salvo + ' \u2192';
+      volta.onclick = function(){ openLesson('lesson' + salvo); };
+    }
+  }
+  addEventListener('hashchange', marcar);
+  if(document.readyState === 'loading') addEventListener('DOMContentLoaded', marcar);
+  else marcar();
+
+  /* Estado inicial de cada máquina, para nenhum passo abrir vazio. */
+  function iniciar(){
+    var maqs = document.querySelectorAll('.mic-maq');
+    for(var i=0;i<maqs.length;i++) atualizar(maqs[i]);
+  }
+  if(document.readyState === 'loading') addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
+</script></section><section id="categories" class="screen"><div class="lesson-card"><span class="lesson-tag">Escolha o conteúdo</span><div class="mode-toggle"><button class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">Treino <small>sem vidas</small></button><button class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">Desafio <small>5 vidas</small></button></div><div class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="buscaMissao" oninput="filtrarMissoes()" autocomplete="off" placeholder="Buscar assunto..." aria-label="Buscar missão" aria-controls="gradeMissoes"></div><h2 style="margin-top:20px">Trilhas</h2><div class="trail-grid"><button class="trail-card recommended" data-trail="setores" onclick="startTrail('setores')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg><strong>Os Três Setores<span class="trail-done">✓ concluída</span></strong><small>Atividades econômicas → Primário → Secundário → Terciário.</small></button><button class="trail-card" data-trail="campo" onclick="startTrail('campo')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg><strong>O Trabalho no Campo<span class="trail-done">✓ concluída</span></strong><small>Agricultura → Pecuária → Extrativismo.</small></button><button class="trail-card" data-trail="cidade" onclick="startTrail('cidade')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-predios"/></svg><strong>Do Campo à Cidade<span class="trail-done">✓ concluída</span></strong><small>Agroindústria → Indústrias e construção → O caminho do produto.</small></button></div><h2 style="margin-top:24px">Ou escolha um conteúdo</h2><div class="category-grid" id="gradeMissoes">
+<h3 class="grupo">Atalhos</h3><button class="category-card" data-cat="review" onclick="startCategory('review')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-remendo"/></svg><strong>Revisar meus erros</strong><small>Só o que você vem errando, para atacar o ponto fraco.</small><span class="review-count"></span></button><button class="category-card" data-cat="all" onclick="startCategory('all')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-dado"/></svg><strong>Tudo misturado</strong><small>Todos os conteúdos em uma única partida.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">Os Três Setores</h3><button class="category-card" data-cat="atividades" onclick="startCategory('atividades')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-ciclo"/></svg><strong>Atividades econômicas</strong><small>O que são, e os três setores em que se organizam.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="primario" onclick="startCategory('primario')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-planta"/></svg><strong>Setor primário</strong><small>Agricultura, pecuária, pesca e extrativismo.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="secundario" onclick="startCategory('secundario')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-engrenagem"/></svg><strong>Setor secundário</strong><small>A indústria e a construção transformando matéria-prima.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="terciario" onclick="startCategory('terciario')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sacola"/></svg><strong>Setor terciário</strong><small>Comércio e serviços — o maior setor do Brasil.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">O Trabalho no Campo</h3><button class="category-card" data-cat="agricultura" onclick="startCategory('agricultura')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-trabalho"/></svg><strong>Agricultura</strong><small>Tradicional e moderna: da enxada à máquina.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="pecuaria" onclick="startCategory('pecuaria')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-animal"/></svg><strong>Pecuária</strong><small>Extensiva no pasto, intensiva no confinamento.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="extrativismo" onclick="startCategory('extrativismo')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-montanha"/></svg><strong>Extrativismo</strong><small>Vegetal, animal e mineral.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<h3 class="grupo">Do Campo à Cidade</h3><button class="category-card" data-cat="agroindustria" onclick="startCategory('agroindustria')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-comida"/></svg><strong>Agroindústria</strong><small>Quando o campo vira produto na indústria.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="industrias" onclick="startCategory('industrias')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-predios"/></svg><strong>Indústrias e construção</strong><small>Extrativas, de transformação, e a construção civil.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button><button class="category-card" data-cat="caminho" onclick="startCategory('caminho')"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-elos"/></svg><strong>O caminho do produto</strong><small>O leite da vaca até o supermercado.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>
+<p id="semResultado" class="sem-resultado" hidden>Nenhuma missão com esse nome.</p>
+</div><div style="margin-top:18px"><button class="secondary" onclick="goHome()">← Voltar</button></div></div></section>
+<section id="quiz" class="screen"><div class="quiz-top"><button class="exit-btn" onclick="sairDaPartida()">Sair da missão</button></div><div class="question-card"><div class="progress-panel"><div class="progress-head"><span id="progressText">Questão 1</span><span id="progressPct">0%</span></div><div class="track"><div id="fill" class="fill"></div></div><div id="trailMap" class="trail-map"></div></div><div id="stage" class="stage"></div><div id="fonte" class="fonte" style="display:none"></div><div id="illustration" class="illustration"></div><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="special" class="special"></div><div id="feedback" class="feedback" role="status" aria-live="polite"></div><div class="controls"><button id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próxima →</button></div></div></section>
+
+<section id="sala" class="screen">
+  <div class="hero">
+    <h2>Jogar com outras pessoas</h2>
+    <p>Um aparelho vira o telão e mostra as perguntas. Os outros entram pelo
+    código e respondem no próprio celular. <b>Este modo precisa de internet.</b></p>
+  </div>
+
+  <div id="salaEscolha" class="sala-escolha">
+    <button type="button" class="primary" onclick="criarSala()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tv"/></svg> Ser o telão</button>
+    <button type="button" class="ghost" onclick="mostrarEntrada()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-celular"/></svg> Entrar numa sala</button>
+    <button type="button" class="ghost" onclick="goHome()">Voltar ao início</button>
+  </div>
+
+  <div id="salaEntrada" class="sala-caixa" hidden>
+    <label class="sala-campo"><span>Código da sala</span>
+      <input id="salaCodigo" type="text" inputmode="numeric" maxlength="4"
+             autocomplete="off" placeholder="0000"></label>
+    <label class="sala-campo"><span>Seu nome</span>
+      <input id="salaNome" type="text" maxlength="12" autocomplete="off"
+             placeholder="Anne"></label>
+    <button type="button" class="primary" onclick="entrarSala()">Entrar</button>
+    <button type="button" class="ghost" onclick="voltarEscolha()">Voltar</button>
+  </div>
+
+  <div id="salaAnfitriao" class="sala-caixa" hidden>
+    <div class="sala-codigo"><span class="rot">Código da sala</span>
+      <strong id="salaCodigoTela">----</strong></div>
+    <p id="salaDica" class="sala-dica">Abra o mesmo endereço no celular de cada
+    jogador, toque em <b>Entrar numa sala</b> e digite o código.<br>
+    <b>Melhor com todos no mesmo Wi-Fi.</b> Em redes diferentes costuma
+    funcionar, mas em dados móveis pode não conectar.<br>
+    O telão não responde às perguntas: é preciso pelo menos um jogador para
+    começar.</p>
+    <div id="salaJogadores" class="sala-jogadores"></div>
+    <label class="sala-campo"><span>Missão</span>
+      <select id="salaMissao"></select></label>
+    <button type="button" id="salaComecar" class="primary" onclick="comecarSala()" disabled>
+      Esperando jogadores...</button>
+    <button type="button" class="ghost" onclick="fecharSala()">Encerrar sala</button>
+  </div>
+
+  <div id="salaJogo" class="sala-caixa" hidden>
+    <div class="sala-topo"><span id="salaProgresso"></span>
+      <span id="salaTempo" class="sala-tempo">20</span></div>
+    <div id="salaPergunta" class="question"></div>
+    <div id="salaOpcoes" class="answers"></div>
+    <div id="salaPlacar" class="sala-placar"></div>
+  </div>
+
+  <div id="salaJogador" class="sala-caixa" hidden>
+    <div id="salaEstado" class="sala-estado">Esperando o telão começar...</div>
+    <div id="salaBotoes" class="answers sala-botoes"></div>
+    <div id="salaMeuPlacar" class="sala-placar"></div>
+  </div>
+</section>
+<section id="end" class="screen"><div class="result"><div class="trophy"></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
+</main></div></div>
+<script>
+
+/* ---------- perfis ---------- */
+/* A lista de perfis é a mesma nos quatro jogos e na página inicial. Cada
+   perfil tem a sua chave de progresso: trocar de aluno não apaga o do outro. */
+const PERFIS_CHAVE = "jogos_perfis_v1";
+const PERFIL_ATUAL = "jogos_perfil_atual";
+const CORES_PERFIL = ["--alt-1", "--alt-2", "--alt-3", "--alt-4"];
+
+function lerPerfis(){
+  try{ return JSON.parse(localStorage.getItem(PERFIS_CHAVE)) || []; }
+  catch(e){ return []; }
+}
+function gravarPerfis(lista){
+  try{ localStorage.setItem(PERFIS_CHAVE, JSON.stringify(lista)); }catch(e){}
+}
+function perfilAtual(){
+  const lista = lerPerfis();
+  if(!lista.length) return null;
+  let id;
+  try{ id = localStorage.getItem(PERFIL_ATUAL); }catch(e){}
+  return lista.find(p => p.id === id) || lista[0];
+}
+function trocarPerfil(id){
+  try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){}
+}
+function criarPerfil(nome){
+  const lista = lerPerfis();
+  const p = {id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+             nome: String(nome).trim().slice(0, 16) || "Aluno",
+             cor: CORES_PERFIL[lista.length % CORES_PERFIL.length],
+             criado: Date.now()};
+  lista.push(p); gravarPerfis(lista); trocarPerfil(p.id);
+  return p;
+}
+function inicialDe(nome){ return (nome || "?").trim().charAt(0).toUpperCase(); }
+
+/* A chave de progresso passa a levar o perfil. Sem perfil escolhido, o jogo
+   usa a chave antiga — é o progresso que já existia neste aparelho. */
+function chaveProgresso(base){
+  const p = perfilAtual();
+  return p ? base + ":" + p.id : base;
+}
+
+/* Primeira vez com perfis: o que já estava salvo vira o perfil inicial, em
+   vez de a criança perder tudo o que fez. */
+function migrarProgresso(base){
+  try{
+    const antigo = localStorage.getItem(base);
+    if(!antigo) return;
+    if(!lerPerfis().length) criarPerfil("Aluno");
+    const nova = chaveProgresso(base);
+    if(!localStorage.getItem(nova)) localStorage.setItem(nova, antigo);
+  }catch(e){}
+}
+const FORMAS=["A","B","C","D"];
+const NOMES_FORMA=FORMAS;
+const SVG_SOM='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>',SVG_MUDO='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-mudo"/></svg>';
+
+const bank={
+atividades:[
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},q:"O que são atividades econômicas?",c:"Toda forma de trabalho que produz e oferece produtos e serviços",d:["O trabalho realizado dentro das fábricas e das oficinas", "A compra e a venda de mercadorias nas lojas da cidade", "O dinheiro que circula entre os bancos e as grandes empresas"],e:"São todo trabalho que atende às necessidades da vida em sociedade."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},q:"Em quantos setores principais as atividades econômicas se organizam?",c:"Três",d:["Dois", "Quatro", "Cinco"],e:"Primário, secundário e terciário."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},q:"As atividades econômicas acontecem:",c:"No campo e na cidade",d:["Nas cidades, onde há indústria", "No campo, onde há terra", "Nos portos e nas fronteiras"],e:"Estão presentes nos dois lugares, em setores diferentes."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Os três setores da economia são independentes: um não usa o que o outro produz.",c:false,e:"Falso: o que é produzido num setor costuma ser usado por outro."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"As atividades econômicas produzem tanto produtos quanto serviços.",c:true,e:"Verdadeiro: produzir, distribuir e oferecer — produtos e serviços."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},q:"Segundo o capítulo, as atividades econômicas devem ser feitas:",c:"Com responsabilidade e sem desperdício",d:["Buscando o maior lucro possível", "Deixando a natureza em segundo plano", "Pelas pessoas das grandes cidades"],e:"Usar os recursos com equilíbrio e evitar o desperdício faz parte do capítulo."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},t:"text",q:"Qual setor reúne o comércio e a prestação de serviços?",valid:["terciario", "terciário", "o terciario", "o terciário", "setor terciario", "setor terciário"],ph:"Digite o setor...",e:"O setor terciário: comércio e serviços."},
+{ic:"ciclo",src:{"t": "folha", "d": "revisão de setembro"},t:"order",q:"Coloque os setores na ordem em que o produto costuma passar.",seq:["primário", "secundário", "terciário"],e:"A matéria-prima sai do primário, é transformada no secundário e vendida no terciário."}],
+primario:[
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},q:"O setor primário reúne atividades ligadas:",c:"Diretamente à natureza, de onde tiram tudo",d:["Ao comércio de lojas", "À transformação em fábricas", "Ao transporte de passageiros"],e:"Agricultura, pecuária, pesca e extrativismo."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},q:"Qual destas NÃO faz parte do setor primário?",c:"Refino de petróleo",d:["Agricultura de subsistência", "Pesca comercial", "Mineração de carvão"],e:"Refinar é transformar: isso é setor secundário."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},q:"Quais são as quatro atividades do setor primário citadas no capítulo?",c:"Agricultura, pecuária, pesca e extrativismo",d:["Comércio, serviços, indústria e transporte", "Agricultura, indústria, comércio e turismo", "Pesca, construção, educação e saúde"],e:"Todas elas tiram algo diretamente da natureza."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},q:"«Um agricultor cultiva milho e feijão em sua propriedade.» Que setor?",c:"Primário",d:["Secundário", "Terciário", "Quaternário"],e:"Cultivar é produzir matéria-prima: setor primário."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},q:"«Um pescador retira peixes do rio para comercialização.» Que setor?",c:"Primário",d:["Secundário", "Terciário", "Quaternário"],e:"Retirar da natureza é setor primário, mesmo que depois seja vendido."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"O setor primário produz as matérias-primas que os outros setores usam.",c:true,e:"Verdadeiro: é dele que sai o que será transformado e vendido."},
+{ic:"planta",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"A mineração de carvão pertence ao setor secundário.",c:false,e:"Falso: extrair carvão do solo é extrativismo mineral, do setor primário."}],
+secundario:[
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},q:"O que o setor secundário faz?",c:"Transforma as matérias-primas em produtos novos",d:["Retira recursos diretamente da natureza", "Vende produtos prontos ao consumidor", "Transporta passageiros pela cidade"],e:"Principalmente por meio das indústrias e da construção."},
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},q:"Além das indústrias, que atividade pertence ao setor secundário?",c:"A construção",d:["O comércio", "O turismo", "A pesca"],e:"Indústria e construção formam o setor secundário."},
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},q:"«Uma fábrica transforma o leite em queijo e iogurte.» Que setor?",c:"Secundário",d:["Primário", "Terciário", "Quaternário"],e:"Transformar matéria-prima é setor secundário."},
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},q:"«Uma indústria utiliza madeira para fabricar móveis.» Que setor?",c:"Secundário",d:["Primário", "Terciário", "Quaternário"],e:"A madeira é matéria-prima; o móvel é o produto novo."},
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},q:"Que fator é associado aos problemas do setor secundário em países em desenvolvimento?",c:"Escassez de mão de obra qualificada",d:["Alta produtividade e tecnologia avançada", "Eficiência na gestão dos recursos naturais", "Redução das desigualdades de renda"],e:"Faltar gente preparada trava a indústria."},
+{ic:"engrenagem",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Toda atividade do setor secundário acontece dentro de uma fábrica.",c:false,e:"Falso: a construção civil também é setor secundário e acontece na obra."}],
+terciario:[
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"O setor terciário reúne:",c:"O comércio e os serviços",d:["A agricultura e a pecuária", "A indústria e a construção", "A pesca e o extrativismo"],e:"É o setor que conecta os outros dois ao consumidor."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"Qual destes profissionais trabalha no setor terciário?",c:"Médico",d:["Agricultor", "Pescador", "Minerador"],e:"Professores, médicos, motoristas e vendedores prestam serviços."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"O que é comércio?",c:"A venda de produtos em lojas, feiras e supermercados",d:["A transformação de matérias-primas dentro das fábricas", "A retirada de recursos naturais do solo e do subsolo", "A construção de prédios, estradas, pontes e moradias"],e:"Lojas, feiras e shoppings são estabelecimentos comerciais."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"O que são serviços?",c:"Atividades feitas para atender necessidades",d:["Produtos vendidos em lojas e supermercados", "Matérias-primas retiradas do campo e do mar", "Máquinas usadas dentro das grandes indústrias"],e:"Educação, saúde e transporte são serviços."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"Qual é o principal setor econômico do Brasil?",c:"Terciário",d:["Primário", "Secundário", "Extrativismo"],e:"O comércio e os serviços são o maior setor da economia brasileira."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"«Um motorista transporta passageiros pela cidade.» Que setor?",c:"Terciário",d:["Primário", "Secundário", "Quaternário"],e:"Transporte é prestação de serviço."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},q:"«Uma professora trabalha ensinando crianças.» Que setor?",c:"Terciário",d:["Primário", "Secundário", "Quaternário"],e:"Educação é serviço, portanto setor terciário."},
+{ic:"sacola",src:{"t": "folha", "d": "revisão de setembro"},t:"match",q:"Ligue cada profissional ao seu setor.",pairs:[["Agricultor", "Primário"], ["Operário de fábrica", "Secundário"], ["Vendedor de loja", "Terciário"], ["Pescador", "Primário"]],e:"O setor depende do que a pessoa faz, não de onde ela mora."}],
+agricultura:[
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},q:"A agricultura tradicional se caracteriza por:",c:"Técnicas simples e trabalho da própria família",d:["Máquinas modernas e grandes áreas", "Produção voltada para a exportação", "Uso intenso de tecnologia e agrotóxicos"],e:"Ferramentas simples, mão de obra da família, produção para o próprio consumo."},
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},q:"A agricultura moderna se caracteriza por:",c:"Máquinas e grandes áreas",d:["Enxada e trabalho manual", "Produção para a própria família", "Ausência de comercialização"],e:"É voltada ao comércio e produz em grande escala."},
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},q:"A agricultura de subsistência produz principalmente para:",c:"O consumo da própria família",d:["A exportação", "As grandes indústrias", "Os supermercados das cidades"],e:"Subsistência é sustentar quem produz."},
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"A agricultura pode ser classificada como tradicional e moderna.",c:true,e:"Verdadeiro: é a divisão que o capítulo apresenta."},
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Na agricultura tradicional predomina o uso de máquinas pesadas.",c:false,e:"Falso: as máquinas são a marca da agricultura moderna."},
+{ic:"trabalho",src:{"t": "folha", "d": "revisão de setembro"},q:"O homem cultiva a terra e cria animais para:",c:"Ter alimento, materiais e recursos",d:["Vender nas cidades grandes", "Exportar para outros países", "Alimentar os outros animais"],e:"O cultivo atende a alimento, matéria-prima e recursos."}],
+pecuaria:[
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},q:"O que é pecuária?",c:"A criação de animais",d:["O cultivo de plantas", "A retirada de minérios", "A venda de alimentos"],e:"Criar animais para alimento e outros produtos."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},q:"A pecuária extensiva acontece:",c:"Em grandes áreas de pastagem, com os animais soltos",d:["Em espaços pequenos e fechados", "Dentro das fábricas", "Dentro das regiões urbanas"],e:"Os animais criam-se soltos, com menos controle."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},q:"A pecuária intensiva se caracteriza por:",c:"Espaços menores e mais controle",d:["Grandes pastos abertos", "Ausência de alimentação planejada", "Criação solta na natureza"],e:"Há confinamento, ração e acompanhamento de perto."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},q:"Na pecuária intensiva os animais recebem:",c:"Alimentação com ração",d:["O capim que encontram no pasto", "Acompanhamento de longe", "Água da chuva acumulada"],e:"A alimentação é controlada, o que acelera a criação."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"A pecuária pode ser dividida em extensiva e intensiva.",c:true,e:"Verdadeiro: é a divisão apresentada no capítulo."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Na pecuária extensiva há mais controle sobre os animais que na intensiva.",c:false,e:"Falso: é o contrário. A intensiva é a de maior controle."},
+{ic:"animal",src:{"t": "folha", "d": "revisão de setembro"},t:"match",q:"Ligue cada tipo de pecuária à sua marca.",pairs:[["Extensiva", "Grandes áreas de pastagem"], ["Intensiva", "Confinamento e ração"]],e:"Espaço grande e pouco controle, ou espaço pequeno e muito controle."}],
+extrativismo:[
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"O que é extrativismo?",c:"Retirar recursos diretamente da natureza, sem cultivá-los",d:["Transformar matérias-primas nas indústrias", "Vender produtos em lojas e supermercados", "Criar animais para transporte"],e:"É retirar da natureza para utilização ou comercialização."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"Quantos tipos de extrativismo existem?",c:"Três",d:["Dois", "Quatro", "Cinco"],e:"Vegetal, animal e mineral."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"O extrativismo vegetal retira recursos de:",c:"Plantas",d:["Animais", "Rochas do subsolo", "Fábricas"],e:"Madeira, látex e castanha vêm do extrativismo vegetal."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"O extrativismo animal inclui:",c:"Pesca, caça e mel",d:["Corte de madeira e látex", "Extração de petróleo bruto", "Cultivo de milho e feijão"],e:"Retira o que vem dos animais, sem criá-los."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"O extrativismo mineral retira recursos:",c:"Do solo e do subsolo",d:["Das copas das árvores", "Do fundo dos rios", "Das plantações"],e:"Minérios, carvão e petróleo saem do solo e do subsolo."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},q:"A extração de petróleo é exemplo de extrativismo:",c:"Mineral",d:["Vegetal", "Animal", "Industrial"],e:"Petróleo sai do subsolo: extrativismo mineral."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"A coleta de castanha na floresta é extrativismo vegetal.",c:true,e:"Verdadeiro: a castanha vem de uma planta."},
+{ic:"montanha",src:{"t": "folha", "d": "revisão de setembro"},t:"match",q:"Ligue cada exemplo ao tipo de extrativismo.",pairs:[["Madeira", "Vegetal"], ["Mel", "Animal"], ["Carvão", "Mineral"], ["Pesca", "Animal"]],e:"Planta, animal ou solo: é a origem que decide."}],
+agroindustria:[
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},q:"O que é agroindústria?",c:"A ligação entre a produção do campo e a indústria",d:["A venda de produtos agrícolas em feiras e mercados", "O cultivo de plantas com máquinas e tecnologia nova", "O transporte de alimentos do campo até as cidades"],e:"Ela acrescenta valor às matérias-primas produzidas no campo."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},q:"A transformação da cana-de-açúcar em açúcar é exemplo da relação entre:",c:"O primário e o secundário",d:["O primário e o terciário", "O secundário e o terciário", "Dois setores primários"],e:"A cana vem do campo; o açúcar sai da indústria."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},q:"Ao transformar a matéria-prima do campo, a agroindústria:",c:"Aumenta o valor do produto e facilita a conservação",d:["Diminui o preço do produto final", "Impede que o produto seja transportado", "Elimina a necessidade do setor primário"],e:"Também facilita a distribuição do produto."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"O leite retirado da vaca e vendido sem transformação já é agroindústria.",c:false,e:"Falso: sem passar pela transformação industrial, não é agroindústria."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"A agroindústria pode usar matérias-primas da agricultura e da pecuária.",c:true,e:"Verdadeiro: as duas alimentam a agroindústria."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Só grandes fábricas podem ser consideradas agroindústrias.",c:false,e:"Falso: pequenas unidades de processamento também são."},
+{ic:"comida",src:{"t": "folha", "d": "revisão de setembro"},q:"A transformação do tomate em molho é exemplo de:",c:"Agroindústria",d:["Extrativismo vegetal", "Pecuária intensiva", "Comércio"],e:"Matéria-prima do campo virando produto na indústria."}],
+industrias:[
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},q:"As indústrias extrativas fazem o quê?",c:"Preparam a matéria-prima",d:["Vendem produtos prontos nas lojas", "Transportam mercadorias entre cidades", "Ensinam profissões aos trabalhadores"],e:"Elas retiram e preparam o que será transformado depois."},
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},q:"As indústrias de transformação fazem o quê?",c:"Transformam matéria-prima em produto",d:["Retiram recursos do solo e do subsolo", "Vendem as mercadorias ao consumidor", "Constroem estradas, pontes e moradias"],e:"É delas que saem os produtos prontos."},
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},q:"As atividades industriais geralmente se instalam:",c:"Em áreas urbanas",d:["Nas áreas de floresta", "No meio das plantações", "Ao longo do litoral"],e:"A indústria é uma atividade típica da cidade."},
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},q:"Qual é a importância da construção civil?",c:"Constrói moradias, prédios e estradas",d:["Produz os alimentos que a cidade consome", "Vende materiais nas lojas e nos depósitos", "Retira minérios do solo e do subsolo"],e:"É ela que ergue a estrutura em que a cidade funciona."},
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Existem dois tipos de indústria: extrativas e de transformação.",c:true,e:"Verdadeiro: é a divisão apresentada no capítulo."},
+{ic:"predios",src:{"t": "folha", "d": "revisão de setembro"},q:"A construção civil pertence a qual setor?",c:"Secundário",d:["Primário", "Terciário", "Quaternário"],e:"Construir é transformar materiais: setor secundário."}],
+caminho:[
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},q:"A criação das vacas e a produção do leite fazem parte do setor:",c:"Primário",d:["Secundário", "Terciário", "Quaternário"],e:"Estão ligadas à produção de matérias-primas."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},q:"A transformação do leite em queijo e iogurte ocorre no setor:",c:"Secundário",d:["Primário", "Terciário", "Quaternário"],e:"Envolve atividade industrial."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},q:"O transporte e a venda do queijo no supermercado pertencem ao setor:",c:"Terciário",d:["Primário", "Secundário", "Quaternário"],e:"Envolvem comércio e prestação de serviços."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},t:"order",q:"Coloque o caminho do leite na ordem.",seq:["A vaca é ordenhada na propriedade rural", "O leite vai para a indústria e vira queijo", "O queijo é transportado até a cidade", "O queijo é vendido no supermercado"],e:"Primário, secundário e depois terciário — duas vezes: transporte e venda."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},t:"match",q:"Ligue cada etapa ao seu setor.",pairs:[["Ordenhar a vaca", "Primário"], ["Fabricar o queijo", "Secundário"], ["Vender no mercado", "Terciário"]],e:"O mesmo produto passa pelos três setores até a nossa mesa."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},t:"tf",q:"Um mesmo produto pode passar pelos três setores da economia.",c:true,e:"Verdadeiro: o leite é o exemplo do capítulo."},
+{ic:"elos",src:{"t": "folha", "d": "revisão de setembro"},t:"text",q:"Em que setor o leite vira queijo?",valid:["secundario", "secundário", "o secundario", "o secundário", "setor secundario", "setor secundário"],ph:"Digite o setor...",e:"Transformar é setor secundário."}]
+};
+const trails={setores:{name:"Os Três Setores",steps:["atividades", "primario", "secundario", "terciario", "all"]},campo:{name:"O Trabalho no Campo",steps:["agricultura", "pecuaria", "extrativismo", "all"]},cidade:{name:"Do Campo à Cidade",steps:["agroindustria", "industrias", "caminho", "all"]}};
+
+/* ---------- identidade estavel de cada questao (para o progresso) ---------- */
+Object.keys(bank).forEach(cat=>bank[cat].forEach((q,i)=>{q.id=cat+i;q.cat=cat}));
+const allItems=Object.values(bank).flat();
+
+let questions=[],index=0,score=0,lives=5,hits=0,answered=0,combo=0,bestCombo=0,
+    locked=false,activeTrail=null,trailStep=0,currentCategory="all",practiceMode=true;
+
+/* ---------- progresso persistente ---------- */
+const STORE_BASE="geografia_progress_v1";
+const STORE=(migrarProgresso("geografia_progress_v1"), chaveProgresso("geografia_progress_v1"));
+function defaultProgress(){return{items:{},best:{score:0,acc:0},trails:{},missions:{},practice:true,mudo:false}}
+
+// Estado de uma missão: nunca jogada, começada, concluída ou dominada.
+function missionStat(cat){return progress.missions[cat]||(progress.missions[cat]={iniciada:false,concluidas:0,melhorAcc:0})}
+function missionInfo(cat){
+  const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
+  const itens = cat==="all" ? allItems : (bank[cat]||[]);
+  const dominadas = itens.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e}).length;
+  const pct = itens.length ? Math.round(dominadas/itens.length*100) : 0;
+  let estado="nova", rotulo="", icone="";
+  if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="";rotulo="Dominada"}
+  else if(m.concluidas){estado="concluida";icone="✓";rotulo="Concluída"}
+  else if(m.iniciada){estado="andamento";icone="▶";rotulo="Em andamento"}
+  return {...m,dominadas,total:itens.length,pct,estado,rotulo,icone};
+}
+let progress=defaultProgress();
+function loadProgress(){
+  try{
+    const raw=localStorage.getItem(STORE); if(!raw) return defaultProgress();
+    const p=JSON.parse(raw),d=defaultProgress();
+    return{items:p.items||d.items,best:p.best||d.best,trails:p.trails||d.trails,
+           missions:p.missions||d.missions,
+           practice:typeof p.practice==="boolean"?p.practice:d.practice,
+           mudo:!!p.mudo};
+  }catch(e){return defaultProgress()}
+}
+function saveProgress(){try{localStorage.setItem(STORE,JSON.stringify(progress))}catch(e){}}
+function stat(id){return progress.items[id]||(progress.items[id]={e:0,h:0})}
+function weakItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.e>t.h})
+                                    .sort((a,b)=>(progress.items[b.id].e-progress.items[b.id].h)-(progress.items[a.id].e-progress.items[a.id].h))}
+function masteredItems(){return allItems.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e})}
+function record(q,ok){if(!q||!q.id)return;const t=stat(q.id);ok?t.h++:t.e++;saveProgress()}
+
+/* ---------- sorteio: uniforme e enviesado para o que o aluno erra ---------- */
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function weight(q){const t=progress.items[q.id];if(!t)return 3;const n=t.e-t.h;if(n>0)return Math.min(12,3+n*3);if(t.h>=2)return 1;return 2}
+function pickWeighted(list,n){
+  const pool=[...list],out=[];n=Math.min(n,pool.length);
+  while(out.length<n&&pool.length){
+    const w=pool.map(weight),tot=w.reduce((a,b)=>a+b,0);
+    let r=Math.random()*tot,i=0;
+    while(i<pool.length-1&&(r-=w[i])>0)i++;
+    out.push(pool.splice(i,1)[0]);
+  }
+  return out;
+}
+
+/* ---------- montagem da partida: sem repetir questao ---------- */
+const TAM_PARTIDA=12, TAM_ETAPA=8;
+function makeQuestions(cat,limite){
+  let src;
+  if(cat==="review"){src=weakItems(); if(!src.length) return [];}
+  else src = cat==="all" ? allItems : bank[cat];
+  const alvo=Math.min(limite||TAM_PARTIDA, src.length);   // nunca pede mais do que existe
+  return pickWeighted(src,alvo).map(x=>{
+    const t=x.t||"choice";
+    if(t!=="choice") return {...x,t};
+    const choices=shuffle([x.c,...x.d]);
+    return {...x,t,choices,answer:choices.indexOf(x.c)};
+  });
+}
+
+/* ---------- telas ---------- */
+function show(id){migalhas(id);document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function _goHome(){renderStats();renderModeToggle();show('start')}
+
+/* ---------- busca de missão ---------- */
+/* Sem acento e sem caixa: a criança digita "relogio" e acha "Que horas são".
+   Filtra por título e descrição, esconde grupo que ficou vazio. */
+function _chave(t){
+  return (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+function filtrarMissoes(){
+  const campo = document.getElementById("buscaMissao");
+  const raiz  = document.getElementById("categories");
+  if(!campo || !raiz) return;
+  const q = _chave(campo.value.trim());
+  let achou = 0;
+  raiz.querySelectorAll(".category-card, .trail-card").forEach(c => {
+    const bate = !q || _chave(c.textContent).includes(q);
+    c.hidden = !bate;
+    if(bate) achou++;
+  });
+  // Um título — de seção ou de grupo — só aparece se sobrou cartão embaixo.
+  raiz.querySelectorAll("h2, h3.grupo").forEach(h => {
+    let vivo = false;
+    for(let n = h.nextElementSibling; n && !_ehTitulo(n); n = n.nextElementSibling){
+      if(_ehCartao(n)){ if(!n.hidden){ vivo = true; break; } continue; }
+      if(n.querySelector && n.querySelector(".category-card:not([hidden]), .trail-card:not([hidden])")){
+        vivo = true; break;
+      }
+    }
+    h.hidden = !vivo;
+  });
+  const vazio = document.getElementById("semResultado");
+  if(vazio) vazio.hidden = achou > 0;
+}
+function _ehTitulo(n){ return n.tagName === "H2" || n.classList.contains("grupo"); }
+function _ehCartao(n){
+  return n.classList.contains("category-card") || n.classList.contains("trail-card");
+}
+
+
+function _openCategories(){renderCards();renderModeToggle();show('categories')}
+function _openLesson(id){show('lesson');document.querySelectorAll('.lesson-part').forEach(x=>x.style.display='none');document.getElementById(id).style.display='block'}
+function sairDaPartida(){if(index>0&&!confirm("Sair da missão? O progresso desta partida será perdido."))return;activeTrail=null;openCategories()}
+
+/* ---------- modo treino x desafio ---------- */
+/* ============================================================
+   SOM E FEEDBACK
+   Tudo em try/catch: o jogo nunca pode quebrar por causa de áudio.
+   ============================================================ */
+
+let audioCtx=null, mudo=false;
+
+function ensureAudio(){
+  if(audioCtx) return audioCtx;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C) return null;
+    audioCtx=new C();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    return audioCtx;
+  }catch(e){ return null; }
+}
+
+// Uma nota. `quando` permite encadear arpejos sem setTimeout.
+function nota(freq,dur=0.12,vol=0.05,tipo="sine",quando=0){
+  if(mudo) return;
+  const ctx=ensureAudio(); if(!ctx) return;
+  try{
+    const t=ctx.currentTime+quando;
+    const osc=ctx.createOscillator(), g=ctx.createGain();
+    osc.type=tipo; osc.frequency.setValueAtTime(freq,t);
+    osc.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    osc.start(t); osc.stop(t+dur+0.02);
+  }catch(e){}
+}
+function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
+  freqs.forEach((f,i)=>nota(f,0.16,vol,tipo,i*passo));
+}
+
+const sfx={
+  toque(){ nota(320,0.05,0.02,"sine"); },
+  acerto(){ arpejo([660,880],0.07,0.045); },
+  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
+  // O combo sobe de tom: quanto maior a sequência, mais alto e mais brilhante.
+  combo(n){
+    const base=520+Math.min(n,8)*45;
+    arpejo([base,base*1.25,base*1.5],0.06,0.05,"triangle");
+  },
+  etapa(){ arpejo([523,659,784],0.09,0.05); },
+  missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
+  recorde(){ arpejo([784,988,1175,1568],0.09,0.06,"triangle"); },
+  fimDeVidas(){ arpejo([440,349,262],0.14,0.05,"triangle"); }
+};
+
+// Aviso flutuante no topo: conquistas, etapas concluídas, marcos de combo.
+function posicionarAviso(p){
+  // Abaixo do painel de progresso, para a trilha — que é o que o aviso está
+  // anunciando — continuar à vista. Fora da partida, abaixo do cabeçalho.
+  const alvo=document.querySelector("#quiz.active .progress-panel")
+          || document.querySelector("header");
+  const y=alvo?alvo.getBoundingClientRect().bottom+12:12;
+  p.style.setProperty("--aviso-topo",Math.round(Math.max(y,12))+"px");
+}
+
+function marcarEtapaFechada(i){
+  const n=document.querySelectorAll("#trailMap .node")[i];
+  if(!n) return;
+  n.classList.add("fechou");
+  setTimeout(()=>n.classList.remove("fechou"),700);
+}
+
+function mostrarConquista(txt,etapa){
+  const p=document.getElementById("conquista");
+  if(!p) return;
+  p.classList.toggle("etapa",!!etapa);
+  if(etapa) p.innerHTML=txt; else p.textContent=txt;
+  posicionarAviso(p);
+  p.classList.remove("show");
+  void p.offsetWidth;              // reinicia a animação se já estava na tela
+  p.classList.add("show");
+  clearTimeout(p._t);
+  p._t=setTimeout(()=>p.classList.remove("show"),etapa?2800:2200);
+}
+
+const MARCOS={3:"Três seguidas",5:"Cinco seguidas",8:"Oito seguidas",12:"Doze seguidas — impressionante"};
+function festeja(n){ if(MARCOS[n]) mostrarConquista(MARCOS[n]); }
+
+function setMudo(v){
+  mudo=!!v;
+  progress.mudo=mudo;
+  saveProgress();
+  const b=document.getElementById("btnSom");
+  if(b){ b.innerHTML=mudo?SVG_MUDO:SVG_SOM; b.setAttribute("aria-label",mudo?"Ativar som":"Desativar som"); }
+}
+function alternarSom(){ setMudo(!mudo); if(!mudo) sfx.toque(); }
+
+/* ---------- feedback visual ---------- */
+
+// Número que sobe e some, ancorado no card da questão.
+function pontosVoando(texto,bom){
+  try{
+    const alvo=document.getElementById("question")||document.body;
+    const el=document.createElement("div");
+    el.className="floater "+(bom?"bom":"ruim");
+    el.textContent=texto;
+    alvo.appendChild(el);
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },1100);
+  }catch(e){}
+}
+
+function pulsarCombo(){
+  const el=document.getElementById("combo");
+  if(!el||!el.parentNode) return;
+  const p=el.parentNode;
+  p.classList.remove("combo-pulse");
+  void p.offsetWidth;              // reinicia a animação
+  p.classList.add("combo-pulse");
+}
+
+function setPracticeMode(on){practiceMode=!!on;progress.practice=practiceMode;saveProgress();renderModeToggle();renderLives()}
+function renderModeToggle(){document.querySelectorAll('.mode-opt').forEach(b=>b.classList.toggle('active',(b.dataset.mode==='treino')===practiceMode))}
+function renderLives(){const e=document.getElementById('lives');if(e)e.textContent=practiceMode?'∞':String(lives)}
+function loseLife(){if(!practiceMode)lives--;renderLives()}
+
+/* ---------- inicio de partida ---------- */
+function reset(){index=0;score=0;lives=5;hits=0;answered=0;combo=0;bestCombo=0;locked=false}
+function _startCategory(cat){
+  activeTrail=null;trailStep=0;currentCategory=cat;
+  questions=makeQuestions(cat);
+  if(!questions.length){alert("Nada para revisar ainda. Jogue uma missão primeiro!");openCategories();return}
+  missionStat(cat).iniciada=true;saveProgress();
+  reset();updateHud();show('quiz');renderQuestion();
+}
+function _startTrail(name){activeTrail=name;trailStep=0;reset();startTrailStep()}
+function startTrailStep(){
+  currentCategory=trails[activeTrail].steps[trailStep];
+  missionStat(currentCategory).iniciada=true;
+  questions=makeQuestions(currentCategory,TAM_ETAPA);
+  index=0;locked=false;updateHud();show('quiz');renderQuestion();
+}
+function updateHud(){document.getElementById('score').textContent=score;renderLives();document.getElementById('combo').textContent=combo;_acenderFoguinho(combo)}
+
+/* ---------- progresso da partida ---------- */
+function updateProgress(){
+  const total=Math.max(questions.length,1),pct=Math.round(index/total*100),t=trails[activeTrail];
+  document.getElementById('progressText').textContent=activeTrail
+    ?`${t.name} • Etapa ${trailStep+1}/${t.steps.length} • Questão ${Math.min(index+1,total)}/${total}`
+    :`Questão ${Math.min(index+1,total)}/${total}`;
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('fill').style.width=pct+'%';
+  const map=document.getElementById('trailMap');
+  if(!activeTrail){map.innerHTML='';return}
+  map.innerHTML=t.steps.map((s,i)=>{
+    const cls=i<trailStep?'done':i===trailStep?'current':'';
+    const line=i<t.steps.length-1?`<div class="line ${i<trailStep?'done':''}"></div>`:'';
+    return `<div class="node ${cls}">${i<trailStep?'✓':i+1}</div>${line}`}).join('');
+  const atual=map.querySelector('.current');
+  if(atual) atual.scrollIntoView({block:'nearest',inline:'center'});
+}
+
+const nomes={all:"Desafio misto",review:"Revisão dos meus erros",atividades:"Atividades econômicas",primario:"Setor primário",secundario:"Setor secundário",terciario:"Setor terciário",agricultura:"Agricultura",pecuaria:"Pecuária",extrativismo:"Extrativismo",agroindustria:"Agroindústria",industrias:"Indústrias e construção",caminho:"O caminho do produto"};
+
+/* ---------- utilidades comuns a todos os formatos ---------- */
+function norm(x){return String(x||"").trim().toLowerCase().replace(/[.!?,;]/g,"")
+  .normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ")}
+
+function zonas(){document.getElementById('answers').innerHTML='';document.getElementById('special').innerHTML=''}
+
+// Ponto unico de pontuacao: todo formato termina aqui.
+function resolve(ok,msg){
+  const q=questions[index];
+  answered++;record(q,ok);
+  if(ok){
+    score+=100;hits++;combo++;bestCombo=Math.max(bestCombo,combo);
+    pontosVoando("+100",true);
+    if(combo>=3){sfx.combo(combo);pulsarCombo();festeja(combo)} else sfx.acerto();
+  }else{
+    loseLife();combo=0;
+    pontosVoando(practiceMode?"−":"−1 vida",false);
+    sfx.erro();
+  }
+  feedback(ok,(ok?'Muito bem! ':'')+(msg||q.e));
+  updateHud();
+}
+
+/* ---------- 1. múltipla escolha ---------- */
+function renderChoice(q){
+  const a=document.getElementById('answers');
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='answer';b.type='button';
+    const marca=document.createElement('span');
+    marca.className='letra';marca.textContent=FORMAS[i%4];
+    const txt=document.createElement('span');txt.textContent=c;
+    b.append(marca,txt);
+    b.setAttribute('aria-label',`Alternativa ${NOMES_FORMA[i%4]}: ${c}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      const buttons=[...document.querySelectorAll('.answer')];
+      b.classList.add(i===q.answer?'correct':'wrong');
+      if(i!==q.answer&&buttons[q.answer])buttons[q.answer].classList.add('correct');
+      resolve(i===q.answer);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 2. verdadeiro ou falso ---------- */
+function renderTF(q){
+  const a=document.getElementById('answers');
+  [['Verdadeiro',true],['Falso',false]].forEach(([label,val],i)=>{
+    const b=document.createElement('button');
+    b.className='answer tf-btn';b.type='button';
+    const mk=document.createElement('span');mk.className='letra';mk.textContent=FORMAS[i%4];
+    const tx=document.createElement('span');tx.textContent=label;b.append(mk,tx);
+    b.setAttribute('aria-label',`Alternativa ${i+1}: ${label}`);
+    b.onclick=()=>{
+      if(locked)return;locked=true;
+      b.classList.add(val===q.c?'correct':'wrong');
+      if(val!==q.c){const cert=[...a.children].find((_,j)=>(j===0)===q.c);if(cert)cert.classList.add('correct')}
+      resolve(val===q.c);
+    };
+    a.appendChild(b);
+  });
+}
+
+/* ---------- 3. rosa dos ventos clicável ---------- */
+const ROSA=['NO','N','NE','O','','L','SO','S','SE'];
+const CARDEAIS=['N','S','L','O'];
+function renderCompass(q){
+  const sp=document.getElementById('special');
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique na direção correta na rosa dos ventos.';
+  const g=document.createElement('div');g.className='rosa';
+  ROSA.forEach(cell=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='rosa-btn'+(cell===''?' centro':CARDEAIS.includes(cell)?' card':'');
+    b.textContent=cell;
+    if(cell===''){b.disabled=true;b.setAttribute('aria-hidden','true')}
+    else{
+      b.setAttribute('aria-label',cell);
+      b.onclick=()=>{
+        if(locked)return;locked=true;
+        const acertou=cell===q.target;
+        b.classList.add(acertou?'correct':'wrong');
+        if(!acertou){const alvo=[...g.children].find(x=>x.textContent===q.target);if(alvo)alvo.classList.add('correct')}
+        resolve(acertou,acertou?undefined:`A direção correta é ${q.target}. ${q.e}`);
+      };
+    }
+    g.appendChild(b);
+  });
+  sp.appendChild(dica);sp.appendChild(g);
+}
+
+/* ---------- 4. associação (colunas) ---------- */
+function renderMatch(q){
+  const sp=document.getElementById('special');
+  let sel=null,feitos=0,erros=0;
+  const dica=document.createElement('div');dica.className='small';
+  dica.textContent='Clique em um item da esquerda e depois no par correspondente da direita.';
+  const wrap=document.createElement('div');wrap.className='match';
+  const esq=document.createElement('div');esq.className='match-col';
+  const dir=document.createElement('div');dir.className='match-col';
+  const criar=(txt,lado,col)=>{
+    const b=document.createElement('button');
+    b.className='match-item';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.classList.contains('done'))return;
+      if(lado==='e'){[...esq.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;return}
+      if(!sel)return;
+      if(q.pairs.some(p=>p[0]===sel.textContent&&p[1]===txt)){
+        sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;feitos++;
+        if(feitos===q.pairs.length){
+          locked=true;
+          resolve(erros===0,erros===0?undefined:`Você completou, mas com ${erros} tentativa${erros>1?'s':''} errada${erros>1?'s':''}. ${q.e}`);
+        }
+      }else{
+        erros++;b.classList.add('wrong');sel.classList.remove('sel');sel=null;
+        setTimeout(()=>b.classList.remove('wrong'),450);
+      }
+    };
+    col.appendChild(b);
+  };
+  shuffle(q.pairs.map(p=>p[0])).forEach(t=>criar(t,'e',esq));
+  shuffle(q.pairs.map(p=>p[1])).forEach(t=>criar(t,'d',dir));
+  wrap.appendChild(esq);wrap.appendChild(dir);
+  sp.appendChild(dica);sp.appendChild(wrap);
+}
+
+/* ---------- 5. ordenar a sequência ---------- */
+function renderOrder(q){
+  const sp=document.getElementById('special');
+  const escolha=[];
+  const slot=document.createElement('div');slot.className='order-slot';
+  const banco=document.createElement('div');banco.className='order-bank';
+  const redesenhar=()=>{
+    slot.innerHTML='';
+    if(!escolha.length){const v=document.createElement('span');v.className='small';v.textContent='Clique nos itens na ordem correta...';slot.appendChild(v);return}
+    escolha.forEach((txt,i)=>{const c=document.createElement('span');c.className='order-chip';c.textContent=`${i+1}. ${txt}`;slot.appendChild(c)});
+  };
+  shuffle(q.seq).forEach(txt=>{
+    const b=document.createElement('button');
+    b.className='order-btn';b.type='button';b.textContent=txt;
+    b.onclick=()=>{
+      if(locked||b.disabled)return;
+      b.disabled=true;escolha.push(txt);redesenhar();
+      if(escolha.length===q.seq.length){
+        locked=true;
+        const ok=escolha.every((x,i)=>x===q.seq[i]);
+        resolve(ok,ok?undefined:`A ordem correta é: ${q.seq.join(' → ')}. ${q.e}`);
+      }
+    };
+    banco.appendChild(b);
+  });
+  const limpar=document.createElement('button');
+  limpar.className='secondary';limpar.type='button';limpar.textContent='Limpar';
+  limpar.onclick=()=>{if(locked)return;escolha.length=0;[...banco.children].forEach(b=>b.disabled=false);redesenhar()};
+  redesenhar();
+  sp.appendChild(slot);sp.appendChild(banco);sp.appendChild(limpar);
+}
+
+/* ---------- 6. digitar a resposta ---------- */
+function renderText(q){
+  const sp=document.getElementById('special');
+  const row=document.createElement('div');row.className='text-row';
+  const inp=document.createElement('input');
+  inp.id='resp';inp.type='text';inp.placeholder=q.ph||'Digite sua resposta...';
+  inp.autocomplete='off';inp.setAttribute('autocapitalize','none');
+  const b=document.createElement('button');
+  b.className='primary';b.type='button';b.textContent='Confirmar';
+  const confirmar=()=>{
+    if(locked)return;locked=true;
+    const ok=q.valid.some(v=>norm(v)===norm(inp.value));
+    resolve(ok,ok?undefined:`A resposta é: ${q.valid[0]}. ${q.e}`);
+  };
+  b.onclick=confirmar;
+  inp.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();confirmar()}};
+  row.appendChild(inp);row.appendChild(b);sp.appendChild(row);
+  setTimeout(()=>{try{inp.focus()}catch(e){}},50);
+}
+
+const RENDER={choice:renderChoice,tf:renderTF,compass:renderCompass,match:renderMatch,order:renderOrder,text:renderText};
+
+
+/* ---------- rótulo de procedência ---------- */
+/* A fonte vem normalizada do conteúdo: {t:"livro"|"folha", d:"p.49"}. Antes
+   cada jogo escrevia à sua maneira e cada motor tinha o seu formatador. */
+function rotuloFonte(src){
+  if(!src) return "";
+  if(typeof src === "string") return src;          // conteúdo antigo, se houver
+  if(src.t === "livro") return "Livro, " + src.d;
+  if(src.t === "folha") return "Folha da escola" + (src.d ? ", " + src.d : "");
+  return src.d || "";
+}
+
+function renderQuestion(){
+  if(lives<=0){endGame();return}
+  if(index>=questions.length){
+    if(activeTrail&&trailStep<trails[activeTrail].steps.length-1){
+      const fechada=trailStep;
+      trailStep++;sfx.etapa();
+      const tr=trails[activeTrail];
+      mostrarConquista(
+        `<span class="aviso-t"><svg class=\"ic-txt\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#i-check\"/></svg> Etapa ${fechada+1} de ${tr.steps.length} concluída</span>`+
+        `<span class="aviso-s">Agora: ${nomes[tr.steps[trailStep]]||''}</span>`, true);
+      startTrailStep();marcarEtapaFechada(fechada);return;
+    }
+    endGame();return;
+  }
+  updateProgress();
+  const q=questions[index];
+  document.getElementById('stage').textContent=nomes[currentCategory]||currentCategory;
+  // Questões tiradas do capítulo do livro ganham um selo, para o aluno reconhecer o que já caiu.
+  const fonte=document.getElementById('fonte');
+  if(fonte){
+    // As questões vêm de duas fontes: o livro (p.NN) e a folha de revisão da escola.
+    fonte.innerHTML = rotuloFonte(q.src);
+    fonte.style.display = q.src ? 'inline-block' : 'none';
+  }
+  const il=document.getElementById('illustration');
+  il.innerHTML = q.ic
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+q.ic+'"/></svg>' : '';
+  il.style.display = q.ic ? '' : 'none';
+  document.getElementById('question').textContent=q.q;
+  const f=document.getElementById('feedback');f.className='feedback';f.textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  zonas();
+  locked=false;
+  (RENDER[q.t]||renderChoice)(q);
+}
+
+function feedback(ok,msg){
+  const f=document.getElementById('feedback');
+  f.className='feedback show '+(ok?'good':'bad');
+  f.innerHTML='<span class="rotulo">'+(ok?'Certo':'Ainda não')+'</span>';f.append(msg);
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+function nextQuestion(){index++;renderQuestion()}
+
+/* ---------- atalhos de teclado ---------- */
+document.addEventListener('keydown',ev=>{
+  if(!document.getElementById('quiz').classList.contains('active'))return;
+  if(ev.target&&ev.target.tagName==='INPUT')return;   // o campo de texto trata o Enter sozinho
+  const btn=document.getElementById('nextBtn');
+  if(ev.key==='Enter'||ev.key===' '){
+    if(btn.style.display!=='none'){ev.preventDefault();nextQuestion()}
+    return;
+  }
+  const n=parseInt(ev.key,10);
+  if(n>=1&&n<=4&&!locked){
+    const b=document.querySelectorAll('.answer')[n-1];
+    if(b){ev.preventDefault();b.click()}
+  }
+});
+
+/* ---------- fim de partida ---------- */
+function endGame(){
+  registrarPartida(hits, answered, score);
+  setTimeout(() => comemorar(hits, answered), 260);
+  if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
+  // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
+  if(answered&&(lives>0||practiceMode)){
+    const m=missionStat(currentCategory);
+    m.iniciada=true;m.concluidas++;
+    const a=Math.round(hits/answered*100);
+    if(a>m.melhorAcc)m.melhorAcc=a;
+  }
+  // denominador = questoes efetivamente respondidas (vale para trilhas de varias etapas
+  // e para partidas encerradas antes do fim)
+  const acc=answered?Math.round(hits/answered*100):0;
+  if(!practiceMode&&answered){
+    if(score>progress.best.score)progress.best.score=score;
+    if(acc>progress.best.acc)progress.best.acc=acc;
+  }
+  saveProgress();
+  if(lives<=0&&!practiceMode) sfx.fimDeVidas();
+  else if(!practiceMode&&score>0&&score>=progress.best.score) sfx.recorde();
+  else sfx.missao();
+  show('end');
+  document.getElementById('finalScore').textContent=score;
+  document.getElementById('finalHits').textContent=hits+'/'+answered;
+  document.getElementById('accuracy').textContent=acc+'%';
+  document.getElementById('bestCombo').textContent=bestCombo;
+  const rank=lives<=0&&!practiceMode?'Aprendiz de Geografia':acc>=90?'Mestre do Campo e da Cidade':acc>=70?'Geógrafo':'Aprendiz de Geografia';
+  document.getElementById('rank').textContent=rank;
+  document.getElementById('endText').textContent=
+    lives<=0&&!practiceMode?'As energias acabaram! Revise a lição e tente de novo.':
+    acc>=90?'Excelente domínio dos conteúdos!':
+    acc>=70?'Muito bom! Você já compreende bem o céu e a orientação.':
+    'Continue explorando e tente novamente para consolidar o conteúdo.';
+  renderMissed();
+}
+
+/* ---------- paineis de progresso ---------- */
+function renderStats(){
+  const el=document.getElementById('startStats');if(!el)return;
+  const feitas=Object.keys(trails).filter(k=>progress.trails[k]).length;
+  el.innerHTML=`<span class="chip">Recorde <b>${progress.best.score}</b></span>`+
+    `<span class="chip">Dominadas <b>${masteredItems().length}/${allItems.length}</b></span>`+
+    `<span class="chip">A revisar <b>${weakItems().length}</b></span>`+
+    `<span class="chip">Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+}
+function renderCards(){
+  // Cada card mostra em que pé está a missão e quanto do conteúdo já foi dominado.
+  document.querySelectorAll('[data-cat]').forEach(card=>{
+    const info=missionInfo(card.dataset.cat);
+    card.classList.remove('nova','andamento','concluida','dominada');
+    card.classList.add(info.estado);
+    const selo=card.querySelector('.selo');
+    if(selo){
+      selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:'';
+      selo.style.display=info.rotulo?'inline-block':'none';
+    }
+    const barra=card.querySelector('.mini-bar span');
+    if(barra) barra.style.width=info.pct+'%';
+    const txt=card.querySelector('.mini-txt');
+    if(txt) txt.textContent=info.total?`${info.dominadas}/${info.total} dominadas`+(info.melhorAcc?` • melhor ${info.melhorAcc}%`:''):'';
+  });
+  const n=weakItems().length,c=document.getElementById('reviewCard');
+  if(c){
+    const t=c.querySelector('.review-count');
+    if(t)t.textContent=n?`${n} questã${n>1?'ões':'o'} esperando revisão`:'Nada pendente — jogue uma missão primeiro';
+    c.classList.toggle('empty',n===0);
+  }
+  document.querySelectorAll('[data-trail]').forEach(b=>{
+    const d=!!progress.trails[b.dataset.trail];
+    b.classList.toggle('done',d);
+    const s=b.querySelector('.trail-done');if(s)s.style.display=d?'inline-block':'none';
+  });
+}
+function renderMissed(){
+  const box=document.getElementById('missed');if(!box)return;
+  const w=weakItems().slice(0,5);
+  if(!w.length){box.style.display='none';box.innerHTML='';return}
+  box.style.display='block';
+  box.innerHTML=`<div class="missed-title">Conteúdos que ainda pedem atenção</div>`+
+    `<ul class="missed-list">${w.map(q=>`<li>${q.ic ? '<svg class="ic-txt" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+q.ic+'"/></svg>' : ''}<span>${q.q}</span></li>`).join('')}</ul>`+
+    `<button type="button" class="gold" onclick="startCategory('review')">Revisar só esses</button>`;
+}
+function resetProgress(){
+  if(!confirm("Apagar todo o progresso salvo?"))return;
+  progress=defaultProgress();progress.practice=practiceMode;saveProgress();
+  renderStats();renderCards();
+}
+
+/* ---------- init ---------- */
+progress=loadProgress();practiceMode=progress.practice;mudo=!!progress.mudo;setMudo(mudo);
+renderModeToggle();renderLives();renderStats();
+
+
+/* ---------- rotas: a tela mora na URL ---------- */
+/* As funções públicas só escrevem o endereço; quem muda de tela é o
+   roteador. É o que faz o botão voltar do celular recuar uma tela em vez
+   de sair do jogo, e recarregar cair de volta onde estava. */
+const _PRIMEIRA_LICAO = "lesson1";
+const ROTAS = {
+  inicio:  function(){ _goHome(); },
+  licao:   function(a){ _openLesson(a || _PRIMEIRA_LICAO); },
+  missoes: function(){ _openCategories(); },
+  missao:  function(a){ a ? _startCategory(a) : _openCategories(); },
+  trilha:  function(a){ a ? _startTrail(a) : _openCategories(); }
+};
+
+function irPara(r){
+  // Mesmo endereço não dispara hashchange: refaz a rota (rejogar a missão).
+  if(location.hash === "#" + r) rota(); else location.hash = r;
+}
+function rota(){
+  const bruto = (location.hash || "#inicio").slice(1);
+  const barra = bruto.indexOf("/");
+  const tipo  = barra < 0 ? bruto : bruto.slice(0, barra);
+  const arg   = barra < 0 ? ""    : decodeURIComponent(bruto.slice(barra + 1));
+  (ROTAS[tipo] || ROTAS.inicio)(arg);
+}
+function goHome(){ irPara("inicio"); }
+function openCategories(){ irPara("missoes"); }
+function openLesson(id){ irPara("licao/" + id); }
+function startCategory(c){ irPara("missao/" + encodeURIComponent(c)); }
+function startTrail(t){ irPara("trilha/" + encodeURIComponent(t)); }
+addEventListener("hashchange", rota);
+
+/* ---------- trilha de migalhas ---------- */
+const _AQUI = {lesson:"Lição", categories:"Missões", quiz:null, end:"Resultado",
+              sala:"Sala em rede"};
+function migalhas(id){
+  const el = document.getElementById("migalhaAqui");
+  if(!el) return;
+  let nome = _AQUI[id];
+  if(id === "quiz"){
+    // Na partida, a última migalha é a missão ou a trilha em curso.
+    nome = activeTrail ? (trails[activeTrail] && trails[activeTrail].name)
+                       : _nomeDaMissao(currentCategory);
+    el.innerHTML = ' <span class="migalha-sep" aria-hidden="true">/</span> '
+                 + '<a href="#missoes">Missões</a>'
+                 + ' <span class="migalha-sep" aria-hidden="true">/</span> '
+                 + '<b>' + (nome || "Missão") + '</b>';
+    return;
+  }
+  el.innerHTML = nome
+    ? ' <span class="migalha-sep" aria-hidden="true">/</span> <b>' + nome + '</b>'
+    : "";
+}
+
+function _nomeDaMissao(c){ return (typeof nomes !== "undefined" && nomes[c]) || c; }
+
+if(document.readyState !== 'loading') rota();
+else addEventListener('DOMContentLoaded', rota);
+
+/* ---------- tema: sistema, claro, escuro ---------- */
+const TEMAS = ["sistema", "claro", "escuro"];
+const _ICONE_TEMA = {sistema: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-tema"/></svg>', claro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-sol"/></svg>', escuro: '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-lua"/></svg>'};
+const _ROTULO_TEMA = {sistema: "Tema: seguir o sistema",
+                      claro: "Tema: claro", escuro: "Tema: escuro"};
+function temaAtual(){
+  try{ return localStorage.getItem("tema") || "sistema"; }catch(e){ return "sistema"; }
+}
+function aplicarTema(t){
+  if(t === "sistema") delete document.documentElement.dataset.tema;
+  else document.documentElement.dataset.tema = t;
+  try{ localStorage.setItem("tema", t); }catch(e){}
+  const b = document.getElementById("btnTema");
+  if(b){ b.innerHTML = _ICONE_TEMA[t]; b.setAttribute("aria-label", _ROTULO_TEMA[t]); }
+}
+function alternarTema(){
+  aplicarTema(TEMAS[(TEMAS.indexOf(temaAtual()) + 1) % TEMAS.length]);
+  if(typeof sfx !== "undefined") sfx.toque();
+}
+
+/* ---------- tela cheia ---------- */
+/* O iPhone não expõe requestFullscreen em elementos: lá o botão nem aparece,
+   em vez de aparecer e não fazer nada. */
+function _temTelaCheia(){
+  return !!(document.documentElement.requestFullscreen);
+}
+function alternarTela(){
+  try{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }catch(e){}
+}
+function _pintarBotaoTela(){
+  const b = document.getElementById("btnTela");
+  if(!b) return;
+  const cheia = !!document.fullscreenElement;
+  b.innerHTML = cheia ? '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-encolher"/></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-expandir"/></svg>';
+  b.setAttribute("aria-label", cheia ? "Sair da tela cheia" : "Tela cheia");
+}
+
+/* ---------- estímulos ---------- */
+/* O foguinho troca o número da pílula de sequência por chama a partir de 3:
+   a criança vê a sequência crescer sem precisar ler. */
+function _acenderFoguinho(n){
+  const p = document.getElementById("combo");
+  if(!p) return;
+  const caixa = p.closest(".pill");
+  if(caixa) caixa.classList.toggle("em-chamas", n >= 3);
+  // `hidden` é propriedade de HTMLElement, não de SVGElement: atribuir a
+  // `.hidden` num <svg> cria uma propriedade solta e deixa o atributo no DOM.
+  const fogo = document.getElementById("foguinho");
+  if(fogo) fogo.toggleAttribute("hidden", n < 3);
+}
+
+function _ruido(dur, corte, vol){
+  /* Palmas são ruído filtrado, não nota: um estalo curto e seco. */
+  if(!audioCtx || mudo) return;
+  const n = Math.floor(audioCtx.sampleRate * dur);
+  const buf = audioCtx.createBuffer(1, n, audioCtx.sampleRate);
+  const dados = buf.getChannelData(0);
+  for(let i = 0; i < n; i++) dados[i] = (Math.random() * 2 - 1) * (1 - i / n);
+  const src = audioCtx.createBufferSource(); src.buffer = buf;
+  const f = audioCtx.createBiquadFilter(); f.type = "bandpass";
+  f.frequency.value = corte; f.Q.value = 0.8;
+  const g = audioCtx.createGain(); g.gain.value = vol;
+  src.connect(f).connect(g).connect(audioCtx.destination);
+  src.start();
+}
+function palmas(){
+  /* Doze palmas com intervalo irregular: regular demais vira metrônomo. */
+  try{
+    if(typeof ensureAudio === "function") ensureAudio();
+    for(let i = 0; i < 12; i++){
+      const atraso = i * 95 + Math.random() * 55;
+      setTimeout(() => _ruido(0.07, 1400 + Math.random() * 900, 0.16), atraso);
+    }
+  }catch(e){}
+}
+
+const _CORES_FESTA = ["--materia-solida", "--alt-1", "--alt-2", "--alt-3", "--alt-4", "--certo"];
+function festa(quantidade){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const caixa = document.getElementById("festaBox");
+  if(!caixa) return;
+  const n = quantidade || 44;
+  for(let i = 0; i < n; i++){
+    const p = document.createElement("i");
+    p.className = "confete";
+    p.style.left = (Math.random() * 100) + "vw";
+    p.style.background = "var(" + _CORES_FESTA[i % _CORES_FESTA.length] + ")";
+    p.style.animationDelay = (Math.random() * 0.45) + "s";
+    p.style.animationDuration = (1.5 + Math.random() * 1.1) + "s";
+    p.style.setProperty("--giro", (Math.random() * 720 - 360) + "deg");
+    p.style.setProperty("--desvio", (Math.random() * 120 - 60) + "px");
+    caixa.appendChild(p);
+    setTimeout(() => p.remove(), 3000);
+  }
+}
+
+/* Chamado no fim da partida: festa e palmas só quando houve o que comemorar. */
+function comemorar(acertos, total){
+  const pct = total ? acertos / total : 0;
+  if(pct >= 0.9){ festa(70); palmas(); }
+  else if(pct >= 0.6){ festa(36); }
+}
+
+addEventListener("DOMContentLoaded", () => {
+  aplicarTema(temaAtual());
+  const b = document.getElementById("btnTela");
+  if(b && _temTelaCheia()){ b.hidden = false; _pintarBotaoTela(); }
+  addEventListener("fullscreenchange", _pintarBotaoTela);
+});
+
+/* ---------- sala em rede ---------- */
+/* WebRTC direto entre os aparelhos: nenhum servidor nosso no meio. O único
+   intermediário é o broker público do PeerJS, e só para eles se acharem. */
+const SALA_PREFIXO = "jogosdeestudo-geo-";
+const SALA_PRAZO = 20000;       // por pergunta
+const SALA_MAX = 8;
+const SALA_LIB = "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js";
+
+let _peer = null, _souTelao = false, _conexoes = [], _conAnfitriao = null;
+let _jogadores = new Map();     // id -> {nome, pontos, respondeu, con}
+let _perguntas = [], _iPergunta = -1, _tInicio = 0, _relogio = null;
+
+function _tela(id){
+  ["salaEscolha","salaEntrada","salaAnfitriao","salaJogo","salaJogador"]
+    .forEach(x => { const e = document.getElementById(x); if(e) e.hidden = x !== id; });
+}
+function mostrarEntrada(){ _tela("salaEntrada"); }
+function voltarEscolha(){ _tela("salaEscolha"); }
+
+function _carregarPeer(){
+  if(window.Peer) return Promise.resolve();
+  return new Promise((ok, falha) => {
+    const s = document.createElement("script");
+    s.src = SALA_LIB;
+    s.onload = ok;
+    s.onerror = () => falha(new Error("sem rede"));
+    document.head.appendChild(s);
+  });
+}
+
+/* O aviso flutuante hoje tem um nome só nos quatro motores. O `typeof` fica
+   porque referenciar identificador não declarado lança ReferenceError — foi
+   assim que a entrada na sala travou em "Conectando..." quando os nomes ainda
+   divergiam. */
+function _flutuante(txt){
+  if(typeof mostrarConquista === "function") mostrarConquista(txt);
+}
+function _avisoSala(txt){
+  const e = document.getElementById("salaEstado");
+  if(e) e.textContent = txt;
+  _flutuante(txt);
+}
+
+/* ---------- lado do telão ---------- */
+async function criarSala(){
+  _tela("salaAnfitriao");
+  document.getElementById("salaCodigoTela").textContent = "....";
+  try{ await _carregarPeer(); }
+  catch(e){
+    document.getElementById("salaCodigoTela").textContent = "!";
+    document.getElementById("salaDica").innerHTML =
+      "<b>Sem internet.</b> Este modo precisa de conexão; o resto do jogo funciona offline.";
+    return;
+  }
+  _souTelao = true;
+  _montarMissoes();
+  _pintarJogadores();   // sem isto a área fica vazia e ninguém entende a espera
+  _tentarCodigo(0);
+}
+
+function _tentarCodigo(tentativa){
+  if(tentativa > 5){
+    document.getElementById("salaDica").textContent =
+      "Não consegui abrir uma sala agora. Tente de novo em alguns segundos.";
+    return;
+  }
+  const codigo = String(Math.floor(1000 + Math.random() * 9000));
+  if(_peer) try{ _peer.destroy(); }catch(e){}
+  _peer = new Peer(SALA_PREFIXO + codigo);
+  _peer.on("open", () => {
+    document.getElementById("salaCodigoTela").textContent = codigo;
+    location.hash = "sala/" + codigo;
+  });
+  // Código já em uso (ou por outra família): sorteia outro.
+  _peer.on("error", err => {
+    if(err && err.type === "unavailable-id") _tentarCodigo(tentativa + 1);
+  });
+  _peer.on("connection", con => {
+    con.on("data", d => _doJogador(con, d));
+    con.on("close", () => { _jogadores.delete(con.peer); _pintarJogadores(); });
+  });
+}
+
+function _doJogador(con, d){
+  if(d.t === "entrar"){
+    if(_iPergunta >= 0){ con.send({t: "recusado", motivo: "A partida já começou."}); return; }
+    if(_jogadores.size >= SALA_MAX){ con.send({t: "recusado", motivo: "A sala está cheia."}); return; }
+    _jogadores.set(con.peer, {nome: (d.nome || "Jogador").slice(0, 12), pontos: 0, con});
+    con.send({t: "aceito"});
+    _pintarJogadores();
+    if(typeof sfx !== "undefined") sfx.toque();
+  }
+  if(d.t === "resposta"){
+    const j = _jogadores.get(con.peer);
+    if(!j || j.respondeu || d.i !== _iPergunta) return;
+    j.respondeu = true;
+    const q = _perguntas[_iPergunta];
+    const certo = d.escolha === q.answer;
+    // Fórmula do Kahoot: acertar vale 1000, e a demora come até metade.
+    j.ganho = certo ? Math.max(1, Math.round(1000 * (1 - (d.ms / SALA_PRAZO) / 2))) : 0;
+    j.pontos += j.ganho;
+    con.send({t: "recebido", certo});
+    if([..._jogadores.values()].every(x => x.respondeu)) _fecharPergunta();
+  }
+}
+
+function _pintarJogadores(){
+  const c = document.getElementById("salaJogadores");
+  c.innerHTML = [..._jogadores.values()]
+    .map(j => '<span class="sala-jogador">' + _escapar(j.nome) + "</span>").join("")
+    || '<span class="sala-dica">Ninguém entrou ainda.</span>';
+  // Um botão desativado sem motivo é um beco: o rótulo passa a dizer por que.
+  const b = document.getElementById("salaComecar");
+  b.disabled = _jogadores.size === 0;
+  b.textContent = _jogadores.size === 0 ? "Esperando jogadores..."
+    : "Começar com " + _jogadores.size + (_jogadores.size === 1 ? " jogador" : " jogadores");
+}
+function _escapar(t){
+  return String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+}
+function _enviarTodos(m){ _jogadores.forEach(j => { try{ j.con.send(m); }catch(e){} }); }
+
+function _montarMissoes(){
+  const sel = document.getElementById("salaMissao");
+  sel.innerHTML = "";
+  _catalogoMissoes().forEach(([id, nome]) => {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = nome; sel.appendChild(o);
+  });
+}
+
+function comecarSala(){
+  const cat = document.getElementById("salaMissao").value;
+  _perguntas = _perguntasSala(cat).filter(q => q.choices && q.answer != null).slice(0, 10);
+  if(!_perguntas.length){ _avisoSala("Essa missão não tem perguntas de escolha."); return; }
+  _iPergunta = -1;
+  _tela("salaJogo");
+  _proximaPergunta();
+}
+
+function _proximaPergunta(){
+  _iPergunta++;
+  if(_iPergunta >= _perguntas.length) return _fimSala();
+  const q = _perguntas[_iPergunta];
+  _jogadores.forEach(j => { j.respondeu = false; j.ganho = 0; });
+  document.getElementById("salaProgresso").textContent =
+    "Pergunta " + (_iPergunta + 1) + " de " + _perguntas.length;
+  document.getElementById("salaPergunta").textContent = q.q;
+  document.getElementById("salaOpcoes").innerHTML = q.choices.map((c, i) =>
+    '<div class="answer"><span class="letra">' + FORMAS[i % 4] + "</span><span>"
+    + _escapar(c) + "</span></div>").join("");
+  document.getElementById("salaPlacar").innerHTML = "";
+  _enviarTodos({t: "pergunta", i: _iPergunta, n: q.choices.length, prazo: SALA_PRAZO});
+  _tInicio = Date.now();
+  _contar();
+}
+
+function _contar(){
+  clearInterval(_relogio);
+  const el = document.getElementById("salaTempo");
+  const tique = () => {
+    const resta = Math.max(0, SALA_PRAZO - (Date.now() - _tInicio));
+    el.textContent = Math.ceil(resta / 1000);
+    el.classList.toggle("urgente", resta <= 5000);
+    if(resta <= 0) _fecharPergunta();
+  };
+  tique();
+  _relogio = setInterval(tique, 250);
+}
+
+function _fecharPergunta(){
+  clearInterval(_relogio);
+  const q = _perguntas[_iPergunta];
+  document.getElementById("salaOpcoes").querySelectorAll(".answer")
+    .forEach((e, i) => e.classList.add(i === q.answer ? "correct" : "wrong"));
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaPlacar").innerHTML = ordem.map((j, i) =>
+    '<div class="sala-linha' + (j.ganho ? "" : " errou") + '"><span>' + (i + 1)
+    + "</span><b>" + _escapar(j.nome) + "</b><span class=\"ganho\">+" + (j.ganho || 0)
+    + "</span><span>" + j.pontos + "</span></div>").join("");
+  _enviarTodos({t: "resultado", certa: q.answer,
+                placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos, ganho: j.ganho || 0}))});
+  if(typeof sfx !== "undefined") sfx.etapa();
+  setTimeout(_proximaPergunta, 4000);
+}
+
+function _fimSala(){
+  const ordem = [..._jogadores.values()].sort((a, b) => b.pontos - a.pontos);
+  document.getElementById("salaProgresso").textContent = "Fim!";
+  document.getElementById("salaTempo").textContent = "";
+  document.getElementById("salaPergunta").textContent =
+    ordem.length ? ordem[0].nome + " venceu!" : "Fim da partida";
+  document.getElementById("salaOpcoes").innerHTML = "";
+  _enviarTodos({t: "fim", placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos}))});
+  if(typeof festa === "function"){ festa(80); palmas(); }
+}
+
+function fecharSala(){
+  clearInterval(_relogio);
+  _enviarTodos({t: "encerrada"});
+  try{ _peer && _peer.destroy(); }catch(e){}
+  _peer = null; _souTelao = false; _jogadores.clear(); _iPergunta = -1;
+  goHome();
+}
+
+/* ---------- lado do jogador ---------- */
+async function entrarSala(){
+  const codigo = (document.getElementById("salaCodigo").value || "").replace(/\D/g, "");
+  const nome = (document.getElementById("salaNome").value || "").trim() || "Jogador";
+  if(codigo.length !== 4){ _flutuante("O código tem 4 números."); return; }
+  _tela("salaJogador");
+  _avisoSala("Conectando...");
+  try{ await _carregarPeer(); }
+  catch(e){ _avisoSala("Sem internet. Este modo precisa de conexão."); return; }
+  // Se o peer não abrir, não há nem conexão para dar erro: sem este prazo a
+  // tela fica em "Conectando..." para sempre.
+  let peerPronto = false;
+  setTimeout(() => { if(!peerPronto) _avisoSala("Não consegui falar com o servidor de encontro. Verifique a internet."); }, 12000);
+  _peer = new Peer();
+  _peer.on("open", () => {
+    peerPronto = true;
+    _conAnfitriao = _peer.connect(SALA_PREFIXO + codigo);
+    let abriu = false;
+    _conAnfitriao.on("open", () => { abriu = true; _conAnfitriao.send({t: "entrar", nome}); });
+    _conAnfitriao.on("data", d => _doTelao(d));
+    _conAnfitriao.on("close", () => _avisoSala("O telão encerrou a sala."));
+    // O telão respondeu mas o canal não abriu: é a rede no meio. Acontece
+    // quando os dois lados estão atrás de NAT restritivo — dados móveis, por
+    // exemplo. Sem um servidor de relé não há o que fazer daqui, então o
+    // aviso diz o que resolve na prática.
+    setTimeout(() => {
+      if(!abriu) _avisoSala("Não consegui conectar ao telão. "
+        + "Ponha os dois aparelhos no mesmo Wi-Fi e tente de novo.");
+    }, 12000);
+  });
+  _peer.on("error", e => _avisoSala(
+    e && e.type === "peer-unavailable" ? "Não achei essa sala. Confira o código."
+                                       : "Falha de conexão. Tente de novo."));
+}
+
+function _doTelao(d){
+  const estado = document.getElementById("salaEstado");
+  const botoes = document.getElementById("salaBotoes");
+  const placar = document.getElementById("salaMeuPlacar");
+  if(d.t === "aceito"){ _avisoSala("Você entrou! Esperando começar..."); }
+  if(d.t === "recusado"){ _avisoSala(d.motivo); }
+  if(d.t === "pergunta"){
+    placar.innerHTML = "";
+    estado.textContent = "Responda!";
+    botoes.innerHTML = "";
+    const t0 = Date.now();
+    for(let i = 0; i < d.n; i++){
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "answer";
+      b.innerHTML = '<span class="letra">' + FORMAS[i % 4] + "</span>";
+      b.setAttribute("aria-label", "Alternativa " + FORMAS[i % 4]);
+      b.onclick = () => {
+        botoes.querySelectorAll(".answer").forEach(x => { x.disabled = true; });
+        b.classList.add("escolhida");
+        estado.textContent = "Resposta enviada!";
+        _conAnfitriao.send({t: "resposta", i: d.i, escolha: i, ms: Date.now() - t0});
+        if(typeof sfx !== "undefined") sfx.toque();
+      };
+      botoes.appendChild(b);
+    }
+  }
+  if(d.t === "recebido"){
+    estado.textContent = d.certo ? "Acertou!" : "Dessa vez não.";
+    if(typeof sfx !== "undefined") d.certo ? sfx.acerto() : sfx.erro();
+  }
+  if(d.t === "resultado" || d.t === "fim"){
+    botoes.innerHTML = "";
+    if(d.t === "fim"){
+      estado.textContent = d.placar.length ? d.placar[0].nome + " venceu!" : "Fim";
+      if(typeof festa === "function") festa(50);
+    }
+    placar.innerHTML = d.placar.map((j, i) =>
+      '<div class="sala-linha"><span>' + (i + 1) + "</span><b>" + _escapar(j.nome)
+      + '</b><span class="ganho">' + (j.ganho ? "+" + j.ganho : "") + "</span><span>"
+      + j.pontos + "</span></div>").join("");
+  }
+  if(d.t === "encerrada"){ _avisoSala("O telão encerrou a sala."); }
+}
+
+/* ---------- entrada pela rota ---------- */
+function abrirSala(codigo){
+  show("sala");
+  _tela(_souTelao ? "salaAnfitriao" : "salaEscolha");
+  if(codigo && !_souTelao){
+    mostrarEntrada();
+    document.getElementById("salaCodigo").value = codigo;
+  }
+}
+ROTAS.sala = abrirSala;
+
+function _catalogoMissoes(){
+  return Object.keys(nomes).filter(c => c !== "review").map(c => [c, nomes[c]]);
+}
+function _perguntasSala(cat){ return makeQuestions(cat, 10); }
+
+/* ---------- seletor de perfil no cabeçalho ---------- */
+function pintarPerfil(){
+  const b = document.getElementById("btnPerfil");
+  if(!b) return;
+  const p = perfilAtual();
+  b.textContent = p ? inicialDe(p.nome) : "?";
+  b.style.background = p ? "var(" + p.cor + ")" : "";
+  b.setAttribute("aria-label", p ? "Perfil: " + p.nome + ". Trocar de aluno"
+                                 : "Escolher quem está jogando");
+  b.title = p ? p.nome : "Escolher aluno";
+}
+function abrirPerfis(){ location.href = "index.html#perfis"; }
+addEventListener("DOMContentLoaded", pintarPerfil);
+
+/* ---------- histórico de partidas ---------- */
+/* Uma linha por partida terminada. Campos curtos: isto cresce sem parar e
+   divide os 5 MB do localStorage com o progresso. */
+const HIST_CHAVE = "jogos_historico_v1";
+const HIST_MAX = 400;
+
+function registrarPartida(acertos, total, pontos){
+  if(!total) return;                       // saiu antes de responder: não conta
+  try{
+    const p = perfilAtual();
+    const k = HIST_CHAVE + (p ? ":" + p.id : "");
+    const lista = JSON.parse(localStorage.getItem(k) || "[]");
+    lista.push({q: Date.now(), j: "geo", m: currentCategory || "all",
+                t: activeTrail || null, a: acertos, n: total, p: pontos || 0});
+    while(lista.length > HIST_MAX) lista.shift();
+    localStorage.setItem(k, JSON.stringify(lista));
+  }catch(e){}
+}
+</script></body></html>

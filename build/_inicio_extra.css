@@ -95,3 +95,4 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 
 .cartao-resumo.mat .grande{color:var(--matematica)}
 .cartao-resumo.gram .grande{color:var(--gramatica)}
+.cartao-resumo.geo .grande{color:var(--geografia)}
