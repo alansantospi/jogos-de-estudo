@@ -11,6 +11,7 @@
   --ingles:oklch(0.55 0.20 265); --ciencias:oklch(0.525 0.15 195);
   --matematica:oklch(0.52 0.22 298);
   --historia:oklch(0.575 0.18 40); --arte:oklch(0.56 0.22 330);
+  --gramatica:oklch(0.55 0.11 82);
   --display:'Fredoka',ui-rounded,system-ui,sans-serif;
   --corpo:'Nunito',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   --s-2:0.5rem; --s-3:0.75rem; --s-4:1rem; --s-5:1.5rem; --s-6:2rem;
@@ -25,6 +26,7 @@
     --ingles:oklch(0.72 0.17 265); --ciencias:oklch(0.75 0.13 195);
     --matematica:oklch(0.74 0.16 298);
     --historia:oklch(0.74 0.15 40); --arte:oklch(0.72 0.19 330);
+    --gramatica:oklch(0.78 0.13 80);
   }
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -63,6 +65,7 @@ a.jogo:focus-visible{outline:3px solid var(--cor);outline-offset:3px}
 li.ingles a{--cor:var(--ingles)} li.ciencias a{--cor:var(--ciencias)}
 li.historia a{--cor:var(--historia)} li.arte a{--cor:var(--arte)}
 li.matematica a{--cor:var(--matematica)}
+li.gramatica a{--cor:var(--gramatica)}
 footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
   border:2px solid var(--risco);border-radius:var(--r-g);
   color:var(--texto-2);font-size:0.9375rem;max-width:56ch}

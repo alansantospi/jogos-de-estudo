@@ -13,11 +13,12 @@ sh build/rebuild.sh          # valida, monta e confere que nada se perdeu
 | arquivo | questões | derivadas |
 |---|---:|---:|
 | `ciencias-4ano.json` | 187 | 20 |
+| `gramatica-4ano.json` | 116 | 114 |
 | `historia-4ano.json` | 92 | 67 |
 | `artes-4ano.json` | 34 | 30 |
 | `ingles-4ano.json` | 186 | 45 |
 | `matematica-4ano.json` | 91 | 75 |
-| **total** | **590** | **237** |
+| **total** | **706** | **351** |
 
 O inglês guarda também `verbos` (49), de onde os geradores por regra fabricam
 questão na hora. Essas geradas não estão aqui — são código, e só viram dado
@@ -75,7 +76,7 @@ salva os tipos de memória e cruzada, cujo miolo ainda é próprio daquele motor
 
 Decide o que pode ser publicado com o produto. Questão marcada `derivada` veio
 do livro didático ou da folha da escola — serve para a Anne estudar, não para
-acompanhar um produto à venda. Hoje são **237 de 590**. Ver `PLANO.md`, §2.1.
+acompanhar um produto à venda. Hoje são **351 de 706**. Ver `PLANO.md`, §2.1.
 
 ## O que o validador cobra
 
@@ -91,15 +92,30 @@ enunciado entreguem a resposta.
 
 Foi o que a Matemática fez, e não exigiu passo de build novo:
 
+Foi o que a Matemática e a Gramática fizeram, e não exigiu passo de build novo:
+
 1. escrever `conteudo/<materia>-<ano>.json`;
 2. registrar o jogo na tabela `JOGOS` de `build/montar.py` — cor, título,
    chave de progresso, prefixo da sala, patentes;
 3. criar `jogo/<id>/` com `hero.html`, `licao.html` e `cartoes.html` (os
    cartões dá para gerar do próprio conteúdo);
-4. acrescentar a matéria em `build/_inicio.js`, `build/_inicio.html` e
-   `build/missoes.json`, para a página inicial conhecê-la.
+4. acrescentar a matéria em `build/_inicio.js`, `build/_inicio.html`,
+   `build/_inicio_tokens.css`, `build/inicio.py` e `build/missoes.json`.
 
-**Cuidado com a cor.** Ela precisa ficar longe do verde de "certo" e do
-vermelho de "errado", ou a faixa da matéria vira um sinal falso. Na Matemática
-o primeiro verde escolhido ficou a 0,052 do verde de acerto — o par mais
-próximo de toda a paleta.
+Os medidores, o round trip e a suíte de testes leem a tabela `JOGOS`, então o
+passo 2 já os liga. **Era assim que um jogo novo passava sem ser medido**: a
+lista de jogos estava copiada à mão em quatro arquivos, e a Gramática entrou
+sem viés medido, sem round trip e sem teste até alguém reparar.
+
+**Cuidado com a cor.** Duas armadilhas, as duas já pisadas:
+
+*Significado.* A cor precisa ficar longe do verde de "certo" e do vermelho de
+"errado", ou a faixa da matéria vira sinal falso. Na Matemática o primeiro
+verde escolhido ficou a 0,052 do verde de acerto — o par mais próximo de toda
+a paleta. O par mais apertado que o app aceita hoje é 0,120.
+
+*Gamut.* Ouro e âmbar escuros e saturados **não existem em sRGB**: o canal
+azul fica negativo. Ao procurar a cor da Gramática, o teste de gamut olhava o
+valor já clampeado, que sai exatamente 0,0, e por isso descartava toda a faixa
+dourada como se fosse impossível — quando o que faltava era baixar o croma.
+Teste o RGB **linear, antes do clamp**.

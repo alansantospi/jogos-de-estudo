@@ -62,5 +62,23 @@
   "malha": "Trajetos na malha",
   "all": "Desafio misto",
   "review": "Revisão dos meus erros"
+ },
+ "gram": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "pessoais": "Pronomes pessoais",
+  "tratamento": "Pronomes de tratamento",
+  "possessivos": "Pronomes possessivos",
+  "demonstrativos": "Pronomes demonstrativos",
+  "indefinidos": "Pronomes indefinidos",
+  "interrogativos": "Pronomes interrogativos",
+  "verbo": "O que é verbo",
+  "modos": "Modos verbais",
+  "tempos": "Tempos verbais",
+  "conjugacao": "As três conjugações",
+  "nominais": "Formas nominais",
+  "preposicao": "O que é preposição",
+  "relacoes": "Relações de sentido",
+  "contracao": "Contração e combinação"
  }
 }

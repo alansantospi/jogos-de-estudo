@@ -38,6 +38,14 @@ JOGOS = {
         sala="jogosdeestudo-mat-",
         patente="lives<=0&&!practiceMode?'Aprendiz de Geometria':acc>=90?'Mestre de Régua e Compasso'"
                 ":acc>=70?'Geômetra':'Aprendiz de Geometria'"),
+    "gramatica.html": dict(
+        id="gramatica", conteudo="gramatica-4ano", slug="gram",
+        cor="oklch(0.55 0.11 82)", titulo="Oficina das Palavras",
+        chave="gramatica_progress_v1", materia="Gramática",
+        subtitulo="Gramática — pronomes, verbo e preposição",
+        sala="jogosdeestudo-gram-",
+        patente="lives<=0&&!practiceMode?'Aprendiz de Palavras':acc>=90?'Mestre da Oficina'"
+                ":acc>=70?'Gramático':'Aprendiz de Palavras'"),
     "artes.html": dict(
         id="artes", conteudo="artes-4ano", slug="arte",
         cor="oklch(0.56 0.22 330)", titulo="Ateliê",

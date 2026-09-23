@@ -20,8 +20,11 @@ CHROME = next((c for c in [
     "/usr/bin/google-chrome", "/usr/bin/chromium",
 ] if os.path.exists(c)), None)
 
-JOGOS = ["exploradores-do-ceu.html", "historia.html", "artes.html",
-         "time-travel-english.html", "matematica.html"]
+# Da tabela do montador, mais o inglês, que tem motor próprio. Lista fixa aqui
+# significa jogo novo entrando sem que a suíte o toque.
+sys.path.insert(0, os.path.join(RAIZ, "build"))
+import montar
+JOGOS = sorted(montar.JOGOS) + ["time-travel-english.html"]
 
 # Cada caso diz em que página roda: os quatro jogos, ou só o índice.
 ALVOS = {

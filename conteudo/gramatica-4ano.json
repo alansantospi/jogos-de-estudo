@@ -1,0 +1,2138 @@
+{
+ "id": "gramatica-4ano",
+ "materia": "Gramática",
+ "titulo": "Oficina das Palavras",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "pessoais",
+   "nome": "Pronomes pessoais"
+  },
+  {
+   "id": "tratamento",
+   "nome": "Pronomes de tratamento"
+  },
+  {
+   "id": "possessivos",
+   "nome": "Pronomes possessivos"
+  },
+  {
+   "id": "demonstrativos",
+   "nome": "Pronomes demonstrativos"
+  },
+  {
+   "id": "indefinidos",
+   "nome": "Pronomes indefinidos"
+  },
+  {
+   "id": "interrogativos",
+   "nome": "Pronomes interrogativos"
+  },
+  {
+   "id": "verbo",
+   "nome": "O que é verbo"
+  },
+  {
+   "id": "modos",
+   "nome": "Modos verbais"
+  },
+  {
+   "id": "tempos",
+   "nome": "Tempos verbais"
+  },
+  {
+   "id": "conjugacao",
+   "nome": "As três conjugações"
+  },
+  {
+   "id": "nominais",
+   "nome": "Formas nominais"
+  },
+  {
+   "id": "preposicao",
+   "nome": "O que é preposição"
+  },
+  {
+   "id": "relacoes",
+   "nome": "Relações de sentido"
+  },
+  {
+   "id": "contracao",
+   "nome": "Contração e combinação"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "pessoa",
+   "nome": "Pessoa e Posse",
+   "etapas": [
+    "pessoais",
+    "tratamento",
+    "possessivos",
+    "all"
+   ]
+  },
+  {
+   "id": "apontar",
+   "nome": "Apontar e Perguntar",
+   "etapas": [
+    "demonstrativos",
+    "indefinidos",
+    "interrogativos",
+    "all"
+   ]
+  },
+  {
+   "id": "acao",
+   "nome": "O Verbo",
+   "etapas": [
+    "verbo",
+    "modos",
+    "tempos",
+    "conjugacao",
+    "nominais",
+    "all"
+   ]
+  },
+  {
+   "id": "ligacao",
+   "nome": "Palavras que Ligam",
+   "etapas": [
+    "preposicao",
+    "relacoes",
+    "contracao",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "O que os pronomes pessoais indicam na oração?",
+   "certa": "O sujeito ou o complemento",
+   "erradas": [
+    "Apenas a posse de um objeto",
+    "O lugar onde a cena acontece",
+    "A qualidade do substantivo"
+   ],
+   "explicacao": "Pronome pessoal marca quem pratica ou quem recebe a ação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Qual destes é pronome pessoal do caso reto?",
+   "certa": "Nós",
+   "erradas": [
+    "Conosco",
+    "Nos",
+    "Nosso"
+   ],
+   "explicacao": "Nós é caso reto. Nos e conosco são oblíquos; nosso é possessivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Qual destes é pronome pessoal do caso oblíquo?",
+   "certa": "Mim",
+   "erradas": [
+    "Eu",
+    "Meu",
+    "Minha"
+   ],
+   "explicacao": "Mim é oblíquo. Eu é reto e meu/minha são possessivos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Em «Papai ficou feliz comigo», a palavra destacada é:",
+   "certa": "Oblíquo de 1ª pessoa do singular",
+   "erradas": [
+    "Reto de 1ª pessoa do singular",
+    "Possessivo de 1ª pessoa",
+    "Demonstrativo de 1ª pessoa"
+   ],
+   "explicacao": "Comigo é a forma oblíqua de eu quando vem depois de com.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Substituindo «Joana e Sandra» por um pronome, a frase fica:",
+   "certa": "Elas assistiram ao filme",
+   "erradas": [
+    "Elas assistiu ao filme",
+    "Eles assistiram ao filme",
+    "Nós assistimos ao filme"
+   ],
+   "explicacao": "Duas mulheres: elas, 3ª pessoa do plural. O verbo acompanha no plural.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "«Eu e Patrícia viajamos» pode ser trocado por:",
+   "certa": "Nós viajamos",
+   "erradas": [
+    "Eles viajaram",
+    "Elas viajaram",
+    "Vós viajais"
+   ],
+   "explicacao": "Eu mais outra pessoa formam nós, 1ª pessoa do plural.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Em «O menino enxugou a lágrima», trocando o destaque por pronome oblíquo:",
+   "certa": "O menino enxugou-a",
+   "erradas": [
+    "O menino enxugou-lhe",
+    "O menino enxugou ela",
+    "O menino enxugou-se"
+   ],
+   "explicacao": "A lágrima é objeto direto, então entra a forma a: enxugou-a.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Tu e vós são pronomes pessoais do caso reto.",
+   "certa": true,
+   "explicacao": "Verdadeiro: tu é 2ª do singular e vós é 2ª do plural, ambos do caso reto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Os pronomes «o, a, lhe, se, si» são do caso reto.",
+   "certa": false,
+   "explicacao": "Falso: são todos do caso oblíquo da 3ª pessoa.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Qual pronome pessoal do caso reto corresponde à 1ª pessoa do plural?",
+   "aceitas": [
+    "nós",
+    "nos"
+   ],
+   "exemplo": "Digite o pronome...",
+   "explicacao": "Nós é a 1ª pessoa do plural do caso reto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Coloque os pronomes do caso reto na ordem das pessoas verbais.",
+   "sequencia": [
+    "eu",
+    "tu",
+    "ele",
+    "nós",
+    "vós",
+    "eles"
+   ],
+   "explicacao": "A ordem é 1ª, 2ª e 3ª do singular, depois as três do plural.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "pessoais",
+   "icone": "pessoa",
+   "enunciado": "Ligue cada pronome reto à sua forma oblíqua.",
+   "pares": [
+    [
+     "Eu",
+     "Mim"
+    ],
+    [
+     "Tu",
+     "Ti"
+    ],
+    [
+     "Ele",
+     "Lhe"
+    ],
+    [
+     "Nós",
+     "Conosco"
+    ]
+   ],
+   "explicacao": "Cada pessoa verbal tem sua forma oblíqua correspondente.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.182-189"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Qual é o único pronome de tratamento usado em situações informais?",
+   "certa": "Você",
+   "erradas": [
+    "Vossa Senhoria",
+    "Vossa Excelência",
+    "Senhor"
+   ],
+   "explicacao": "Todos os outros são formais. Você é a exceção da regra.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Vossa Majestade é o tratamento usado para:",
+   "certa": "Reis e rainhas",
+   "erradas": [
+    "Papas",
+    "Cardeais",
+    "Reitores"
+   ],
+   "explicacao": "Reis e rainhas: Vossa Majestade, abreviado VM.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Que tratamento se usa para o Papa?",
+   "certa": "Vossa Santidade",
+   "erradas": [
+    "Vossa Eminência",
+    "Vossa Reverendíssima",
+    "Vossa Excelência"
+   ],
+   "explicacao": "Vossa Santidade (V.S.) é do Papa. Vossa Eminência é de cardeais.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Vossa Excelência é empregado para:",
+   "certa": "Presidente, senadores e deputados",
+   "erradas": [
+    "Príncipes e duquesas",
+    "Reitores de universidade",
+    "Sacerdotes em geral"
+   ],
+   "explicacao": "Vossa Excelência serve a pessoas de alta autoridade política.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Vossa Magnificência é o tratamento de:",
+   "certa": "Reitores de universidade",
+   "erradas": [
+    "Juízes",
+    "Embaixadores",
+    "Bispos"
+   ],
+   "explicacao": "Vossa Magnificência (V.Mag.ª) é reservado aos reitores.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Pronomes de tratamento são termos respeitosos usados em situações formais.",
+   "certa": true,
+   "explicacao": "Verdadeiro. A exceção é você, que é informal.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "A abreviação de Vossa Alteza no singular é V.A.",
+   "certa": true,
+   "explicacao": "Verdadeiro: V.A. no singular e V.V.A.A. no plural, usado para príncipes e duquesas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "tratamento",
+   "icone": "coroa",
+   "enunciado": "Ligue cada tratamento a quem ele se destina.",
+   "pares": [
+    [
+     "Vossa Majestade",
+     "Reis e rainhas"
+    ],
+    [
+     "Vossa Santidade",
+     "O Papa"
+    ],
+    [
+     "Vossa Magnificência",
+     "Reitores"
+    ],
+    [
+     "Vossa Eminência",
+     "Cardeais"
+    ]
+   ],
+   "explicacao": "Cada autoridade tem sua forma própria de tratamento.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "O que os pronomes possessivos transmitem?",
+   "certa": "A ideia de posse",
+   "erradas": [
+    "A posição no espaço",
+    "Uma quantidade vaga",
+    "Uma pergunta indireta"
+   ],
+   "explicacao": "Possessivo indica de quem é: meu, teu, seu, nosso, vosso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Qual é o possessivo da 1ª pessoa do plural?",
+   "certa": "Nosso",
+   "erradas": [
+    "Vosso",
+    "Seu",
+    "Meu"
+   ],
+   "explicacao": "Nós usa nosso, nossa, nossos, nossas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Em «Meus amigos e minhas amigas chegaram», há quantos possessivos?",
+   "certa": "Dois",
+   "erradas": [
+    "Um",
+    "Três",
+    "Nenhum"
+   ],
+   "explicacao": "Meus e minhas. Os dois concordam com o substantivo que acompanham.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Em «Nossas brincadeiras são as nossas alegrias», o pronome nossas indica:",
+   "certa": "Posse",
+   "erradas": [
+    "Dúvida",
+    "Lugar",
+    "Pergunta"
+   ],
+   "explicacao": "Nossas mostra a quem as brincadeiras e as alegrias pertencem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Qual frase usa corretamente um possessivo de 2ª pessoa do singular?",
+   "certa": "Teu caderno está aqui",
+   "erradas": [
+    "Meu caderno está aqui",
+    "Nosso caderno está aqui",
+    "Vosso caderno está aqui"
+   ],
+   "explicacao": "Tu combina com teu, tua, teus, tuas.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "vf",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "O possessivo concorda em gênero e número com o objeto possuído.",
+   "certa": true,
+   "explicacao": "Verdadeiro: minha bola, meus livros — muda conforme o que é possuído.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Seu e sua servem tanto para a 3ª pessoa do singular quanto do plural.",
+   "certa": true,
+   "explicacao": "Verdadeiro: ele, ela, eles e elas usam todos seu, sua, seus, suas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "possessivos",
+   "icone": "mao",
+   "enunciado": "Complete com o possessivo de 1ª pessoa do plural: «Esta é a ___ escola.»",
+   "aceitas": [
+    "nossa"
+   ],
+   "exemplo": "Digite o pronome...",
+   "explicacao": "Nós usa nossa no feminino singular.",
+   "origem": "propria"
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "Para que servem os pronomes demonstrativos?",
+   "certa": "Indicar a posição de um elemento",
+   "erradas": [
+    "Indicar posse de um objeto",
+    "Formular perguntas diretas",
+    "Substituir o verbo da oração"
+   ],
+   "explicacao": "Eles situam algo no discurso, no tempo ou no espaço.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "Qual grupo se usa quando o objeto está com quem fala?",
+   "certa": "Este, esta, isto",
+   "erradas": [
+    "Esse, essa, isso",
+    "Aquele, aquela, aquilo",
+    "Meu, minha, meus"
+   ],
+   "explicacao": "Primeira pessoa: este. «Isto não é meu» — está comigo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "O objeto está com a pessoa com quem se fala. Usa-se:",
+   "certa": "Esse",
+   "erradas": [
+    "Este",
+    "Aquele",
+    "Aquilo"
+   ],
+   "explicacao": "Segunda pessoa: esse, essa, isso. «Isso não se faz.»",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "«Aquilo é muito bonito» indica que o objeto está:",
+   "certa": "Longe dos dois",
+   "erradas": [
+    "Com quem fala",
+    "Com quem ouve",
+    "Dentro da mão de quem fala"
+   ],
+   "explicacao": "Terceira pessoa: nem com quem fala nem com quem ouve.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "«Ricardo, é seu ___ caderno aí perto de sua carteira?» completa-se com:",
+   "certa": "Esse",
+   "erradas": [
+    "Este",
+    "Aquele",
+    "Aquilo"
+   ],
+   "explicacao": "O caderno está perto de Ricardo, com quem se fala: esse.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "«___ livro que está com você?» — a forma correta é:",
+   "certa": "Esse",
+   "erradas": [
+    "Este",
+    "Aquele",
+    "Isto"
+   ],
+   "explicacao": "Está com você, a pessoa com quem se fala: esse livro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "«___ documento aqui é a maior prova da inocência!» completa-se com:",
+   "certa": "Este",
+   "erradas": [
+    "Esse",
+    "Aquele",
+    "Aquilo"
+   ],
+   "explicacao": "A palavra aqui mostra que está com quem fala: este.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "Isto, isso e aquilo são formas invariáveis dos demonstrativos.",
+   "certa": true,
+   "explicacao": "Verdadeiro: não têm masculino, feminino nem plural.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "«Este» é usado quando o objeto está longe de quem fala e de quem ouve.",
+   "certa": false,
+   "explicacao": "Falso: longe dos dois é aquele. Este é o que está com quem fala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "demonstrativos",
+   "icone": "seta-diagonal",
+   "enunciado": "Ligue cada demonstrativo à posição que ele marca.",
+   "pares": [
+    [
+     "Este",
+     "Com quem fala"
+    ],
+    [
+     "Esse",
+     "Com quem ouve"
+    ],
+    [
+     "Aquele",
+     "Longe dos dois"
+    ]
+   ],
+   "explicacao": "A escolha depende de onde está o objeto em relação às pessoas do discurso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Os pronomes indefinidos substituem o substantivo de que maneira?",
+   "certa": "De maneira vaga",
+   "erradas": [
+    "De maneira exata",
+    "Em ordem numérica",
+    "Sempre no plural"
+   ],
+   "explicacao": "Vaga ou imprecisa: algum, nenhum, todo, vários.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Qual destes é pronome indefinido invariável?",
+   "certa": "Ninguém",
+   "erradas": [
+    "Muitos",
+    "Vários",
+    "Certas"
+   ],
+   "explicacao": "Ninguém não muda. Muitos, vários e certas variam.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Em «Ninguém quer discutir a questão», a palavra destacada é:",
+   "certa": "Indefinido",
+   "erradas": [
+    "Pessoal",
+    "Possessivo",
+    "Demonstrativo"
+   ],
+   "explicacao": "Ninguém não diz quem: é indefinido invariável.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Em «Vários atletas já chegaram», o pronome vários é:",
+   "certa": "Indefinido variável",
+   "erradas": [
+    "Indefinido invariável",
+    "Interrogativo variável",
+    "Demonstrativo"
+   ],
+   "explicacao": "Vários muda no feminino e no plural: vária, vários, várias.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Em «Há poucos erros na redação», o pronome indefinido é:",
+   "certa": "Poucos",
+   "erradas": [
+    "Há",
+    "Erros",
+    "Na"
+   ],
+   "explicacao": "Poucos indica quantidade imprecisa: é pronome indefinido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Tudo, nada e algo são pronomes indefinidos invariáveis.",
+   "certa": true,
+   "explicacao": "Verdadeiro: não flexionam em gênero nem em número.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "indefinidos",
+   "icone": "nuvem",
+   "enunciado": "Os pronomes indefinidos são empregados na 3ª pessoa do discurso.",
+   "certa": true,
+   "explicacao": "Verdadeiro. O próprio nome já diz que não definem de quem se fala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Os pronomes interrogativos servem para:",
+   "certa": "Formular perguntas",
+   "erradas": [
+    "Indicar posse",
+    "Marcar posição no espaço",
+    "Substituir o verbo"
+   ],
+   "explicacao": "Perguntas diretas e indiretas: quem, que, qual, quanto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Qual destes é interrogativo invariável?",
+   "certa": "Quem",
+   "erradas": [
+    "Qual",
+    "Quantos",
+    "Quanta"
+   ],
+   "explicacao": "Quem e que não variam. Qual e quanto variam.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Em «Qual é a atriz principal da peça?», o pronome qual é:",
+   "certa": "Interrogativo",
+   "erradas": [
+    "Indefinido",
+    "Demonstrativo",
+    "Possessivo"
+   ],
+   "explicacao": "Ele abre uma pergunta direta: é interrogativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Em «Quantos ainda não votaram?», o pronome quantos é:",
+   "certa": "Interrogativo variável",
+   "erradas": [
+    "Interrogativo invariável",
+    "Indefinido invariável",
+    "Demonstrativo"
+   ],
+   "explicacao": "Quanto varia: quanto, quanta, quantos, quantas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Pronomes interrogativos só aparecem em perguntas diretas.",
+   "certa": false,
+   "explicacao": "Falso: aparecem também nas indiretas, como em «Não sei quem chegou».",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.190-201"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "interrogativos",
+   "icone": "pergunta",
+   "enunciado": "Complete a pergunta: «___ entende esse livro?» (invariável, refere-se a pessoa)",
+   "aceitas": [
+    "quem"
+   ],
+   "exemplo": "Digite o pronome...",
+   "explicacao": "Quem é interrogativo invariável e pergunta por pessoa.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "O verbo é a palavra que indica:",
+   "certa": "Ação, estado ou fenômeno",
+   "erradas": [
+    "Apenas ação",
+    "Apenas qualidade",
+    "Apenas quantidade"
+   ],
+   "explicacao": "Ação, estado ou fenômeno meteorológico — as três possibilidades.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202-208"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Em «Nevou no Sul do Brasil», o verbo indica:",
+   "certa": "Fenômeno da natureza",
+   "erradas": [
+    "Ação",
+    "Estado",
+    "Posse"
+   ],
+   "explicacao": "Nevar é fenômeno meteorológico.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Em «Clarita está muito feliz!», o verbo indica:",
+   "certa": "Estado",
+   "erradas": [
+    "Ação",
+    "Fenômeno",
+    "Lugar"
+   ],
+   "explicacao": "Estar mostra como alguém se encontra: é estado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Em «O feirante vendeu todas as verduras», o verbo indica:",
+   "certa": "Ação",
+   "erradas": [
+    "Estado",
+    "Fenômeno",
+    "Dúvida"
+   ],
+   "explicacao": "Vender é algo que se faz: ação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Quais são as flexões do verbo?",
+   "certa": "Modo, tempo, número e pessoa",
+   "erradas": [
+    "Só tempo e pessoa",
+    "Gênero e número",
+    "Grau e gênero"
+   ],
+   "explicacao": "O verbo flexiona em modo, tempo, número e pessoa.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202-208"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Em «Quero dormir até mais tarde», há dois verbos.",
+   "certa": true,
+   "explicacao": "Verdadeiro: querer e dormir, este no infinitivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "verbo",
+   "icone": "movimento",
+   "enunciado": "Verbos se flexionam em gênero, como os substantivos.",
+   "certa": false,
+   "explicacao": "Falso: o verbo flexiona em número e pessoa, não em gênero.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.202-208"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "O modo verbal indica:",
+   "certa": "A atitude do falante",
+   "erradas": [
+    "O tempo da ação",
+    "O número de pessoas",
+    "A conjugação do verbo"
+   ],
+   "explicacao": "Modo mostra como o falante encara o que diz.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "Quantos são os modos verbais?",
+   "certa": "Três",
+   "erradas": [
+    "Dois",
+    "Quatro",
+    "Seis"
+   ],
+   "explicacao": "Indicativo, subjuntivo e imperativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "O modo indicativo é usado quando o falante:",
+   "certa": "Tem certeza",
+   "erradas": [
+    "Está em dúvida",
+    "Dá uma ordem",
+    "Faz um pedido"
+   ],
+   "explicacao": "No indicativo o fato é ou será uma realidade.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "«Pode ser que eu estude hoje» está em que modo?",
+   "certa": "Subjuntivo",
+   "erradas": [
+    "Indicativo",
+    "Imperativo",
+    "Infinitivo"
+   ],
+   "explicacao": "Há dúvida, possibilidade: é subjuntivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "«Não sejas tão indisciplinado!» está em que modo?",
+   "certa": "Imperativo",
+   "erradas": [
+    "Indicativo",
+    "Subjuntivo",
+    "Particípio"
+   ],
+   "explicacao": "É uma ordem ou conselho: imperativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "«Se eu fosse você, estudaria» está em que modo?",
+   "certa": "Subjuntivo",
+   "erradas": [
+    "Indicativo",
+    "Imperativo",
+    "Gerúndio"
+   ],
+   "explicacao": "O fato é incerto, uma hipótese: subjuntivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "«Estudei muito para a prova» está em que modo?",
+   "certa": "Indicativo",
+   "erradas": [
+    "Subjuntivo",
+    "Imperativo",
+    "Nominal"
+   ],
+   "explicacao": "É um fato certo, que aconteceu: indicativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "«Devolvam tudo, nós lhes suplicamos» está no modo imperativo.",
+   "certa": true,
+   "explicacao": "Verdadeiro: devolvam é uma ordem, portanto imperativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "modos",
+   "icone": "fala",
+   "enunciado": "Ligue cada modo à atitude que ele expressa.",
+   "pares": [
+    [
+     "Indicativo",
+     "Certeza"
+    ],
+    [
+     "Subjuntivo",
+     "Dúvida"
+    ],
+    [
+     "Imperativo",
+     "Ordem"
+    ]
+   ],
+   "explicacao": "Certeza, dúvida e ordem — uma atitude para cada modo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "Quais são os três tempos verbais?",
+   "certa": "Presente, pretérito e futuro",
+   "erradas": [
+    "Passado, agora e depois",
+    "Início, meio e fim",
+    "Curto, médio e longo"
+   ],
+   "explicacao": "O pretérito é o passado; os três cobrem toda a linha do tempo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "«A diretora estava muito bonita ontem» está no:",
+   "certa": "Pretérito",
+   "erradas": [
+    "Presente",
+    "Futuro",
+    "Imperativo"
+   ],
+   "explicacao": "A ação ocorreu antes da fala: pretérito.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "«A diretora estará mais bonita amanhã» está no:",
+   "certa": "Futuro",
+   "erradas": [
+    "Presente",
+    "Pretérito",
+    "Subjuntivo"
+   ],
+   "explicacao": "A ação vai ocorrer depois da fala: futuro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "Em «Papai gosta de verdura», o tempo verbal é:",
+   "certa": "Presente",
+   "erradas": [
+    "Pretérito",
+    "Futuro",
+    "Nominal"
+   ],
+   "explicacao": "Gosta acontece no momento em que se fala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "Em «Damião estudará a lição», o tempo verbal é:",
+   "certa": "Futuro",
+   "erradas": [
+    "Presente",
+    "Pretérito",
+    "Gerúndio"
+   ],
+   "explicacao": "Estudará ainda vai acontecer.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "Em «José ganhou uma bola», o tempo verbal é:",
+   "certa": "Pretérito",
+   "erradas": [
+    "Presente",
+    "Futuro",
+    "Imperativo"
+   ],
+   "explicacao": "Ganhou já aconteceu.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "«Eu reparti meu lanche com ele» está no:",
+   "certa": "Passado",
+   "erradas": [
+    "Presente",
+    "Futuro",
+    "Gerúndio"
+   ],
+   "explicacao": "Reparti é uma ação concluída antes da fala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "«Nós fazemos doces» está no presente.",
+   "certa": true,
+   "explicacao": "Verdadeiro: a ação ocorre no momento da fala.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "tempos",
+   "icone": "relogio",
+   "enunciado": "«Ele irá embora amanhã cedo» está no passado.",
+   "certa": false,
+   "explicacao": "Falso: irá e a palavra amanhã mostram que é futuro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "Verbos de 1ª conjugação terminam em:",
+   "certa": "-ar",
+   "erradas": [
+    "-er",
+    "-ir",
+    "-or"
+   ],
+   "explicacao": "Cantar, estudar, brincar: todos de 1ª conjugação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "Verbos de 2ª conjugação terminam em:",
+   "certa": "-er e -or",
+   "erradas": [
+    "-ar e -er",
+    "-ir e -or",
+    "-ar apenas"
+   ],
+   "explicacao": "Vender e compor pertencem os dois à 2ª conjugação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "O verbo «partir» é de que conjugação?",
+   "certa": "Terceira",
+   "erradas": [
+    "Primeira",
+    "Segunda",
+    "Nenhuma"
+   ],
+   "explicacao": "Termina em -ir: 3ª conjugação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "Em «Cantamos uma música linda», o verbo é de que conjugação?",
+   "certa": "Primeira",
+   "erradas": [
+    "Segunda",
+    "Terceira",
+    "Quarta"
+   ],
+   "explicacao": "Cantar termina em -ar: 1ª conjugação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "Em «Compusemos uma bela canção», o verbo compor é de que conjugação?",
+   "certa": "Segunda",
+   "erradas": [
+    "Primeira",
+    "Terceira",
+    "Quarta"
+   ],
+   "explicacao": "Compor termina em -or, que também é 2ª conjugação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "conjugacao",
+   "icone": "letras",
+   "enunciado": "«Não fui à escola ontem» tem um verbo de 3ª conjugação.",
+   "certa": true,
+   "explicacao": "Verdadeiro: fui vem de ir, que termina em -ir.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "As formas nominais do verbo são:",
+   "certa": "Infinitivo, gerúndio e particípio",
+   "erradas": [
+    "Presente, pretérito e futuro",
+    "Indicativo, subjuntivo e imperativo",
+    "Primeira, segunda e terceira"
+   ],
+   "explicacao": "Elas dizem algo sobre a ação sem marcar o tempo do jeito comum.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "O infinitivo termina sempre em:",
+   "certa": "-r",
+   "erradas": [
+    "-ndo",
+    "-do",
+    "-ar"
+   ],
+   "explicacao": "Brincar, correr, partir: todos terminam em -r.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "O gerúndio indica que a ação:",
+   "certa": "Está em curso",
+   "erradas": [
+    "Já acabou",
+    "Vai começar",
+    "Nunca aconteceu"
+   ],
+   "explicacao": "Terminado em -ndo: brincando, correndo, partindo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "O particípio indica que a ação:",
+   "certa": "Já acabou",
+   "erradas": [
+    "Está acontecendo",
+    "Vai acontecer",
+    "É duvidosa"
+   ],
+   "explicacao": "Nos regulares termina em -do: brincado, corrido, partido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "Em «Ela estava correndo», a forma nominal é:",
+   "certa": "Gerúndio",
+   "erradas": [
+    "Infinitivo",
+    "Particípio",
+    "Imperativo"
+   ],
+   "explicacao": "Correndo termina em -ndo: ação em curso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "Em «Eles gostam de brincar», a forma nominal é:",
+   "certa": "Infinitivo",
+   "erradas": [
+    "Gerúndio",
+    "Particípio",
+    "Subjuntivo"
+   ],
+   "explicacao": "Brincar termina em -r: infinitivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "Em «Despedidos os funcionários, nada mais restava», a forma nominal é:",
+   "certa": "Particípio",
+   "erradas": [
+    "Gerúndio",
+    "Infinitivo",
+    "Indicativo"
+   ],
+   "explicacao": "Despedidos termina em -dos: ação já concluída.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "O infinitivo pode ser usado como substantivo em alguns contextos.",
+   "certa": true,
+   "explicacao": "Verdadeiro: em «O caminhar faz bem», caminhar funciona como substantivo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "Ligue cada forma nominal à sua terminação.",
+   "pares": [
+    [
+     "Infinitivo",
+     "-r"
+    ],
+    [
+     "Gerúndio",
+     "-ndo"
+    ],
+    [
+     "Particípio",
+     "-do"
+    ]
+   ],
+   "explicacao": "A terminação é a pista mais rápida para reconhecer a forma.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.209-218"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "nominais",
+   "icone": "ampulheta",
+   "enunciado": "Escreva o gerúndio do verbo «usar».",
+   "aceitas": [
+    "usando"
+   ],
+   "exemplo": "Digite a forma...",
+   "explicacao": "Gerúndio termina em -ndo: usando.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "A preposição é uma palavra:",
+   "certa": "Invariável",
+   "erradas": [
+    "Que flexiona em gênero",
+    "Que flexiona em número",
+    "Que indica ação"
+   ],
+   "explicacao": "Não muda em gênero nem em número, ao contrário do artigo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "Qual destas é preposição essencial?",
+   "certa": "Perante",
+   "erradas": [
+    "Durante",
+    "Conforme",
+    "Exceto"
+   ],
+   "explicacao": "Durante, conforme e exceto são acidentais: viraram preposição.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "Qual destas é preposição acidental?",
+   "certa": "Segundo",
+   "erradas": [
+    "Ante",
+    "Após",
+    "Desde"
+   ],
+   "explicacao": "Segundo também é numeral e adjetivo: é acidental.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "O que fazem as preposições numa oração?",
+   "certa": "Ligam palavras e estabelecem relações",
+   "erradas": [
+    "Substituem o substantivo",
+    "Indicam o tempo do verbo",
+    "Marcam a pessoa do discurso"
+   ],
+   "explicacao": "Sozinhas são vazias de sentido; o sentido nasce da ligação.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "Em «Nós estudamos até tarde», a preposição é:",
+   "certa": "Até",
+   "erradas": [
+    "Nós",
+    "Estudamos",
+    "Tarde"
+   ],
+   "explicacao": "Até liga o verbo à expressão de tempo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "Não obstante e mediante são preposições acidentais.",
+   "certa": true,
+   "explicacao": "Verdadeiro: estão na lista das acidentais.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "preposicao",
+   "icone": "elos",
+   "enunciado": "A preposição muda de forma quando o substantivo vai para o plural.",
+   "certa": false,
+   "explicacao": "Falso: a preposição é invariável.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «São lindos os olhos de Patrícia», a preposição indica:",
+   "certa": "Posse",
+   "erradas": [
+    "Lugar",
+    "Causa",
+    "Matéria"
+   ],
+   "explicacao": "Os olhos pertencem a Patrícia: relação de posse.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «Viajará com as amigas», a relação é de:",
+   "certa": "Companhia",
+   "erradas": [
+    "Instrumento",
+    "Meio",
+    "Modo"
+   ],
+   "explicacao": "Ela viaja acompanhada: companhia.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «Voltaremos de ônibus», a relação é de:",
+   "certa": "Meio",
+   "erradas": [
+    "Lugar",
+    "Posse",
+    "Causa"
+   ],
+   "explicacao": "O ônibus é o meio de transporte usado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «Com a seca, o gado começou a morrer», a relação é de:",
+   "certa": "Causa",
+   "erradas": [
+    "Fim",
+    "Assunto",
+    "Recurso"
+   ],
+   "explicacao": "A seca é o motivo da morte do gado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «A bicicleta é de alumínio», a relação é de:",
+   "certa": "Matéria",
+   "erradas": [
+    "Posse",
+    "Lugar",
+    "Meio"
+   ],
+   "explicacao": "Diz do que a bicicleta é feita: matéria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «Feriu-se com o martelo», a relação é de:",
+   "certa": "Instrumento",
+   "erradas": [
+    "Companhia",
+    "Causa",
+    "Modo"
+   ],
+   "explicacao": "O martelo é a ferramenta usada: instrumento.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Em «Parou para abastecer o carro», a relação é de:",
+   "certa": "Fim",
+   "erradas": [
+    "Causa",
+    "Tempo",
+    "Lugar"
+   ],
+   "explicacao": "Mostra a finalidade da parada.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "relacoes",
+   "icone": "mapa",
+   "enunciado": "Ligue cada frase à relação que a preposição estabelece.",
+   "pares": [
+    [
+     "Chorou de alegria",
+     "Causa"
+    ],
+    [
+     "Morava numa casa de madeira",
+     "Matéria"
+    ],
+    [
+     "Veio de ônibus",
+     "Meio"
+    ],
+    [
+     "Falava de política",
+     "Assunto"
+    ]
+   ],
+   "explicacao": "A mesma preposição de muda de sentido conforme o contexto.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "A contração acontece quando a preposição se une a outra palavra e:",
+   "certa": "Perde um fonema",
+   "erradas": [
+    "Ganha uma sílaba",
+    "Muda de sentido",
+    "Vira um verbo"
+   ],
+   "explicacao": "Em de + o = do, o e desaparece: houve perda.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Quanto vale «de + isso»?",
+   "certa": "Disso",
+   "erradas": [
+    "Desse",
+    "Naquilo",
+    "Nisso"
+   ],
+   "explicacao": "De mais isso resulta em disso.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Quanto vale «em + aquela»?",
+   "certa": "Naquela",
+   "erradas": [
+    "Nessa",
+    "Daquela",
+    "Àquela"
+   ],
+   "explicacao": "Em mais aquela resulta em naquela.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Quanto vale «por + os»?",
+   "certa": "Pelos",
+   "erradas": [
+    "Polos",
+    "Pros",
+    "Dos"
+   ],
+   "explicacao": "Por mais os resulta em pelos, forma antiga de por.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Quanto vale «a + as»?",
+   "certa": "Às",
+   "erradas": [
+    "As",
+    "Ás",
+    "Aos"
+   ],
+   "explicacao": "A crase marca a união da preposição a com o artigo as.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Em «Saímos daquele local», a palavra daquele é formada por:",
+   "certa": "De + aquele",
+   "erradas": [
+    "Em + aquele",
+    "A + aquele",
+    "Por + aquele"
+   ],
+   "explicacao": "De mais aquele: contração da preposição com o demonstrativo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Ao(s) e aonde são exemplos de:",
+   "certa": "Combinação",
+   "erradas": [
+    "Contração",
+    "Crase",
+    "Flexão"
+   ],
+   "explicacao": "Na combinação não há perda de fonema, só a união.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.257-262"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Em «Não voltei àquele local», houve contração com crase.",
+   "certa": true,
+   "explicacao": "Verdadeiro: a preposição a mais aquele resulta em àquele.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "contracao",
+   "icone": "mais",
+   "enunciado": "Escreva a contração de «em + esses».",
+   "aceitas": [
+    "nesses"
+   ],
+   "exemplo": "Digite a contração...",
+   "explicacao": "Em mais esses resulta em nesses.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão 11/09"
+   }
+  }
+ ]
+}

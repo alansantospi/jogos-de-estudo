@@ -17,3 +17,4 @@ preparar("exploradores-do-ceu.html", "web/exploradores-do-ceu.html", "Explorador
 preparar("historia.html",            "web/historia.html",            "Linhas do Tempo")
 preparar("artes.html",              "web/artes.html",              "Ateliê")
 preparar("matematica.html",         "web/matematica.html",         "Régua e Compasso")
+preparar("gramatica.html",          "web/gramatica.html",          "Oficina das Palavras")

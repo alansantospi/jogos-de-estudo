@@ -14,12 +14,9 @@ import extrair
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-PARES = {
-    "exploradores-do-ceu.html": "ciencias-4ano",
-    "historia.html": "historia-4ano",
-    "artes.html": "artes-4ano",
-    "matematica.html": "matematica-4ano",
-}
+# Sai da tabela do montador: lista fixa aqui é jogo novo passando sem conferência.
+import montar
+PARES = {a: p["conteudo"] for a, p in montar.JOGOS.items()}
 
 # Campos do esquema que o motor não carrega de volta: são só para nós.
 SO_NOSSOS = {"origem"}

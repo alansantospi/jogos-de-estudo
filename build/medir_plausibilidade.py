@@ -15,11 +15,13 @@ joga só por ela. O acaso puro acerta 25%.
 """
 import io, json, os, re, sys, unicodedata
 
-ARQUIVOS = {"artes.html": "artes-4ano",
-            "historia.html": "historia-4ano",
-            "exploradores-do-ceu.html": "ciencias-4ano",
-            "time-travel-english.html": "ingles-4ano",
-            "matematica.html": "matematica-4ano"}
+# A lista de jogos sai da tabela do montador, não de uma cópia aqui. Antes era
+# uma lista fixa, repetida em dois medidores: a Gramática entrou e passou sem
+# ser medida, porque ninguém lembrou de acrescentá-la nos dois lugares.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import montar
+ARQUIVOS = {a: p["conteudo"] for a, p in montar.JOGOS.items()}
+ARQUIVOS["time-travel-english.html"] = "ingles-4ano"   # motor próprio, fora da tabela
 
 CERTA = re.compile(r'(?<![a-z])c:"((?:[^"\\]|\\.)*)"')
 ERRADAS = re.compile(r'(?<![a-z])d:\[(.*?)\]')
@@ -131,8 +133,7 @@ def relatorio(arq):
 
 if __name__ == "__main__":
     ruim = 0
-    for arq in ("artes.html", "historia.html", "exploradores-do-ceu.html",
-            "time-travel-english.html", "matematica.html"):
+    for arq in sorted(ARQUIVOS):
         v = relatorio(arq)
         if v is not None and not (PISO <= v <= TETO):
             ruim += 1
