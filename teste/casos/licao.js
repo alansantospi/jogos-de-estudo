@@ -9,7 +9,8 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
 // --- todos os passos existem e estão bem formados ---------------------
-const passos = $$(".lesson-part");
+// O resumo também é um .lesson-part, mas não é um passo.
+const passos = $$(".lesson-part").filter(p => p.id !== "resumo");
 if (passos.length < 10) falhas.push("só " + passos.length + " passos na lição");
 for (const p of passos) {
   const q = p.querySelector('[data-mic="escolher"]');
@@ -83,10 +84,50 @@ if (eixos.length !== 2) falhas.push("a contração não tem dois eixos");
 const saida = m14.querySelector(".mic-res").textContent;
 if (!saida.includes("daquela")) falhas.push("de + aquela não deu daquela, e sim " + saida);
 
+// --- modo resumo: os dois modos saem do mesmo dado --------------------
+await vai("licao/resumo");
+if (telaAtual() !== "lesson") falhas.push("#licao/resumo não abriu a lição");
+const res14 = document.getElementById("resumo");
+if (!res14) falhas.push("não há modo resumo");
+else {
+  if (res14.style.display === "none") falhas.push("o resumo não ficou visível");
+  const blocos = res14.querySelectorAll(".mic-bloco");
+  if (blocos.length !== passos.length)
+    falhas.push("o resumo tem " + blocos.length + " conteúdos e a lição tem " + passos.length);
+  // a regra de cada passo tem de aparecer igual nos dois modos, senão divergem
+  for (const p of passos) {
+    const regra = p.querySelector(".mic-ideia").innerHTML.trim();
+    const achou = [...res14.querySelectorAll(".mic-regra")]
+      .some(x => x.innerHTML.trim() === regra);
+    if (!achou) falhas.push(p.id + ": a regra do passo não está no resumo");
+  }
+  // e todo alerta do passo a passo também
+  for (const p of passos) {
+    const al = p.querySelector(".example.warning");
+    if (!al) continue;
+    const achou = [...res14.querySelectorAll(".example.warning")]
+      .some(x => x.innerHTML.trim() === al.innerHTML.trim());
+    if (!achou) falhas.push(p.id + ": o alerta do passo não está no resumo");
+  }
+  if (!res14.querySelector(".mic-titulo")) falhas.push("o resumo não leva a treinar");
+}
+
+// --- o botão de alternar leva de um modo ao outro ---------------------
+await vai("licao/lesson1");
+const paraResumo = $("#lesson1 .mic-modo");
+if (!paraResumo) falhas.push("o passo não oferece o resumo");
+else {
+  paraResumo.click();
+  await new Promise(ok => setTimeout(ok, 150));
+  if (document.getElementById("resumo").style.display === "none")
+    falhas.push("o botão de resumo não abriu o resumo");
+}
+
 // --- guarda onde parou ------------------------------------------------
 let salvo = null;
 try { salvo = localStorage.getItem("gramatica_licao_v1"); } catch (e) {}
-if (salvo !== "14") falhas.push("não guardou o passo (guardou " + salvo + ")");
+if (salvo !== "1") falhas.push("não guardou o passo (guardou " + salvo + ")");
+// O resumo não é passo: visitá-lo não pode mexer em onde a criança parou.
 
 fim({ ok: !falhas.length, detalhes: falhas,
       nota: passos.length + " passos, checagem e máquinas conferidas" });

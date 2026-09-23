@@ -100,6 +100,34 @@ CSS = """<style>
 .mic-fb{margin:var(--s-3) 0 0;font-size:var(--t-sm);line-height:1.5;color:var(--texto-2)}
 .mic-fb b{color:var(--texto)}
 
+/* alternar entre os dois modos */
+.mic-modo{min-height:0;box-shadow:none;padding:var(--s-1) var(--s-3);
+  background:none;border:2px solid var(--risco);border-radius:999px;
+  font-family:var(--display);font-size:var(--t-xs);font-weight:600;
+  color:var(--texto-3);white-space:nowrap}
+.mic-modo:hover{border-color:var(--materia);color:var(--materia)}
+
+/* modo resumo: tudo numa página, para reler na véspera */
+.mic-secao{font-family:var(--display);font-size:var(--t-lg);font-weight:700;
+  color:var(--materia);margin:var(--s-6) 0 var(--s-3);
+  padding-bottom:var(--s-2);border-bottom:2px solid var(--risco)}
+.mic-bloco{margin:var(--s-4) 0 var(--s-5)}
+.mic-titulo{display:flex;width:100%;min-height:0;box-shadow:none;
+  justify-content:space-between;align-items:baseline;gap:var(--s-3);
+  background:none;border:0;border-radius:0;padding:0 0 var(--s-1);
+  font-family:var(--display);font-size:var(--t-md);font-weight:700;
+  color:var(--texto);text-align:left}
+.mic-titulo span{font-size:var(--t-xs);font-weight:600;color:var(--texto-3);
+  opacity:0;transition:opacity .18s var(--saida)}
+.mic-titulo:hover{color:var(--materia)}
+.mic-titulo:hover span,.mic-titulo:focus-visible span{opacity:1}
+.mic-regra{margin:0 0 var(--s-3);font-size:var(--t-sm);line-height:1.5;
+  color:var(--texto-2);max-width:60ch}
+.mic-regra b{color:var(--texto)}
+.mic-bloco .content-grid{margin:var(--s-3) 0}
+.mic-bloco .mini{padding:var(--s-3)}
+.mic-bloco .example{margin:var(--s-2) 0;font-weight:600}
+
 /* rodapé do passo */
 .mic-nav{display:flex;align-items:center;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-5)}
 .mic-nav .cresce{flex:1}
@@ -370,277 +398,402 @@ def svg_elo():
 
 
 
-P = []   # (missao, titulo, ideia, corpo)
+# ============================================================================
+# OS CATORZE PASSOS, COMO DADO
+#
+# Nada aqui é HTML pronto. Os dois modos — passo a passo e resumo — saem daqui,
+# e é por isso que não podem divergir: escrever o resumo à mão seria manter a
+# mesma gramática em dois lugares, e um dos dois envelheceria calado.
+#
+#   ideia    a regra, em uma ou duas frases
+#   fig      um desenho (opcional)
+#   revs     pares título → resposta: cartões no passo, .mini no resumo
+#   maq      eixos de escolha e o que compõem
+#   alerta   a pegadinha; aparece nos dois modos
+#   quiz     a checagem; só no passo a passo
+# ============================================================================
+P = []
 
-# ------------------------------------------------------------------ 1
-P.append(("pessoais", "Quem faz e quem recebe",
-  "O pronome do <b>caso reto</b> é quem pratica a ação. O do <b>caso oblíquo</b> "
-  "é quem recebe.",
-  fig(svg_fluxo(), "Eu chamei-a. Reto na frente do verbo, oblíquo atrás.")
-  + revelar([("1ª singular","eu / me, mim, comigo"), ("2ª singular","tu / te, ti, contigo"),
-             ("3ª singular","ele, ela / o, a, lhe, se"), ("1ª plural","nós / nos, conosco"),
-             ("2ª plural","vós / vos, convosco"), ("3ª plural","eles, elas / os, as, lhes")],
-            "Toque cada pessoa para ver o par reto / oblíquo.")
-  + checar("Complete: «___ chamei ___ para a festa.»",
-           [("Eu / a", True), ("Mim / ela", False), ("Me / ti", False), ("Eu / tu", False)],
-           "<b>Eu</b> pratica (reto) e <b>-a</b> recebe (oblíquo): <i>Eu chamei-a</i>.")))
+P.append(dict(missao="pessoais", titulo="Quem faz e quem recebe",
+  ideia="O pronome do <b>caso reto</b> é quem pratica a ação. "
+        "O do <b>caso oblíquo</b> é quem recebe.",
+  fig=svg_fluxo(), legenda="Eu chamei-a. Reto na frente do verbo, oblíquo atrás.",
+  revs=[("1ª singular","eu / me, mim, comigo"), ("2ª singular","tu / te, ti, contigo"),
+        ("3ª singular","ele, ela / o, a, lhe, se"), ("1ª plural","nós / nos, conosco"),
+        ("2ª plural","vós / vos, convosco"), ("3ª plural","eles, elas / os, as, lhes")],
+  revs_cap="Toque cada pessoa para ver o par reto / oblíquo.",
+  alerta="Depois de <b>com</b>, o oblíquo muda de cara: comigo, contigo, conosco, convosco.",
+  quiz=dict(p="Complete: «___ chamei ___ para a festa.»",
+    o=[("Eu / a", True), ("Mim / ela", False), ("Me / ti", False), ("Eu / tu", False)],
+    r="<b>Eu</b> pratica (reto) e <b>-a</b> recebe (oblíquo): <i>Eu chamei-a</i>.")))
 
-# ------------------------------------------------------------------ 2
-P.append(("tratamento", "Como se fala com cada um",
-  "Pronome de tratamento é o jeito respeitoso de se dirigir a alguém. "
-  "<b>Você</b> é o único informal.",
-  revelar([("Reis e rainhas","Vossa Majestade"), ("O Papa","Vossa Santidade"),
-           ("Cardeais","Vossa Eminência"), ("Reitores","Vossa Magnificência"),
-           ("Presidente, senadores","Vossa Excelência"),
-           ("Príncipes, duquesas","Vossa Alteza")],
-          "Toque cada pessoa para ver como se fala com ela.")
-  + checar("Qual destes é usado em situação informal?",
-           [("Você", True), ("Vossa Senhoria", False), ("Senhor", False),
-            ("Vossa Excelência", False)],
-           "Todos os outros são formais. <b>Você</b> é a exceção da regra.")))
+P.append(dict(missao="tratamento", titulo="Como se fala com cada um",
+  ideia="Pronome de tratamento é o jeito respeitoso de se dirigir a alguém.",
+  revs=[("Reis e rainhas","Vossa Majestade"), ("O Papa","Vossa Santidade"),
+        ("Cardeais","Vossa Eminência"), ("Reitores","Vossa Magnificência"),
+        ("Presidente, senadores","Vossa Excelência"),
+        ("Príncipes, duquesas","Vossa Alteza")],
+  revs_cap="Toque cada pessoa para ver como se fala com ela.",
+  alerta="<b>Você</b> é o único pronome de tratamento usado em situação informal. "
+         "Todos os outros são formais.",
+  quiz=dict(p="Qual destes é usado em situação informal?",
+    o=[("Você", True), ("Vossa Senhoria", False), ("Senhor", False),
+       ("Vossa Excelência", False)],
+    r="Todos os outros são formais. <b>Você</b> é a exceção da regra.")))
 
-# ------------------------------------------------------------------ 3
-P.append(("possessivos", "De quem é a coisa",
-  "O possessivo concorda com <b>a coisa possuída</b>, não com o dono. "
-  "Troque o dono e a coisa e veja.",
-  maquina([[("eu","eu"), ("tu","tu"), ("nós","nós"), ("eles","eles")],
-           [("bola","a bola"), ("livros","os livros"), ("casa","a casa")]],
-          {"eu|bola":"minha bola", "eu|livros":"meus livros", "eu|casa":"minha casa",
-           "tu|bola":"tua bola", "tu|livros":"teus livros", "tu|casa":"tua casa",
-           "nós|bola":"nossa bola", "nós|livros":"nossos livros", "nós|casa":"nossa casa",
-           "eles|bola":"sua bola", "eles|livros":"seus livros", "eles|casa":"sua casa"},
-          {"eu|livros":"O dono é um só, mas o possessivo foi para o <b>plural</b>: "
+P.append(dict(missao="possessivos", titulo="De quem é a coisa",
+  ideia="O possessivo diz de quem é. Troque o dono e a coisa e veja o que muda.",
+  maq=dict(eixos=[[("eu","eu"), ("tu","tu"), ("nós","nós"), ("eles","eles")],
+                  [("bola","a bola"), ("livros","os livros"), ("casa","a casa")]],
+    saidas={"eu|bola":"minha bola", "eu|livros":"meus livros", "eu|casa":"minha casa",
+            "tu|bola":"tua bola", "tu|livros":"teus livros", "tu|casa":"tua casa",
+            "nós|bola":"nossa bola", "nós|livros":"nossos livros", "nós|casa":"nossa casa",
+            "eles|bola":"sua bola", "eles|livros":"seus livros", "eles|casa":"sua casa"},
+    notas={"eu|livros":"O dono é um só, mas o possessivo foi para o <b>plural</b>: "
                        "quem manda é a coisa.",
            "nós|bola":"Vários donos, mas a bola é uma: <b>nossa</b>, no singular.",
            "eles|casa":"Eles e ela usam <b>seu, sua</b> — os mesmos da 3ª pessoa."},
-          ident=None, legenda="Escolha o dono e a coisa.")
-  + checar("Muitos donos, uma coisa só: como fica?",
-           [("Nossa escola", True), ("Nossas escola", False), ("Nosso escola", False),
-            ("Minhas escola", False)],
-           "A escola é <b>uma</b> e é <b>feminina</b>, então: nossa escola.")))
+    cap="Escolha o dono e a coisa."),
+  alerta="O possessivo concorda com <b>a coisa possuída</b>, não com o dono: "
+         "<i>minha bola</i>, <i>meus livros</i> — quem fala é o mesmo.",
+  quiz=dict(p="Muitos donos, uma coisa só: como fica?",
+    o=[("Nossa escola", True), ("Nossas escola", False), ("Nosso escola", False),
+       ("Minhas escola", False)],
+    r="A escola é <b>uma</b> e é <b>feminina</b>, então: nossa escola.")))
 
-# ------------------------------------------------------------------ 4
-P.append(("demonstrativos", "Perto, aí, ou lá longe",
-  "O demonstrativo diz <b>onde está</b> o objeto: comigo, com você, ou longe dos dois.",
-  fig(svg_distancia(), "Mova o objeto e veja o pronome mudar.")
-  + maquina([[("este","comigo"), ("esse","com você"), ("aquele","longe dos dois")]],
-            {"este":"este, esta, isto", "esse":"esse, essa, isso",
-             "aquele":"aquele, aquela, aquilo"},
-            {"este":"A palavra <b>aqui</b> pede este. <i>Este documento aqui.</i>",
-             "esse":"A palavra <b>aí</b> pede esse. <i>Esse caderno aí.</i>",
-             "aquele":"A palavra <b>lá</b> pede aquele. <i>Aquele guarda-chuva lá.</i>"},
-            ident="fgDist", legenda="Onde está o objeto?")
-  + checar("«Ricardo, é seu ___ caderno aí perto da sua carteira?»",
-           [("esse", True), ("este", False), ("aquele", False), ("aquilo", False)],
-           "O caderno está com <b>Ricardo</b>, a pessoa com quem se fala: esse.")))
+P.append(dict(missao="demonstrativos", titulo="Perto, aí, ou lá longe",
+  ideia="O demonstrativo diz <b>onde está</b> o objeto: comigo, com você, "
+        "ou longe dos dois.",
+  fig=svg_distancia(), legenda="Mova o objeto e veja o pronome mudar.",
+  maq=dict(eixos=[[("este","comigo"), ("esse","com você"), ("aquele","longe dos dois")]],
+    saidas={"este":"este, esta, isto", "esse":"esse, essa, isso",
+            "aquele":"aquele, aquela, aquilo"},
+    notas={"este":"A palavra <b>aqui</b> pede este. <i>Este documento aqui.</i>",
+           "esse":"A palavra <b>aí</b> pede esse. <i>Esse caderno aí.</i>",
+           "aquele":"A palavra <b>lá</b> pede aquele. <i>Aquele guarda-chuva lá.</i>"},
+    ident="fgDist", cap="Onde está o objeto?"),
+  alerta="Isto, isso e aquilo são <b>invariáveis</b>: não têm masculino, feminino "
+         "nem plural.",
+  quiz=dict(p="«Ricardo, é seu ___ caderno aí perto da sua carteira?»",
+    o=[("esse", True), ("este", False), ("aquele", False), ("aquilo", False)],
+    r="O caderno está com <b>Ricardo</b>, a pessoa com quem se fala: esse.")))
 
-# ------------------------------------------------------------------ 5
-P.append(("indefinidos", "Quando não se diz qual",
-  "O indefinido substitui o substantivo de modo <b>vago</b>. Uns mudam de forma, "
-  "outros não.",
-  revelar([("algum, alguma","variável"), ("nenhum, nenhuns","variável"),
-           ("muito, muitas","variável"), ("ninguém","invariável"),
-           ("tudo","invariável"), ("nada","invariável")],
-          "Toque para ver se a palavra muda de forma.", oculto="varia?")
-  + checar("Em «Há poucos erros na redação», o indefinido é:",
-           [("poucos", True), ("erros", False), ("redação", False), ("há", False)],
-           "<b>Poucos</b> diz uma quantidade imprecisa. E varia: pouco, pouca, poucas.")))
+P.append(dict(missao="indefinidos", titulo="Quando não se diz qual",
+  ideia="O indefinido substitui o substantivo de modo <b>vago</b>. "
+        "Uns mudam de forma, outros não.",
+  revs=[("algum, alguma","variável"), ("nenhum, nenhuns","variável"),
+        ("muito, muitas","variável"), ("ninguém","invariável"),
+        ("tudo","invariável"), ("nada","invariável")],
+  revs_cap="Toque para ver se a palavra muda de forma.", revs_oculto="varia?",
+  alerta="Eles ficam sempre na <b>3ª pessoa</b> do discurso — o nome já diz que "
+         "não definem de quem se fala.",
+  quiz=dict(p="Em «Há poucos erros na redação», o indefinido é:",
+    o=[("poucos", True), ("erros", False), ("redação", False), ("há", False)],
+    r="<b>Poucos</b> diz uma quantidade imprecisa. E varia: pouco, pouca, poucas.")))
 
-# ------------------------------------------------------------------ 6
-P.append(("interrogativos", "As palavras que perguntam",
-  "O interrogativo abre a pergunta — direta ou indireta. <b>Quem</b> e <b>que</b> "
-  "não mudam; <b>qual</b> e <b>quanto</b> mudam.",
-  maquina([[("quem","quem"), ("que","que"), ("qual","qual"), ("quanto","quanto")]],
-          {"quem":"Quem chegou?", "que":"Que horas são?",
-           "qual":"Qual / quais?", "quanto":"Quanto / quantos?"},
-          {"quem":"<b>Invariável</b>: nunca vira quens.",
+P.append(dict(missao="interrogativos", titulo="As palavras que perguntam",
+  ideia="O interrogativo abre a pergunta — direta ou indireta.",
+  maq=dict(eixos=[[("quem","quem"), ("que","que"), ("qual","qual"), ("quanto","quanto")]],
+    saidas={"quem":"Quem chegou?", "que":"Que horas são?",
+            "qual":"Qual / quais?", "quanto":"Quanto / quantos?"},
+    notas={"quem":"<b>Invariável</b>: nunca vira quens.",
            "que":"<b>Invariável</b>: nunca vira ques.",
            "qual":"<b>Variável</b>: qual, quais.",
            "quanto":"<b>Variável</b>: quanto, quanta, quantos, quantas."},
-          legenda="Toque um pronome e veja se ele muda de forma.")
-  + checar("Em «Quantos ainda não votaram?», o pronome é:",
-           [("interrogativo variável", True), ("interrogativo invariável", False),
-            ("indefinido invariável", False), ("demonstrativo", False)],
-           "Abre pergunta, logo é interrogativo. E <b>quanto</b> varia em gênero e número.")))
+    cap="Toque um pronome e veja se ele muda de forma."),
+  alerta="Também aparece em pergunta indireta, sem ponto de interrogação: "
+         "<i>Não sei <b>quem</b> chegou.</i>",
+  quiz=dict(p="Em «Quantos ainda não votaram?», o pronome é:",
+    o=[("interrogativo variável", True), ("interrogativo invariável", False),
+       ("indefinido invariável", False), ("demonstrativo", False)],
+    r="Abre pergunta, logo é interrogativo. E <b>quanto</b> varia em gênero e número.")))
 
-# ------------------------------------------------------------------ 7
-P.append(("verbo", "Ação, estado ou fenômeno",
-  "O verbo indica uma <b>ação</b>, um <b>estado</b> ou um <b>fenômeno da natureza</b>. "
-  "Só essas três.",
-  revelar([("O feirante vendeu tudo","ação"), ("Clarita está feliz","estado"),
-           ("Nevou no Sul do Brasil","fenômeno"), ("Quero dormir mais","duas ações")],
-          "Toque cada frase para ver o que o verbo indica.", oculto="o que é?")
-  + checar("Toque no verbo da frase.",
-           [("O", False), ("feirante", False), ("vendeu", True), ("todas", False),
-            ("as", False), ("verduras", False)],
-           "<b>Vendeu</b> é o que o feirante fez: é ação, é verbo.", frase=True)))
+P.append(dict(missao="verbo", titulo="Ação, estado ou fenômeno",
+  ideia="O verbo indica uma <b>ação</b>, um <b>estado</b> ou um <b>fenômeno da "
+        "natureza</b>. Só essas três.",
+  revs=[("O feirante vendeu tudo","ação"), ("Clarita está feliz","estado"),
+        ("Nevou no Sul do Brasil","fenômeno"), ("Quero dormir mais","duas ações")],
+  revs_cap="Toque cada frase para ver o que o verbo indica.", revs_oculto="o que é?",
+  alerta="Ele flexiona em <b>modo</b>, <b>tempo</b>, <b>número</b> e <b>pessoa</b> — "
+         "mas nunca em gênero.",
+  quiz=dict(p="Toque no verbo da frase.",
+    o=[("O", False), ("feirante", False), ("vendeu", True), ("todas", False),
+       ("as", False), ("verduras", False)],
+    r="<b>Vendeu</b> é o que o feirante fez: é ação, é verbo.", frase=True)))
 
-# ------------------------------------------------------------------ 8
-P.append(("modos", "A atitude de quem fala",
-  "O modo mostra <b>como o falante encara</b> o que diz: com certeza, com dúvida, "
-  "ou mandando.",
-  revelar([("Estudei muito para a prova","indicativo — certeza"),
-           ("Pode ser que eu estude hoje","subjuntivo — dúvida"),
-           ("Se eu fosse você, estudaria","subjuntivo — hipótese"),
-           ("Não sejas indisciplinado!","imperativo — ordem")],
-          "Toque cada frase para ver o modo.", oculto="qual modo?")
-  + checar("«Devolvam tudo, nós lhes suplicamos.» O modo é:",
-           [("imperativo", True), ("indicativo", False), ("subjuntivo", False),
-            ("infinitivo", False)],
-           "<b>Devolvam</b> é uma ordem — ou um pedido forte. Isso é imperativo.")))
+P.append(dict(missao="modos", titulo="A atitude de quem fala",
+  ideia="O modo mostra <b>como o falante encara</b> o que diz: com certeza, "
+        "com dúvida, ou mandando.",
+  revs=[("Estudei muito para a prova","indicativo — certeza"),
+        ("Pode ser que eu estude hoje","subjuntivo — dúvida"),
+        ("Se eu fosse você, estudaria","subjuntivo — hipótese"),
+        ("Não sejas indisciplinado!","imperativo — ordem")],
+  revs_cap="Toque cada frase para ver o modo.", revs_oculto="qual modo?",
+  alerta="São três e só três: <b>indicativo</b>, <b>subjuntivo</b> e <b>imperativo</b>.",
+  quiz=dict(p="«Devolvam tudo, nós lhes suplicamos.» O modo é:",
+    o=[("imperativo", True), ("indicativo", False), ("subjuntivo", False),
+       ("infinitivo", False)],
+    r="<b>Devolvam</b> é uma ordem — ou um pedido forte. Isso é imperativo.")))
 
-# ------------------------------------------------------------------ 9
-P.append(("tempos", "Antes, agora, depois",
-  "O tempo verbal diz <b>quando</b> a ação acontece em relação ao momento da fala.",
-  fig(svg_linha("fgTempo", ["preterito","presente","futuro"],
+P.append(dict(missao="tempos", titulo="Antes, agora, depois",
+  ideia="O tempo verbal diz <b>quando</b> a ação acontece em relação ao momento "
+        "da fala.",
+  fig=svg_linha("fgTempo", ["preterito","presente","futuro"],
                 ["pretérito","presente","futuro"],
                 "Linha do tempo: pretérito, presente e futuro"),
-      "A fala acontece no meio da linha.")
-  + maquina([[("preterito","ontem"), ("presente","hoje"), ("futuro","amanhã")]],
-            {"preterito":"A diretora estava bonita.",
-             "presente":"A diretora está bonita.",
-             "futuro":"A diretora estará bonita."},
-            {"preterito":"<b>Pretérito</b>: aconteceu antes da fala.",
-             "presente":"<b>Presente</b>: acontece no momento da fala.",
-             "futuro":"<b>Futuro</b>: vai acontecer depois da fala."},
-            ident="fgTempo", legenda="Escolha o momento.")
-  + checar("«Damião estudará a lição» está no:",
-           [("futuro", True), ("presente", False), ("pretérito", False),
-            ("imperativo", False)],
-           "A terminação <b>-rá</b> entrega: a ação ainda vai acontecer.")))
+  legenda="A fala acontece no meio da linha.",
+  maq=dict(eixos=[[("preterito","ontem"), ("presente","hoje"), ("futuro","amanhã")]],
+    saidas={"preterito":"A diretora estava bonita.",
+            "presente":"A diretora está bonita.",
+            "futuro":"A diretora estará bonita."},
+    notas={"preterito":"<b>Pretérito</b>: aconteceu antes da fala.",
+           "presente":"<b>Presente</b>: acontece no momento da fala.",
+           "futuro":"<b>Futuro</b>: vai acontecer depois da fala."},
+    ident="fgTempo", cap="Escolha o momento."),
+  quiz=dict(p="«Damião estudará a lição» está no:",
+    o=[("futuro", True), ("presente", False), ("pretérito", False),
+       ("imperativo", False)],
+    r="A terminação <b>-rá</b> entrega: a ação ainda vai acontecer.")))
 
-# ------------------------------------------------------------------ 10
-P.append(("conjugacao", "A terminação diz o grupo",
-  "Todo verbo pertence a um de três grupos, e quem decide é a terminação do "
-  "<b>infinitivo</b>.",
-  maquina([[("cantar","cantar"), ("vender","vender"), ("compor","compor"),
-            ("partir","partir")]],
-          {"cantar":"-ar → 1ª", "vender":"-er → 2ª", "compor":"-or → 2ª",
-           "partir":"-ir → 3ª"},
-          {"cantar":"Termina em <b>-ar</b>: primeira conjugação.",
+P.append(dict(missao="conjugacao", titulo="A terminação diz o grupo",
+  ideia="Todo verbo pertence a um de três grupos, e quem decide é a terminação "
+        "do <b>infinitivo</b>.",
+  maq=dict(eixos=[[("cantar","cantar"), ("vender","vender"), ("compor","compor"),
+                   ("partir","partir")]],
+    saidas={"cantar":"-ar → 1ª", "vender":"-er → 2ª", "compor":"-or → 2ª",
+            "partir":"-ir → 3ª"},
+    notas={"cantar":"Termina em <b>-ar</b>: primeira conjugação.",
            "vender":"Termina em <b>-er</b>: segunda conjugação.",
            "compor":"Termina em <b>-or</b>, que também é <b>segunda</b> — é a pegadinha.",
            "partir":"Termina em <b>-ir</b>: terceira conjugação."},
-          legenda="Toque um verbo no infinitivo.")
-  + checar("«Compusemos uma bela canção.» Que conjugação?",
-           [("segunda", True), ("primeira", False), ("terceira", False),
-            ("quarta", False)],
-           "Leve ao infinitivo: <b>compor</b>, terminado em -or. Segunda conjugação.")))
+    cap="Toque um verbo no infinitivo."),
+  alerta="<b>-or</b> também é segunda conjugação: compor, pôr, depor. É a pegadinha "
+         "mais comum.",
+  quiz=dict(p="«Compusemos uma bela canção.» Que conjugação?",
+    o=[("segunda", True), ("primeira", False), ("terceira", False), ("quarta", False)],
+    r="Leve ao infinitivo: <b>compor</b>, terminado em -or. Segunda conjugação.")))
 
-# ------------------------------------------------------------------ 11
-P.append(("nominais", "As três formas nominais",
-  "Elas falam da ação sem marcar o tempo como os outros verbos: uma antes, "
-  "uma durante, uma depois.",
-  fig(svg_linha("fgNom", ["infinitivo","gerundio","participio"],
+P.append(dict(missao="nominais", titulo="As três formas nominais",
+  ideia="Elas falam da ação sem marcar o tempo como os outros verbos: uma antes, "
+        "uma durante, uma depois.",
+  fig=svg_linha("fgNom", ["infinitivo","gerundio","participio"],
                 ["infinitivo", "gerúndio", "particípio"],
                 "Infinitivo, gerúndio e particípio ao longo da ação"),
-      "O infinitivo nem começou; o particípio já acabou.")
-  + maquina([[("infinitivo","-r"), ("gerundio","-ndo"), ("participio","-do")]],
-            {"infinitivo":"brincar", "gerundio":"brincando", "participio":"brincado"},
-            {"infinitivo":"<b>Infinitivo</b>: o nome do verbo, sem tempo marcado.",
-             "gerundio":"<b>Gerúndio</b>: a ação está acontecendo agora.",
-             "participio":"<b>Particípio</b>: a ação já foi concluída."},
-            ident="fgNom", legenda="Toque uma terminação.")
-  + checar("«Despedidos os funcionários, nada restava.» A forma é:",
-           [("particípio", True), ("gerúndio", False), ("infinitivo", False),
-            ("imperativo", False)],
-           "<b>Despedidos</b> termina em -dos: a ação já tinha acabado.")))
+  legenda="O infinitivo nem começou; o particípio já acabou.",
+  maq=dict(eixos=[[("infinitivo","-r"), ("gerundio","-ndo"), ("participio","-do")]],
+    saidas={"infinitivo":"brincar", "gerundio":"brincando", "participio":"brincado"},
+    notas={"infinitivo":"<b>Infinitivo</b>: o nome do verbo, sem tempo marcado.",
+           "gerundio":"<b>Gerúndio</b>: a ação está acontecendo agora.",
+           "participio":"<b>Particípio</b>: a ação já foi concluída."},
+    ident="fgNom", cap="Toque uma terminação."),
+  alerta="O infinitivo pode virar substantivo: <i>O <b>caminhar</b> faz bem</i>.",
+  quiz=dict(p="«Despedidos os funcionários, nada restava.» A forma é:",
+    o=[("particípio", True), ("gerúndio", False), ("infinitivo", False),
+       ("imperativo", False)],
+    r="<b>Despedidos</b> termina em -dos: a ação já tinha acabado.")))
 
-# ------------------------------------------------------------------ 12
-P.append(("preposicao", "A palavra que liga",
-  "A preposição é <b>invariável</b> e sozinha não quer dizer nada. O sentido "
-  "nasce da ligação que ela faz.",
-  fig(svg_elo(), "Sem a preposição, as duas palavras ficam soltas.")
-  + revelar([("a, ante, até, após","essenciais"), ("com, contra, de, desde","essenciais"),
-             ("em, entre, para, por","essenciais"), ("conforme, durante","acidentais"),
-             ("exceto, mediante","acidentais"), ("segundo, não obstante","acidentais")],
-            "Toque para ver se a preposição é essencial ou acidental.", oculto="qual grupo?")
-  + checar("Qual destas é preposição acidental?",
-           [("segundo", True), ("ante", False), ("após", False), ("desde", False)],
-           "<b>Segundo</b> também é numeral e adjetivo: virou preposição, é acidental.")))
+P.append(dict(missao="preposicao", titulo="A palavra que liga",
+  ideia="A preposição é <b>invariável</b> e sozinha não quer dizer nada. "
+        "O sentido nasce da ligação que ela faz.",
+  fig=svg_elo(), legenda="Sem a preposição, as duas palavras ficam soltas.",
+  revs=[("a, ante, até, após","essenciais"), ("com, contra, de, desde","essenciais"),
+        ("em, entre, para, por","essenciais"), ("conforme, durante","acidentais"),
+        ("exceto, mediante","acidentais"), ("segundo, não obstante","acidentais")],
+  revs_cap="Toque para ver se a preposição é essencial ou acidental.",
+  revs_oculto="qual grupo?",
+  alerta="<b>Acidental</b> é a palavra de outra classe que virou preposição: "
+         "segundo, durante, exceto.",
+  quiz=dict(p="Qual destas é preposição acidental?",
+    o=[("segundo", True), ("ante", False), ("após", False), ("desde", False)],
+    r="<b>Segundo</b> também é numeral e adjetivo: virou preposição, é acidental.")))
 
-# ------------------------------------------------------------------ 13
-P.append(("relacoes", "Uma preposição, muitos sentidos",
-  "A mesma palavrinha <b>de</b> muda de sentido conforme o que ela liga. "
-  "É o contexto que decide.",
-  revelar([("os olhos de Patrícia","posse"), ("uma casa de madeira","matéria"),
-           ("veio de ônibus","meio"), ("falava de política","assunto"),
-           ("chorou de alegria","causa"), ("feriu-se com o martelo","instrumento")],
-          "Toque cada trecho para ver a relação.", oculto="que relação?")
-  + checar("Em «Parou para abastecer o carro», a relação é de:",
-           [("fim", True), ("causa", False), ("meio", False), ("lugar", False)],
-           "<b>Para</b> mostra a finalidade: ele parou <i>com o objetivo de</i> abastecer.")))
+P.append(dict(missao="relacoes", titulo="Uma preposição, muitos sentidos",
+  ideia="A mesma palavrinha <b>de</b> muda de sentido conforme o que ela liga. "
+        "É o contexto que decide.",
+  revs=[("os olhos de Patrícia","posse"), ("uma casa de madeira","matéria"),
+        ("veio de ônibus","meio"), ("falava de política","assunto"),
+        ("chorou de alegria","causa"), ("feriu-se com o martelo","instrumento")],
+  revs_cap="Toque cada trecho para ver a relação.", revs_oculto="que relação?",
+  alerta="Outras relações que caem na prova: <b>companhia</b> (com as amigas), "
+         "<b>fim</b> (para abastecer), <b>oposição</b> (contra o vento), "
+         "<b>lugar</b> (em São Paulo).",
+  quiz=dict(p="Em «Parou para abastecer o carro», a relação é de:",
+    o=[("fim", True), ("causa", False), ("meio", False), ("lugar", False)],
+    r="<b>Para</b> mostra a finalidade: ele parou <i>com o objetivo de</i> abastecer.")))
 
-# ------------------------------------------------------------------ 14
-P.append(("contracao", "Quando a preposição gruda",
-  "Grudando na palavra seguinte, a preposição pode <b>perder um som</b> "
-  "(contração) ou só se juntar (combinação).",
-  maquina([[("de","de"), ("em","em"), ("a","a"), ("por","por")],
-           [("o","o"), ("as","as"), ("isso","isso"), ("aquela","aquela")]],
-          {"de|o":"d<s>e</s>o → <b>do</b>", "de|as":"d<s>e</s>as → <b>das</b>",
-           "de|isso":"d<s>e</s>isso → <b>disso</b>",
-           "de|aquela":"d<s>e</s>aquela → <b>daquela</b>",
-           "em|o":"e<s>m</s>o → <b>no</b>", "em|as":"e<s>m</s>as → <b>nas</b>",
-           "em|isso":"e<s>m</s>isso → <b>nisso</b>",
-           "em|aquela":"e<s>m</s>aquela → <b>naquela</b>",
-           "a|o":"a + o → <b>ao</b>", "a|as":"a + as → <b>às</b>",
-           "a|isso":"a + isso → <b>a isso</b>", "a|aquela":"a + aquela → <b>àquela</b>",
-           "por|o":"por + o → <b>pelo</b>", "por|as":"por + as → <b>pelas</b>",
-           "por|isso":"por + isso → <b>por isso</b>",
-           "por|aquela":"por + aquela → <b>por aquela</b>"},
-          {"a|o":"Aqui <b>não se perde nada</b>: a + o = ao. Isso é combinação.",
+P.append(dict(missao="contracao", titulo="Quando a preposição gruda",
+  ideia="Grudando na palavra seguinte, a preposição pode <b>perder um som</b> "
+        "(contração) ou só se juntar (combinação).",
+  maq=dict(eixos=[[("de","de"), ("em","em"), ("a","a"), ("por","por")],
+                  [("o","o"), ("as","as"), ("isso","isso"), ("aquela","aquela")]],
+    saidas={"de|o":"d<s>e</s>o → <b>do</b>", "de|as":"d<s>e</s>as → <b>das</b>",
+            "de|isso":"d<s>e</s>isso → <b>disso</b>",
+            "de|aquela":"d<s>e</s>aquela → <b>daquela</b>",
+            "em|o":"e<s>m</s>o → <b>no</b>", "em|as":"e<s>m</s>as → <b>nas</b>",
+            "em|isso":"e<s>m</s>isso → <b>nisso</b>",
+            "em|aquela":"e<s>m</s>aquela → <b>naquela</b>",
+            "a|o":"a + o → <b>ao</b>", "a|as":"a + as → <b>às</b>",
+            "a|isso":"a + isso → <b>a isso</b>", "a|aquela":"a + aquela → <b>àquela</b>",
+            "por|o":"por + o → <b>pelo</b>", "por|as":"por + as → <b>pelas</b>",
+            "por|isso":"por + isso → <b>por isso</b>",
+            "por|aquela":"por + aquela → <b>por aquela</b>"},
+    notas={"a|o":"Aqui <b>não se perde nada</b>: a + o = ao. Isso é combinação.",
            "a|as":"A crase marca a união: <b>às</b>.",
-           "a|isso":"Com <i>isso</i> não se usa a crase — a forma correta é "
-                    "<b>a isso</b>. Nem toda junção acontece.",
+           "a|isso":"Com <i>isso</i> não se usa crase — fica <b>a isso</b>. "
+                    "Nem toda junção acontece.",
            "por|isso":"<b>Por</b> não gruda em isso: continuam duas palavras.",
            "por|aquela":"<b>Por</b> também não gruda aqui.",
            "de|o":"O <b>e</b> some: houve perda de fonema. Isso é contração.",
            "em|aquela":"O <b>m</b> some e vira <b>n</b>: naquela."},
-          legenda="Escolha a preposição e a palavra que vem depois.")
-  + checar("«Saímos daquele local.» A palavra daquele é:",
-           [("de + aquele", True), ("em + aquele", False), ("a + aquele", False),
-            ("por + aquele", False)],
-           "<b>De</b> mais <b>aquele</b>, perdendo o e: contração.")))
+    rotular=False, cap="Escolha a preposição e a palavra que vem depois."),
+  alerta="<b>Contração</b> perde um som (de+o = do). <b>Combinação</b> só junta "
+         "(a+o = ao, a+onde = aonde).",
+  quiz=dict(p="«Saímos daquele local.» A palavra daquele é:",
+    o=[("de + aquele", True), ("em + aquele", False), ("a + aquele", False),
+       ("por + aquele", False)],
+    r="<b>De</b> mais <b>aquele</b>, perdendo o e: contração.")))
 
-# ----------------------------------------------------------------- montagem
-NOMES = {m: n for m, n in [
-    ("pessoais","Pronomes pessoais"), ("tratamento","Pronomes de tratamento"),
-    ("possessivos","Pronomes possessivos"), ("demonstrativos","Pronomes demonstrativos"),
-    ("indefinidos","Pronomes indefinidos"), ("interrogativos","Pronomes interrogativos"),
-    ("verbo","O que é verbo"), ("modos","Modos verbais"), ("tempos","Tempos verbais"),
-    ("conjugacao","As três conjugações"), ("nominais","Formas nominais"),
-    ("preposicao","O que é preposição"), ("relacoes","Relações de sentido"),
-    ("contracao","Contração e combinação")]}
+# ============================================================================
+# OS DOIS MODOS
+# ============================================================================
+CONTEUDO = json.load(io.open(os.path.join(RAIZ, "conteudo", "gramatica-4ano.json"),
+                             encoding="utf-8"))
+NOMES = {m["id"]: m["nome"] for m in CONTEUDO["missoes"]}
+# O ícone de cada missão sai do conteúdo, para o resumo não inventar o seu.
+ICONE = {q["missao"]: q["icone"] for q in reversed(CONTEUDO["questoes"])}
+TRILHAS = CONTEUDO["trilhas"]
 
-n = len(P)
-out = ['<section id="lesson" class="screen">', CSS]
-for i, (missao, titulo, ideia, corpo) in enumerate(P, 1):
+
+def alternar(para, rotulo):
+    return ('<button type="button" class="mic-modo" onclick="openLesson(\'%s\')">'
+            '%s</button>' % (para, rotulo))
+
+
+def passo(p, i, n):
+    """Modo passo a passo: uma ideia, um desenho, uma checagem."""
+    corpo = []
+    if p.get("fig"):
+        corpo.append(fig(p["fig"], p.get("legenda", "")))
+    if p.get("revs"):
+        corpo.append(revelar(p["revs"], p.get("revs_cap", ""),
+                             p.get("revs_oculto", "toque para ver")))
+    if p.get("maq"):
+        m = p["maq"]
+        corpo.append(maquina(m["eixos"], m["saidas"], m.get("notas"),
+                             ident=m.get("ident"), legenda=m.get("cap", "")))
+    if p.get("alerta"):
+        corpo.append('<div class="example warning">%s</div>' % p["alerta"])
+    q = p["quiz"]
+    corpo.append(checar(q["p"], q["o"], q["r"], frase=q.get("frase", False)))
+
     nav = []
     if i > 1:
         nav.append('<button class="secondary" onclick="openLesson(\'lesson%d\')">'
-                   '← Voltar</button>' % (i-1))
+                   '← Voltar</button>' % (i - 1))
     nav.append('<button class="mic-treinar" onclick="startCategory(\'%s\')">'
-               'Treinar isto agora</button>' % missao)
+               'Treinar isto agora</button>' % p["missao"])
     nav.append('<span class="cresce"></span>')
     if i < n:
         nav.append('<button class="primary" onclick="openLesson(\'lesson%d\')">'
-                   'Próximo →</button>' % (i+1))
+                   'Próximo →</button>' % (i + 1))
     else:
         nav.append('<button class="gold" onclick="openCategories()">'
                    'Ir aos desafios →</button>')
+
     volta = ('<button type="button" id="micVoltar" class="link-btn" hidden></button>'
              if i == 1 else '')
-    out.append(
-      '<div id="lesson%d" class="lesson-part"><div class="lesson-card">'
-      '<div class="mic-topo"><span class="lesson-tag">Passo %d de %d</span>'
-      '<span class="mic-barra"><i style="width:%d%%"></i></span>%s</div>'
-      '<h2>%s</h2><p class="mic-ideia">%s</p>%s'
-      '<div class="mic-nav">%s</div></div></div>'
-      % (i, i, n, round(i*100/n), volta, titulo, ideia, corpo, "".join(nav)))
-out.append(JS)
-out.append('</section>')
+    return ('<div id="lesson%d" class="lesson-part"><div class="lesson-card">'
+            '<div class="mic-topo"><span class="lesson-tag">Passo %d de %d</span>'
+            '<span class="mic-barra"><i style="width:%d%%"></i></span>%s%s</div>'
+            '<h2>%s</h2><p class="mic-ideia">%s</p>%s'
+            '<div class="mic-nav">%s</div></div></div>'
+            % (i, i, n, round(i * 100 / n), volta,
+               alternar("resumo", "Ver resumo"), p["titulo"], p["ideia"],
+               "".join(corpo), "".join(nav)))
 
-io.open(os.path.join(RAIZ, "jogo", "gramatica", "licao.html"), "w", encoding="utf-8").write("".join(out))
-print("  licao.html: %d passos, %d KB" % (n, len("".join(out))//1024))
-for i,(m,t,_,_) in enumerate(P,1):
-    print("    %2d  %-16s %s" % (i, m, t))
+
+def _svg_mini(nome):
+    return ('<div class="pic"><svg width="26" height="26" viewBox="0 0 24 24" '
+            'aria-hidden="true" focusable="false"><use href="#i-%s"/></svg></div>'
+            % nome)
+
+
+def resumo(P):
+    """Modo resumo: tudo numa página, para reler na véspera.
+
+    Sai do mesmo dado dos passos. Os pares de `revs` viram cartões; as saídas
+    da `maq`, uma linha de combinações; o `alerta` continua alerta.
+    """
+    porMissao = {p["missao"]: p for p in P}
+    out = ['<div id="resumo" class="lesson-part"><div class="lesson-card">'
+           '<div class="mic-topo"><span class="lesson-tag">Resumo</span>'
+           '<span class="mic-barra"><i style="width:100%"></i></span>'
+           + alternar("lesson1", "Ir ao passo a passo") + '</div>'
+           '<h2>Gramática do 4º ano, tudo numa página</h2>'
+           '<p class="mic-ideia">Os catorze conteúdos da prova, para reler de '
+           'ponta a ponta. Cada título leva às questões daquele conteúdo.</p>']
+
+    for t in TRILHAS:
+        out.append('<h3 class="mic-secao">%s</h3>' % t["nome"])
+        for etapa in t["etapas"]:
+            if etapa in ("all", "review"):
+                continue
+            p = porMissao[etapa]
+            out.append('<div class="mic-bloco">')
+            out.append('<button type="button" class="mic-titulo" '
+                       'onclick="startCategory(\'%s\')">%s<span>treinar →</span>'
+                       '</button>' % (etapa, NOMES[etapa]))
+            out.append('<p class="mic-regra">%s</p>' % p["ideia"])
+
+            if p.get("revs"):
+                out.append('<div class="content-grid">')
+                for titulo, resposta in p["revs"]:
+                    out.append('<div class="mini">%s<strong>%s</strong>'
+                               '<span>%s</span></div>'
+                               % (_svg_mini(ICONE[etapa]), titulo, resposta))
+                out.append('</div>')
+
+            if p.get("maq"):
+                m = p["maq"]
+                if len(m["eixos"]) == 1:
+                    itens = ["<b>%s</b> → %s" % (rot, m["saidas"].get(v, ""))
+                             for v, rot in m["eixos"][0]]
+                else:
+                    # Com dois eixos a linha perde o pé sem o rótulo da esquerda
+                    # — "minha bola  meus livros" não diz que o dono é "eu".
+                    # A contração dispensa: a saída já mostra a conta inteira.
+                    itens = []
+                    for v1, r1 in m["eixos"][0]:
+                        linha = [m["saidas"].get(v1 + "|" + v2, "")
+                                 for v2, _ in m["eixos"][1]]
+                        texto = " &nbsp; ".join(x for x in linha if x)
+                        if m.get("rotular", True):
+                            texto = "<b>%s</b> → %s" % (r1, texto)
+                        itens.append(texto)
+                cola = " &nbsp;·&nbsp; " if len(m["eixos"]) == 1 else "<br>"
+                out.append('<div class="example">%s</div>' % cola.join(itens))
+
+            if p.get("alerta"):
+                out.append('<div class="example warning">%s</div>' % p["alerta"])
+            out.append('</div>')
+
+    out.append('<div class="mic-nav">'
+               '<button class="secondary" onclick="openLesson(\'lesson1\')">'
+               '← Passo a passo</button><span class="cresce"></span>'
+               '<button class="gold" onclick="openCategories()">'
+               'Ir aos desafios →</button></div>')
+    out.append('</div></div>')
+    return "".join(out)
+
+
+n = len(P)
+saida = ['<section id="lesson" class="screen">', CSS]
+for i, p in enumerate(P, 1):
+    saida.append(passo(p, i, n))
+saida.append(resumo(P))
+saida.append(JS)
+saida.append('</section>')
+
+io.open(os.path.join(RAIZ, "jogo", "gramatica", "licao.html"), "w",
+        encoding="utf-8").write("".join(saida))
+print("  licao.html: %d passos + resumo, %d KB" % (n, len("".join(saida)) // 1024))
