@@ -21,6 +21,13 @@ MUTACOES = [
     ("time-travel-english.html", "migracao", "migração ficando com o menor em vez do maior",
      "h: Math.max(atual.h | 0, v.hits | 0, v.h | 0)",
      "h: Math.min(atual.h | 999, v.hits | 999, v.h | 999)"),
+    ("gramatica.html", "licao", "checagem da lição aceitando qualquer opção",
+     "var certo = botao.dataset.ok === '1';", "var certo = true;"),
+    ("gramatica.html", "licao", "máquina da lição sem mexer no desenho",
+     "if(fig) fig.setAttribute('data-estado', partes[0]);", "if(fig) void 0;"),
+    ("gramatica.html", "licao", "revelar da lição que abre e não fecha",
+     "botao.setAttribute('aria-expanded', aberto ? 'false' : 'true');",
+     "botao.setAttribute('aria-expanded', 'true');"),
     ("index.html", "perfis", "apagar destruindo em vez de ir para a lixeira",
      "const guardado = {};",
      'const guardado = {}; if(true){ Object.values(BASES).forEach(b => '

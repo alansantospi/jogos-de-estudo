@@ -23,8 +23,12 @@ APOSENTADOS = {
     "best.accuracy": "best.acc",
 }
 
-JOGOS = ("historia.html", "artes.html", "exploradores-do-ceu.html",
-         "time-travel-english.html", "matematica.html")
+# Da tabela do montador: era a quinta cópia à mão da lista de jogos, e a
+# Gramática entrou sem passar por aqui.
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import montar
+JOGOS = tuple(sorted(montar.JOGOS)) + ("time-travel-english.html",)
 
 def _sem_comentarios(js):
     """Comentários citam nomes de função; varrer texto é achar a si mesmo."""
