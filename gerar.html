@@ -819,12 +819,12 @@ async function pedir(ev){
                          material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
                 missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
-                custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "",
+                custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "", pedidas: total,
                 partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
     }else
     estado = {pedido, criacao: ab.criacao, plano: pl.missoes,
               missoes: pl.missoes.map(({id, nome}) => ({id, nome})), lote: null, aviso: "",
-              custo: pl.custo_usd, restantes: pl.restantes, questoes: [],
+              custo: pl.custo_usd, restantes: pl.restantes, questoes: [], pedidas: total,
               partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
     cota(pl.restantes);
     filtro = "todas";
@@ -969,7 +969,9 @@ function pintarPlano(){
   const pronto = Object.values(estado.partes).every(p => p.estado === "pronta");
   const linhas = estado.plano.map(m => {
     const p = estado.partes[m.id] || {estado: "falhou", erro: ""};
-    const qtd = p.estado === "pronta" ? plural(p.n, "questão", "questões") : m.quantidade + " previstas";
+    // Menos que o previsto é o modelo recusando inventar: o trecho não dava.
+    const qtd = p.estado !== "pronta" ? m.quantidade + " previstas"
+      : p.n < m.quantidade ? p.n + " de " + m.quantidade + " previstas" : plural(p.n, "questão", "questões");
     return el("li", {class: "missao " + p.estado},
       el("span", {class: "nome-missao"}, m.nome),
       el("span", {class: "qtd"}, qtd),
@@ -979,10 +981,18 @@ function pintarPlano(){
                       onclick: () => tentarDeNovo(m.id)}, "Tentar de novo")) : null,
       p.aviso ? el("p", {class: "erro-missao cuidado"}, p.aviso) : null);
   });
+  // Pedir 30 e ver 23 parece defeito: é o material que não sustentava mais,
+  // e o modelo é instruído a não inventar.
+  const vieram = estado.plano.reduce((t, m) => t + ((estado.partes[m.id] || {}).n || 0), 0);
+  const curto = pronto && estado.pedidas && vieram < estado.pedidas;
   // Com tudo pronto, o plano vira referência: fecha, mas continua à mão.
-  return el("details", {class: "plano", open: !pronto},
-    el("summary", {}, plural(estado.plano.length, "missão", "missões") + (pronto ? "" : " · gerando")),
-    el("ul", {}, linhas));
+  return el("div", {},
+    curto ? el("p", {class: "nota", id: "notaCurto"}, "Você pediu " + estado.pedidas + "; o material sustentou "
+      + vieram + ". As questões só saem do que está no material, e ele não tinha assunto para mais. "
+      + "Para ter mais, salve e depois use Acrescentar questões com outras páginas.") : null,
+    el("details", {class: "plano", open: !pronto},
+      el("summary", {}, plural(estado.plano.length, "missão", "missões") + (pronto ? "" : " · gerando")),
+      el("ul", {}, linhas)));
 }
 
 const FILTROS = [["todas", "Todas", () => true], ["aviso", "Com aviso", comAviso],

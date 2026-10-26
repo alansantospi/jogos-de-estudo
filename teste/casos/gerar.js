@@ -198,6 +198,9 @@ else {
 if (!/2 restantes hoje/.test($("cota").textContent)) falhas.push("a cota de jogos não aparece: " + $("cota").textContent);
 // plano 0,02 + três partes de 0,10 + a recusa, que também foi paga: 0,05
 if (Math.abs(estado.custo - 0.37) > 1e-9) falhas.push("o custo do jogo não soma as partes: " + estado.custo);
+// pediu 30, cada missão deu 2 das 10 previstas: a tela diz que foi o material
+if (!/pediu 30; o material sustentou 6/.test(($("notaCurto") || {}).textContent || "")) falhas.push("vieram menos que o pedido e a tela não explica");
+if (!/2 de 10 previstas/.test($("resumo").innerText)) falhas.push("a missão curta não mostra quantas de quantas");
 
 /* 14. salvar e jogar: vai para a conta, abre o jogo, e salvar de novo atualiza o mesmo */
 const gravados = [], abertos = [];
