@@ -1,0 +1,1725 @@
+{
+ "id": "restaurante-4ano",
+ "materia": "Inglês",
+ "titulo": "Diner Time",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "comidas",
+   "nome": "Comidas"
+  },
+  {
+   "id": "bebidas",
+   "nome": "Bebidas"
+  },
+  {
+   "id": "sobremesas",
+   "nome": "Sobremesas"
+  },
+  {
+   "id": "artigos",
+   "nome": "A ou AN"
+  },
+  {
+   "id": "preco",
+   "nome": "How much is / are?"
+  },
+  {
+   "id": "numeros",
+   "nome": "Números e preços"
+  },
+  {
+   "id": "pedido",
+   "nome": "No restaurante"
+  },
+  {
+   "id": "cardapio",
+   "nome": "O cardápio do Rubi's"
+  },
+  {
+   "id": "historia",
+   "nome": "A história do hambúrguer"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "menu",
+   "nome": "O Cardápio",
+   "etapas": [
+    "comidas",
+    "bebidas",
+    "sobremesas"
+   ]
+  },
+  {
+   "id": "pedir",
+   "nome": "Pedindo em Inglês",
+   "etapas": [
+    "artigos",
+    "preco",
+    "numeros",
+    "pedido"
+   ]
+  },
+  {
+   "id": "ler",
+   "nome": "Leitura e História",
+   "etapas": [
+    "cardapio",
+    "historia",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Como se diz “batata frita” em inglês?",
+   "certa": "French fries",
+   "erradas": [
+    "Onion rings",
+    "Hot dog",
+    "Chocolate cake"
+   ],
+   "explicacao": "French fries são as batatas fritas em palito.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "O que são “onion rings”?",
+   "certa": "Anéis de cebola fritos",
+   "erradas": [
+    "Batatas fritas em palito",
+    "Salada de folhas verdes",
+    "Bolinhos de salsicha"
+   ],
+   "explicacao": "Onion = cebola, rings = anéis.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "O que o cheeseburger tem que o hamburger não tem?",
+   "certa": "Queijo",
+   "erradas": [
+    "Salsicha",
+    "Batata",
+    "Cebola"
+   ],
+   "explicacao": "Cheese = queijo: cheeseburger é o hambúrguer com queijo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Ligue cada comida ao que ela é.",
+   "pares": [
+    [
+     "Hot dog",
+     "Cachorro-quente"
+    ],
+    [
+     "Salad",
+     "Salada"
+    ],
+    [
+     "French fries",
+     "Batata frita"
+    ],
+    [
+     "Onion rings",
+     "Anéis de cebola"
+    ]
+   ],
+   "explicacao": "Os nomes do cardápio da página 50.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "No cardápio da página 50, quais estão em “Sandwiches”?",
+   "certa": "Cheeseburger, hamburger e hot dog",
+   "erradas": [
+    "French fries, onion rings e salad",
+    "Orange juice, smoothie e soda",
+    "Apple pie, cake e ice cream"
+   ],
+   "explicacao": "Sandwiches são os sanduíches: cheeseburger, hamburger e hot dog.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "No cardápio da página 50, quais são os “side orders” (acompanhamentos)?",
+   "certa": "French fries, onion rings e salad",
+   "erradas": [
+    "Cheeseburger, hamburger e hot dog",
+    "Smoothie, soda e orange juice",
+    "Apple pie, ice cream e cake"
+   ],
+   "explicacao": "Side orders acompanham o sanduíche: batata, anéis de cebola e salada.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Escreva em inglês: salada.",
+   "aceitas": [
+    "salad",
+    "a salad"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Salada é salad.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Escreva em inglês o hambúrguer com queijo.",
+   "aceitas": [
+    "cheeseburger",
+    "a cheeseburger",
+    "cheese burger"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Cheeseburger: cheese (queijo) + burger.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Hot dog é um sanduíche de salsicha.",
+   "certa": true,
+   "explicacao": "Verdadeiro: hot dog é o cachorro-quente.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "comidas",
+   "icone": "comida",
+   "enunciado": "Quanto custa o cheeseburger no cardápio da página 50?",
+   "certa": "$7.20",
+   "erradas": [
+    "$6.15",
+    "$5.50",
+    "$7.60"
+   ],
+   "explicacao": "Cheeseburger $7.20. O hamburger custa $6.15 e o hot dog, $5.50.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "O que é “orange juice”?",
+   "certa": "Suco de laranja",
+   "erradas": [
+    "Suco de limão",
+    "Refrigerante",
+    "Vitamina de laranja"
+   ],
+   "explicacao": "Orange = laranja, juice = suco.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Qual bebida do cardápio é uma vitamina de frutas batida?",
+   "certa": "Smoothie",
+   "erradas": [
+    "Soda",
+    "Lemon juice",
+    "Orange juice"
+   ],
+   "explicacao": "Smoothie é a vitamina batida.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "O que é “soda”?",
+   "certa": "Refrigerante",
+   "erradas": [
+    "Suco de laranja",
+    "Vitamina de frutas",
+    "Suco de limão"
+   ],
+   "explicacao": "Soda é o refrigerante.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Ligue cada bebida ao que ela é.",
+   "pares": [
+    [
+     "Orange juice",
+     "Suco de laranja"
+    ],
+    [
+     "Lemon juice",
+     "Suco de limão"
+    ],
+    [
+     "Soda",
+     "Refrigerante"
+    ],
+    [
+     "Smoothie",
+     "Vitamina"
+    ]
+   ],
+   "explicacao": "As bebidas dos cardápios das páginas 50 e 57.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Escreva em inglês: suco de laranja.",
+   "aceitas": [
+    "orange juice",
+    "an orange juice"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Suco de laranja é orange juice.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Qual destes é uma “beverage” (bebida)?",
+   "certa": "Smoothie",
+   "erradas": [
+    "Apple pie",
+    "Cheeseburger",
+    "French fries"
+   ],
+   "explicacao": "Beverages são bebidas. Smoothie é a única bebida aqui.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Quanto custa o smoothie no cardápio da página 50?",
+   "certa": "$3.45",
+   "erradas": [
+    "$2.30",
+    "$3.40",
+    "$2.00"
+   ],
+   "explicacao": "Smoothie $3.45. A salad custa $3.40 e o orange juice, $2.00.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "No cardápio da página 50, o refrigerante (soda) é a bebida mais barata.",
+   "certa": true,
+   "explicacao": "Verdadeiro: soda $1.20, orange juice $2.00, smoothie $3.45.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "No cardápio, o que quer dizer “Beverages”?",
+   "certa": "Bebidas",
+   "erradas": [
+    "Sobremesas",
+    "Lanches",
+    "Saladas"
+   ],
+   "explicacao": "Beverages = bebidas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "bebidas",
+   "icone": "bebida",
+   "enunciado": "Da bebida mais barata para a mais cara, no cardápio da página 50.",
+   "sequencia": [
+    "Soda",
+    "Orange juice",
+    "Smoothie"
+   ],
+   "explicacao": "Soda $1.20, orange juice $2.00, smoothie $3.45.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "No cardápio, o que quer dizer “Desserts”?",
+   "certa": "Sobremesas",
+   "erradas": [
+    "Bebidas geladas",
+    "Acompanhamentos",
+    "Sanduíches"
+   ],
+   "explicacao": "Desserts = sobremesas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "O que é “apple pie”?",
+   "certa": "Torta de maçã",
+   "erradas": [
+    "Bolo de chocolate",
+    "Suco de maçã verde",
+    "Sorvete de morango"
+   ],
+   "explicacao": "Apple = maçã, pie = torta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "O que é “chocolate cake”?",
+   "certa": "Bolo de chocolate",
+   "erradas": [
+    "Sorvete de chocolate",
+    "Torta de maçã",
+    "Chocolate quente"
+   ],
+   "explicacao": "Cake = bolo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "Ligue cada sobremesa ao que ela é.",
+   "pares": [
+    [
+     "Apple pie",
+     "Torta de maçã"
+    ],
+    [
+     "Chocolate cake",
+     "Bolo de chocolate"
+    ],
+    [
+     "Ice cream",
+     "Sorvete"
+    ],
+    [
+     "Strawberry ice cream",
+     "Sorvete de morango"
+    ]
+   ],
+   "explicacao": "As sobremesas dos cardápios das páginas 50 e 57.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "Escreva em inglês: sorvete.",
+   "aceitas": [
+    "ice cream",
+    "an ice cream",
+    "icecream"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Sorvete é ice cream.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "Escreva em inglês: bolo de chocolate.",
+   "aceitas": [
+    "chocolate cake",
+    "a chocolate cake"
+   ],
+   "exemplo": "Digite em inglês...",
+   "explicacao": "Bolo de chocolate é chocolate cake.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "No cardápio da página 50, qual é a sobremesa mais cara?",
+   "certa": "Apple pie",
+   "erradas": [
+    "Chocolate cake",
+    "Ice cream",
+    "Smoothie"
+   ],
+   "explicacao": "Apple pie $2.60, chocolate cake $2.30, ice cream $1.60. Smoothie é bebida.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.50"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "O cardápio infantil do Rubi's Diner tem três sobremesas.",
+   "certa": true,
+   "explicacao": "Verdadeiro: strawberry ice cream, apple pie e chocolate cake.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "Qual destes é comida (food), e não bebida?",
+   "certa": "Chocolate cake",
+   "erradas": [
+    "Orange juice",
+    "Smoothie",
+    "Soda"
+   ],
+   "explicacao": "Chocolate cake é comida; os outros três são beverages.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.60"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "sobremesas",
+   "icone": "comida",
+   "enunciado": "“Strawberry ice cream” é sorvete de quê?",
+   "certa": "Morango",
+   "erradas": [
+    "Chocolate",
+    "Framboesa",
+    "Laranja"
+   ],
+   "explicacao": "Strawberry = morango.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Complete com A ou AN: I'd like ___ smoothie, please.",
+   "aceitas": [
+    "a"
+   ],
+   "exemplo": "a ou an",
+   "explicacao": "Smoothie começa com som de consoante: a smoothie.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Complete com A ou AN: I'd like ___ apple juice, please.",
+   "aceitas": [
+    "an"
+   ],
+   "exemplo": "a ou an",
+   "explicacao": "Apple começa com som de vogal: an apple juice.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Complete com A ou AN: I'd like ___ ice cream, please.",
+   "aceitas": [
+    "an"
+   ],
+   "exemplo": "a ou an",
+   "explicacao": "Ice começa com som de vogal: an ice cream.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Complete com A ou AN: I'd like ___ chocolate cake, please.",
+   "aceitas": [
+    "a"
+   ],
+   "exemplo": "a ou an",
+   "explicacao": "Chocolate começa com som de consoante: a chocolate cake.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Por que se diz “an orange juice”, e não “a orange juice”?",
+   "certa": "Orange começa com som de vogal",
+   "erradas": [
+    "Juice é uma palavra que está no plural",
+    "Orange é o nome de uma cor",
+    "AN se usa com as bebidas"
+   ],
+   "explicacao": "Antes de som de vogal (a, e, i, o, u) usamos AN.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Qual destas palavras pede AN?",
+   "certa": "apple pie",
+   "erradas": [
+    "hamburger",
+    "soda",
+    "smoothie"
+   ],
+   "explicacao": "Apple começa com vogal: an apple pie.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Qual destas palavras pede A?",
+   "certa": "cheeseburger",
+   "erradas": [
+    "orange juice",
+    "apple pie",
+    "ice cream"
+   ],
+   "explicacao": "Cheeseburger começa com consoante: a cheeseburger.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Qual pedido está escrito certo?",
+   "certa": "I'd like an orange juice, please.",
+   "erradas": [
+    "I'd like a orange juice, please.",
+    "I'd like an soda, please.",
+    "I'd like an hot dog, please."
+   ],
+   "explicacao": "Orange começa com vogal: an orange juice. Soda e hot dog pedem A.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "“An hot dog” está certo.",
+   "certa": false,
+   "explicacao": "Falso: hot começa com som de consoante, então é a hot dog.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "artigos",
+   "icone": "letras",
+   "enunciado": "Na atividade da página 53, quais vão com AN?",
+   "certa": "apple pie e orange juice",
+   "erradas": [
+    "hot dog e hamburger",
+    "smoothie e soda",
+    "cheeseburger e chocolate cake"
+   ],
+   "explicacao": "Só apple pie e orange juice começam com vogal. Todo o resto vai com A.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Complete com IS ou ARE: How much ___ the hot dog?",
+   "aceitas": [
+    "is"
+   ],
+   "exemplo": "is ou are",
+   "explicacao": "Hot dog é um só: How much is the hot dog?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Complete com IS ou ARE: How much ___ the onion rings?",
+   "aceitas": [
+    "are"
+   ],
+   "exemplo": "is ou are",
+   "explicacao": "Onion rings está no plural: How much are the onion rings?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "“How much are the smoothies?” A resposta começa com:",
+   "certa": "They're",
+   "erradas": [
+    "It's",
+    "He's",
+    "We're"
+   ],
+   "explicacao": "Plural pergunta com ARE e responde com THEY'RE: They're $2.30.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "“How much is the apple pie?” Qual é a resposta?",
+   "certa": "It's $3.15.",
+   "erradas": [
+    "They're $3.15.",
+    "It are $3.15.",
+    "Is it $3.15?"
+   ],
+   "explicacao": "Um só: It's $3.15.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Quando se usa “How much are...?”",
+   "certa": "Quando a coisa está no plural",
+   "erradas": [
+    "Quando a coisa é uma bebida",
+    "Quando o preço passa de cem dólares",
+    "Quando se fala com o garçom"
+   ],
+   "explicacao": "ARE é para o plural: the onion rings, the smoothies, the toys.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "“How much is the cheeseburgers?” está certo.",
+   "certa": false,
+   "explicacao": "Falso: cheeseburgers está no plural, então é How much are the cheeseburgers?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Complete com IS ou ARE: How much ___ the toys?",
+   "aceitas": [
+    "are"
+   ],
+   "exemplo": "is ou are",
+   "explicacao": "Toys está no plural: How much are the toys? They're $7.78.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Como perguntar o preço da bicicleta (the bike)?",
+   "certa": "How much is the bike?",
+   "erradas": [
+    "How much are the bike?",
+    "How many is the bike?",
+    "What much is the bike?"
+   ],
+   "explicacao": "A bike é uma só: How much is the bike?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Qual par de pergunta e resposta combina?",
+   "certa": "How much are the toys? They're $7.78.",
+   "erradas": [
+    "How much are the toys? It's $7.78.",
+    "How much is the toys? They're $7.78.",
+    "How much is the toy? They're $7.78."
+   ],
+   "explicacao": "Plural com plural: are... they're.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.61"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "preco",
+   "icone": "pergunta",
+   "enunciado": "Na resposta, “It's” combina com IS, e “They're” combina com ARE.",
+   "certa": true,
+   "explicacao": "Verdadeiro: How much is it? It's... / How much are they? They're...",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se escreve 90 em inglês?",
+   "certa": "ninety",
+   "erradas": [
+    "nineteen",
+    "nine",
+    "ninty"
+   ],
+   "explicacao": "90 = ninety.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se escreve 80 em inglês?",
+   "certa": "eighty",
+   "erradas": [
+    "eighteen",
+    "eight",
+    "eigthy"
+   ],
+   "explicacao": "80 = eighty.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se escreve 70 em inglês?",
+   "certa": "seventy",
+   "erradas": [
+    "seventeen",
+    "seven",
+    "sevendy"
+   ],
+   "explicacao": "70 = seventy.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se lê $91.79?",
+   "certa": "ninety-one dollars and seventy-nine cents",
+   "erradas": [
+    "ninety dollars and seventy-nine cents",
+    "nineteen dollars and seventy-nine cents",
+    "ninety-one dollars and seventy-five cents"
+   ],
+   "explicacao": "91 = ninety-one; 79 = seventy-nine.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se lê $100.99?",
+   "certa": "a hundred dollars and ninety-nine cents",
+   "erradas": [
+    "a hundred dollars and nineteen cents",
+    "ten dollars and ninety-nine cents",
+    "one hundred and ninety-nine dollars and cents"
+   ],
+   "explicacao": "100 = a hundred; 99 = ninety-nine.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Escreva em inglês, por extenso: 100.",
+   "aceitas": [
+    "a hundred",
+    "one hundred",
+    "hundred"
+   ],
+   "exemplo": "Digite por extenso...",
+   "explicacao": "100 = a hundred.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "“It's five dollars and seventy cents.” Que preço é esse?",
+   "certa": "$5.70",
+   "erradas": [
+    "$7.50",
+    "$5.17",
+    "$57.00"
+   ],
+   "explicacao": "Five dollars = 5; seventy cents = 70.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Como se lê $82.85?",
+   "certa": "eighty-two dollars and eighty-five cents",
+   "erradas": [
+    "eighty-five dollars and eighty-two cents",
+    "eighteen dollars and eighty-five cents",
+    "eighty-two dollars and eighteen cents"
+   ],
+   "explicacao": "Primeiro os dólares (82), depois os centavos (85).",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "“It's one dollar and eighty-two cents.” Que preço é esse?",
+   "certa": "$1.82",
+   "erradas": [
+    "$1.28",
+    "$8.20",
+    "$18.20"
+   ],
+   "explicacao": "One dollar = 1; eighty-two cents = 82.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Complete: $1.75 = one dollar and ______-five cents.",
+   "aceitas": [
+    "seventy"
+   ],
+   "exemplo": "Digite o número...",
+   "explicacao": "75 = seventy-five.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Na conta da página 52: hamburger $6.15, salad $3.40, orange juice $2.00 e apple pie $2.60. Qual é o total?",
+   "certa": "$14.15",
+   "erradas": [
+    "$13.15",
+    "$14.51",
+    "$12.15"
+   ],
+   "explicacao": "6.15 + 3.40 + 2.00 + 2.60 = 14.15.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.52"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "numeros",
+   "icone": "numeros",
+   "enunciado": "Com mais de um, “dollar” vira “dollars”: one dollar, five dollars.",
+   "certa": true,
+   "explicacao": "Verdadeiro: one dollar, mas five dollars.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.54"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "No restaurante, como o garçom (server) começa a conversa?",
+   "certa": "How can I help you?",
+   "erradas": [
+    "Here it is. Thanks.",
+    "How much is it, please?",
+    "I'd like a soda, please."
+   ],
+   "explicacao": "How can I help you? = Como posso ajudar?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Como o cliente pede um sorvete?",
+   "certa": "I'd like an ice cream, please.",
+   "erradas": [
+    "I'd like a ice cream, please.",
+    "Here you are, an ice cream, sir.",
+    "How much is an ice cream?"
+   ],
+   "explicacao": "I'd like... é o jeito educado de pedir. E ice cream pede AN.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "O que quer dizer “Here you are”?",
+   "certa": "Aqui está",
+   "erradas": [
+    "Onde você está?",
+    "Você está aqui",
+    "Pode pagar agora"
+   ],
+   "explicacao": "O garçom diz Here you are ao entregar o pedido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Coloque o começo do diálogo em ordem.",
+   "sequencia": [
+    "How can I help you?",
+    "I'd like a hot dog, please.",
+    "Here you are.",
+    "Thank you. How much is it?"
+   ],
+   "explicacao": "Primeiro o garçom oferece ajuda, depois vem o pedido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Coloque o fim do diálogo em ordem.",
+   "sequencia": [
+    "How much is it?",
+    "It's one dollar and eighty-two cents.",
+    "OK. Here it is. Thanks.",
+    "Thank you very much! Have a nice day!"
+   ],
+   "explicacao": "Pergunta o preço, ouve o preço, paga, e o garçom se despede.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.62"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Depois de “How much is it?”, o que o garçom responde?",
+   "certa": "It's two dollars and seventy-three cents.",
+   "erradas": [
+    "I'd like an orange juice, please.",
+    "OK. Here it is. Thanks.",
+    "How can I help you today? I'm the server."
+   ],
+   "explicacao": "Ele diz o preço: It's...",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Quem diz “Have a nice day!”?",
+   "certa": "O garçom, ao se despedir",
+   "erradas": [
+    "O cliente, ao fazer o pedido",
+    "O garçom, ao dizer o preço",
+    "O cliente, ao pegar a comida"
+   ],
+   "explicacao": "É a despedida do garçom: Tenha um bom dia!",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "“OK. Here it is. Thanks.” Nessa hora, o cliente está:",
+   "certa": "Entregando o dinheiro",
+   "erradas": [
+    "Pedindo a comida",
+    "Perguntando o preço",
+    "Chamando o garçom"
+   ],
+   "explicacao": "Depois de ouvir o preço, ele paga: Here it is.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "No diálogo, “Here you are” e “Here it is” são ditos pela mesma pessoa.",
+   "certa": false,
+   "explicacao": "Falso: o garçom diz Here you are ao entregar; o cliente diz Here it is ao pagar.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.58"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Para que serve “I'd like...”?",
+   "certa": "Para pedir alguma coisa com educação",
+   "erradas": [
+    "Para perguntar quanto custa",
+    "Para agradecer no fim da conversa toda",
+    "Para dizer o que não quer"
+   ],
+   "explicacao": "I'd like a salad, please = Eu gostaria de uma salada, por favor.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.53"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "pedido",
+   "icone": "fala",
+   "enunciado": "Responder “Yes! Thank you!” é mais educado do que responder só “Yes!”.",
+   "certa": true,
+   "explicacao": "Verdadeiro: agradecer é a escolha educada, como na atividade 10.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.56"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Quanto custa o cheeseburger no cardápio infantil do Rubi's Diner?",
+   "certa": "$3.95",
+   "erradas": [
+    "$2.35",
+    "$1.95",
+    "$4.99"
+   ],
+   "explicacao": "Cheeseburger $3.95. Hamburger $2.35, hot dog $1.95, salad $4.99.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Que informação o cardápio do Rubi's Diner NÃO traz?",
+   "certa": "Informação nutricional",
+   "erradas": [
+    "O nome do restaurante",
+    "O preço das comidas",
+    "O nome das bebidas"
+   ],
+   "explicacao": "O cardápio traz nome, preços e pratos. Não traz informação nutricional nem opinião.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "O que quer dizer “All kids' meals come with a drink”?",
+   "certa": "Toda refeição infantil vem com bebida",
+   "erradas": [
+    "As crianças não podem pedir bebida nenhuma",
+    "A bebida infantil custa mais caro",
+    "Toda bebida vem com sobremesa"
+   ],
+   "explicacao": "Come with a drink = vem com uma bebida.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Complete pelo cardápio: “When you buy a meal, ...”",
+   "certa": "the drink is free.",
+   "erradas": [
+    "of dessert.",
+    "lemon pies.",
+    "only for kids."
+   ],
+   "explicacao": "A bebida vem junto com a refeição: é grátis.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Complete pelo cardápio: “There are three options...”",
+   "certa": "of dessert.",
+   "erradas": [
+    "lemon juice.",
+    "French fries.",
+    "the drink is free."
+   ],
+   "explicacao": "Strawberry ice cream, apple pie e chocolate cake: três sobremesas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Complete pelo cardápio: “There aren't...”",
+   "certa": "lemon pies.",
+   "erradas": [
+    "French fries.",
+    "lemon juice.",
+    "of dessert."
+   ],
+   "explicacao": "No cardápio não há torta de limão.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Complete pelo cardápio: “There is orange and...”",
+   "certa": "lemon juice.",
+   "erradas": [
+    "lemon pies.",
+    "French fries.",
+    "of dessert."
+   ],
+   "explicacao": "Há suco de laranja e suco de limão.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Complete pelo cardápio: “The menu is...”",
+   "certa": "only for kids.",
+   "erradas": [
+    "of dessert.",
+    "lemon pies.",
+    "the drink is free."
+   ],
+   "explicacao": "É o Kids' Menu: só para crianças.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "No Rubi's Diner, o lemon juice custa mais que o orange juice.",
+   "certa": true,
+   "explicacao": "Verdadeiro: lemon juice $2.83, orange juice $2.73.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "cardapio",
+   "icone": "bilhete",
+   "enunciado": "Qual é a comida mais cara da parte “Food” do Rubi's Diner?",
+   "certa": "Salad",
+   "erradas": [
+    "Cheeseburger",
+    "Onion rings",
+    "Hamburger"
+   ],
+   "explicacao": "Salad $4.99, cheeseburger $3.95.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.57"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "No quadrinho, Noah explica que Hamburg é:",
+   "certa": "uma cidade da Alemanha",
+   "erradas": [
+    "um restaurante dos EUA",
+    "o nome de um cozinheiro",
+    "uma cidade dos EUA"
+   ],
+   "explicacao": "It's a city in Germany: Hamburg é uma cidade da Alemanha.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Onde as crianças do quadrinho estão de verdade?",
+   "certa": "Na feira de St. Louis, nos EUA",
+   "erradas": [
+    "Num restaurante de Hamburg",
+    "Numa estação de trem da Alemanha",
+    "Numa lanchonete de Londres"
+   ],
+   "explicacao": "No. We're in the U.S.: elas estão na feira mundial de St. Louis.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Em que ano foi a feira de St. Louis do quadrinho?",
+   "certa": "1904",
+   "erradas": [
+    "1940",
+    "1914",
+    "2004"
+   ],
+   "explicacao": "O cartaz diz World's Fair, St. Louis, 1904.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "O que as crianças acham no chão?",
+   "certa": "Sacos de sanduíche",
+   "erradas": [
+    "Um mapa da Alemanha",
+    "Moedas de um dólar",
+    "Um cardápio antigo"
+   ],
+   "explicacao": "What are these? Sandwich bags! São sacos de sanduíche.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "O que o cozinheiro diz que inventou?",
+   "certa": "O hambúrguer",
+   "erradas": [
+    "O cachorro-quente",
+    "O suco de laranja",
+    "O sorvete de morango"
+   ],
+   "explicacao": "Yeah! My invention, a hamburger.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Quanto as crianças pagaram pelo hambúrguer?",
+   "certa": "Nada: para elas, era grátis",
+   "erradas": [
+    "$2.30, o preço do hot dog",
+    "$1.45, o preço do sorvete",
+    "$0.90, o preço do suco"
+   ],
+   "explicacao": "For you, it's free, kids! Para elas, de graça.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.56"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "As crianças devolveram os sacos de sanduíche ao cozinheiro.",
+   "certa": true,
+   "explicacao": "Verdadeiro: Excuse me, are these yours? Oh, yes! Thank you!",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Por que muitos diners têm forma de vagão de trem?",
+   "certa": "Antes, vagões eram usados como restaurantes",
+   "erradas": [
+    "Os cozinheiros moravam dentro de trens",
+    "Os diners ficam sempre perto das estações de trem",
+    "Os vagões deixam a comida mais barata"
+   ],
+   "explicacao": "In the past, some people used wagons as restaurants.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.51"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Em “Are we in Hamburg?”, a voz:",
+   "certa": "Sobe no fim",
+   "erradas": [
+    "Desce no fim",
+    "Fica igual o tempo todo",
+    "Sobe no começo"
+   ],
+   "explicacao": "Pergunta de sim ou não sobe no fim, como em Oh, is that a sandwich?",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.56"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Em “How much is it?”, a voz desce no fim.",
+   "certa": true,
+   "explicacao": "Verdadeiro: How much, Where e What descem no fim.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.56"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "historia",
+   "icone": "globo",
+   "enunciado": "Hamburg é uma cidade de que país? (em português)",
+   "aceitas": [
+    "alemanha",
+    "a alemanha",
+    "germany",
+    "na alemanha"
+   ],
+   "exemplo": "Digite o país...",
+   "explicacao": "It's a city in Germany: Alemanha.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.55"
+   }
+  }
+ ]
+}

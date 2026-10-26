@@ -326,6 +326,24 @@ Em três pedaços, cada um entregável sozinho:
 **Custo novo:** cada geração chama um modelo e custa. Precisa de limite por
 conta desde o primeiro dia, ou a conta chega antes do cliente.
 
+**Pedaço 1 escrito em 25/10/2026, ainda não publicado.** A função está em
+`supabase/functions/gerar/`, a esteira em `supabase/functions/_esteira/`, e a
+tela é `gerar.html`. Ligar está em `GERAR.md`. O que ficou decidido no
+caminho:
+
+- **Só `escolha`.** É o tipo em que os medidores mordem; `vf` tem viés
+  próprio (proporção de verdadeiros) que ainda não se mede.
+- **Os medidores existem duas vezes**, em Python no build e em TypeScript na
+  função, e `teste/esteira/paridade.ts` cobra que deem o mesmo número sobre
+  todo `conteudo/`. Cada regra ganhou uma versão por questão, que é o que
+  decide o que regerar. Ela foi calibrada contra as 540 questões revisadas à
+  mão: marca 19 delas (3,5%), como aviso, não bloqueio.
+- **Limite em duas cercas**: gerações por conta por dia e teto de gasto de
+  todas as contas por dia, reservado antes de chamar o modelo e sob trava.
+- **A saída é um arquivo** no esquema de `conteudo/`, não um jogo pronto.
+  Virar jogo ainda passa pelos passos de `conteudo/LEIA.md`. Jogar direto da
+  tela de revisão é o que falta para "sair com um jogo" valer ao pé da letra.
+
 ### Fase 5 — Modelo de dados `~4 dias, depende do cliente`
 
 Contas → perfis → progresso → biblioteca de material, com papéis. Turma e

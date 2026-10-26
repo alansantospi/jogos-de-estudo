@@ -59,25 +59,31 @@ def medir(arq):
     return it, estrategia(it, max), estrategia(it, min), mc, me
 
 
-ruim = 0
-for arq in sorted(ARQUIVOS):
-    it, pmaior, pmenor, mc, me = medir(arq)
-    mal = not (PISO <= pmaior <= TETO) or not (PISO <= pmenor <= TETO)
-    print("  %-22s n=%-4d  sempre-a-maior=%4.1f%%  sempre-a-menor=%4.1f%%"
-          "  mediaC=%4.1f mediaE=%4.1f  %s"
-          % (arq.replace(".html", ""), len(it), pmaior, pmenor, mc, me,
-             "VIÉS" if mal else "ok"))
-    if mal:
-        ruim += 1
-        if "-v" in sys.argv:
-            piores = sorted(((len(c) - max(len(x) for x in d), q, c, d) for q, c, d in it),
-                            reverse=True)[:12]
-            for g, q, c, d in piores:
-                if g <= 0:
-                    break
-                print("     +%-3d %s" % (g, q[:72]))
-                print("          C %3d %s" % (len(c), c))
-                for x in d:
-                    print("          e %3d %s" % (len(x), x))
-print("  (acaso puro: 25%%. Faixa aceita: %g%% a %g%%)" % (PISO, TETO))
-sys.exit(1 if ruim else 0)
+
+def main():
+    ruim = 0
+    for arq in sorted(ARQUIVOS):
+        it, pmaior, pmenor, mc, me = medir(arq)
+        mal = not (PISO <= pmaior <= TETO) or not (PISO <= pmenor <= TETO)
+        print("  %-22s n=%-4d  sempre-a-maior=%4.1f%%  sempre-a-menor=%4.1f%%"
+              "  mediaC=%4.1f mediaE=%4.1f  %s"
+              % (arq.replace(".html", ""), len(it), pmaior, pmenor, mc, me,
+                 "VIÉS" if mal else "ok"))
+        if mal:
+            ruim += 1
+            if "-v" in sys.argv:
+                piores = sorted(((len(c) - max(len(x) for x in d), q, c, d) for q, c, d in it),
+                                reverse=True)[:12]
+                for g, q, c, d in piores:
+                    if g <= 0:
+                        break
+                    print("     +%-3d %s" % (g, q[:72]))
+                    print("          C %3d %s" % (len(c), c))
+                    for x in d:
+                        print("          e %3d %s" % (len(x), x))
+    print("  (acaso puro: 25%%. Faixa aceita: %g%% a %g%%)" % (PISO, TETO))
+    return 1 if ruim else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

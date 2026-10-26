@@ -7,12 +7,17 @@ const BASES = {ing: "ttg_progress_v1", cien: "sky_progress_v1",
                hist: "historia_progress_v1", arte: "artes_progress_v1",
                mat: "matematica_progress_v1",
                gram: "gramatica_progress_v1",
-               geo: "geografia_progress_v1"};
+               geo: "geografia_progress_v1",
+               rest: "restaurante_progress_v1",
+               micro: "microscopico_progress_v1"};
 const MATERIA = {ing: "Inglês", cien: "Ciências", hist: "História", arte: "Arte",
-                 mat: "Matemática", gram: "Gramática", geo: "Geografia"};
+                 mat: "Matemática", gram: "Gramática", geo: "Geografia",
+                 rest: "Inglês (Eating Out)",
+                 micro: "Ciências (Mundo microscópico)"};
 const PAGINA = {ing: "time-travel-english.html", cien: "exploradores-do-ceu.html",
                 hist: "historia.html", arte: "artes.html", mat: "matematica.html",
-                gram: "gramatica.html", geo: "geografia.html"};
+                gram: "gramatica.html", geo: "geografia.html",
+                rest: "restaurante.html", micro: "microscopico.html"};
 
 const ler = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } };
 const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };

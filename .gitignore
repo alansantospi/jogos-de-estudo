@@ -2,3 +2,9 @@
 # Não são páginas completas e não funcionam sozinhas no GitHub Pages.
 web/
 build/__pycache__/
+
+# Segredos locais (senha do banco para a CLI do Supabase). Nunca no repositório.
+.env
+
+# Estado local da CLI do Supabase (projeto ligado, URL do pooler).
+supabase/.temp/

@@ -54,6 +54,22 @@ JOGOS = {
         sala="jogosdeestudo-geo-",
         patente="lives<=0&&!practiceMode?'Aprendiz de Geografia':acc>=90?'Mestre do Campo e da Cidade'"
                 ":acc>=70?'Geógrafo':'Aprendiz de Geografia'"),
+    "restaurante.html": dict(
+        id="restaurante", conteudo="restaurante-4ano", slug="rest",
+        cor="oklch(0.40 0.16 330)", titulo="Diner Time",
+        chave="restaurante_progress_v1", materia="Inglês",
+        subtitulo="Inglês — Eating Out: comida, preços e pedidos",
+        sala="jogosdeestudo-rest-",
+        patente="lives<=0&&!practiceMode?'Cliente Novo':acc>=90?'Chef do Diner'"
+                ":acc>=70?'Freguês da Casa':'Cliente Novo'"),
+    "microscopico.html": dict(
+        id="microscopico", conteudo="microscopico-4ano", slug="micro",
+        cor="oklch(0.40 0.19 285)", titulo="Mundo Microscópico",
+        chave="microscopico_progress_v1", materia="Ciências",
+        subtitulo="Ciências — células, microrganismos e vírus",
+        sala="jogosdeestudo-micro-",
+        patente="lives<=0&&!practiceMode?'Aprendiz de Laboratório':acc>=90?'Mestre do Microscópio'"
+                ":acc>=70?'Cientista':'Aprendiz de Laboratório'"),
     "artes.html": dict(
         id="artes", conteudo="artes-4ano", slug="arte",
         cor="oklch(0.56 0.22 330)", titulo="Ateliê",

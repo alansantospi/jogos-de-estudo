@@ -13,6 +13,11 @@ Sai com código 1 se algo falhar, então serve de portão antes de publicar.
 navegador. Viés de comprimento e de plausibilidade nas alternativas, e função
 chamada num motor que não a tem.
 
+**Esteira** (`teste/esteira/`) — em Node, sem navegador nem rede. `paridade.ts`
+roda os medidores em Python e em TypeScript sobre todo `conteudo/` e cobra o
+mesmo número; `esteira.test.ts` roda a geração inteira com um modelo de
+mentira. Precisa de Node 23.6 ou mais novo, que lê TypeScript direto.
+
 **Casos** (`teste/casos/*.js`) — num Chrome de verdade, sem cabeça:
 
 | caso | onde | o que cobra |
@@ -21,6 +26,7 @@ chamada num motor que não a tem.
 | `navegacao` | 4 jogos | rotas, o endereço persistindo, busca sem acento, migalhas |
 | `fim` | 4 jogos | caixa de revisão, ícones nela, patente da matéria certa |
 | `perfis` | índice | isolamento entre alunos, histórico a partir do progresso, lixeira, restauração |
+| `gerar` | gerar.html | aprovar, editar, descartar; problema grave não se aprova; texto do modelo nunca vira HTML; o arquivo baixado no esquema |
 
 **Mutação** (`teste/mutacao.py`) — reinjeta quatro defeitos que este projeto
 teve de verdade e cobra que a suíte falhe. Suíte que passa não prova nada.

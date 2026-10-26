@@ -94,5 +94,32 @@
   "agroindustria": "Agroindústria",
   "industrias": "Indústrias e construção",
   "caminho": "O caminho do produto"
+ },
+ "rest": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "comidas": "Comidas",
+  "bebidas": "Bebidas",
+  "sobremesas": "Sobremesas",
+  "artigos": "A ou AN",
+  "preco": "How much is / are?",
+  "numeros": "Números e preços",
+  "pedido": "No restaurante",
+  "cardapio": "O cardápio do Rubi's",
+  "historia": "A história do hambúrguer"
+ },
+ "micro": {
+  "all": "Desafio misto",
+  "review": "Revisão dos meus erros",
+  "celula": "A célula",
+  "unimulti": "Uni ou multicelular",
+  "microscopio": "O microscópio",
+  "fungos": "Fungos",
+  "protozoarios": "Protozoários",
+  "algas": "Algas e fitoplâncton",
+  "bacterias": "Bactérias",
+  "virus": "Vírus",
+  "natureza": "Microrganismos na natureza",
+  "saude": "Vilões e aliados"
  }
 }

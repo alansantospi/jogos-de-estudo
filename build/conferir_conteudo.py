@@ -19,7 +19,9 @@ import montar
 PARES = {a: p["conteudo"] for a, p in montar.JOGOS.items()}
 
 # Campos do esquema que o motor não carrega de volta: são só para nós.
-SO_NOSSOS = {"origem"}
+# `trecho` é a citação que a esteira de geração exige; serve para conferir a
+# questão, não para a criança.
+SO_NOSSOS = {"origem", "trecho"}
 
 
 def _comparavel(q):

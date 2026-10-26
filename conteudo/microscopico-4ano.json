@@ -1,0 +1,2139 @@
+{
+ "id": "microscopico-4ano",
+ "materia": "Ciências",
+ "titulo": "Mundo Microscópico",
+ "motor": "ceu",
+ "missoes": [
+  {
+   "id": "celula",
+   "nome": "A célula"
+  },
+  {
+   "id": "unimulti",
+   "nome": "Uni ou multicelular"
+  },
+  {
+   "id": "microscopio",
+   "nome": "O microscópio"
+  },
+  {
+   "id": "fungos",
+   "nome": "Fungos"
+  },
+  {
+   "id": "protozoarios",
+   "nome": "Protozoários"
+  },
+  {
+   "id": "algas",
+   "nome": "Algas e fitoplâncton"
+  },
+  {
+   "id": "bacterias",
+   "nome": "Bactérias"
+  },
+  {
+   "id": "virus",
+   "nome": "Vírus"
+  },
+  {
+   "id": "natureza",
+   "nome": "Microrganismos na natureza"
+  },
+  {
+   "id": "saude",
+   "nome": "Vilões e aliados"
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "celulas",
+   "nome": "As Células",
+   "etapas": [
+    "celula",
+    "unimulti",
+    "microscopio"
+   ]
+  },
+  {
+   "id": "seres",
+   "nome": "Os Microrganismos",
+   "etapas": [
+    "fungos",
+    "protozoarios",
+    "algas",
+    "bacterias",
+    "virus"
+   ]
+  },
+  {
+   "id": "vida",
+   "nome": "Vilões e Aliados",
+   "etapas": [
+    "natureza",
+    "saude",
+    "all"
+   ]
+  }
+ ],
+ "questoes": [
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "O que todos os seres vivos têm em comum?",
+   "certa": "São formados por células",
+   "erradas": [
+    "Todos têm núcleo e citoplasma",
+    "Todos fazem fotossíntese",
+    "Todos têm parede celular"
+   ],
+   "explicacao": "Todo ser vivo é feito de células. Núcleo não é de todos: a bactéria não tem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "O que é a célula?",
+   "certa": "A menor parte viva de um organismo",
+   "erradas": [
+    "Um órgão grande dentro do corpo humano",
+    "Um tipo de microscópio",
+    "Uma substância que fica no sangue"
+   ],
+   "explicacao": "Célula é a menor unidade viva dos seres vivos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "Que parte da célula controla as atividades dela?",
+   "certa": "O núcleo",
+   "erradas": [
+    "O citoplasma",
+    "A parede celular",
+    "O cloroplasto"
+   ],
+   "explicacao": "O núcleo controla as atividades da célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "O que só a célula vegetal tem?",
+   "certa": "Parede celular e cloroplastos",
+   "erradas": [
+    "Núcleo e citoplasma",
+    "Só o citoplasma",
+    "Cílios e flagelos para se mover"
+   ],
+   "explicacao": "A parede dá sustentação e os cloroplastos produzem o alimento. A célula animal não tem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "Para que servem os cloroplastos?",
+   "certa": "Para produzir o próprio alimento",
+   "erradas": [
+    "Para controlar a célula",
+    "Para dar sustentação à célula vegetal",
+    "Para a célula se locomover"
+   ],
+   "explicacao": "Os cloroplastos fazem a fotossíntese.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "Para que serve a parede celular?",
+   "certa": "Para dar sustentação",
+   "erradas": [
+    "Para produzir alimento",
+    "Para controlar a célula toda",
+    "Para guardar o material genético"
+   ],
+   "explicacao": "A parede celular sustenta a célula vegetal.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "A célula animal tem parede celular e cloroplastos.",
+   "certa": false,
+   "explicacao": "Falso: só a célula vegetal tem essas duas estruturas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "A célula vegetal e a célula animal têm núcleo e citoplasma.",
+   "certa": true,
+   "explicacao": "Verdadeiro: essas são as partes que as duas têm em comum.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "Ligue cada parte da célula ao que ela faz.",
+   "pares": [
+    [
+     "Núcleo",
+     "Controla a célula"
+    ],
+    [
+     "Citoplasma",
+     "Onde ocorrem várias funções"
+    ],
+    [
+     "Parede celular",
+     "Dá sustentação"
+    ],
+    [
+     "Cloroplasto",
+     "Produz o alimento"
+    ]
+   ],
+   "explicacao": "As partes da célula, página 75.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "O que é o citoplasma?",
+   "certa": "Substância gelatinosa que enche a célula",
+   "erradas": [
+    "A parte dura que protege a célula da planta",
+    "O nome do núcleo da bactéria",
+    "Uma lente do microscópio"
+   ],
+   "explicacao": "Glossário da página 86: substância gelatinosa que preenche as células.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "celula",
+   "icone": "olho",
+   "enunciado": "Quais funções a célula realiza?",
+   "certa": "Nutrição, crescimento e reprodução",
+   "erradas": [
+    "Só respiração e nada mais",
+    "Fotossíntese em todos os seres vivos",
+    "Apenas a locomoção"
+   ],
+   "explicacao": "Célula realiza funções vitais: nutrição, crescimento e reprodução.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.75"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Um organismo formado por uma célula só é:",
+   "certa": "Unicelular",
+   "erradas": [
+    "Multicelular",
+    "Vegetal",
+    "Inativo"
+   ],
+   "explicacao": "Uni = um. Unicelular tem uma única célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Plantas e animais são organismos:",
+   "certa": "Multicelulares",
+   "erradas": [
+    "Unicelulares",
+    "Microscópicos",
+    "Sem células"
+   ],
+   "explicacao": "São formados pela união de muitas células.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Por que os seres unicelulares são chamados de microrganismos?",
+   "certa": "Só podem ser vistos com microscópio",
+   "erradas": [
+    "Vivem só dentro do corpo humano",
+    "Têm milhões de células muito pequenas",
+    "São todos causadores de doenças"
+   ],
+   "explicacao": "Micro = muito pequeno. Só se veem com a ajuda do microscópio.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "No organismo multicelular, cada célula:",
+   "certa": "Tem uma função específica",
+   "erradas": [
+    "Faz todas as funções sozinha",
+    "Vive separada das outras",
+    "É vista a olho nu"
+   ],
+   "explicacao": "No unicelular, a única célula faz tudo. No multicelular, as células dividem o trabalho.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "O camelo é um ser unicelular.",
+   "certa": false,
+   "explicacao": "Falso: o camelo é multicelular, como todo animal.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.79"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "O cogumelo é multicelular.",
+   "certa": true,
+   "explicacao": "Verdadeiro: cogumelo e bolor são fungos que vemos sem microscópio, então são multicelulares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.79"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "A bactéria é um ser unicelular.",
+   "certa": true,
+   "explicacao": "Verdadeiro: a bactéria tem uma única célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.79"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Ligue cada ser ao tipo dele.",
+   "pares": [
+    [
+     "Paramécio",
+     "Unicelular"
+    ],
+    [
+     "Cogumelo",
+     "Multicelular"
+    ],
+    [
+     "Bactéria",
+     "Unicelular"
+    ],
+    [
+     "Camelo",
+     "Multicelular"
+    ]
+   ],
+   "explicacao": "A atividade 4 da página 79.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.79"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Qual é a diferença entre a levedura e o cogumelo?",
+   "certa": "A levedura tem uma célula; o cogumelo, muitas",
+   "erradas": [
+    "O cogumelo tem uma célula; a levedura, muitas",
+    "Só a levedura é um fungo de verdade",
+    "Só o cogumelo se alimenta de matéria orgânica"
+   ],
+   "explicacao": "Os dois são fungos. A levedura é unicelular e o cogumelo é multicelular.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.96"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Complete: organismos vistos sem instrumento possuem mais de uma célula e são ______.",
+   "aceitas": [
+    "multicelulares",
+    "multicelular",
+    "pluricelulares",
+    "pluricelular"
+   ],
+   "exemplo": "Digite a palavra...",
+   "explicacao": "Vistos a olho nu: multicelulares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.78"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "unimulti",
+   "icone": "pessoas",
+   "enunciado": "Qual destes NÃO é exemplo de ser unicelular?",
+   "certa": "O cachorro",
+   "erradas": [
+    "A bactéria",
+    "O protozoário",
+    "A levedura"
+   ],
+   "explicacao": "O cachorro é multicelular.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "Para que serve o microscópio?",
+   "certa": "Para ampliar a imagem do que é pequeno",
+   "erradas": [
+    "Para matar os microrganismos",
+    "Para medir a temperatura",
+    "Para enxergar as estrelas mais distantes"
+   ],
+   "explicacao": "O microscópio amplia a imagem dos objetos e das estruturas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "No microscópio ótico, a imagem aparece:",
+   "certa": "No próprio aparelho",
+   "erradas": [
+    "Num computador",
+    "Numa folha de papel",
+    "Num celular"
+   ],
+   "explicacao": "A luz atravessa a amostra, passa pelas lentes, e vemos no próprio aparelho.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.77"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "No microscópio eletrônico, a imagem aparece:",
+   "certa": "Num computador",
+   "erradas": [
+    "No próprio aparelho",
+    "Numa lupa de mão",
+    "Na lente do olho"
+   ],
+   "explicacao": "O eletrônico mostra a imagem num computador, com ainda mais detalhes.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.77"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "Qual microscópio é o único que mostra os vírus?",
+   "certa": "O eletrônico",
+   "erradas": [
+    "O ótico",
+    "Qualquer um deles",
+    "Nenhum, só a lupa"
+   ],
+   "explicacao": "Os vírus são tão pequenos que só o eletrônico, mais potente, consegue mostrar.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.87"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "Que microscópio usa luz e lentes, e mostra a imagem no próprio aparelho?",
+   "aceitas": [
+    "otico",
+    "optico",
+    "microscopio otico",
+    "microscopio optico",
+    "o otico",
+    "o optico"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "É o microscópio ótico (ou óptico): com P depois do O, nunca \"opitico\".",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.78"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "O microscópio eletrônico mostra mais detalhes das células que o ótico.",
+   "certa": true,
+   "explicacao": "Verdadeiro: ele é muito mais potente.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.77"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "Os seres unicelulares foram descobertos antes da invenção do microscópio.",
+   "certa": false,
+   "explicacao": "Falso: só foram descobertos depois do microscópio.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.76"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "microscopio",
+   "icone": "lupa",
+   "enunciado": "Coloque em ordem o caminho da luz no microscópio ótico.",
+   "sequencia": [
+    "A luz atravessa a amostra",
+    "Passa pelas lentes",
+    "As lentes ampliam a imagem",
+    "Vemos a imagem no aparelho"
+   ],
+   "explicacao": "Luz, amostra, lentes, imagem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.77"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Como os fungos conseguem alimento?",
+   "certa": "Absorvem matéria orgânica do ambiente",
+   "erradas": [
+    "Fazem fotossíntese com a luz",
+    "Caçam usando os flagelos",
+    "Recebem alimento pelas raízes das plantas"
+   ],
+   "explicacao": "Fungos são heterótrofos: não produzem o próprio alimento.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "O bolor verde faz fotossíntese, como as plantas.",
+   "certa": false,
+   "explicacao": "Falso: mesmo verde, o bolor é fungo e não faz fotossíntese.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.80"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Os fungos têm flagelos para se locomover.",
+   "certa": false,
+   "explicacao": "Falso: flagelo é de protozoários, algas e bactérias. Fungo se alastra pela superfície.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Fungos são heterótrofos. Isso quer dizer que eles:",
+   "certa": "Não produzem o próprio alimento",
+   "erradas": [
+    "Produzem o alimento com a luz do sol",
+    "Vivem só dentro da água salgada",
+    "Têm uma única célula sempre"
+   ],
+   "explicacao": "Heterótrofo depende de outros seres para se alimentar.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Como se chamam os fungos unicelulares?",
+   "certa": "Leveduras",
+   "erradas": [
+    "Cogumelos",
+    "Bolores",
+    "Orelhas-de-pau"
+   ],
+   "explicacao": "Leveduras são fungos microscópicos, de uma célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.81"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Onde os fungos podem ser encontrados?",
+   "certa": "Em lugares úmidos, sombreados e na água",
+   "erradas": [
+    "Só na água doce e salgada",
+    "Só dentro de seres humanos",
+    "Só em lugares secos e quentes, longe da água"
+   ],
+   "explicacao": "Há fungos em todos os cantos da crosta terrestre: terra úmida e sombreada, e também a água.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Quais são representantes do reino Fungi?",
+   "certa": "Cogumelo, bolor e levedura",
+   "erradas": [
+    "Ameba, paramécio e euglena",
+    "Bacilo, coco e espirilo",
+    "Diatomácea, alga e musgo"
+   ],
+   "explicacao": "Cogumelos, bolores, orelhas-de-pau e leveduras.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Qual destas é uma utilidade dos fungos?",
+   "certa": "Fazer queijo, pão e remédios",
+   "erradas": [
+    "Produzir o oxigênio do planeta",
+    "Fazer fotossíntese para as plantas",
+    "Proteger contra todo vírus"
+   ],
+   "explicacao": "Fungos entram em queijos, na fermentação e em medicamentos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Qual a relação dos fungos com a farmácia?",
+   "certa": "Alguns fungos produzem antibióticos",
+   "erradas": [
+    "Fungos curam todas as doenças",
+    "A farmácia vende cogumelos",
+    "Os fungos destroem os remédios da farmácia"
+   ],
+   "explicacao": "Alguns fungos produzem antibióticos, remédios contra bactérias.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "O vinho é feito pela fermentação da uva. Quem faz essa fermentação?",
+   "certa": "As leveduras",
+   "erradas": [
+    "Os cogumelos",
+    "As bactérias do intestino",
+    "Os protozoários"
+   ],
+   "explicacao": "Leveduras, fungos unicelulares, participam da produção de bebidas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Um fungo saprófito se alimenta de:",
+   "certa": "Matéria orgânica em decomposição",
+   "erradas": [
+    "Luz do sol e água",
+    "Sangue de outros animais",
+    "Pedras e minerais do fundo do solo"
+   ],
+   "explicacao": "A maioria dos fungos é saprófita: come o que está se decompondo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Que doença é causada por fungo?",
+   "certa": "Micose",
+   "erradas": [
+    "Doença de Chagas",
+    "Malária",
+    "Toxoplasmose"
+   ],
+   "explicacao": "Micose é doença de fungo. As outras são de protozoários.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Todas mostram a importância dos fungos, EXCETO:",
+   "certa": "Fazem fotossíntese",
+   "erradas": [
+    "Fazem a fermentação",
+    "Alguns produzem antibióticos",
+    "Ajudam a formar os líquens"
+   ],
+   "explicacao": "Fungo não é autótrofo: não produz alimento.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "Ligue cada fungo à sua característica.",
+   "pares": [
+    [
+     "Cogumelo",
+     "Multicelular, com haste e chapéu"
+    ],
+    [
+     "Bolor",
+     "Multicelular, aparece no pão"
+    ],
+    [
+     "Levedura",
+     "Unicelular e redonda"
+    ]
+   ],
+   "explicacao": "Os três grupos de fungos da página 83.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.83"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "fungos",
+   "icone": "comida",
+   "enunciado": "As leveduras, junto com outros fungos, agem como decompositoras.",
+   "certa": true,
+   "explicacao": "Verdadeiro: decompõem a matéria nas cadeias alimentares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.81"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Protozoários são seres:",
+   "certa": "Unicelulares",
+   "erradas": [
+    "Multicelulares",
+    "Sem células",
+    "Que fazem fotossíntese"
+   ],
+   "explicacao": "Protozoários têm uma única célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.81"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Como o paramécio se locomove?",
+   "certa": "Com cílios",
+   "erradas": [
+    "Com flagelo",
+    "Estendendo o corpo",
+    "Ele não se mexe"
+   ],
+   "explicacao": "Cílios são estruturas curtas, como cílios dos olhos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.81"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Como a ameba se locomove?",
+   "certa": "Estendendo o corpo",
+   "erradas": [
+    "Com cílios",
+    "Com um flagelo",
+    "Pela água da chuva"
+   ],
+   "explicacao": "Ela estende o corpo em várias direções: são os pseudópodes, falsos pés.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.82"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Como o tripanossomo se locomove?",
+   "certa": "Com um flagelo",
+   "erradas": [
+    "Com cílios",
+    "Estendendo o corpo",
+    "Ele não se locomove"
+   ],
+   "explicacao": "Flagelo é uma estrutura longa e fina, como uma cauda.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.82"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Onde vive o tripanossomo?",
+   "certa": "Dentro do inseto barbeiro",
+   "erradas": [
+    "Na água do mar",
+    "No pão mofado",
+    "Nas raízes do feijão"
+   ],
+   "explicacao": "O Trypanosoma cruzi vive dentro do barbeiro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.82"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Ligue o grupo de protozoário ao jeito de se mover.",
+   "pares": [
+    [
+     "Flagelados",
+     "Flagelos"
+    ],
+    [
+     "Ciliados",
+     "Cílios"
+    ],
+    [
+     "Rizópodes",
+     "Pseudópodes"
+    ],
+    [
+     "Esporozoários",
+     "Não se locomovem"
+    ]
+   ],
+   "explicacao": "Os protozoários se classificam pela locomoção.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "O que são pseudópodes?",
+   "certa": "Falsos pés, como os da ameba",
+   "erradas": [
+    "Pés de verdade dos insetos",
+    "Pelinhos curtos do paramécio",
+    "A cauda comprida do tripanossomo"
+   ],
+   "explicacao": "Pseudo = falso. A ameba estende o corpo como se fossem pés.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Os esporozoários se locomovem:",
+   "certa": "Não têm estrutura para se locomover",
+   "erradas": [
+    "Com muitos cílios",
+    "Com um flagelo comprido",
+    "Estendendo o corpo todo"
+   ],
+   "explicacao": "Esporozoários não possuem estrutura locomotora.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Qual destas é uma característica dos protozoários?",
+   "certa": "Unicelulares, heterótrofos, com núcleo",
+   "erradas": [
+    "Multicelulares e com parede rígida",
+    "Fazem fotossíntese, como as algas fazem",
+    "Não são formados por células"
+   ],
+   "explicacao": "Uma célula só, com núcleo (eucarionte), e se alimentam de outros pequenos organismos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Qual destas doenças é causada por protozoário?",
+   "certa": "Doença de Chagas",
+   "erradas": [
+    "Micose na pele",
+    "Gripe comum",
+    "Frieira nos pés"
+   ],
+   "explicacao": "Chagas, malária, amebíase, leishmaniose e toxoplasmose são de protozoários.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Que protozoário causa a doença de Chagas?",
+   "certa": "Trypanosoma cruzi",
+   "erradas": [
+    "Toxoplasma gondii",
+    "Paramécio",
+    "Ameba"
+   ],
+   "explicacao": "O tripanossomo, transmitido pelo barbeiro.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Que protozoário se locomove com cílios e vive na água doce?",
+   "aceitas": [
+    "paramecio",
+    "o paramecio"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "É o paramécio — com M e acento: pa-ra-mé-cio.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.83"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Como se chama a estrutura longa e fina que o tripanossomo usa para se mover?",
+   "aceitas": [
+    "flagelo",
+    "o flagelo",
+    "um flagelo"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "É o flagelo: fla-ge-lo, com L depois do F.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.82"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "protozoarios",
+   "icone": "gota",
+   "enunciado": "Protozoários podem viver dentro de insetos e em locais úmidos.",
+   "certa": true,
+   "explicacao": "Verdadeiro: vivem na água, no solo e dentro de outros seres.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.81"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Como se chama o grupo das algas unicelulares?",
+   "certa": "Fitoplâncton",
+   "erradas": [
+    "Leveduras",
+    "Protozoários",
+    "Cogumelos"
+   ],
+   "explicacao": "As algas unicelulares formam o fitoplâncton.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.84"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Onde vive o fitoplâncton?",
+   "certa": "Em mares, rios e lagos",
+   "erradas": [
+    "Dentro do inseto barbeiro",
+    "No pão e nas frutas",
+    "No intestino das pessoas"
+   ],
+   "explicacao": "O fitoplâncton vive em toda a coluna d'água.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.84"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Que parte do oxigênio do planeta o fitoplâncton produz?",
+   "certa": "Cerca de 4/5",
+   "erradas": [
+    "Cerca de 1/10",
+    "Quase nenhuma",
+    "Só metade, 1/2"
+   ],
+   "explicacao": "É o fitoplâncton, e não as árvores, que produz a maior parte do oxigênio.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.84"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Por que algumas pessoas confundem algas com plantas?",
+   "certa": "Têm clorofila e fazem fotossíntese",
+   "erradas": [
+    "Têm raízes, folhas e flores bonitas",
+    "Vivem todas na terra",
+    "São todas enormes"
+   ],
+   "explicacao": "As algas têm cloroplastos e clorofila, mas não são plantas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.85"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Ligue cada alga à sua característica.",
+   "pares": [
+    [
+     "Diatomácea",
+     "Parede rígida em duas partes"
+    ],
+    [
+     "Dinoflagelado",
+     "Dois flagelos"
+    ],
+    [
+     "Euglena",
+     "Flexível, sem parede rígida"
+    ]
+   ],
+   "explicacao": "As algas do fitoplâncton, páginas 85 e folha.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.85"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "O que algumas espécies de dinoflagelados provocam?",
+   "certa": "A maré vermelha",
+   "erradas": [
+    "A micose",
+    "O bolor no pão",
+    "A fermentação do vinho"
+   ],
+   "explicacao": "A maré vermelha acontece quando os dinoflagelados se multiplicam muito rápido.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "O que é a bioluminescência?",
+   "certa": "A produção de luz por um ser vivo",
+   "erradas": [
+    "A luz do sol refletida na água do mar",
+    "Uma doença das algas",
+    "O som que as algas fazem"
+   ],
+   "explicacao": "Alguns dinoflagelados produzem luz fria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Onde vivem principalmente as euglenófitas?",
+   "certa": "Em água doce rica em matéria orgânica",
+   "erradas": [
+    "No mar bem fundo e escuro só",
+    "Dentro do corpo de insetos e de animais",
+    "Em lugares secos, sem água"
+   ],
+   "explicacao": "Unicelulares, com um ou dois flagelos, flexíveis, em água doce.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "A diatomácea é:",
+   "certa": "Uma alga unicelular",
+   "erradas": [
+    "Um fungo multicelular",
+    "Uma bactéria em bastão",
+    "Um protozoário ciliado"
+   ],
+   "explicacao": "Diatomácea é alga e é unicelular. Marcar multicelular é um dos erros da tabela da página 96.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "As algas longas que flutuam no mar são multicelulares.",
+   "certa": true,
+   "explicacao": "Verdadeiro: as grandes são multicelulares; as minúsculas, unicelulares.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.84"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Que alga do fitoplâncton tem dois flagelos?",
+   "aceitas": [
+    "dinoflagelado",
+    "dinoflagelados",
+    "os dinoflagelados",
+    "o dinoflagelado"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Dinoflagelado: dino + flagelado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.85"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "algas",
+   "icone": "ondas-agua",
+   "enunciado": "Por que o peixe consegue se alimentar de tanto fitoplâncton?",
+   "certa": "O fitoplâncton é muito abundante",
+   "erradas": [
+    "O fitoplâncton é enorme",
+    "O peixe faz fotossíntese",
+    "O fitoplâncton vive no fundo da terra"
+   ],
+   "explicacao": "Ele vive em qualquer profundidade e se junta em grande quantidade.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.99"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Que formato têm os cocos?",
+   "certa": "Esférico, como bolas",
+   "erradas": [
+    "De bastão",
+    "De espiral",
+    "De vírgula"
+   ],
+   "explicacao": "Os cocos parecem bolinhas.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Que bactéria tem formato de bastão?",
+   "certa": "Bacilo",
+   "erradas": [
+    "Coco",
+    "Espirilo",
+    "Vibrião"
+   ],
+   "explicacao": "Os bacilos se assemelham a bastões.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Que bactéria tem formato de vírgula?",
+   "certa": "Vibrião",
+   "erradas": [
+    "Bacilo",
+    "Coco",
+    "Espirilo"
+   ],
+   "explicacao": "Os vibriões têm formato de vírgula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Ligue cada bactéria ao seu formato.",
+   "pares": [
+    [
+     "Coco",
+     "Bola"
+    ],
+    [
+     "Bacilo",
+     "Bastão"
+    ],
+    [
+     "Espirilo",
+     "Espiral"
+    ],
+    [
+     "Vibrião",
+     "Vírgula"
+    ]
+   ],
+   "explicacao": "Os quatro formatos de bactéria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.98"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "O que a célula da bactéria NÃO tem?",
+   "certa": "Núcleo",
+   "erradas": [
+    "Citoplasma",
+    "Material genético",
+    "Uma única célula"
+   ],
+   "explicacao": "O material genético da bactéria fica espalhado no citoplasma, sem núcleo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "“Organismo unicelular com material genético espalhado no seu interior.” Quem é?",
+   "certa": "Uma bactéria",
+   "erradas": [
+    "Um vírus",
+    "Um fungo",
+    "Uma alga"
+   ],
+   "explicacao": "Material genético solto no citoplasma, sem núcleo: bactéria.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.88"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Existem bactérias vivendo dentro do nosso intestino.",
+   "certa": true,
+   "explicacao": "Verdadeiro: elas habitam todos os lugares, até dentro da gente.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Como boa parte das bactérias se movimenta?",
+   "certa": "Com um flagelo",
+   "erradas": [
+    "Estendendo o corpo",
+    "Com pseudópodes",
+    "Elas não se movem"
+   ],
+   "explicacao": "A maioria tem cápsula protetora e muitas se movem com flagelo; algumas usam cílios.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Que bactérias vivem mais em grupo?",
+   "certa": "Os cocos",
+   "erradas": [
+    "Os vibriões",
+    "Os espirilos",
+    "Os bacilos"
+   ],
+   "explicacao": "Elas vivem sozinhas ou em grupo — principalmente os cocos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "digitar",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "Como se chamam as bactérias em forma de espiral?",
+   "aceitas": [
+    "espirilo",
+    "espirilos",
+    "os espirilos"
+   ],
+   "exemplo": "Digite o nome...",
+   "explicacao": "Espirilos parecem uma espiral.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.98"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "bacterias",
+   "icone": "pontos",
+   "enunciado": "As bactérias só vivem em lugares quentes.",
+   "certa": false,
+   "explicacao": "Falso: vivem desde os lugares mais gelados até os mais quentes.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.86"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Os vírus são seres vivos unicelulares.",
+   "certa": false,
+   "explicacao": "Falso: os vírus não são formados por células.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Os vírus podem se multiplicar em qualquer lugar.",
+   "certa": false,
+   "explicacao": "Falso: só se multiplicam usando as células de seres vivos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Os vírus podem ser vistos em qualquer tipo de microscópio.",
+   "certa": false,
+   "explicacao": "Falso: só no microscópio eletrônico.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Vírus que parasitam animais não parasitam plantas ou bactérias.",
+   "certa": true,
+   "explicacao": "Verdadeiro: os vírus são muito seletivos.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Os vírus são exclusivamente parasitas.",
+   "certa": true,
+   "explicacao": "Verdadeiro: não se multiplicam sem as células de outros seres.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.87"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Por que muitos cientistas não classificam os vírus como seres vivos?",
+   "certa": "Não têm células e ficam inativos",
+   "erradas": [
+    "Porque são grandes demais para isso",
+    "Porque fazem fotossíntese",
+    "Porque vivem só no mar"
+   ],
+   "explicacao": "Fora das células eles parecem desligados.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.87"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "O que acontece com o vírus fora das células?",
+   "certa": "Fica inativo, como desligado",
+   "erradas": [
+    "Cresce e vira bactéria",
+    "Faz fotossíntese",
+    "Se multiplica mais rápido"
+   ],
+   "explicacao": "Sem as células de um ser vivo, o vírus não faz nada.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.87"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "A grande maioria dos vírus:",
+   "certa": "Causa doenças",
+   "erradas": [
+    "Produz oxigênio",
+    "Faz queijo e pão",
+    "Decompõe as folhas"
+   ],
+   "explicacao": "Existem vários tipos, e a maioria causa doenças.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.87"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "Qual destas é uma característica dos vírus?",
+   "certa": "Não são formados por células",
+   "erradas": [
+    "Têm parede celular rígida",
+    "Têm núcleo e citoplasma",
+    "Fazem fotossíntese"
+   ],
+   "explicacao": "Parasitas, sem células, e a maioria causa doenças.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.89"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "virus",
+   "icone": "alerta",
+   "enunciado": "O que o livro diz sobre os vírus em “O que aprendi”?",
+   "certa": "Não são considerados seres vivos",
+   "erradas": [
+    "São os maiores microrganismos",
+    "São todos benéficos",
+    "Vivem soltos na natureza"
+   ],
+   "explicacao": "Vírus não são considerados seres vivos e não são formados por células.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.95"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Quem são, em sua maioria, os microrganismos decompositores?",
+   "certa": "Fungos e bactérias",
+   "erradas": [
+    "Vírus e algas",
+    "Algas e protozoários",
+    "Apenas os vírus"
+   ],
+   "explicacao": "Os ciclos de nutrientes dependem dos decompositores: fungos e bactérias.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.90"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "O que os decompositores fazem com a matéria orgânica?",
+   "certa": "Viram nutrientes para os produtores",
+   "erradas": [
+    "Transformam em oxigênio para o ar",
+    "Guardam para sempre no solo",
+    "Levam para dentro dos vírus"
+   ],
+   "explicacao": "Eles devolvem nutrientes que as plantas usam de novo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.90"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Um tronco caído, cheio de cogumelos, estava se desfazendo. Que processo é esse?",
+   "certa": "Decomposição",
+   "erradas": [
+    "Fotossíntese",
+    "Fermentação",
+    "Maré vermelha"
+   ],
+   "explicacao": "Os cogumelos são fungos decompositores: desfazem o tronco.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.100"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Se os microrganismos sumissem por um dia, o que aconteceria?",
+   "certa": "Restos de seres mortos se acumulariam",
+   "erradas": [
+    "Nada mudaria na natureza",
+    "As plantas cresceriam muito mais rápido",
+    "O oxigênio aumentaria na hora"
+   ],
+   "explicacao": "Sem eles não haveria decomposição.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.101"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "As algas são classificadas na cadeia alimentar como:",
+   "certa": "Produtoras",
+   "erradas": [
+    "Decompositoras",
+    "Consumidoras",
+    "Parasitas"
+   ],
+   "explicacao": "Fazem o próprio alimento e liberam oxigênio.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.90"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "O que é simbiose?",
+   "certa": "Dois seres vivos que se ajudam",
+   "erradas": [
+    "Um ser que vive de outro e o prejudica",
+    "Um fungo que faz fotossíntese",
+    "A morte de um ser vivo"
+   ],
+   "explicacao": "Simbiose é uma relação ecológica em que os dois se auxiliam.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.91"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "O que fazem os fungos nas raízes do feijão?",
+   "certa": "Levam ferro do solo para a semente",
+   "erradas": [
+    "Comem as raízes até a planta morrer",
+    "Fazem a fotossíntese da planta",
+    "Afastam todas as bactérias"
+   ],
+   "explicacao": "É um exemplo de simbiose: o fungo ajuda a nutrição da planta.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.91"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Qual destas NÃO mostra a importância dos microrganismos?",
+   "certa": "Impedem que os vírus causem doenças",
+   "erradas": [
+    "Estão em todos os níveis da cadeia alimentar",
+    "As algas produzem a maior parte do oxigênio",
+    "Fazem a decomposição e o ciclo dos nutrientes"
+   ],
+   "explicacao": "Na página 91, a, b e d estão certas; a c não.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.91"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "O parasitismo do tripanossomo também é uma relação ecológica.",
+   "certa": true,
+   "explicacao": "Verdadeiro: é uma forma de interação e consumo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.90"
+   }
+  },
+  {
+   "tipo": "ordenar",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Coloque a cadeia alimentar em ordem.",
+   "sequencia": [
+    "Produtor faz o alimento",
+    "Consumidor come outro ser",
+    "Decompositor recicla os restos",
+    "Os nutrientes voltam ao solo"
+   ],
+   "explicacao": "Vamos lembrar, página 91.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.91"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "natureza",
+   "icone": "ciclo",
+   "enunciado": "Os microrganismos ajudam na limpeza das águas e do solo.",
+   "certa": true,
+   "explicacao": "Verdadeiro: produção de oxigênio, limpeza das águas e do solo.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.95"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Por que lavar as mãos antes de comer?",
+   "certa": "Para tirar microrganismos que não vemos",
+   "erradas": [
+    "Para deixar a comida mais gostosa",
+    "Porque a água da torneira tem vitaminas",
+    "Para matar as algas das mãos"
+   ],
+   "explicacao": "Há microrganismos invisíveis nas mãos, e alguns causam doenças.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.73"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "O que faz o pão crescer?",
+   "certa": "Leveduras, que são fungos",
+   "erradas": [
+    "Bactérias em forma de bastão",
+    "O calor do forno sozinho",
+    "As algas do fitoplâncton"
+   ],
+   "explicacao": "O fermento é feito de leveduras.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.73"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Como a doença de Chagas é transmitida?",
+   "certa": "Pelo inseto barbeiro",
+   "erradas": [
+    "Pelo ar, como a gripe",
+    "Comendo pão mofado",
+    "Pela água do mar"
+   ],
+   "explicacao": "O tripanossomo vive no barbeiro e passa para as pessoas pelas fezes dele.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Que protozoário causa a toxoplasmose?",
+   "certa": "Toxoplasma gondii",
+   "erradas": [
+    "Trypanosoma cruzi",
+    "Uma levedura",
+    "Um vibrião"
+   ],
+   "explicacao": "Toxoplasmose: Toxoplasma gondii, transmitida por carne crua e alimentos mal lavados.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Como prevenir a giardíase?",
+   "certa": "Saneamento básico e higiene pessoal",
+   "erradas": [
+    "Tomar banho de sol todos os dias da semana",
+    "Usar mais o microscópio",
+    "Comer carne mal passada"
+   ],
+   "explicacao": "Água tratada, saneamento e higiene evitam a giardíase.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Qual destes fungos prejudica as pessoas?",
+   "certa": "Os cogumelos venenosos",
+   "erradas": [
+    "As leveduras do pão",
+    "Os fungos dos queijos",
+    "Os fungos dos antibióticos"
+   ],
+   "explicacao": "Cogumelos venenosos e fungos que causam micoses incomodam e prejudicam.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "ligar",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Ligue cada doença a quem a causa.",
+   "pares": [
+    [
+     "Micose",
+     "Fungo"
+    ],
+    [
+     "Doença de Chagas",
+     "Protozoário"
+    ],
+    [
+     "Toxoplasmose",
+     "Protozoário"
+    ],
+    [
+     "Frieira",
+     "Fungo"
+    ]
+   ],
+   "explicacao": "Micose e frieira são de fungos; Chagas e toxoplasmose, de protozoários.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "folha",
+    "detalhe": "revisão de 20/10"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Qual é um exemplo de microrganismo como aliado?",
+   "certa": "O fitoplâncton produzindo oxigênio",
+   "erradas": [
+    "O vírus causando gripe",
+    "O tripanossomo vivendo dentro do barbeiro",
+    "O fungo causando micose"
+   ],
+   "explicacao": "Aliados: oxigênio, decomposição, pão, queijo e remédios.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.101"
+   }
+  },
+  {
+   "tipo": "vf",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Quando pensamos em microrganismos, quase sempre só lembramos das doenças.",
+   "certa": true,
+   "explicacao": "Verdadeiro: e esquecemos as coisas boas que eles oferecem.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.95"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Na tabela da página 96, o bolor está marcado como bactéria. O certo é:",
+   "certa": "Fungo multicelular",
+   "erradas": [
+    "Bactéria unicelular",
+    "Alga unicelular",
+    "Protozoário ciliado"
+   ],
+   "explicacao": "Bolor é fungo e é multicelular.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.96"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Na tabela da página 96, o paramécio está marcado como fungo. O certo é:",
+   "certa": "Protozoário",
+   "erradas": [
+    "Bactéria",
+    "Alga",
+    "Vírus"
+   ],
+   "explicacao": "O paramécio é um protozoário ciliado.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.96"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Na tabela da página 96, a levedura está como protozoário. O certo é:",
+   "certa": "Fungo",
+   "erradas": [
+    "Alga",
+    "Bactéria",
+    "Vírus"
+   ],
+   "explicacao": "Levedura é fungo unicelular.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.96"
+   }
+  },
+  {
+   "tipo": "escolha",
+   "missao": "saude",
+   "icone": "termometro",
+   "enunciado": "Na tabela da página 96, os bacilos estão como alga multicelular. O certo é:",
+   "certa": "Bactéria unicelular",
+   "erradas": [
+    "Fungo multicelular",
+    "Protozoário ciliado",
+    "Alga unicelular"
+   ],
+   "explicacao": "Bacilo é bactéria em forma de bastão, e tem uma célula.",
+   "origem": "derivada",
+   "fonte": {
+    "tipo": "livro",
+    "detalhe": "p.96"
+   }
+  }
+ ]
+}

@@ -353,12 +353,13 @@ NOMES, ICONE, TRILHAS = {}, {}, []
 
 
 def _carregar(jogo):
-    global NOMES, ICONE, TRILHAS
+    global NOMES, ICONE, TRILHAS, MATERIA
     d = json.load(io.open(os.path.join(RAIZ, "conteudo", jogo + "-4ano.json"),
                           encoding="utf-8"))
     NOMES = {m["id"]: m["nome"] for m in d["missoes"]}
     ICONE = {q["missao"]: q["icone"] for q in reversed(d["questoes"])}
     TRILHAS = d["trilhas"]
+    MATERIA = d["materia"]
     return d
 
 
@@ -416,63 +417,79 @@ def _svg_mini(nome):
             % nome)
 
 
+POR_EXTENSO = {n: e for n, e in enumerate(
+    "zero um dois três quatro cinco seis sete oito nove dez onze doze treze "
+    "catorze quinze dezesseis dezessete dezoito dezenove vinte".split())}
+
+
+def _bloco(p, etapa):
+    """Um passo no resumo: a regra, os cartões, as combinações e o alerta."""
+    out = ['<p class="mic-regra">%s</p>' % p["ideia"]]
+    if p.get("revs"):
+        out.append('<div class="content-grid">')
+        for titulo, resposta in p["revs"]:
+            out.append('<div class="mini">%s<strong>%s</strong>'
+                       '<span>%s</span></div>'
+                       % (_svg_mini(ICONE[etapa]), titulo, resposta))
+        out.append('</div>')
+
+    if p.get("maq"):
+        m = p["maq"]
+        if len(m["eixos"]) == 1:
+            itens = ["<b>%s</b> → %s" % (rot, m["saidas"].get(v, ""))
+                     for v, rot in m["eixos"][0]]
+        else:
+            # Com dois eixos a linha perde o pé sem o rótulo da esquerda
+            # — "minha bola  meus livros" não diz que o dono é "eu".
+            # A contração dispensa: a saída já mostra a conta inteira.
+            itens = []
+            for v1, r1 in m["eixos"][0]:
+                linha = [m["saidas"].get(v1 + "|" + v2, "")
+                         for v2, _ in m["eixos"][1]]
+                texto = " &nbsp; ".join(x for x in linha if x)
+                if m.get("rotular", True):
+                    texto = "<b>%s</b> → %s" % (r1, texto)
+                itens.append(texto)
+        cola = " &nbsp;·&nbsp; " if len(m["eixos"]) == 1 else "<br>"
+        out.append('<div class="example">%s</div>' % cola.join(itens))
+
+    if p.get("alerta"):
+        out.append('<div class="example warning">%s</div>' % p["alerta"])
+    return "".join(out)
+
+
 def resumo(P):
     """Modo resumo: tudo numa página, para reler na véspera.
 
     Sai do mesmo dado dos passos. Os pares de `revs` viram cartões; as saídas
     da `maq`, uma linha de combinações; o `alerta` continua alerta.
     """
-    porMissao = {p["missao"]: p for p in P}
+    # Uma missão pode ter mais de um passo (A ou AN pede dois); o resumo
+    # junta todos sob o mesmo título, na ordem em que aparecem.
+    porMissao = {}
+    for p in P:
+        porMissao.setdefault(p["missao"], []).append(p)
+    conteudos = sum(1 for t in TRILHAS for e in t["etapas"] if e in porMissao)
     out = ['<div id="resumo" class="lesson-part"><div class="lesson-card">'
            '<div class="mic-topo"><span class="lesson-tag">Resumo</span>'
            '<span class="mic-barra"><i style="width:100%"></i></span>'
            + alternar("lesson1", "Ir ao passo a passo") + '</div>'
-           '<h2>Gramática do 4º ano, tudo numa página</h2>'
-           '<p class="mic-ideia">Os catorze conteúdos da prova, para reler de '
-           'ponta a ponta. Cada título leva às questões daquele conteúdo.</p>']
+           '<h2>%s do 4º ano, tudo numa página</h2>'
+           '<p class="mic-ideia">Os %s conteúdos da prova, para reler de '
+           'ponta a ponta. Cada título leva às questões daquele conteúdo.</p>'
+           % (MATERIA, POR_EXTENSO.get(conteudos, conteudos))]
 
     for t in TRILHAS:
         out.append('<h3 class="mic-secao">%s</h3>' % t["nome"])
         for etapa in t["etapas"]:
             if etapa in ("all", "review"):
                 continue
-            p = porMissao[etapa]
             out.append('<div class="mic-bloco">')
             out.append('<button type="button" class="mic-titulo" '
                        'onclick="startCategory(\'%s\')">%s<span>treinar →</span>'
                        '</button>' % (etapa, NOMES[etapa]))
-            out.append('<p class="mic-regra">%s</p>' % p["ideia"])
-
-            if p.get("revs"):
-                out.append('<div class="content-grid">')
-                for titulo, resposta in p["revs"]:
-                    out.append('<div class="mini">%s<strong>%s</strong>'
-                               '<span>%s</span></div>'
-                               % (_svg_mini(ICONE[etapa]), titulo, resposta))
-                out.append('</div>')
-
-            if p.get("maq"):
-                m = p["maq"]
-                if len(m["eixos"]) == 1:
-                    itens = ["<b>%s</b> → %s" % (rot, m["saidas"].get(v, ""))
-                             for v, rot in m["eixos"][0]]
-                else:
-                    # Com dois eixos a linha perde o pé sem o rótulo da esquerda
-                    # — "minha bola  meus livros" não diz que o dono é "eu".
-                    # A contração dispensa: a saída já mostra a conta inteira.
-                    itens = []
-                    for v1, r1 in m["eixos"][0]:
-                        linha = [m["saidas"].get(v1 + "|" + v2, "")
-                                 for v2, _ in m["eixos"][1]]
-                        texto = " &nbsp; ".join(x for x in linha if x)
-                        if m.get("rotular", True):
-                            texto = "<b>%s</b> → %s" % (r1, texto)
-                        itens.append(texto)
-                cola = " &nbsp;·&nbsp; " if len(m["eixos"]) == 1 else "<br>"
-                out.append('<div class="example">%s</div>' % cola.join(itens))
-
-            if p.get("alerta"):
-                out.append('<div class="example warning">%s</div>' % p["alerta"])
+            for p in porMissao[etapa]:
+                out.append(_bloco(p, etapa))
             out.append('</div>')
 
     out.append('<div class="mic-nav">'

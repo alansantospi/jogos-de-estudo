@@ -16,6 +16,8 @@ python3 build/documentos.py
 echo "== partes geradas"
 python3 build/licao_gramatica.py
 python3 build/licao_geografia.py
+python3 build/licao_restaurante.py
+python3 build/licao_microscopico.py
 
 echo "== montagem"
 python3 build/montar.py
@@ -28,3 +30,7 @@ python3 build/conferir_conteudo.py
 
 echo "== página inicial"
 python3 build/inicio.py
+
+echo "== esteira de geração"
+python3 build/esteira.py
+python3 build/gerar.py

@@ -104,9 +104,13 @@ const res14 = document.getElementById("resumo");
 if (!res14) falhas.push("não há modo resumo");
 else {
   if (res14.style.display === "none") falhas.push("o resumo não ficou visível");
+  // um bloco por missão: dois passos da mesma missão dividem o título, e é a
+  // conferência das regras, logo abaixo, que cobra cada passo
   const blocos = res14.querySelectorAll(".mic-bloco");
-  if (blocos.length !== passos.length)
-    falhas.push("o resumo tem " + blocos.length + " conteúdos e a lição tem " + passos.length);
+  const missoes = new Set(passos.map(p =>
+    (p.querySelector(".mic-treinar").getAttribute("onclick").match(/'([^']+)'/) || [])[1]));
+  if (blocos.length !== missoes.size)
+    falhas.push("o resumo tem " + blocos.length + " conteúdos e a lição tem " + missoes.size);
   // a regra de cada passo tem de aparecer igual nos dois modos, senão divergem
   for (const p of passos) {
     const regra = p.querySelector(".mic-ideia").innerHTML.trim();

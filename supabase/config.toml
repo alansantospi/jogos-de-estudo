@@ -1,0 +1,9 @@
+# Só o que este projeto usa da CLI do Supabase: a função `gerar` e as
+# migrações. O resto fica no padrão. Ver GERAR.md.
+project_id = "approveit"
+
+[functions.gerar]
+# A porta do Supabase confere o JWT por conta própria; aqui quem confere é a
+# função, com auth.getUser, que vale também para as chaves novas
+# (sb_publishable_...), que não são JWT.
+verify_jwt = false

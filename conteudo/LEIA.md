@@ -19,7 +19,9 @@ sh build/rebuild.sh          # valida, monta e confere que nada se perdeu
 | `artes-4ano.json` | 34 | 30 |
 | `ingles-4ano.json` | 186 | 45 |
 | `matematica-4ano.json` | 91 | 75 |
-| **total** | **776** | **421** |
+| `microscopico-4ano.json` | 116 | 116 |
+| `restaurante-4ano.json` | 94 | 94 |
+| **total** | **986** | **631** |
 
 O inglês guarda também `verbos` (49), de onde os geradores por regra fabricam
 questão na hora. Essas geradas não estão aqui — são código, e só viram dado
@@ -51,8 +53,9 @@ Campos comuns a todos os tipos:
 | `icone` | nome de um desenho de `build/desenhos.py` |
 | `enunciado` | a pergunta |
 | `origem` | `propria` ou `derivada` |
-| `fonte` | `{"tipo": "livro"\|"folha", "detalhe": "p.37"}`, quando há |
+| `fonte` | `{"tipo": "livro"\|"folha"\|"material", "detalhe": "p.37"}`, quando há |
 | `explicacao` | o que aparece no retorno |
+| `trecho` | a frase do material que sustenta a questão, copiada letra por letra. Toda questão saída da esteira (`gerar.html`) tem; o motor não usa |
 
 E o que cada tipo exige além disso:
 
@@ -77,7 +80,7 @@ salva os tipos de memória e cruzada, cujo miolo ainda é próprio daquele motor
 
 Decide o que pode ser publicado com o produto. Questão marcada `derivada` veio
 do livro didático ou da folha da escola — serve para a Anne estudar, não para
-acompanhar um produto à venda. Hoje são **421 de 776**. Ver `PLANO.md`, §2.1.
+acompanhar um produto à venda. Hoje são **631 de 986**. Ver `PLANO.md`, §2.1.
 
 ## O que o validador cobra
 

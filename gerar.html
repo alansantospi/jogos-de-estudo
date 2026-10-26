@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gerar questões</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light dark;
+ --fundo:oklch(0.975 0.008 265);--carta:oklch(1 0 0);--risco:oklch(0.905 0.012 265);
+ --texto:oklch(0.28 0.030 268);--texto-2:oklch(0.50 0.028 268);
+ --acao:oklch(0.55 0.20 265);--certo:oklch(0.50 0.16 148);--alerta:oklch(0.47 0.19 22);
+ --cuidado:oklch(0.50 0.12 70)}
+@media (prefers-color-scheme:dark){:root{
+ --fundo:oklch(0.205 0.028 272);--carta:oklch(0.262 0.030 272);--risco:oklch(0.365 0.030 272);
+ --texto:oklch(0.975 0.008 272);--texto-2:oklch(0.800 0.020 272);
+ --acao:oklch(0.72 0.17 265);--certo:oklch(0.74 0.15 148);--alerta:oklch(0.72 0.16 22);
+ --cuidado:oklch(0.80 0.12 75)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:Nunito,system-ui,sans-serif;
+ font-weight:600;line-height:1.55;padding:1.5rem 1rem}
+.wrap{max-width:46rem;margin:0 auto}
+h1{font-family:Fredoka,sans-serif;font-size:1.75rem;margin:0 0 .25rem}
+h2{font-family:Fredoka,sans-serif;font-size:1.125rem;margin:2rem 0 .75rem}
+p{color:var(--texto-2);margin:.25rem 0 1rem}
+[hidden]{display:none!important}
+label{display:grid;gap:.25rem;font-weight:700;margin-bottom:.75rem}
+label small{color:var(--texto-2);font-weight:600}
+input,select,textarea{width:100%;background:var(--carta);color:var(--texto);font:inherit;font-weight:600;
+ border:2px solid var(--risco);border-radius:12px;padding:.6rem .75rem;min-height:2.75rem}
+textarea{min-height:12rem;resize:vertical;line-height:1.5}
+.campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:0 .75rem}
+button{min-height:2.75rem;padding:0 1.25rem;border-radius:999px;cursor:pointer;
+ font-family:Fredoka,sans-serif;font-size:1rem;font-weight:600;border:0}
+button:disabled{opacity:.5;cursor:not-allowed}
+.primario{background:var(--acao);color:#fff}
+.fantasma{background:none;color:var(--texto-2);border:2px solid var(--risco)}
+.linha{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;align-items:center}
+#recado{min-height:1.5em;font-weight:700;margin:1rem 0}
+#recado.ruim{color:var(--alerta)}
+.carta{background:var(--carta);border:2px solid var(--risco);border-radius:14px;padding:1rem 1.25rem;margin-bottom:.75rem}
+.carta.aprovada{border-color:var(--certo)}
+.carta.descartada{opacity:.55}
+.topo{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;color:var(--texto-2);font-size:.875rem}
+.selo{font-family:Fredoka,sans-serif;font-weight:600;padding:0 .6rem;border-radius:999px;border:2px solid var(--risco)}
+.aprovada .selo{border-color:var(--certo);color:var(--certo)}
+.enunciado{font-family:Fredoka,sans-serif;font-size:1.125rem;font-weight:600;margin:.5rem 0}
+.ops{list-style:none;padding:0;margin:0 0 .75rem;display:grid;gap:.35rem}
+.ops li{border:2px solid var(--risco);border-radius:10px;padding:.4rem .75rem}
+.ops li.certa{border-color:var(--certo)}
+.ops li.certa b{color:var(--certo)}
+.explica{margin:.25rem 0}
+blockquote{margin:.75rem 0;padding:.5rem .75rem;border-left:4px solid var(--risco);color:var(--texto-2)}
+.problemas{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.35rem}
+.problemas li{padding:.4rem .75rem;border-radius:10px;border:2px solid var(--cuidado);color:var(--cuidado)}
+.problemas li.grave{border-color:var(--alerta);color:var(--alerta)}
+.medida{display:grid;gap:.25rem;margin:0;padding:0;list-style:none}
+.medida li{display:flex;justify-content:space-between;gap:1rem}
+.medida .fora{color:var(--alerta)}
+.nota{color:var(--texto-2);font-size:.875rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Gerar questões</h1>
+<p>Cole o material de estudo, como o resumo da aula ou o texto do livro. Cada questão sai com o
+trecho de onde veio e é medida contra os atalhos que deixam acertar sem saber. Nada entra
+no jogo antes de você aprovar.</p>
+
+<section id="entrar" hidden>
+  <h2>Entre na conta</h2>
+  <p>Gerar custa, então cada conta tem um limite por dia. É a mesma conta da página inicial.</p>
+  <form id="formEntrar">
+    <label>E-mail <input id="email" type="email" autocomplete="email" required></label>
+    <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
+    <button class="primario" type="submit">Entrar</button>
+  </form>
+</section>
+
+<form id="pedido" hidden>
+  <div class="campos">
+    <label>Título do jogo <input id="titulo" required placeholder="Os três setores"></label>
+    <label>Matéria <input id="materia" required placeholder="Geografia"></label>
+    <label>Ano <select id="ano">
+      <option>1º ano</option><option>2º ano</option><option>3º ano</option>
+      <option selected>4º ano</option><option>5º ano</option><option>6º ano</option>
+      <option>7º ano</option><option>8º ano</option><option>9º ano</option></select></label>
+    <label>Questões <input id="quantidade" type="number" min="5" max="20" value="10" required></label>
+  </div>
+  <label>Material <textarea id="material" required
+    placeholder="Cole aqui o texto. As questões só podem usar o que estiver nele."></textarea>
+    <small id="contador"></small></label>
+  <div class="linha"><button class="primario" id="botaoGerar" type="submit">Gerar questões</button></div>
+</form>
+
+<p id="recado" role="status" aria-live="polite"></p>
+
+<section id="revisao" hidden>
+  <h2>Revisão</h2>
+  <div class="carta" id="resumo"></div>
+  <div id="lista"></div>
+  <div class="linha">
+    <button class="primario" id="baixar">Baixar conteúdo</button>
+    <button class="fantasma" id="recomecar">Descartar e recomeçar</button>
+  </div>
+  <p class="nota">O arquivo baixado vai para <code>conteudo/</code> e vira jogo pelos passos de
+  <code>conteudo/LEIA.md</code>.</p>
+</section>
+</div>
+
+<script>
+const CONTA = {
+  /* Project Settings > Data API > Project URL.
+     Só a base: SEM o /rest/v1 que a documentação mostra. */
+  url: "https://bjlbfstuossmxnaqblih.supabase.co",     /* https://xxxxxxxx.supabase.co */
+  /* Project Settings > API Keys > "publishable key" (sb_publishable_...).
+     Em projeto antigo pode ser a legada "anon public" (começa com eyJ). */
+  chave: "sb_publishable_lOr07N705_pZp6UQZmQLQg_EGjIAwgY",
+};
+const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
+/* O pedido custa: a resposta fica guardada neste aparelho até a pessoa
+   baixar ou descartar, para um recarregar de página não jogar fora. */
+const RASCUNHO = "jogos_geracao_v1";
+const MATERIAL_MAX = 20000;
+
+let estado = null, _sb = null;
+const $ = id => document.getElementById(id);
+
+function recado(t, ruim){ const r = $("recado"); r.textContent = t || ""; r.className = ruim ? "ruim" : ""; }
+function guardar(){ try{ estado ? localStorage.setItem(RASCUNHO, JSON.stringify(estado))
+                               : localStorage.removeItem(RASCUNHO); }catch(e){} }
+function lerRascunho(){ try{ return JSON.parse(localStorage.getItem(RASCUNHO)); }catch(e){ return null; } }
+
+/* O que vem do modelo é texto, nunca HTML: tudo entra por textContent. */
+function el(tag, props, ...filhos){
+  const e = document.createElement(tag);
+  Object.entries(props || {}).forEach(([k, v]) => {
+    if(k === "class") e.className = v; else if(k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else if(v !== false && v != null) e.setAttribute(k, v === true ? "" : v);
+  });
+  filhos.flat().forEach(f => f != null && e.append(f));
+  return e;
+}
+
+async function cliente(){
+  if(_sb) return _sb;
+  const {createClient} = await import(CONTA_LIB);
+  return (_sb = createClient(CONTA.url, CONTA.chave));
+}
+
+/* Uma porta só para a função de servidor; o teste troca esta função. */
+async function chamarFuncao(corpo){
+  const sb = await cliente();
+  const {data, error} = await sb.functions.invoke("gerar", {body: corpo});
+  if(!error) return data;
+  let r = null;
+  try{ r = await error.context.json(); }catch(e){}
+  const x = new Error(r && r.mensagem || "Sem resposta do servidor. Verifique a internet.");
+  x.codigo = r && r.erro;
+  throw x;
+}
+
+/* ---------- pedir ---------- */
+
+function contar(){
+  const n = $("material").value.length;
+  $("contador").textContent = n.toLocaleString("pt-BR") + " de " + MATERIAL_MAX.toLocaleString("pt-BR")
+    + " caracteres" + (n > MATERIAL_MAX ? " — passou do limite, divida em duas gerações" : "");
+}
+
+async function pedir(ev){
+  ev.preventDefault();
+  const pedido = {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(),
+                  ano: $("ano").value, quantidade: Number($("quantidade").value),
+                  material: $("material").value.trim()};
+  if(pedido.material.length > MATERIAL_MAX) return recado("O material passou do limite.", true);
+  $("botaoGerar").disabled = true;
+  const t0 = Date.now();
+  const relogio = setInterval(() => recado("Gerando... " + Math.round((Date.now() - t0) / 1000)
+    + " s. Costuma levar de meio minuto a dois minutos."), 1000);
+  recado("Gerando...");
+  try{
+    const r = await chamarFuncao({acao: "gerar", ...pedido});
+    mostrar(r, pedido);
+    recado("");
+  }catch(e){
+    recado(e.message, true);
+  }finally{
+    clearInterval(relogio);
+    $("botaoGerar").disabled = false;
+  }
+}
+
+/* ---------- revisar ---------- */
+
+function mostrar(r, pedido){
+  estado = {pedido, missoes: r.missoes, lote: r.lote, aviso: r.aviso || "",
+            custo: r.custo_usd, restantes: r.restantes,
+            questoes: r.questoes.map(q => ({...q, estado: "pendente"}))};
+  guardar();
+  pintar();
+}
+
+const grave = q => (q.problemas || []).some(p => p.grave);
+const vivas = () => estado.questoes.filter(q => q.estado !== "descartada");
+const aprovadas = () => estado.questoes.filter(q => q.estado === "aprovada");
+
+const REGRAS = [["sempreAMaior", "Quem escolhe sempre a maior acerta"],
+                ["sempreAMenor", "Quem escolhe sempre a menor acerta"],
+                ["eliminarAbsolutos", "Quem elimina as com “sempre”, “nunca”, “só” acerta"],
+                ["seguirOEco", "Quem segue as palavras do enunciado acerta"]];
+
+function pintarResumo(){
+  const l = estado.lote, c = $("resumo");
+  c.replaceChildren();
+  if(estado.aviso) c.append(el("ul", {class: "problemas"}, el("li", {}, estado.aviso)));
+  if(l){
+    c.append(el("ul", {class: "medida"}, REGRAS.map(([k, nome]) =>
+      el("li", {class: l.fora.includes(k) ? "fora" : ""}, el("span", {}, nome),
+         el("b", {}, l[k].toFixed(0) + "%")))));
+    c.append(el("p", {class: "nota"}, l.amostraPequena
+      ? "O acaso puro acerta 25%. Com " + l.n + " questões a média ainda é ruído, então ela não reprova: "
+        + "o que conta são os avisos em cada questão. No jogo montado, o build mede de novo."
+      : "O acaso puro acerta 25%; a faixa aceita é de 15% a 35%. Medido sobre as " + l.n
+        + " questões que não estão descartadas nem com problema grave."));
+  }
+  const partes = [];
+  if(estado.custo != null) partes.push("Esta geração custou US$ " + Number(estado.custo).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+  if(estado.restantes != null) partes.push("restam " + estado.restantes + " hoje");
+  if(partes.length) c.append(el("p", {class: "nota"}, partes.join(" · ") + "."));
+}
+
+function cartaLeitura(q, i){
+  const missao = (estado.missoes.find(m => m.id === q.missao) || {}).nome || q.missao;
+  const selo = {pendente: "Pendente", aprovada: "Aprovada", descartada: "Descartada"}[q.estado];
+  const acoes = q.estado === "pendente"
+    ? [el("button", {class: "primario", disabled: grave(q), onclick: () => marcar(i, "aprovada"),
+                     title: grave(q) ? "Corrija o problema antes de aprovar" : false}, "Aprovar"),
+       el("button", {class: "fantasma", onclick: () => editar(i)}, "Editar"),
+       el("button", {class: "fantasma", onclick: () => marcar(i, "descartada")}, "Descartar")]
+    : [el("button", {class: "fantasma", onclick: () => marcar(i, "pendente")}, "Desfazer")];
+  return el("article", {class: "carta " + q.estado, "data-i": i},
+    el("div", {class: "topo"}, el("span", {}, "Questão " + (i + 1) + " · " + missao),
+       el("span", {class: "selo"}, selo)),
+    el("div", {class: "enunciado"}, q.enunciado),
+    el("ul", {class: "ops"}, el("li", {class: "certa"}, el("b", {}, "Certa · "), q.certa), q.erradas.map(e => el("li", {}, e))),
+    el("p", {class: "explica"}, q.explicacao),
+    el("blockquote", {}, el("b", {}, "Do material: "), "“" + q.trecho + "”"),
+    (q.problemas || []).length ? el("ul", {class: "problemas"},
+      q.problemas.map(p => el("li", {class: p.grave ? "grave" : ""}, p.texto))) : null,
+    el("div", {class: "linha"}, acoes));
+}
+
+function cartaEdicao(q, i){
+  const campo = (nome, rotulo, valor, area) => el("label", {}, rotulo,
+    el(area ? "textarea" : "input", {name: nome, ...(area ? {} : {value: valor})}, area ? valor : null));
+  const f = el("form", {class: "carta", "data-i": i, onsubmit: ev => { ev.preventDefault(); salvar(i, f); }},
+    el("label", {}, "Missão", el("select", {name: "missao"}, estado.missoes.map(m =>
+      el("option", {value: m.id, selected: m.id === q.missao}, m.nome)))),
+    campo("enunciado", "Enunciado", q.enunciado, true),
+    campo("certa", "Resposta certa", q.certa),
+    q.erradas.map((e, k) => campo("errada" + k, "Errada " + (k + 1), e)),
+    campo("explicacao", "Explicação", q.explicacao, true),
+    campo("trecho", "Trecho do material (copiado letra por letra)", q.trecho, true),
+    el("div", {class: "linha"}, el("button", {class: "primario", type: "submit"}, "Salvar"),
+       el("button", {class: "fantasma", type: "button", onclick: () => pintar()}, "Cancelar")));
+  f.querySelectorAll("textarea").forEach(t => t.style.minHeight = "4.5rem");
+  return f;
+}
+
+function pintar(editando){
+  $("revisao").hidden = !estado;
+  if(!estado) return;
+  pintarResumo();
+  $("lista").replaceChildren(...estado.questoes.map((q, i) =>
+    i === editando ? cartaEdicao(q, i) : cartaLeitura(q, i)));
+  const n = aprovadas().length;
+  $("baixar").textContent = "Baixar conteúdo (" + n + (n === 1 ? " aprovada)" : " aprovadas)");
+  $("baixar").disabled = !n;
+}
+
+function editar(i){ pintar(i); }
+
+function marcar(i, novo){
+  if(novo === "aprovada" && grave(estado.questoes[i])) return;
+  estado.questoes[i].estado = novo;
+  guardar();
+  remedir();
+}
+
+async function salvar(i, f){
+  const v = n => f.elements[n].value.trim();
+  const q = estado.questoes[i];
+  Object.assign(q, {missao: v("missao"), enunciado: v("enunciado"), certa: v("certa"),
+                    erradas: q.erradas.map((_, k) => v("errada" + k)),
+                    explicacao: v("explicacao"), trecho: v("trecho"), estado: "pendente"});
+  guardar();
+  await remedir();
+}
+
+/* A edição passa pela mesma conferência que o modelo passou. Sem servidor,
+   a carta fica sem veredito em vez de parecer aprovada pela máquina. */
+async function remedir(){
+  const vs = vivas();
+  try{
+    const r = await chamarFuncao({acao: "medir", material: estado.pedido.material,
+                                  missoes: estado.missoes, questoes: vs});
+    vs.forEach((q, k) => { q.problemas = r.problemas[k]; if(grave(q) && q.estado === "aprovada") q.estado = "pendente"; });
+    estado.lote = r.lote;
+    recado("");
+  }catch(e){
+    recado("Não consegui reconferir: " + e.message, true);
+  }
+  guardar();
+  pintar();
+}
+
+/* ---------- entregar ---------- */
+
+function slug(t){
+  return t.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "jogo";
+}
+
+/* No esquema de `conteudo/`, o mesmo que `build/esquema.py` valida. */
+function montarConteudo(){
+  const qs = aprovadas();
+  const usadas = estado.missoes.filter(m => qs.some(q => q.missao === m.id));
+  const p = estado.pedido;
+  return {
+    id: slug(p.titulo) + "-" + slug(p.ano), materia: p.materia, titulo: p.titulo, motor: "ceu",
+    missoes: usadas,
+    trilhas: [{id: "tudo", nome: "Todas as missões", etapas: [...usadas.map(m => m.id), "all"]}],
+    questoes: qs.map(q => ({tipo: "escolha", missao: q.missao, icone: q.icone,
+      enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao,
+      // Veio de material que não é nosso: serve para estudar, não para vender.
+      origem: "derivada", fonte: {tipo: "material", detalhe: p.titulo}, trecho: q.trecho})),
+  };
+}
+
+function baixar(){
+  const c = montarConteudo();
+  const a = el("a", {href: URL.createObjectURL(new Blob([JSON.stringify(c, null, 1)],
+    {type: "application/json"})), download: c.id + ".json"});
+  document.body.append(a); a.click(); a.remove();
+}
+
+function recomecar(){
+  if(!confirm("Descartar estas questões? Esta geração já foi paga e não volta.")) return;
+  estado = null; guardar(); pintar();
+}
+
+/* ---------- começo ---------- */
+
+async function entrar(ev){
+  ev.preventDefault();
+  recado("Entrando...");
+  try{
+    const sb = await cliente();
+    const {error} = await sb.auth.signInWithPassword({email: $("email").value.trim(),
+                                                     password: $("senha").value});
+    if(error) return recado(/invalid login/i.test(error.message)
+      ? "E-mail ou senha não conferem." : error.message, true);
+    recado(""); $("entrar").hidden = true; $("pedido").hidden = false;
+  }catch(e){ recado("Não consegui falar com a conta. Verifique a internet.", true); }
+}
+
+async function iniciar(){
+  $("pedido").addEventListener("submit", pedir);
+  $("formEntrar").addEventListener("submit", entrar);
+  $("material").addEventListener("input", contar);
+  $("baixar").addEventListener("click", baixar);
+  $("recomecar").addEventListener("click", recomecar);
+  contar();
+  estado = lerRascunho();
+  pintar();
+  try{
+    const {data} = await (await cliente()).auth.getSession();
+    $(data.session ? "pedido" : "entrar").hidden = false;
+  }catch(e){
+    $("entrar").hidden = false;
+    recado("Não consegui falar com a conta. Verifique a internet.", true);
+  }
+}
+iniciar();
+</script>
+</body>
+</html>

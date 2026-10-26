@@ -34,7 +34,9 @@ ALVOS = {
     "perfis": ["index.html"],
     "migracao": ["time-travel-english.html"],
     # Os jogos com lição em passos curtos. Quem entrar depois entra aqui.
-    "licao": ["gramatica.html", "geografia.html"],
+    "licao": ["gramatica.html", "geografia.html", "restaurante.html",
+              "microscopico.html"],
+    "gerar": ["gerar.html"],
 }
 
 # Injetado antes de cada caso: entrega o resultado e captura erro de JS.
