@@ -16,7 +16,10 @@ chamada num motor que não a tem.
 **Esteira** (`teste/esteira/`) — em Node, sem navegador nem rede. `paridade.ts`
 roda os medidores em Python e em TypeScript sobre todo `conteudo/` e cobra o
 mesmo número; `esteira.test.ts` roda a geração inteira com um modelo de
-mentira. Precisa de Node 23.6 ou mais novo, que lê TypeScript direto.
+mentira, e `leitura.test.ts` faz o mesmo com a leitura de foto e PDF.
+`montar_jogo.test.ts` cobra que o jogo montado no navegador (`jogar.html`)
+tenha o mesmo banco, nomes e trilhas que o build monta, sobre todo
+`conteudo/`. Precisa de Node 23.6 ou mais novo, que lê TypeScript direto.
 
 **Casos** (`teste/casos/*.js`) — num Chrome de verdade, sem cabeça:
 

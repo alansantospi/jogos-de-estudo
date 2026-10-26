@@ -2,8 +2,16 @@
    pode ir para o navegador. Ela guarda a chave, cobra o limite antes de
    gastar e registra o custo depois.
 
-   Duas ações, no corpo do POST:
-     {acao:"gerar", material, titulo, materia, ano, quantidade}
+   Ações, no corpo do POST:
+     {acao:"ler", arquivos:[{nome, tipo, dados}]}  — foto ou PDF em base64
+                                                     vira texto por página,
+                                                     para a pessoa conferir
+     {acao:"abrir", total}                          — abre um jogo: é o que
+                                                     conta no limite do dia
+     {acao:"planejar", criacao, material, materia, ano, total}
+                                                   — divide em missões
+     {acao:"gerar", criacao, material, titulo, materia, ano, quantidade,
+                    missoes, alvo}                 — uma missão do plano
      {acao:"medir", material, missoes, questoes}   — reconfere o que a
                                                      revisão editou; não
                                                      chama modelo, não custa
@@ -12,15 +20,21 @@
 
 import Anthropic from "npm:@anthropic-ai/sdk@0.133.0";
 import { createClient } from "npm:@supabase/supabase-js@2.117.0";
-import { conferirEntrada, custo, ErroEsteira, gerar, LIMITES, remedir,
+import { conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, LIMITES, planejar, remedir,
          type Modelo, type Uso } from "../_esteira/esteira.ts";
 import { ICONES } from "../_esteira/icones.ts";
+import { conferirArquivos, expandir, ler, type Arquivo } from "../_esteira/leitura.ts";
+import { PDFDocument } from "npm:pdf-lib@1.17.1";
 
 const MODELO = "claude-opus-5-5";
 
-/* As duas cercas, ajustáveis sem novo deploy: `supabase secrets set`. */
-const LIMITE_POR_DIA = Number(Deno.env.get("LIMITE_POR_DIA") ?? 10);
-const TETO_DIA_USD = Number(Deno.env.get("TETO_DIA_USD") ?? 5);
+/* As cercas, ajustáveis sem novo deploy: `supabase secrets set`.
+   LIMITE_POR_DIA conta jogos; um jogo é o plano mais uma parte por missão,
+   até MAX_PARTES pedidos (doze missões, o plano e algumas tentativas). */
+const LIMITE_POR_DIA = Number(Deno.env.get("LIMITE_POR_DIA") ?? 3);
+const LIMITE_LEITURAS = Number(Deno.env.get("LIMITE_LEITURAS") ?? 10);
+const MAX_PARTES = Number(Deno.env.get("MAX_PARTES") ?? 20);
+const TETO_DIA_USD = Number(Deno.env.get("TETO_DIA_USD") ?? 15);
 /* Quanto uma geração em curso pesa no teto antes de se saber o custo real.
    Material no limite, vinte questões e duas rodadas ficam abaixo disto. */
 const ESTIMATIVA_USD = 0.6;
@@ -49,7 +63,7 @@ const responder = (status: number, corpo: unknown) =>
 const erro = (status: number, codigo: string, mensagem: string, extra = {}) =>
   responder(status, { erro: codigo, mensagem, ...extra });
 
-const modelo: Modelo = async ({ sistema, usuario, esquema }) => {
+const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high" }) => {
   let msg;
   try {
     msg = await anthropic.beta.messages.stream({
@@ -59,10 +73,11 @@ const modelo: Modelo = async ({ sistema, usuario, esquema }) => {
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
       thinking: { type: "adaptive" },
-      // Distrator plausível é o trabalho difícil daqui: esforço alto.
-      output_config: { effort: "high", format: { type: "json_schema", schema: esquema } },
+      // Distrator plausível é o trabalho difícil daqui: esforço alto, salvo
+      // quando o pedido diz outro (a leitura).
+      output_config: { effort: esforco, format: { type: "json_schema", schema: esquema } },
       system: sistema,
-      messages: [{ role: "user", content: usuario }],
+      messages: [{ role: "user", content: usuario as any }],
     }).finalMessage();
   } catch (e) {
     if (e instanceof Anthropic.AuthenticationError || e instanceof Anthropic.PermissionDeniedError)
@@ -110,6 +125,65 @@ async function registrar(id: number, estado: string, usos: Uso[], extra: {
   if (error) console.error("registrar_geracao", id, error.message);
 }
 
+/* Reserva antes de gastar; devolve a resposta pronta quando a cerca barra. */
+async function reservar(conta: string, tipo: string, caracteres: number, pedidas: number,
+                        criacao: number | null = null) {
+  const { data, error } = await admin.rpc("reservar_geracao", {
+    p_conta: conta, p_tipo: tipo, p_criacao: criacao, p_caracteres: caracteres, p_pedidas: pedidas,
+    p_limite_jogos: LIMITE_POR_DIA, p_limite_leituras: LIMITE_LEITURAS, p_max_partes: MAX_PARTES,
+    p_teto_dia_usd: TETO_DIA_USD, p_estimativa_usd: ESTIMATIVA_USD });
+  if (!error) return data[0] as { id: number; restantes: number };
+  if (/limite_conta/.test(error.message))
+    return erro(429, "limite", `Você já criou os ${LIMITE_POR_DIA} jogos de hoje. ` +
+                               "A contagem é das últimas 24 horas.");
+  if (/limite_leitura/.test(error.message))
+    return erro(429, "limite", `Você já fez as ${LIMITE_LEITURAS} leituras de hoje. ` +
+                               "A contagem é das últimas 24 horas.");
+  if (/limite_partes/.test(error.message))
+    return erro(429, "partes", "Este jogo já fez todos os pedidos que cabem nele. Revise o que veio, ou comece outro jogo.");
+  if (/criacao_invalida/.test(error.message))
+    return erro(400, "criacao", "Este jogo expirou ou não é desta conta. Comece de novo pela etapa de conferir.");
+  if (/teto_global/.test(error.message))
+    return erro(429, "teto", "A geração está pausada por hoje: o gasto de todas as contas " +
+                             "chegou ao teto diário.");
+  console.error("reservar_geracao", error.message);
+  return erro(500, "reserva", "Não consegui reservar a geração. Tente de novo.");
+}
+
+/* Erro depois da reserva: registra o que foi gasto e devolve a vez se nada foi. */
+async function falhou(id: number, restantes: number, e: unknown) {
+  const usos = e instanceof ErroEsteira ? e.uso : [];
+  await registrar(id, "falhou", usos, { erro: e instanceof Error ? e.message : String(e) });
+  // A conta dos jogos que restam já sai de reservar_geracao, que não conta
+  // jogo morto sem gasto; aqui não há o que devolver.
+  // O que a falha gastou vai junto, para a tela somar o custo do jogo.
+  const extra = { restantes, custo_usd: Number(custo(usos).toFixed(4)) };
+  if (e instanceof ErroEsteira)
+    return erro(e.codigo === "configuracao" ? 500 : 502, e.codigo, e.message, extra);
+  console.error("gerar", e);
+  return erro(500, "interno", "Erro inesperado.", extra);
+}
+
+const deBase64 = (b64: string) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+function paraBase64(u: Uint8Array) {
+  let s = "";
+  for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode(...u.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+
+/* Um PDF de uma página para cada página do original. */
+async function dividirPdf(b64: string): Promise<string[]> {
+  const doc = await PDFDocument.load(deBase64(b64));
+  const partes: string[] = [];
+  for (const k of doc.getPageIndices()) {
+    const um = await PDFDocument.create();
+    const [pg] = await um.copyPages(doc, [k]);
+    um.addPage(pg);
+    partes.push(paraBase64(await um.save()));
+  }
+  return partes;
+}
+
 Deno.serve(async req => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
   if (req.method !== "POST") return erro(405, "metodo", "Use POST.");
@@ -124,32 +198,74 @@ Deno.serve(async req => {
   if (corpo.acao === "medir") {
     const { material, missoes, questoes } = corpo as any;
     if (typeof material !== "string" || material.length > LIMITES.materialMax
-        || !Array.isArray(missoes) || !Array.isArray(questoes) || questoes.length > 40)
+        || !Array.isArray(missoes) || !Array.isArray(questoes) || questoes.length > LIMITES.totalMax + 20)
       return erro(400, "corpo", "Pedido de medida mal formado.");
     return responder(200, remedir(questoes, material, missoes, ICONES));
+  }
+  if (corpo.acao === "ler") {
+    const brutos = corpo.arquivos as Arquivo[];
+    const invalido = conferirArquivos(brutos);
+    if (invalido) return erro(400, "entrada", invalido);
+    // Dividir antes de reservar: PDF que não abre ou grande demais não custa a vez.
+    const arquivos = await expandir(brutos.map(a => ({ nome: String(a.nome || "arquivo").slice(0, 120),
+                                                       tipo: a.tipo, dados: a.dados })), dividirPdf);
+    if (typeof arquivos === "string") return erro(400, "entrada", arquivos);
+    const reserva = await reservar(quem.user.id, "ler", 0, arquivos.length);
+    if (reserva instanceof Response) return reserva;
+    try {
+      const r = await ler(arquivos, modelo);
+      await registrar(reserva.id, "feita", r.uso, { entregues: r.paginas.length,
+        reprovadas: r.paginas.filter(p => p.legivel === "nao").length, rodadas: 1 });
+      return responder(200, { paginas: r.paginas, aviso: r.aviso, restantes: reserva.restantes,
+                              custo_usd: Number(custo(r.uso).toFixed(4)) });
+    } catch (e) {
+      return await falhou(reserva.id, reserva.restantes, e);
+    }
+  }
+  if (corpo.acao === "abrir") {
+    const total = Number(corpo.total);
+    if (!Number.isInteger(total) || total < LIMITES.totalMin || total > LIMITES.totalMax)
+      return erro(400, "entrada", `Peça entre ${LIMITES.totalMin} e ${LIMITES.totalMax} questões.`);
+    const reserva = await reservar(quem.user.id, "jogo", 0, total);
+    if (reserva instanceof Response) return reserva;
+    return responder(200, { criacao: reserva.id, restantes: reserva.restantes });
+  }
+  const criacao = Number(corpo.criacao);
+  if (!Number.isInteger(criacao) || criacao <= 0)
+    return erro(400, "criacao", "Falta abrir o jogo antes de gerar.");
+
+  if (corpo.acao === "planejar") {
+    const pedido = { material: String(corpo.material ?? "").trim(), materia: String(corpo.materia ?? ""),
+                     ano: String(corpo.ano ?? ""), total: Number(corpo.total) };
+    const invalido = conferirPlano(pedido);
+    if (invalido) return erro(400, "entrada", invalido);
+    const reserva = await reservar(quem.user.id, "plano", pedido.material.length, pedido.total, criacao);
+    if (reserva instanceof Response) return reserva;
+    try {
+      const r = await planejar(pedido, modelo);
+      await registrar(reserva.id, "feita", r.uso, { entregues: r.missoes.length, rodadas: 1 });
+      return responder(200, { missoes: r.missoes, total: r.total, restantes: reserva.restantes,
+                              custo_usd: Number(custo(r.uso).toFixed(4)) });
+    } catch (e) {
+      return await falhou(reserva.id, reserva.restantes, e);
+    }
   }
   if (corpo.acao !== "gerar") return erro(400, "acao", "Ação desconhecida.");
 
   const entrada = { material: String(corpo.material ?? "").trim(), titulo: String(corpo.titulo ?? ""),
                     materia: String(corpo.materia ?? ""), ano: String(corpo.ano ?? ""),
-                    quantidade: Number(corpo.quantidade) };
+                    quantidade: Number(corpo.quantidade),
+                    missoes: Array.isArray(corpo.missoes)
+                      ? (corpo.missoes as any[]).map(m => ({ id: String(m?.id ?? ""), nome: String(m?.nome ?? ""),
+                                                             descricao: String(m?.descricao ?? "").slice(0, 400) }))
+                      : undefined,
+                    alvo: corpo.alvo == null ? undefined : String(corpo.alvo) };
   const invalida = conferirEntrada(entrada);
   if (invalida) return erro(400, "entrada", invalida);
 
-  const { data: reserva, error: barrada } = await admin.rpc("reservar_geracao", {
-    p_conta: quem.user.id, p_caracteres: entrada.material.length, p_pedidas: entrada.quantidade,
-    p_limite_dia: LIMITE_POR_DIA, p_teto_dia_usd: TETO_DIA_USD, p_estimativa_usd: ESTIMATIVA_USD });
-  if (barrada) {
-    if (/limite_conta/.test(barrada.message))
-      return erro(429, "limite", `Você já fez as ${LIMITE_POR_DIA} gerações de hoje. ` +
-                                 "A contagem é das últimas 24 horas.");
-    if (/teto_global/.test(barrada.message))
-      return erro(429, "teto", "A geração está pausada por hoje: o gasto de todas as contas " +
-                               "chegou ao teto diário.");
-    console.error("reservar_geracao", barrada.message);
-    return erro(500, "reserva", "Não consegui reservar a geração. Tente de novo.");
-  }
-  const { id, restantes } = reserva[0];
+  const reserva = await reservar(quem.user.id, "gerar", entrada.material.length, entrada.quantidade, criacao);
+  if (reserva instanceof Response) return reserva;
+  const { id, restantes } = reserva;
 
   const inicio = Date.now();
   try {
@@ -160,13 +276,6 @@ Deno.serve(async req => {
                             rodadas: r.rodadas, aviso: r.aviso, restantes,
                             custo_usd: Number(custo(r.uso).toFixed(4)) });
   } catch (e) {
-    const usos = e instanceof ErroEsteira ? e.uso : [];
-    await registrar(id, "falhou", usos, { erro: e instanceof Error ? e.message : String(e) });
-    // Falha que não gastou nada não consome a vez (ver reservar_geracao).
-    const extra = { restantes: custo(usos) > 0 ? restantes : restantes + 1 };
-    if (e instanceof ErroEsteira)
-      return erro(e.codigo === "configuracao" ? 500 : 502, e.codigo, e.message, extra);
-    console.error("gerar", e);
-    return erro(500, "interno", "Erro inesperado na geração.", extra);
+    return await falhou(id, restantes, e);
   }
 });

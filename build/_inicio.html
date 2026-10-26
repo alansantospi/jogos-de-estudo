@@ -26,6 +26,7 @@
       <button class="aba" data-vista="jogos"     onclick="ir('jogos')">Jogos</button>
       <button class="aba" data-vista="historico" onclick="ir('historico')">Histórico</button>
       <button class="aba" data-vista="conta"     onclick="ir('conta')">Conta</button>
+      <a class="aba criar" href="gerar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
     </nav>
   </header>
 
@@ -97,6 +98,10 @@
         <span class="mini" data-jogo="arte"></span>
       </a></li>
     </ul>
+    <section id="meusJogos" hidden>
+      <h2 class="titulo-meus">Criados na conta</h2>
+      <ul class="grade" id="gradeMeus"></ul>
+    </section>
     <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>
   </section>
 

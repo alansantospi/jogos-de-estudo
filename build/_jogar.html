@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Abrindo o jogo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700&display=swap">
+<style>
+/* Só a espera: o jogo, quando chega, substitui esta página inteira. */
+:root{color-scheme:light dark;--fundo:oklch(0.975 0.008 265);--texto:oklch(0.28 0.030 268);
+ --texto-2:oklch(0.50 0.028 268);--acao:oklch(0.52 0.20 265);--risco:oklch(0.905 0.012 265)}
+@media (prefers-color-scheme:dark){:root{--fundo:oklch(0.205 0.028 272);--texto:oklch(0.975 0.008 272);
+ --texto-2:oklch(0.80 0.020 272);--risco:oklch(0.365 0.030 272)}}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--fundo);color:var(--texto);
+ font-family:Nunito,system-ui,sans-serif;font-weight:600;padding:1.5rem}
+main{max-width:26rem;text-align:center}
+h1{font-family:Fredoka,ui-rounded,sans-serif;font-size:1.5rem;margin:0 0 .5rem}
+p{color:var(--texto-2);margin:0 0 1.25rem}
+a.botao{display:inline-flex;align-items:center;min-height:2.75rem;padding:0 1.25rem;border-radius:999px;
+ background:var(--acao);color:#fff;text-decoration:none;font-weight:700}
+.roda{width:2rem;height:2rem;margin:0 auto 1rem;border-radius:50%;border:3px solid var(--risco);
+ border-top-color:var(--acao);animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(1turn)}}
+@media (prefers-reduced-motion:reduce){.roda{animation:none}}
+</style>
+</head>
+<body>
+<main id="espera" aria-live="polite"><div class="roda"></div><h1>Abrindo o jogo</h1><p>Buscando as questões na conta.</p></main>
+<script>
+/*%CONTA%*/
+const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
+const MOLDE = /*%MOLDE%*/;
+/*%MONTAR%*/
+
+/* O jogo fica guardado neste aparelho depois da primeira abertura: abre de
+   novo sem internet, e sem a conta, como os jogos feitos à mão. */
+const GUARDA = id => "jogo_gerado_" + id;
+
+function aviso(titulo, texto, link){
+  const m = document.getElementById("espera");
+  m.replaceChildren();
+  const h = document.createElement("h1"); h.textContent = titulo;
+  const p = document.createElement("p"); p.textContent = texto;
+  m.append(h, p);
+  if(link){ const a = document.createElement("a"); a.className = "botao"; a.href = link[1]; a.textContent = link[0]; m.append(a); }
+}
+
+async function buscar(id){
+  const {createClient} = await import(CONTA_LIB);
+  const sb = createClient(CONTA.url, CONTA.chave);
+  const {data: s} = await sb.auth.getSession();
+  if(!s.session) return {sessao: false};
+  const {data, error} = await sb.from("jogos").select("titulo,materia,conteudo").eq("id", id).maybeSingle();
+  if(error) throw error;
+  return {sessao: true, jogo: data && data.conteudo};
+}
+
+async function abrir(){
+  const id = new URLSearchParams(location.search).get("id") || "";
+  if(!/^[0-9a-f-]{36}$/i.test(id))
+    return aviso("Jogo não encontrado", "O endereço está incompleto.", ["Voltar aos jogos", "index.html"]);
+  let jogo = null, r = null;
+  try{ jogo = JSON.parse(localStorage.getItem(GUARDA(id))); }catch(e){}
+  try{ r = await buscar(id); }catch(e){}
+  // O da conta vence o guardado: pode ter sido editado em outro aparelho.
+  if(r && r.jogo){ jogo = r.jogo; try{ localStorage.setItem(GUARDA(id), JSON.stringify(jogo)); }catch(e){} }
+  if(!jogo){
+    if(r && !r.sessao) return aviso("Entre na conta", "Este jogo foi criado na conta da família. Entre nela pela página inicial e volte.",
+                                    ["Entrar na conta", "index.html#conta"]);
+    if(r) return aviso("Jogo não encontrado", "Ele foi apagado, ou é de outra conta.", ["Voltar aos jogos", "index.html"]);
+    return aviso("Sem conexão", "Na primeira vez, o jogo precisa da internet para chegar. Depois abre sem ela.",
+                 ["Voltar aos jogos", "index.html"]);
+  }
+  let html;
+  try{ html = montarJogo(MOLDE, jogo, id); }
+  catch(e){ return aviso("Este jogo não abriu", "O conteúdo salvo está fora do formato: " + e.message, ["Voltar aos jogos", "index.html"]); }
+  document.open(); document.write(html); document.close();
+}
+abrir();
+</script>
+</body>
+</html>

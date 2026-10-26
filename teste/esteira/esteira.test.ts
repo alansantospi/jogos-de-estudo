@@ -3,7 +3,7 @@
    regera só o que reprovou, e não perde o que já foi pago. */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { conferirEntrada, custo, ErroEsteira, gerar, remedir,
+import { arrumarPlano, conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, planejar, remedir,
          type Entrada, type Modelo, type Pedido } from "../../supabase/functions/_esteira/esteira.ts";
 import { ICONES } from "../../supabase/functions/_esteira/icones.ts";
 
@@ -138,8 +138,9 @@ test("a revisão reconfere o que a pessoa editou", () => {
 test("a entrada tem limites que seguram o custo", () => {
   assert.equal(conferirEntrada({ ...ENTRADA, quantidade: 10 }), null);
   assert.match(conferirEntrada({ ...ENTRADA, material: "curto" })!, /pelo menos 300/);
-  assert.match(conferirEntrada({ ...ENTRADA, material: "x".repeat(20001) })!, /limite é 20000/);
-  assert.match(conferirEntrada({ ...ENTRADA, quantidade: 50 })!, /entre 5 e 20/);
+  assert.match(conferirEntrada({ ...ENTRADA, material: "x".repeat(40001) })!, /limite é 40000/);
+  assert.match(conferirEntrada({ ...ENTRADA, quantidade: 50 })!, /entre 1 e 20/);
+  assert.match(conferirEntrada({ ...ENTRADA, missoes: MISSOES, alvo: "outra" })!, /não está no plano/);
   assert.match(conferirEntrada({ ...ENTRADA, titulo: " " })!, /título/);
 });
 
@@ -155,4 +156,46 @@ test("sem tempo para regerar, entrega o que tem e avisa", async () => {
   assert.equal(pedidos.length, 1);
   assert.equal(r.rodadas, 0);
   assert.match(r.aviso!, /Faltou tempo/);
+});
+
+
+/* ---------- o jogo grande: plano e partes ---------- */
+
+test("o plano vira missões que o motor aceita, com no máximo 12 cada", () => {
+  const p = arrumarPlano({ missoes: [
+    { id: "Setor Primário", nome: "O campo", descricao: "agricultura e extrativismo", quantidade: 30 },
+    { id: "all", nome: "Tudo", descricao: "x", quantidade: 4 },
+    { id: "", nome: "", descricao: "", quantidade: 3 },
+  ] }, 30);
+  assert.deepEqual(p.missoes.map(m => [m.id, m.quantidade]), [["setor_primario", 12], ["all_2", 4]]);
+  assert.equal(p.total, 16, "faltar é melhor que repetir: o total cai, não se inventa missão");
+  assert.equal(p.missoes[0].descricao, "agricultura e extrativismo");
+});
+
+test("o plano que passa do total perde das maiores", () => {
+  const p = arrumarPlano({ missoes: [
+    { id: "a", nome: "A", descricao: "", quantidade: 12 }, { id: "b", nome: "B", descricao: "", quantidade: 8 }] }, 15);
+  assert.deepEqual(p.missoes.map(m => m.quantidade), [7, 8]);
+  assert.throws(() => arrumarPlano({ missoes: [] }, 10), /formato/);
+});
+
+test("planejar pede o mínimo de missões e leva o gasto", async () => {
+  const { modelo, pedidos } = roteiro({ missoes: [{ id: "setores", nome: "Setores", descricao: "", quantidade: 10 }] });
+  const r = await planejar({ material: MATERIAL, materia: "Geografia", ano: "4º ano", total: 30 }, modelo);
+  assert.match(pedidos[0].usuario as string, /pelo menos 3 missões/);
+  assert.equal(r.uso.length, 1);
+  assert.equal(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 100 }), null);
+  assert.match(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 101 })!, /entre 10 e 100/);
+});
+
+test("a parte escreve só a sua missão, sabendo das outras", async () => {
+  const plano = [{ id: "primario", nome: "O campo", descricao: "o que se retira da natureza" },
+                 { id: "setores", nome: "A indústria", descricao: "o que se transforma" }];
+  const { modelo, pedidos } = roteiro({ missoes: [], questoes: [boa(1), { ...boa(2), missao: "primario" }] });
+  const r = await gerar({ ...ENTRADA, quantidade: 2, missoes: plano, alvo: "setores" }, modelo, ICONES);
+  const u = pedidos[0].usuario as string;
+  assert.match(u, /só da missão "setores" \(A indústria\)/);
+  assert.match(u, /Não escreva sobre o assunto delas:\n- O campo: o que se retira da natureza/);
+  assert.deepEqual(r.missoes.map(m => m.id), ["primario", "setores"], "as missões são as do plano");
+  assert.deepEqual(r.questoes.map(q => q.missao), ["setores", "setores"], "a parte não invade a vizinha");
 });

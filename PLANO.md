@@ -326,7 +326,7 @@ Em três pedaços, cada um entregável sozinho:
 **Custo novo:** cada geração chama um modelo e custa. Precisa de limite por
 conta desde o primeiro dia, ou a conta chega antes do cliente.
 
-**Pedaço 1 escrito em 25/10/2026, ainda não publicado.** A função está em
+**Pedaço 1 publicado em 25/10/2026.** A função está em
 `supabase/functions/gerar/`, a esteira em `supabase/functions/_esteira/`, e a
 tela é `gerar.html`. Ligar está em `GERAR.md`. O que ficou decidido no
 caminho:
@@ -343,6 +343,61 @@ caminho:
 - **A saída é um arquivo** no esquema de `conteudo/`, não um jogo pronto.
   Virar jogo ainda passa pelos passos de `conteudo/LEIA.md`. Jogar direto da
   tela de revisão é o que falta para "sair com um jogo" valer ao pé da letra.
+
+**Pedaço 2 publicado em 26/10/2026.** É a ação `ler` da
+mesma função, com o módulo em `supabase/functions/_esteira/leitura.ts`. O que
+ficou decidido:
+
+- **Ler e gerar são dois passos.** A leitura devolve o texto de cada página
+  para a pessoa conferir e escolher; o que ela deixa marcado vira o
+  `material` da geração. Assim a conferência do trecho continua a mesma: a
+  questão cita o texto lido, e não a foto. Sem OCR à parte: o próprio modelo
+  lê a imagem e o PDF.
+- **Letra de mão fica fora.** A folha chega respondida pela criança, com
+  erro. O texto escrito à mão vem num campo próprio, que a tela mostra e não
+  põe no material. Foi o que aconteceu de verdade com a revisão de Ciências
+  de 20/10.
+- **"Não deu para ler" é veredito por página**, com o motivo para saber o que
+  fotografar de novo. Página com quase nada de texto é marcada assim mesmo que
+  o modelo diga que leu, e o arquivo que não rendeu página nenhuma também
+  aparece. Ilegível vem desmarcada.
+- **Um pedido por página, todos ao mesmo tempo.** Num pedido só, doze
+  páginas de livro voltam como uns 30 mil tokens de texto, minutos de
+  escrita, e a função é cortada em 150 s. O PDF é dividido no servidor em
+  PDFs de uma página (pdf-lib) e segue como se fossem fotos. A página que
+  falha vira "não deu para ler" com o motivo, sem derrubar as outras.
+- **A foto é reduzida no aparelho** a 1568 px no lado maior antes de subir:
+  ~300 KB em vez de 4 MB, e o mesmo que o modelo leria. Limites: 12 páginas
+  (as do PDF contam uma a uma) e 12 MB por leitura.
+- **A leitura gasta a mesma cota** da geração: um jogo a partir de fotos usa
+  duas das dez vezes do dia. A tabela `geracoes` ganhou `tipo` para separar as
+  duas no gasto.
+- **A procedência sai mais fina.** Cada questão aprovada procura, entre as
+  páginas lidas, a que contém o seu trecho, e o arquivo baixado leva
+  `fonte: {tipo: "foto", detalhe: "IMG_2598.jpg, p.1"}`.
+
+**Jogo grande, escrito em 27/10/2026.** O pedaço 1 parava em 20 questões
+porque é o que um pedido escreve dentro dos 150 s da função; os jogos feitos
+à mão têm cem. Agora um jogo é:
+
+- **abrir** — a reserva que conta no limite do dia (3 jogos por conta).
+  Plano e partes apontam para ela (`geracoes.criacao`); o teto de gasto de
+  todas as contas continua contando cada pedido.
+- **planejar** — o material vira missões que não se sobrepõem, cada uma com
+  quantas questões comporta, no máximo 12. Se o material não sustenta o
+  total pedido, o plano soma menos: melhor um jogo menor que um repetido.
+- **gerar**, uma missão por pedido, quatro ao mesmo tempo. Cada pedido sabe
+  das outras missões e é instruído a não invadi-las; a questão que vier com
+  a missão errada é posta na certa. A missão que falha aparece no plano com
+  "Tentar de novo", e as que chegam já entram na revisão.
+
+**Jogar sem build, escrito em 27/10/2026.** "Salvar e jogar" grava o
+conteúdo aprovado na tabela `jogos` e abre `jogar.html?id=…`. A página leva
+o motor inteiro e preenche as fendas no navegador (`build/_montar_jogo.js`),
+como `montar.py` faz no build; `montar_jogo.test.ts` cobra que os dois
+escrevam o mesmo banco sobre todo `conteudo/`. Capa e cartões saem de um
+modelo único, e a lição fica de fora — é o passo 3. O índice lista os jogos
+da conta. Falta: o progresso desses jogos não sincroniza entre aparelhos.
 
 ### Fase 5 — Modelo de dados `~4 dias, depende do cliente`
 

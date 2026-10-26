@@ -307,6 +307,39 @@ function pintarHistorico(){
     : '<p class="vazio">Nenhuma partida registrada neste período.</p>';
 }
 
+/* ---------- jogos criados na conta ---------- */
+
+/* A lista fica guardada no aparelho: sem internet, os cartões continuam
+   aparecendo, e o jogo abre se já foi aberto uma vez (ver jogar.html). */
+const CRIADOS = "jogos_criados_v1";
+
+function pintarMeusJogos(){
+  const l = ler(CRIADOS) || [];
+  const s = document.getElementById("meusJogos");
+  s.hidden = !l.length;
+  document.getElementById("gradeMeus").innerHTML = l.map(j =>
+    '<li class="gerado"><a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
+    + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
+    + '<span class="materia">' + esc(j.materia) + '</span>'
+    + '<span><span class="nome">' + esc(j.titulo) + '</span>'
+    + '<span class="desc">Criado em ' + new Date(j.criado).toLocaleDateString("pt-BR") + '.</span></span></a></li>').join("");
+}
+
+async function buscarMeusJogos(){
+  pintarMeusJogos();
+  if(typeof contaLigada !== "function" || !contaLigada()) return;
+  try{
+    const sb = await _cliente();
+    const {data: s} = await sb.auth.getSession();
+    if(!s.session) return;
+    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado")
+      .order("criado", {ascending: false});
+    if(error) return;
+    gravar(CRIADOS, data);
+    pintarMeusJogos();
+  }catch(e){}
+}
+
 /* ---------- navegação por aba ---------- */
 function ir(v){
   location.hash = v;
@@ -320,4 +353,5 @@ addEventListener("DOMContentLoaded", () => {
   const v = (typeof _VOLTA !== "undefined" && _VOLTA) ? "conta"
           : (location.hash || "#jogos").slice(1);
   ir(document.getElementById("v-" + v) ? v : "jogos");
+  buscarMeusJogos();
 });

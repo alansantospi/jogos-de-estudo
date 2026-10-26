@@ -51,5 +51,17 @@ if (!lerPerfis().some(p => p.nome === "Anne")) falhas.push("o perfil não voltou
 if (localStorage.getItem(BASE + ":" + a.id) === null) falhas.push("o progresso não voltou");
 window.prompt = promptReal; window.alert = alertReal;
 
+// Os jogos criados na conta aparecem no índice, mesmo sem rede.
+localStorage.setItem("jogos_criados_v1", JSON.stringify([{id: "abc-1", titulo: "Mundo <i>x</i>", materia: "Ciências",
+                                                         criado: "2026-10-27T10:00:00Z"}]));
+pintarMeusJogos();
+if (document.getElementById("meusJogos").hidden) falhas.push("os jogos criados não aparecem no índice");
+if (!document.querySelector('#gradeMeus a[href="jogar.html?id=abc-1"]')) falhas.push("o cartão não leva ao jogo criado");
+if (document.querySelector("#gradeMeus i")) falhas.push("título do jogo criado virou HTML");
+localStorage.removeItem("jogos_criados_v1");
+
+// Do índice se chega à tela de criar jogo, pela mesma fila de abas.
+if (!document.querySelector('.abas a[href="gerar.html"]')) falhas.push("o índice não leva a criar jogo");
+
 fim({ ok: falhas.length === 0, detalhes: falhas,
       resumo: "isolamento, lixeira e restauração conferidos" });

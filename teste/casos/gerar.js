@@ -50,7 +50,7 @@ if (!/<img src=x/.test(cartas()[2].innerText)) falhas.push("o texto com sinais d
 /* 3. aprovar reconfere e conta */
 botao(0, "Aprovar").click();
 await espere(() => pedidos.length === 1);
-await espere(() => /1 aprovada\)/.test($("baixar").textContent));
+await espere(() => /e jogar \(1\)/.test($("salvar").textContent));
 if ($("baixar").disabled) falhas.push("com uma aprovada, baixar continua desligado");
 
 /* 4. editar: a pessoa corrige e a carta passa pela mesma conferência */
@@ -99,4 +99,124 @@ for (const q of c.questoes) {
   if ("problemas" in q || "estado" in q || "rodada" in q) falhas.push("campo da revisão vazou para o conteúdo");
 }
 
-fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar e baixar", detalhes: falhas});
+/* 9. foto grande sobe reduzida, em JPEG */
+const tela = document.createElement("canvas");
+tela.width = 3000; tela.height = 2000;
+tela.getContext("2d").fillRect(0, 0, 10, 10);
+const png = await new Promise(ok => tela.toBlob(ok, "image/png"));
+const pronta = await prepararArquivo(new File([png], "IMG_2598.png", {type: "image/png"}));
+if (pronta.tipo !== "image/jpeg") falhas.push("a foto não virou JPEG: " + pronta.tipo);
+const volta = await createImageBitmap(await (await fetch("data:image/jpeg;base64," + pronta.dados)).blob());
+if (Math.max(volta.width, volta.height) !== 1568) falhas.push("a foto subiu com " + volta.width + "x" + volta.height);
+
+/* 10. a leitura: o ilegível fica desmarcado e avisado, a letra de mão fora */
+const TEXTO1 = "A célula é a menor unidade que forma os seres vivos.";
+const TEXTO2 = "Os fungos não fazem fotossíntese e se alimentam de matéria orgânica.";
+mostrarLeitura({aviso: "1 de 3 páginas não deram para ler e ficaram desmarcadas.", custo_usd: 0.05, restantes: 8,
+  paginas: [
+    {arquivo: 0, nome: "IMG_2598.jpg", pagina: 1, legivel: "sim", motivo: "", texto: TEXTO1, manuscrito: ""},
+    {arquivo: 1, nome: "IMG_2599.jpg", pagina: 1, legivel: "nao", motivo: "Foto tremida.", texto: "", manuscrito: ""},
+    {arquivo: 2, nome: "folha.pdf", pagina: 2, legivel: "parcial", motivo: "Rodapé cortado.", texto: TEXTO2,
+     manuscrito: "fungos produzem fotossíntese"},
+  ]});
+const material = $("material").value;
+if (material !== TEXTO1 + "\n\n" + TEXTO2) falhas.push("o material não é a soma das páginas lidas: " + JSON.stringify(material));
+if (/produzem fotossíntese/.test(material)) falhas.push("a letra de mão entrou no material");
+const pags = [...document.querySelectorAll("#paginas .pagina")];
+if (pags.length !== 3) falhas.push("esperava 3 páginas, vieram " + pags.length);
+else {
+  if (pags[1].querySelector("input").checked) falhas.push("a página ilegível veio marcada");
+  if (!/Foto tremida/.test(pags[1].innerText)) falhas.push("a página ilegível não diz por quê");
+  if (!/Escrito à mão/.test(pags[2].innerText)) falhas.push("a letra de mão não aparece para conferir");
+}
+if (!/não deram para ler/.test($("paginas").innerText)) falhas.push("o aviso da leitura não aparece");
+pags[0].querySelector("input").click();
+if ($("material").value !== TEXTO2) falhas.push("desmarcar a página não a tirou do material");
+if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção das páginas não ficou guardada");
+
+/* 11. a questão leva a página de onde veio */
+const comFoto = {titulo: "Micro", paginas: [{nome: "IMG_2598.jpg", pagina: 1, texto: TEXTO1},
+                                            {nome: "folha.pdf", pagina: 2, texto: TEXTO2}]};
+const f2 = fonteDe({trecho: "não fazem  fotossíntese e se alimentam"}, comFoto);
+if (f2.tipo !== "pdf" || f2.detalhe !== "folha.pdf, p.2") falhas.push("procedência errada: " + JSON.stringify(f2));
+if (fonteDe({trecho: "frase que não está em página nenhuma"}, comFoto).tipo !== "material")
+  falhas.push("trecho sem página deveria cair no material");
+
+/* 12. a etapa mora na URL: o voltar recua uma etapa, e o que não se alcança não abre */
+mostrar({missoes: [{id: "setores", nome: "Os três setores"}], questoes: [{...base, enunciado: "Outra"}],
+         lote: null, custo_usd: 0.1, restantes: 8, rodadas: 0},
+        {titulo: "T", materia: "M", ano: "4º ano", quantidade: 1, material: "x"});
+if (location.hash !== "#revisar") falhas.push("revisar não ficou na URL: " + location.hash);
+location.hash = "conferir";
+await espere(() => etapa === 2);
+if ($("pedido").hidden) falhas.push("#conferir não abriu a etapa de conferir");
+if (!$("pe").hidden) falhas.push("a barra de baixar ficou fora da revisão");
+estado = null; leitura = null; $("material").value = "";
+location.hash = "revisar";
+await espere(() => etapa === 1);
+if (location.hash !== "#material") falhas.push("etapa sem conteúdo abriu pelo endereço: " + location.hash);
+
+/* 13. o jogo grande: plano, missões em paralelo, a que falha tenta de novo */
+const gerados = [];
+let recusarB = true;
+window.chamarFuncao = async corpo => {
+  if (corpo.acao === "abrir") return {criacao: 7, restantes: 2};
+  if (corpo.acao === "planejar") return {total: 30, restantes: 2, custo_usd: 0.02, missoes: [
+    {id: "a", nome: "Missão A", descricao: "", quantidade: 10},
+    {id: "b", nome: "Missão B", descricao: "", quantidade: 10},
+    {id: "c", nome: "Missão C", descricao: "", quantidade: 10}]};
+  if (corpo.acao === "medir") return {problemas: corpo.questoes.map(() => []), lote: null};
+  gerados.push(corpo);
+  if (corpo.alvo === "b" && recusarB) {
+    recusarB = false;
+    throw Object.assign(new Error("O modelo se recusou."), {custo: 0.05});
+  }
+  // A primeira missão chega por último: a revisão tem de mostrar na ordem do plano mesmo assim.
+  await new Promise(ok => setTimeout(ok, corpo.alvo === "a" ? 200 : 20));
+  return {restantes: 2, custo_usd: 0.1, aviso: "", questoes: [1, 2].map(k =>
+    ({...base, missao: corpo.alvo, enunciado: corpo.alvo + k, problemas: []}))};
+};
+estado = null; leitura = null;
+$("material").value = base.trecho.repeat(8);
+$("titulo").value = "Jogo grande"; $("materia").value = "Geografia"; $("quantidade").value = "30";
+contar();
+$("pedido").requestSubmit();
+await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado === "falhou", 4000);
+if (gerados.length !== 3) falhas.push("esperava 3 partes, vieram " + gerados.length);
+if (gerados.some(g => g.criacao !== 7 || !g.missoes || g.missoes.length !== 3))
+  falhas.push("a parte não levou a criação e o plano inteiro");
+if (!/Não veio/.test($("resumo").innerText)) falhas.push("a missão que falhou não aparece no plano");
+const ordem = () => [...document.querySelectorAll("#lista .enunciado")].map(e => e.textContent).join(",");
+if (ordem() !== "a1,a2,c1,c2") falhas.push("fora da ordem do plano: " + ordem());
+const deNovo = [...document.querySelectorAll("#resumo button")].find(b => b.textContent === "Tentar de novo");
+if (!deNovo) falhas.push("a missão que falhou não oferece tentar de novo");
+else {
+  deNovo.click();
+  await espere(() => estado.partes.b.estado === "pronta" && !gerando, 4000);
+  if (ordem() !== "a1,a2,b1,b2,c1,c2") falhas.push("depois de tentar de novo: " + ordem());
+}
+if (!/2 restantes hoje/.test($("cota").textContent)) falhas.push("a cota de jogos não aparece: " + $("cota").textContent);
+// plano 0,02 + três partes de 0,10 + a recusa, que também foi paga: 0,05
+if (Math.abs(estado.custo - 0.37) > 1e-9) falhas.push("o custo do jogo não soma as partes: " + estado.custo);
+
+/* 14. salvar e jogar: vai para a conta, abre o jogo, e salvar de novo atualiza o mesmo */
+const gravados = [], abertos = [];
+window.gravarJogo = async (linha, id) => { gravados.push({linha, id}); return id || "11111111-2222-3333-4444-555555555555"; };
+window.abrirJogo = id => abertos.push(id);
+estado.questoes.forEach(x => { x.estado = "aprovada"; });
+pintar();
+if ($("salvar").disabled) falhas.push("com aprovadas, salvar continua desligado");
+$("salvar").click();
+await espere(() => abertos.length === 1);
+if (gravados[0].id) falhas.push("o primeiro salvamento já veio com id");
+if (gravados[0].linha.conteudo.questoes.length !== 6) falhas.push("o jogo salvo não leva as aprovadas: " + gravados[0].linha.conteudo.questoes.length);
+if (gravados[0].linha.titulo !== "Jogo grande") falhas.push("título do jogo salvo: " + gravados[0].linha.titulo);
+if (!lerDe("jogo_gerado_" + abertos[0])) falhas.push("o jogo salvo não ficou no aparelho para abrir sem rede");
+if (!(lerDe("jogos_criados_v1") || []).some(j => j.id === abertos[0])) falhas.push("o índice não fica sabendo do jogo novo");
+await espere(() => !$("salvar").disabled);
+if (!/Atualizar e jogar/.test($("salvar").textContent)) falhas.push("depois de salvo, o botão não diz que atualiza");
+$("salvar").click();
+await espere(() => abertos.length === 2);
+if (gravados[1].id !== abertos[0]) falhas.push("salvar de novo criou outro jogo em vez de atualizar");
+
+fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar", detalhes: falhas});

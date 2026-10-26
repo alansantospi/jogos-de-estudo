@@ -9,7 +9,7 @@ import io, json, re, sys
 sys.path.insert(0, "build")
 import icons
 
-USADOS = ["livro", "terra", "prensa", "nota", "regua", "letras", "globo", "comida", "lupa"]
+USADOS = ["livro", "terra", "prensa", "nota", "regua", "letras", "globo", "comida", "lupa", "mais"]
 
 SPRITE = {
  "livro": '<path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/>',
@@ -19,6 +19,7 @@ SPRITE = {
  "letras": '<path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/>',
  "globo": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/>',
  "comida": '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/>',
+ "mais": icons._P["mais"],
  "lupa": '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>',
  "regua": '<rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/>',
 }

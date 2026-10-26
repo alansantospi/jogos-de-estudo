@@ -37,6 +37,7 @@ ALVOS = {
     "licao": ["gramatica.html", "geografia.html", "restaurante.html",
               "microscopico.html"],
     "gerar": ["gerar.html"],
+    "jogar": ["jogar.html"],
 }
 
 # Injetado antes de cada caso: entrega o resultado e captura erro de JS.

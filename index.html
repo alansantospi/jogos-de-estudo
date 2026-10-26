@@ -83,6 +83,7 @@ li.gramatica a{--cor:var(--gramatica)}
 li.geografia a{--cor:var(--geografia)}
 li.restaurante a{--cor:var(--restaurante)}
 li.microscopico a{--cor:var(--microscopico)}
+li.gerado a{--cor:var(--ingles)}
 footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
   border:2px solid var(--risco);border-radius:var(--r-g);
   color:var(--texto-2);font-size:0.9375rem;max-width:56ch}
@@ -102,8 +103,14 @@ footer b{color:var(--texto)}
   padding:var(--s-2) var(--s-4);color:var(--texto-2);cursor:pointer;
   font-family:var(--display);font-size:0.9375rem;font-weight:600}
 .aba:hover{color:var(--texto);border-color:var(--texto-2)}
+/* Criar é outra página, e é do adulto: fica no fim da fila, separada das
+   vistas da criança, com o sinal de mais no lugar do realce. */
+.aba.criar{display:inline-flex;align-items:center;gap:.35rem;margin-left:auto;text-decoration:none;border-style:dashed}
+.aba.criar svg{width:1rem;height:1rem}
 .aba.atual{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
 .vista[hidden]{display:none}
+#meusJogos[hidden]{display:none}
+.titulo-meus{margin:var(--s-6) 0 var(--s-4)}
 h2{font-family:var(--display);font-size:1.5rem;margin:0 0 var(--s-4)}
 h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 
@@ -195,7 +202,7 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 </style>
 </head>
 <body>
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol></defs></svg>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol></defs></svg>
 
 <div class="wrap">
   <header>
@@ -210,6 +217,7 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
       <button class="aba" data-vista="jogos"     onclick="ir('jogos')">Jogos</button>
       <button class="aba" data-vista="historico" onclick="ir('historico')">Histórico</button>
       <button class="aba" data-vista="conta"     onclick="ir('conta')">Conta</button>
+      <a class="aba criar" href="gerar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
     </nav>
   </header>
 
@@ -281,6 +289,10 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
         <span class="mini" data-jogo="arte"></span>
       </a></li>
     </ul>
+    <section id="meusJogos" hidden>
+      <h2 class="titulo-meus">Criados na conta</h2>
+      <ul class="grade" id="gradeMeus"></ul>
+    </section>
     <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>
   </section>
 
@@ -629,6 +641,39 @@ function pintarHistorico(){
     : '<p class="vazio">Nenhuma partida registrada neste período.</p>';
 }
 
+/* ---------- jogos criados na conta ---------- */
+
+/* A lista fica guardada no aparelho: sem internet, os cartões continuam
+   aparecendo, e o jogo abre se já foi aberto uma vez (ver jogar.html). */
+const CRIADOS = "jogos_criados_v1";
+
+function pintarMeusJogos(){
+  const l = ler(CRIADOS) || [];
+  const s = document.getElementById("meusJogos");
+  s.hidden = !l.length;
+  document.getElementById("gradeMeus").innerHTML = l.map(j =>
+    '<li class="gerado"><a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
+    + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
+    + '<span class="materia">' + esc(j.materia) + '</span>'
+    + '<span><span class="nome">' + esc(j.titulo) + '</span>'
+    + '<span class="desc">Criado em ' + new Date(j.criado).toLocaleDateString("pt-BR") + '.</span></span></a></li>').join("");
+}
+
+async function buscarMeusJogos(){
+  pintarMeusJogos();
+  if(typeof contaLigada !== "function" || !contaLigada()) return;
+  try{
+    const sb = await _cliente();
+    const {data: s} = await sb.auth.getSession();
+    if(!s.session) return;
+    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado")
+      .order("criado", {ascending: false});
+    if(error) return;
+    gravar(CRIADOS, data);
+    pintarMeusJogos();
+  }catch(e){}
+}
+
 /* ---------- navegação por aba ---------- */
 function ir(v){
   location.hash = v;
@@ -642,6 +687,7 @@ addEventListener("DOMContentLoaded", () => {
   const v = (typeof _VOLTA !== "undefined" && _VOLTA) ? "conta"
           : (location.hash || "#jogos").slice(1);
   ir(document.getElementById("v-" + v) ? v : "jogos");
+  buscarMeusJogos();
 });
 
 /* ---------- conta e sincronização ---------- */
