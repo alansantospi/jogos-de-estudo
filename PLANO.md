@@ -399,6 +399,12 @@ escrevam o mesmo banco sobre todo `conteudo/`. Capa e cartões saem de um
 modelo único, e a lição fica de fora — é o passo 3. O índice lista os jogos
 da conta. Falta: o progresso desses jogos não sincroniza entre aparelhos.
 
+**Gerir, escrito em 27/10/2026.** `gerar.html#meus` lista os jogos da conta
+com Jogar, Editar e Apagar. Editar reabre o jogo na revisão (renomear,
+editar, descartar; salvar atualiza o mesmo). Acrescentar questões gera
+missões novas só do material novo e as soma às do jogo, com ids que não
+colidem. A tabela `jogos` passa a guardar o material e o ano.
+
 ### Fase 5 — Modelo de dados `~4 dias, depende do cliente`
 
 Contas → perfis → progresso → biblioteca de material, com papéis. Turma e

@@ -197,8 +197,10 @@ Deno.serve(async req => {
 
   if (corpo.acao === "medir") {
     const { material, missoes, questoes } = corpo as any;
-    if (typeof material !== "string" || material.length > LIMITES.materialMax
-        || !Array.isArray(missoes) || !Array.isArray(questoes) || questoes.length > LIMITES.totalMax + 20)
+    // Um jogo reaberto para acrescentar questões soma o material e as questões
+    // de mais de uma geração: o teto é o da coluna `jogos.material`.
+    if (typeof material !== "string" || material.length > LIMITES.materialMax * 3
+        || !Array.isArray(missoes) || !Array.isArray(questoes) || questoes.length > LIMITES.totalMax * 2 + 20)
       return erro(400, "corpo", "Pedido de medida mal formado.");
     return responder(200, remedir(questoes, material, missoes, ICONES));
   }

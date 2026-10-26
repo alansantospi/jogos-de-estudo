@@ -110,7 +110,9 @@ footer b{color:var(--texto)}
 .aba.atual{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
 .vista[hidden]{display:none}
 #meusJogos[hidden]{display:none}
-.titulo-meus{margin:var(--s-6) 0 var(--s-4)}
+.titulo-meus{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;margin:var(--s-6) 0 var(--s-4)}
+.titulo-meus h2{margin:0}
+.titulo-meus a{color:var(--texto-2);font-weight:600}
 h2{font-family:var(--display);font-size:1.5rem;margin:0 0 var(--s-4)}
 h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 
@@ -290,7 +292,7 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
       </a></li>
     </ul>
     <section id="meusJogos" hidden>
-      <h2 class="titulo-meus">Criados na conta</h2>
+      <div class="titulo-meus"><h2>Meus jogos</h2><a href="gerar.html#meus">Editar ou apagar</a></div>
       <ul class="grade" id="gradeMeus"></ul>
     </section>
     <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>

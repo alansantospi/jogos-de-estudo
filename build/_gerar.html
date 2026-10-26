@@ -57,7 +57,8 @@ a{color:var(--acao);text-underline-offset:.2em}
 .abas-site a{display:inline-flex;align-items:center;gap:.35rem;min-height:2.5rem;padding:0 1rem;border-radius:999px;
  border:2px solid var(--risco);color:var(--texto-2);text-decoration:none;font-family:var(--display);font-weight:600;font-size:.9375rem}
 .abas-site a:hover{color:var(--texto);border-color:var(--texto-2)}
-.abas-site .atual{background:var(--texto);color:var(--fundo);border-color:var(--texto);margin-left:auto}
+.abas-site .atual,.abas-site .atual:hover{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
+.abas-site .empurra{margin-left:auto}
 .abas-site svg{width:1rem;height:1rem}
 .conta{margin-left:auto;display:flex;align-items:center;gap:.5rem;color:var(--texto-2);min-width:0}
 .conta .email{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14rem}
@@ -272,6 +273,20 @@ form.carta{display:grid;gap:.75rem}
 @media (max-width:34rem){.pe .resumo-pe{display:none}.pe .empurra{width:100%;justify-content:space-between}}
 .pe .empurra{margin-left:auto;display:flex;gap:.5rem}
 
+.cabeca-meus{display:flex;gap:1rem;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:1.25rem}
+.jogo-linha{display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem;align-items:center;background:var(--carta);
+ border:1px solid var(--risco);border-radius:var(--r-g);padding:.9rem 1.1rem;margin-bottom:.6rem}
+.jogo-linha.aberto{border-color:var(--acao);box-shadow:inset 0 0 0 1px var(--acao)}
+.jogo-linha strong{display:block;font-size:1.0625rem;overflow-wrap:anywhere}
+.jogo-linha .meta{color:var(--texto-2);font-size:.8125rem;font-variant-numeric:tabular-nums}
+.jogo-linha .acoes{margin:0;justify-content:flex-end}
+@media (max-width:34rem){.jogo-linha{grid-template-columns:1fr}.jogo-linha .acoes{justify-content:flex-start}}
+a.botao{text-decoration:none;font-weight:800}
+.vazio-meus{text-align:center;padding:2rem 1rem;color:var(--texto-2);border:2px dashed var(--risco-forte);border-radius:var(--r-g)}
+.editando-jogo{display:grid;grid-template-columns:2fr 1.5fr;gap:.75rem;margin:0 0 1rem}
+@media (max-width:34rem){.editando-jogo{grid-template-columns:1fr}}
+.faixa-acrescentar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;padding:.75rem 1rem;border-radius:var(--r);
+ background:var(--acao-tinta);margin:0 0 1.25rem}
 .cartao-entrar{max-width:24rem;margin:2rem auto;background:var(--carta);border:1px solid var(--risco);border-radius:var(--r-g);
  padding:1.5rem;display:grid;gap:.9rem}
 
@@ -295,7 +310,8 @@ form.carta{display:grid;gap:.75rem}
     <a href="index.html#jogos">Jogos</a>
     <a href="index.html#historico">Histórico</a>
     <a href="index.html#conta">Conta</a>
-    <a class="atual" href="gerar.html" aria-current="page"><svg aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
+    <a class="atual empurra" id="abaCriar" href="gerar.html#material" aria-current="page"><svg aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
+    <a id="abaMeus" href="gerar.html#meus">Meus jogos</a>
   </nav>
 </header>
 
@@ -321,8 +337,19 @@ form.carta{display:grid;gap:.75rem}
 
 <p id="recado" role="status" aria-live="polite"></p>
 
+<!-- meus jogos -->
+<section id="meus" data-e="4" hidden>
+  <div class="cabeca-meus">
+    <div><h1 tabindex="-1">Meus jogos</h1>
+    <p class="lead">Os jogos criados nesta conta. Aparecem na página inicial de quem entrar nela.</p></div>
+    <button class="botao primario" type="button" id="novoJogo"><svg aria-hidden="true"><use href="#i-mais"/></svg>Novo jogo</button>
+  </div>
+  <div id="listaMeus"></div>
+</section>
+
 <!-- 1. material -->
 <section id="etapa1" data-e="1">
+  <div class="faixa-acrescentar" id="faixa1" hidden></div>
   <h1 tabindex="-1">De onde vêm as questões?</h1>
   <p class="lead">Fotos do livro, a folha de revisão, um PDF ou o resumo da aula. As questões só usam o que estiver no material.</p>
   <div class="abas" role="tablist" aria-label="Tipo de material">
@@ -356,6 +383,7 @@ form.carta{display:grid;gap:.75rem}
 
 <!-- 2. conferir -->
 <form id="pedido" data-e="2" hidden novalidate>
+  <div class="faixa-acrescentar" id="faixa2" hidden></div>
   <h1 tabindex="-1" id="tituloConferir">Confira o que foi lido</h1>
   <p class="lead" id="leadConferir">Desmarque o que não deve virar questão. O que estiver escrito à mão fica de fora: resposta de aluno pode estar errada.</p>
   <div id="paginas"></div>
@@ -420,6 +448,9 @@ const RASCUNHO = "jogos_geracao_v1";
 const LEITURA = "jogos_leitura_v1";
 const MATERIAL = "jogos_material_v1";
 const MATERIAL_MAX = 40000, MATERIAL_MIN = 300;
+// O material de um jogo salvo soma o de cada vez que se acrescentou questões
+// (coluna `jogos.material`), e um jogo tem no máximo 200 questões.
+const MATERIAL_JOGO_MAX = 120000, QUESTOES_JOGO_MAX = 200;
 /* Quantas missões se escrevem ao mesmo tempo. Mais que isso esbarra no
    limite de pedidos simultâneos da API sem terminar mais cedo. */
 const PARALELO = 4;
@@ -506,11 +537,11 @@ function relogio(texto, faixa){
 /* A etapa mora na URL, como as telas dos jogos (DESIGN.md, Navegação): o
    voltar do celular recua uma etapa em vez de sair da página, e recarregar
    cai de volta onde estava. */
-const NOMES = {1: "material", 2: "conferir", 3: "revisar"};
+const NOMES = {1: "material", 2: "conferir", 3: "revisar", 4: "meus"};
 const daUrl = () => Number(Object.keys(NOMES).find(k => "#" + NOMES[k] === location.hash)) || 0;
 const melhor = () => estado ? 3 : (leitura || $("material").value.trim()) ? 2 : 1;
 
-const alcanca = n => n === 1 || (n === 2 && (!!leitura || !!$("material").value.trim() || !!estado))
+const alcanca = n => n === 1 || n === 4 || (n === 2 && (!!leitura || !!$("material").value.trim() || !!estado))
                             || (n === 3 && (!!estado || gerando));
 
 function irPara(n, focar = true){
@@ -532,6 +563,14 @@ function irPara(n, focar = true){
     b.querySelector(".num").replaceChildren(feita && k !== n ? icone("check") : String(k));
   });
   $("pe").hidden = n !== 3 || !estado;
+  // Meus jogos é outra vista, não uma etapa: some o indicador, troca a aba.
+  $("etapas").hidden = n === 4;
+  $("abaMeus").classList.toggle("atual", n === 4);
+  $("abaCriar").classList.toggle("atual", n !== 4);
+  n === 4 ? $("abaMeus").setAttribute("aria-current", "page") : $("abaMeus").removeAttribute("aria-current");
+  n !== 4 ? $("abaCriar").setAttribute("aria-current", "page") : $("abaCriar").removeAttribute("aria-current");
+  pintarFaixas();
+  if(n === 4) listarMeus();
   if(focar){
     const h = document.querySelector('[data-e="' + n + '"] h1');
     if(h) h.focus({preventScroll: true});
@@ -712,7 +751,9 @@ function contar(){
   $("botaoGerar").disabled = gerando || fora || curto;
   const q = Number($("quantidade").value) || 30;
   $("botaoGerar").textContent = gerando ? "Gerando..." : "Gerar " + q + " questões";
-  $("dicaGerar").textContent = estado ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
+  $("dicaGerar").textContent = estado && estado.acrescentar
+      ? "As " + estado.questoes.filter(q => q.estado !== "descartada").length + " questões que o jogo já tem continuam. Conta como outro jogo do dia."
+    : estado ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
     : q > 20 ? "Uma missão por vez, " + PARALELO + " ao mesmo tempo: " + (q >= 60 ? "uns 3 a 5 minutos." : "uns 2 a 3 minutos.")
     : "";
 }
@@ -738,9 +779,16 @@ async function pedir(ev){
   if(leitura) pedido.paginas = leitura.paginas.filter(p => p.marcada)
     .map(p => ({nome: p.nome, pagina: p.pagina, texto: p.texto}));
   if(pedido.material.length > MATERIAL_MAX) return recado("O material passou do limite.", true);
+  if(estado && estado.acrescentar){
+    const ja = estado.questoes.filter(q => q.estado !== "descartada").length;
+    if(estado.pedido.material.length + pedido.material.length > MATERIAL_JOGO_MAX || ja + total > QUESTOES_JOGO_MAX)
+      return recado("Este jogo já está no tamanho máximo. Crie um jogo novo para este material.", true);
+  }
 
   gerando = true; contar();
   const anterior = estado;
+  // Acrescentar: o jogo aberto continua, e as missões novas entram nele.
+  const base = estado && estado.acrescentar ? estado : null;
   estado = null;
   irPara(3);
   $("resumo").replaceChildren(el("p", {style: "margin:0"},
@@ -755,6 +803,18 @@ async function pedir(ev){
     const pl = await chamarFuncao({acao: "planejar", criacao: ab.criacao, material: pedido.material,
                                    materia: pedido.materia, ano: pedido.ano, total});
     parar();
+    if(base){
+      // Missão nova com id de uma que o jogo já tem viraria a mesma missão.
+      const usados = new Set(base.missoes.map(m => m.id));
+      pl.missoes.forEach(m => { let id = m.id, k = 2; while(usados.has(id)) id = m.id + "_" + k++; usados.add(id); m.id = id; });
+      estado = {...base, acrescentar: false, criacao: ab.criacao, plano: pl.missoes, materialNovo: pedido.material,
+                pedido: {...base.pedido, titulo: pedido.titulo, materia: pedido.materia, ano: pedido.ano,
+                         material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
+                         paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
+                missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
+                custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "",
+                partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
+    }else
     estado = {pedido, criacao: ab.criacao, plano: pl.missoes,
               missoes: pl.missoes.map(({id, nome}) => ({id, nome})), lote: null, aviso: "",
               custo: pl.custo_usd, restantes: pl.restantes, questoes: [],
@@ -809,7 +869,8 @@ async function gerarParte(id){
   estado.partes[id] = {estado: "escrevendo"};
   pintarResumo();
   try{
-    const r = await chamarFuncao({acao: "gerar", criacao: estado.criacao, material: p.material,
+    // Ao acrescentar, as missões novas saem só do material novo.
+    const r = await chamarFuncao({acao: "gerar", criacao: estado.criacao, material: estado.materialNovo || p.material,
       titulo: p.titulo, materia: p.materia, ano: p.ano, quantidade: m.quantidade,
       missoes: estado.plano, alvo: id});
     estado.questoes.push(...r.questoes.map(q => ({...q, estado: "pendente"})));
@@ -860,6 +921,16 @@ const REGRAS = [["sempreAMaior", "Quem escolhe sempre a maior"],
 function pintarResumo(){
   const l = estado.lote, c = $("resumo"), qs = estado.questoes;
   c.replaceChildren();
+  if(estado.jogoId){
+    // Jogo salvo, reaberto: o nome muda aqui e vale no próximo "Atualizar".
+    const campo = (k, rotulo) => el("label", {}, rotulo, el("input", {value: estado.pedido[k] || "", autocomplete: "off",
+      oninput: ev => { estado.pedido[k] = ev.target.value; guardar(); }}));
+    c.append(el("div", {class: "editando-jogo"}, campo("titulo", "Nome do jogo"), campo("materia", "Matéria")),
+      el("div", {class: "acoes", style: "margin:0 0 1rem"},
+        el("button", {class: "botao secundario", type: "button", disabled: gerando, onclick: comecarAcrescentar},
+           icone("mais"), "Acrescentar questões"),
+        el("a", {class: "botao discreto", href: "jogar.html?id=" + encodeURIComponent(estado.jogoId)}, "Jogar a versão salva")));
+  }
   const n = k => qs.filter(q => q.estado === k).length;
   c.append(el("p", {class: "contas"},
     el("span", {}, el("b", {}, String(qs.length)), "questões"),
@@ -1064,7 +1135,9 @@ function montarConteudo(){
     questoes: qs.map(q => ({tipo: "escolha", missao: q.missao, icone: q.icone,
       enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao,
       // Veio de material que não é nosso: serve para estudar, não para vender.
-      origem: "derivada", fonte: fonteDe(q, p), trecho: q.trecho})),
+      // A página lida vence; sem ela, fica a procedência que a questão já tinha.
+      origem: "derivada", fonte: fonteDe(q, p).tipo === "material" && q.fonte ? q.fonte : fonteDe(q, p),
+      trecho: q.trecho})),
   };
 }
 
@@ -1096,13 +1169,16 @@ async function salvarJogo(){
   const b = $("salvar");
   b.classList.add("ocupado"); b.disabled = true;
   try{
-    estado.jogoId = await gravarJogo({titulo: c.titulo, materia: c.materia, conteudo: c}, estado.jogoId);
+    estado.jogoId = await gravarJogo({titulo: c.titulo, materia: c.materia, ano: estado.pedido.ano || "",
+                                      material: estado.pedido.material || "", conteudo: c}, estado.jogoId);
     guardar();
     // O jogo aberto aqui já fica no aparelho, e o índice o mostra sem esperar a rede.
     try{
       localStorage.setItem("jogo_gerado_" + estado.jogoId, JSON.stringify(c));
       const lista = (lerDe("jogos_criados_v1") || []).filter(j => j.id !== estado.jogoId);
-      lista.unshift({id: estado.jogoId, titulo: c.titulo, materia: c.materia, criado: new Date().toISOString()});
+      const antes = (lerDe("jogos_criados_v1") || []).find(j => j.id === estado.jogoId);
+      lista.unshift({id: estado.jogoId, titulo: c.titulo, materia: c.materia, questoes: c.questoes.length,
+                     criado: antes ? antes.criado : new Date().toISOString(), atualizado: new Date().toISOString()});
       localStorage.setItem("jogos_criados_v1", JSON.stringify(lista));
     }catch(e){}
     abrirJogo(estado.jogoId);
@@ -1112,6 +1188,149 @@ async function salvarJogo(){
     b.classList.remove("ocupado");
     pintar();
   }
+}
+
+/* ---------- meus jogos ---------- */
+
+/* Portas para a conta, trocadas pelo teste. */
+async function listarJogosConta(){
+  const sb = await cliente();
+  const {data, error} = await sb.from("jogos").select("id,titulo,materia,questoes,criado,atualizado")
+    .order("atualizado", {ascending: false});
+  if(error) throw new Error(error.message);
+  return data;
+}
+async function lerJogoConta(id){
+  const sb = await cliente();
+  const {data, error} = await sb.from("jogos").select("id,titulo,materia,ano,material,conteudo").eq("id", id).single();
+  if(error) throw new Error(error.message);
+  return data;
+}
+async function apagarJogoConta(id){
+  const sb = await cliente();
+  const {error} = await sb.from("jogos").delete().eq("id", id);
+  if(error) throw new Error(error.message);
+}
+
+const quando = t => t ? new Date(t).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit", year: "numeric"}) : "";
+
+async function listarMeus(){
+  const caixa = $("listaMeus");
+  let lista = lerDe("jogos_criados_v1");
+  if(lista) pintarMeus(lista);
+  else caixa.replaceChildren(el("div", {class: "esqueleto", style: "height:5rem"}), el("div", {class: "esqueleto", style: "height:5rem"}));
+  try{
+    lista = await listarJogosConta();
+    guardarEm("jogos_criados_v1", lista);
+    pintarMeus(lista);
+  }catch(e){
+    if(!lista) caixa.replaceChildren(el("p", {class: "nota"}, "Não consegui buscar os jogos: " + e.message));
+  }
+}
+
+/* Apagar e trocar o rascunho pedem um segundo toque no próprio botão. */
+const segundoToque = new Map();
+function confirmar(chave, botao, texto){
+  if(segundoToque.has(chave)){ clearTimeout(segundoToque.get(chave)); segundoToque.delete(chave); return true; }
+  const antes = botao.textContent;
+  botao.textContent = texto;
+  segundoToque.set(chave, setTimeout(() => { segundoToque.delete(chave); botao.textContent = antes; }, 4000));
+  return false;
+}
+
+function pintarMeus(lista){
+  const caixa = $("listaMeus");
+  if(!lista.length) return caixa.replaceChildren(el("div", {class: "vazio-meus"},
+    el("p", {style: "margin:0 0 1rem"}, "Nenhum jogo criado ainda. Fotografe o livro ou cole o resumo da aula, e em poucos minutos sai um jogo."),
+    el("button", {class: "botao primario", type: "button", onclick: () => novoJogo()}, "Criar o primeiro")));
+  caixa.replaceChildren(...lista.map(j => {
+    const apagar = el("button", {class: "botao discreto perigo", type: "button"}, "Apagar");
+    apagar.addEventListener("click", () => { if(confirmar("apagar" + j.id, apagar, "Toque de novo para apagar")) apagarJogo(j.id); });
+    const editarB = el("button", {class: "botao secundario", type: "button"}, "Editar");
+    editarB.addEventListener("click", () => editarJogo(j.id, editarB));
+    const meta = [j.materia, j.questoes != null ? plural(j.questoes, "questão", "questões") : null,
+                  "atualizado em " + quando(j.atualizado || j.criado)].filter(Boolean).join(" · ");
+    return el("article", {class: "jogo-linha" + (estado && estado.jogoId === j.id ? " aberto" : ""), "data-id": j.id},
+      el("div", {}, el("strong", {}, j.titulo), el("span", {class: "meta"}, meta)),
+      el("div", {class: "acoes"},
+        el("a", {class: "botao primario", href: "jogar.html?id=" + encodeURIComponent(j.id)}, "Jogar"),
+        editarB, apagar));
+  }));
+}
+
+/* Rascunho com questões que ainda não estão num jogo salvo custou dinheiro:
+   trocá-lo por outro pede o segundo toque. */
+const rascunhoSolto = () => estado && estado.questoes && estado.questoes.length && !estado.jogoId;
+
+async function editarJogo(id, botao){
+  if(estado && estado.jogoId !== id && rascunhoSolto()
+     && !confirmar("editar" + id, botao, "Toque de novo: descarta o rascunho atual")) return;
+  botao.classList.add("ocupado");
+  try{
+    const j = await lerJogoConta(id);
+    const c = j.conteudo;
+    editandoAgora = null; filtro = "todas";
+    estado = {jogoId: j.id, lote: null, aviso: "", custo: null, restantes: estado ? estado.restantes : null,
+              pedido: {titulo: j.titulo, materia: j.materia, ano: j.ano || "", material: j.material || "", paginas: []},
+              missoes: c.missoes.map(({id, nome}) => ({id, nome})),
+              questoes: c.questoes.filter(q => q.tipo === "escolha").map(q => ({missao: q.missao, icone: q.icone,
+                enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao || "",
+                trecho: q.trecho || "", fonte: q.fonte, problemas: [], estado: "aprovada"}))};
+    guardar();
+    irPara(3);
+    recado("Aberto para editar: o que você aprovar vai para o jogo quando tocar em Atualizar.");
+    // Sem o material (jogo salvo antes de ele ser guardado), conferir o trecho
+    // reprovaria tudo: fica sem reconferência.
+    if(estado.pedido.material) await remedir(); else pintar();
+  }catch(e){
+    recado("Não consegui abrir o jogo: " + e.message, true);
+  }finally{ botao.classList.remove("ocupado"); }
+}
+
+async function apagarJogo(id){
+  try{
+    await apagarJogoConta(id);
+    try{
+      localStorage.removeItem("jogo_gerado_" + id);
+      guardarEm("jogos_criados_v1", (lerDe("jogos_criados_v1") || []).filter(j => j.id !== id));
+    }catch(e){}
+    // O rascunho aberto continua, agora sem jogo: salvar cria outro.
+    if(estado && estado.jogoId === id){ estado.jogoId = null; guardar(); }
+    recado("Jogo apagado.");
+    listarMeus();
+  }catch(e){
+    recado("Não consegui apagar: " + e.message, true);
+  }
+}
+
+function novoJogo(){
+  if(estado && estado.acrescentar){ estado.acrescentar = false; guardar(); }
+  irPara(1);
+}
+
+/* Acrescentar: o material novo entra pelas etapas de sempre; as questões
+   que o jogo já tem esperam na revisão e não são tocadas. */
+function comecarAcrescentar(){
+  estado.acrescentar = true;
+  guardar();
+  leitura = null; guardarLeitura(); pintarPaginas();
+  $("material").value = ""; $("textoColado").value = "";
+  $("titulo").value = estado.pedido.titulo; $("materia").value = estado.pedido.materia;
+  if(estado.pedido.ano) $("ano").value = estado.pedido.ano;
+  contar(); guardarMaterial();
+  irPara(1);
+}
+
+function pintarFaixas(){
+  const ac = estado && estado.acrescentar;
+  ["faixa1", "faixa2"].forEach(id => {
+    const f = $(id);
+    f.hidden = !ac;
+    if(!ac) return;
+    f.replaceChildren(icone("mais"), el("span", {}, "Acrescentando questões a “" + estado.pedido.titulo + "”. As que o jogo já tem continuam."),
+      el("button", {class: "botao discreto empurra", type: "button", style: "margin-left:auto",
+                    onclick: () => { estado.acrescentar = false; guardar(); irPara(3); }}, "Cancelar"));
+  });
 }
 
 /* Descartar pede um segundo toque, no próprio botão: a geração já foi paga
@@ -1172,6 +1391,7 @@ function ligar(){
   $("botaoLer").addEventListener("click", lerArquivos);
   $("continuarTexto").addEventListener("click", continuarTexto);
   $("voltar1").addEventListener("click", () => irPara(1));
+  $("novoJogo").addEventListener("click", novoJogo);
   $("abaFotos").addEventListener("click", () => aba("fotos"));
   $("abaTexto").addEventListener("click", () => aba("texto"));
   $("arquivos").addEventListener("change", ev => adicionar(ev.target.files));

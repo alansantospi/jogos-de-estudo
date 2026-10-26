@@ -219,4 +219,66 @@ $("salvar").click();
 await espere(() => abertos.length === 2);
 if (gravados[1].id !== abertos[0]) falhas.push("salvar de novo criou outro jogo em vez de atualizar");
 
-fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar", detalhes: falhas});
+/* 15. meus jogos: lista, reabre para editar e renomear, acrescenta questões sem mexer nas que havia, apaga */
+const OUTRO = "99999999-8888-7777-6666-555555555555";
+const apagados = [];
+window.listarJogosConta = async () => [
+  {id: abertos[0], titulo: "Jogo grande", materia: "Geografia", questoes: 6, criado: "2026-10-20T12:00:00Z", atualizado: "2026-10-25T12:00:00Z"},
+  {id: OUTRO, titulo: "Outro jogo", materia: "Ciências", questoes: 1, criado: "2026-10-21T12:00:00Z", atualizado: "2026-10-21T12:00:00Z"}];
+window.lerJogoConta = async id => ({id, titulo: "Outro jogo", materia: "Ciências", ano: "4º ano",
+  material: "Material antigo do outro jogo.", conteudo: {missoes: [{id: "a", nome: "Antiga"}], questoes: [
+    {tipo: "escolha", missao: "a", icone: "livro", enunciado: "velha", certa: "c", erradas: ["x", "y", "z"],
+     explicacao: "", trecho: "Material antigo", fonte: {tipo: "material"}}]}});
+window.apagarJogoConta = async id => { apagados.push(id); };
+location.hash = "#meus";
+await espere(() => document.querySelectorAll("#listaMeus .jogo-linha").length === 2);
+if (!$("etapas").hidden) falhas.push("em meus jogos, o indicador de etapas continua à vista");
+if ($("abaMeus").getAttribute("aria-current") !== "page") falhas.push("a aba Meus jogos não fica marcada");
+if (!document.querySelector('#listaMeus .jogo-linha[data-id="' + abertos[0] + '"]').classList.contains("aberto"))
+  falhas.push("o jogo aberto na revisão não aparece marcado na lista");
+const linhaOutro = document.querySelector('#listaMeus .jogo-linha[data-id="' + OUTRO + '"]');
+if (!/jogar\.html\?id=/.test(linhaOutro.querySelector("a").getAttribute("href"))) falhas.push("Jogar não leva ao jogar.html");
+[...linhaOutro.querySelectorAll("button")].find(b => b.textContent === "Editar").click();
+await espere(() => estado.jogoId === OUTRO && location.hash === "#revisar");
+if (estado.questoes.length !== 1 || estado.questoes[0].estado !== "aprovada") falhas.push("o jogo reaberto não vem com as questões aprovadas");
+const nome = [...$("resumo").querySelectorAll("label")].find(l => /Nome do jogo/.test(l.textContent));
+if (!nome) falhas.push("o jogo reaberto não deixa renomear");
+else { nome.querySelector("input").value = "Outro, renomeado"; nome.querySelector("input").dispatchEvent(new Event("input")); }
+$("salvar").click();
+await espere(() => gravados.length === 3);
+if (gravados[2].id !== OUTRO) falhas.push("salvar o jogo reaberto não atualiza o mesmo");
+if (gravados[2].linha.titulo !== "Outro, renomeado") falhas.push("o nome novo não foi salvo: " + gravados[2].linha.titulo);
+if (gravados[2].linha.material !== "Material antigo do outro jogo.") falhas.push("o material não vai junto com o jogo");
+
+/* acrescentar: só o material novo vai para as partes; a missão de id repetido ganha outro */
+await espere(() => !gerando);
+gerados.length = 0;
+[...$("resumo").querySelectorAll("button")].find(b => /Acrescentar/.test(b.textContent)).click();
+await espere(() => location.hash === "#material");
+if ($("faixa1").hidden) falhas.push("acrescentando, a etapa 1 não diz a que jogo");
+if ($("titulo").value !== "Outro, renomeado") falhas.push("acrescentando, o título não vem do jogo");
+$("material").value = "Material novo. ".repeat(30); contar();
+$("pedido").requestSubmit();
+await espere(() => estado && estado.plano && !gerando && Object.values(estado.partes).every(x => x.estado === "pronta"), 4000);
+if (estado.jogoId !== OUTRO) falhas.push("acrescentar perdeu o jogo de onde veio");
+if (estado.questoes.length !== 7 || estado.questoes[0].enunciado !== "velha" || estado.questoes[0].estado !== "aprovada")
+  falhas.push("acrescentar mexeu nas questões que o jogo tinha");
+if (estado.missoes.map(m => m.id).join() !== "a,a_2,b,c") falhas.push("ids das missões: " + estado.missoes.map(m => m.id).join());
+if (gerados.some(g => /antigo/.test(g.material))) falhas.push("as partes novas foram escritas também do material antigo");
+if (!/antigo[\s\S]*novo/.test(estado.pedido.material)) falhas.push("o material salvo não soma o antigo e o novo");
+
+/* apagar pede o segundo toque e limpa o aparelho */
+location.hash = "#meus";
+await espere(() => document.querySelectorAll("#listaMeus .jogo-linha").length === 2);
+localStorage.setItem("jogo_gerado_" + OUTRO, "{}");
+const apagar = () => [...document.querySelector('#listaMeus .jogo-linha[data-id="' + OUTRO + '"]').querySelectorAll("button")]
+  .find(b => /apagar/i.test(b.textContent));
+apagar().click();
+if (apagados.length) falhas.push("apagou no primeiro toque");
+apagar().click();
+await espere(() => apagados.length === 1);
+if (apagados[0] !== OUTRO) falhas.push("apagou o jogo errado");
+if (localStorage.getItem("jogo_gerado_" + OUTRO)) falhas.push("o jogo apagado continuou no aparelho");
+if (estado.jogoId) falhas.push("o rascunho continua apontando para o jogo apagado");
+
+fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir", detalhes: falhas});

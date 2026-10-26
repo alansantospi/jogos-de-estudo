@@ -15,7 +15,9 @@
 .aba.atual{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
 .vista[hidden]{display:none}
 #meusJogos[hidden]{display:none}
-.titulo-meus{margin:var(--s-6) 0 var(--s-4)}
+.titulo-meus{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;margin:var(--s-6) 0 var(--s-4)}
+.titulo-meus h2{margin:0}
+.titulo-meus a{color:var(--texto-2);font-weight:600}
 h2{font-family:var(--display);font-size:1.5rem;margin:0 0 var(--s-4)}
 h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 

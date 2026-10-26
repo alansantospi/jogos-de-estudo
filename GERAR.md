@@ -111,7 +111,7 @@ select date_trunc('day', criado) dia, count(*) geracoes, sum(custo_usd) gasto
 Na revisão, **Salvar e jogar** guarda as questões aprovadas na conta (tabela
 `jogos`, da migração `20261027010000_jogos.sql`) e abre `jogar.html?id=…`,
 que monta o jogo no navegador com o mesmo motor dos jogos feitos à mão. O
-jogo aparece na página inicial, em "Criados na conta", para quem entrar na
+jogo aparece na página inicial, em "Meus jogos", para quem entrar na
 mesma conta. Depois de aberto uma vez, abre também sem internet.
 
 Salvar de novo atualiza o mesmo jogo. **Baixar** continua existindo: é o
@@ -121,6 +121,25 @@ lição.
 O que o jogo criado ainda não tem: lição, e progresso sincronizado entre
 aparelhos (a sincronização só conhece os jogos do build).
 
+## Gerir os jogos criados
+
+`gerar.html#meus` (aba **Meus jogos**, ou "Editar ou apagar" no índice)
+lista os jogos da conta. Cada um tem:
+
+- **Jogar** — abre `jogar.html?id=…`.
+- **Editar** — reabre o jogo na revisão, com todas as questões aprovadas. Ali
+  se renomeia (nome e matéria), edita, descarta, e **Atualizar e jogar**
+  grava por cima do mesmo jogo. Editar não chama o modelo nem gasta jogo.
+- **Acrescentar questões** (dentro de Editar) — o material novo passa pelas
+  etapas de sempre; as missões novas saem só dele e entram depois das que o
+  jogo já tem, sem tocar nelas. Conta como um jogo do dia. O jogo guarda o
+  material somado, até 120 mil caracteres e 200 questões.
+- **Apagar** — pede um segundo toque; apaga da conta e do aparelho.
+
+Precisa da migração `20261027020000_gerir_jogos.sql`: ela guarda o material
+de cada jogo, contra o qual a questão editada é reconferida. Jogo salvo antes
+dela reabre sem material, e então a edição não é reconferida.
+
 ## Quando dá errado
 
 | a tela diz | o que é |
@@ -128,6 +147,8 @@ aparelhos (a sincronização só conhece os jogos do build).
 | "A chave da API não foi aceita" | o passo 3 não foi feito, ou a chave foi revogada |
 | "Não consegui reservar a geração" | a migração do passo 2 não rodou |
 | "A tabela de jogos ainda não existe" | falta `supabase db push` da migração de jogos |
+| "Não consegui buscar os jogos: column … does not exist" | falta `supabase db push` da migração `gerir_jogos` |
+| "Este jogo já está no tamanho máximo" | acrescentar passaria de 120 mil caracteres de material ou 200 questões |
 | "Você já criou os N jogos de hoje" | a cerca por conta; a contagem é das últimas 24 h |
 | "A geração está pausada por hoje" | o teto global; vale para todas as contas |
 | "Nenhuma página deu para ler" | foto escura, tremida ou de longe; refaça de frente, com luz, a página inteira no quadro |
