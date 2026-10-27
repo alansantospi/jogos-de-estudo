@@ -412,4 +412,29 @@ if (apagados[0] !== OUTRO) falhas.push("apagou o jogo errado");
 if (localStorage.getItem("jogo_gerado_" + OUTRO)) falhas.push("o jogo apagado continuou no aparelho");
 if (estado.jogoId) falhas.push("o rascunho continua apontando para o jogo apagado");
 
-fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir", detalhes: falhas});
+/* 16. o link de jogar sem conta: liga, mostra o endereço, desliga com segundo toque */
+const links = [];
+let linkNoBanco = null;
+window.mudarLinkConta = async (id, link) => { links.push({id, link}); linkNoBanco = link; };
+const linha = () => document.querySelector("#listaMeus .jogo-linha");
+const botaoDe = rotulo => [...linha().querySelectorAll("button")].find(b => b.textContent === rotulo);
+window.listarJogosConta = async () => [{id: abertos[0], titulo: "Jogo grande", materia: "Geografia", questoes: 6,
+  link: linkNoBanco, criado: "2026-10-20T12:00:00Z", atualizado: "2026-10-25T12:00:00Z"}];
+await listarMeus();
+if (document.querySelectorAll("#listaMeus .jogo-linha").length !== 1) falhas.push("a lista não foi repintada");
+if (linha().querySelector(".link-jogo")) falhas.push("jogo sem link já mostra endereço");
+botaoDe("Compartilhar").click();
+await espere(() => links.length === 1 && linha().querySelector(".campo-link"));
+if (!/^[0-9a-f-]{36}$/.test(links[0].link || "")) falhas.push("o link ligado não é um uuid: " + links[0].link);
+if (!linha().querySelector(".campo-link").value.endsWith("jogar.html?l=" + links[0].link))
+  falhas.push("o endereço mostrado não é o do link: " + linha().querySelector(".campo-link").value);
+if (botaoDe("Compartilhar")) falhas.push("com o link ligado, Compartilhar continua à vista");
+if (!(lerDe("jogos_criados_v1") || [])[0]?.link) falhas.push("o link não ficou na lista guardada");
+botaoDe("Desligar link").click();
+if (links.length !== 1) falhas.push("desligou no primeiro toque");
+[...linha().querySelectorAll("button")].find(b => /desligar|toque/i.test(b.textContent)).click();
+await espere(() => links.length === 2);
+if (links[1].link !== null) falhas.push("desligar não apagou o link");
+await espere(() => botaoDe("Compartilhar"));
+
+fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir, link", detalhes: falhas});

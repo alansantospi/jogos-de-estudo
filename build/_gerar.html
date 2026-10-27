@@ -309,6 +309,11 @@ form.carta{display:grid;gap:.75rem}
 .jogo-linha strong{display:block;font-size:1.0625rem;overflow-wrap:anywhere}
 .jogo-linha .meta{color:var(--texto-2);font-size:.8125rem;font-variant-numeric:tabular-nums}
 .jogo-linha .acoes{margin:0;justify-content:flex-end}
+.link-jogo{grid-column:1/-1;border-top:1px solid var(--risco);padding-top:.6rem}
+.link-jogo p{margin:0 0 .4rem;color:var(--texto-2);font-size:.8125rem}
+.link-jogo .acoes{justify-content:flex-start}
+.campo-link{flex:1 1 14rem;min-width:0;min-height:2.5rem;padding:0 .7rem;border:1px solid var(--risco-forte);
+ border-radius:var(--r);background:var(--fundo);color:var(--texto);font:inherit;font-size:.8125rem}
 @media (max-width:34rem){.jogo-linha{grid-template-columns:1fr}.jogo-linha .acoes{justify-content:flex-start}}
 a.botao{text-decoration:none;font-weight:800}
 .vazio-meus{text-align:center;padding:2rem 1rem;color:var(--texto-2);border:2px dashed var(--risco-forte);border-radius:var(--r-g)}
@@ -354,6 +359,8 @@ a.botao{text-decoration:none;font-weight:800}
     <label>E-mail <input id="email" type="email" autocomplete="email" required></label>
     <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
     <button class="botao primario" type="submit">Entrar</button>
+    <p class="nota">Ainda não tem conta? Estamos em teste fechado: <a href="index.html#conta">crie a sua</a> com o código de convite que você recebeu.</p>
+    <p class="nota legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></p>
   </form>
 </section>
 
@@ -1481,7 +1488,7 @@ async function salvarJogo(){
 /* Portas para a conta, trocadas pelo teste. */
 async function listarJogosConta(){
   const sb = await cliente();
-  const {data, error} = await sb.from("jogos").select("id,titulo,materia,questoes,criado,atualizado")
+  const {data, error} = await sb.from("jogos").select("id,titulo,materia,questoes,link,criado,atualizado")
     .order("atualizado", {ascending: false});
   if(error) throw new Error(error.message);
   return data;
@@ -1491,6 +1498,13 @@ async function lerJogoConta(id){
   const {data, error} = await sb.from("jogos").select("id,titulo,materia,ano,material,conteudo").eq("id", id).single();
   if(error) throw new Error(error.message);
   return data;
+}
+/* Ligar o link sorteia um endereço novo; desligar o apaga. Quem abre o
+   link lê pela função jogo_por_link, que não precisa de conta. */
+async function mudarLinkConta(id, link){
+  const sb = await cliente();
+  const {error} = await sb.from("jogos").update({link}).eq("id", id);
+  if(error) throw new Error(error.message);
 }
 async function apagarJogoConta(id){
   const sb = await cliente();
@@ -1536,12 +1550,53 @@ function pintarMeus(lista){
     editarB.addEventListener("click", () => editarJogo(j.id, editarB));
     const meta = [j.materia, j.questoes != null ? plural(j.questoes, "questão", "questões") : null,
                   "atualizado em " + quando(j.atualizado || j.criado)].filter(Boolean).join(" · ");
+    const compartilhar = j.link ? null
+      : el("button", {class: "botao secundario", type: "button"}, "Compartilhar");
+    if(compartilhar) compartilhar.addEventListener("click", () => mudarLink(j, crypto.randomUUID(), compartilhar));
     return el("article", {class: "jogo-linha" + (estado && estado.jogoId === j.id ? " aberto" : ""), "data-id": j.id},
       el("div", {}, el("strong", {}, j.titulo), el("span", {class: "meta"}, meta)),
       el("div", {class: "acoes"},
         el("a", {class: "botao primario", href: "jogar.html?id=" + encodeURIComponent(j.id)}, "Jogar"),
-        editarB, apagar));
+        editarB, compartilhar, apagar),
+      j.link ? linhaDoLink(j) : null);
   }));
+}
+
+/* O link é para a criança jogar no aparelho dela sem a senha da conta, ou
+   para mandar a um colega. Quem tem o link joga; não edita, e do
+   material vê só os trechos que as questões citam. */
+const enderecoDoLink = link => new URL("jogar.html?l=" + link, location.href).href;
+function linhaDoLink(j){
+  const campo = el("input", {class: "campo-link", readonly: true, value: enderecoDoLink(j.link),
+                             "aria-label": "Link de " + j.titulo, onfocus: e => e.target.select()});
+  const copiar = el("button", {class: "botao secundario", type: "button"}, "Copiar");
+  copiar.addEventListener("click", async () => {
+    try{ await navigator.clipboard.writeText(campo.value); }
+    catch(e){ campo.select(); document.execCommand("copy"); }
+    copiar.textContent = "Copiado";
+    setTimeout(() => { copiar.textContent = "Copiar"; }, 2000);
+  });
+  const desligar = el("button", {class: "botao discreto", type: "button"}, "Desligar link");
+  desligar.addEventListener("click", () => {
+    if(confirmar("link" + j.id, desligar, "Toque de novo: o link para de abrir")) mudarLink(j, null, desligar);
+  });
+  return el("div", {class: "link-jogo"},
+    el("p", {}, "Quem tiver este link joga sem entrar na conta. Não deixa editar; do material, mostra só os trechos que as questões citam."),
+    el("div", {class: "acoes"}, campo, copiar, desligar));
+}
+
+async function mudarLink(j, link, botao){
+  botao.classList.add("ocupado"); botao.disabled = true;
+  try{
+    await mudarLinkConta(j.id, link);
+    const lista = (lerDe("jogos_criados_v1") || []).map(x => x.id === j.id ? {...x, link} : x);
+    guardarEm("jogos_criados_v1", lista);
+    pintarMeus(lista);
+    recado(link ? "Link ligado. Copie e mande para quem vai jogar." : "Link desligado: o endereço antigo não abre mais.");
+  }catch(e){
+    recado("Não consegui mudar o link: " + e.message, true);
+    botao.classList.remove("ocupado"); botao.disabled = false;
+  }
 }
 
 /* Rascunho com questões que ainda não estão num jogo salvo custou dinheiro:

@@ -333,8 +333,45 @@ async function buscar(id){
   return {sessao: true, jogo: data && data.conteudo};
 }
 
+/* Pelo link compartilhado: sem conta, pela função jogo_por_link. Ela
+   devolve nada quando o dono desligou o link. */
+async function buscarPorLink(link){
+  const {createClient} = await import(CONTA_LIB);
+  const sb = createClient(CONTA.url, CONTA.chave, {auth: {persistSession: false}});
+  const {data, error} = await sb.rpc("jogo_por_link", {l: link});
+  if(error) throw error;
+  return {jogo: data && data[0] && data[0].conteudo};
+}
+
+async function abrirPorLink(link){
+  let jogo = null, r = null;
+  try{ jogo = JSON.parse(localStorage.getItem(GUARDA("l_" + link))); }catch(e){}
+  try{ r = await buscarPorLink(link); }catch(e){}
+  if(r && r.jogo){ jogo = r.jogo; try{ localStorage.setItem(GUARDA("l_" + link), JSON.stringify(jogo)); }catch(e){} }
+  // O dono desligou: o guardado no aparelho também deixa de abrir.
+  else if(r){ jogo = null; try{ localStorage.removeItem(GUARDA("l_" + link)); }catch(e){} }
+  if(!jogo){
+    if(r) return aviso("Este link não abre mais", "Quem criou o jogo desligou o link, ou ele foi apagado. Peça um link novo.",
+                       ["Ver os outros jogos", "index.html"]);
+    return aviso("Sem conexão", "Na primeira vez, o jogo precisa da internet para chegar. Depois abre sem ela.",
+                 ["Ver os outros jogos", "index.html"]);
+  }
+  montar(jogo, link);
+}
+
+function montar(jogo, id){
+  let html;
+  try{ html = montarJogo(MOLDE, jogo, id, LICAO); }
+  catch(e){ return aviso("Este jogo não abriu", "O conteúdo salvo está fora do formato: " + e.message, ["Voltar aos jogos", "index.html"]); }
+  document.open(); document.write(html); document.close();
+}
+
 async function abrir(){
-  const id = new URLSearchParams(location.search).get("id") || "";
+  const busca = new URLSearchParams(location.search);
+  const link = busca.get("l") || "";
+  if(link) return /^[0-9a-f-]{36}$/i.test(link) ? abrirPorLink(link)
+    : aviso("Jogo não encontrado", "O link está incompleto. Copie de novo o endereço inteiro.", ["Ver os outros jogos", "index.html"]);
+  const id = busca.get("id") || "";
   if(!/^[0-9a-f-]{36}$/i.test(id))
     return aviso("Jogo não encontrado", "O endereço está incompleto.", ["Voltar aos jogos", "index.html"]);
   let jogo = null, r = null;
@@ -349,10 +386,7 @@ async function abrir(){
     return aviso("Sem conexão", "Na primeira vez, o jogo precisa da internet para chegar. Depois abre sem ela.",
                  ["Voltar aos jogos", "index.html"]);
   }
-  let html;
-  try{ html = montarJogo(MOLDE, jogo, id, LICAO); }
-  catch(e){ return aviso("Este jogo não abriu", "O conteúdo salvo está fora do formato: " + e.message, ["Voltar aos jogos", "index.html"]); }
-  document.open(); document.write(html); document.close();
+  montar(jogo, id);
 }
 abrir();
 </script>

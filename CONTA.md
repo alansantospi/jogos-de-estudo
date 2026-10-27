@@ -114,6 +114,13 @@ ou confirme-o ali mesmo, pelo menu de três pontos.
 Mesmo desligando a confirmação, deixe o **Site URL** correto: ele também vale
 para recuperação de senha e para o login com Google.
 
+## Beta fechado: convite para criar conta
+
+Com a migração `20261030000000_beta_fechado.sql`, conta nova só nasce com
+código de convite e aceite dos termos — inclusive pelo Google e pelo painel
+do Supabase. Como criar convites, e o que fazer antes de mandar o primeiro,
+está em `BETA.md`.
+
 ## 6. Opcional: entrar com Google
 
 Em **Authentication → Sign In / Providers → Google**, ligue o provedor e siga

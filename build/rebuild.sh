@@ -35,3 +35,4 @@ echo "== esteira de geração"
 python3 build/esteira.py
 python3 build/gerar.py
 python3 build/jogar.py
+python3 build/legal.py

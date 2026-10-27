@@ -131,6 +131,13 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
 .primario:active{transform:translateY(var(--labio));box-shadow:none}
 .fantasma{background:none;color:var(--texto-2);border:2px solid var(--risco)}
 .recado{min-height:1.2em;color:var(--texto-2);font-size:0.875rem}
+.aceite{display:grid;grid-template-columns:auto 1fr;gap:var(--s-2);align-items:start;
+  font-size:0.875rem;color:var(--texto-2)}
+.aceite input{width:1.25rem;height:1.25rem;margin:2px 0 0;accent-color:var(--ingles)}
+.aceite a,.trocar-modo .link{color:var(--ingles);font-weight:700}
+footer .legal{display:block;margin-top:var(--s-2);font-size:0.8125rem}
+footer .legal a{color:var(--texto-2)}
+.link{background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline}
 
 /* ---------- perfis ---------- */
 .perfis{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-bottom:var(--s-5)}
@@ -295,7 +302,7 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
       <div class="titulo-meus"><h2>Meus jogos</h2><a href="gerar.html#meus">Editar ou apagar</a></div>
       <ul class="grade" id="gradeMeus"></ul>
     </section>
-    <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.</footer>
+    <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.<span class="legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></span></footer>
   </section>
 
   <!-- ---------------- perfis ---------------- -->
@@ -816,7 +823,7 @@ function _emPortugues(msg){
   if(/access_denied/i.test(m))
     return "O link não foi aceito. Entre abaixo com o mesmo e-mail e senha.";
   if(/email not confirmed/i.test(m))
-    return "A conta existe, mas falta confirmar o e-mail. Veja o passo 5 do CONTA.md.";
+    return "A conta existe, mas falta confirmar o e-mail: abra o link que chegou nele (veja também o spam).";
   if(/invalid login/i.test(m))
     return "E-mail ou senha não conferem.";
   if(/already registered|user already/i.test(m))
@@ -827,36 +834,62 @@ function _emPortugues(msg){
     return "Muitas tentativas seguidas. Espere um minuto.";
   if(/fetch|network/i.test(m))
     return "Sem resposta do servidor. Verifique a internet.";
+  /* O gatilho do convite (migração beta_fechado) derruba o cadastro, e o
+     Supabase devolve só isto, sem dizer qual regra foi. Pelo Google não há
+     onde pôr o código, então a conta nova pelo Google cai aqui também. */
+  if(/database error saving new user|unexpected_failure|server_error/i.test(m))
+    return "Conta nova só com código de convite válido. Use Criar conta, com o código que você recebeu. "
+      + "Pelo Google dá para entrar depois, com o mesmo e-mail.";
   return m;
 }
+
+/* Muda quando o texto dos termos ou da política mudar de verdade; tem de
+   bater com termos_versao() na migração beta_fechado, que recusa o cadastro
+   com outra versão. */
+const TERMOS_VERSAO = "2026-10-27";
+
+/* Entrar e criar conta são duas portas: no beta, criar pede o convite e o
+   aceite dos termos, e quem só errou a senha não deve ver nenhum dos dois. */
+let _modoConta = "entrar";
+function modoConta(m){ _modoConta = m; pintarConta(); }
 
 async function entrarConta(ev){
   if(ev) ev.preventDefault();
   const email = document.getElementById("contaEmail").value.trim();
   const senha = document.getElementById("contaSenha").value;
-  _recado("Entrando...");
+  const criar = _modoConta === "criar";
+  _recado(criar ? "Criando a conta..." : "Entrando...");
   let sb;
   try{ sb = await _cliente(); }
   catch(e){ return _recado("Não consegui carregar a biblioteca. Verifique a internet."); }
 
-  let {data, error} = await sb.auth.signInWithPassword({email, password: senha});
-  let novaConta = false;
-  if(error && /invalid login/i.test(error.message)){
-    novaConta = true;
-    ({data, error} = await sb.auth.signUp({email, password: senha}));
+  let data, error;
+  if(criar){
+    const convite = document.getElementById("contaConvite").value.replace(/\s/g, "").toUpperCase();
+    if(!document.getElementById("contaAceite").checked)
+      return _recado("Para criar a conta, é preciso aceitar os termos e a política de privacidade.");
+    ({data, error} = await sb.auth.signUp({email, password: senha,
+      options: {data: {convite, aceite: TERMOS_VERSAO}, emailRedirectTo: location.href.split("#")[0]}}));
+  }else{
+    ({data, error} = await sb.auth.signInWithPassword({email, password: senha}));
   }
-  if(error) return _recado(_emPortugues(error.message));
+  if(error){
+    if(!criar && /invalid login/i.test(error.message))
+      return _recado("E-mail ou senha não conferem. Ainda não tem conta? Toque em Criar conta.");
+    return _recado(_emPortugues(error.message));
+  }
 
   /* Com confirmação de e-mail ligada, o cadastro não devolve sessão: a
      conta existe mas ainda não dá para entrar. Dizer isso é melhor do que
      redesenhar a tela como se nada tivesse acontecido. */
   if(!data || !data.session){
-    return _recado(novaConta
-      ? "Conta criada. Confirme pelo link no e-mail e entre de novo. Se o link "
-        + "levar a localhost, falta ajustar o Site URL — veja o CONTA.md."
+    if(criar) _modoConta = "entrar", desenhar();
+    return _recado(criar
+      ? "Conta criada. Confirme pelo link que chegou no e-mail e depois entre aqui."
       : "Não foi possível abrir a sessão. Tente de novo.");
   }
   _sessao = data.session;
+  _modoConta = "entrar";
   await sincronizar();
   const recado = document.getElementById("contaRecado");
   const texto = recado ? recado.textContent : "";
@@ -908,13 +941,26 @@ function pintarConta(){
       + '<button class="primario" onclick="sincronizar()">Sincronizar agora</button>'
       + '<button class="fantasma" onclick="sairConta()">Sair</button>'
       + '<p id="contaRecado" class="recado"></p></div>'
+    : _modoConta === "criar"
+    ? '<form class="cartao" onsubmit="entrarConta(event)"><h2>Criar conta</h2>'
+      + '<p>Estamos em teste fechado: a conta nova precisa do código de convite que você recebeu.</p>'
+      + '<label class="campo"><span>Código de convite</span><input id="contaConvite" required autocomplete="off" '
+      + 'autocapitalize="characters" spellcheck="false" pattern="[A-Za-z0-9\\- ]{6,40}" placeholder="ABCD-123456"></label>'
+      + '<label class="campo"><span>E-mail</span><input id="contaEmail" type="email" required autocomplete="email"></label>'
+      + '<label class="campo"><span>Senha (pelo menos 8 caracteres)</span><input id="contaSenha" type="password" required autocomplete="new-password" minlength="8"></label>'
+      + '<label class="aceite"><input id="contaAceite" type="checkbox" required> <span>Sou maior de idade e li e aceito os '
+      + '<a href="termos.html" target="_blank">termos de uso</a> e a <a href="privacidade.html" target="_blank">política de privacidade</a>.</span></label>'
+      + '<button class="primario" type="submit">Criar conta</button>'
+      + '<button class="fantasma" type="button" onclick="modoConta(\'entrar\')">Já tenho conta</button>'
+      + '<p id="contaRecado" class="recado" role="status"></p></form>'
     : '<form class="cartao" onsubmit="entrarConta(event)"><h2>Entrar na conta</h2>'
       + '<p>Para o progresso ser o mesmo no celular, no tablet e no notebook.</p>'
       + '<label class="campo"><span>E-mail</span><input id="contaEmail" type="email" required autocomplete="email"></label>'
-      + '<label class="campo"><span>Senha</span><input id="contaSenha" type="password" required autocomplete="current-password" minlength="8"></label>'
-      + '<button class="primario" type="submit">Entrar ou criar conta</button>'
+      + '<label class="campo"><span>Senha</span><input id="contaSenha" type="password" required autocomplete="current-password"></label>'
+      + '<button class="primario" type="submit">Entrar</button>'
       + '<button class="fantasma" type="button" onclick="entrarGoogle()">Entrar com Google</button>'
-      + '<p id="contaRecado" class="recado"></p></form>';
+      + '<p class="trocar-modo">Recebeu um convite? <button class="link" type="button" onclick="modoConta(\'criar\')">Criar conta</button></p>'
+      + '<p id="contaRecado" class="recado" role="status"></p></form>';
 }
 
 /* Volta de uma confirmação de e-mail ou de um login do Google. */

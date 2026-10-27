@@ -32,6 +32,7 @@ ALVOS = {
     "navegacao": JOGOS,
     "fim": JOGOS,
     "perfis": ["index.html"],
+    "conta": ["index.html"],
     "migracao": ["time-travel-english.html"],
     # Os jogos com lição em passos curtos. Quem entrar depois entra aqui.
     "licao": ["gramatica.html", "geografia.html", "restaurante.html",

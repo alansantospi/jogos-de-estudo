@@ -181,6 +181,8 @@ lista os jogos da conta. Cada um tem:
   etapas de sempre; as missões novas saem só dele e entram depois das que o
   jogo já tem, sem tocar nelas. Conta como um jogo do dia. O jogo guarda o
   material somado, até 120 mil caracteres e 200 questões.
+- **Compartilhar** — liga um link `jogar.html?l=…` para jogar sem entrar
+  na conta; **Desligar link** o apaga. Detalhes em `BETA.md`.
 - **Apagar** — pede um segundo toque; apaga da conta e do aparelho.
 
 Precisa da migração `20261027020000_gerir_jogos.sql`: ela guarda o material
@@ -197,6 +199,9 @@ dela reabre sem material, e então a edição não é reconferida.
 | "Não consegui buscar os jogos: column … does not exist" | falta `supabase db push` da migração `gerir_jogos` |
 | "Ação desconhecida" ao gerar a lição | falta `supabase functions deploy gerar` |
 | lição "não veio" com erro de reserva | falta `supabase db push` da migração `licao` |
+| "Não consegui mudar o link: column … link does not exist" | falta `supabase db push` da migração `beta_fechado` |
+| "Este link não abre mais" | o dono desligou o link, ou apagou o jogo |
+| "Conta nova só com código de convite válido" | o convite não existe, esgotou ou foi desligado (`BETA.md`) |
 | "Este jogo já está no tamanho máximo" | acrescentar passaria de 120 mil caracteres de material ou 200 questões |
 | "Você já criou os N jogos de hoje" | a cerca por conta; a contagem é das últimas 24 h |
 | "A geração está pausada por hoje" | o teto global; vale para todas as contas |

@@ -25,6 +25,28 @@ const JOGO = {id: "teste-4-ano", materia: "Ciências", titulo: "Mundo <b>teste</
      quiz: {pergunta: "O fungo faz fotossíntese?", certa: "Não", erradas: ["Sim", "Só de dia", "Só no verão"],
             retorno: "Ele absorve o alimento."}}]};
 
+/* o link de jogar sem conta, antes de montar de verdade: o que chega da
+   função é montado com o link no lugar do id; link desligado não abre nem
+   pelo que ficou guardado no aparelho */
+const LINK = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+const montarDeVerdade = window.montar;
+let montado = null, respostaLink = {jogo: JOGO};
+window.montar = (jogo, id) => { montado = {jogo, id}; };
+window.buscarPorLink = async l => { if (l !== LINK) throw new Error("link errado: " + l); return respostaLink; };
+history.replaceState(null, "", location.pathname + "?l=" + LINK);
+await abrir();
+if (!montado || montado.id !== LINK || montado.jogo.titulo !== JOGO.titulo) falhas.push("o link não montou o jogo");
+if (!localStorage.getItem("jogo_gerado_l_" + LINK)) falhas.push("o jogo do link não ficou guardado no aparelho");
+montado = null; respostaLink = {jogo: null};
+await abrir();
+if (montado) falhas.push("link desligado ainda abriu o jogo guardado");
+if (!/não abre mais/.test(document.getElementById("espera").innerText)) falhas.push("link desligado sem aviso: " + document.getElementById("espera").innerText);
+if (localStorage.getItem("jogo_gerado_l_" + LINK)) falhas.push("link desligado continuou guardado no aparelho");
+history.replaceState(null, "", location.pathname + "?l=nada");
+await abrir();
+if (!/incompleto/.test(document.getElementById("espera").innerText)) falhas.push("link truncado sem aviso");
+window.montar = montarDeVerdade;
+
 localStorage.setItem("jogo_gerado_" + ID, JSON.stringify(JOGO));
 history.replaceState(null, "", location.pathname + "?id=" + ID);
 await abrir();

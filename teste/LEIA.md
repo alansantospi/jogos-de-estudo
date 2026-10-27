@@ -28,8 +28,9 @@ tenha o mesmo banco, nomes e trilhas que o build monta, sobre todo
 | `conteudo` | 4 jogos | percorre todas as trilhas: sem `undefined`, sem alternativa vazia, letra na ordem, ícone presente |
 | `navegacao` | 4 jogos | rotas, o endereço persistindo, busca sem acento, migalhas |
 | `fim` | 4 jogos | caixa de revisão, ícones nela, patente da matéria certa |
+| `conta` | índice | entrar não pede convite e senha errada não vira cadastro; criar pede convite e aceite e os manda ao banco; convite recusado explicado |
 | `perfis` | índice | isolamento entre alunos, histórico a partir do progresso, lixeira, restauração |
-| `gerar` | gerar.html | aprovar, editar, descartar; problema grave não se aprova; texto do modelo nunca vira HTML; o arquivo baixado no esquema |
+| `gerar` | gerar.html | aprovar, editar, descartar; problema grave não se aprova; texto do modelo nunca vira HTML; o arquivo baixado no esquema; Meus jogos e o link de compartilhar |
 
 **Mutação** (`teste/mutacao.py`) — reinjeta quatro defeitos que este projeto
 teve de verdade e cobra que a suíte falhe. Suíte que passa não prova nada.
