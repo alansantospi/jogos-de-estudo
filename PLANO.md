@@ -396,8 +396,15 @@ conteúdo aprovado na tabela `jogos` e abre `jogar.html?id=…`. A página leva
 o motor inteiro e preenche as fendas no navegador (`build/_montar_jogo.js`),
 como `montar.py` faz no build; `montar_jogo.test.ts` cobra que os dois
 escrevam o mesmo banco sobre todo `conteudo/`. Capa e cartões saem de um
-modelo único, e a lição fica de fora — é o passo 3. O índice lista os jogos
+modelo único, e a lição veio depois (abaixo). O índice lista os jogos
 da conta. Falta: o progresso desses jogos não sincroniza entre aparelhos.
+
+**Lição, escrita em 26/10/2026.** Um pedido de esforço médio por missão,
+na mesma fila das partes, escreve um ou dois passos no formato de
+`build/licao.py` sem o desenho. `_montar_jogo.js` desenha com o mesmo CSS e
+JS de lá; `montar_jogo.test.ts` cobra o mesmo HTML. Cada passo cita o
+material e é conferido; o que não confere chega fora da lição. Falta: o
+desenho, e medir o custo de verdade.
 
 **Gerir, escrito em 27/10/2026.** `gerar.html#meus` lista os jogos da conta
 com Jogar, Editar e Apagar. Editar reabre o jogo na revisão (renomear,

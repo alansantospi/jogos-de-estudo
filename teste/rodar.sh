@@ -12,7 +12,7 @@ echo "
 == esteira"
 N="node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"
 $N teste/esteira/paridade.ts
-$N --test --test-reporter=dot teste/esteira/esteira.test.ts teste/esteira/leitura.test.ts teste/esteira/montar_jogo.test.ts
+$N --test --test-reporter=dot teste/esteira/esteira.test.ts teste/esteira/leitura.test.ts teste/esteira/licao.test.ts teste/esteira/montar_jogo.test.ts
 python3 teste/executar.py "$@"
 
 if [ $# -eq 0 ]; then

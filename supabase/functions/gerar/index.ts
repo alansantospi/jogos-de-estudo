@@ -12,6 +12,9 @@
                                                    — divide em missões
      {acao:"gerar", criacao, material, titulo, materia, ano, quantidade,
                     missoes, alvo}                 — uma missão do plano
+     {acao:"licao", criacao, material, materia, ano, missoes, alvo}
+                                                   — os passos da lição
+                                                     de uma missão
      {acao:"medir", material, missoes, questoes}   — reconfere o que a
                                                      revisão editou; não
                                                      chama modelo, não custa
@@ -24,16 +27,18 @@ import { conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, LIMITES, pla
          type Modelo, type Uso } from "../_esteira/esteira.ts";
 import { ICONES } from "../_esteira/icones.ts";
 import { conferirArquivos, expandir, ler, type Arquivo } from "../_esteira/leitura.ts";
+import { escreverLicao } from "../_esteira/licao.ts";
 import { PDFDocument } from "npm:pdf-lib@1.17.1";
 
 const MODELO = "claude-opus-5-5";
 
 /* As cercas, ajustáveis sem novo deploy: `supabase secrets set`.
-   LIMITE_POR_DIA conta jogos; um jogo é o plano mais uma parte por missão,
-   até MAX_PARTES pedidos (doze missões, o plano e algumas tentativas). */
+   LIMITE_POR_DIA conta jogos; um jogo é o plano mais, por missão, uma parte
+   e uma lição, até MAX_PARTES pedidos (doze missões, o plano e algumas
+   tentativas). */
 const LIMITE_POR_DIA = Number(Deno.env.get("LIMITE_POR_DIA") ?? 3);
 const LIMITE_LEITURAS = Number(Deno.env.get("LIMITE_LEITURAS") ?? 10);
-const MAX_PARTES = Number(Deno.env.get("MAX_PARTES") ?? 20);
+const MAX_PARTES = Number(Deno.env.get("MAX_PARTES") ?? 40);
 const TETO_DIA_USD = Number(Deno.env.get("TETO_DIA_USD") ?? 15);
 /* Quanto uma geração em curso pesa no teto antes de se saber o custo real.
    Material no limite, vinte questões e duas rodadas ficam abaixo disto. */
@@ -252,15 +257,38 @@ Deno.serve(async req => {
       return await falhou(reserva.id, reserva.restantes, e);
     }
   }
+  const missoesDoCorpo = Array.isArray(corpo.missoes)
+    ? (corpo.missoes as any[]).map(m => ({ id: String(m?.id ?? ""), nome: String(m?.nome ?? ""),
+                                                        descricao: String(m?.descricao ?? "").slice(0, 400) }))
+    : undefined;
+
+  if (corpo.acao === "licao") {
+    const e = { material: String(corpo.material ?? "").trim(), materia: String(corpo.materia ?? ""),
+                ano: String(corpo.ano ?? ""), missoes: missoesDoCorpo ?? [], alvo: String(corpo.alvo ?? "") };
+    if (e.material.length < LIMITES.materialMin || e.material.length > LIMITES.materialMax)
+      return erro(400, "entrada", "O material da lição está fora do tamanho.");
+    if (!e.materia.trim()) return erro(400, "entrada", "Diga de que matéria é.");
+    if (e.missoes.length > 20 || !e.missoes.some(m => m.id === e.alvo))
+      return erro(400, "entrada", "A missão pedida não está no plano.");
+    const reserva = await reservar(quem.user.id, "licao", e.material.length, 1, criacao);
+    if (reserva instanceof Response) return reserva;
+    const inicio = Date.now();
+    try {
+      const r = await escreverLicao(e, modelo, () => Date.now() - inicio < SO_REGERA_ATE_MS);
+      await registrar(reserva.id, "feita", r.uso, { entregues: r.passos.length, rodadas: r.rodadas,
+        reprovadas: r.passos.filter(p => p.problemas.some(x => x.grave)).length });
+      return responder(200, { passos: r.passos, aviso: r.aviso, restantes: reserva.restantes,
+                              custo_usd: Number(custo(r.uso).toFixed(4)) });
+    } catch (e) {
+      return await falhou(reserva.id, reserva.restantes, e);
+    }
+  }
   if (corpo.acao !== "gerar") return erro(400, "acao", "Ação desconhecida.");
 
   const entrada = { material: String(corpo.material ?? "").trim(), titulo: String(corpo.titulo ?? ""),
                     materia: String(corpo.materia ?? ""), ano: String(corpo.ano ?? ""),
                     quantidade: Number(corpo.quantidade),
-                    missoes: Array.isArray(corpo.missoes)
-                      ? (corpo.missoes as any[]).map(m => ({ id: String(m?.id ?? ""), nome: String(m?.nome ?? ""),
-                                                             descricao: String(m?.descricao ?? "").slice(0, 400) }))
-                      : undefined,
+                    missoes: missoesDoCorpo,
                     alvo: corpo.alvo == null ? undefined : String(corpo.alvo) };
   const invalida = conferirEntrada(entrada);
   if (invalida) return erro(400, "entrada", invalida);

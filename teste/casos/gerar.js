@@ -157,10 +157,24 @@ await espere(() => etapa === 1);
 if (location.hash !== "#material") falhas.push("etapa sem conteúdo abriu pelo endereço: " + location.hash);
 
 /* 13. o jogo grande: plano, missões em paralelo, a que falha tenta de novo */
-const gerados = [];
-let recusarB = true;
+const gerados = [], licoes = [];
+let recusarB = true, recusarLicaoB = true;
+// O passo da missão c chega sem trecho conferido: tem de entrar fora da lição.
+const passoDe = alvo => ({missao: alvo, titulo: "Passo " + alvo, ideia: "A ideia de <b>" + alvo + "</b>.",
+  trecho: base.trecho, revs: [{titulo: "Termo", resposta: "o que é"}, {titulo: "Outro", resposta: "outra coisa"}],
+  revs_cap: "Toque cada um.", maq: [], maq_cap: "", alerta: "Cuidado com <b>isto</b>.",
+  quiz: {pergunta: "Pergunta " + alvo + "?", certa: "certa", erradas: ["x", "y", "z"], retorno: "Porque sim."},
+  problemas: alvo === "c" ? [{grave: true, texto: "O trecho citado não está no material."}] : []});
 window.chamarFuncao = async corpo => {
   if (corpo.acao === "abrir") return {criacao: 7, restantes: 2};
+  if (corpo.acao === "licao") {
+    licoes.push(corpo);
+    if (corpo.alvo === "b" && recusarLicaoB) {
+      recusarLicaoB = false;
+      throw Object.assign(new Error("A lição falhou."), {custo: 0.01});
+    }
+    return {restantes: 2, custo_usd: 0.02, passos: [passoDe(corpo.alvo)]};
+  }
   if (corpo.acao === "planejar") return {total: 30, restantes: 2, custo_usd: 0.02, missoes: [
     {id: "a", nome: "Missão A", descricao: "", quantidade: 10},
     {id: "b", nome: "Missão B", descricao: "", quantidade: 10},
@@ -181,7 +195,10 @@ $("material").value = base.trecho.repeat(8);
 $("titulo").value = "Jogo grande"; $("materia").value = "Geografia"; $("quantidade").value = "30";
 contar();
 $("pedido").requestSubmit();
-await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado === "falhou", 4000);
+await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado === "falhou"
+                   && estado.licao.b.estado === "falhou", 4000);
+if (licoes.length !== 3 || licoes.some(l => l.criacao !== 7 || l.missoes.length !== 3))
+  falhas.push("a lição não foi pedida uma vez por missão, dentro da criação: " + licoes.length);
 if (gerados.length !== 3) falhas.push("esperava 3 partes, vieram " + gerados.length);
 if (gerados.some(g => g.criacao !== 7 || !g.missoes || g.missoes.length !== 3))
   falhas.push("a parte não levou a criação e o plano inteiro");
@@ -196,8 +213,29 @@ else {
   if (ordem() !== "a1,a2,b1,b2,c1,c2") falhas.push("depois de tentar de novo: " + ordem());
 }
 if (!/2 restantes hoje/.test($("cota").textContent)) falhas.push("a cota de jogos não aparece: " + $("cota").textContent);
+/* a lição: a de b falhou e tenta de novo; a de c chega fora; tirar e pôr de volta */
+const licaoBox = () => $("resumo").querySelector("details.licao");
+if (!licaoBox()) falhas.push("a revisão não mostra a lição");
+else {
+  licaoBox().open = true; licaoBox().dispatchEvent(new Event("toggle"));
+  const deNovoL = [...licaoBox().querySelectorAll("button")].find(b => b.textContent === "Tentar de novo");
+  if (!deNovoL) falhas.push("a lição que falhou não oferece tentar de novo");
+  else { deNovoL.click(); await espere(() => estado.licao.b.estado === "pronta" && !gerando, 4000); }
+}
+const passoCarta = t => [...document.querySelectorAll("#resumo article.passo")].find(a => a.querySelector(".enunciado").textContent === t);
+if (!passoCarta("Passo a")) falhas.push("a lição aberta não mostra os passos (ficou fechada na repintura?)");
+else {
+  if (passoCarta("Passo a").querySelector(".ideia b")?.textContent !== "a") falhas.push("o <b> da ideia não virou negrito");
+  if (!estado.licao.c.passos[0].fora || !passoCarta("Passo c").querySelector(".acoes button").disabled)
+    falhas.push("o passo sem trecho conferido não ficou fora da lição");
+  passoCarta("Passo a").querySelector(".acoes button").click();
+  if (!estado.licao.a.passos[0].fora) falhas.push("tirar da lição não tirou");
+  passoCarta("Passo a").querySelector(".acoes button").click();
+  if (estado.licao.a.passos[0].fora) falhas.push("pôr de volta não pôs");
+}
 // plano 0,02 + três partes de 0,10 + a recusa, que também foi paga: 0,05
-if (Math.abs(estado.custo - 0.37) > 1e-9) falhas.push("o custo do jogo não soma as partes: " + estado.custo);
+// + três lições de 0,02 + a que falhou, 0,01
+if (Math.abs(estado.custo - 0.44) > 1e-9) falhas.push("o custo do jogo não soma as partes e a lição: " + estado.custo);
 // pediu 30, cada missão deu 2 das 10 previstas: a tela diz que foi o material
 if (!/pediu 30; o material sustentou 6/.test(($("notaCurto") || {}).textContent || "")) falhas.push("vieram menos que o pedido e a tela não explica");
 if (!/2 de 10 previstas/.test($("resumo").innerText)) falhas.push("a missão curta não mostra quantas de quantas");
@@ -214,6 +252,9 @@ await espere(() => abertos.length === 1);
 if (gravados[0].id) falhas.push("o primeiro salvamento já veio com id");
 if (gravados[0].linha.conteudo.questoes.length !== 6) falhas.push("o jogo salvo não leva as aprovadas: " + gravados[0].linha.conteudo.questoes.length);
 if (gravados[0].linha.titulo !== "Jogo grande") falhas.push("título do jogo salvo: " + gravados[0].linha.titulo);
+const licaoSalva = gravados[0].linha.conteudo.licao || [];
+if (licaoSalva.map(x => x.missao).join() !== "a,b") falhas.push("a lição salva: " + licaoSalva.map(x => x.missao).join());
+if (licaoSalva.some(x => "problemas" in x || "fora" in x)) falhas.push("a lição salva leva o estado da revisão");
 if (!lerDe("jogo_gerado_" + abertos[0])) falhas.push("o jogo salvo não ficou no aparelho para abrir sem rede");
 if (!(lerDe("jogos_criados_v1") || []).some(j => j.id === abertos[0])) falhas.push("o índice não fica sabendo do jogo novo");
 await espere(() => !$("salvar").disabled);
@@ -252,10 +293,12 @@ await espere(() => gravados.length === 3);
 if (gravados[2].id !== OUTRO) falhas.push("salvar o jogo reaberto não atualiza o mesmo");
 if (gravados[2].linha.titulo !== "Outro, renomeado") falhas.push("o nome novo não foi salvo: " + gravados[2].linha.titulo);
 if (gravados[2].linha.material !== "Material antigo do outro jogo.") falhas.push("o material não vai junto com o jogo");
+if (![...$("resumo").querySelectorAll("button")].some(b => /Criar a lição/.test(b.textContent)))
+  falhas.push("jogo salvo sem lição não oferece criar a lição");
 
 /* acrescentar: só o material novo vai para as partes; a missão de id repetido ganha outro */
 await espere(() => !gerando);
-gerados.length = 0;
+gerados.length = 0; licoes.length = 0;
 [...$("resumo").querySelectorAll("button")].find(b => /Acrescentar/.test(b.textContent)).click();
 await espere(() => location.hash === "#material");
 if ($("faixa1").hidden) falhas.push("acrescentando, a etapa 1 não diz a que jogo");
@@ -266,8 +309,11 @@ await espere(() => estado && estado.plano && !gerando && Object.values(estado.pa
 if (estado.jogoId !== OUTRO) falhas.push("acrescentar perdeu o jogo de onde veio");
 if (estado.questoes.length !== 7 || estado.questoes[0].enunciado !== "velha" || estado.questoes[0].estado !== "aprovada")
   falhas.push("acrescentar mexeu nas questões que o jogo tinha");
+if (Object.keys(estado.licao).join() !== "a_2,b,c") falhas.push("lição depois de acrescentar: " + Object.keys(estado.licao).join());
 if (estado.missoes.map(m => m.id).join() !== "a,a_2,b,c") falhas.push("ids das missões: " + estado.missoes.map(m => m.id).join());
 if (gerados.some(g => /antigo/.test(g.material))) falhas.push("as partes novas foram escritas também do material antigo");
+if (licoes.map(l => l.alvo).join() !== "a_2,b,c" || licoes.some(l => /antigo/.test(l.material)))
+  falhas.push("acrescentar pediu a lição errada: " + licoes.map(l => l.alvo).join());
 if (!/antigo[\s\S]*novo/.test(estado.pedido.material)) falhas.push("o material salvo não soma o antigo e o novo");
 
 /* apagar pede o segundo toque e limpa o aparelho */

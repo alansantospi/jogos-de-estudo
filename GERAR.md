@@ -9,15 +9,19 @@ ligada (`CONTA.md`).
 ## O que custa
 
 Cada jogo chama o Claude Opus 5.5 com esforço alto, e isso é dinheiro de
-verdade. Um jogo é um pedido que divide o material em missões e mais um
-pedido por missão, até 12 questões cada, quatro ao mesmo tempo. Cada pedido
-manda o material inteiro, então o custo cresce com o material e com o
-número de missões: perto de US$ 0,20 a 0,40 por missão, ou seja, uns
-US$ 0,60 a 1,20 para 30 questões e US$ 2 a 4 para 100. Ler fotos
-custa à parte: cada foto pesa uns 1.600 tokens de entrada, e o texto lido
-volta como saída, então dez fotos de livro devem ficar entre US$ 0,20 e
-US$ 0,50. **Isso é estimativa, não medida**: o custo real de cada uma aparece na tela, logo
-acima das questões, e fica na tabela `geracoes`.
+verdade. Um jogo é um pedido que divide o material em missões e, por
+missão, um pedido de questões (até 12) e um da lição, quatro ao mesmo
+tempo. Cada pedido manda o material inteiro, então o custo cresce com o
+material e com o número de missões.
+
+**Medido em 26/10/2026**, com 5 fotos de História (4.676 caracteres lidos):
+leitura US$ 0,11; plano US$ 0,04; cinco partes US$ 0,46 — 23 questões por
+US$ 0,61, uns US$ 0,027 por questão, em cerca de 1 minuto. Partes que
+precisaram de uma rodada de correção custaram o dobro das outras. Isso foi
+antes da lição, que acrescenta um pedido de esforço médio por missão:
+**estimativa, não medida**, de US$ 0,03 a 0,06 cada. Um jogo de 100
+questões deve ficar perto de US$ 3. O custo real de cada jogo aparece na
+tela, logo acima das questões, e fica na tabela `geracoes`.
 
 Há três cercas, da mais próxima à mais distante:
 
@@ -25,7 +29,7 @@ Há três cercas, da mais próxima à mais distante:
 |---|---|---|
 | jogos por conta em 24 h | 3 | `LIMITE_POR_DIA` |
 | leituras de foto por conta em 24 h | 10 | `LIMITE_LEITURAS` |
-| pedidos dentro de um jogo | 20 | `MAX_PARTES` |
+| pedidos dentro de um jogo | 40 | `MAX_PARTES` |
 | gasto de todas as contas em 24 h | US$ 15 | `TETO_DIA_USD` |
 | gasto do mês na Anthropic | — | console da Anthropic, passo 3 |
 
@@ -115,11 +119,34 @@ jogo aparece na página inicial, em "Meus jogos", para quem entrar na
 mesma conta. Depois de aberto uma vez, abre também sem internet.
 
 Salvar de novo atualiza o mesmo jogo. **Baixar** continua existindo: é o
-arquivo para `conteudo/`, para quem quer o jogo montado pelo build, com
-lição.
+arquivo para `conteudo/`, para quem quer o jogo montado pelo build, com a
+lição em `licao` (o build ainda não a usa: as lições dele são escritas à
+mão em `build/licao_*.py`).
 
-O que o jogo criado ainda não tem: lição, e progresso sincronizado entre
-aparelhos (a sincronização só conhece os jogos do build).
+O que o jogo criado ainda não tem: o desenho de cada passo da lição, e
+progresso sincronizado entre aparelhos (a sincronização só conhece os jogos
+do build).
+
+## A lição
+
+Cada missão ganha um ou dois passos de lição, escritos junto com as
+questões (`supabase/functions/_esteira/licao.ts`), no formato das lições
+feitas à mão: a ideia, cartões de tocar ou uma escolha que mostra o
+resultado, a pegadinha e uma checagem. Só falta o desenho. O jogo abre com
+**Estudar passo a passo** e **Ver o resumo**, como os outros.
+
+Cada passo cita o trecho do material que o sustenta. Passo cujo trecho não
+está no material volta ao modelo uma vez; se ainda assim não bater, chega à
+revisão **fora da lição** e não pode ser posto de volta. Na revisão, o bloco
+**Lição** (fechado, acima das questões) mostra cada passo para conferir e
+tirar. Entram no jogo só os passos das missões com questão aprovada.
+
+Jogo salvo antes da lição ganha o botão **Criar a lição** em Editar, se
+tiver material guardado. Conta como um jogo do dia.
+
+O texto da lição vira HTML no jogo. O servidor tira toda marcação que não
+seja `<b>`, e o navegador escapa tudo de novo antes de montar: material
+colado pode trazer qualquer coisa.
 
 ## Gerir os jogos criados
 
@@ -148,6 +175,8 @@ dela reabre sem material, e então a edição não é reconferida.
 | "Não consegui reservar a geração" | a migração do passo 2 não rodou |
 | "A tabela de jogos ainda não existe" | falta `supabase db push` da migração de jogos |
 | "Não consegui buscar os jogos: column … does not exist" | falta `supabase db push` da migração `gerir_jogos` |
+| "Ação desconhecida" ao gerar a lição | falta `supabase functions deploy gerar` |
+| lição "não veio" com erro de reserva | falta `supabase db push` da migração `licao` |
 | "Este jogo já está no tamanho máximo" | acrescentar passaria de 120 mil caracteres de material ou 200 questões |
 | "Você já criou os N jogos de hoje" | a cerca por conta; a contagem é das últimas 24 h |
 | "A geração está pausada por hoje" | o teto global; vale para todas as contas |

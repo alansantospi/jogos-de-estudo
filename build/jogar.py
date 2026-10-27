@@ -11,7 +11,7 @@ import io, json, os, re, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "build"))
-import icons
+import icons, licao
 
 ler = lambda *p: io.open(os.path.join(RAIZ, *p), encoding="utf-8").read()
 
@@ -28,12 +28,14 @@ if not m:
     raise SystemExit("build/_conta.js: não achei a declaração const CONTA = {...};")
 
 html = ler("build", "_jogar.html")
-for fenda in ("/*%CONTA%*/", "/*%MOLDE%*/", "/*%MONTAR%*/"):
+for fenda in ("/*%CONTA%*/", "/*%MOLDE%*/", "/*%LICAO%*/", "/*%MONTAR%*/"):
     if fenda not in html:
         raise SystemExit("build/_jogar.html: falta a fenda " + fenda)
 html = html.replace("/*%CONTA%*/", m.group(0))
 # Dentro de <script>, "</" fecharia a tag: o molde tem as suas.
 html = html.replace("/*%MOLDE%*/", json.dumps(molde, ensure_ascii=False).replace("</", "<\\/"))
+html = html.replace("/*%LICAO%*/", json.dumps({"css": licao.CSS, "js": licao.JS},
+                                              ensure_ascii=False).replace("</", "<\\/"))
 montar = ler("build", "_montar_jogo.js")
 if re.search(r"</script", montar, re.I):
     raise SystemExit("build/_montar_jogo.js: o texto </script fecharia a tag que o recebe")

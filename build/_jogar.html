@@ -30,6 +30,8 @@ a.botao{display:inline-flex;align-items:center;min-height:2.75rem;padding:0 1.25
 /*%CONTA%*/
 const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
 const MOLDE = /*%MOLDE%*/;
+/* O CSS e o JS da lição, os mesmos dos jogos feitos à mão (`build/licao.py`). */
+const LICAO = /*%LICAO%*/;
 /*%MONTAR%*/
 
 /* O jogo fica guardado neste aparelho depois da primeira abertura: abre de
@@ -72,7 +74,7 @@ async function abrir(){
                  ["Voltar aos jogos", "index.html"]);
   }
   let html;
-  try{ html = montarJogo(MOLDE, jogo, id); }
+  try{ html = montarJogo(MOLDE, jogo, id, LICAO); }
   catch(e){ return aviso("Este jogo não abriu", "O conteúdo salvo está fora do formato: " + e.message, ["Voltar aos jogos", "index.html"]); }
   document.open(); document.write(html); document.close();
 }

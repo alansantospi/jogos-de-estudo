@@ -259,6 +259,19 @@ button{font:inherit;font-weight:800;cursor:pointer}
 .problemas li.grave{background:var(--alerta-tinta);color:var(--alerta)}
 .problemas svg{width:1rem;height:1rem;margin-top:.2rem}
 .carta .acoes{margin-top:.75rem}
+.licao{margin:0 0 1rem;border:1px solid var(--risco);border-radius:var(--r);background:var(--carta-2)}
+.licao summary{cursor:pointer;padding:.6rem .9rem;font-weight:800;min-height:2.75rem;display:flex;align-items:center;gap:.5rem}
+.licao summary small{font-weight:600;color:var(--texto-2)}
+.licao > div{padding:0 .9rem .9rem}
+.licao .nota{margin:.25rem 0 .75rem}
+.licao .missao{border-top:0;margin:.5rem 0 .25rem}
+.carta.passo .ideia{margin:.1rem 0 .6rem;font-size:.9375rem}
+.carta.passo.fora{opacity:.6}
+.carta.passo.fora .enunciado{text-decoration:line-through;text-decoration-thickness:1.5px}
+.carta.passo .rotulo{display:block;margin:.6rem 0 .3rem;color:var(--texto-2);font-size:.75rem;font-weight:800;
+ text-transform:uppercase;letter-spacing:.04em}
+.carta.passo .pares{margin:0 0 .5rem;padding-left:1.1rem;font-size:.9375rem}
+.carta.passo .pares li{margin:.15rem 0}
 form.carta{display:grid;gap:.75rem}
 
 .esqueleto{height:12rem;border-radius:var(--r-g);margin-bottom:.75rem;border:1px solid var(--risco);
@@ -820,18 +833,21 @@ async function pedir(ev){
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
                 missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
                 custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "", pedidas: total,
-                partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
+                partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}])),
+                licao: {...(base.licao || {}), ...Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))}};
     }else
     estado = {pedido, criacao: ab.criacao, plano: pl.missoes,
               missoes: pl.missoes.map(({id, nome}) => ({id, nome})), lote: null, aviso: "",
               custo: pl.custo_usd, restantes: pl.restantes, questoes: [], pedidas: total,
-              partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
+              partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}])),
+              licao: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
     cota(pl.restantes);
     filtro = "todas";
     guardar();
     irPara(3, false);
     pintar();
-    await gerarPartes(pl.missoes.map(m => m.id));
+    // As questões primeiro: são o que se revisa enquanto a lição se escreve.
+    await gerarPartes([...pl.missoes.map(m => m.id), ...pl.missoes.map(m => "licao:" + m.id)]);
   }catch(e){
     parar();
     gerando = false;
@@ -844,19 +860,23 @@ async function pedir(ev){
 
 /* As missões saem em paralelo, de PARALELO em PARALELO, e cada uma entra
    na revisão assim que chega: dá para começar a revisar a primeira
-   enquanto as outras se escrevem. */
+   enquanto as outras se escrevem. A lição de cada missão é outro pedido da
+   mesma fila, com o id "licao:<missão>". */
 let filaAtual = null;
 async function gerarPartes(ids){
   gerando = true; contar();
   const fila = filaAtual = [...ids], t0 = Date.now();
   const placar = () => {
-    const ps = Object.values(estado.partes), prontas = ps.filter(p => p.estado === "pronta").length;
-    recado("Escrevendo as missões: " + prontas + " de " + ps.length + " prontas · "
+    const ps = [...Object.values(estado.partes || {}), ...Object.values(estado.licao || {})];
+    const prontas = ps.filter(p => p.estado === "pronta").length;
+    recado("Escrevendo as missões e a lição: " + prontas + " de " + ps.length + " prontas · "
            + Math.round((Date.now() - t0) / 1000) + " s. Dá para ir revisando as que chegaram.");
   };
   placar();
   const relogioPartes = setInterval(placar, 1000);
-  const trabalhador = async () => { while(fila.length) await gerarParte(fila.shift()); };
+  const trabalhador = async () => {
+    while(fila.length){ const id = fila.shift(); await (id.startsWith("licao:") ? gerarLicao(id.slice(6)) : gerarParte(id)); }
+  };
   try{
     await Promise.all(Array.from({length: Math.min(PARALELO, ids.length)}, trabalhador));
   }finally{
@@ -865,9 +885,11 @@ async function gerarPartes(ids){
     gerando = false;
     contar();
   }
-  const falhas = Object.values(estado.partes).filter(p => p.estado === "falhou").length;
-  recado(falhas ? plural(falhas, "missão não veio", "missões não vieram") + ". Tente de novo na lista de missões, acima."
-                : "", !!falhas);
+  const falhas = Object.values(estado.partes || {}).filter(p => p.estado === "falhou").length;
+  const semLicao = Object.values(estado.licao || {}).filter(p => p.estado === "falhou").length;
+  recado([falhas ? plural(falhas, "missão não veio", "missões não vieram") + ". Tente de novo na lista de missões, acima." : "",
+          semLicao ? plural(semLicao, "lição de missão não veio", "lições de missão não vieram") + ". Tente de novo em Lição, acima." : ""]
+         .filter(Boolean).join(" "), !!(falhas || semLicao));
   await remedir();
 }
 
@@ -890,6 +912,50 @@ async function gerarParte(id){
   }
   guardar();
   pintar();
+}
+
+async function gerarLicao(id){
+  const p = estado.pedido;
+  estado.licao[id] = {estado: "escrevendo"};
+  pintarResumo();
+  try{
+    const r = await chamarFuncao({acao: "licao", criacao: estado.criacao, material: estado.materialNovo || p.material,
+      materia: p.materia, ano: p.ano, missoes: estado.plano || estado.missoes, alvo: id});
+    estado.custo = (estado.custo || 0) + (r.custo_usd || 0);
+    if(r.restantes != null){ estado.restantes = r.restantes; cota(r.restantes); }
+    // Passo que não se conferiu contra o material já chega fora da lição.
+    estado.licao[id] = {estado: "pronta", aviso: r.aviso || "",
+      passos: r.passos.map(x => ({...x, fora: x.problemas.some(y => y.grave)}))};
+  }catch(e){
+    estado.custo = (estado.custo || 0) + (e.custo || 0);
+    estado.licao[id] = {estado: "falhou", erro: e.message};
+  }
+  guardar();
+  pintar();
+}
+
+async function tentarLicao(id){
+  estado.licao[id] = {estado: "aguardando"};
+  pintarResumo();
+  if(filaAtual) filaAtual.push("licao:" + id);
+  else await gerarPartes(["licao:" + id]);
+}
+
+/* Jogo salvo sem lição (feito antes dela existir): ela é escrita agora,
+   com o material guardado. Abre uma criação, e por isso conta no dia. */
+async function criarLicao(){
+  const total = Math.min(100, Math.max(10, vivas().length));
+  try{
+    const ab = await chamarFuncao({acao: "abrir", total});
+    cota(ab.restantes);
+    estado.criacao = ab.criacao;
+    estado.restantes = ab.restantes;
+    estado.licao = Object.fromEntries(estado.missoes.map(m => [m.id, {estado: "aguardando"}]));
+    guardar();
+    await gerarPartes(estado.missoes.map(m => "licao:" + m.id));
+  }catch(e){
+    recado(e.message, true);
+  }
 }
 
 /* Com a fila andando, a missão volta para o fim dela; parada, abre outra. */
@@ -936,6 +1002,9 @@ function pintarResumo(){
       el("div", {class: "acoes", style: "margin:0 0 1rem"},
         el("button", {class: "botao secundario", type: "button", disabled: gerando, onclick: comecarAcrescentar},
            icone("mais"), "Acrescentar questões"),
+        // Sem material guardado, não há contra o que conferir a lição.
+        !temLicao() && estado.pedido.material ? el("button", {class: "botao secundario", type: "button",
+          disabled: gerando, title: "Conta como um jogo do dia", onclick: criarLicao}, icone("livro"), "Criar a lição") : null,
         el("a", {class: "botao discreto", href: "jogar.html?id=" + encodeURIComponent(estado.jogoId)}, "Jogar a versão salva")));
   }
   const n = k => qs.filter(q => q.estado === k).length;
@@ -946,6 +1015,7 @@ function pintarResumo(){
     n("descartada") ? el("span", {}, el("b", {}, String(n("descartada"))), "descartadas") : null));
   if(estado.aviso) c.append(el("div", {class: "aviso"}, icone("alerta"), el("span", {}, estado.aviso)));
   if(estado.plano) c.append(pintarPlano());
+  if(estado.licao && Object.keys(estado.licao).length) c.append(pintarLicao());
   if(l){
     c.append(el("ul", {class: "medida", "aria-label": "Quanto acerta quem chuta por atalho"}, REGRAS.map(([k, nome]) =>
       el("li", {class: l.fora.includes(k) ? "fora" : ""}, el("span", {}, nome),
@@ -993,6 +1063,77 @@ function pintarPlano(){
     el("details", {class: "plano", open: !pronto},
       el("summary", {}, plural(estado.plano.length, "missão", "missões") + (pronto ? "" : " · gerando")),
       el("ul", {}, linhas)));
+}
+
+/* <b> é a única marcação que a lição usa. Vira nó, não innerHTML: o texto
+   veio do modelo. */
+function rico(t){
+  let negrito = false;
+  return String(t || "").split(/(<\/?b>)/i).flatMap(pedaco => {
+    if(/^<b>$/i.test(pedaco)){ negrito = true; return []; }
+    if(/^<\/b>$/i.test(pedaco)){ negrito = false; return []; }
+    return pedaco ? [negrito ? el("b", {}, pedaco) : pedaco] : [];
+  });
+}
+
+const temLicao = () => Object.values(estado.licao || {}).some(l => (l.passos || []).length);
+
+function cartaPasso(x, mid, k){
+  const missao = (estado.missoes.find(m => m.id === mid) || {}).nome || mid;
+  const grave = x.problemas.some(p => p.grave);
+  const alternar = () => { x.fora = !x.fora; guardar(); pintar(); };
+  return el("article", {class: "carta passo" + (x.fora ? " fora" : ""), "aria-label": "Passo da lição: " + x.titulo},
+    el("div", {class: "topo"}, el("span", {}, "Lição · " + missao + (k ? " · passo " + (k + 1) : "")),
+       el("span", {class: "selo"}, x.fora ? "Fora da lição" : "Na lição")),
+    el("div", {class: "enunciado"}, x.titulo),
+    el("p", {class: "ideia"}, rico(x.ideia)),
+    x.revs.length ? [el("span", {class: "rotulo"}, x.revs_cap || "Cartões de tocar"),
+      el("ul", {class: "pares"}, x.revs.map(r => el("li", {}, el("b", {}, r.titulo), " → ", r.resposta)))] : null,
+    x.maq.length ? [el("span", {class: "rotulo"}, x.maq_cap || "Escolhas"),
+      el("ul", {class: "pares"}, x.maq.map(o => el("li", {}, el("b", {}, o.rotulo), " → ", rico(o.saida),
+        o.nota ? [" — ", rico(o.nota)] : null)))] : null,
+    x.alerta ? el("div", {class: "aviso"}, icone("alerta"), el("span", {}, rico(x.alerta))) : null,
+    el("span", {class: "rotulo"}, "Checagem do fim do passo"),
+    el("p", {class: "ideia"}, x.quiz.pergunta),
+    el("ul", {class: "ops"},
+       el("li", {class: "certa"}, icone("check"), el("span", {}, el("span", {class: "so-leitor"}, "Certa: "), x.quiz.certa)),
+       x.quiz.erradas.map(e => el("li", {}, icone("xis"), el("span", {}, e)))),
+    el("p", {class: "explica"}, x.quiz.retorno),
+    el("p", {class: "origem"}, el("b", {}, "Do material: "), "“" + x.trecho + "”"),
+    x.problemas.length ? el("ul", {class: "problemas"}, x.problemas.map(p =>
+      el("li", {class: p.grave ? "grave" : ""}, icone("alerta"), el("span", {}, p.texto)))) : null,
+    el("div", {class: "acoes"}, el("button", {class: "botao " + (x.fora ? "secundario" : "discreto"), type: "button",
+      disabled: grave, title: grave ? "Sem trecho conferido, este passo não entra" : false, onclick: alternar},
+      x.fora ? "Pôr de volta na lição" : "Tirar da lição")));
+}
+
+/* A lição fica fechada: aberta, empurraria as questões para baixo. */
+let licaoAberta = false;
+function pintarLicao(){
+  const ids = estado.missoes.map(m => m.id).filter(id => estado.licao[id]);
+  const ls = ids.map(id => estado.licao[id]);
+  const passos = ls.flatMap(l => l.passos || []), dentro = passos.filter(x => !x.fora).length;
+  const andando = ls.some(l => l.estado === "aguardando" || l.estado === "escrevendo");
+  const partes = [plural(dentro, "passo", "passos")];
+  if(passos.length > dentro) partes.push(plural(passos.length - dentro, "fora", "fora"));
+  if(andando) partes.push("escrevendo");
+  if(ls.some(l => l.estado === "falhou")) partes.push("falta missão");
+  const d = el("details", {class: "licao", open: licaoAberta, ontoggle: () => { licaoAberta = d.open; }},
+    el("summary", {}, icone("livro"), "Lição", el("small", {}, partes.join(" · "))),
+    el("div", {},
+      el("p", {class: "nota"}, "Vem antes das questões no jogo: um passo por ideia, com uma checagem no fim. "
+        + "Só entram os passos das missões que têm questão aprovada."),
+      ids.flatMap(id => {
+        const l = estado.licao[id], nome = (estado.missoes.find(m => m.id === id) || {}).nome || id;
+        if(l.estado === "pronta") return [
+          l.aviso ? el("p", {class: "erro-missao cuidado"}, l.aviso) : null,
+          ...l.passos.map((x, k) => cartaPasso(x, id, k))];
+        return [el("div", {class: "missao " + l.estado},
+          el("span", {class: "nome-missao"}, nome), el("span", {}), el("span", {class: "situacao"}, SITUACAO[l.estado]),
+          l.estado === "falhou" ? el("p", {class: "erro-missao"}, l.erro || "",
+            el("button", {class: "botao secundario", type: "button", onclick: () => tentarLicao(id)}, "Tentar de novo")) : null)];
+      })));
+  return d;
 }
 
 const FILTROS = [["todas", "Todas", () => true], ["aviso", "Com aviso", comAviso],
@@ -1149,6 +1290,9 @@ function montarConteudo(){
     id: slug(p.titulo) + "-" + slug(p.ano), materia: p.materia, titulo: p.titulo, motor: "ceu",
     missoes: usadas,
     trilhas: [{id: "tudo", nome: "Todas as missões", etapas: [...usadas.map(m => m.id), "all"]}],
+    // A lição das missões que ficaram no jogo; `problemas` e `fora` são da revisão.
+    licao: usadas.flatMap(m => ((estado.licao || {})[m.id] || {}).passos || [])
+      .filter(x => !x.fora).map(({problemas, fora, ...x}) => x),
     questoes: qs.map(q => ({tipo: "escolha", missao: q.missao, icone: q.icone,
       enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao,
       // Veio de material que não é nosso: serve para estudar, não para vender.
@@ -1290,6 +1434,9 @@ async function editarJogo(id, botao){
     estado = {jogoId: j.id, lote: null, aviso: "", custo: null, restantes: estado ? estado.restantes : null,
               pedido: {titulo: j.titulo, materia: j.materia, ano: j.ano || "", material: j.material || "", paginas: []},
               missoes: c.missoes.map(({id, nome}) => ({id, nome})),
+              licao: (c.licao || []).reduce((o, x) => {
+                (o[x.missao] ||= {estado: "pronta", passos: []}).passos.push({...x, problemas: [], fora: false});
+                return o; }, {}),
               questoes: c.questoes.filter(q => q.tipo === "escolha").map(q => ({missao: q.missao, icone: q.icone,
                 enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao || "",
                 trecho: q.trecho || "", fonte: q.fonte, problemas: [], estado: "aprovada"}))};
@@ -1433,11 +1580,11 @@ async function iniciar(){
   if(leitura && !$("material").value.trim()) aplicarPaginas();
   contar();
   pintarEscolhidos();
-  if(estado && estado.partes)
+  if(estado)
     // O que estava a caminho quando a página fechou não volta mais.
-    Object.values(estado.partes).forEach(p => {
+    [...Object.values(estado.partes || {}), ...Object.values(estado.licao || {})].forEach(p => {
       if(p.estado === "aguardando" || p.estado === "escrevendo")
-        Object.assign(p, {estado: "falhou", erro: "Interrompida: a página fechou antes de a missão chegar."});
+        Object.assign(p, {estado: "falhou", erro: "Interrompida: a página fechou antes de chegar."});
     });
   if(estado){ cota(estado.restantes); pintar(); }
   irPara(daUrl() || melhor(), false);
