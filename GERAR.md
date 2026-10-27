@@ -29,6 +29,7 @@ Há três cercas, da mais próxima à mais distante:
 |---|---|---|
 | jogos por conta em 24 h | 3 | `LIMITE_POR_DIA` |
 | leituras de foto por conta em 24 h | 10 | `LIMITE_LEITURAS` |
+| páginas por leitura (lidas de 10 em 10; os lotes depois do primeiro não contam como outra leitura) | 30 | `LIMITES_LEITURA` em `leitura.ts` |
 | pedidos dentro de um jogo | 40 | `MAX_PARTES` |
 | gasto de todas as contas em 24 h | US$ 15 | `TETO_DIA_USD` |
 | gasto do mês na Anthropic | — | console da Anthropic, passo 3 |

@@ -367,8 +367,11 @@ ficou decidido:
   PDFs de uma página (pdf-lib) e segue como se fossem fotos. A página que
   falha vira "não deu para ler" com o motivo, sem derrubar as outras.
 - **A foto é reduzida no aparelho** a 1568 px no lado maior antes de subir:
-  ~300 KB em vez de 4 MB, e o mesmo que o modelo leria. Limites: 12 páginas
-  (as do PDF contam uma a uma) e 12 MB por leitura.
+  ~300 KB em vez de 4 MB, e o mesmo que o modelo leria. Limites: 30 páginas
+  por leitura (as do PDF contam uma a uma), lidas de 10 em 10 — o que cabe
+  em uma chamada de 150 s —, e 12 MB por chamada. O 12 de antes era
+  estimativa de página densa; a medida deu ~935 caracteres por página, e
+  quem segura o tamanho é o material (40 mil caracteres).
 - **A leitura gasta a mesma cota** da geração: um jogo a partir de fotos usa
   duas das dez vezes do dia. A tabela `geracoes` ganhou `tipo` para separar as
   duas no gasto.

@@ -376,7 +376,7 @@ a.botao{text-decoration:none;font-weight:800}
     <label class="solta" id="solta">
       <span class="icone"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
       <strong id="soltaTitulo">Escolha fotos ou um PDF</strong>
-      <span class="dica">Ou arraste para cá. Até 12 páginas; cada página de PDF conta uma.<br>
+      <span class="dica">Ou arraste para cá. Até 30 páginas; cada página de PDF conta uma.<br>
         Página inteira no quadro, de frente e com luz.</span>
       <input id="arquivos" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
     </label>
@@ -476,7 +476,10 @@ const MATERIAL_JOGO_MAX = 120000, QUESTOES_JOGO_MAX = 200;
 const PARALELO = 4;
 /* O lado maior que o modelo lê sem reamostrar; acima disso só pesa na subida. */
 const FOTO_LADO = 1568;
-const ARQUIVOS_MAX = 12, PDF_BYTES_MAX = 8e6;
+/* Uma chamada da função lê até LOTE páginas (o que cabe nos 150 s dela); a
+   leitura inteira vai até 30, em várias chamadas. Quem segura o tamanho do
+   jogo é o material, MATERIAL_MAX: o que passar dele se desmarca na conferência. */
+const ARQUIVOS_MAX = 30, LOTE = 10, PDF_BYTES_MAX = 8e6;
 
 let estado = null, leitura = null, _sb = null;
 let escolhidos = [], etapa = 1, filtro = "todas", lendo = false, gerando = false, editandoAgora = null;
@@ -673,6 +676,59 @@ async function prepararArquivo(f){
   return {nome: f.name, tipo: "image/jpeg", dados: await base64(blob)};
 }
 
+/* As fotos vão de LOTE em LOTE; cada PDF vai sozinho, e a resposta diz
+   quantas páginas ele tem: as que passam de LOTE voltam à fila. */
+function lotes(arquivos){
+  const out = [];
+  let fotos = [];
+  for(const a of arquivos){
+    if(a.tipo === "application/pdf"){
+      if(fotos.length){ out.push(fotos); fotos = []; }
+      out.push([a]);
+    }else if(fotos.push(a) === LOTE){ out.push(fotos); fotos = []; }
+  }
+  if(fotos.length) out.push(fotos);
+  return out;
+}
+
+/* A primeira chamada é a leitura do dia, e vai sozinha: dela sai o número
+   a que as outras se prendem, para não gastar outra leitura. As outras vão
+   de duas em duas. Lote que falha depois da primeira não derruba o resto:
+   suas páginas chegam ilegíveis, com o motivo, como página que não deu. */
+async function lerEmLotes(arquivos){
+  const fila = lotes(arquivos).map((arqs, k) => ({arqs, k, inicio: 0}));
+  const lidos = [];
+  let leituraId = null, custo = 0, restantes = null;
+  const ler = async t => {
+    try{
+      const r = await chamarFuncao({acao: "ler", arquivos: t.arqs, inicio: t.inicio, leitura: leituraId});
+      custo += r.custo_usd || 0;
+      if(r.restantes != null) restantes = r.restantes;
+      lidos.push({t, paginas: r.paginas});
+      if(t.inicio === 0) for(let i = LOTE; i < (r.total || 0); i += LOTE) fila.push({arqs: t.arqs, k: t.k, inicio: i, total: r.total});
+      return r;
+    }catch(e){
+      custo += e.custo || 0;
+      if(leituraId === null) throw e;
+      const motivo = "A leitura deste lote falhou: " + e.message;
+      const pdf = t.arqs[0].tipo === "application/pdf";
+      const paginas = pdf
+        ? Array.from({length: t.total ? Math.min(LOTE, t.total - t.inicio) : 1}, (_, j) => ({nome: t.arqs[0].nome, pagina: t.inicio + j + 1}))
+        : t.arqs.map(a => ({nome: a.nome, pagina: 1}));
+      lidos.push({t, paginas: paginas.map(p => ({...p, legivel: "nao", motivo, texto: "", manuscrito: ""}))});
+    }
+  };
+  leituraId = (await ler(fila.shift())).leitura;
+  const trabalhador = async () => { while(fila.length) await ler(fila.shift()); };
+  await Promise.all([trabalhador(), trabalhador()]);
+
+  const paginas = lidos.sort((a, b) => a.t.k - b.t.k || a.t.inicio - b.t.inicio).flatMap(x => x.paginas);
+  const ruins = paginas.filter(p => p.legivel === "nao").length;
+  return {paginas, custo_usd: custo, restantes,
+    aviso: ruins === paginas.length ? "Nenhuma página deu para ler. Fotografe de novo, de frente, com luz e a página inteira no quadro."
+         : ruins ? ruins + " de " + paginas.length + " páginas não deram para ler e ficaram desmarcadas." : ""};
+}
+
 async function lerArquivos(){
   if(!escolhidos.length || lendo) return;
   lendo = true;
@@ -683,8 +739,9 @@ async function lerArquivos(){
     const arquivos = [];
     for(const x of escolhidos) arquivos.push(await prepararArquivo(x.f));
     parar = relogio("Lendo " + plural(arquivos.length, "arquivo", "arquivos") + "...",
-                    "Costuma levar de meio minuto a um minuto e meio.");
-    const r = await chamarFuncao({acao: "ler", arquivos});
+                    arquivos.length > LOTE ? "Lê de " + LOTE + " em " + LOTE + " páginas; cada lote leva de meio minuto a um minuto e meio."
+                                           : "Costuma levar de meio minuto a um minuto e meio.");
+    const r = await lerEmLotes(arquivos);
     parar();
     recado("");
     escolhidos.forEach(x => x.url && URL.revokeObjectURL(x.url));

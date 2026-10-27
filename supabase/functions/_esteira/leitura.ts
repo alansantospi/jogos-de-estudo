@@ -23,9 +23,15 @@ export type Pagina = { arquivo: number; nome: string; pagina: number;
 export type Leitura = { paginas: Pagina[]; uso: Uso[]; aviso?: string };
 
 /* A tela reduz cada foto a 1568 px no lado maior, o tamanho que o modelo lê
-   sem reamostrar: uma foto fica em ~300 KB e ~1.600 tokens. O teto conta
-   páginas, não arquivos: um PDF de cinco páginas pesa como cinco fotos. */
-export const LIMITES_LEITURA = { paginasMax: 12, bytesMax: 12_000_000 };
+   sem reamostrar: uma foto fica em ~300 KB e ~1.600 tokens. Os tetos contam
+   páginas, não arquivos: um PDF de cinco páginas pesa como cinco fotos.
+
+   Uma chamada à função lê até `paginasPorPedido`, todas ao mesmo tempo:
+   é o que cabe nos 150 s dela. Uma leitura maior vem em várias chamadas,
+   presas à primeira, até `paginasMax` — que não é o que limita o jogo: o
+   material vai até 40 mil caracteres (LIMITES.materialMax), e a página que
+   passar disso fica desmarcada na conferência. */
+export const LIMITES_LEITURA = { paginasPorPedido: 10, paginasMax: 30, bytesMax: 12_000_000 };
 const TIPOS = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"]);
 
 /* Tamanho decodificado de um base64, sem decodificar. */
@@ -33,8 +39,8 @@ const bytes = (b64: string) => Math.floor(b64.length * 3 / 4) - (b64.endsWith("=
 
 export function conferirArquivos(arquivos: unknown): string | null {
   if (!Array.isArray(arquivos) || !arquivos.length) return "Escolha ao menos uma foto ou um PDF.";
-  if (arquivos.length > LIMITES_LEITURA.paginasMax)
-    return `São ${arquivos.length} arquivos e o limite é ${LIMITES_LEITURA.paginasMax} páginas por leitura. Divida em duas.`;
+  if (arquivos.length > LIMITES_LEITURA.paginasPorPedido)
+    return `São ${arquivos.length} arquivos e cada pedido de leitura leva até ${LIMITES_LEITURA.paginasPorPedido}.`;
   let total = 0;
   for (const a of arquivos as Arquivo[]) {
     if (!a || typeof a.dados !== "string" || typeof a.tipo !== "string" || !/^[A-Za-z0-9+/]+=*$/.test(a.dados))

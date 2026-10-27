@@ -3,9 +3,14 @@
    gastar e registra o custo depois.
 
    Ações, no corpo do POST:
-     {acao:"ler", arquivos:[{nome, tipo, dados}]}  — foto ou PDF em base64
+     {acao:"ler", arquivos:[{nome, tipo, dados}], inicio?, leitura?}
+                                                   — foto ou PDF em base64
                                                      vira texto por página,
-                                                     para a pessoa conferir
+                                                     para a pessoa conferir;
+                                                     até 10 páginas a partir
+                                                     de `inicio`, e `leitura`
+                                                     prende a continuação à
+                                                     primeira chamada
      {acao:"abrir", total}                          — abre um jogo: é o que
                                                      conta no limite do dia
      {acao:"planejar", criacao, material, materia, ano, total}
@@ -26,7 +31,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.0";
 import { conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, LIMITES, planejar, remedir,
          type Modelo, type Uso } from "../_esteira/esteira.ts";
 import { ICONES } from "../_esteira/icones.ts";
-import { conferirArquivos, expandir, ler, type Arquivo } from "../_esteira/leitura.ts";
+import { conferirArquivos, expandir, ler, LIMITES_LEITURA, type Arquivo } from "../_esteira/leitura.ts";
 import { escreverLicao } from "../_esteira/licao.ts";
 import { PDFDocument } from "npm:pdf-lib@1.17.1";
 
@@ -136,6 +141,7 @@ async function reservar(conta: string, tipo: string, caracteres: number, pedidas
   const { data, error } = await admin.rpc("reservar_geracao", {
     p_conta: conta, p_tipo: tipo, p_criacao: criacao, p_caracteres: caracteres, p_pedidas: pedidas,
     p_limite_jogos: LIMITE_POR_DIA, p_limite_leituras: LIMITE_LEITURAS, p_max_partes: MAX_PARTES,
+    p_paginas_leitura: LIMITES_LEITURA.paginasMax,
     p_teto_dia_usd: TETO_DIA_USD, p_estimativa_usd: ESTIMATIVA_USD });
   if (!error) return data[0] as { id: number; restantes: number };
   if (/limite_conta/.test(error.message))
@@ -144,6 +150,8 @@ async function reservar(conta: string, tipo: string, caracteres: number, pedidas
   if (/limite_leitura/.test(error.message))
     return erro(429, "limite", `Você já fez as ${LIMITE_LEITURAS} leituras de hoje. ` +
                                "A contagem é das últimas 24 horas.");
+  if (/limite_paginas/.test(error.message))
+    return erro(429, "partes", `Esta leitura já passou de ${LIMITES_LEITURA.paginasMax} páginas. Mande só as páginas da matéria.`);
   if (/limite_partes/.test(error.message))
     return erro(429, "partes", "Este jogo já fez todos os pedidos que cabem nele. Revise o que veio, ou comece outro jogo.");
   if (/criacao_invalida/.test(error.message))
@@ -217,13 +225,23 @@ Deno.serve(async req => {
     const arquivos = await expandir(brutos.map(a => ({ nome: String(a.nome || "arquivo").slice(0, 120),
                                                        tipo: a.tipo, dados: a.dados })), dividirPdf);
     if (typeof arquivos === "string") return erro(400, "entrada", arquivos);
-    const reserva = await reservar(quem.user.id, "ler", 0, arquivos.length);
+    // Um PDF longo é lido em pedaços: cada chamada lê as suas páginas e diz quantas há.
+    const inicio = Number(corpo.inicio ?? 0);
+    if (!Number.isInteger(inicio) || inicio < 0 || inicio >= arquivos.length)
+      return erro(400, "entrada", "O pedaço pedido da leitura não existe.");
+    const estas = arquivos.slice(inicio, inicio + LIMITES_LEITURA.paginasPorPedido);
+    // A continuação não gasta outra leitura do dia: prende-se à primeira.
+    const leitura = corpo.leitura == null ? null : Number(corpo.leitura);
+    if (leitura !== null && (!Number.isInteger(leitura) || leitura <= 0))
+      return erro(400, "entrada", "A leitura de onde esta continua não existe.");
+    const reserva = await reservar(quem.user.id, "ler", 0, estas.length, leitura);
     if (reserva instanceof Response) return reserva;
     try {
-      const r = await ler(arquivos, modelo);
+      const r = await ler(estas, modelo);
       await registrar(reserva.id, "feita", r.uso, { entregues: r.paginas.length,
         reprovadas: r.paginas.filter(p => p.legivel === "nao").length, rodadas: 1 });
       return responder(200, { paginas: r.paginas, aviso: r.aviso, restantes: reserva.restantes,
+                              total: arquivos.length, leitura: leitura ?? reserva.id,
                               custo_usd: Number(custo(r.uso).toFixed(4)) });
     } catch (e) {
       return await falhou(reserva.id, reserva.restantes, e);

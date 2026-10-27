@@ -134,6 +134,45 @@ pags[0].querySelector("input").click();
 if ($("material").value !== TEXTO2) falhas.push("desmarcar a página não a tirou do material");
 if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção das páginas não ficou guardada");
 
+/* 10b. leitura grande: lotes de 10, o PDF longo em pedaços, presos à primeira chamada */
+{
+  const antes = window.chamarFuncao, chamadas = [];
+  const foto = k => ({nome: "IMG_" + k + ".jpg", tipo: "image/jpeg", dados: "x"});
+  const pdf = {nome: "livro.pdf", tipo: "application/pdf", dados: "x"};
+  let falhouUma = false;
+  window.chamarFuncao = async corpo => {
+    chamadas.push(corpo);
+    await new Promise(ok => setTimeout(ok, Math.random() * 30));
+    const ehPdf = corpo.arquivos[0].tipo === "application/pdf";
+    if (ehPdf && corpo.inicio === 10 && !falhouUma) { falhouUma = true; throw Object.assign(new Error("caiu"), {custo: 0.01}); }
+    const paginas = ehPdf
+      ? Array.from({length: Math.min(10, 23 - corpo.inicio)}, (_, j) => ({nome: "livro.pdf", pagina: corpo.inicio + j + 1}))
+      : corpo.arquivos.map(a => ({nome: a.nome, pagina: 1}));
+    return {leitura: 55, restantes: 7, custo_usd: 0.02, total: ehPdf ? 23 : corpo.arquivos.length,
+            paginas: paginas.map(p => ({...p, legivel: "sim", motivo: "", texto: TEXTO1, manuscrito: ""}))};
+  };
+  const r = await lerEmLotes([...Array.from({length: 12}, (_, k) => foto(k + 1)), pdf, foto(13)]);
+  if (chamadas.length !== 6) falhas.push("leitura grande: esperava 6 chamadas, vieram " + chamadas.length);
+  if (chamadas[0].leitura !== null || chamadas.slice(1).some(c => c.leitura !== 55))
+    falhas.push("as continuações não se prendem à primeira leitura");
+  if (chamadas.some(c => c.arquivos.length > 10)) falhas.push("um lote passou de 10 páginas");
+  const ordem = r.paginas.map(p => p.nome.replace(/\.\w+$/, "") + (p.nome === "livro.pdf" ? ":" + p.pagina : "")).join();
+  const esperada = [...Array.from({length: 12}, (_, k) => "IMG_" + (k + 1)),
+                    ...Array.from({length: 23}, (_, k) => "livro:" + (k + 1)), "IMG_13"].join();
+  if (ordem !== esperada) falhas.push("leitura grande fora de ordem: " + ordem);
+  const caidas = r.paginas.filter(p => p.legivel === "nao");
+  if (caidas.length !== 10 || caidas[0].pagina !== 11 || !/falhou: caiu/.test(caidas[0].motivo))
+    falhas.push("o lote que caiu não virou páginas ilegíveis com o motivo");
+  if (Math.abs(r.custo_usd - 0.11) > 1e-9) falhas.push("o custo da leitura em lotes: " + r.custo_usd);
+  if (!/10 de 36 páginas/.test(r.aviso)) falhas.push("o aviso da leitura grande: " + r.aviso);
+  // A primeira chamada que falha derruba a leitura: não há leitura a que as outras se prendam.
+  window.chamarFuncao = async () => { throw new Error("sem conta"); };
+  let caiu = null;
+  try { await lerEmLotes([foto(1)]); } catch (e) { caiu = e; }
+  if (!caiu) falhas.push("a primeira chamada falhou e a leitura seguiu");
+  window.chamarFuncao = antes;
+}
+
 /* 11. a questão leva a página de onde veio */
 const comFoto = {titulo: "Micro", paginas: [{nome: "IMG_2598.jpg", pagina: 1, texto: TEXTO1},
                                             {nome: "folha.pdf", pagina: 2, texto: TEXTO2}]};

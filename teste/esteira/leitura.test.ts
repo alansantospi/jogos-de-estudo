@@ -15,7 +15,7 @@ const PDF: Arquivo = { nome: "unidade.pdf", tipo: "application/pdf", dados: b64(
 const dividir = async (dados: string) => {
   const t = Buffer.from(dados, "base64").toString("latin1");
   if (!t.startsWith("%PDF")) throw new Error("não é PDF");
-  const n = { uma: 1, tres: 3, vinte: 20 }[t.split(" ")[1]] ?? 1;
+  const n = { uma: 1, tres: 3, vinte: 20, quarenta: 40 }[t.split(" ")[1]] ?? 1;
   return Array.from({ length: n }, (_, k) => b64("%PDF pagina " + (k + 1)));
 };
 
@@ -53,8 +53,11 @@ test("um pedido por página, cada um só com o seu arquivo", async () => {
 });
 
 test("PDF demais ou que não abre é recusado antes de custar", async () => {
+  // Vinte páginas cabem numa leitura (em pedaços); quarenta, não.
   const vinte = { ...PDF, dados: b64("%PDF-1.4 vinte paginas") };
-  assert.match(await expandir([vinte], dividir) as string, /mais de 12 páginas/);
+  assert.equal((await expandir([vinte], dividir) as Arquivo[]).length, 20);
+  const quarenta = { ...PDF, dados: b64("%PDF-1.4 quarenta paginas") };
+  assert.match(await expandir([quarenta], dividir) as string, /mais de 30 páginas/);
   assert.match(await expandir([{ ...PDF, dados: b64("lixo") }], dividir) as string, /Não consegui abrir/);
 });
 
@@ -123,7 +126,7 @@ test("se nada voltou é erro, e leva o gasto junto", async () => {
 test("os limites seguram o custo antes de chamar o modelo", () => {
   assert.equal(conferirArquivos([FOTO, PDF]), null);
   assert.match(conferirArquivos([])!, /ao menos uma/);
-  assert.match(conferirArquivos(Array(LIMITES_LEITURA.paginasMax + 1).fill(FOTO))!, /limite é 12/);
+  assert.match(conferirArquivos(Array(LIMITES_LEITURA.paginasPorPedido + 1).fill(FOTO))!, /cada pedido de leitura leva até 10/);
   assert.match(conferirArquivos([{ ...FOTO, tipo: "image/heic" }])!, /não é foto nem PDF/);
   assert.match(conferirArquivos([{ ...FOTO, dados: "não é base64!" }])!, /mal formado/);
   const grande = { ...FOTO, dados: "A".repeat(Math.ceil(LIMITES_LEITURA.bytesMax * 4 / 3) + 8) };
