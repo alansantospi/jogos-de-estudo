@@ -19,7 +19,11 @@ import { ErroEsteira, type Modelo, type Pedido, type Uso } from "./esteira.ts";
 export type Arquivo = { nome: string; tipo: string; dados: string; pagina?: number };
 export type Pagina = { arquivo: number; nome: string; pagina: number;
                        legivel: "sim" | "parcial" | "nao"; motivo: string;
-                       texto: string; manuscrito: string };
+                       texto: string; manuscrito: string; assunto: string; materia: string };
+
+/* A leitura já olha a página inteira: aproveita para sugerir o nome do jogo
+   e a matéria, que a tela preenche se a pessoa ainda não escreveu. */
+export const MATERIAS = ["Ciências", "Geografia", "História", "Língua Portuguesa", "Matemática", "Inglês", "Arte"];
 export type Leitura = { paginas: Pagina[]; uso: Uso[]; aviso?: string };
 
 /* A tela reduz cada foto a 1568 px no lado maior, o tamanho que o modelo lê
@@ -83,17 +87,20 @@ Chega um arquivo por vez. Para cada página dele, uma entrada. Uma foto costuma 
 - "legivel": "sim" se deu para ler tudo; "parcial" se uma parte ficou de fora (borrada, cortada, escura, reflexo, foco); "nao" se quase nada dá para ler, ou se a imagem não é material escolar.
 - "motivo": quando não for "sim", diga em uma frase curta o que impediu e qual parte ficou de fora, para a pessoa saber o que fotografar de novo. Quando for "sim", deixe vazio.
 - Trecho que você não consegue ler com segurança fica de fora, marcado como [ilegível]. Nunca adivinhe palavra: texto inventado aqui vira questão errada depois.
-- "pagina" é a ordem da página dentro do arquivo, começando em 1.`;
+- "pagina" é a ordem da página dentro do arquivo, começando em 1.
+- "assunto": o título do capítulo, unidade ou seção que aparece impresso na página, como está escrito, sem o número ("Os movimentos migratórios"). Se a página não traz título, "".
+- "materia": a disciplina escolar da página, uma da lista. Se não der para saber, "".`;
 
 const ESQUEMA = {
   type: "object", additionalProperties: false, required: ["paginas"],
   properties: { paginas: { type: "array", items: {
     type: "object", additionalProperties: false,
-    required: ["pagina", "legivel", "motivo", "texto", "manuscrito"],
+    required: ["pagina", "legivel", "motivo", "texto", "manuscrito", "assunto", "materia"],
     properties: {
       pagina: { type: "integer" },
       legivel: { type: "string", enum: ["sim", "parcial", "nao"] },
       motivo: { type: "string" }, texto: { type: "string" }, manuscrito: { type: "string" },
+      assunto: { type: "string" }, materia: { type: "string", enum: [...MATERIAS, ""] },
     } } } },
 };
 
@@ -131,7 +138,9 @@ export function paginasDoArquivo(saida: unknown, i: number, a: Pick<Arquivo, "no
     // Página tirada de PDF já sabe o próprio número; o do modelo seria 1.
     return { arquivo: i, nome: a.nome, pagina: a.pagina ? a.pagina + k : Math.max(Number(p?.pagina) || 1, 1),
              legivel, motivo: legivel === "sim" ? "" : motivo, texto,
-             manuscrito: String(p?.manuscrito ?? "").trim() };
+             manuscrito: String(p?.manuscrito ?? "").trim(),
+             assunto: String(p?.assunto ?? "").replace(/\s+/g, " ").trim().slice(0, 120),
+             materia: MATERIAS.includes(p?.materia) ? p.materia : "" };
   });
 }
 
@@ -144,6 +153,7 @@ export function organizar(porArquivo: (Pagina[] | string)[], arquivos: Arquivo[]
     const r = porArquivo[i];
     if (Array.isArray(r) && r.length) paginas.push(...r);
     else paginas.push({ arquivo: i, nome: a.nome, pagina: a.pagina || 1, legivel: "nao", texto: "", manuscrito: "",
+                        assunto: "", materia: "",
                         motivo: typeof r === "string" ? r : "O modelo não devolveu nada deste arquivo." });
   });
   paginas.sort((a, b) => a.arquivo - b.arquivo || a.pagina - b.pagina);

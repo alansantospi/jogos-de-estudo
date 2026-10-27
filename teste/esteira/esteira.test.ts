@@ -184,8 +184,8 @@ test("planejar pede o mínimo de missões e leva o gasto", async () => {
   const r = await planejar({ material: MATERIAL, materia: "Geografia", ano: "4º ano", total: 30 }, modelo);
   assert.match(pedidos[0].usuario as string, /pelo menos 3 missões/);
   assert.equal(r.uso.length, 1);
-  assert.equal(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 100 }), null);
-  assert.match(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 101 })!, /entre 10 e 100/);
+  assert.equal(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 200 }), null);
+  assert.match(conferirPlano({ material: MATERIAL, materia: "Geografia", total: 201 })!, /entre 10 e 200/);
 });
 
 test("a parte escreve só a sua missão, sabendo das outras", async () => {
@@ -198,4 +198,24 @@ test("a parte escreve só a sua missão, sabendo das outras", async () => {
   assert.match(u, /Não escreva sobre o assunto delas:\n- O campo: o que se retira da natureza/);
   assert.deepEqual(r.missoes.map(m => m.id), ["primario", "setores"], "as missões são as do plano");
   assert.deepEqual(r.questoes.map(q => q.missao), ["setores", "setores"], "a parte não invade a vizinha");
+});
+
+test("o plano sugere o nome e a matéria, e pede a matéria quando ela vem em branco", async () => {
+  const { modelo, pedidos } = roteiro({ titulo: " Os <b>setores</b>  da economia ", materia: "Geografia",
+    missoes: [{ id: "setores", nome: "Setores", descricao: "", quantidade: 10 }] });
+  const r = await planejar({ material: MATERIAL, materia: "", ano: "4º ano", total: 10 }, modelo);
+  assert.match(pedidos[0].usuario as string, /Matéria: não informada; sugira uma/);
+  assert.equal(r.titulo, "Os setores da economia");
+  assert.equal(r.materia, "Geografia");
+  assert.equal(conferirPlano({ material: MATERIAL, materia: "", total: 10 }), null, "matéria em branco passa");
+});
+
+test("sem quantidade escolhida, o material decide e o total é só o teto", async () => {
+  const { modelo, pedidos } = roteiro({ titulo: "", materia: "", missoes: [{ id: "a", nome: "A", descricao: "", quantidade: 9 }] });
+  const r = await planejar({ material: MATERIAL, materia: "Geografia", ano: "", total: 200, automatico: true }, modelo);
+  const u = pedidos[0].usuario as string;
+  assert.match(u, /você decide pelo material/);
+  assert.match(u, /de 10 a 200/);
+  assert.doesNotMatch(u, /pelo menos \d+ missões/, "no automático não se exige o mínimo de missões do teto");
+  assert.equal(r.total, 9);
 });

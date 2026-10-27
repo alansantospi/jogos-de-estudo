@@ -173,6 +173,42 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   window.chamarFuncao = antes;
 }
 
+/* 10c. a leitura sugere nome e matéria; a quantidade acompanha o material até alguém escolher */
+{
+  $("titulo").value = ""; $("materia").value = "";
+  const pg = (k, o) => ({arquivo: k, nome: "P" + k + ".jpg", pagina: 1, legivel: "sim", motivo: "", manuscrito: "",
+                         texto: (TEXTO1 + " ").repeat(40).trim(), assunto: "", materia: "", ...o});
+  mostrarLeitura({aviso: "", custo_usd: 0, restantes: 8, paginas: [
+    pg(0, {materia: "Ciências"}), pg(1, {assunto: "A célula", materia: "Ciências"}), pg(2, {materia: "História"})]});
+  if ($("titulo").value !== "A célula" || $("materia").value !== "Ciências")
+    falhas.push("a leitura não sugeriu nome e matéria: " + $("titulo").value + " / " + $("materia").value);
+  if ($("sugestao").hidden) falhas.push("a sugestão não diz de onde veio");
+  // Sem escolha, o material decide: o padrão é "auto", com a estimativa à vista.
+  $("quantidade").value = "auto"; contar();
+  if (!document.querySelector('#pilulas input[value="auto"]').checked) falhas.push("o automático não é o marcado");
+  if (!/Devem vir umas 3\d questões: o quanto o material sustenta/.test($("estimativa").textContent))
+    falhas.push("estimativa no automático: " + $("estimativa").textContent);
+  if ($("botaoGerar").textContent !== "Gerar o jogo") falhas.push("botão no automático: " + $("botaoGerar").textContent);
+  // O que a pessoa escreveu fica; a sugestão nova só ocupa o que ainda era sugestão.
+  $("titulo").value = "Meu nome";
+  leitura.paginas[1].assunto = "Outro capítulo"; leitura.paginas[2].materia = "História"; leitura.paginas[0].materia = "História";
+  aplicarPaginas();
+  if ($("titulo").value !== "Meu nome") falhas.push("a sugestão passou por cima do nome escrito");
+  if ($("materia").value !== "História") falhas.push("a matéria sugerida não se atualizou: " + $("materia").value);
+  // Escolher fixa a quantidade; pedir além do que cabe avisa.
+  document.querySelector('#pilulas input[value="100"]').click();
+  if ($("quantidade").value !== "100") falhas.push("a pílula não muda a quantidade");
+  if ($("botaoGerar").textContent !== "Gerar 100 questões") falhas.push("botão com número: " + $("botaoGerar").textContent);
+  const marcadas = [...document.querySelectorAll("#pilulas input")].filter(r => r.checked).map(r => r.value).join();
+  if (marcadas !== "100") falhas.push("pílulas marcadas depois de escolher 100: " + marcadas);
+  if (!$("estimativa").classList.contains("alem") || !/Pedindo 100, devem vir umas/.test($("estimativa").textContent))
+    falhas.push("pedir além do material não avisa: " + $("estimativa").textContent);
+  leitura.paginas[0].marcada = false; aplicarPaginas();
+  if ($("quantidade").value !== "100") falhas.push("depois de escolhida, a quantidade mudou sozinha");
+  document.querySelector('#pilulas input[value="auto"]').click();
+  if ($("quantidade").value !== "auto") falhas.push("não dá para voltar ao automático");
+}
+
 /* 11. a questão leva a página de onde veio */
 const comFoto = {titulo: "Micro", paginas: [{nome: "IMG_2598.jpg", pagina: 1, texto: TEXTO1},
                                             {nome: "folha.pdf", pagina: 2, texto: TEXTO2}]};
@@ -196,7 +232,7 @@ await espere(() => etapa === 1);
 if (location.hash !== "#material") falhas.push("etapa sem conteúdo abriu pelo endereço: " + location.hash);
 
 /* 13. o jogo grande: plano, missões em paralelo, a que falha tenta de novo */
-const gerados = [], licoes = [];
+const gerados = [], licoes = [], planos = [];
 let recusarB = true, recusarLicaoB = true;
 // O passo da missão c chega sem trecho conferido: tem de entrar fora da lição.
 const passoDe = alvo => ({missao: alvo, titulo: "Passo " + alvo, ideia: "A ideia de <b>" + alvo + "</b>.",
@@ -214,7 +250,8 @@ window.chamarFuncao = async corpo => {
     }
     return {restantes: 2, custo_usd: 0.02, passos: [passoDe(corpo.alvo)]};
   }
-  if (corpo.acao === "planejar") return {total: 30, restantes: 2, custo_usd: 0.02, missoes: [
+  if (corpo.acao === "planejar") planos.push(corpo);
+  if (corpo.acao === "planejar") return {total: 30, restantes: 2, custo_usd: 0.02, titulo: "Sugerido", materia: "Geografia", missoes: [
     {id: "a", nome: "Missão A", descricao: "", quantidade: 10},
     {id: "b", nome: "Missão B", descricao: "", quantidade: 10},
     {id: "c", nome: "Missão C", descricao: "", quantidade: 10}]};
@@ -231,7 +268,8 @@ window.chamarFuncao = async corpo => {
 };
 estado = null; leitura = null;
 $("material").value = base.trecho.repeat(8);
-$("titulo").value = "Jogo grande"; $("materia").value = "Geografia"; $("quantidade").value = "30";
+// A matéria em branco: o plano sugere.
+$("titulo").value = "Jogo grande"; $("materia").value = ""; $("quantidade").value = "30";
 contar();
 $("pedido").requestSubmit();
 await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado === "falhou"
@@ -239,6 +277,9 @@ await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado 
 if (licoes.length !== 3 || licoes.some(l => l.criacao !== 7 || l.missoes.length !== 3))
   falhas.push("a lição não foi pedida uma vez por missão, dentro da criação: " + licoes.length);
 if (gerados.length !== 3) falhas.push("esperava 3 partes, vieram " + gerados.length);
+if (planos[0].automatico || planos[0].total !== 30) falhas.push("quantidade escolhida não foi como pedido: " + JSON.stringify(planos[0]));
+if (estado.pedido.materia !== "Geografia" || $("materia").value !== "Geografia" || estado.pedido.titulo !== "Jogo grande")
+  falhas.push("matéria em branco não veio do plano, ou o nome escrito foi trocado: " + estado.pedido.titulo + " / " + estado.pedido.materia);
 if (gerados.some(g => g.criacao !== 7 || !g.missoes || g.missoes.length !== 3))
   falhas.push("a parte não levou a criação e o plano inteiro");
 if (!/Não veio/.test($("resumo").innerText)) falhas.push("a missão que falhou não aparece no plano");
@@ -342,10 +383,12 @@ gerados.length = 0; licoes.length = 0;
 await espere(() => location.hash === "#material");
 if ($("faixa1").hidden) falhas.push("acrescentando, a etapa 1 não diz a que jogo");
 if ($("titulo").value !== "Outro, renomeado") falhas.push("acrescentando, o título não vem do jogo");
-$("material").value = "Material novo. ".repeat(30); contar();
+$("material").value = "Material novo. ".repeat(30); $("quantidade").value = "auto"; contar();
 $("pedido").requestSubmit();
 await espere(() => estado && estado.plano && !gerando && Object.values(estado.partes).every(x => x.estado === "pronta"), 4000);
 if (estado.jogoId !== OUTRO) falhas.push("acrescentar perdeu o jogo de onde veio");
+if (!planos.at(-1).automatico || planos.at(-1).total !== 200) falhas.push("no automático, o plano não recebeu o teto: " + JSON.stringify(planos.at(-1)));
+if (estado.pedidas != null) falhas.push("no automático não há quantidade pedida para comparar");
 if (estado.questoes.length !== 7 || estado.questoes[0].enunciado !== "velha" || estado.questoes[0].estado !== "aprovada")
   falhas.push("acrescentar mexeu nas questões que o jogo tinha");
 if (Object.keys(estado.licao).join() !== "a_2,b,c") falhas.push("lição depois de acrescentar: " + Object.keys(estado.licao).join());

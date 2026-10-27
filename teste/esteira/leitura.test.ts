@@ -132,3 +132,12 @@ test("os limites seguram o custo antes de chamar o modelo", () => {
   const grande = { ...FOTO, dados: "A".repeat(Math.ceil(LIMITES_LEITURA.bytesMax * 4 / 3) + 8) };
   assert.match(conferirArquivos([grande])!, /MB e o limite/);
 });
+
+test("a leitura sugere o assunto e a matéria de cada página, só da lista", () => {
+  const [a] = paginasDoArquivo({ paginas: [pagina({ assunto: "  Os movimentos\n migratórios ", materia: "História" })] }, 0, FOTO);
+  assert.equal(a.assunto, "Os movimentos migratórios");
+  assert.equal(a.materia, "História");
+  const [b] = paginasDoArquivo({ paginas: [pagina({ materia: "Astrologia" })] }, 0, FOTO);
+  assert.equal(b.materia, "", "matéria fora da lista não passa");
+  assert.equal(b.assunto, "");
+});

@@ -46,7 +46,7 @@ export class ErroEsteira extends Error {
    que cabe nos 150 s da função; o jogo inteiro vai até `totalMax`. */
 export const LIMITES = { materialMin: 300, materialMax: 40000,
                          quantidadeMin: 1, quantidadeMax: 20,
-                         totalMin: 10, totalMax: 100, porMissaoMax: 12 };
+                         totalMin: 10, totalMax: 200, porMissaoMax: 12 };
 
 export function conferirEntrada(e: Partial<Entrada>): string | null {
   const m = typeof e.material === "string" ? e.material.trim() : "";
@@ -200,9 +200,11 @@ Cada missão é um assunto do material, na ordem em que o material o apresenta, 
 - "descricao": uma ou duas frases dizendo exatamente o que do material entra nesta missão e o que fica para as outras.
 - "quantidade": quantas questões a missão comporta. Assunto com mais conteúdo no material, mais questões. Nunca mais que 12 por missão, e nunca mais do que o material sustenta sem repetir.
 
-A soma das quantidades deve ser o total pedido. Se o material não sustenta tantas questões sem repetir ou inventar, some menos: é melhor um jogo menor que um jogo com questão repetida.`;
+A soma das quantidades deve ser o total pedido. Se o material não sustenta tantas questões sem repetir ou inventar, some menos: é melhor um jogo menor que um jogo com questão repetida.
 
-export type Plano = { missoes: Missao[]; total: number };
+Sugira também o "titulo" do jogo, de duas a cinco palavras, com o assunto do material ("Os movimentos migratórios"), e a "materia", a disciplina escolar ("Geografia"). Se a pessoa já disse a matéria, repita a dela.`;
+
+export type Plano = { missoes: Missao[]; total: number; titulo: string; materia: string };
 
 export function conferirPlano(e: { material?: unknown; materia?: unknown; total?: unknown }): string | null {
   const m = typeof e.material === "string" ? e.material.trim() : "";
@@ -210,7 +212,8 @@ export function conferirPlano(e: { material?: unknown; materia?: unknown; total?
     return `O material tem ${m.length} caracteres. Precisa de pelo menos ${LIMITES.materialMin}.`;
   if (m.length > LIMITES.materialMax)
     return `O material tem ${m.length} caracteres e o limite é ${LIMITES.materialMax}. Tire páginas ou divida em dois jogos.`;
-  if (typeof e.materia !== "string" || !e.materia.trim()) return "Diga de que matéria é.";
+  // A matéria pode vir em branco: o plano sugere uma.
+  if (e.materia !== undefined && typeof e.materia !== "string") return "A matéria chegou mal formada.";
   const t = Number(e.total);
   if (!Number.isInteger(t) || t < LIMITES.totalMin || t > LIMITES.totalMax)
     return `Peça entre ${LIMITES.totalMin} e ${LIMITES.totalMax} questões.`;
@@ -240,22 +243,32 @@ export function arrumarPlano(saida: unknown, total: number): Plano {
     maior.quantidade!--; soma--;
   }
   const usadas = missoes.filter(m => m.quantidade! > 0);
-  return { missoes: usadas, total: usadas.reduce((s, m) => s + m.quantidade!, 0) };
+  const texto = (v: unknown, max: number) => String(v ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().slice(0, max);
+  return { missoes: usadas, total: usadas.reduce((s, m) => s + m.quantidade!, 0),
+           titulo: texto((saida as any)?.titulo, 120), materia: texto((saida as any)?.materia, 60) };
 }
 
-export async function planejar(e: { material: string; materia: string; ano: string; total: number },
+/* `automatico`: a pessoa não escolheu a quantidade, e `total` é só o teto.
+   É como os jogos feitos à mão: o material diz quantas questões cabem. */
+export async function planejar(e: { material: string; materia: string; ano: string; total: number;
+                                    automatico?: boolean },
                                modelo: Modelo): Promise<Plano & { uso: Uso[] }> {
   const minimo = Math.ceil(e.total / LIMITES.porMissaoMax);
   let r;
   try {
     r = await modelo({
       sistema: SISTEMA_PLANO, esforco: "medium",
-      usuario: `Matéria: ${e.materia}\nAno: ${e.ano || "não informado"}\n` +
-        `Total de questões: ${e.total}. Como cada missão comporta no máximo ${LIMITES.porMissaoMax}, ` +
-        `são pelo menos ${minimo} missões.\n\n<material>\n${e.material.trim()}\n</material>`,
+      usuario: `Matéria: ${e.materia.trim() || "não informada; sugira uma"}\nAno: ${e.ano || "não informado"}\n` +
+        (e.automatico
+          ? `Total de questões: você decide pelo material — quantas ele sustenta sem repetir nem inventar, ` +
+            `de ${LIMITES.totalMin} a ${e.total}. Não estique para chegar ao teto: material curto dá jogo curto. ` +
+            `Cada missão comporta no máximo ${LIMITES.porMissaoMax}.`
+          : `Total de questões: ${e.total}. Como cada missão comporta no máximo ${LIMITES.porMissaoMax}, ` +
+            `são pelo menos ${minimo} missões.`) +
+        `\n\n<material>\n${e.material.trim()}\n</material>`,
       esquema: {
-        type: "object", additionalProperties: false, required: ["missoes"],
-        properties: { missoes: { type: "array", items: {
+        type: "object", additionalProperties: false, required: ["titulo", "materia", "missoes"],
+        properties: { titulo: { type: "string" }, materia: { type: "string" }, missoes: { type: "array", items: {
           type: "object", additionalProperties: false, required: ["id", "nome", "descricao", "quantidade"],
           properties: { id: { type: "string" }, nome: { type: "string" },
                         descricao: { type: "string" }, quantidade: { type: "integer" } } } } },

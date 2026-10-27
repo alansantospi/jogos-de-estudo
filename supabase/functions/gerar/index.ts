@@ -39,11 +39,11 @@ const MODELO = "claude-opus-5-5";
 
 /* As cercas, ajustáveis sem novo deploy: `supabase secrets set`.
    LIMITE_POR_DIA conta jogos; um jogo é o plano mais, por missão, uma parte
-   e uma lição, até MAX_PARTES pedidos (doze missões, o plano e algumas
-   tentativas). */
+   e uma lição, até MAX_PARTES pedidos (200 questões são ~17 missões: o
+   plano, 34 pedidos e folga para tentar de novo). */
 const LIMITE_POR_DIA = Number(Deno.env.get("LIMITE_POR_DIA") ?? 3);
 const LIMITE_LEITURAS = Number(Deno.env.get("LIMITE_LEITURAS") ?? 10);
-const MAX_PARTES = Number(Deno.env.get("MAX_PARTES") ?? 40);
+const MAX_PARTES = Number(Deno.env.get("MAX_PARTES") ?? 60);
 const TETO_DIA_USD = Number(Deno.env.get("TETO_DIA_USD") ?? 15);
 /* Quanto uma geração em curso pesa no teto antes de se saber o custo real.
    Material no limite, vinte questões e duas rodadas ficam abaixo disto. */
@@ -261,7 +261,7 @@ Deno.serve(async req => {
 
   if (corpo.acao === "planejar") {
     const pedido = { material: String(corpo.material ?? "").trim(), materia: String(corpo.materia ?? ""),
-                     ano: String(corpo.ano ?? ""), total: Number(corpo.total) };
+                     ano: String(corpo.ano ?? ""), total: Number(corpo.total), automatico: corpo.automatico === true };
     const invalido = conferirPlano(pedido);
     if (invalido) return erro(400, "entrada", invalido);
     const reserva = await reservar(quem.user.id, "plano", pedido.material.length, pedido.total, criacao);
@@ -269,7 +269,8 @@ Deno.serve(async req => {
     try {
       const r = await planejar(pedido, modelo);
       await registrar(reserva.id, "feita", r.uso, { entregues: r.missoes.length, rodadas: 1 });
-      return responder(200, { missoes: r.missoes, total: r.total, restantes: reserva.restantes,
+      return responder(200, { missoes: r.missoes, total: r.total, titulo: r.titulo, materia: r.materia,
+                              restantes: reserva.restantes,
                               custo_usd: Number(custo(r.uso).toFixed(4)) });
     } catch (e) {
       return await falhou(reserva.id, reserva.restantes, e);

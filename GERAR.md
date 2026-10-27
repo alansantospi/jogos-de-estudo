@@ -20,7 +20,8 @@ US$ 0,61, uns US$ 0,027 por questão, em cerca de 1 minuto. Partes que
 precisaram de uma rodada de correção custaram o dobro das outras. Isso foi
 antes da lição, que acrescenta um pedido de esforço médio por missão:
 **estimativa, não medida**, de US$ 0,03 a 0,06 cada. Um jogo de 100
-questões deve ficar perto de US$ 3. O custo real de cada jogo aparece na
+questões deve ficar perto de US$ 3, e um de 200, o máximo, perto de US$ 6 —
+dois desses num dia já passam da metade do teto diário. O custo real de cada jogo aparece na
 tela, logo acima das questões, e fica na tabela `geracoes`.
 
 Há três cercas, da mais próxima à mais distante:
@@ -30,7 +31,8 @@ Há três cercas, da mais próxima à mais distante:
 | jogos por conta em 24 h | 3 | `LIMITE_POR_DIA` |
 | leituras de foto por conta em 24 h | 10 | `LIMITE_LEITURAS` |
 | páginas por leitura (lidas de 10 em 10; os lotes depois do primeiro não contam como outra leitura) | 30 | `LIMITES_LEITURA` em `leitura.ts` |
-| pedidos dentro de um jogo | 40 | `MAX_PARTES` |
+| questões por jogo | 200 | `LIMITES.totalMax` em `esteira.ts` |
+| pedidos dentro de um jogo | 60 | `MAX_PARTES` |
 | gasto de todas as contas em 24 h | US$ 15 | `TETO_DIA_USD` |
 | gasto do mês na Anthropic | — | console da Anthropic, passo 3 |
 
@@ -110,6 +112,23 @@ Para ver o que já se gastou, no **SQL Editor**:
 select date_trunc('day', criado) dia, count(*) geracoes, sum(custo_usd) gasto
   from geracoes group by 1 order by 1 desc;
 ```
+
+## Nome, matéria e quantas questões
+
+Na etapa Conferir, o nome do jogo e a matéria podem ficar em branco:
+
+- vindo de fotos ou PDF, a leitura sugere os dois a partir do que está
+  impresso nas páginas (o título do capítulo e a disciplina), e a tela
+  preenche os campos que a pessoa ainda não escreveu;
+- vindo de texto colado, quem sugere é o plano, na hora de gerar.
+
+**Quantas questões** vem marcado em **O material decide**, como nos jogos
+feitos à mão: o plano recebe o teto (200) e escreve quantas o material
+sustenta sem repetir nem inventar. A tela mostra quantas devem vir, pela
+régua de ~170 caracteres por questão (medida num jogo real: 4.676
+caracteres deram 28). Os botões 10, 30, 60, 100 e 200 pedem um número; pedir
+além do que o material sustenta avisa antes de gerar, porque o plano só
+distribui o que cabe: pedir 100 com material para 37 traz umas 37.
 
 ## Jogar o que foi criado
 

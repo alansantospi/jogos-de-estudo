@@ -409,6 +409,13 @@ JS de lá; `montar_jogo.test.ts` cobra o mesmo HTML. Cada passo cita o
 material e é conferido; o que não confere chega fora da lição. Falta: o
 desenho, e medir o custo de verdade.
 
+**Quantidade, escrita em 27/10/2026.** O padrão passou a ser "o material
+decide", como nos jogos feitos à mão (de 34 a 187 questões): o plano
+recebe 200 como teto e não estica. O jogo vai até 200 questões (eram 100),
+e um jogo pede até 60 chamadas (o plano, ~17 partes, ~17 lições e folga).
+A leitura sugere nome e matéria pelo que está impresso; no texto colado,
+o plano sugere.
+
 **Gerir, escrito em 27/10/2026.** `gerar.html#meus` lista os jogos da conta
 com Jogar, Editar e Apagar. Editar reabre o jogo na revisão (renomear,
 editar, descartar; salvar atualiza o mesmo). Acrescentar questões gera

@@ -101,7 +101,23 @@ input,select,textarea{width:100%;background:var(--carta);color:var(--texto);font
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acao);box-shadow:0 0 0 3px var(--acao-tinta)}
 textarea{resize:vertical;line-height:1.55}
 input[type=checkbox]{accent-color:var(--acao-solida)}
-.campos{display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr;gap:.75rem}
+.campos{display:grid;grid-template-columns:2fr 1.5fr 1fr;gap:.75rem}
+.sugestao{display:flex;gap:.4rem;align-items:center;margin:.5rem 0 0}
+.sugestao svg{width:1rem;height:1rem;color:var(--acao)}
+.quantas{border:0;padding:0;margin:1.25rem 0 0;min-width:0}
+.quantas legend{font-weight:700;font-size:.9375rem;padding:0;margin-bottom:.45rem}
+.pilulas{display:flex;flex-wrap:wrap;gap:.5rem}
+.pilulas label{display:inline-flex;align-items:center;justify-content:center;min-width:4rem;min-height:2.75rem;padding:0 1.1rem;
+ border:1.5px solid var(--risco-forte);border-radius:999px;background:var(--carta);font-weight:800;font-size:1.0625rem;
+ font-variant-numeric:tabular-nums;cursor:pointer;transition:border-color .15s,background-color .15s}
+.pilulas label:hover{border-color:var(--acao)}
+.pilulas input{position:absolute;opacity:0;pointer-events:none}
+.pilulas .auto{font-size:.9375rem}
+/* Classe, não :has(:checked): marcar pelo código nem sempre repinta o :has. */
+.pilulas label.on{background:var(--acao-solida);border-color:var(--acao-solida);color:#fff}
+.pilulas label:has(input:focus-visible){outline:3px solid var(--acao);outline-offset:2px}
+.estimativa{margin:.6rem 0 0;font-size:.875rem;color:var(--texto-2);min-height:1.3em}
+.estimativa.alem{color:var(--cuidado);font-weight:700}
 @media (max-width:40rem){.campos{grid-template-columns:1fr 1fr}.campos .largo{grid-column:1 / -1}}
 
 button{font:inherit;font-weight:800;cursor:pointer}
@@ -408,15 +424,25 @@ a.botao{text-decoration:none;font-weight:800}
 
   <h2>O jogo</h2>
   <div class="campos">
-    <label class="largo">Título <input id="titulo" required placeholder="Mundo microscópico" autocomplete="off"></label>
-    <label class="largo">Matéria <input id="materia" required placeholder="Ciências" list="materias" autocomplete="off"></label>
+    <label class="largo">Nome do jogo <input id="titulo" placeholder="Em branco, a geração sugere" autocomplete="off"></label>
+    <label class="largo">Matéria <input id="materia" placeholder="Em branco, a geração sugere" list="materias" autocomplete="off"></label>
     <label>Ano <select id="ano">
       <option>1º ano</option><option>2º ano</option><option>3º ano</option>
       <option selected>4º ano</option><option>5º ano</option><option>6º ano</option>
       <option>7º ano</option><option>8º ano</option><option>9º ano</option></select></label>
-    <label>Questões <select id="quantidade">
-      <option>10</option><option>20</option><option selected>30</option><option>60</option><option>100</option></select></label>
   </div>
+  <p class="dica sugestao" id="sugestao" hidden></p>
+  <fieldset class="quantas">
+    <legend>Quantas questões</legend>
+    <div class="pilulas" id="pilulas">
+      <label class="auto"><input type="radio" name="qtd" value="auto">O material decide</label>
+      <label><input type="radio" name="qtd" value="10">10</label><label><input type="radio" name="qtd" value="30">30</label>
+      <label><input type="radio" name="qtd" value="60">60</label><label><input type="radio" name="qtd" value="100">100</label>
+      <label><input type="radio" name="qtd" value="200">200</label>
+    </div>
+    <input type="hidden" id="quantidade" value="auto">
+    <p class="estimativa" id="estimativa" aria-live="polite"></p>
+  </fieldset>
   <datalist id="materias"><option>Ciências</option><option>Geografia</option><option>História</option>
     <option>Língua Portuguesa</option><option>Matemática</option><option>Inglês</option><option>Arte</option></datalist>
 
@@ -470,7 +496,16 @@ const MATERIAL = "jogos_material_v1";
 const MATERIAL_MAX = 40000, MATERIAL_MIN = 300;
 // O material de um jogo salvo soma o de cada vez que se acrescentou questões
 // (coluna `jogos.material`), e um jogo tem no máximo 200 questões.
-const MATERIAL_JOGO_MAX = 120000, QUESTOES_JOGO_MAX = 200;
+const MATERIAL_JOGO_MAX = 120000, QUESTOES_JOGO_MAX = 400;
+/* Quanto material cada questão pede. Medido num jogo real (26/10/2026):
+   4.676 caracteres sustentaram 28 questões. É uma régua, não uma promessa:
+   o plano decide pelo conteúdo, não pela contagem. */
+const POR_QUESTAO = 170, TOTAL_MAX = 200, TOTAL_MIN = 10;
+const sustenta = n => Math.floor(n / POR_QUESTAO);
+/* "auto" é o padrão, como nos jogos feitos à mão: o plano recebe o teto e
+   decide pelo material. Número escolhido é pedido. */
+const automatico = () => $("quantidade").value === "auto";
+const esperadas = n => Math.min(TOTAL_MAX, Math.max(TOTAL_MIN, sustenta(n)));
 /* Quantas missões se escrevem ao mesmo tempo. Mais que isso esbarra no
    limite de pedidos simultâneos da API sem terminar mais cedo. */
 const PARALELO = 4;
@@ -763,6 +798,7 @@ function continuarTexto(){
   recado("");
   leitura = null; guardarLeitura();
   $("material").value = t;
+  $("sugestao").hidden = true;
   pintarPaginas(); contar(); guardarMaterial();
   irPara(2);
 }
@@ -782,8 +818,31 @@ function mostrarLeitura(r){
 /* As páginas marcadas, na ordem, viram o material. A caixa continua
    editável; mexer na seleção reescreve o que estiver nela. */
 function aplicarPaginas(){
-  $("material").value = leitura.paginas.filter(p => p.marcada).map(p => p.texto).join("\n\n");
+  const marcadas = leitura.paginas.filter(p => p.marcada);
+  $("material").value = marcadas.map(p => p.texto).join("\n\n");
+  sugerirNome(marcadas);
   contar(); guardarMaterial();
+}
+
+/* O nome e a matéria que a leitura viu impressos nas páginas. Só ocupa
+   campo vazio, ou que ainda tem a sugestão anterior: o que a pessoa
+   escreveu fica. */
+let sugerido = {titulo: "", materia: ""};
+function sugerirNome(paginas){
+  const titulo = (paginas.find(p => p.assunto) || {}).assunto || "";
+  const conta = {};
+  paginas.forEach(p => { if(p.materia) conta[p.materia] = (conta[p.materia] || 0) + 1; });
+  const materia = Object.keys(conta).sort((a, b) => conta[b] - conta[a])[0] || "";
+  const usou = [];
+  [["titulo", titulo], ["materia", materia]].forEach(([k, v]) => {
+    const campo = $(k);
+    if(v && (!campo.value.trim() || campo.value === sugerido[k])){ campo.value = v; usou.push(k); }
+    sugerido[k] = v;
+  });
+  $("sugestao").hidden = !usou.length;
+  if(usou.length) $("sugestao").replaceChildren(icone("livro"),
+    el("span", {}, (usou.length === 2 ? "Nome e matéria tirados" : usou[0] === "titulo" ? "Nome tirado" : "Matéria tirada")
+      + " das páginas lidas. Mude se quiser."));
 }
 
 function pintarPaginas(){
@@ -826,12 +885,24 @@ function contar(){
                  : curto && n ? "Precisa de pelo menos " + MATERIAL_MIN + " caracteres." : ""),
     el("span", {}, n.toLocaleString("pt-BR") + " de " + MATERIAL_MAX.toLocaleString("pt-BR")));
   $("botaoGerar").disabled = gerando || fora || curto;
-  const q = Number($("quantidade").value) || 30;
-  $("botaoGerar").textContent = gerando ? "Gerando..." : "Gerar " + q + " questões";
+  const auto = automatico(), escolhida = Number($("quantidade").value) || 30;
+  document.querySelectorAll("#pilulas input").forEach(r => {
+    r.checked = r.value === $("quantidade").value;
+    r.parentNode.classList.toggle("on", r.checked);
+  });
+  const cabem = sustenta(n), q = auto ? esperadas(n) : escolhida;
+  const alem = !auto && !fora && n >= MATERIAL_MIN && q > cabem * 1.15;
+  $("estimativa").className = "estimativa" + (alem ? " alem" : "");
+  $("estimativa").textContent = fora || n < MATERIAL_MIN ? ""
+    : auto ? "Devem vir umas " + q + " questões" + (cabem > TOTAL_MAX ? ", o máximo de um jogo." : ": o quanto o material sustenta sem repetir.")
+    : alem ? "Pedindo " + q + ", devem vir umas " + cabem + ": as questões só saem do que está no material. Para ter mais, volte e acrescente páginas."
+    : "Este material sustenta umas " + cabem + " questões.";
+  $("botaoGerar").textContent = gerando ? "Gerando..." : auto ? "Gerar o jogo" : "Gerar " + q + " questões";
   $("dicaGerar").textContent = estado && estado.acrescentar
       ? "As " + estado.questoes.filter(q => q.estado !== "descartada").length + " questões que o jogo já tem continuam. Conta como outro jogo do dia."
     : estado ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
-    : q > 20 ? "Uma missão por vez, " + PARALELO + " ao mesmo tempo: " + (q >= 60 ? "uns 3 a 5 minutos." : "uns 2 a 3 minutos.")
+    : q > 20 ? "Uma missão por vez, " + PARALELO + " ao mesmo tempo: "
+      + (q > 100 ? "uns 5 a 8 minutos." : q >= 60 ? "uns 3 a 5 minutos." : "uns 2 a 3 minutos.")
     : "";
 }
 
@@ -847,9 +918,9 @@ function lerMaterial(){
 
 async function pedir(ev){
   ev.preventDefault();
-  const falta = ["titulo", "materia"].find(k => !$(k).value.trim());
-  if(falta){ $(falta).focus(); return recado(falta === "titulo" ? "Dê um título ao jogo." : "Diga de que matéria é.", true); }
-  const total = Number($("quantidade").value);
+  // Nome e matéria podem ir em branco: o plano sugere os dois.
+  // No automático, o teto vai para o plano, que decide pelo material.
+  const auto = automatico(), total = auto ? TOTAL_MAX : Number($("quantidade").value);
   const pedido = {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(),
                   ano: $("ano").value, total, material: $("material").value.trim()};
   // De que página veio cada questão: guardado agora, que a leitura pode mudar.
@@ -858,7 +929,8 @@ async function pedir(ev){
   if(pedido.material.length > MATERIAL_MAX) return recado("O material passou do limite.", true);
   if(estado && estado.acrescentar){
     const ja = estado.questoes.filter(q => q.estado !== "descartada").length;
-    if(estado.pedido.material.length + pedido.material.length > MATERIAL_JOGO_MAX || ja + total > QUESTOES_JOGO_MAX)
+    const vem = auto ? esperadas(pedido.material.length) : total;
+    if(estado.pedido.material.length + pedido.material.length > MATERIAL_JOGO_MAX || ja + vem > QUESTOES_JOGO_MAX)
       return recado("Este jogo já está no tamanho máximo. Crie um jogo novo para este material.", true);
   }
 
@@ -878,8 +950,11 @@ async function pedir(ev){
     const ab = await chamarFuncao({acao: "abrir", total});
     cota(ab.restantes);
     const pl = await chamarFuncao({acao: "planejar", criacao: ab.criacao, material: pedido.material,
-                                   materia: pedido.materia, ano: pedido.ano, total});
+                                   materia: pedido.materia, ano: pedido.ano, total, automatico: auto});
     parar();
+    if(!pedido.titulo){ pedido.titulo = pl.titulo || "Jogo sem nome"; $("titulo").value = pedido.titulo; }
+    if(!pedido.materia){ pedido.materia = pl.materia || "Estudo"; $("materia").value = pedido.materia; }
+    guardarMaterial();
     if(base){
       // Missão nova com id de uma que o jogo já tem viraria a mesma missão.
       const usados = new Set(base.missoes.map(m => m.id));
@@ -889,13 +964,13 @@ async function pedir(ev){
                          material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
                 missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
-                custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "", pedidas: total,
+                custo: (base.custo || 0) + pl.custo_usd, restantes: pl.restantes, lote: null, aviso: "", pedidas: auto ? null : total,
                 partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}])),
                 licao: {...(base.licao || {}), ...Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))}};
     }else
     estado = {pedido, criacao: ab.criacao, plano: pl.missoes,
               missoes: pl.missoes.map(({id, nome}) => ({id, nome})), lote: null, aviso: "",
-              custo: pl.custo_usd, restantes: pl.restantes, questoes: [], pedidas: total,
+              custo: pl.custo_usd, restantes: pl.restantes, questoes: [], pedidas: auto ? null : total,
               partes: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}])),
               licao: Object.fromEntries(pl.missoes.map(m => [m.id, {estado: "aguardando"}]))};
     cota(pl.restantes);
@@ -1001,7 +1076,7 @@ async function tentarLicao(id){
 /* Jogo salvo sem lição (feito antes dela existir): ela é escrita agora,
    com o material guardado. Abre uma criação, e por isso conta no dia. */
 async function criarLicao(){
-  const total = Math.min(100, Math.max(10, vivas().length));
+  const total = Math.min(TOTAL_MAX, Math.max(TOTAL_MIN, vivas().length));
   try{
     const ab = await chamarFuncao({acao: "abrir", total});
     cota(ab.restantes);
@@ -1604,8 +1679,12 @@ function ligar(){
   $("pedido").addEventListener("submit", pedir);
   $("formEntrar").addEventListener("submit", entrar);
   $("sair").addEventListener("click", sair);
-  ["material", "titulo", "materia", "ano", "quantidade"].forEach(k =>
+  ["material", "titulo", "materia", "ano"].forEach(k =>
     $(k).addEventListener("input", () => { contar(); guardarMaterial(); }));
+  document.querySelectorAll("#pilulas input").forEach(r => r.addEventListener("change", () => {
+    $("quantidade").value = r.value;
+    contar(); guardarMaterial();
+  }));
   $("baixar").addEventListener("click", baixar);
   $("salvar").addEventListener("click", salvarJogo);
   $("recomecar").addEventListener("click", recomecar);
