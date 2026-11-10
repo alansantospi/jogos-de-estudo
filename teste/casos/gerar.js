@@ -43,9 +43,10 @@ if (!/Do material/.test(cartas()[0].innerText)) falhas.push("a carta não mostra
 if (!/US\$ 0,18 · restam 9 hoje/.test($("resumo").innerText)) falhas.push("custo e limite não aparecem: " + $("resumo").innerText);
 if (!/ainda é ruído/.test($("resumo").textContent)) falhas.push("amostra pequena não é explicada");
 if ($("resumo").querySelector("details.conferencia").open) falhas.push("as medidas da conferência não vêm recolhidas");
-// Sem aprovar nada, já dá para jogar: o que não tem problema grave vai.
-if ($("salvar").disabled || !/Pronto, jogar \(2\)/.test($("salvar").textContent))
-  falhas.push("sem revisar, não dá para jogar o que não tem problema grave: " + $("salvar").textContent);
+// Sem aprovar nada, já dá para jogar: só o que passou sem aviso vai; o aviso espera.
+if ($("salvar").disabled || !/Pronto, jogar \(1\)/.test($("salvar").textContent))
+  falhas.push("sem revisar, pronto para jogar não leva só as sem aviso: " + $("salvar").textContent);
+if (!/2 questões com aviso ficam fora/.test($("resumoPe").textContent)) falhas.push("o pé não diz que as com aviso esperam: " + $("resumoPe").textContent);
 
 /* 2. o texto do modelo entra como texto, nunca como HTML */
 if (document.querySelector("#lista img") || window.__xss) falhas.push("HTML vindo do modelo foi interpretado");
@@ -113,6 +114,21 @@ const pronta = await prepararArquivo(new File([png], "IMG_2598.png", {type: "ima
 if (pronta.tipo !== "image/jpeg") falhas.push("a foto não virou JPEG: " + pronta.tipo);
 const volta = await createImageBitmap(await (await fetch("data:image/jpeg;base64," + pronta.dados)).blob());
 if (Math.max(volta.width, volta.height) !== 1568) falhas.push("a foto subiu com " + volta.width + "x" + volta.height);
+
+/* 9b. a câmera: cada foto entra na fila, e os botões dizem o próximo passo */
+{
+  if ($("fotografar").getAttribute("capture") !== "environment") falhas.push("fotografar não abre a câmera traseira");
+  const dt = new DataTransfer();
+  dt.items.add(new File([png], "foto.jpg", {type: "image/jpeg"}));
+  $("fotografar").files = dt.files;
+  $("fotografar").dispatchEvent(new Event("change"));
+  if (escolhidos.length !== 1) falhas.push("a foto da câmera não entrou na fila: " + escolhidos.length);
+  if ($("cameraRotulo").textContent !== "Mais uma página") falhas.push("depois da foto, a câmera não oferece mais uma: " + $("cameraRotulo").textContent);
+  if ($("botaoLer").textContent !== "Pronto, ler 1 página") falhas.push("o botão de ler: " + $("botaoLer").textContent);
+  if ($("fotografar").value) falhas.push("a câmera não ficou pronta para a próxima foto");
+  tirar(0);
+  if ($("cameraRotulo").textContent !== "Fotografar página") falhas.push("sem fotos, a câmera não volta ao começo");
+}
 
 /* 10. a leitura: o ilegível fica desmarcado e avisado, a letra de mão fora */
 const TEXTO1 = "A célula é a menor unidade que forma os seres vivos.";
@@ -355,12 +371,12 @@ if (!/2 de 10 previstas/.test($("resumo").innerText)) falhas.push("a missão cur
 const gravados = [], abertos = [];
 window.gravarJogo = async (linha, id) => { gravados.push({linha, id}); return id || "11111111-2222-3333-4444-555555555555"; };
 window.abrirJogo = id => abertos.push(id);
-// Ninguém aprovou nada: "Pronto, jogar" aprova o que não tem problema grave e salva.
+// Ninguém aprovou nada: "Pronto, jogar" aprova o que passou sem aviso e salva.
 estado.questoes.forEach(x => { x.estado = "pendente"; });
-estado.questoes[0].problemas = [{grave: true, texto: "grave"}];
+estado.questoes[0].problemas = [{grave: false, texto: "A certa é bem mais longa."}];
 pintar();
 if ($("salvar").disabled || !/Pronto, jogar \(5\)/.test($("salvar").textContent))
-  falhas.push("pronto para jogar não conta as pendentes sem problema grave: " + $("salvar").textContent);
+  falhas.push("aviso não grave entrou no pronto para jogar: " + $("salvar").textContent);
 estado.questoes[0].problemas = [];
 pintar();
 $("salvar").click();

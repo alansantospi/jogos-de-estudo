@@ -227,7 +227,9 @@ fica), e o jogo salvo segue aberto para "Atualizar e jogar".
 ## Jogar sem revisar
 
 Na revisão, o botão do pé é **Pronto, jogar** enquanto houver questão
-pendente: ele aprova as que não têm problema grave e salva. Revisar uma a
+pendente: ele aprova as que passaram sem aviso e salva. As que têm aviso,
+mesmo não grave, esperam alguém olhar: o aviso mais comum é a certa se
+entregar pelo tamanho, e jogo gerado não passa pelo medidor do build. Revisar uma a
 uma continua possível, antes ou depois (Meus jogos → Editar). As medidas de
 atalho ficam em "Detalhes da conferência", recolhidas.
 

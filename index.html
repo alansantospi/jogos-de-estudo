@@ -112,6 +112,22 @@ footer b{color:var(--texto)}
 .aba.criar svg{width:1rem;height:1rem}
 .aba.atual{background:var(--texto);color:var(--fundo);border-color:var(--texto)}
 .vista[hidden]{display:none}
+.aba .ic{display:none}
+
+/* No celular, as abas descem para o pé, onde o polegar alcança: o formato
+   de app. Desenho em cima, nome embaixo; a atual ganha a cor do texto. */
+@media (max-width:40rem){
+  .abas{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    margin:0;padding:.3rem .4rem calc(.3rem + env(safe-area-inset-bottom));background:var(--carta);
+    border-top:1px solid var(--risco)}
+  .aba,.aba.criar{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;
+    min-height:3.25rem;margin:0;padding:.2rem;border:0;border-radius:12px;font-size:.75rem;line-height:1.1}
+  .aba .ic{display:block}
+  .aba svg,.aba.criar svg{width:1.4rem;height:1.4rem}
+  .aba.atual{background:color-mix(in oklch,var(--texto) 10%,transparent);color:var(--texto)}
+  .aba.criar span{white-space:nowrap}
+  body{padding-bottom:calc(4.25rem + env(safe-area-inset-bottom))}
+}
 #meusJogos[hidden]{display:none}
 .fora-da-conta{grid-column:1 / -1;padding:var(--s-4,1rem);border:2px dashed var(--risco);border-radius:var(--r);
   color:var(--texto-2);text-align:center}
@@ -231,7 +247,7 @@ footer .legal a{color:var(--texto-2)}
 </style>
 </head>
 <body>
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol></defs></svg>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/></symbol><symbol id="i-terra" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 9.5c3 1.5 5 .5 7 1.5s1.5 3.5 3 4 3-1 4.5-.5"/></symbol><symbol id="i-prensa" viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M7 10v3h10v-3"/><path d="M4 16h16"/><path d="M8 20h8"/><path d="M12 16v4"/></symbol><symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><ellipse cx="6.5" cy="18" rx="2.5" ry="2"/><ellipse cx="16.5" cy="16" rx="2.5" ry="2"/></symbol><symbol id="i-regua" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(-8 12 12)"/><path d="M6.5 9v3M10.5 8.5v4M14.5 8v3M18.5 7.5v4"/></symbol><symbol id="i-letras" viewBox="0 0 24 24"><path d="M3 18 7.5 6l4.5 12M4.5 14h6"/><path d="M15 18V9h3a2.5 2.5 0 0 1 0 5h-3"/></symbol><symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17z"/></symbol><symbol id="i-comida" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol><symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-controle" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 10v4M4.5 12h4"/><circle cx="16" cy="11" r="1" fill="currentColor"/><circle cx="18.5" cy="13.5" r="1" fill="currentColor"/></symbol><symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.3 2"/></symbol><symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A6.5 6.5 0 0 1 11.5 13h1A6.5 6.5 0 0 1 19 19.5V21"/></symbol></defs></svg>
 
 <div class="wrap">
   <header>
@@ -243,10 +259,10 @@ footer .legal a{color:var(--texto-2)}
       <button id="chipPerfil" class="chip-perfil" onclick="ir('perfis')" aria-label="Trocar de aluno"></button>
     </div>
     <nav class="abas" role="tablist">
-      <button class="aba" data-vista="jogos"     onclick="ir('jogos')">Jogos</button>
-      <button class="aba" data-vista="historico" onclick="ir('historico')">Histórico</button>
-      <button class="aba" data-vista="conta"     onclick="ir('conta')">Conta</button>
-      <a class="aba criar" href="gerar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
+      <button class="aba" data-vista="jogos"     onclick="ir('jogos')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-controle"/></svg><span>Jogos</span></button>
+      <button class="aba" data-vista="historico" onclick="ir('historico')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-relogio"/></svg><span>Histórico</span></button>
+      <button class="aba" data-vista="conta"     onclick="ir('conta')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pessoa"/></svg><span>Conta</span></button>
+      <a class="aba criar" href="gerar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mais"/></svg><span>Criar jogo</span></a>
     </nav>
   </header>
 

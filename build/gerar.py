@@ -31,7 +31,8 @@ html = html.replace("/*%CORES%*/", cores.group(0))
 # Os desenhos são os mesmos dos jogos (`icons.py`): só os que a tela usa.
 sys.path.insert(0, os.path.join(RAIZ, "build"))
 from icons import _P
-USADOS = ["mais", "camera", "escrever", "livro", "xis", "check", "alerta", "relogio", "seta-baixo"]
+USADOS = ["mais", "camera", "escrever", "livro", "xis", "check", "alerta", "relogio", "seta-baixo",
+          "controle", "pessoa"]
 if "/*SPRITE*/" not in html:
     raise SystemExit("build/_gerar.html: falta a fenda /*SPRITE*/")
 html = html.replace("/*SPRITE*/", "".join(

@@ -63,6 +63,36 @@ a{color:var(--acao);text-underline-offset:.2em}
 .conta{margin-left:auto;display:flex;align-items:center;gap:.5rem;color:var(--texto-2);min-width:0}
 .conta .email{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14rem}
 @media (max-width:34rem){.conta .email{display:none}}
+.abas-site .ic{display:none}
+.link-meus{display:none;font-weight:800;text-decoration:none;white-space:nowrap}
+.link-meus[aria-current]{color:var(--texto)}
+/* No celular, as abas descem para o pé, como no índice; as barras de ação
+   desta tela (gerar, salvar) sobem para ficar logo acima delas. */
+@media (max-width:40rem){
+ :root{--nav:calc(3.9rem + env(safe-area-inset-bottom))}
+ .abas-site{position:fixed;left:0;right:0;bottom:0;z-index:6;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin:0;padding:.3rem .4rem calc(.3rem + env(safe-area-inset-bottom));background:var(--carta);border-top:1px solid var(--risco)}
+ .abas-site a{flex-direction:column;justify-content:center;gap:.15rem;min-height:3.25rem;padding:.2rem;border:0;
+  border-radius:12px;font-size:.75rem;line-height:1.1}
+ .abas-site .ic{display:block}
+ .abas-site svg{width:1.4rem;height:1.4rem}
+ .abas-site .atual,.abas-site .atual:hover{background:color-mix(in oklch,var(--texto) 10%,transparent);color:var(--texto)}
+ .abas-site .empurra{margin-left:0}
+ .abas-site span{white-space:nowrap}
+ #abaMeus{display:none}
+ .link-meus{display:inline}
+ /* body na frente: a regra de .pe vem depois no arquivo e venceria. */
+ body .pe{bottom:var(--nav);padding-bottom:.75rem}
+ /* Topo enxuto: a cota aparece na revisão; o nome não quebra. */
+ .marca{white-space:nowrap}
+ .cota{display:none}
+ /* Três botões no pé não cabem em 375px: Baixar fica só com o desenho. */
+ #baixar span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ #baixar{padding:0 .8rem}
+ .pe .empurra #salvar{flex:1}
+ .wrap{padding-bottom:calc(10rem + var(--nav))}
+ .barra{padding-bottom:.75rem}
+}
 .cota{font-variant-numeric:tabular-nums;white-space:nowrap;padding:.15rem .6rem;border-radius:999px;
  background:var(--carta-2);border:1px solid var(--risco)}
 
@@ -156,6 +186,17 @@ button{font:inherit;font-weight:800;cursor:pointer}
  border:0;background:none;color:var(--texto-2)}
 .abas [aria-selected=true]{background:var(--carta);color:var(--texto);box-shadow:var(--sombra)}
 
+/* Só onde há câmera de verdade na mão: dedo como ponteiro. No computador
+   fica a área de soltar, que lá é o gesto certo. */
+.camera{display:none;position:relative;width:100%;margin:0 0 .75rem}
+.camera input{position:absolute;inset:0;opacity:0;width:100%;height:100%;min-height:0;padding:0;cursor:pointer}
+@media (pointer:coarse){
+ .camera{display:flex}
+ .solta{padding:1.1rem 1rem}
+ .solta .icone{display:none}
+ #painelFotos .acoes{position:sticky;bottom:var(--nav,0px);background:var(--fundo);padding:.5rem 0;margin-top:.75rem}
+ #botaoLer{flex:1;min-height:3.25rem;font-size:1.0625rem}
+}
 .solta{position:relative;display:grid;justify-items:center;gap:.5rem;padding:2.25rem 1rem;text-align:center;
  border:2px dashed var(--risco-forte);border-radius:var(--r-g);background:var(--carta);cursor:pointer;
  transition:border-color .15s,background .15s}
@@ -354,7 +395,7 @@ form.carta{display:grid;gap:.75rem}
  padding:.75rem 1rem calc(.75rem + env(safe-area-inset-bottom))}
 .pe .dentro{max-width:48rem;margin:0 auto;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
 .pe .resumo-pe{font-size:.875rem;color:var(--texto-2);font-variant-numeric:tabular-nums}
-@media (max-width:34rem){.pe .resumo-pe{display:none}.pe .empurra{width:100%;justify-content:space-between}}
+@media (max-width:34rem){.pe .resumo-pe{display:none}.pe .resumo-pe.importa{display:block;width:100%}.pe .empurra{width:100%;justify-content:space-between}}
 .pe .empurra{margin-left:auto;display:flex;gap:.5rem}
 
 .cabeca-meus{display:flex;gap:1rem;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:1.25rem}
@@ -400,6 +441,8 @@ a.botao{text-decoration:none;font-weight:800}
 <header class="barra">
   <div class="linha-topo">
     <a class="marca" href="index.html">Jogos de Estudo</a>
+    <!-- No celular, Meus jogos sai da barra de baixo e fica aqui em cima. -->
+    <a class="link-meus" id="linkMeus" href="gerar.html#meus">Meus jogos</a>
     <div class="conta" id="conta" hidden>
       <span class="cota" id="cota" hidden></span>
       <span class="email" id="emailConta"></span>
@@ -408,10 +451,10 @@ a.botao{text-decoration:none;font-weight:800}
   </div>
   <!-- As mesmas abas do índice: daqui se volta a qualquer vista dele. -->
   <nav class="abas-site" aria-label="Seções">
-    <a href="index.html#jogos">Jogos</a>
-    <a href="index.html#historico">Histórico</a>
-    <a href="index.html#conta">Conta</a>
-    <a class="atual empurra" id="abaCriar" href="gerar.html#material" aria-current="page"><svg aria-hidden="true"><use href="#i-mais"/></svg>Criar jogo</a>
+    <a href="index.html#jogos"><svg class="ic" aria-hidden="true"><use href="#i-controle"/></svg><span>Jogos</span></a>
+    <a href="index.html#historico"><svg class="ic" aria-hidden="true"><use href="#i-relogio"/></svg><span>Histórico</span></a>
+    <a href="index.html#conta"><svg class="ic" aria-hidden="true"><use href="#i-pessoa"/></svg><span>Conta</span></a>
+    <a class="atual empurra" id="abaCriar" href="gerar.html#material" aria-current="page"><svg aria-hidden="true"><use href="#i-mais"/></svg><span>Criar jogo</span></a>
     <a id="abaMeus" href="gerar.html#meus">Meus jogos</a>
   </nav>
 </header>
@@ -465,6 +508,12 @@ a.botao{text-decoration:none;font-weight:800}
   </div>
 
   <div id="painelFotos" role="tabpanel" aria-labelledby="abaFotos">
+    <!-- No celular, o gesto real é fotografar o livro aberto: a câmera
+         traseira abre direto, uma página por vez. -->
+    <label class="botao primario grande camera" id="camera">
+      <svg aria-hidden="true"><use href="#i-camera"/></svg><span id="cameraRotulo">Fotografar página</span>
+      <input id="fotografar" type="file" accept="image/*" capture="environment">
+    </label>
     <label class="solta" id="solta">
       <span class="icone"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
       <strong id="soltaTitulo">Escolha fotos ou um PDF</strong>
@@ -552,7 +601,7 @@ a.botao{text-decoration:none;font-weight:800}
 <!-- 3. revisar -->
 <section id="revisao" data-e="3" hidden>
   <h1 tabindex="-1">Revise as questões</h1>
-  <p class="lead" id="leadRevisar">Já dá para jogar: o que não tem problema grave vai para o jogo. Revise antes, se quiser; depois também dá, em Meus jogos.</p>
+  <p class="lead" id="leadRevisar">Já dá para jogar: o que passou sem aviso vai para o jogo. O que tem aviso espera você olhar; o resto, revise se quiser.</p>
   <div class="painel" id="resumo"></div>
   <div class="filtros" id="filtros" role="group" aria-label="Mostrar"></div>
   <div id="lista"></div>
@@ -738,6 +787,7 @@ function irPara(n, focar = true){
   $("etapas").hidden = n === 4;
   $("abaMeus").classList.toggle("atual", n === 4);
   $("abaCriar").classList.toggle("atual", n !== 4);
+  $("linkMeus").toggleAttribute("aria-current", n === 4);
   n === 4 ? $("abaMeus").setAttribute("aria-current", "page") : $("abaMeus").removeAttribute("aria-current");
   n !== 4 ? $("abaCriar").setAttribute("aria-current", "page") : $("abaCriar").removeAttribute("aria-current");
   pintarFaixas();
@@ -772,8 +822,11 @@ function adicionar(lista){
     recado("Ficaram os " + ARQUIVOS_MAX + " primeiros: o limite é " + ARQUIVOS_MAX + " páginas por leitura.", true);
   }else if(fora) recado(plural(fora, "arquivo não é foto nem PDF", "arquivos não são foto nem PDF") + " e ficou de fora.", true);
   else recado("");
-  $("arquivos").value = "";
+  $("arquivos").value = ""; $("fotografar").value = "";
   pintarEscolhidos();
+  // A última foto à vista, com o botão de ler logo abaixo dela.
+  const ultima = $("miniaturas").lastElementChild;
+  if(ultima && ultima.scrollIntoView) ultima.scrollIntoView({block: "nearest", behavior: "smooth"});
 }
 
 function tirar(i){
@@ -785,7 +838,11 @@ function tirar(i){
 function pintarEscolhidos(){
   const n = escolhidos.length;
   $("solta").classList.toggle("cheia", n > 0);
-  $("soltaTitulo").textContent = n ? "Adicionar mais" : "Escolha fotos ou um PDF";
+  const toque = window.matchMedia && matchMedia("(pointer:coarse)").matches;
+  $("soltaTitulo").textContent = n ? "Adicionar mais" : toque ? "Ou escolha da galeria, ou um PDF" : "Escolha fotos ou um PDF";
+  $("cameraRotulo").textContent = n ? "Mais uma página" : "Fotografar página";
+  $("camera").classList.toggle("primario", !n);
+  $("camera").classList.toggle("secundario", !!n);
   $("miniaturas").replaceChildren(...escolhidos.map((x, i) => el("li", {class: lendo ? "lendo" : ""},
     el("div", {class: "quadro"}, x.url ? el("img", {src: x.url, alt: ""}) : icone("livro"),
       el("button", {class: "tirar", type: "button", "aria-label": "Tirar " + x.f.name,
@@ -793,7 +850,7 @@ function pintarEscolhidos(){
     el("span", {class: "nome", title: x.f.name}, x.f.name))));
   $("botaoLer").disabled = !n || lendo;
   $("botaoLer").classList.toggle("ocupado", lendo);
-  $("botaoLer").textContent = n ? "Ler " + plural(n, "arquivo", "arquivos") : "Ler as páginas";
+  $("botaoLer").textContent = n ? "Pronto, ler " + plural(n, "página", "páginas") : "Ler as páginas";
 }
 
 const base64 = blob => new Promise((ok, falha) => {
@@ -1309,9 +1366,12 @@ const comAviso = q => (q.problemas || []).length > 0;
 const vivas = () => estado.questoes.filter(q => q.estado !== "descartada");
 const aprovadas = () => estado.questoes.filter(q => q.estado === "aprovada");
 const limpasPendentes = () => estado.questoes.filter(q => q.estado === "pendente" && !comAviso(q));
-/* O que vai para o jogo num toque: o aprovado e o pendente sem problema
-   grave. Descartada e grave ficam de fora. Revisar é opcional. */
-const prontas = () => estado.questoes.filter(q => q.estado === "aprovada" || (q.estado === "pendente" && !grave(q)));
+/* O que vai para o jogo num toque: o aprovado e o pendente SEM AVISO. O
+   aviso mais comum é a certa se entregar pelo tamanho, e jogo gerado não
+   passa pelo medidor do build (PRODUCT.md, "A questão precisa ser
+   honesta"): com aviso, espera alguém olhar. Revisar o resto é opcional. */
+const prontas = () => estado.questoes.filter(q => q.estado === "aprovada" || (q.estado === "pendente" && !comAviso(q)));
+const comAvisoPendentes = () => estado.questoes.filter(q => q.estado === "pendente" && comAviso(q));
 
 const REGRAS = [["sempreAMaior", "Quem escolhe sempre a maior"],
                 ["sempreAMenor", "Quem escolhe sempre a menor"],
@@ -1569,8 +1629,12 @@ function pintar(){
   $("salvar").querySelector("span").textContent = !vao ? "Nada para jogar ainda"
     : soltas ? "Pronto, jogar (" + vao + ")"
     : (estado.jogoId ? "Atualizar e jogar" : "Salvar e jogar") + " (" + n + ")";
-  $("salvar").title = soltas ? "Aprova as " + soltas + " pendentes sem problema grave e salva" : "";
-  $("resumoPe").textContent = pend ? plural(pend, "questão pendente", "questões pendentes") : "Tudo revisado.";
+  $("salvar").title = soltas ? "Aprova as " + soltas + " pendentes sem aviso e salva" : "";
+  const esperam = comAvisoPendentes().length;
+  $("resumoPe").textContent = esperam ? plural(esperam, "questão com aviso fica", "questões com aviso ficam") + " fora até você olhar."
+    : pend ? plural(pend, "questão pendente", "questões pendentes") : "Tudo revisado.";
+  // No celular o pé esconde o resumo; este aviso aparece mesmo assim.
+  $("resumoPe").classList.toggle("importa", !!esperam);
   // Salvo, o jogo está na conta: descartar não faz sentido, começar outro faz.
   $("recomecar").hidden = !!estado.jogoId;
   $("outroJogo").hidden = !estado.jogoId;
@@ -1690,7 +1754,7 @@ async function gravarJogo(linha, id){
 function abrirJogo(id){ location.href = "jogar.html?id=" + encodeURIComponent(id); }
 
 async function salvarJogo(){
-  // Jogar já: o pendente sem problema grave entra aprovado.
+  // Jogar já: o pendente sem aviso entra aprovado.
   prontas().forEach(q => { q.estado = "aprovada"; });
   guardar();
   const c = montarConteudo();
@@ -2080,6 +2144,7 @@ function ligar(){
   $("abaFotos").addEventListener("click", () => aba("fotos"));
   $("abaTexto").addEventListener("click", () => aba("texto"));
   $("arquivos").addEventListener("change", ev => adicionar(ev.target.files));
+  $("fotografar").addEventListener("change", ev => adicionar(ev.target.files));
   document.querySelectorAll("#etapas button").forEach(b =>
     b.addEventListener("click", () => irPara(Number(b.dataset.etapa))));
   const solta = $("solta");
