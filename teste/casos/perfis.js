@@ -66,6 +66,7 @@ if (location.hash !== "#jogos" || document.getElementById("v-jogos").hidden)
 localStorage.setItem("jogos_criados_v1", JSON.stringify([{id: "abc-1", titulo: "Mundo <i>x</i>", materia: "Ciências",
                                                          criado: "2026-10-27T10:00:00Z", cor: "laranja"},
   {id: "abc-2", titulo: "Sem cor", materia: "História", criado: "2026-10-27T10:00:00Z", cor: "x;}body{display:none"}]));
+contaSemSessao = false;
 pintarMeusJogos();
 const cartoes = [...document.querySelectorAll("#gradeMeus li")];
 if (!cartoes.every(li => li.style.getPropertyValue("--cor-jogo") === CORES_JOGO.laranja.valor))
@@ -73,6 +74,12 @@ if (!cartoes.every(li => li.style.getPropertyValue("--cor-jogo") === CORES_JOGO.
 if (document.getElementById("meusJogos").hidden) falhas.push("os jogos criados não aparecem no índice");
 if (!document.querySelector('#gradeMeus a[href="jogar.html?id=abc-1"]')) falhas.push("o cartão não leva ao jogo criado");
 if (document.querySelector("#gradeMeus i")) falhas.push("título do jogo criado virou HTML");
+// Conferido que não há sessão, os jogos guardados não aparecem como se estivesse dentro.
+contaSemSessao = true;
+pintarMeusJogos();
+if (document.querySelector('#gradeMeus a[href^="jogar.html"]') || !/Entre na conta/.test(document.getElementById("gradeMeus").innerText))
+  falhas.push("sem sessão, Meus jogos continua mostrando os jogos como se estivesse dentro");
+contaSemSessao = false;
 localStorage.removeItem("jogos_criados_v1");
 
 // Do índice se chega à tela de criar jogo, pela mesma fila de abas.

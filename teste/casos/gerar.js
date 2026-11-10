@@ -468,4 +468,21 @@ await espere(() => links.length === 2);
 if (links[1].link !== null) falhas.push("desligar não apagou o link");
 await espere(() => botaoDe("Compartilhar"));
 
+/* 17. a sessão: sair é só deste aparelho; sem sessão, diz que expirou e traz o e-mail */
+{
+  let escopo = null;
+  _sb = {auth: {signOut: async o => { escopo = o; }}};
+  localStorage.setItem("jogos_ultima_conta", "pai@exemplo.com");
+  await sair();
+  if (!escopo || escopo.scope !== "local") falhas.push("sair derruba a sessão de todos os aparelhos: " + JSON.stringify(escopo));
+  if (localStorage.getItem("jogos_ultima_conta")) falhas.push("sair não esqueceu a última conta");
+  if (/expirou/.test($("recado").innerText)) falhas.push("quem saiu de propósito ouviu que a sessão expirou");
+  localStorage.setItem("jogos_ultima_conta", "pai@exemplo.com");
+  $("email").value = "";
+  await mostrarConta(null);
+  if ($("entrar").hidden) falhas.push("sem sessão, o login não aparece");
+  if (!/expirou/.test($("recado").innerText)) falhas.push("sessão que caiu não é explicada: " + $("recado").innerText);
+  if ($("email").value !== "pai@exemplo.com") falhas.push("o login não traz o e-mail de quem estava dentro");
+}
+
 fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir, link", detalhes: falhas});

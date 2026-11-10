@@ -316,11 +316,20 @@ function pintarHistorico(){
 /* A lista fica guardada no aparelho: sem internet, os cartões continuam
    aparecendo, e o jogo abre se já foi aberto uma vez (ver jogar.html). */
 const CRIADOS = "jogos_criados_v1";
+/* Conferido com a conta que não há sessão: os jogos guardados no aparelho
+   não aparecem como se ainda estivesse dentro. Antes de conferir (e sem
+   rede), eles aparecem: é o que deixa abrir sem esperar. */
+let contaSemSessao = false;
 
 function pintarMeusJogos(){
   const l = ler(CRIADOS) || [];
   const s = document.getElementById("meusJogos");
   s.hidden = !l.length;
+  if(contaSemSessao && l.length){
+    document.getElementById("gradeMeus").innerHTML = '<li class="fora-da-conta">Entre na conta para ver os jogos '
+      + 'que você criou. <a href="#conta">Entrar</a></li>';
+    return;
+  }
   document.getElementById("gradeMeus").innerHTML = l.map(j =>
     // A cor sai da tabela pela chave: o que vem do banco nunca entra no CSS.
     '<li class="gerado" style="--cor-jogo:' + CORES_JOGO[corDoJogo(j)].valor + '">'
@@ -337,6 +346,8 @@ async function buscarMeusJogos(){
   try{
     const sb = await _cliente();
     const {data: s} = await sb.auth.getSession();
+    contaSemSessao = !s.session;
+    pintarMeusJogos();
     if(!s.session) return;
     const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado,cor:conteudo->>cor")
       .order("criado", {ascending: false});

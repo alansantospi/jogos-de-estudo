@@ -200,8 +200,30 @@ async function entrarGoogle(){
   const sb = await _cliente();
   await sb.auth.signInWithOAuth({provider: "google", options: {redirectTo: location.href}});
 }
+/* Sai só deste aparelho. O padrão do supabase-js é "global": derrubava a
+   sessão do celular e do tablet junto, que continuavam parecendo dentro
+   por até uma hora e depois caíam sem explicação. */
+const ULTIMA_CONTA = "jogos_ultima_conta";
 async function sairConta(){
-  const sb = await _cliente(); await sb.auth.signOut(); _sessao = null; desenhar();
+  const sb = await _cliente(); await sb.auth.signOut({scope: "local"}); _sessao = null;
+  try{ localStorage.removeItem(ULTIMA_CONTA); }catch(e){}
+  desenhar(); buscarMeusJogos();
+}
+
+/* A sessão muda fora desta página: entrou em outra aba, expirou, saiu em
+   outra aba. A tela confere de novo em vez de mostrar o que viu ao abrir.
+   Só redesenha quando quem está dentro mudou, para não apagar o que se
+   está digitando no formulário. */
+function _quem(s){ return s && s.user ? s.user.id : null; }
+function _novaSessao(s){
+  if(s && s.user) try{ localStorage.setItem(ULTIMA_CONTA, s.user.email || ""); }catch(e){}
+  if(_quem(s) === _quem(_sessao)){ _sessao = s || null; return; }
+  _sessao = s || null;
+  desenhar();
+  buscarMeusJogos();
+}
+async function _conferirSessao(){
+  try{ const r = await (await _cliente()).auth.getSession(); _novaSessao(r.data.session); }catch(e){}
 }
 
 async function sincronizar(){
@@ -392,4 +414,8 @@ async function _retomarSessao(){
       + "Entre abaixo com o mesmo e-mail e senha.");
   }
 }
-_retomarSessao().catch(() => {});
+_retomarSessao().catch(() => {}).finally(async () => {
+  if(!contaLigada()) return;
+  try{ (await _cliente()).auth.onAuthStateChange((evento, s) => _novaSessao(s)); }catch(e){}
+  document.addEventListener("visibilitychange", () => { if(!document.hidden) _conferirSessao(); });
+});

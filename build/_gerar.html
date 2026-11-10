@@ -1884,11 +1884,35 @@ function recomecar(){
 
 /* ---------- começo ---------- */
 
+/* Quem entrou por último neste aparelho: sem sessão, a tela diz que ela
+   expirou e já traz o e-mail, em vez de um login mudo. */
+const ULTIMA_CONTA = "jogos_ultima_conta";
 async function mostrarConta(sessao){
   $("entrar").hidden = !!sessao;
   $("app").hidden = !sessao;
   $("conta").hidden = !sessao;
-  if(sessao) $("emailConta").textContent = sessao.user.email || "";
+  if(sessao){
+    $("emailConta").textContent = sessao.user.email || "";
+    try{ localStorage.setItem(ULTIMA_CONTA, sessao.user.email || ""); }catch(e){}
+    return;
+  }
+  let ultima = "";
+  try{ ultima = localStorage.getItem(ULTIMA_CONTA) || ""; }catch(e){}
+  if(ultima){
+    if(!$("email").value) $("email").value = ultima;
+    recado("Sua sessão expirou. Entre de novo para continuar: o que estava em andamento ficou guardado.", true);
+  }
+}
+
+/* A sessão muda fora desta página (expirou, saiu ou entrou em outra aba):
+   a tela acompanha em vez de descobrir só na hora de gerar. */
+const dentro = () => !$("app").hidden;
+function vigiarSessao(sb){
+  sb.auth.onAuthStateChange((evento, s) => { if(!!s !== dentro()) mostrarConta(s); });
+  document.addEventListener("visibilitychange", async () => {
+    if(document.hidden) return;
+    try{ const {data} = await sb.auth.getSession(); if(!!data.session !== dentro()) mostrarConta(data.session); }catch(e){}
+  });
 }
 
 async function entrar(ev){
@@ -1909,7 +1933,9 @@ async function entrar(ev){
 }
 
 async function sair(){
-  try{ await (await cliente()).auth.signOut(); }catch(e){}
+  // Só deste aparelho: o padrão "global" derrubava os outros também.
+  try{ await (await cliente()).auth.signOut({scope: "local"}); }catch(e){}
+  try{ localStorage.removeItem(ULTIMA_CONTA); }catch(e){}
   mostrarConta(null);
 }
 
@@ -1981,8 +2007,10 @@ async function iniciar(){
   if(estado){ cota(estado.restantes); pintar(); }
   irPara(daUrl() || melhor(), false);
   try{
-    const {data} = await (await cliente()).auth.getSession();
+    const sb = await cliente();
+    const {data} = await sb.auth.getSession();
     mostrarConta(data.session);
+    vigiarSessao(sb);
   }catch(e){
     mostrarConta(null);
     recado("Não consegui falar com a conta. Verifique a internet.", true);
