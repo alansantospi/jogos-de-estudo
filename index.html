@@ -83,7 +83,10 @@ li.gramatica a{--cor:var(--gramatica)}
 li.geografia a{--cor:var(--geografia)}
 li.restaurante a{--cor:var(--restaurante)}
 li.microscopico a{--cor:var(--microscopico)}
-li.gerado a{--cor:var(--ingles)}
+li.gerado a{--cor:var(--cor-jogo,var(--ingles))}
+/* No escuro as matérias clareiam para servir de texto; a do jogo criado
+   clareia do mesmo jeito que o motor faz com ela (ceu.molde.html). */
+@media (prefers-color-scheme:dark){li.gerado a{--cor:color-mix(in oklch,var(--cor-jogo,var(--ingles)) 68%,white)}}
 footer{margin-top:var(--s-6);padding:var(--s-4) var(--s-5);background:var(--carta);
   border:2px solid var(--risco);border-radius:var(--r-g);
   color:var(--texto-2);font-size:0.9375rem;max-width:56ch}
@@ -355,7 +358,50 @@ footer .legal a{color:var(--texto-2)}
   </section>
 </div>
 <script>const MISSOES = {"cien": {"all": "Desafio misto", "review": "Revisão dos meus erros", "earth": "Movimento da Terra", "sun": "Sol e orientação", "orientation": "Orientação espacial", "stars": "Observando as estrelas", "instruments": "Instrumentos de orientação", "hemispheres": "Hemisférios e Equador", "moon": "Fases da Lua", "calendars": "Calendários e ano bissexto"}, "hist": {"all": "Desafio misto", "review": "Revisão dos meus erros", "imprensa": "A chegada da imprensa", "jornais": "Jornais e fontes históricas", "distancia": "Correio, telégrafo e telefone", "imagem": "Fotografia, cinema e TV", "digital": "Internet e mundo digital", "inclusao": "Braille e Libras"}, "arte": {"all": "Desafio misto", "review": "Revisão dos meus erros", "melodia": "Melodia, ritmo e timbre", "harmonia": "Harmonia e arranjo", "pintura": "Pintura mural e afresco", "michelangelo": "Michelangelo e a Capela Sistina"}, "ing": {"review": "Sala de Reparos", "all": "Portal Completo", "vocabulary": "Arquivo de Vocabulário", "ing_add": "Portal +ING", "ing_drop_e": "Portal do E Perdido", "ing_double": "Portal da Consoante Dupla", "be": "Núcleo AM / IS / ARE", "affirmative": "Linha das Frases Afirmativas", "negative_questions": "Zona de Negativas e Perguntas", "contractions": "Central das Contrações", "clock_routine": "Estação do Relógio", "time_numbers": "Relógio do Tempo", "world": "Volta ao Mundo e ao Espaço", "listening": "Sala de Escuta", "ticket": "Terminal Temporal", "movement": "Rota do Movimento", "daily_actions": "Rotina Temporal", "results_actions": "Arquivo de Ações Especiais"}, "mat": {"retas": "Retas e segmentos", "angulos": "Ângulos", "posicao": "Paralelas e concorrentes", "poligonos": "Polígonos", "triangulos": "Triângulos", "quadrilateros": "Quadriláteros", "simetria": "Simetria", "solidos": "Sólidos geométricos", "planificacoes": "Planificações e sólidos do dia a dia", "malha": "Trajetos na malha", "all": "Desafio misto", "review": "Revisão dos meus erros"}, "gram": {"all": "Desafio misto", "review": "Revisão dos meus erros", "pessoais": "Pronomes pessoais", "tratamento": "Pronomes de tratamento", "possessivos": "Pronomes possessivos", "demonstrativos": "Pronomes demonstrativos", "indefinidos": "Pronomes indefinidos", "interrogativos": "Pronomes interrogativos", "verbo": "O que é verbo", "modos": "Modos verbais", "tempos": "Tempos verbais", "conjugacao": "As três conjugações", "nominais": "Formas nominais", "preposicao": "O que é preposição", "relacoes": "Relações de sentido", "contracao": "Contração e combinação"}, "geo": {"all": "Desafio misto", "review": "Revisão dos meus erros", "atividades": "Atividades econômicas", "primario": "Setor primário", "secundario": "Setor secundário", "terciario": "Setor terciário", "agricultura": "Agricultura", "pecuaria": "Pecuária", "extrativismo": "Extrativismo", "agroindustria": "Agroindústria", "industrias": "Indústrias e construção", "caminho": "O caminho do produto"}, "rest": {"all": "Desafio misto", "review": "Revisão dos meus erros", "comidas": "Comidas", "bebidas": "Bebidas", "sobremesas": "Sobremesas", "artigos": "A ou AN", "preco": "How much is / are?", "numeros": "Números e preços", "pedido": "No restaurante", "cardapio": "O cardápio do Rubi's", "historia": "A história do hambúrguer"}, "micro": {"all": "Desafio misto", "review": "Revisão dos meus erros", "celula": "A célula", "unimulti": "Uni ou multicelular", "microscopio": "O microscópio", "fungos": "Fungos", "protozoarios": "Protozoários", "algas": "Algas e fitoplâncton", "bacterias": "Bactérias", "virus": "Vírus", "natureza": "Microrganismos na natureza", "saude": "Vilões e aliados"}};</script>
-<script>/* ---------- perfis ---------- */
+<script>/*CORES>*/
+/* As cores de jogo: as dos jogos feitos à mão, mais turquesa. Nenhum verde
+   nem vermelho, que no jogo querem dizer certo e errado. `conteudo.cor`
+   guarda a CHAVE, nunca o valor: o jogo é montado com texto que vem do
+   banco, e o CSS só aceita o que está nesta tabela. Este bloco vai
+   recortado para `gerar.html` e `index.html` (gerar.py, inicio.py). */
+const CORES_JOGO = {
+  anil:     {nome: "Anil",     valor: "oklch(0.55 0.20 265)"},
+  violeta:  {nome: "Violeta",  valor: "oklch(0.40 0.19 285)"},
+  roxo:     {nome: "Roxo",     valor: "oklch(0.52 0.22 298)"},
+  rosa:     {nome: "Rosa",     valor: "oklch(0.56 0.22 330)"},
+  laranja:  {nome: "Laranja",  valor: "oklch(0.60 0.18 40)"},
+  ocre:     {nome: "Ocre",     valor: "oklch(0.55 0.11 82)"},
+  turquesa: {nome: "Turquesa", valor: "oklch(0.525 0.15 195)"},
+  azul:     {nome: "Azul",     valor: "oklch(0.46 0.12 245)"},
+};
+const COR_PADRAO = "anil";
+/* Matéria, ou o nome do jogo quando ela não diz nada, para cor. Sem acento
+   e sem caixa, por pedaço de palavra: "Ciências (Mundo microscópico)" e
+   "ciencias" dão a mesma. A ordem conta: a primeira que casar vence. */
+const CORES_POR_ASSUNTO = [
+  [/cienc|biolog|celula|seres vivos|corpo humano|ecossist/, "violeta"],
+  [/geograf|relevo|clima|cartograf/, "azul"],
+  [/histor/, "laranja"],
+  [/matemat|geometr|fraca?o|decima|aritmet|numero|tabuada/, "roxo"],
+  [/portugu|gramat|redac|literat|ortograf|verbo|pronome/, "ocre"],
+  [/ingles|english|espanhol|frances|idioma/, "anil"],
+  [/\bartes?\b|music|danca|teatro|pintura/, "rosa"],
+  [/fisic|quimic|astronom|planeta|sistema solar/, "turquesa"],
+];
+const mjSemAcento = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+function corSugerida(materia, titulo){
+  for(const t of [materia, titulo]){
+    const s = mjSemAcento(t);
+    const achou = s.trim() && CORES_POR_ASSUNTO.find(([re]) => re.test(s));
+    if(achou) return achou[1];
+  }
+  return COR_PADRAO;
+}
+/* A cor guardada, se for uma da tabela; senão, a da matéria. */
+const corDoJogo = jogo => jogo && Object.hasOwn(CORES_JOGO, jogo.cor) ? jogo.cor
+  : corSugerida(jogo && jogo.materia, jogo && jogo.titulo);
+/*<CORES*/
+/* ---------- perfis ---------- */
 const PERFIS_CHAVE = "jogos_perfis_v1";
 const PERFIL_ATUAL = "jogos_perfil_atual";
 const HIST_CHAVE = "jogos_historico_v1";
@@ -386,6 +432,9 @@ function perfilAtual(){
   return l.find(p => p.id === id) || l[0];
 }
 function trocarPerfil(id){ try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){} desenhar(); }
+/* Tocar no aluno é escolher quem vai jogar: troca e já leva aos jogos, em
+   vez de ficar parado na lista sem sinal de que algo mudou. */
+function escolherPerfil(id){ trocarPerfil(id); ir("jogos"); }
 function inicialDe(n){ return (n || "?").trim().charAt(0).toUpperCase(); }
 function criarPerfil(nome){
   const l = lerPerfis();
@@ -508,7 +557,8 @@ function pintarPerfis(){
   const l = lerPerfis();
   c.innerHTML = l.map(p =>
     '<div class="perfil' + (atual && atual.id === p.id ? " atual" : "") + '">'
-    + '<button class="avatar" style="background:var(' + p.cor + ')" onclick="trocarPerfil(\'' + p.id + '\')">'
+    + '<button class="avatar" style="background:var(' + p.cor + ')" onclick="escolherPerfil(\'' + p.id + '\')"'
+    + ' aria-label="Jogar como ' + esc(p.nome) + '">'
     + inicialDe(p.nome) + "</button>"
     + '<button class="perfil-nome" onclick="renomearPerfil(\'' + p.id + '\')"'
     + ' aria-label="Renomear ' + esc(p.nome) + '">' + esc(p.nome) + "</button>"
@@ -675,7 +725,9 @@ function pintarMeusJogos(){
   const s = document.getElementById("meusJogos");
   s.hidden = !l.length;
   document.getElementById("gradeMeus").innerHTML = l.map(j =>
-    '<li class="gerado"><a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
+    // A cor sai da tabela pela chave: o que vem do banco nunca entra no CSS.
+    '<li class="gerado" style="--cor-jogo:' + CORES_JOGO[corDoJogo(j)].valor + '">'
+    + '<a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
     + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
     + '<span class="materia">' + esc(j.materia) + '</span>'
     + '<span><span class="nome">' + esc(j.titulo) + '</span>'
@@ -689,7 +741,7 @@ async function buscarMeusJogos(){
     const sb = await _cliente();
     const {data: s} = await sb.auth.getSession();
     if(!s.session) return;
-    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado")
+    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado,cor:conteudo->>cor")
       .order("criado", {ascending: false});
     if(error) return;
     gravar(CRIADOS, data);

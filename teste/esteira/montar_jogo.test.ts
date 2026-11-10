@@ -129,3 +129,16 @@ test("o jogo com lição ganha os botões de estudar; sem lição, não", () => 
   const sem: string = vm.runInContext("montarJogo(args.molde, args.jogo, 'abc-123', args.pecas)", ctx);
   assert.doesNotMatch(sem, /Estudar passo a passo/);
 });
+
+/* A cor: a chave guardada chega ao jogo; o que não está na tabela não chega,
+   porque o valor vai direto para o CSS do motor. Sem cor, segue a matéria. */
+test("a cor do jogo sai da tabela, pela chave", () => {
+  const cor = (j: object) => { ctx.j = j; return vm.runInContext("CORES_JOGO[corDoJogo(j)].valor", ctx); };
+  const tabela = vm.runInContext("CORES_JOGO", ctx);
+  assert.equal(cor({ cor: "laranja", materia: "Ciências" }), tabela.laranja.valor);
+  assert.equal(cor({ cor: "red;}body{display:none", materia: "História" }), tabela.laranja.valor);
+  assert.equal(cor({ cor: "constructor", materia: "" }), tabela.anil.valor);
+  assert.equal(cor({ materia: "Ciências (Mundo microscópico)" }), cor({ materia: "ciencias" }));
+  assert.equal(cor({ materia: "", titulo: "Frações e decimais" }), tabela.roxo.valor);
+  assert.equal(cor({ materia: "Estudo", titulo: "Partes da planta" }), tabela.anil.valor, "'partes' não é arte");
+});

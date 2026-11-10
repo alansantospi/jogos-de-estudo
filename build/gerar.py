@@ -19,6 +19,15 @@ if "/*%CONTA%*/" not in html:
     raise SystemExit("build/_gerar.html: falta a fenda /*%CONTA%*/")
 html = html.replace("/*%CONTA%*/", m.group(0))
 
+# As cores de jogo moram em `_montar_jogo.js`, que monta o jogo com elas.
+montar = io.open(os.path.join(RAIZ, "build", "_montar_jogo.js"), encoding="utf-8").read()
+cores = re.search(r"/\*CORES>\*/.*?/\*<CORES\*/", montar, re.S)
+if not cores:
+    raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
+if "/*%CORES%*/" not in html:
+    raise SystemExit("build/_gerar.html: falta a fenda /*%CORES%*/")
+html = html.replace("/*%CORES%*/", cores.group(0))
+
 # Os desenhos são os mesmos dos jogos (`icons.py`): só os que a tela usa.
 sys.path.insert(0, os.path.join(RAIZ, "build"))
 from icons import _P

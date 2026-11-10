@@ -29,6 +29,9 @@ function perfilAtual(){
   return l.find(p => p.id === id) || l[0];
 }
 function trocarPerfil(id){ try{ localStorage.setItem(PERFIL_ATUAL, id); }catch(e){} desenhar(); }
+/* Tocar no aluno é escolher quem vai jogar: troca e já leva aos jogos, em
+   vez de ficar parado na lista sem sinal de que algo mudou. */
+function escolherPerfil(id){ trocarPerfil(id); ir("jogos"); }
 function inicialDe(n){ return (n || "?").trim().charAt(0).toUpperCase(); }
 function criarPerfil(nome){
   const l = lerPerfis();
@@ -151,7 +154,8 @@ function pintarPerfis(){
   const l = lerPerfis();
   c.innerHTML = l.map(p =>
     '<div class="perfil' + (atual && atual.id === p.id ? " atual" : "") + '">'
-    + '<button class="avatar" style="background:var(' + p.cor + ')" onclick="trocarPerfil(\'' + p.id + '\')">'
+    + '<button class="avatar" style="background:var(' + p.cor + ')" onclick="escolherPerfil(\'' + p.id + '\')"'
+    + ' aria-label="Jogar como ' + esc(p.nome) + '">'
     + inicialDe(p.nome) + "</button>"
     + '<button class="perfil-nome" onclick="renomearPerfil(\'' + p.id + '\')"'
     + ' aria-label="Renomear ' + esc(p.nome) + '">' + esc(p.nome) + "</button>"
@@ -318,7 +322,9 @@ function pintarMeusJogos(){
   const s = document.getElementById("meusJogos");
   s.hidden = !l.length;
   document.getElementById("gradeMeus").innerHTML = l.map(j =>
-    '<li class="gerado"><a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
+    // A cor sai da tabela pela chave: o que vem do banco nunca entra no CSS.
+    '<li class="gerado" style="--cor-jogo:' + CORES_JOGO[corDoJogo(j)].valor + '">'
+    + '<a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
     + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
     + '<span class="materia">' + esc(j.materia) + '</span>'
     + '<span><span class="nome">' + esc(j.titulo) + '</span>'
@@ -332,7 +338,7 @@ async function buscarMeusJogos(){
     const sb = await _cliente();
     const {data: s} = await sb.auth.getSession();
     if(!s.session) return;
-    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado")
+    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado,cor:conteudo->>cor")
       .order("criado", {ascending: false});
     if(error) return;
     gravar(CRIADOS, data);

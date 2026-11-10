@@ -210,3 +210,16 @@ dela reabre sem material, e então a edição não é reconferida.
 | "Faltou tempo para regerar" | a primeira rodada demorou e a função tem teto de 150 s no plano grátis; as questões vêm, sem a troca das reprovadas |
 
 Uma geração que falha sem ter gastado nada não consome a vez.
+
+## A cor do jogo
+
+A capa da etapa Jogo já aparece na cor que o jogo vai ter. Em branco, a
+cor segue a matéria (ou o nome, quando a matéria não diz nada); escolhida,
+fica. O conteúdo salvo leva a **chave** da cor (`"cor": "laranja"`), e o
+valor sai sempre da tabela `CORES_JOGO` de `build/_montar_jogo.js` — o
+build a recorta para `gerar.html` e `index.html`. Jogo salvo antes disso,
+sem `cor`, sai na cor da matéria.
+
+Texto colado também sugere o nome na hora: a primeira linha, quando tem
+cara de título. Depois de salvar, os campos da criação esvaziam (o ano
+fica), e o jogo salvo segue aberto para "Atualizar e jogar".

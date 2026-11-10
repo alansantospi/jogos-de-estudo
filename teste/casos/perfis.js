@@ -51,10 +51,25 @@ if (!lerPerfis().some(p => p.nome === "Anne")) falhas.push("o perfil não voltou
 if (localStorage.getItem(BASE + ":" + a.id) === null) falhas.push("o progresso não voltou");
 window.prompt = promptReal; window.alert = alertReal;
 
+/* 5. tocar no avatar troca o aluno e leva aos jogos */
+ir("perfis");
+const outro = lerPerfis().find(p => p.id !== perfilAtual().id);
+const avatar = document.querySelector('#listaPerfis .avatar[onclick*="' + (outro || {}).id + '"]');
+if (!avatar) falhas.push("sem avatar do outro aluno: " + document.getElementById("listaPerfis").innerHTML.slice(0, 200)
+                          + " / perfis: " + JSON.stringify(lerPerfis()));
+else avatar.click();
+if (perfilAtual().id !== outro.id) falhas.push("tocar no avatar não trocou o aluno");
+if (location.hash !== "#jogos" || document.getElementById("v-jogos").hidden)
+  falhas.push("trocar de aluno ficou parado na tela de perfis: " + location.hash);
+
 // Os jogos criados na conta aparecem no índice, mesmo sem rede.
 localStorage.setItem("jogos_criados_v1", JSON.stringify([{id: "abc-1", titulo: "Mundo <i>x</i>", materia: "Ciências",
-                                                         criado: "2026-10-27T10:00:00Z"}]));
+                                                         criado: "2026-10-27T10:00:00Z", cor: "laranja"},
+  {id: "abc-2", titulo: "Sem cor", materia: "História", criado: "2026-10-27T10:00:00Z", cor: "x;}body{display:none"}]));
 pintarMeusJogos();
+const cartoes = [...document.querySelectorAll("#gradeMeus li")];
+if (!cartoes.every(li => li.style.getPropertyValue("--cor-jogo") === CORES_JOGO.laranja.valor))
+  falhas.push("o card do jogo criado não está na cor do jogo: " + cartoes.map(li => li.getAttribute("style")).join(" | "));
 if (document.getElementById("meusJogos").hidden) falhas.push("os jogos criados não aparecem no índice");
 if (!document.querySelector('#gradeMeus a[href="jogar.html?id=abc-1"]')) falhas.push("o cartão não leva ao jogo criado");
 if (document.querySelector("#gradeMeus i")) falhas.push("título do jogo criado virou HTML");

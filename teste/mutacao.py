@@ -35,6 +35,11 @@ MUTACOES = [
      'const guardado = {}; if(true){ Object.values(BASES).forEach(b => '
      'localStorage.removeItem(b + ":" + id)); gravar(PERFIS_CHAVE, '
      'lerPerfis().filter(x => x.id !== id)); desenhar(); return; }'),
+    ("index.html", "perfis", "trocar de aluno e ficar parado na lista",
+     'function escolherPerfil(id){ trocarPerfil(id); ir("jogos"); }',
+     'function escolherPerfil(id){ trocarPerfil(id); }'),
+    ("gerar.html", "gerar", "salvar sem limpar os campos da criação",
+     "    limparCriacao();\n    abrirJogo(estado.jogoId);", "    abrirJogo(estado.jogoId);"),
 ]
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

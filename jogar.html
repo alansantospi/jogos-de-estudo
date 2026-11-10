@@ -276,12 +276,49 @@ function mjLicao(jogo, pecas, chave){
     + pecas.js.split("%CHAVE%").join(chave) + "</section>";
 }
 
-/* A cor da matéria, a mesma dos jogos feitos à mão; matéria nova fica com
-   o azul da casa. */
-const MJ_CORES = {"ciências": "oklch(0.40 0.19 285)", "geografia": "oklch(0.46 0.12 245)",
-  "história": "oklch(0.60 0.18 40)", "matemática": "oklch(0.52 0.22 298)",
-  "gramática": "oklch(0.55 0.11 82)", "língua portuguesa": "oklch(0.55 0.11 82)",
-  "português": "oklch(0.55 0.11 82)", "inglês": "oklch(0.55 0.20 265)", "arte": "oklch(0.56 0.22 330)"};
+/*CORES>*/
+/* As cores de jogo: as dos jogos feitos à mão, mais turquesa. Nenhum verde
+   nem vermelho, que no jogo querem dizer certo e errado. `conteudo.cor`
+   guarda a CHAVE, nunca o valor: o jogo é montado com texto que vem do
+   banco, e o CSS só aceita o que está nesta tabela. Este bloco vai
+   recortado para `gerar.html` e `index.html` (gerar.py, inicio.py). */
+const CORES_JOGO = {
+  anil:     {nome: "Anil",     valor: "oklch(0.55 0.20 265)"},
+  violeta:  {nome: "Violeta",  valor: "oklch(0.40 0.19 285)"},
+  roxo:     {nome: "Roxo",     valor: "oklch(0.52 0.22 298)"},
+  rosa:     {nome: "Rosa",     valor: "oklch(0.56 0.22 330)"},
+  laranja:  {nome: "Laranja",  valor: "oklch(0.60 0.18 40)"},
+  ocre:     {nome: "Ocre",     valor: "oklch(0.55 0.11 82)"},
+  turquesa: {nome: "Turquesa", valor: "oklch(0.525 0.15 195)"},
+  azul:     {nome: "Azul",     valor: "oklch(0.46 0.12 245)"},
+};
+const COR_PADRAO = "anil";
+/* Matéria, ou o nome do jogo quando ela não diz nada, para cor. Sem acento
+   e sem caixa, por pedaço de palavra: "Ciências (Mundo microscópico)" e
+   "ciencias" dão a mesma. A ordem conta: a primeira que casar vence. */
+const CORES_POR_ASSUNTO = [
+  [/cienc|biolog|celula|seres vivos|corpo humano|ecossist/, "violeta"],
+  [/geograf|relevo|clima|cartograf/, "azul"],
+  [/histor/, "laranja"],
+  [/matemat|geometr|fraca?o|decima|aritmet|numero|tabuada/, "roxo"],
+  [/portugu|gramat|redac|literat|ortograf|verbo|pronome/, "ocre"],
+  [/ingles|english|espanhol|frances|idioma/, "anil"],
+  [/\bartes?\b|music|danca|teatro|pintura/, "rosa"],
+  [/fisic|quimic|astronom|planeta|sistema solar/, "turquesa"],
+];
+const mjSemAcento = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+function corSugerida(materia, titulo){
+  for(const t of [materia, titulo]){
+    const s = mjSemAcento(t);
+    const achou = s.trim() && CORES_POR_ASSUNTO.find(([re]) => re.test(s));
+    if(achou) return achou[1];
+  }
+  return COR_PADRAO;
+}
+/* A cor guardada, se for uma da tabela; senão, a da matéria. */
+const corDoJogo = jogo => jogo && Object.hasOwn(CORES_JOGO, jogo.cor) ? jogo.cor
+  : corSugerida(jogo && jogo.materia, jogo && jogo.titulo);
+/*<CORES*/
 
 /* `id` é o da linha em `jogos`: dele saem a chave do progresso e a sala,
    para dois jogos gerados nunca dividirem progresso. `pecas` é o CSS e o JS
@@ -290,7 +327,7 @@ function montarJogo(molde, jogo, id, pecas){
   const curto = String(id).replace(/[^a-z0-9]/gi, "").slice(0, 12).toLowerCase();
   const troca = {
     "%PATENTE%": "lives<=0&&!practiceMode?'Aprendiz':acc>=90?'Mestre':acc>=70?'Estudante':'Aprendiz'",
-    "%COR%": MJ_CORES[String(jogo.materia).trim().toLowerCase()] || "oklch(0.55 0.20 265)",
+    "%COR%": CORES_JOGO[corDoJogo(jogo)].valor,
     "%TITULO%": mjHtml(jogo.titulo), "%CHAVE%": "gerado_" + curto + "_progress_v1",
     "%MATERIA%": mjHtml(jogo.materia), "%SUBTITULO%": mjHtml(jogo.materia + " — " + jogo.titulo),
     "%SALA%": "jogosdeestudo-g" + curto + "-", "%SLUG%": "g_" + curto,

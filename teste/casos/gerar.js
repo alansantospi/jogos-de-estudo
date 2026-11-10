@@ -209,6 +209,32 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   if ($("quantidade").value !== "auto") falhas.push("não dá para voltar ao automático");
 }
 
+/* 10d. a cor segue a matéria até alguém escolher; o texto colado sugere o nome */
+{
+  const amostra = k => document.querySelector('#escolhaCor input[value="' + k + '"]');
+  $("cor").value = ""; $("materia").value = "História"; $("materia").dispatchEvent(new Event("input"));
+  if (!amostra("laranja").checked) falhas.push("História não deu laranja");
+  if ($("pedido").style.getPropertyValue("--tom") !== CORES_JOGO.laranja.valor) falhas.push("a capa não ficou na cor da matéria");
+  amostra("roxo").click();
+  $("materia").value = "Geografia"; $("materia").dispatchEvent(new Event("input"));
+  if ($("cor").value !== "roxo" || !amostra("roxo").checked) falhas.push("a cor escolhida mudou com a matéria");
+  const voltar = [...document.querySelectorAll("#escolhaCor button")].find(b => /Voltar à cor da matéria/.test(b.textContent));
+  if (!voltar) falhas.push("escolhida a cor, não há como voltar à da matéria");
+  else { voltar.click(); if ($("cor").value || !amostra("azul").checked) falhas.push("voltar à cor da matéria não voltou"); }
+
+  aba("texto");
+  $("titulo").value = ""; $("materia").value = "";
+  $("textoColado").value = "x";
+  $("textoColado").dispatchEvent(new Event("input"));
+  if (!$("continuarTexto").disabled) falhas.push("continuar ligado com texto curto demais");
+  $("textoColado").value = "O ciclo da água\n" + base.trecho.repeat(8);
+  $("textoColado").dispatchEvent(new Event("input"));
+  if ($("continuarTexto").disabled) falhas.push("continuar desligado com texto suficiente");
+  $("continuarTexto").click();
+  if ($("titulo").value !== "O ciclo da água") falhas.push("a primeira linha do texto não virou o nome: " + $("titulo").value);
+  if (tituloDoTexto("Era uma vez um texto que começa com uma frase comum.\nE segue.")) falhas.push("frase comum virou nome do jogo");
+}
+
 /* 11. a questão leva a página de onde veio */
 const comFoto = {titulo: "Micro", paginas: [{nome: "IMG_2598.jpg", pagina: 1, texto: TEXTO1},
                                             {nome: "folha.pdf", pagina: 2, texto: TEXTO2}]};
@@ -337,6 +363,11 @@ if (licaoSalva.map(x => x.missao).join() !== "a,b") falhas.push("a lição salva
 if (licaoSalva.some(x => "problemas" in x || "fora" in x)) falhas.push("a lição salva leva o estado da revisão");
 if (!lerDe("jogo_gerado_" + abertos[0])) falhas.push("o jogo salvo não ficou no aparelho para abrir sem rede");
 if (!(lerDe("jogos_criados_v1") || []).some(j => j.id === abertos[0])) falhas.push("o índice não fica sabendo do jogo novo");
+if (gravados[0].linha.conteudo.cor !== "azul") falhas.push("o jogo salvo não leva a cor da matéria: " + gravados[0].linha.conteudo.cor);
+if ($("material").value || $("titulo").value || $("materia").value || $("textoColado").value || leitura)
+  falhas.push("depois de salvar, os campos da criação continuam preenchidos");
+if ($("ano").value !== "4º ano") falhas.push("limpar levou o ano junto: " + $("ano").value);
+if ($("quantidade").value !== "auto") falhas.push("limpar não voltou a quantidade para o automático");
 await espere(() => !$("salvar").disabled);
 if (!/Atualizar e jogar/.test($("salvar").textContent)) falhas.push("depois de salvo, o botão não diz que atualiza");
 $("salvar").click();

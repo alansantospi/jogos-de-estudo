@@ -101,7 +101,6 @@ input,select,textarea{width:100%;background:var(--carta);color:var(--texto);font
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acao);box-shadow:0 0 0 3px var(--acao-tinta)}
 textarea{resize:vertical;line-height:1.55}
 input[type=checkbox]{accent-color:var(--acao-solida)}
-.campos{display:grid;grid-template-columns:2fr 1.5fr 1fr;gap:.75rem}
 .sugestao{display:flex;gap:.4rem;align-items:center;margin:.5rem 0 0}
 .sugestao svg{width:1rem;height:1rem;color:var(--acao)}
 .quantas{border:0;padding:0;margin:1.25rem 0 0;min-width:0}
@@ -111,14 +110,16 @@ input[type=checkbox]{accent-color:var(--acao-solida)}
  border:1.5px solid var(--risco-forte);border-radius:999px;background:var(--carta);font-weight:800;font-size:1.0625rem;
  font-variant-numeric:tabular-nums;cursor:pointer;transition:border-color .15s,background-color .15s}
 .pilulas label:hover{border-color:var(--acao)}
-.pilulas input{position:absolute;opacity:0;pointer-events:none}
+/* O rádio some por baixo da pílula: 1px, senão o width:100% dos campos o
+   estica até o ancestral posicionado e a página ganha rolagem lateral. */
+.pilulas label{position:relative}
+.pilulas input,.amostra input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;min-height:0;padding:0}
 .pilulas .auto{font-size:.9375rem}
 /* Classe, não :has(:checked): marcar pelo código nem sempre repinta o :has. */
 .pilulas label.on{background:var(--acao-solida);border-color:var(--acao-solida);color:#fff}
 .pilulas label:has(input:focus-visible){outline:3px solid var(--acao);outline-offset:2px}
 .estimativa{margin:.6rem 0 0;font-size:.875rem;color:var(--texto-2);min-height:1.3em}
 .estimativa.alem{color:var(--cuidado);font-weight:700}
-@media (max-width:40rem){.campos{grid-template-columns:1fr 1fr}.campos .largo{grid-column:1 / -1}}
 
 button{font:inherit;font-weight:800;cursor:pointer}
 .botao{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:2.75rem;
@@ -212,6 +213,60 @@ button{font:inherit;font-weight:800;cursor:pointer}
 .contador{display:flex;justify-content:space-between;gap:1rem;font-size:.8125rem;color:var(--texto-2);font-variant-numeric:tabular-nums}
 .contador.fora{color:var(--alerta)}
 .custo{font-size:.8125rem;color:var(--texto-2);font-variant-numeric:tabular-nums}
+
+/* A capa: o card do jogo que vai sair, na cor dele, com matéria e nome
+   escritos no próprio card. --tom vem do JS (pintarCapa). */
+#pedido{--tom:var(--acao-solida)}
+.capa{position:relative;display:grid;gap:.35rem;padding:1.1rem 1.25rem 1.2rem;margin:.75rem 0 1rem;
+ border-radius:var(--r-g);background:var(--tom);color:#fff;overflow:hidden;
+ box-shadow:0 4px 0 color-mix(in oklch,var(--tom) 62%,black);
+ transition:background-color .35s var(--saida),box-shadow .35s var(--saida)}
+.capa .marca-capa{position:absolute;right:1rem;top:1rem;width:2.75rem;height:2.75rem;padding:.6rem;border-radius:50%;
+ background:rgb(255 255 255 / .18);stroke-width:2}
+.capa label{display:block;font-size:inherit}
+.capa input{background:none;border:0;border-radius:8px;color:#fff;padding:0;box-shadow:none;caret-color:#fff}
+.capa input::placeholder{color:rgb(255 255 255 / .82)}
+.capa input:focus{box-shadow:none;background:rgb(255 255 255 / .14)}
+.capa input:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.capa-materia{justify-self:start;max-width:calc(100% - 3.5rem)}
+.capa-materia input{field-sizing:content;min-width:7ch;max-width:100%;min-height:2rem;padding:0 .8rem;border-radius:999px;
+ background:rgb(255 255 255 / .2);font-size:.875rem;font-weight:800}
+.capa-nome input{min-height:3rem;font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1.2;
+ letter-spacing:-0.01em;padding:0 .2rem;margin-left:-.2rem}
+.capa-dica{margin:0;font-size:.8125rem;color:rgb(255 255 255 / .9);min-height:1.2em}
+@media (max-width:30rem){.capa-nome input{font-size:1.4rem}}
+
+.escolha-cor{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;margin:0 0 1rem}
+.cores{display:flex;flex-wrap:wrap;gap:.45rem}
+.amostra{position:relative;display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;
+ background:var(--c);color:#fff;cursor:pointer;transition:transform .15s var(--saida),box-shadow .15s var(--saida)}
+.amostra svg{width:1.25rem;height:1.25rem;stroke-width:3;opacity:0;transform:scale(.5);
+ transition:opacity .15s var(--saida),transform .2s var(--saida)}
+.amostra:hover{transform:scale(1.07)}
+.amostra.on{box-shadow:0 0 0 3px var(--fundo),0 0 0 5px var(--c)}
+.amostra.on svg{opacity:1;transform:none}
+.amostra:has(input:focus-visible){outline:3px solid var(--acao);outline-offset:5px}
+.cor-dica{margin:0;font-size:.8125rem;color:var(--texto-2);display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.link{background:none;border:0;padding:0;min-height:2.75rem;color:var(--acao);font-weight:800;font-size:inherit;
+ text-decoration:underline;text-underline-offset:.2em}
+
+.ajustes{display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:flex-start;margin:1.5rem 0 0}
+.ajustes .quantas{flex:1 1 20rem;margin:0}
+.ajustes .ano{flex:0 0 8.5rem}
+.caixa-material{margin:1.25rem 0 0;border:1px solid var(--risco);border-radius:var(--r);background:var(--carta)}
+.caixa-material summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:3rem;
+ padding:.5rem 1rem;cursor:pointer;font-weight:800}
+.caixa-material summary small{color:var(--texto-2);font-weight:600;font-variant-numeric:tabular-nums}
+.caixa-material > div{padding:0 1rem 1rem}
+.dica-gerar{margin:.75rem 0 0}
+.dica-gerar:empty{display:none}
+#paginas:not(:empty){margin-bottom:.5rem}
+
+.grande{min-height:3.25rem;padding:0 1.6rem;font-size:1.0625rem}
+.pe-gerar .primario{background:var(--tom);transition:background-color .35s var(--saida),filter .15s}
+.pe-gerar .primario:hover:not(:disabled){background:var(--tom);filter:brightness(.92)}
+@media (max-width:34rem){.pe-gerar .empurra{flex:1}}
+@media (hover:none){.atalho{display:none}}
 
 /* ---------- etapa 3: revisar ---------- */
 .painel{background:var(--carta);border:1px solid var(--risco);border-radius:var(--r-g);padding:1rem 1.25rem;margin-bottom:1rem}
@@ -317,7 +372,10 @@ form.carta{display:grid;gap:.75rem}
 @media (max-width:34rem){.jogo-linha{grid-template-columns:1fr}.jogo-linha .acoes{justify-content:flex-start}}
 a.botao{text-decoration:none;font-weight:800}
 .vazio-meus{text-align:center;padding:2rem 1rem;color:var(--texto-2);border:2px dashed var(--risco-forte);border-radius:var(--r-g)}
-.editando-jogo{display:grid;grid-template-columns:2fr 1.5fr;gap:.75rem;margin:0 0 1rem}
+.editando-jogo{display:grid;grid-template-columns:2fr 1.5fr;gap:.75rem;margin:0 0 .75rem}
+.identidade{border-bottom:1px solid var(--risco);margin:0 0 1rem}
+.nome-jogo{display:flex;gap:.75rem;align-items:center;min-width:0}
+.ponto{flex:none;width:.9rem;height:.9rem;border-radius:50%;background:var(--c)}
 @media (max-width:34rem){.editando-jogo{grid-template-columns:1fr}}
 .faixa-acrescentar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;padding:.75rem 1rem;border-radius:var(--r);
  background:var(--acao-tinta);margin:0 0 1.25rem}
@@ -367,7 +425,7 @@ a.botao{text-decoration:none;font-weight:800}
 <div id="app" hidden>
 <ol class="etapas" id="etapas" aria-label="Etapas">
   <li><button type="button" data-etapa="1"><span class="num">1</span><span class="rotulo">Material</span></button></li>
-  <li><button type="button" data-etapa="2"><span class="num">2</span><span class="rotulo">Conferir</span></button></li>
+  <li><button type="button" data-etapa="2"><span class="num">2</span><span class="rotulo">Jogo</span></button></li>
   <li><button type="button" data-etapa="3"><span class="num">3</span><span class="rotulo">Revisar</span></button></li>
 </ol>
 
@@ -386,8 +444,8 @@ a.botao{text-decoration:none;font-weight:800}
 <!-- 1. material -->
 <section id="etapa1" data-e="1">
   <div class="faixa-acrescentar" id="faixa1" hidden></div>
-  <h1 tabindex="-1">De onde vêm as questões?</h1>
-  <p class="lead">Fotos do livro, a folha de revisão, um PDF ou o resumo da aula. As questões só usam o que estiver no material.</p>
+  <h1 tabindex="-1">Novo jogo</h1>
+  <p class="lead">Fotos do livro, um PDF ou o resumo da aula. As questões saem só dele.</p>
   <div class="abas" role="tablist" aria-label="Tipo de material">
     <button type="button" role="tab" id="abaFotos" aria-controls="painelFotos" aria-selected="true">
       <svg aria-hidden="true"><use href="#i-camera"/></svg>Fotos ou PDF</button>
@@ -411,52 +469,72 @@ a.botao{text-decoration:none;font-weight:800}
   </div>
 
   <div id="painelTexto" role="tabpanel" aria-labelledby="abaTexto" hidden>
-    <label>Texto <textarea id="textoColado" rows="12"
-      placeholder="Cole aqui o resumo da aula ou o texto do livro."></textarea></label>
-    <div class="acoes"><button class="botao primario" id="continuarTexto" type="button">Continuar</button></div>
+    <label class="so-leitor" for="textoColado">Texto</label>
+    <textarea id="textoColado" rows="12"
+      placeholder="Cole aqui o resumo da aula ou o texto do livro. Se a primeira linha for o título, ela vira o nome do jogo."></textarea>
+    <div class="contador" id="contadorTexto"></div>
+    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Continuar</button>
+      <span class="dica atalho" aria-hidden="true">⌘ ou Ctrl + Enter</span></div>
   </div>
 </section>
 
-<!-- 2. conferir -->
+<!-- 2. o jogo: a capa primeiro, o detalhe recolhido -->
 <form id="pedido" data-e="2" hidden novalidate>
   <div class="faixa-acrescentar" id="faixa2" hidden></div>
-  <h1 tabindex="-1" id="tituloConferir">Confira o que foi lido</h1>
-  <p class="lead" id="leadConferir">Desmarque o que não deve virar questão. O que estiver escrito à mão fica de fora: resposta de aluno pode estar errada.</p>
+  <h1 tabindex="-1" id="tituloConferir">Seu jogo</h1>
+
+  <!-- A capa é o card que vai aparecer na página inicial, já na cor do jogo. -->
+  <div class="capa" id="capa">
+    <svg class="marca-capa" aria-hidden="true"><use href="#i-livro"/></svg>
+    <label class="capa-materia"><span class="so-leitor">Matéria</span>
+      <input id="materia" placeholder="Matéria" list="materias" autocomplete="off" maxlength="60"></label>
+    <label class="capa-nome"><span class="so-leitor">Nome do jogo</span>
+      <input id="titulo" placeholder="Nome do jogo" autocomplete="off" maxlength="120"></label>
+    <p class="capa-dica" id="capaDica"></p>
+  </div>
+  <div id="escolhaCor"></div>
+  <input type="hidden" id="cor" value="">
+  <p class="dica sugestao" id="sugestao" hidden></p>
+
+  <p class="lead" id="leadConferir" hidden>Desmarque o que não deve virar questão. O que estiver escrito à mão fica de fora: resposta de aluno pode estar errada.</p>
   <div id="paginas"></div>
 
-  <h2>Material</h2>
-  <label class="so-leitor" for="material">Material</label>
-  <textarea id="material" required placeholder="O texto de onde saem as questões."></textarea>
-  <div class="contador" id="contador"></div>
-
-  <h2>O jogo</h2>
-  <div class="campos">
-    <label class="largo">Nome do jogo <input id="titulo" placeholder="Em branco, a geração sugere" autocomplete="off"></label>
-    <label class="largo">Matéria <input id="materia" placeholder="Em branco, a geração sugere" list="materias" autocomplete="off"></label>
-    <label>Ano <select id="ano">
+  <div class="ajustes">
+    <fieldset class="quantas">
+      <legend>Quantas questões</legend>
+      <div class="pilulas" id="pilulas">
+        <label class="auto"><input type="radio" name="qtd" value="auto">O material decide</label>
+        <label><input type="radio" name="qtd" value="10">10</label><label><input type="radio" name="qtd" value="30">30</label>
+        <label><input type="radio" name="qtd" value="60">60</label><label><input type="radio" name="qtd" value="100">100</label>
+        <label><input type="radio" name="qtd" value="200">200</label>
+      </div>
+      <input type="hidden" id="quantidade" value="auto">
+      <p class="estimativa" id="estimativa" aria-live="polite"></p>
+    </fieldset>
+    <label class="ano">Ano <select id="ano">
       <option>1º ano</option><option>2º ano</option><option>3º ano</option>
       <option selected>4º ano</option><option>5º ano</option><option>6º ano</option>
       <option>7º ano</option><option>8º ano</option><option>9º ano</option></select></label>
   </div>
-  <p class="dica sugestao" id="sugestao" hidden></p>
-  <fieldset class="quantas">
-    <legend>Quantas questões</legend>
-    <div class="pilulas" id="pilulas">
-      <label class="auto"><input type="radio" name="qtd" value="auto">O material decide</label>
-      <label><input type="radio" name="qtd" value="10">10</label><label><input type="radio" name="qtd" value="30">30</label>
-      <label><input type="radio" name="qtd" value="60">60</label><label><input type="radio" name="qtd" value="100">100</label>
-      <label><input type="radio" name="qtd" value="200">200</label>
-    </div>
-    <input type="hidden" id="quantidade" value="auto">
-    <p class="estimativa" id="estimativa" aria-live="polite"></p>
-  </fieldset>
   <datalist id="materias"><option>Ciências</option><option>Geografia</option><option>História</option>
     <option>Língua Portuguesa</option><option>Matemática</option><option>Inglês</option><option>Arte</option></datalist>
 
-  <div class="acoes">
-    <button class="botao primario" id="botaoGerar" type="submit">Gerar questões</button>
-    <button class="botao discreto" type="button" id="voltar1">Voltar ao material</button>
-    <span class="dica" id="dicaGerar"></span>
+  <details class="caixa-material" id="caixaMaterial">
+    <summary>Ver e editar o texto <small id="resumoMaterial"></small></summary>
+    <div>
+      <label class="so-leitor" for="material">Material</label>
+      <textarea id="material" required placeholder="O texto de onde saem as questões."></textarea>
+      <div class="contador" id="contador"></div>
+    </div>
+  </details>
+  <p class="dica dica-gerar" id="dicaGerar"></p>
+
+  <!-- O botão de gerar fica no polegar, preso ao pé, na cor do jogo. -->
+  <div class="pe pe-gerar">
+    <div class="dentro">
+      <button class="botao discreto" type="button" id="voltar1">Voltar</button>
+      <button class="botao primario grande empurra" id="botaoGerar" type="submit">Gerar questões</button>
+    </div>
   </div>
 </form>
 
@@ -476,6 +554,7 @@ a.botao{text-decoration:none;font-weight:800}
     <span class="resumo-pe" id="resumoPe"></span>
     <div class="empurra">
       <button class="botao discreto perigo" id="recomecar" type="button">Descartar</button>
+      <button class="botao discreto" id="outroJogo" type="button" hidden><svg aria-hidden="true"><use href="#i-mais"/></svg>Novo jogo</button>
       <button class="botao secundario" id="baixar" type="button" title="O arquivo para conteudo/, para montar pelo build">
         <svg aria-hidden="true"><use href="#i-seta-baixo"/></svg><span>Baixar</span></button>
       <button class="botao primario" id="salvar" type="button"><span>Salvar e jogar</span></button>
@@ -492,6 +571,49 @@ const CONTA = {
      Em projeto antigo pode ser a legada "anon public" (começa com eyJ). */
   chave: "sb_publishable_lOr07N705_pZp6UQZmQLQg_EGjIAwgY",
 };
+/*CORES>*/
+/* As cores de jogo: as dos jogos feitos à mão, mais turquesa. Nenhum verde
+   nem vermelho, que no jogo querem dizer certo e errado. `conteudo.cor`
+   guarda a CHAVE, nunca o valor: o jogo é montado com texto que vem do
+   banco, e o CSS só aceita o que está nesta tabela. Este bloco vai
+   recortado para `gerar.html` e `index.html` (gerar.py, inicio.py). */
+const CORES_JOGO = {
+  anil:     {nome: "Anil",     valor: "oklch(0.55 0.20 265)"},
+  violeta:  {nome: "Violeta",  valor: "oklch(0.40 0.19 285)"},
+  roxo:     {nome: "Roxo",     valor: "oklch(0.52 0.22 298)"},
+  rosa:     {nome: "Rosa",     valor: "oklch(0.56 0.22 330)"},
+  laranja:  {nome: "Laranja",  valor: "oklch(0.60 0.18 40)"},
+  ocre:     {nome: "Ocre",     valor: "oklch(0.55 0.11 82)"},
+  turquesa: {nome: "Turquesa", valor: "oklch(0.525 0.15 195)"},
+  azul:     {nome: "Azul",     valor: "oklch(0.46 0.12 245)"},
+};
+const COR_PADRAO = "anil";
+/* Matéria, ou o nome do jogo quando ela não diz nada, para cor. Sem acento
+   e sem caixa, por pedaço de palavra: "Ciências (Mundo microscópico)" e
+   "ciencias" dão a mesma. A ordem conta: a primeira que casar vence. */
+const CORES_POR_ASSUNTO = [
+  [/cienc|biolog|celula|seres vivos|corpo humano|ecossist/, "violeta"],
+  [/geograf|relevo|clima|cartograf/, "azul"],
+  [/histor/, "laranja"],
+  [/matemat|geometr|fraca?o|decima|aritmet|numero|tabuada/, "roxo"],
+  [/portugu|gramat|redac|literat|ortograf|verbo|pronome/, "ocre"],
+  [/ingles|english|espanhol|frances|idioma/, "anil"],
+  [/\bartes?\b|music|danca|teatro|pintura/, "rosa"],
+  [/fisic|quimic|astronom|planeta|sistema solar/, "turquesa"],
+];
+const mjSemAcento = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+function corSugerida(materia, titulo){
+  for(const t of [materia, titulo]){
+    const s = mjSemAcento(t);
+    const achou = s.trim() && CORES_POR_ASSUNTO.find(([re]) => re.test(s));
+    if(achou) return achou[1];
+  }
+  return COR_PADRAO;
+}
+/* A cor guardada, se for uma da tabela; senão, a da matéria. */
+const corDoJogo = jogo => jogo && Object.hasOwn(CORES_JOGO, jogo.cor) ? jogo.cor
+  : corSugerida(jogo && jogo.materia, jogo && jogo.titulo);
+/*<CORES*/
 const CONTA_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
 /* O que custou fica guardado neste aparelho até a pessoa baixar ou
    descartar, para um recarregar de página não jogar fora. O material e os
@@ -798,14 +920,35 @@ async function lerArquivos(){
   }
 }
 
+/* O botão só liga com o mínimo, em vez de reclamar depois do toque. */
+function pintarTexto(){
+  const n = $("textoColado").value.trim().length;
+  $("continuarTexto").disabled = n < MATERIAL_MIN;
+  $("contadorTexto").replaceChildren(
+    el("span", {}, n && n < MATERIAL_MIN ? "Faltam " + (MATERIAL_MIN - n) + " caracteres para um jogo." : ""),
+    el("span", {}, n ? n.toLocaleString("pt-BR") + " caracteres" : ""));
+}
+
+/* A primeira linha, quando tem cara de título: curta, sem pontuação no fim. */
+function tituloDoTexto(t){
+  const l = (String(t).split("\n").map(x => x.trim()).find(Boolean) || "").replace(/^#+\s*/, "");
+  return l.length >= 3 && l.length <= 70 && l.split(/\s+/).length <= 10 && !/[.,;:!?]$/.test(l) ? l : "";
+}
+
+/* O jogo salvo já está na conta: material novo começa outro, sem ele. */
+function largarSalvo(){
+  if(estado && estado.jogoId && !estado.acrescentar){ estado = null; guardar(); }
+}
+
 function continuarTexto(){
   const t = $("textoColado").value.trim();
   if(t.length < MATERIAL_MIN) return recado("O texto tem " + t.length + " caracteres. Cole pelo menos "
     + MATERIAL_MIN + ": menos que isso não sustenta um jogo.", true);
   recado("");
+  largarSalvo();
   leitura = null; guardarLeitura();
   $("material").value = t;
-  $("sugestao").hidden = true;
+  aplicarSugestao(tituloDoTexto(t), "", "da primeira linha do texto");
   pintarPaginas(); contar(); guardarMaterial();
   irPara(2);
 }
@@ -813,6 +956,7 @@ function continuarTexto(){
 /* ---------- 2. conferir ---------- */
 
 function mostrarLeitura(r){
+  largarSalvo();
   leitura = {aviso: r.aviso || "", custo: r.custo_usd, restantes: r.restantes,
              paginas: r.paginas.map(p => ({...p, marcada: p.legivel !== "nao"}))};
   cota(r.restantes);
@@ -840,25 +984,62 @@ function sugerirNome(paginas){
   const conta = {};
   paginas.forEach(p => { if(p.materia) conta[p.materia] = (conta[p.materia] || 0) + 1; });
   const materia = Object.keys(conta).sort((a, b) => conta[b] - conta[a])[0] || "";
+  aplicarSugestao(titulo, materia, "das páginas lidas");
+}
+function aplicarSugestao(titulo, materia, deOnde){
   const usou = [];
   [["titulo", titulo], ["materia", materia]].forEach(([k, v]) => {
     const campo = $(k);
     if(v && (!campo.value.trim() || campo.value === sugerido[k])){ campo.value = v; usou.push(k); }
+    // A sugestão anterior que o material novo não sustenta sai junto.
+    else if(!v && sugerido[k] && campo.value === sugerido[k]) campo.value = "";
     sugerido[k] = v;
   });
   $("sugestao").hidden = !usou.length;
   if(usou.length) $("sugestao").replaceChildren(icone("livro"),
     el("span", {}, (usou.length === 2 ? "Nome e matéria tirados" : usou[0] === "titulo" ? "Nome tirado" : "Matéria tirada")
-      + " das páginas lidas. Mude se quiser."));
+      + " " + deOnde + ". Mude se quiser."));
+  pintarCapa();
 }
+
+/* ---------- a cor do jogo ---------- */
+
+/* As cores, como bolinhas: rádio de verdade, para a seta do teclado andar
+   entre elas. `atualizar` marca a atual sem refazer o grupo, para não
+   tirar o foco de quem está escolhendo. */
+function seletorCor(nome, aoEscolher, aoVoltar){
+  const grupo = el("div", {class: "cores", role: "radiogroup", "aria-label": "Cor do jogo"},
+    Object.entries(CORES_JOGO).map(([k, c]) => el("label", {class: "amostra", style: "--c:" + c.valor, title: c.nome},
+      el("input", {type: "radio", name: nome, value: k, onchange: () => aoEscolher(k)}),
+      el("span", {class: "so-leitor"}, c.nome), icone("check"))));
+  const dica = el("p", {class: "cor-dica", "aria-live": "polite"});
+  const caixa = el("div", {class: "escolha-cor"}, grupo, dica);
+  caixa.atualizar = (k, auto) => {
+    grupo.querySelectorAll("input").forEach(r => { r.checked = r.value === k; r.parentNode.classList.toggle("on", r.checked); });
+    dica.replaceChildren(auto ? "Na cor da matéria." : CORES_JOGO[k].nome + ", escolhida por você. ",
+      auto ? "" : el("button", {class: "link", type: "button", onclick: aoVoltar}, "Voltar à cor da matéria"));
+  };
+  return caixa;
+}
+
+/* Em branco, a cor segue a matéria (ou o nome); escolhida, fica. */
+const corAtual = () => $("cor").value || corSugerida($("materia").value, $("titulo").value);
+let corPedido = null;
+function pintarCapa(){
+  if(!corPedido) return;
+  const k = corAtual();
+  $("pedido").style.setProperty("--tom", CORES_JOGO[k].valor);
+  corPedido.atualizar(k, !$("cor").value);
+  const vazios = [!$("titulo").value.trim() && "o nome", !$("materia").value.trim() && "a matéria"].filter(Boolean);
+  $("capaDica").textContent = vazios.length ? "Em branco, " + vazios.join(" e ") + " sai" + (vazios.length > 1 ? "em" : "")
+    + " do conteúdo na hora de gerar." : "";
+}
+function escolherCor(k){ $("cor").value = k; pintarCapa(); guardarMaterial(); }
 
 function pintarPaginas(){
   const caixa = $("paginas");
   caixa.replaceChildren();
-  $("tituloConferir").textContent = leitura ? "Confira o que foi lido" : "Confira o material";
-  $("leadConferir").textContent = leitura
-    ? "Desmarque o que não deve virar questão. O que estiver escrito à mão fica de fora: resposta de aluno pode estar errada."
-    : "As questões só usam o que estiver neste texto. Ajuste o que precisar e diga como é o jogo.";
+  $("leadConferir").hidden = !leitura;
   if(!leitura) return;
   if(leitura.aviso){
     const nada = leitura.paginas.every(p => p.legivel === "nao");
@@ -891,6 +1072,11 @@ function contar(){
     el("span", {}, fora ? "Passou do limite: tire páginas ou divida em duas gerações."
                  : curto && n ? "Precisa de pelo menos " + MATERIAL_MIN + " caracteres." : ""),
     el("span", {}, n.toLocaleString("pt-BR") + " de " + MATERIAL_MAX.toLocaleString("pt-BR")));
+  const marcadas = leitura ? leitura.paginas.filter(p => p.marcada).length : 0;
+  $("resumoMaterial").textContent = n.toLocaleString("pt-BR") + " caracteres"
+    + (leitura ? " de " + plural(marcadas, "página", "páginas") : "");
+  // Recolhido quando está tudo bem; aberto quando é preciso mexer.
+  if(fora || (curto && n)) $("caixaMaterial").open = true;
   $("botaoGerar").disabled = gerando || fora || curto;
   const auto = automatico(), escolhida = Number($("quantidade").value) || 30;
   document.querySelectorAll("#pilulas input").forEach(r => {
@@ -907,20 +1093,35 @@ function contar(){
   $("botaoGerar").textContent = gerando ? "Gerando..." : auto ? "Gerar o jogo" : "Gerar " + q + " questões";
   $("dicaGerar").textContent = estado && estado.acrescentar
       ? "As " + estado.questoes.filter(q => q.estado !== "descartada").length + " questões que o jogo já tem continuam. Conta como outro jogo do dia."
-    : estado ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
+    : estado && !estado.jogoId ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
     : q > 20 ? "Uma missão por vez, " + PARALELO + " ao mesmo tempo: "
       + (q > 100 ? "uns 5 a 8 minutos." : q >= 60 ? "uns 3 a 5 minutos." : "uns 2 a 3 minutos.")
     : "";
+  pintarCapa();
 }
 
 function guardarMaterial(){
   guardarEm(MATERIAL, {material: $("material").value, titulo: $("titulo").value, materia: $("materia").value,
-                       ano: $("ano").value, quantidade: $("quantidade").value});
+                       cor: $("cor").value, ano: $("ano").value, quantidade: $("quantidade").value});
 }
 function lerMaterial(){
   const m = lerDe(MATERIAL);
   if(!m) return;
-  ["material", "titulo", "materia", "ano", "quantidade"].forEach(k => { if(m[k] != null && m[k] !== "") $(k).value = m[k]; });
+  ["material", "titulo", "materia", "cor", "ano", "quantidade"].forEach(k => { if(m[k] != null && m[k] !== "") $(k).value = m[k]; });
+  if(!Object.hasOwn(CORES_JOGO, $("cor").value)) $("cor").value = "";
+}
+
+/* Salvou: a próxima criação começa limpa. O ano fica, que é o mesmo aluno;
+   o jogo salvo continua aberto na revisão, para "Atualizar" seguir valendo. */
+function limparCriacao(){
+  leitura = null; guardarLeitura();
+  sugerido = {titulo: "", materia: ""};
+  ["material", "textoColado", "titulo", "materia", "cor"].forEach(k => { $(k).value = ""; });
+  $("quantidade").value = "auto";
+  $("sugestao").hidden = true;
+  $("caixaMaterial").open = false;
+  pintarPaginas(); pintarTexto(); contar();
+  guardarMaterial();
 }
 
 async function pedir(ev){
@@ -928,7 +1129,7 @@ async function pedir(ev){
   // Nome e matéria podem ir em branco: o plano sugere os dois.
   // No automático, o teto vai para o plano, que decide pelo material.
   const auto = automatico(), total = auto ? TOTAL_MAX : Number($("quantidade").value);
-  const pedido = {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(),
+  const pedido = {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(), cor: $("cor").value,
                   ano: $("ano").value, total, material: $("material").value.trim()};
   // De que página veio cada questão: guardado agora, que a leitura pode mudar.
   if(leitura) pedido.paginas = leitura.paginas.filter(p => p.marcada)
@@ -967,7 +1168,7 @@ async function pedir(ev){
       const usados = new Set(base.missoes.map(m => m.id));
       pl.missoes.forEach(m => { let id = m.id, k = 2; while(usados.has(id)) id = m.id + "_" + k++; usados.add(id); m.id = id; });
       estado = {...base, acrescentar: false, criacao: ab.criacao, plano: pl.missoes, materialNovo: pedido.material,
-                pedido: {...base.pedido, titulo: pedido.titulo, materia: pedido.materia, ano: pedido.ano,
+                pedido: {...base.pedido, titulo: pedido.titulo, materia: pedido.materia, cor: pedido.cor, ano: pedido.ano,
                          material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
                 missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
@@ -1130,15 +1331,37 @@ const REGRAS = [["sempreAMaior", "Quem escolhe sempre a maior"],
                 ["eliminarAbsolutos", "Quem descarta “sempre”, “nunca”, “só”"],
                 ["seguirOEco", "Quem segue as palavras do enunciado"]];
 
+/* Nome, matéria e cor ficam editáveis na revisão: o nome que o plano
+   sugeriu muda aqui, sem voltar etapas. O bloco é feito uma vez e
+   sobrevive às repinturas — as missões chegam enquanto se digita. */
+let identidade = null;
+function pintarIdentidade(c){
+  if(!identidade){
+    const campo = (k, rotulo) => el("label", {}, rotulo, el("input", {"data-k": k, autocomplete: "off",
+      oninput: ev => { estado.pedido[k] = ev.target.value; guardar(); corDaRevisao(); }}));
+    const mudar = k => { estado.pedido.cor = k; guardar(); corDaRevisao(); };
+    identidade = el("div", {class: "identidade"},
+      el("div", {class: "editando-jogo"}, campo("titulo", "Nome do jogo"), campo("materia", "Matéria")));
+    identidade.cor = seletorCor("corRevisao", mudar, () => mudar(""));
+    identidade.append(identidade.cor);
+  }
+  identidade.querySelectorAll("input[data-k]").forEach(i => {
+    if(document.activeElement !== i) i.value = estado.pedido[i.dataset.k] || ""; });
+  corDaRevisao();
+  if(identidade.parentNode !== c) c.prepend(identidade);
+}
+function corDaRevisao(){
+  const p = estado.pedido;
+  identidade.cor.atualizar(Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo), !p.cor);
+}
+
 function pintarResumo(){
   const l = estado.lote, c = $("resumo"), qs = estado.questoes;
-  c.replaceChildren();
+  [...c.childNodes].forEach(x => { if(x !== identidade) x.remove(); });
+  pintarIdentidade(c);
   if(estado.jogoId){
-    // Jogo salvo, reaberto: o nome muda aqui e vale no próximo "Atualizar".
-    const campo = (k, rotulo) => el("label", {}, rotulo, el("input", {value: estado.pedido[k] || "", autocomplete: "off",
-      oninput: ev => { estado.pedido[k] = ev.target.value; guardar(); }}));
-    c.append(el("div", {class: "editando-jogo"}, campo("titulo", "Nome do jogo"), campo("materia", "Matéria")),
-      el("div", {class: "acoes", style: "margin:0 0 1rem"},
+    // Jogo salvo, reaberto: o que mudar aqui vale no próximo "Atualizar".
+    c.append(el("div", {class: "acoes", style: "margin:0 0 1rem"},
         el("button", {class: "botao secundario", type: "button", disabled: gerando, onclick: comecarAcrescentar},
            icone("mais"), "Acrescentar questões"),
         // Sem material guardado, não há contra o que conferir a lição.
@@ -1350,6 +1573,9 @@ function pintar(){
   $("salvar").querySelector("span").textContent = n
     ? (estado.jogoId ? "Atualizar e jogar" : "Salvar e jogar") + " (" + n + ")" : "Aprove para salvar";
   $("resumoPe").textContent = pend ? plural(pend, "questão pendente", "questões pendentes") : "Tudo revisado.";
+  // Salvo, o jogo está na conta: descartar não faz sentido, começar outro faz.
+  $("recomecar").hidden = !!estado.jogoId;
+  $("outroJogo").hidden = !estado.jogoId;
   $("pe").hidden = etapa !== 3;
 }
 
@@ -1427,6 +1653,7 @@ function montarConteudo(){
   const p = estado.pedido;
   return {
     id: slug(p.titulo) + "-" + slug(p.ano), materia: p.materia, titulo: p.titulo, motor: "ceu",
+    cor: Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo),
     missoes: usadas,
     trilhas: [{id: "tudo", nome: "Todas as missões", etapas: [...usadas.map(m => m.id), "all"]}],
     // A lição das missões que ficaram no jogo; `problemas` e `fora` são da revisão.
@@ -1477,10 +1704,11 @@ async function salvarJogo(){
       localStorage.setItem("jogo_gerado_" + estado.jogoId, JSON.stringify(c));
       const lista = (lerDe("jogos_criados_v1") || []).filter(j => j.id !== estado.jogoId);
       const antes = (lerDe("jogos_criados_v1") || []).find(j => j.id === estado.jogoId);
-      lista.unshift({id: estado.jogoId, titulo: c.titulo, materia: c.materia, questoes: c.questoes.length,
+      lista.unshift({id: estado.jogoId, titulo: c.titulo, materia: c.materia, cor: c.cor, questoes: c.questoes.length,
                      criado: antes ? antes.criado : new Date().toISOString(), atualizado: new Date().toISOString()});
       localStorage.setItem("jogos_criados_v1", JSON.stringify(lista));
     }catch(e){}
+    limparCriacao();
     abrirJogo(estado.jogoId);
   }catch(e){
     recado("Não consegui salvar: " + e.message, true);
@@ -1495,7 +1723,7 @@ async function salvarJogo(){
 /* Portas para a conta, trocadas pelo teste. */
 async function listarJogosConta(){
   const sb = await cliente();
-  const {data, error} = await sb.from("jogos").select("id,titulo,materia,questoes,link,criado,atualizado")
+  const {data, error} = await sb.from("jogos").select("id,titulo,materia,questoes,link,criado,atualizado,cor:conteudo->>cor")
     .order("atualizado", {ascending: false});
   if(error) throw new Error(error.message);
   return data;
@@ -1561,7 +1789,8 @@ function pintarMeus(lista){
       : el("button", {class: "botao secundario", type: "button"}, "Compartilhar");
     if(compartilhar) compartilhar.addEventListener("click", () => mudarLink(j, crypto.randomUUID(), compartilhar));
     return el("article", {class: "jogo-linha" + (estado && estado.jogoId === j.id ? " aberto" : ""), "data-id": j.id},
-      el("div", {}, el("strong", {}, j.titulo), el("span", {class: "meta"}, meta)),
+      el("div", {class: "nome-jogo"}, el("span", {class: "ponto", style: "--c:" + CORES_JOGO[corDoJogo(j)].valor, "aria-hidden": "true"}),
+        el("div", {}, el("strong", {}, j.titulo), el("span", {class: "meta"}, meta))),
       el("div", {class: "acoes"},
         el("a", {class: "botao primario", href: "jogar.html?id=" + encodeURIComponent(j.id)}, "Jogar"),
         editarB, compartilhar, apagar),
@@ -1619,7 +1848,8 @@ async function editarJogo(id, botao){
     const c = j.conteudo;
     editandoAgora = null; filtro = "todas";
     estado = {jogoId: j.id, lote: null, aviso: "", custo: null, restantes: estado ? estado.restantes : null,
-              pedido: {titulo: j.titulo, materia: j.materia, ano: j.ano || "", material: j.material || "", paginas: []},
+              pedido: {titulo: j.titulo, materia: j.materia, ano: j.ano || "", material: j.material || "", paginas: [],
+                       cor: Object.hasOwn(CORES_JOGO, c.cor) && c.cor !== corSugerida(j.materia, j.titulo) ? c.cor : ""},
               missoes: c.missoes.map(({id, nome}) => ({id, nome})),
               licao: (c.licao || []).reduce((o, x) => {
                 (o[x.missao] ||= {estado: "pronta", passos: []}).passos.push({...x, problemas: [], fora: false});
@@ -1656,6 +1886,7 @@ async function apagarJogo(id){
 
 function novoJogo(){
   if(estado && estado.acrescentar){ estado.acrescentar = false; guardar(); }
+  largarSalvo();
   irPara(1);
 }
 
@@ -1667,6 +1898,7 @@ function comecarAcrescentar(){
   leitura = null; guardarLeitura(); pintarPaginas();
   $("material").value = ""; $("textoColado").value = "";
   $("titulo").value = estado.pedido.titulo; $("materia").value = estado.pedido.materia;
+  $("cor").value = estado.pedido.cor || "";
   if(estado.pedido.ano) $("ano").value = estado.pedido.ano;
   contar(); guardarMaterial();
   irPara(1);
@@ -1745,6 +1977,23 @@ function ligar(){
   $("recomecar").addEventListener("click", recomecar);
   $("botaoLer").addEventListener("click", lerArquivos);
   $("continuarTexto").addEventListener("click", continuarTexto);
+  $("textoColado").addEventListener("input", pintarTexto);
+  $("textoColado").addEventListener("keydown", ev => {
+    if(ev.key === "Enter" && (ev.metaKey || ev.ctrlKey)){ ev.preventDefault(); continuarTexto(); } });
+  // Colar na etapa do material: foto vira arquivo escolhido, texto vai para a aba de texto.
+  document.addEventListener("paste", ev => {
+    if(etapa !== 1 || $("app").hidden || /^(INPUT|TEXTAREA|SELECT)$/.test((ev.target || {}).tagName || "")) return;
+    const arqs = [...(ev.clipboardData && ev.clipboardData.files || [])];
+    const texto = ev.clipboardData && ev.clipboardData.getData("text/plain") || "";
+    if(arqs.length){ ev.preventDefault(); aba("fotos"); adicionar(arqs); }
+    else if(texto.trim()){
+      ev.preventDefault(); aba("texto");
+      $("textoColado").value = texto; pintarTexto(); $("textoColado").focus();
+    }
+  });
+  corPedido = seletorCor("corPedido", escolherCor, () => escolherCor(""));
+  $("escolhaCor").append(corPedido);
+  $("outroJogo").addEventListener("click", novoJogo);
   $("voltar1").addEventListener("click", () => irPara(1));
   $("novoJogo").addEventListener("click", novoJogo);
   $("abaFotos").addEventListener("click", () => aba("fotos"));
@@ -1771,6 +2020,7 @@ async function iniciar(){
   if(leitura && !$("material").value.trim()) aplicarPaginas();
   contar();
   pintarEscolhidos();
+  pintarTexto();
   if(estado)
     // O que estava a caminho quando a página fechou não volta mais.
     [...Object.values(estado.partes || {}), ...Object.values(estado.licao || {})].forEach(p => {
