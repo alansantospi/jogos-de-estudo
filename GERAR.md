@@ -223,3 +223,19 @@ sem `cor`, sai na cor da matéria.
 Texto colado também sugere o nome na hora: a primeira linha, quando tem
 cara de título. Depois de salvar, os campos da criação esvaziam (o ano
 fica), e o jogo salvo segue aberto para "Atualizar e jogar".
+
+## Jogar sem revisar
+
+Na revisão, o botão do pé é **Pronto, jogar** enquanto houver questão
+pendente: ele aprova as que não têm problema grave e salva. Revisar uma a
+uma continua possível, antes ou depois (Meus jogos → Editar). As medidas de
+atalho ficam em "Detalhes da conferência", recolhidas.
+
+Em Meus jogos, com o link ligado, **QR code** mostra o endereço para a
+câmera do tablet. A biblioteca (`qrcode-generator`, jsDelivr) só carrega
+quando alguém pede.
+
+A tela de criar também entra com o Google. A volta traz a sessão no
+fragmento da URL, que a tela lê antes de usar o fragmento para as etapas.
+Se o Supabase não tiver `gerar.html` entre as URLs de retorno permitidas,
+ele devolve para o Site URL (a página inicial), que também abre a sessão.

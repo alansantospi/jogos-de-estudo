@@ -41,7 +41,11 @@ if (botao(2, "Aprovar").disabled) falhas.push("aviso que não é grave impediu a
 if (!/aparece também entre as erradas/.test(cartas()[1].innerText)) falhas.push("o problema grave não aparece na carta");
 if (!/Do material/.test(cartas()[0].innerText)) falhas.push("a carta não mostra o trecho de origem");
 if (!/US\$ 0,18 · restam 9 hoje/.test($("resumo").innerText)) falhas.push("custo e limite não aparecem: " + $("resumo").innerText);
-if (!/ainda é ruído/.test($("resumo").innerText)) falhas.push("amostra pequena não é explicada");
+if (!/ainda é ruído/.test($("resumo").textContent)) falhas.push("amostra pequena não é explicada");
+if ($("resumo").querySelector("details.conferencia").open) falhas.push("as medidas da conferência não vêm recolhidas");
+// Sem aprovar nada, já dá para jogar: o que não tem problema grave vai.
+if ($("salvar").disabled || !/Pronto, jogar \(2\)/.test($("salvar").textContent))
+  falhas.push("sem revisar, não dá para jogar o que não tem problema grave: " + $("salvar").textContent);
 
 /* 2. o texto do modelo entra como texto, nunca como HTML */
 if (document.querySelector("#lista img") || window.__xss) falhas.push("HTML vindo do modelo foi interpretado");
@@ -50,7 +54,8 @@ if (!/<img src=x/.test(cartas()[2].innerText)) falhas.push("o texto com sinais d
 /* 3. aprovar reconfere e conta */
 botao(0, "Aprovar").click();
 await espere(() => pedidos.length === 1);
-await espere(() => /e jogar \(1\)/.test($("salvar").textContent));
+// A reconferência do dublê limpa os avisos: as três vão.
+await espere(() => pedidos.length === 1 && /Pronto, jogar \(3\)/.test($("salvar").textContent));
 if ($("baixar").disabled) falhas.push("com uma aprovada, baixar continua desligado");
 
 /* 4. editar: a pessoa corrige e a carta passa pela mesma conferência */
@@ -350,13 +355,19 @@ if (!/2 de 10 previstas/.test($("resumo").innerText)) falhas.push("a missão cur
 const gravados = [], abertos = [];
 window.gravarJogo = async (linha, id) => { gravados.push({linha, id}); return id || "11111111-2222-3333-4444-555555555555"; };
 window.abrirJogo = id => abertos.push(id);
-estado.questoes.forEach(x => { x.estado = "aprovada"; });
+// Ninguém aprovou nada: "Pronto, jogar" aprova o que não tem problema grave e salva.
+estado.questoes.forEach(x => { x.estado = "pendente"; });
+estado.questoes[0].problemas = [{grave: true, texto: "grave"}];
 pintar();
-if ($("salvar").disabled) falhas.push("com aprovadas, salvar continua desligado");
+if ($("salvar").disabled || !/Pronto, jogar \(5\)/.test($("salvar").textContent))
+  falhas.push("pronto para jogar não conta as pendentes sem problema grave: " + $("salvar").textContent);
+estado.questoes[0].problemas = [];
+pintar();
 $("salvar").click();
 await espere(() => abertos.length === 1);
 if (gravados[0].id) falhas.push("o primeiro salvamento já veio com id");
-if (gravados[0].linha.conteudo.questoes.length !== 6) falhas.push("o jogo salvo não leva as aprovadas: " + gravados[0].linha.conteudo.questoes.length);
+if (gravados[0].linha.conteudo.questoes.length !== 6) falhas.push("o jogo salvo não leva as prontas: " + gravados[0].linha.conteudo.questoes.length);
+if (estado.questoes.some(q => q.estado !== "aprovada")) falhas.push("pronto, jogar não deixou as questões aprovadas");
 if (gravados[0].linha.titulo !== "Jogo grande") falhas.push("título do jogo salvo: " + gravados[0].linha.titulo);
 const licaoSalva = gravados[0].linha.conteudo.licao || [];
 if (licaoSalva.map(x => x.missao).join() !== "a,b") falhas.push("a lição salva: " + licaoSalva.map(x => x.missao).join());
@@ -461,6 +472,16 @@ if (!linha().querySelector(".campo-link").value.endsWith("jogar.html?l=" + links
   falhas.push("o endereço mostrado não é o do link: " + linha().querySelector(".campo-link").value);
 if (botaoDe("Compartilhar")) falhas.push("com o link ligado, Compartilhar continua à vista");
 if (!(lerDe("jogos_criados_v1") || [])[0]?.link) falhas.push("o link não ficou na lista guardada");
+// QR code: desenha o endereço do link, com a biblioteca trocada por um dublê.
+let codificado = null;
+window.carregarQR = async () => () => ({addData: t => { codificado = t; }, make() {}, getModuleCount: () => 21,
+                                         isDark: (r, c) => (r * c) % 3 === 0});
+botaoDe("QR code").click();
+await espere(() => linha().querySelector(".qr svg path"));
+if (codificado !== linha().querySelector(".campo-link").value) falhas.push("o QR code não leva o link: " + codificado);
+if (linha().querySelector(".qr").hidden) falhas.push("o QR code não apareceu");
+botaoDe("QR code").click();
+if (!linha().querySelector(".qr").hidden) falhas.push("o QR code não fecha");
 botaoDe("Desligar link").click();
 if (links.length !== 1) falhas.push("desligou no primeiro toque");
 [...linha().querySelectorAll("button")].find(b => /desligar|toque/i.test(b.textContent)).click();
@@ -483,6 +504,22 @@ await espere(() => botaoDe("Compartilhar"));
   if ($("entrar").hidden) falhas.push("sem sessão, o login não aparece");
   if (!/expirou/.test($("recado").innerText)) falhas.push("sessão que caiu não é explicada: " + $("recado").innerText);
   if ($("email").value !== "pai@exemplo.com") falhas.push("o login não traz o e-mail de quem estava dentro");
+}
+
+/* 18. Google: volta lida do fragmento, ida sem fragmento, convite explicado */
+{
+  const v = lerVolta("#access_token=aaa&refresh_token=bbb&token_type=bearer");
+  if (!v || v.token !== "aaa" || v.refresh !== "bbb") falhas.push("a volta do Google não é lida: " + JSON.stringify(v));
+  if (lerVolta("#material") !== null) falhas.push("etapa comum lida como volta do Google");
+  if (!/convite/.test(erroDoGoogle(lerVolta("#error=server_error&error_description=Database+error+saving+new+user").erro)))
+    falhas.push("conta nova pelo Google não explica o convite");
+  let pedido = null;
+  _sb = {auth: {signInWithOAuth: async o => { pedido = o; return {error: null}; }}};
+  history.replaceState(null, "", location.pathname + "#material");
+  $("botaoGoogle").click();
+  await espere(() => pedido);
+  if (pedido.provider !== "google" || /#/.test(pedido.options.redirectTo))
+    falhas.push("ida para o Google: " + JSON.stringify(pedido));
 }
 
 fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir, link", detalhes: falhas});

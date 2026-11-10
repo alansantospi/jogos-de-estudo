@@ -379,6 +379,15 @@ a.botao{text-decoration:none;font-weight:800}
 @media (max-width:34rem){.editando-jogo{grid-template-columns:1fr}}
 .faixa-acrescentar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;padding:.75rem 1rem;border-radius:var(--r);
  background:var(--acao-tinta);margin:0 0 1.25rem}
+.ou{display:flex;align-items:center;gap:.75rem;margin:0;color:var(--texto-2);font-size:.8125rem}
+.ou::before,.ou::after{content:"";flex:1;border-top:1px solid var(--risco)}
+/* Branco e preto nos dois temas: QR code invertido muita câmera não lê. */
+.qr{display:grid;justify-items:center;gap:.5rem;margin-top:.75rem;text-align:center}
+.qr svg{width:min(13rem,70vw);height:auto;fill:initial;stroke:none;border-radius:12px;box-shadow:var(--sombra)}
+.qr p{margin:0;color:var(--texto-2);font-size:.8125rem;max-width:22rem}
+.conferencia{margin:.25rem 0 .5rem;border-top:1px solid var(--risco)}
+.conferencia summary{cursor:pointer;min-height:2.75rem;display:flex;align-items:center;gap:.6rem;font-weight:800}
+.conferencia summary small{font-weight:600;color:var(--texto-2)}
 .cartao-entrar{max-width:24rem;margin:2rem auto;background:var(--carta);border:1px solid var(--risco);border-radius:var(--r-g);
  padding:1.5rem;display:grid;gap:.9rem}
 
@@ -417,6 +426,8 @@ a.botao{text-decoration:none;font-weight:800}
     <label>E-mail <input id="email" type="email" autocomplete="email" required></label>
     <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
     <button class="botao primario" type="submit">Entrar</button>
+    <p class="ou" aria-hidden="true"><span>ou</span></p>
+    <button class="botao secundario" type="button" id="botaoGoogle">Entrar com Google</button>
     <p class="nota">Ainda não tem conta? Estamos em teste fechado: <a href="index.html#conta">crie a sua</a> com o código de convite que você recebeu.</p>
     <p class="nota legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></p>
   </form>
@@ -541,7 +552,7 @@ a.botao{text-decoration:none;font-weight:800}
 <!-- 3. revisar -->
 <section id="revisao" data-e="3" hidden>
   <h1 tabindex="-1">Revise as questões</h1>
-  <p class="lead" id="leadRevisar">Aprove o que pode ir para o jogo. Cada uma traz o trecho de onde veio e os avisos da conferência.</p>
+  <p class="lead" id="leadRevisar">Já dá para jogar: o que não tem problema grave vai para o jogo. Revise antes, se quiser; depois também dá, em Meus jogos.</p>
   <div class="painel" id="resumo"></div>
   <div class="filtros" id="filtros" role="group" aria-label="Mostrar"></div>
   <div id="lista"></div>
@@ -646,6 +657,28 @@ const FOTO_LADO = 1568;
 const ARQUIVOS_MAX = 30, LOTE = 10, PDF_BYTES_MAX = 8e6;
 
 let estado = null, leitura = null, _sb = null;
+
+/* A volta do Google traz a sessão no fragmento (#access_token=...), e esta
+   tela usa o fragmento para as etapas: a primeira etapa o apagaria antes de
+   a biblioteca carregar. É lido e limpo aqui, antes de tudo, como no índice. */
+function lerVolta(h){
+  if(!/access_token=|error=|error_code=/.test(h || "")) return null;
+  const p = new URLSearchParams(String(h).slice(1));
+  return {token: p.get("access_token"), refresh: p.get("refresh_token") || "",
+          erro: p.get("error_description") || p.get("error_code") || p.get("error")};
+}
+const VOLTA = lerVolta(location.hash);
+if(VOLTA) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+
+/* Pelo Google não há onde pôr o convite: conta nova cai no gatilho do beta,
+   e o Supabase devolve só um erro genérico de banco. */
+function erroDoGoogle(m){
+  if(/database error|unexpected_failure|server_error/i.test(m))
+    return "Conta nova só com código de convite. Crie a sua na página inicial, em Conta, com o código que recebeu; "
+      + "depois o Google entra com o mesmo e-mail.";
+  if(/access_denied/i.test(m)) return "O Google não liberou a entrada. Tente de novo ou entre com e-mail e senha.";
+  return "Não deu para entrar com o Google: " + m;
+}
 let escolhidos = [], etapa = 1, filtro = "todas", lendo = false, gerando = false, editandoAgora = null;
 const $ = id => document.getElementById(id);
 
@@ -1325,6 +1358,9 @@ const comAviso = q => (q.problemas || []).length > 0;
 const vivas = () => estado.questoes.filter(q => q.estado !== "descartada");
 const aprovadas = () => estado.questoes.filter(q => q.estado === "aprovada");
 const limpasPendentes = () => estado.questoes.filter(q => q.estado === "pendente" && !comAviso(q));
+/* O que vai para o jogo num toque: o aprovado e o pendente sem problema
+   grave. Descartada e grave ficam de fora. Revisar é opcional. */
+const prontas = () => estado.questoes.filter(q => q.estado === "aprovada" || (q.estado === "pendente" && !grave(q)));
 
 const REGRAS = [["sempreAMaior", "Quem escolhe sempre a maior"],
                 ["sempreAMenor", "Quem escolhe sempre a menor"],
@@ -1355,6 +1391,7 @@ function corDaRevisao(){
   identidade.cor.atualizar(Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo), !p.cor);
 }
 
+let conferenciaAberta = false;
 function pintarResumo(){
   const l = estado.lote, c = $("resumo"), qs = estado.questoes;
   [...c.childNodes].forEach(x => { if(x !== identidade) x.remove(); });
@@ -1379,12 +1416,19 @@ function pintarResumo(){
   if(estado.plano) c.append(pintarPlano());
   if(estado.licao && Object.keys(estado.licao).length) c.append(pintarLicao());
   if(l){
-    c.append(el("ul", {class: "medida", "aria-label": "Quanto acerta quem chuta por atalho"}, REGRAS.map(([k, nome]) =>
+    // As medidas são para quem quer conferir: recolhidas, com o veredito no resumo.
+    const det = el("details", {class: "conferencia", ontoggle: ev => { conferenciaAberta = ev.target.open; }},
+      el("summary", {}, "Detalhes da conferência",
+        el("small", {}, l.fora.length ? plural(l.fora.length, "atalho fora da faixa", "atalhos fora da faixa")
+                                      : "atalhos dentro da faixa")));
+    det.open = conferenciaAberta;
+    c.append(det);
+    det.append(el("ul", {class: "medida", "aria-label": "Quanto acerta quem chuta por atalho"}, REGRAS.map(([k, nome]) =>
       el("li", {class: l.fora.includes(k) ? "fora" : ""}, el("span", {}, nome),
          el("b", {}, l[k].toFixed(0) + "%"),
          el("span", {class: "regua", "aria-hidden": "true"},
             el("i", {style: "left:" + Math.min(100, Math.max(0, l[k])) + "%"}))))));
-    c.append(el("p", {class: "nota"}, l.amostraPequena
+    det.append(el("p", {class: "nota"}, l.amostraPequena
       ? "O acaso puro acerta 25%. Com " + l.n + " questões a média ainda é ruído, então ela não reprova: "
         + "o que conta são os avisos em cada questão. No jogo montado, o build mede de novo."
       : "O acaso puro acerta 25%; a faixa verde, de 15% a 35%, é a aceita. Medido sobre as " + l.n
@@ -1569,9 +1613,12 @@ function pintar(){
     : [el("p", {class: "nota"}, "Nenhuma questão neste filtro.")]));
   const n = aprovadas().length, pend = estado.questoes.filter(q => q.estado === "pendente").length;
   $("baixar").disabled = !n;
-  $("salvar").disabled = !n || gerando;
-  $("salvar").querySelector("span").textContent = n
-    ? (estado.jogoId ? "Atualizar e jogar" : "Salvar e jogar") + " (" + n + ")" : "Aprove para salvar";
+  const vao = prontas().length, soltas = vao - n;
+  $("salvar").disabled = !vao || gerando;
+  $("salvar").querySelector("span").textContent = !vao ? "Nada para jogar ainda"
+    : soltas ? "Pronto, jogar (" + vao + ")"
+    : (estado.jogoId ? "Atualizar e jogar" : "Salvar e jogar") + " (" + n + ")";
+  $("salvar").title = soltas ? "Aprova as " + soltas + " pendentes sem problema grave e salva" : "";
   $("resumoPe").textContent = pend ? plural(pend, "questão pendente", "questões pendentes") : "Tudo revisado.";
   // Salvo, o jogo está na conta: descartar não faz sentido, começar outro faz.
   $("recomecar").hidden = !!estado.jogoId;
@@ -1692,6 +1739,9 @@ async function gravarJogo(linha, id){
 function abrirJogo(id){ location.href = "jogar.html?id=" + encodeURIComponent(id); }
 
 async function salvarJogo(){
+  // Jogar já: o pendente sem problema grave entra aprovado.
+  prontas().forEach(q => { q.estado = "aprovada"; });
+  guardar();
   const c = montarConteudo();
   const b = $("salvar");
   b.classList.add("ocupado"); b.disabled = true;
@@ -1812,13 +1862,52 @@ function linhaDoLink(j){
     copiar.textContent = "Copiado";
     setTimeout(() => { copiar.textContent = "Copiar"; }, 2000);
   });
+  const qr = el("div", {class: "qr", hidden: true});
+  const botaoQR = el("button", {class: "botao secundario", type: "button", "aria-expanded": "false"}, "QR code");
+  botaoQR.addEventListener("click", async () => {
+    const abrir = qr.hidden;
+    qr.hidden = !abrir;
+    botaoQR.setAttribute("aria-expanded", String(abrir));
+    if(!abrir || qr.firstChild) return;
+    qr.append(el("div", {class: "esqueleto", style: "height:12rem;width:12rem;margin:0"}));
+    try{
+      qr.replaceChildren(await desenharQR(campo.value),
+        el("p", {}, "Aponte a câmera do tablet ou do celular da criança: o jogo abre direto, sem conta."));
+    }catch(e){
+      qr.replaceChildren(el("p", {}, "Não consegui desenhar o QR code. Copie o link e mande por mensagem."));
+    }
+  });
   const desligar = el("button", {class: "botao discreto", type: "button"}, "Desligar link");
   desligar.addEventListener("click", () => {
     if(confirmar("link" + j.id, desligar, "Toque de novo: o link para de abrir")) mudarLink(j, null, desligar);
   });
   return el("div", {class: "link-jogo"},
     el("p", {}, "Quem tiver este link joga sem entrar na conta. Não deixa editar; do material, mostra só os trechos que as questões citam."),
-    el("div", {class: "acoes"}, campo, copiar, desligar));
+    el("div", {class: "acoes"}, campo, copiar, botaoQR, desligar), qr);
+}
+
+/* O QR code do link: a biblioteca só carrega quando alguém pede. O desenho
+   sai daqui, com elementos, e não do SVG em texto que ela oferece. */
+const QR_LIB = "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/+esm";
+async function carregarQR(){ return (await import(QR_LIB)).default; }
+async function desenharQR(texto){
+  const qrcode = await carregarQR();
+  const q = qrcode(0, "M");
+  q.addData(texto); q.make();
+  const n = q.getModuleCount(), m = 3, lado = n + 2 * m;
+  let d = "";
+  for(let r = 0; r < n; r++) for(let c = 0; c < n; c++) if(q.isDark(r, c)) d += "M" + (c + m) + " " + (r + m) + "h1v1h-1z";
+  const ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 " + lado + " " + lado);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "QR code do link do jogo");
+  svg.setAttribute("shape-rendering", "crispEdges");
+  const fundo = document.createElementNS(ns, "rect");
+  fundo.setAttribute("width", lado); fundo.setAttribute("height", lado); fundo.setAttribute("fill", "#fff");
+  const p = document.createElementNS(ns, "path");
+  p.setAttribute("d", d); p.setAttribute("fill", "#000");
+  svg.append(fundo, p);
+  return svg;
 }
 
 async function mudarLink(j, link, botao){
@@ -1981,6 +2070,20 @@ async function entrar(ev){
   finally{ b.classList.remove("ocupado"); b.disabled = false; }
 }
 
+async function entrarGoogle(){
+  const b = $("botaoGoogle");
+  b.classList.add("ocupado"); b.disabled = true;
+  try{
+    const sb = await cliente();
+    // Sem o fragmento: o Supabase acrescenta o dele, e dois # não se leem.
+    const {error} = await sb.auth.signInWithOAuth({provider: "google", options: {redirectTo: location.href.split("#")[0]}});
+    if(error) throw error;
+  }catch(e){
+    recado(erroDoGoogle(e.message || String(e)), true);
+    b.classList.remove("ocupado"); b.disabled = false;
+  }
+}
+
 async function sair(){
   // Só deste aparelho: o padrão "global" derrubava os outros também.
   try{ await (await cliente()).auth.signOut({scope: "local"}); }catch(e){}
@@ -1991,6 +2094,7 @@ async function sair(){
 function ligar(){
   $("pedido").addEventListener("submit", pedir);
   $("formEntrar").addEventListener("submit", entrar);
+  $("botaoGoogle").addEventListener("click", entrarGoogle);
   $("sair").addEventListener("click", sair);
   ["material", "titulo", "materia", "ano"].forEach(k =>
     $(k).addEventListener("input", () => { contar(); guardarMaterial(); }));
@@ -2057,8 +2161,11 @@ async function iniciar(){
   irPara(daUrl() || melhor(), false);
   try{
     const sb = await cliente();
+    if(VOLTA && VOLTA.token)
+      await sb.auth.setSession({access_token: VOLTA.token, refresh_token: VOLTA.refresh});
     const {data} = await sb.auth.getSession();
     mostrarConta(data.session);
+    if(VOLTA && VOLTA.erro) recado(erroDoGoogle(VOLTA.erro), true);
     vigiarSessao(sb);
   }catch(e){
     mostrarConta(null);
