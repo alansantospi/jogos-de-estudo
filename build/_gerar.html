@@ -255,7 +255,7 @@ button{font:inherit;font-weight:800;cursor:pointer}
 
 /* A capa: o card do jogo que vai sair, na cor dele, com matéria e nome
    escritos no próprio card. --tom vem do JS (pintarCapa). */
-#pedido{--tom:var(--acao-solida)}
+#app{--tom:var(--acao-solida)}
 .capa{position:relative;display:grid;gap:.35rem;padding:1.1rem 1.25rem 1.2rem;margin:.75rem 0 1rem;
  border-radius:var(--r-g);background:var(--tom);color:#fff;overflow:hidden;
  box-shadow:0 4px 0 color-mix(in oklch,var(--tom) 62%,black);
@@ -297,6 +297,31 @@ button{font:inherit;font-weight:800;cursor:pointer}
 .caixa-material summary small{color:var(--texto-2);font-weight:600;font-variant-numeric:tabular-nums}
 .caixa-material > div{padding:0 1rem 1rem}
 .dica-gerar{margin:.75rem 0 0}
+.ajustar{margin:1.25rem 0 0;border:1px solid var(--risco);border-radius:var(--r);background:var(--carta)}
+.ajustar > summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:3rem;
+ padding:.5rem 1rem;cursor:pointer;font-weight:800}
+.ajustar > summary small{color:var(--texto-2);font-weight:600;text-align:right}
+.dentro-ajustar{padding:0 1rem 1rem}
+.dentro-ajustar .capa{margin-top:0}
+.conferir-antes{display:flex;gap:.5rem;align-items:center;margin:1.25rem 0 0;font-weight:700}
+.capa-pronta{margin-top:0;padding:1.5rem 1.25rem 1.75rem}
+.pilula-materia{justify-self:start;max-width:calc(100% - 3.5rem);padding:.15rem .8rem;border-radius:999px;
+ background:rgb(255 255 255 / .2);font-weight:800}
+.pilula-materia:empty{display:none}
+.nome-pronto{font-family:var(--display);font-weight:700;font-size:1.9rem;line-height:1.2;overflow-wrap:anywhere}
+@media (max-width:30rem){.nome-pronto{font-size:1.5rem}}
+.andamento{height:.6rem;border-radius:999px;background:var(--risco);overflow:hidden;margin:.5rem 0 .75rem}
+.andamento > span{display:block;height:100%;border-radius:inherit;background:var(--tom);transition:width .5s var(--saida)}
+.andamento.indeterminado > span{width:30%;animation:vaivem 1.4s var(--saida) infinite alternate}
+@keyframes vaivem{from{margin-left:0}to{margin-left:70%}}
+@media (prefers-reduced-motion:reduce){.andamento.indeterminado > span{animation:none;width:100%;opacity:.4}}
+.andamento-texto{margin:0;font-weight:800;font-variant-numeric:tabular-nums}
+.pode-fechar{margin:.25rem 0 0;color:var(--texto-2)}
+#criando .jogar{display:flex;width:100%;justify-content:center;background:var(--tom);margin:.25rem 0 .75rem}
+#criando .acoes{display:flex;flex-wrap:wrap;gap:.5rem}
+.falta-pronto{margin:1rem 0 0;padding:.75rem 1rem;border-radius:var(--r);background:var(--cuidado-tinta)}
+.falta-pronto button{margin-left:.5rem}
+.voltar-pronto{margin:0 0 .5rem}
 .dica-gerar:empty{display:none}
 #paginas:not(:empty){margin-bottom:.5rem}
 
@@ -473,7 +498,7 @@ a.botao{text-decoration:none;font-weight:800}
 </section>
 
 <div id="app" hidden>
-<ol class="etapas" id="etapas" aria-label="Etapas">
+<ol class="etapas" id="etapas" aria-label="Etapas" hidden>
   <li><button type="button" data-etapa="1"><span class="num">1</span><span class="rotulo">Material</span></button></li>
   <li><button type="button" data-etapa="2"><span class="num">2</span><span class="rotulo">Jogo</span></button></li>
   <li><button type="button" data-etapa="3"><span class="num">3</span><span class="rotulo">Revisar</span></button></li>
@@ -515,7 +540,7 @@ a.botao{text-decoration:none;font-weight:800}
     </label>
     <ul class="miniaturas" id="miniaturas"></ul>
     <div class="acoes">
-      <button class="botao primario" id="botaoLer" type="button" disabled>Ler as páginas</button>
+      <button class="botao primario grande" id="botaoLer" type="button" disabled>Criar jogo</button>
     </div>
   </div>
 
@@ -524,15 +549,14 @@ a.botao{text-decoration:none;font-weight:800}
     <textarea id="textoColado" rows="12"
       placeholder="Cole o texto aqui"></textarea>
     <div class="contador" id="contadorTexto"></div>
-    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Continuar</button></div>
+    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Criar jogo</button></div>
   </div>
-</section>
 
-<!-- 2. o jogo: a capa primeiro, o detalhe recolhido -->
-<form id="pedido" data-e="2" hidden novalidate>
-  <div class="faixa-acrescentar" id="faixa2" hidden></div>
-  <h1 tabindex="-1" id="tituloConferir">Seu jogo</h1>
-
+  <!-- Sem tocar em nada valem os padrões: nome e matéria sugeridos, cor da
+       matéria, o material decide, o último ano. -->
+  <details class="ajustar" id="ajustar">
+    <summary>Ajustar <small id="resumoAjustar"></small></summary>
+    <div class="dentro-ajustar">
   <!-- A capa é o card que vai aparecer na página inicial, já na cor do jogo. -->
   <div class="capa" id="capa">
     <svg class="marca-capa" aria-hidden="true"><use href="#i-livro"/></svg>
@@ -543,7 +567,6 @@ a.botao{text-decoration:none;font-weight:800}
   </div>
   <div id="escolhaCor"></div>
   <input type="hidden" id="cor" value="">
-  <div id="paginas"></div>
 
   <div class="ajustes">
     <fieldset class="quantas">
@@ -565,6 +588,17 @@ a.botao{text-decoration:none;font-weight:800}
   <datalist id="materias"><option>Ciências</option><option>Geografia</option><option>História</option>
     <option>Língua Portuguesa</option><option>Matemática</option><option>Inglês</option><option>Arte</option></datalist>
 
+      <label class="conferir-antes"><input type="checkbox" id="conferirAntes"> Conferir a leitura antes de criar</label>
+    </div>
+  </details>
+</section>
+
+<!-- 2. o jogo: a capa primeiro, o detalhe recolhido -->
+<form id="pedido" data-e="2" hidden novalidate>
+  <div class="faixa-acrescentar" id="faixa2" hidden></div>
+  <h1 tabindex="-1" id="tituloConferir">Confira a leitura</h1>
+  <div id="paginas"></div>
+
   <details class="caixa-material" id="caixaMaterial">
     <summary>Ver e editar o texto <small id="resumoMaterial"></small></summary>
     <div>
@@ -579,13 +613,25 @@ a.botao{text-decoration:none;font-weight:800}
   <div class="pe pe-gerar">
     <div class="dentro">
       <button class="botao discreto" type="button" id="voltar1">Voltar</button>
-      <button class="botao primario grande empurra" id="botaoGerar" type="submit">Gerar questões</button>
+      <button class="botao primario grande empurra" id="botaoGerar" type="submit">Criar jogo</button>
     </div>
   </div>
 </form>
 
+<!-- criando e pronto: a capa do jogo, o andamento, e Jogar -->
+<section id="criando" data-e="5" hidden>
+  <h1 tabindex="-1" class="so-leitor" id="tituloCriando">Criando o jogo</h1>
+  <div class="capa capa-pronta" id="capaPronta">
+    <svg class="marca-capa" aria-hidden="true"><use href="#i-livro"/></svg>
+    <span class="pilula-materia" id="prontaMateria"></span>
+    <strong class="nome-pronto" id="prontaNome"></strong>
+  </div>
+  <div id="andamento"></div>
+</section>
+
 <!-- 3. revisar -->
 <section id="revisao" data-e="3" hidden>
+  <button class="link voltar-pronto" id="voltarPronto" type="button" hidden>← O jogo</button>
   <h1 tabindex="-1">Revise as questões</h1>
   <div class="painel" id="resumo"></div>
   <div class="filtros" id="filtros" role="group" aria-label="Mostrar"></div>
@@ -743,12 +789,12 @@ function relogio(texto, faixa){
 /* A etapa mora na URL, como as telas dos jogos (DESIGN.md, Navegação): o
    voltar do celular recua uma etapa em vez de sair da página, e recarregar
    cai de volta onde estava. */
-const NOMES = {1: "material", 2: "conferir", 3: "revisar", 4: "meus"};
+const NOMES = {1: "material", 2: "conferir", 3: "revisar", 4: "meus", 5: "criando"};
 const daUrl = () => Number(Object.keys(NOMES).find(k => "#" + NOMES[k] === location.hash)) || 0;
-const melhor = () => estado ? 3 : (leitura || $("material").value.trim()) ? 2 : 1;
+const melhor = () => estado ? (estado.fila ? 5 : 3) : (leitura || $("material").value.trim()) ? 2 : 1;
 
 const alcanca = n => n === 1 || n === 4 || (n === 2 && (!!leitura || !!$("material").value.trim() || !!estado))
-                            || (n === 3 && (!!estado || gerando));
+                            || (n === 3 && (!!estado || gerando)) || (n === 5 && (gerando || !!(estado && estado.fila)));
 
 function irPara(n, focar = true){
   if(!alcanca(n)) n = melhor();
@@ -770,7 +816,8 @@ function irPara(n, focar = true){
   });
   $("pe").hidden = n !== 3 || !estado;
   // Meus jogos é outra vista, não uma etapa: some o indicador, troca a aba.
-  $("etapas").hidden = n === 4;
+  if(n === 5) pintarCriando();
+  $("voltarPronto").hidden = !(estado && estado.fila);
   $("abaMeus").classList.toggle("atual", n === 4);
   $("abaCriar").classList.toggle("atual", n !== 4);
   $("linkMeus").toggleAttribute("aria-current", n === 4);
@@ -836,7 +883,7 @@ function pintarEscolhidos(){
     el("span", {class: "nome", title: x.f.name}, x.f.name))));
   $("botaoLer").disabled = !n || lendo;
   $("botaoLer").classList.toggle("ocupado", lendo);
-  $("botaoLer").textContent = n ? "Pronto, ler " + plural(n, "página", "páginas") : "Ler as páginas";
+  $("botaoLer").textContent = lendo ? "Lendo..." : $("conferirAntes").checked && n ? "Ler " + plural(n, "página", "páginas") : "Criar jogo";
 }
 
 const base64 = blob => new Promise((ok, falha) => {
@@ -936,6 +983,7 @@ async function lerArquivos(){
     escolhidos.forEach(x => x.url && URL.revokeObjectURL(x.url));
     escolhidos = [];
     mostrarLeitura(r);
+    seguir();
   }catch(e){
     parar();
     recado(e.message, true);
@@ -976,6 +1024,16 @@ function continuarTexto(){
   aplicarSugestao(tituloDoTexto(t), "", "da primeira linha do texto");
   pintarPaginas(); contar(); guardarMaterial();
   irPara(2);
+  seguir();
+}
+
+/* Um toque: lido o material, o jogo já vai para a fila. Fica na conferência
+   quem pediu para conferir, e o material que não serve como está (nada
+   lido, curto ou longo demais), que é onde dá para arrumar. */
+function seguir(){
+  const n = $("material").value.trim().length;
+  if($("conferirAntes").checked || n < MATERIAL_MIN || n > MATERIAL_MAX) return;
+  $("pedido").requestSubmit();
 }
 
 /* ---------- 2. conferir ---------- */
@@ -1048,7 +1106,7 @@ let corPedido = null;
 function pintarCapa(){
   if(!corPedido) return;
   const k = corAtual();
-  $("pedido").style.setProperty("--tom", CORES_JOGO[k].valor);
+  $("app").style.setProperty("--tom", CORES_JOGO[k].valor);
   corPedido.atualizar(k, !$("cor").value);
 }
 function escolherCor(k){ $("cor").value = k; pintarCapa(); guardarMaterial(); }
@@ -1106,7 +1164,9 @@ function contar(){
     : auto ? "Umas " + q + " questões."
     : alem ? "Este material dá umas " + cabem + "."
     : "";
-  $("botaoGerar").textContent = gerando ? "Gerando..." : auto ? "Gerar o jogo" : "Gerar " + q + " questões";
+  $("botaoGerar").textContent = gerando ? "Criando..." : auto ? "Criar jogo" : "Criar jogo · " + q + " questões";
+  $("resumoAjustar").textContent = [$("materia").value.trim(), auto ? "o material decide" : q + " questões", $("ano").value]
+    .filter(Boolean).join(" · ");
   $("dicaGerar").textContent = estado && estado.acrescentar
       ? "Conta como outro jogo do dia."
     : estado && !estado.jogoId ? "Substitui as questões em revisão."
@@ -1161,7 +1221,8 @@ async function pedir(ev){
   // Acrescentar: o jogo aberto continua, e as missões novas entram nele.
   const base = estado && estado.acrescentar ? estado : null;
   estado = null;
-  irPara(3);
+  if(!base){ irPara(5); pintarCriando(); }
+  else irPara(3);
   $("resumo").replaceChildren();
   $("filtros").replaceChildren();
   $("lista").replaceChildren(...Array.from({length: 3}, () => el("div", {class: "esqueleto"})));
@@ -1228,7 +1289,7 @@ async function pedir(ev){
     gerando = false;
     if(!estado) estado = anterior;
     contar();
-    if(estado){ irPara(3, false); pintar(); } else irPara(2);
+    if(estado){ irPara(melhor(), false); pintar(); } else irPara(2);
     recado(e.message, true);
   }
 }
@@ -1305,9 +1366,9 @@ function aplicarCriacao({criacao: c, tarefas}){
 let olhando = null;
 function acompanhar(parar){
   if(olhando) return olhando;
-  const fila = estado.fila, t0 = Date.now();
+  const fila = estado.fila;
   gerando = true; contar();
-  irPara(3, false);
+  if(etapa !== 3) irPara(5, false);
   pintar();
   olhando = (async () => {
     let semNoticia = 0;
@@ -1328,11 +1389,7 @@ function acompanhar(parar){
         guardar();
         pintar();
         if(filaTerminou()) break;
-        const ps = [...Object.values(estado.partes), ...Object.values(estado.licao)];
-        recado(estado.plano
-          ? "Escrevendo as missões e a lição: " + ps.filter(p => p.estado === "pronta").length + " de " + ps.length
-            + " prontas · " + Math.round((Date.now() - t0) / 1000) + " s. Pode fechar: o jogo fica em Meus jogos quando ficar pronto."
-          : "Dividindo em missões... Pode fechar: o jogo fica em Meus jogos quando ficar pronto.");
+        if(semNoticia === 0) recado("");
         await esperar(INTERVALO_FILA);
       }
     }finally{
@@ -1349,16 +1406,68 @@ function acompanhar(parar){
       irPara(2);
       return recado(erro, true);
     }
-    const falhas = Object.values(estado.partes).filter(p => p.estado === "falhou").length;
-    const semLicao = Object.values(estado.licao).filter(p => p.estado === "falhou").length;
-    recado([estado.filaErro,
-            estado.jogoId && !falhas ? "Pronto: o jogo já está em Meus jogos." : "",
-            falhas ? plural(falhas, "missão não veio", "missões não vieram") + ". Tente de novo na lista de missões, acima." : "",
-            semLicao ? plural(semLicao, "lição de missão não veio", "lições de missão não vieram") + ". Tente de novo em Lição, acima." : ""]
-           .filter(Boolean).join(" "), !!(falhas || semLicao || estado.filaErro));
+    recado(estado.filaErro || "", !!estado.filaErro);
     await remedir();
   })();
   return olhando;
+}
+
+/* Criando: a capa do jogo e o andamento. Pronto: Jogar, e o resto como
+   opção — compartilhar, revisar, tentar de novo o que não veio. */
+function pintarCriando(){
+  const e = estado;
+  const p = e ? e.pedido : {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(), cor: $("cor").value};
+  const k = Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia || "", p.titulo || "");
+  $("criando").style.setProperty("--tom", CORES_JOGO[k].valor);
+  $("prontaMateria").textContent = p.materia || "";
+  $("prontaNome").textContent = p.titulo || "Seu jogo";
+  const caixa = $("andamento");
+  const missoes = e ? Object.entries(e.partes || {}) : [], licoes = e ? Object.entries(e.licao || {}) : [];
+  if(!e || !filaTerminou()){
+    const feitas = missoes.filter(([, x]) => x.estado === "pronta").length;
+    const licoesFeitas = licoes.filter(([, x]) => x.estado === "pronta").length;
+    const total = missoes.length + licoes.length, pronto = feitas + licoesFeitas;
+    $("tituloCriando").textContent = "Criando o jogo";
+    return caixa.replaceChildren(
+      el("div", {class: "andamento" + (total ? "" : " indeterminado"), role: "progressbar", "aria-label": "Andamento",
+                 "aria-valuemin": "0", "aria-valuemax": String(total || 1), "aria-valuenow": String(pronto)},
+        el("span", {style: total ? "width:" + Math.round(100 * pronto / total) + "%" : ""})),
+      el("p", {class: "andamento-texto"}, !e || !e.plano ? "Dividindo o material em missões..."
+        : feitas < missoes.length ? feitas + " de " + plural(missoes.length, "missão", "missões")
+        : "Escrevendo a lição"),
+      el("p", {class: "pode-fechar"}, "Pode fechar. O jogo fica em Meus jogos quando ficar pronto."));
+  }
+  $("tituloCriando").textContent = "Jogo pronto";
+  const naoVieram = [...missoes.filter(([, x]) => x.estado === "falhou").map(([id]) => ["missao", id]),
+                     ...licoes.filter(([, x]) => x.estado === "falhou").map(([id]) => ["licao", id])];
+  const nMissoes = naoVieram.filter(([t]) => t === "missao").length;
+  const comAviso = comAvisoPendentes().length, novas = e.jogoId ? limpasPendentes().length : 0;
+  let compartilhar = null;
+  if(e.jogoId && !e.link){
+    compartilhar = el("button", {class: "botao secundario", type: "button"}, "Compartilhar");
+    compartilhar.addEventListener("click", () => mudarLink({id: e.jogoId, titulo: p.titulo}, crypto.randomUUID(), compartilhar));
+  }
+  // replaceChildren escreveria "null" como texto: as partes ausentes saem antes.
+  caixa.replaceChildren(...[
+    e.jogoId ? el("a", {class: "botao primario grande jogar", href: "jogar.html?id=" + encodeURIComponent(e.jogoId)}, "Jogar")
+      : el("p", {class: "nota"}, e.filaErro || "Nenhuma questão passou sem aviso. Revise para montar o jogo."),
+    el("div", {class: "acoes"}, compartilhar,
+      el("button", {class: "botao " + (e.jogoId ? "secundario" : "primario"), type: "button", onclick: () => irPara(3)},
+        comAviso ? "Revisar · " + comAviso + " com aviso" : "Revisar"),
+      el("button", {class: "botao discreto", type: "button", onclick: novoJogo}, "Novo jogo")),
+    e.jogoId && e.link ? linhaDoLink({id: e.jogoId, titulo: p.titulo, link: e.link}) : null,
+    novas ? el("p", {class: "falta-pronto"}, plural(novas, "questão nova ficou", "questões novas ficaram") + " fora do jogo.",
+      el("button", {class: "botao secundario", type: "button", onclick: salvarJogo}, "Pôr no jogo")) : null,
+    naoVieram.length ? el("p", {class: "falta-pronto"},
+      nMissoes ? plural(nMissoes, "missão não veio", "missões não vieram") + "." : "A lição de " + plural(naoVieram.length, "missão", "missões") + " não veio.",
+      el("button", {class: "botao secundario", type: "button", onclick: tentarFaltas}, "Tentar de novo")) : null]
+    .filter(Boolean));
+}
+
+async function tentarFaltas(){
+  const faltas = [...Object.entries(estado.partes).filter(([, x]) => x.estado === "falhou").map(([id]) => ["missao", id]),
+                  ...Object.entries(estado.licao).filter(([, x]) => x.estado === "falhou").map(([id]) => ["licao", id])];
+  for(const [tipo, id] of faltas) await tentarNaFila(tipo, id);
 }
 
 /* Tentar de novo dentro da fila: a tarefa volta, e a tela volta a olhar. */
@@ -1752,6 +1861,7 @@ function cartaEdicao(q, i){
    uma edição não pode fechar o formulário e perder o que se digitou. */
 function pintar(){
   if(!estado) return;
+  if(etapa === 5) pintarCriando();
   const editando = editandoAgora;
   pintarResumo();
   pintarFiltros();
@@ -2048,6 +2158,7 @@ async function mudarLink(j, link, botao){
     const lista = (lerDe("jogos_criados_v1") || []).map(x => x.id === j.id ? {...x, link} : x);
     guardarEm("jogos_criados_v1", lista);
     pintarMeus(lista);
+    if(estado && estado.jogoId === j.id){ estado.link = link; guardar(); if(etapa === 5) pintarCriando(); }
     recado(link ? "Link ligado. Copie e mande para quem vai jogar." : "Link desligado: o endereço antigo não abre mais.");
   }catch(e){
     recado("Não consegui mudar o link: " + e.message, true);
@@ -2255,6 +2366,8 @@ function ligar(){
   $("escolhaCor").append(corPedido);
   $("outroJogo").addEventListener("click", novoJogo);
   $("voltar1").addEventListener("click", () => irPara(1));
+  $("voltarPronto").addEventListener("click", () => irPara(5));
+  $("conferirAntes").addEventListener("change", pintarEscolhidos);
   $("novoJogo").addEventListener("click", novoJogo);
   $("abaFotos").addEventListener("click", () => aba("fotos"));
   $("abaTexto").addEventListener("click", () => aba("texto"));

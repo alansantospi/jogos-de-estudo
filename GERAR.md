@@ -253,6 +253,11 @@ jogo com as questões sem aviso. Fechar a tela não para nada; voltar retoma
 de onde está. Acrescentar questões e criar a lição de jogo antigo continuam
 conduzidos pela tela.
 
+Na tela é um toque só: o material e **Criar jogo**. Lidas as fotos (ou
+colado o texto), o jogo vai direto para a fila, e a tela mostra a capa com
+o andamento e, no fim, **Jogar**. Revisar fica como opção. Quem quer ver a
+leitura antes liga "Conferir a leitura antes de criar", em Ajustar.
+
 Cada tarefa tenta duas vezes sozinha antes de virar "não veio"; "Tentar de
 novo" dá mais uma, dentro do mesmo jogo. As cercas são as mesmas de
 `reservar_geracao`. A lógica está em `supabase/functions/_esteira/fila.ts`

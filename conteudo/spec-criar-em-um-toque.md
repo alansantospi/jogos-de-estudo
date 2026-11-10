@@ -183,3 +183,21 @@ Cada fase vai ao ar sozinha.
   revisão aberta, e "Atualizar e jogar" as leva para o jogo.
 - Acrescentar questões a um jogo salvo e criar a lição de um jogo antigo
   continuam conduzidos pelo navegador até a fase 2.
+
+## Fase 2a, como ficou
+
+- Material → **Criar jogo** → Criando → Pronto. "Ajustar" fica recolhido
+  no Material (capa, cor, quantas, ano), com o resumo do que vale à vista.
+- "Conferir a leitura antes de criar" leva à etapa de conferir, como antes.
+  Ela também abre sozinha quando o material não serve como está (nada lido,
+  curto ou longo demais).
+- Criando: a capa na cor do jogo, a barra de andamento, "N de M missões" e
+  "Pode fechar". Pronto: **Jogar**; Compartilhar, Revisar (com quantas têm
+  aviso) e Novo jogo como opção; o que não veio, com Tentar de novo; o que
+  chegou depois de salvo, com "Pôr no jogo".
+- A página inicial mostra a criação em curso como card "Criando…", que leva
+  à tela de criar.
+- **Falta (2b):** as fotos subirem e a leitura ir para a fila. Até lá, a
+  tela precisa ficar aberta só enquanto lê as fotos. Acrescentar questões e
+  criar a lição de jogo antigo ainda são conduzidos pela tela, e as ações
+  antigas da função ficam por causa deles.

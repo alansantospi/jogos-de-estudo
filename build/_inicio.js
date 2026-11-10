@@ -318,17 +318,28 @@ const CRIADOS = "jogos_criados_v1";
    não aparecem como se ainda estivesse dentro. Antes de conferir (e sem
    rede), eles aparecem: é o que deixa abrir sem esperar. */
 let contaSemSessao = false;
+/* O jogo que o servidor está criando agora (uma criação por conta), como
+   card "Criando…" que leva à tela de criar. Não fica guardado: só vale o
+   que a conta diz agora. */
+let emCriacao = null, vigiaCriacao = null;
 
 function pintarMeusJogos(){
   const l = ler(CRIADOS) || [];
   const s = document.getElementById("meusJogos");
-  s.hidden = !l.length;
+  const c = contaSemSessao ? null : emCriacao;
+  s.hidden = !l.length && !c;
   if(contaSemSessao && l.length){
     document.getElementById("gradeMeus").innerHTML = '<li class="fora-da-conta">Entre na conta para ver os jogos '
       + 'que você criou. <a href="#conta">Entrar</a></li>';
     return;
   }
-  document.getElementById("gradeMeus").innerHTML = l.map(j =>
+  document.getElementById("gradeMeus").innerHTML = (c
+    ? '<li class="gerado criando" style="--cor-jogo:' + CORES_JOGO[corDoJogo(c)].valor + '">'
+      + '<a class="jogo" href="gerar.html#criando">'
+      + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
+      + '<span class="materia">' + esc(c.materia || "Jogo novo") + '</span>'
+      + '<span><span class="nome">' + esc(c.titulo || "Seu jogo") + '</span>'
+      + '<span class="desc">Criando…</span></span></a></li>' : "") + l.map(j =>
     // A cor sai da tabela pela chave: o que vem do banco nunca entra no CSS.
     '<li class="gerado" style="--cor-jogo:' + CORES_JOGO[corDoJogo(j)].valor + '">'
     + '<a class="jogo" href="jogar.html?id=' + encodeURIComponent(j.id) + '">'
@@ -351,7 +362,13 @@ async function buscarMeusJogos(){
       .order("criado", {ascending: false});
     if(error) return;
     gravar(CRIADOS, data);
+    const r = await sb.from("criacoes").select("id,titulo:pedido->>titulo,materia:pedido->>materia,cor:pedido->>cor")
+      .in("estado", ["planejando", "escrevendo", "montando"]).limit(1);
+    emCriacao = !r.error && r.data && r.data[0] || null;
     pintarMeusJogos();
+    // Enquanto cria, olha de novo de vez em quando: o card vira o jogo pronto.
+    clearTimeout(vigiaCriacao);
+    if(emCriacao) vigiaCriacao = setTimeout(buscarMeusJogos, 20000);
   }catch(e){}
 }
 

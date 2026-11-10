@@ -146,3 +146,8 @@ footer .legal a{color:var(--texto-2)}
 .cartao-resumo.geo .grande{color:var(--geografia)}
 .cartao-resumo.rest .grande{color:var(--restaurante)}
 .cartao-resumo.micro .grande{color:var(--microscopico)}
+/* O jogo que o servidor ainda está criando: o card pulsa de leve. */
+.gerado.criando .desc{font-weight:800}
+.gerado.criando .marca{animation:criando 1.6s ease-in-out infinite alternate}
+@keyframes criando{from{opacity:1}to{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.gerado.criando .marca{animation:none}}

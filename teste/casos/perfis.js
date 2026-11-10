@@ -81,6 +81,21 @@ if (document.querySelector('#gradeMeus a[href^="jogar.html"]') || !/Entre na con
   falhas.push("sem sessão, Meus jogos continua mostrando os jogos como se estivesse dentro");
 contaSemSessao = false;
 localStorage.removeItem("jogos_criados_v1");
+// O jogo que o servidor ainda cria aparece como card "Criando…", mesmo sem outro jogo.
+emCriacao = {id: 9, titulo: "Novo <b>x</b>", materia: "Geografia", cor: ""};
+pintarMeusJogos();
+{
+  const primeiro = document.querySelector("#gradeMeus li");
+  if (document.getElementById("meusJogos").hidden || !primeiro || !primeiro.classList.contains("criando"))
+    falhas.push("o jogo em criação não aparece no índice");
+  else {
+    if (primeiro.querySelector("a").getAttribute("href") !== "gerar.html#criando") falhas.push("o card em criação não leva à tela de criar");
+    if (!/Criando/.test(primeiro.innerText) || primeiro.querySelector("b")) falhas.push("o card em criação: " + primeiro.innerHTML);
+  }
+}
+emCriacao = null;
+pintarMeusJogos();
+if (document.querySelector("#gradeMeus li.criando")) falhas.push("acabada a criação, o card continua");
 
 // Do índice se chega à tela de criar jogo, pela mesma fila de abas.
 if (!document.querySelector('.abas a[href="gerar.html"]')) falhas.push("o índice não leva a criar jogo");

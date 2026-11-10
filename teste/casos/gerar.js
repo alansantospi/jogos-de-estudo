@@ -124,7 +124,7 @@ if (Math.max(volta.width, volta.height) !== 1568) falhas.push("a foto subiu com 
   $("fotografar").dispatchEvent(new Event("change"));
   if (escolhidos.length !== 1) falhas.push("a foto da câmera não entrou na fila: " + escolhidos.length);
   if ($("cameraRotulo").textContent !== "Mais uma página") falhas.push("depois da foto, a câmera não oferece mais uma: " + $("cameraRotulo").textContent);
-  if ($("botaoLer").textContent !== "Pronto, ler 1 página") falhas.push("o botão de ler: " + $("botaoLer").textContent);
+  if ($("botaoLer").textContent !== "Criar jogo") falhas.push("o botão de ler: " + $("botaoLer").textContent);
   if ($("fotografar").value) falhas.push("a câmera não ficou pronta para a próxima foto");
   tirar(0);
   if ($("cameraRotulo").textContent !== "Fotografar página") falhas.push("sem fotos, a câmera não volta ao começo");
@@ -208,7 +208,7 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   if (!document.querySelector('#pilulas input[value="auto"]').checked) falhas.push("o automático não é o marcado");
   if (!/^Umas 3\d questões\.$/.test($("estimativa").textContent))
     falhas.push("estimativa no automático: " + $("estimativa").textContent);
-  if ($("botaoGerar").textContent !== "Gerar o jogo") falhas.push("botão no automático: " + $("botaoGerar").textContent);
+  if ($("botaoGerar").textContent !== "Criar jogo") falhas.push("botão no automático: " + $("botaoGerar").textContent);
   // O que a pessoa escreveu fica; a sugestão nova só ocupa o que ainda era sugestão.
   $("titulo").value = "Meu nome";
   leitura.paginas[1].assunto = "Outro capítulo"; leitura.paginas[2].materia = "História"; leitura.paginas[0].materia = "História";
@@ -218,7 +218,7 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   // Escolher fixa a quantidade; pedir além do que cabe avisa.
   document.querySelector('#pilulas input[value="100"]').click();
   if ($("quantidade").value !== "100") falhas.push("a pílula não muda a quantidade");
-  if ($("botaoGerar").textContent !== "Gerar 100 questões") falhas.push("botão com número: " + $("botaoGerar").textContent);
+  if ($("botaoGerar").textContent !== "Criar jogo · 100 questões") falhas.push("botão com número: " + $("botaoGerar").textContent);
   const marcadas = [...document.querySelectorAll("#pilulas input")].filter(r => r.checked).map(r => r.value).join();
   if (marcadas !== "100") falhas.push("pílulas marcadas depois de escolher 100: " + marcadas);
   if (!$("estimativa").classList.contains("alem") || !/^Este material dá umas \d+\.$/.test($("estimativa").textContent))
@@ -234,7 +234,7 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   const amostra = k => document.querySelector('#escolhaCor input[value="' + k + '"]');
   $("cor").value = ""; $("materia").value = "História"; $("materia").dispatchEvent(new Event("input"));
   if (!amostra("laranja").checked) falhas.push("História não deu laranja");
-  if ($("pedido").style.getPropertyValue("--tom") !== CORES_JOGO.laranja.valor) falhas.push("a capa não ficou na cor da matéria");
+  if ($("app").style.getPropertyValue("--tom") !== CORES_JOGO.laranja.valor) falhas.push("a capa não ficou na cor da matéria");
   amostra("roxo").click();
   $("materia").value = "Geografia"; $("materia").dispatchEvent(new Event("input"));
   if ($("cor").value !== "roxo" || !amostra("roxo").checked) falhas.push("a cor escolhida mudou com a matéria");
@@ -243,6 +243,8 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   else { voltar.click(); if ($("cor").value || !amostra("azul").checked) falhas.push("voltar à cor da matéria não voltou"); }
 
   aba("texto");
+  // Quem liga "conferir a leitura" para na etapa de conferir, como antes.
+  $("conferirAntes").checked = true;
   $("titulo").value = ""; $("materia").value = "";
   $("textoColado").value = "x";
   $("textoColado").dispatchEvent(new Event("input"));
@@ -251,6 +253,8 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   $("textoColado").dispatchEvent(new Event("input"));
   if ($("continuarTexto").disabled) falhas.push("continuar desligado com texto suficiente");
   $("continuarTexto").click();
+  if (etapa !== 2) falhas.push("com conferir ligado, criar não parou na conferência: etapa " + etapa);
+  $("conferirAntes").checked = false;
   if ($("titulo").value !== "O ciclo da água") falhas.push("a primeira linha do texto não virou o nome: " + $("titulo").value);
   if (tituloDoTexto("Era uma vez um texto que começa com uma frase comum.\nE segue.")) falhas.push("frase comum virou nome do jogo");
 }
@@ -326,8 +330,10 @@ function andar(){
     srv.criacao.jogo = srv.criacao.jogo || "jogo-srv";
   }
 }
+const vistas = [];
 window.lerCriacao = async (id, desde) => {
   olhadas++;
+  vistas.push($("andamento").innerText);
   if (id !== 5) throw new Error("olhou a criação errada: " + id);
   andar();
   return {criacao: structuredClone(srv.criacao),
@@ -361,16 +367,39 @@ window.chamarFuncao = async corpo => {
     ({...base, missao: corpo.alvo, enunciado: corpo.alvo + k, problemas: []}))};
 };
 estado = null; leitura = null;
-$("material").value = base.trecho.repeat(8);
+location.hash = "material";
+await espere(() => etapa === 1);
+// Um toque: o texto colado e "Criar jogo", sem parar na conferência.
+aba("texto");
+$("textoColado").value = base.trecho.repeat(8); pintarTexto();
 // A matéria em branco: o plano sugere.
 $("titulo").value = "Jogo grande"; $("materia").value = ""; $("quantidade").value = "30";
 contar();
-const recados = [], recadoDeVerdade = recado;
-window.recado = (t, ruim) => { recados.push(t); recadoDeVerdade(t, ruim); };
-$("pedido").requestSubmit();
+if (!$("ajustar") || $("ajustar").open) falhas.push("Ajustar não vem recolhido");
+if (!/30 questões/.test($("resumoAjustar").textContent)) falhas.push("o resumo de Ajustar não diz o que vale: " + $("resumoAjustar").textContent);
+$("continuarTexto").click();
 await espere(() => estado && estado.filaEstado === "pronta" && !gerando, 4000);
-window.recado = recadoDeVerdade;
-if (!recados.some(t => /Pode fechar/.test(t))) falhas.push("enquanto a fila trabalha, a tela não diz que pode fechar: " + recados.join(" | "));
+if (!vistas.some(t => /Pode fechar/.test(t))) falhas.push("enquanto a fila trabalha, a tela não diz que pode fechar: " + vistas.join(" | "));
+if (!vistas.some(t => /\d de 3 missões/.test(t))) falhas.push("o andamento não conta as missões: " + vistas.join(" | "));
+/* Pronto: Jogar à frente, o resto como opção */
+if (etapa !== 5 || location.hash !== "#criando") falhas.push("pronto, a tela não ficou no jogo: " + location.hash);
+const jogarPronto = $("andamento").querySelector("a.jogar");
+if (!jogarPronto || !/jogar\.html\?id=jogo-srv$/.test(jogarPronto.getAttribute("href"))) falhas.push("pronto, não há Jogar para o jogo salvo");
+if ($("prontaNome").textContent !== "Jogo grande" || $("prontaMateria").textContent !== "Geografia")
+  falhas.push("a capa pronta: " + $("prontaNome").textContent + " / " + $("prontaMateria").textContent);
+if (!/1 missão não veio/.test($("andamento").innerText)) falhas.push("pronto, não diz o que não veio: " + $("andamento").innerText);
+{
+  const ligados = [];
+  const antesLink = window.mudarLinkConta;
+  window.mudarLinkConta = async (id, link) => { ligados.push({id, link}); };
+  [...$("andamento").querySelectorAll("button")].find(b => b.textContent === "Compartilhar").click();
+  await espere(() => $("andamento").querySelector(".campo-link"));
+  if (ligados[0].id !== "jogo-srv") falhas.push("compartilhar ligou o link de outro jogo");
+  window.mudarLinkConta = antesLink;
+}
+[...$("andamento").querySelectorAll("button")].find(b => /^Revisar/.test(b.textContent)).click();
+await espere(() => etapa === 3);
+if ($("voltarPronto").hidden) falhas.push("da revisão não se volta ao jogo pronto");
 if (criados.length !== 1 || criados[0].automatico || criados[0].total !== 30 || criados[0].titulo !== "Jogo grande")
   falhas.push("o pedido à fila não foi como pedido: " + JSON.stringify(criados[0]));
 if (gerados.length || licoes.length || planos.length) falhas.push("com a fila, a tela ainda pediu partes ela mesma");
@@ -404,10 +433,16 @@ if (!/2 restantes hoje/.test($("cota").textContent)) falhas.push("a cota de jogo
 const licaoBox = () => $("resumo").querySelector("details.licao");
 if (!licaoBox()) falhas.push("a revisão não mostra a lição");
 else {
+  if (![...licaoBox().querySelectorAll("button")].some(b => b.textContent === "Tentar de novo"))
+    falhas.push("a lição que falhou não oferece tentar de novo na revisão");
+  $("voltarPronto").click();
+  await espere(() => etapa === 5);
+  if (!/A lição de 1 missão não veio/.test($("andamento").innerText)) falhas.push("pronto, a lição que falta: " + $("andamento").innerText);
+  if (!/2 questões novas ficaram fora do jogo/.test($("andamento").innerText)) falhas.push("o que veio depois de salvo não é oferecido para o jogo");
+  [...$("andamento").querySelectorAll("button")].find(b => b.textContent === "Tentar de novo").click();
+  await espere(() => estado.licao.b.estado === "pronta" && !gerando, 4000);
+  irPara(3);
   licaoBox().open = true; licaoBox().dispatchEvent(new Event("toggle"));
-  const deNovoL = [...licaoBox().querySelectorAll("button")].find(b => b.textContent === "Tentar de novo");
-  if (!deNovoL) falhas.push("a lição que falhou não oferece tentar de novo");
-  else { deNovoL.click(); await espere(() => estado.licao.b.estado === "pronta" && !gerando, 4000); }
 }
 const passoCarta = t => [...document.querySelectorAll("#resumo article.passo")].find(a => a.querySelector(".enunciado").textContent === t);
 if (!passoCarta("Passo a")) falhas.push("a lição aberta não mostra os passos (ficou fechada na repintura?)");
