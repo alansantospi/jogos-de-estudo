@@ -9,6 +9,10 @@ const telaAtual = () => ([...document.querySelectorAll(".screen")]
 const viz = s => [...document.querySelectorAll(s)].filter(e => !e.hidden).length;
 
 await espere(() => typeof trails !== "undefined" && document.getElementById("buscaMissao"));
+/* Antes do evento load, o navegador trata a troca de hash como substituição
+   (é a regra do HTML para navegação durante o carregamento): o histórico não
+   cresce, e o teste falhava conforme as fontes externas demoravam. */
+await espere(() => document.readyState === "complete", 15000);
 
 await vai("missoes");
 if (telaAtual() !== "categories") falhas.push("#missoes não abriu a lista de missões");

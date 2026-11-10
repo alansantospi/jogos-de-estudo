@@ -1,7 +1,7 @@
 # web/ contém fragmentos usados pela hospedagem de artifacts.
 # Não são páginas completas e não funcionam sozinhas no GitHub Pages.
 web/
-build/__pycache__/
+__pycache__/
 
 # Segredos locais (senha do banco para a CLI do Supabase). Nunca no repositório.
 .env
