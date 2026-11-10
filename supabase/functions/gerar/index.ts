@@ -23,6 +23,16 @@
      {acao:"medir", material, missoes, questoes}   — reconfere o que a
                                                      revisão editou; não
                                                      chama modelo, não custa
+     {acao:"criar", material, titulo, materia, cor, ano, total, automatico,
+                    paginas?}                      — abre o jogo e o põe na
+                                                     fila: o servidor conduz
+                                                     daqui (_esteira/fila.ts)
+     {acao:"tentar", fila, tipo, alvo}             — a tarefa que falhou
+                                                     volta à fila
+     {acao:"trabalhar", cadeias?}                  — interna, com o cabeçalho
+                                                     x-trabalho: faz uma
+                                                     tarefa da fila e chama
+                                                     a próxima
 
    Montagem e deploy em GERAR.md. */
 
@@ -33,6 +43,7 @@ import { conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, LIMITES, pla
 import { ICONES } from "../_esteira/icones.ts";
 import { conferirArquivos, expandir, ler, LIMITES_LEITURA, type Arquivo } from "../_esteira/leitura.ts";
 import { escreverLicao } from "../_esteira/licao.ts";
+import { PARALELO, TENTATIVAS, trabalhar, type Banco, type PedidoCriacao } from "../_esteira/fila.ts";
 import { PDFDocument } from "npm:pdf-lib@1.17.1";
 
 const MODELO = "claude-opus-5-5";
@@ -135,32 +146,41 @@ async function registrar(id: number, estado: string, usos: Uso[], extra: {
   if (error) console.error("registrar_geracao", id, error.message);
 }
 
-/* Reserva antes de gastar; devolve a resposta pronta quando a cerca barra. */
-async function reservar(conta: string, tipo: string, caracteres: number, pedidas: number,
-                        criacao: number | null = null) {
+/* Reserva antes de gastar. Quando uma cerca barra, devolve o motivo: a
+   chamada da tela o responde, a fila o grava na tarefa. */
+type Barrada = { status: number; codigo: string; mensagem: string };
+async function reservarNoBanco(conta: string, tipo: string, caracteres: number, pedidas: number,
+                               criacao: number | null = null)
+  : Promise<{ id: number; restantes: number } | Barrada> {
   const { data, error } = await admin.rpc("reservar_geracao", {
     p_conta: conta, p_tipo: tipo, p_criacao: criacao, p_caracteres: caracteres, p_pedidas: pedidas,
     p_limite_jogos: LIMITE_POR_DIA, p_limite_leituras: LIMITE_LEITURAS, p_max_partes: MAX_PARTES,
     p_paginas_leitura: LIMITES_LEITURA.paginasMax,
     p_teto_dia_usd: TETO_DIA_USD, p_estimativa_usd: ESTIMATIVA_USD });
   if (!error) return data[0] as { id: number; restantes: number };
+  const b = (status: number, codigo: string, mensagem: string) => ({ status, codigo, mensagem });
   if (/limite_conta/.test(error.message))
-    return erro(429, "limite", `Você já criou os ${LIMITE_POR_DIA} jogos de hoje. ` +
-                               "A contagem é das últimas 24 horas.");
+    return b(429, "limite", `Você já criou os ${LIMITE_POR_DIA} jogos de hoje. ` +
+                            "A contagem é das últimas 24 horas.");
   if (/limite_leitura/.test(error.message))
-    return erro(429, "limite", `Você já fez as ${LIMITE_LEITURAS} leituras de hoje. ` +
-                               "A contagem é das últimas 24 horas.");
+    return b(429, "limite", `Você já fez as ${LIMITE_LEITURAS} leituras de hoje. ` +
+                            "A contagem é das últimas 24 horas.");
   if (/limite_paginas/.test(error.message))
-    return erro(429, "partes", `Esta leitura já passou de ${LIMITES_LEITURA.paginasMax} páginas. Mande só as páginas da matéria.`);
+    return b(429, "partes", `Esta leitura já passou de ${LIMITES_LEITURA.paginasMax} páginas. Mande só as páginas da matéria.`);
   if (/limite_partes/.test(error.message))
-    return erro(429, "partes", "Este jogo já fez todos os pedidos que cabem nele. Revise o que veio, ou comece outro jogo.");
+    return b(429, "partes", "Este jogo já fez todos os pedidos que cabem nele. Revise o que veio, ou comece outro jogo.");
   if (/criacao_invalida/.test(error.message))
-    return erro(400, "criacao", "Este jogo expirou ou não é desta conta. Comece de novo pela etapa de conferir.");
+    return b(400, "criacao", "Este jogo expirou ou não é desta conta. Comece de novo pela etapa de conferir.");
   if (/teto_global/.test(error.message))
-    return erro(429, "teto", "A geração está pausada por hoje: o gasto de todas as contas " +
-                             "chegou ao teto diário.");
+    return b(429, "teto", "A geração está pausada por hoje: o gasto de todas as contas " +
+                          "chegou ao teto diário.");
   console.error("reservar_geracao", error.message);
-  return erro(500, "reserva", "Não consegui reservar a geração. Tente de novo.");
+  return b(500, "reserva", "Não consegui reservar a geração. Tente de novo.");
+}
+async function reservar(conta: string, tipo: string, caracteres: number, pedidas: number,
+                        criacao: number | null = null) {
+  const r = await reservarNoBanco(conta, tipo, caracteres, pedidas, criacao);
+  return "codigo" in r ? erro(r.status, r.codigo, r.mensagem) : r;
 }
 
 /* Erro depois da reserva: registra o que foi gasto e devolve a vez se nada foi. */
@@ -197,9 +217,190 @@ async function dividirPdf(b64: string): Promise<string[]> {
   return partes;
 }
 
+/* ---------- a fila (conteudo/spec-criar-em-um-toque.md) ---------- */
+
+/* Quem chama `trabalhar` prova que é a própria função ou o relógio do banco:
+   o segredo mora nos secrets da função e no Vault (GERAR.md, "A fila"). */
+const TRABALHO_SEGREDO = Deno.env.get("TRABALHO_SEGREDO") ?? "";
+const ENDERECO = Deno.env.get("SUPABASE_URL") + "/functions/v1/gerar";
+/* Até quando quem pegou a tarefa tem a vez: passa do corte de 150 s. */
+const PRAZO_S = 180;
+
+declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void };
+
+const banco: Banco = {
+  async pegar() {
+    const { data, error } = await admin.rpc("pegar_tarefa",
+      { p_prazo_s: PRAZO_S, p_paralelo: PARALELO, p_tentativas: TENTATIVAS });
+    if (error) throw new Error("pegar_tarefa: " + error.message);
+    const t = (data as any[])[0];
+    if (!t) return null;
+    const { data: c, error: e2 } = await admin.from("criacoes")
+      .select("id,conta,geracao,pedido,plano,jogo").eq("id", t.criacao).single();
+    if (e2) throw new Error("criacoes: " + e2.message);
+    return { tarefa: { id: t.id, criacao: t.criacao, tipo: t.tipo, alvo: t.alvo, tentativas: t.tentativas },
+             criacao: c as any };
+  },
+  async planejada(c, pedido, plano, novas) {
+    const { error } = await admin.rpc("planejar_criacao",
+      { p_criacao: c.id, p_pedido: pedido, p_plano: plano, p_tarefas: novas });
+    if (error) throw new Error("planejar_criacao: " + error.message);
+  },
+  async terminar(t, fim) {
+    const { error } = await admin.rpc("terminar_tarefa", {
+      p_id: t.id, p_estado: fim.estado, p_resultado: fim.resultado ?? null, p_erro: fim.erro ?? null,
+      p_custo: Number(fim.custo.toFixed(4)) });
+    if (error) console.error("terminar_tarefa", t.id, error.message);
+  },
+  async desistir(id, mensagem) {
+    const { error } = await admin.from("criacoes").update({ estado: "falhou", erro: mensagem }).eq("id", id);
+    if (error) console.error("desistir", id, error.message);
+  },
+  async concluir() {
+    const { data, error } = await admin.rpc("concluir_criacoes");
+    if (error) { console.error("concluir_criacoes", error.message); return []; }
+    const prontas = [];
+    for (const c of data as any[]) {
+      const { data: ts, error: e2 } = await admin.from("tarefas")
+        .select("tipo,alvo,estado,resultado").eq("criacao", c.id);
+      if (e2) { console.error("tarefas", c.id, e2.message); continue; }
+      prontas.push({ criacao: c, tarefas: ts as any[] });
+    }
+    return prontas;
+  },
+  async salvarJogo(c, conteudo) {
+    // Com a chave de serviço não há auth.uid(): a conta vai explícita.
+    const { data, error } = await admin.from("jogos").insert({
+      conta: c.conta, titulo: String(conteudo.titulo), materia: String(conteudo.materia),
+      ano: c.pedido.ano || "", material: c.pedido.material, conteudo }).select("id").single();
+    if (error) throw new Error(error.message);
+    return data.id as string;
+  },
+  async pronta(id, jogo, mensagem) {
+    const { error } = await admin.from("criacoes")
+      .update({ estado: "pronta", jogo, erro: mensagem ?? null }).eq("id", id);
+    if (error) console.error("pronta", id, error.message);
+  },
+  async reservar(conta, tipo, caracteres, pedidas, criacao) {
+    const r = await reservarNoBanco(conta, tipo, caracteres, pedidas, criacao);
+    if ("codigo" in r) throw new ErroEsteira(r.codigo, r.mensagem);
+    return r;
+  },
+  registrar,
+};
+
+/* Acorda `n` cadeias: cada chamada faz uma tarefa e chama a próxima. Só
+   espera a resposta de "recebido", não o trabalho. */
+async function acordar(n: number) {
+  try {
+    const r = await fetch(ENDERECO, {
+      method: "POST", body: JSON.stringify({ acao: "trabalhar", cadeias: n }),
+      headers: { "Content-Type": "application/json", "x-trabalho": TRABALHO_SEGREDO } });
+    await r.body?.cancel();
+  } catch (e) {
+    // O relógio do banco acorda a fila em até um minuto.
+    console.error("acordar", e);
+  }
+}
+
+async function cadeia() {
+  const inicio = Date.now();
+  let r;
+  try {
+    r = await trabalhar(banco, modelo, ICONES, () => Date.now() - inicio < SO_REGERA_ATE_MS);
+  } catch (e) {
+    console.error("cadeia", e);
+    return;
+  }
+  if (!r.tarefa) return;
+  // O plano abre as outras cadeias: até PARALELO por criação.
+  const mais = r.tarefa.tipo === "planejar" ? Math.max(0, Math.min(PARALELO, r.novas) - 1) : 0;
+  await acordar(1 + mais);
+}
+
+const texto = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
+
+/* O pedido de `criar`, conferido como o de `planejar`; mal formado vira texto do erro. */
+function pedidoDe(corpo: Record<string, unknown>): PedidoCriacao | string {
+  const p: PedidoCriacao = {
+    titulo: texto(corpo.titulo, 120), materia: texto(corpo.materia, 60), cor: texto(corpo.cor, 20),
+    ano: texto(corpo.ano, 20), total: Number(corpo.total), automatico: corpo.automatico === true,
+    material: String(corpo.material ?? "").trim() };
+  const invalido = conferirPlano(p);
+  if (invalido) return invalido;
+  if (p.cor && !/^[a-z]+$/.test(p.cor)) return "A cor chegou mal formada.";
+  if (corpo.paginas != null) {
+    const ps = corpo.paginas as any[];
+    if (!Array.isArray(ps) || ps.length > 60) return "As páginas lidas chegaram mal formadas.";
+    p.paginas = ps.map(x => ({ nome: texto(x?.nome, 120), pagina: Number(x?.pagina) || 0,
+                               texto: String(x?.texto ?? "").slice(0, 20000) }));
+    if (p.paginas.reduce((s, x) => s + x.texto.length, 0) > LIMITES.materialMax * 1.5)
+      return "As páginas lidas passam do tamanho do material.";
+  }
+  return p;
+}
+
+const EM_CURSO = ["planejando", "escrevendo", "montando"];
+
+async function criar(conta: string, corpo: Record<string, unknown>) {
+  // Sem o segredo, ninguém trabalharia a fila: melhor não abrir o jogo.
+  if (!TRABALHO_SEGREDO)
+    return erro(500, "configuracao", "A fila de criação não está configurada (TRABALHO_SEGREDO). Veja GERAR.md.");
+  const pedido = pedidoDe(corpo);
+  if (typeof pedido === "string") return erro(400, "entrada", pedido);
+  const emCurso = async () => (await admin.from("criacoes").select("id,geracao")
+    .eq("conta", conta).in("estado", EM_CURSO).maybeSingle()).data;
+  // Uma por vez: com outra em curso, a tela passa a acompanhar aquela.
+  const outra = await emCurso();
+  if (outra) return erro(409, "em_curso", "Já há um jogo sendo criado nesta conta.",
+                         { fila: outra.id, criacao: outra.geracao });
+  const reserva = await reservar(conta, "jogo", 0, pedido.total);
+  if (reserva instanceof Response) return reserva;
+  const { data: c, error } = await admin.from("criacoes")
+    .insert({ conta, geracao: reserva.id, pedido }).select("id").single();
+  if (error) {
+    // Duas criações ao mesmo tempo: o índice barra a segunda, e o jogo do
+    // dia que ela reservou não chegou a gastar nada.
+    await admin.from("geracoes").delete().eq("id", reserva.id);
+    const ja = await emCurso();
+    if (ja) return erro(409, "em_curso", "Já há um jogo sendo criado nesta conta.",
+                        { fila: ja.id, criacao: ja.geracao });
+    console.error("criar", error.message);
+    return erro(500, "fila", "Não consegui pôr o jogo na fila. Tente de novo.");
+  }
+  const { error: e2 } = await admin.from("tarefas").insert({ criacao: c.id, tipo: "planejar" });
+  if (e2) console.error("criar tarefa", e2.message);  // o relógio não acha tarefa; a criação fecha vazia
+  EdgeRuntime.waitUntil(acordar(1));
+  return responder(200, { fila: c.id, criacao: reserva.id, restantes: reserva.restantes });
+}
+
+async function tentar(conta: string, corpo: Record<string, unknown>) {
+  const fila = Number(corpo.fila), tipo = String(corpo.tipo ?? ""), alvo = String(corpo.alvo ?? "");
+  if (!Number.isInteger(fila) || !["missao", "licao"].includes(tipo) || !alvo)
+    return erro(400, "entrada", "Pedido de tentar de novo mal formado.");
+  const { data, error } = await admin.rpc("tentar_tarefa",
+    { p_conta: conta, p_criacao: fila, p_tipo: tipo, p_alvo: alvo, p_tentativas: TENTATIVAS });
+  if (error) { console.error("tentar_tarefa", error.message); return erro(500, "fila", "Não consegui tentar de novo."); }
+  if (!data) return erro(409, "tentar", "Esta parte não está mais para tentar de novo.");
+  EdgeRuntime.waitUntil(acordar(1));
+  return responder(200, { ok: true });
+}
+
 Deno.serve(async req => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
   if (req.method !== "POST") return erro(405, "metodo", "Use POST.");
+
+  // A fila se trabalha sem sessão de ninguém: o segredo é a prova.
+  const segredo = req.headers.get("x-trabalho");
+  if (segredo !== null) {
+    if (!TRABALHO_SEGREDO || segredo !== TRABALHO_SEGREDO) return erro(401, "trabalho", "Segredo errado.");
+    let n = 1;
+    try { n = Math.max(1, Math.min(PARALELO, Math.floor(Number((await req.json()).cadeias) || 1))); } catch { /* 1 */ }
+    // Responde já; o trabalho segue depois da resposta, até o corte.
+    for (let k = 1; k < n; k++) EdgeRuntime.waitUntil(acordar(1));
+    EdgeRuntime.waitUntil(cadeia());
+    return responder(202, { ok: true });
+  }
 
   const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
   const { data: quem } = token ? await admin.auth.getUser(token) : { data: { user: null } };
@@ -247,6 +448,8 @@ Deno.serve(async req => {
       return await falhou(reserva.id, reserva.restantes, e);
     }
   }
+  if (corpo.acao === "criar") return await criar(quem.user.id, corpo);
+  if (corpo.acao === "tentar") return await tentar(quem.user.id, corpo);
   if (corpo.acao === "abrir") {
     const total = Number(corpo.total);
     if (!Number.isInteger(total) || total < LIMITES.totalMin || total > LIMITES.totalMax)

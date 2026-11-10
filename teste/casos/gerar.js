@@ -277,38 +277,86 @@ location.hash = "revisar";
 await espere(() => etapa === 1);
 if (location.hash !== "#material") falhas.push("etapa sem conteúdo abriu pelo endereço: " + location.hash);
 
-/* 13. o jogo grande: plano, missões em paralelo, a que falha tenta de novo */
-const gerados = [], licoes = [], planos = [];
-let recusarB = true, recusarLicaoB = true;
+/* 13. o jogo grande, conduzido pela fila do servidor: a tela pede `criar`,
+   olha o que mudou, e a missão que falhou tenta de novo dentro da mesma fila */
+const gerados = [], licoes = [], planos = [], criados = [], tentados = [];
 // O passo da missão c chega sem trecho conferido: tem de entrar fora da lição.
 const passoDe = alvo => ({missao: alvo, titulo: "Passo " + alvo, ideia: "A ideia de <b>" + alvo + "</b>.",
   trecho: base.trecho, revs: [{titulo: "Termo", resposta: "o que é"}, {titulo: "Outro", resposta: "outra coisa"}],
   revs_cap: "Toque cada um.", maq: [], maq_cap: "", alerta: "Cuidado com <b>isto</b>.",
   quiz: {pergunta: "Pergunta " + alvo + "?", certa: "certa", erradas: ["x", "y", "z"], retorno: "Porque sim."},
-  problemas: alvo === "c" ? [{grave: true, texto: "O trecho citado não está no material."}] : []});
-window.chamarFuncao = async corpo => {
-  if (corpo.acao === "abrir") return {criacao: 7, restantes: 2};
-  if (corpo.acao === "licao") {
-    licoes.push(corpo);
-    if (corpo.alvo === "b" && recusarLicaoB) {
-      recusarLicaoB = false;
-      throw Object.assign(new Error("A lição falhou."), {custo: 0.01});
-    }
-    return {restantes: 2, custo_usd: 0.02, passos: [passoDe(corpo.alvo)]};
+  problemas: alvo === "c" ? [{grave: true, texto: "O trecho citado não está no material."}] : [],
+  fora: alvo === "c"});
+const PLANO13 = [{id: "a", nome: "Missão A", descricao: "", quantidade: 10},
+                 {id: "b", nome: "Missão B", descricao: "", quantidade: 10},
+                 {id: "c", nome: "Missão C", descricao: "", quantidade: 10}];
+/* O servidor de mentira: cada olhada da tela anda um passo. A missão a
+   termina por último; a missão b e a lição b falham na primeira vez. */
+let seq = 0, srv = null, olhadas = 0;
+const carimbo = () => new Date(Date.UTC(2026, 10, 10, 0, 0, ++seq)).toISOString();
+const mexer = (t, o) => Object.assign(t, o, {atualizado: carimbo()});
+function andar(){
+  const ts = srv.tarefas;
+  const pl = ts.find(t => t.tipo === "planejar");
+  if (pl.estado === "fila") {
+    mexer(pl, {estado: "feita", custo_usd: 0.02, resultado: {}});
+    srv.criacao.plano = PLANO13;
+    srv.criacao.pedido = {...srv.criacao.pedido, materia: srv.criacao.pedido.materia || "Geografia"};
+    srv.criacao.estado = "escrevendo";
+    for (const tipo of ["missao", "licao"]) for (const m of PLANO13)
+      ts.push({id: ts.length + 1, tipo, alvo: m.id, estado: "fila", custo_usd: 0, atualizado: carimbo(), voltas: 0});
+    return;
   }
-  if (corpo.acao === "planejar") planos.push(corpo);
-  if (corpo.acao === "planejar") return {total: 30, restantes: 2, custo_usd: 0.02, titulo: "Sugerido", materia: "Geografia", missoes: [
-    {id: "a", nome: "Missão A", descricao: "", quantidade: 10},
-    {id: "b", nome: "Missão B", descricao: "", quantidade: 10},
-    {id: "c", nome: "Missão C", descricao: "", quantidade: 10}]};
+  for (const t of ts.filter(t => t.estado === "fazendo")) {
+    if (t.tipo === "missao" && t.alvo === "a" && t.voltas++ < 1) continue;
+    const pago = Number(t.custo_usd) || 0;
+    if (t.alvo === "b" && !t.jaFalhou) {
+      t.jaFalhou = true;
+      mexer(t, {estado: "falhou", erro: t.tipo === "missao" ? "O modelo se recusou." : "A lição falhou.",
+                custo_usd: pago + (t.tipo === "missao" ? 0.05 : 0.01)});
+    } else if (t.tipo === "missao")
+      mexer(t, {estado: "feita", custo_usd: pago + 0.1, resultado: {aviso: "", questoes: [1, 2].map(k =>
+        ({...base, missao: t.alvo, enunciado: t.alvo + k, problemas: []}))}});
+    else mexer(t, {estado: "feita", custo_usd: pago + 0.02, resultado: {aviso: "", passos: [passoDe(t.alvo)]}});
+  }
+  const fazendo = ts.filter(t => t.estado === "fazendo").length;
+  ts.filter(t => t.estado === "fila").slice(0, 4 - fazendo).forEach(t => mexer(t, {estado: "fazendo"}));
+  if (srv.criacao.estado === "escrevendo" && ts.every(t => t.estado === "feita" || t.estado === "falhou")) {
+    srv.criacao.estado = "pronta";
+    srv.criacao.jogo = srv.criacao.jogo || "jogo-srv";
+  }
+}
+window.lerCriacao = async (id, desde) => {
+  olhadas++;
+  if (id !== 5) throw new Error("olhou a criação errada: " + id);
+  andar();
+  return {criacao: structuredClone(srv.criacao),
+          tarefas: structuredClone(srv.tarefas.filter(t => !desde || t.atualizado >= desde))};
+};
+INTERVALO_FILA = 5;
+window.chamarFuncao = async corpo => {
+  if (corpo.acao === "criar") {
+    criados.push(corpo);
+    srv = {criacao: {id: 5, geracao: 7, estado: "planejando", plano: null, jogo: null, erro: null,
+                     pedido: {titulo: corpo.titulo, materia: corpo.materia, cor: corpo.cor, ano: corpo.ano,
+                              total: corpo.total, automatico: corpo.automatico, material: corpo.material}},
+           tarefas: [{id: 1, tipo: "planejar", alvo: "", estado: "fila", custo_usd: 0, atualizado: carimbo()}]};
+    return {fila: 5, criacao: 7, restantes: 2};
+  }
+  if (corpo.acao === "tentar") {
+    tentados.push(corpo);
+    const t = srv.tarefas.find(t => t.tipo === corpo.tipo && t.alvo === corpo.alvo);
+    mexer(t, {estado: "fila", erro: null});
+    srv.criacao.estado = "escrevendo";
+    return {ok: true};
+  }
+  // Acrescentar (seção 15) segue conduzido pelo navegador.
+  if (corpo.acao === "abrir") return {criacao: 7, restantes: 2};
+  if (corpo.acao === "licao") { licoes.push(corpo); return {restantes: 2, custo_usd: 0.02, passos: [passoDe(corpo.alvo)]}; }
+  if (corpo.acao === "planejar") { planos.push(corpo); return {total: 30, restantes: 2, custo_usd: 0.02,
+    titulo: "Sugerido", materia: "Geografia", missoes: structuredClone(PLANO13)}; }
   if (corpo.acao === "medir") return {problemas: corpo.questoes.map(() => []), lote: null};
   gerados.push(corpo);
-  if (corpo.alvo === "b" && recusarB) {
-    recusarB = false;
-    throw Object.assign(new Error("O modelo se recusou."), {custo: 0.05});
-  }
-  // A primeira missão chega por último: a revisão tem de mostrar na ordem do plano mesmo assim.
-  await new Promise(ok => setTimeout(ok, corpo.alvo === "a" ? 200 : 20));
   return {restantes: 2, custo_usd: 0.1, aviso: "", questoes: [1, 2].map(k =>
     ({...base, missao: corpo.alvo, enunciado: corpo.alvo + k, problemas: []}))};
 };
@@ -317,17 +365,24 @@ $("material").value = base.trecho.repeat(8);
 // A matéria em branco: o plano sugere.
 $("titulo").value = "Jogo grande"; $("materia").value = ""; $("quantidade").value = "30";
 contar();
+const recados = [], recadoDeVerdade = recado;
+window.recado = (t, ruim) => { recados.push(t); recadoDeVerdade(t, ruim); };
 $("pedido").requestSubmit();
-await espere(() => estado && estado.plano && !gerando && estado.partes.b.estado === "falhou"
-                   && estado.licao.b.estado === "falhou", 4000);
-if (licoes.length !== 3 || licoes.some(l => l.criacao !== 7 || l.missoes.length !== 3))
-  falhas.push("a lição não foi pedida uma vez por missão, dentro da criação: " + licoes.length);
-if (gerados.length !== 3) falhas.push("esperava 3 partes, vieram " + gerados.length);
-if (planos[0].automatico || planos[0].total !== 30) falhas.push("quantidade escolhida não foi como pedido: " + JSON.stringify(planos[0]));
-if (estado.pedido.materia !== "Geografia" || $("materia").value !== "Geografia" || estado.pedido.titulo !== "Jogo grande")
+await espere(() => estado && estado.filaEstado === "pronta" && !gerando, 4000);
+window.recado = recadoDeVerdade;
+if (!recados.some(t => /Pode fechar/.test(t))) falhas.push("enquanto a fila trabalha, a tela não diz que pode fechar: " + recados.join(" | "));
+if (criados.length !== 1 || criados[0].automatico || criados[0].total !== 30 || criados[0].titulo !== "Jogo grande")
+  falhas.push("o pedido à fila não foi como pedido: " + JSON.stringify(criados[0]));
+if (gerados.length || licoes.length || planos.length) falhas.push("com a fila, a tela ainda pediu partes ela mesma");
+if (olhadas > 30) falhas.push("a tela olhou a fila vezes demais: " + olhadas);
+if (estado.partes.b.estado !== "falhou" || estado.licao.b.estado !== "falhou") falhas.push("a parte que falhou não aparece como falha");
+if (estado.pedido.materia !== "Geografia" || estado.pedido.titulo !== "Jogo grande")
   falhas.push("matéria em branco não veio do plano, ou o nome escrito foi trocado: " + estado.pedido.titulo + " / " + estado.pedido.materia);
-if (gerados.some(g => g.criacao !== 7 || !g.missoes || g.missoes.length !== 3))
-  falhas.push("a parte não levou a criação e o plano inteiro");
+// O servidor salvou o jogo: o que estava pronto foi para ele, e a criação limpou.
+if (estado.jogoId !== "jogo-srv") falhas.push("o jogo salvo pelo servidor não ficou na revisão: " + estado.jogoId);
+if (!lerDe("jogo_gerado_jogo-srv")) falhas.push("o jogo salvo pelo servidor não ficou no aparelho");
+if (aprovadas().length !== 4) falhas.push("as questões que o servidor pôs no jogo não estão aprovadas: " + aprovadas().length);
+if ($("material").value || $("titulo").value) falhas.push("com o jogo salvo pelo servidor, a criação não limpou");
 if (!/Não veio/.test($("resumo").innerText)) falhas.push("a missão que falhou não aparece no plano");
 const ordem = () => [...document.querySelectorAll("#lista .enunciado")].map(e => e.textContent).join(",");
 if (ordem() !== "a1,a2,c1,c2") falhas.push("fora da ordem do plano: " + ordem());
@@ -336,7 +391,13 @@ if (!deNovo) falhas.push("a missão que falhou não oferece tentar de novo");
 else {
   deNovo.click();
   await espere(() => estado.partes.b.estado === "pronta" && !gerando, 4000);
+  if (JSON.stringify(tentados[0]) !== JSON.stringify({acao: "tentar", fila: 5, tipo: "missao", alvo: "b"}))
+    falhas.push("tentar de novo não foi para a fila: " + JSON.stringify(tentados[0]));
   if (ordem() !== "a1,a2,b1,b2,c1,c2") falhas.push("depois de tentar de novo: " + ordem());
+  // O jogo já estava salvo: o que chegou depois espera o "Atualizar e jogar".
+  if (estado.questoes.filter(q => q.missao === "b").some(q => q.estado !== "pendente"))
+    falhas.push("o que veio depois de salvo entrou aprovado sem passar pela pessoa");
+  if (!/Pronto, jogar \(6\)/.test($("salvar").textContent)) falhas.push("o que veio depois não está para jogar: " + $("salvar").textContent);
 }
 if (!/2 restantes hoje/.test($("cota").textContent)) falhas.push("a cota de jogos não aparece: " + $("cota").textContent);
 /* a lição: a de b falhou e tenta de novo; a de c chega fora; tirar e pôr de volta */
@@ -365,6 +426,11 @@ if (Math.abs(estado.custo - 0.44) > 1e-9) falhas.push("o custo do jogo não soma
 // pediu 30, cada missão deu 2 das 10 previstas: a tela diz que foi o material
 if (!/pediu 30; o material sustentou 6/.test(($("notaCurto") || {}).textContent || "")) falhas.push("vieram menos que o pedido e a tela não explica");
 if (!/2 de 10 previstas/.test($("resumo").innerText)) falhas.push("a missão curta não mostra quantas de quantas");
+/* voltar à página com a fila andando: o rascunho guarda a fila, e a tela retoma */
+{
+  const salvo = lerRascunho();
+  if (salvo.fila !== 5 || !salvo.recebidas.length) falhas.push("o rascunho não guarda a fila: " + JSON.stringify({fila: salvo.fila}));
+}
 
 /* 14. salvar e jogar: vai para a conta, abre o jogo, e salvar de novo atualiza o mesmo */
 const gravados = [], abertos = [];
@@ -378,9 +444,11 @@ if ($("salvar").disabled || !/Pronto, jogar \(5\)/.test($("salvar").textContent)
   falhas.push("aviso não grave entrou no pronto para jogar: " + $("salvar").textContent);
 estado.questoes[0].problemas = [];
 pintar();
+// A fila já limpou ao salvar; um material novo começado depois tem de sair também.
+$("material").value = "Outro material começado."; $("titulo").value = "Outro";
 $("salvar").click();
 await espere(() => abertos.length === 1);
-if (gravados[0].id) falhas.push("o primeiro salvamento já veio com id");
+if (gravados[0].id !== "jogo-srv") falhas.push("salvar depois do servidor criou outro jogo: " + gravados[0].id);
 if (gravados[0].linha.conteudo.questoes.length !== 6) falhas.push("o jogo salvo não leva as prontas: " + gravados[0].linha.conteudo.questoes.length);
 if (estado.questoes.some(q => q.estado !== "aprovada")) falhas.push("pronto, jogar não deixou as questões aprovadas");
 if (gravados[0].linha.titulo !== "Jogo grande") falhas.push("título do jogo salvo: " + gravados[0].linha.titulo);

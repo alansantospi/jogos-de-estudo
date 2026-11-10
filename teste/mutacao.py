@@ -40,6 +40,10 @@ MUTACOES = [
      'function escolherPerfil(id){ trocarPerfil(id); }'),
     ("gerar.html", "gerar", "salvar sem limpar os campos da criação",
      "    limparCriacao();\n    abrirJogo(estado.jogoId);", "    abrirJogo(estado.jogoId);"),
+    ("gerar.html", "gerar", "fila aprovando de novo o que chegou depois do jogo salvo",
+     "if(c.jogo && e.jogoId !== c.jogo){", "if(c.jogo){"),
+    ("gerar.html", "gerar", "questão da fila entrando duas vezes",
+     "    if(e.recebidas.includes(t.id)) continue;\n", ""),
 ]
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -28,6 +28,15 @@ if "/*%CORES%*/" not in html:
     raise SystemExit("build/_gerar.html: falta a fenda /*%CORES%*/")
 html = html.replace("/*%CORES%*/", cores.group(0))
 
+# O jogo montado a partir da revisão é o mesmo que a fila monta no servidor.
+esteira = io.open(os.path.join(RAIZ, "supabase", "functions", "_esteira", "conteudo.js"), encoding="utf-8").read()
+bloco = re.search(r"/\*CONTEUDO>\*/.*?/\*<CONTEUDO\*/", esteira, re.S)
+if not bloco:
+    raise SystemExit("_esteira/conteudo.js: não achei o bloco /*CONTEUDO>*/ ... /*<CONTEUDO*/")
+if "/*%CONTEUDO%*/" not in html:
+    raise SystemExit("build/_gerar.html: falta a fenda /*%CONTEUDO%*/")
+html = html.replace("/*%CONTEUDO%*/", re.sub(r"^export ", "", bloco.group(0), flags=re.M))
+
 # Os desenhos são os mesmos dos jogos (`icons.py`): só os que a tela usa.
 sys.path.insert(0, os.path.join(RAIZ, "build"))
 from icons import _P

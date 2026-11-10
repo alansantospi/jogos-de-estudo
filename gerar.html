@@ -767,6 +767,7 @@ async function chamarFuncao(corpo){
   const x = new Error(r && r.mensagem || "Sem resposta do servidor. Verifique a internet.");
   x.codigo = r && r.erro;
   x.custo = r && r.custo_usd || 0;
+  x.dados = r || {};
   if(r && r.restantes != null) cota(r.restantes);
   throw x;
 }
@@ -1216,6 +1217,28 @@ async function pedir(ev){
   $("pe").hidden = true;
   const parar = relogio("Dividindo em missões...", "");
   try{
+    if(!base){
+      // Jogo novo: o servidor conduz, e fechar a tela não para nada.
+      let r;
+      try{
+        r = await chamarFuncao({acao: "criar", material: pedido.material, titulo: pedido.titulo,
+                                materia: pedido.materia, cor: pedido.cor, ano: pedido.ano, total,
+                                automatico: auto, paginas: pedido.paginas});
+      }catch(e){
+        // Outra criação em curso nesta conta: a tela passa a acompanhar aquela.
+        if(e.codigo !== "em_curso" || !e.dados.fila) throw e;
+        r = e.dados;
+        recado("Já havia um jogo sendo criado nesta conta: é ele que aparece aqui.");
+      }
+      if(r.restantes != null) cota(r.restantes);
+      estado = {pedido, fila: r.fila, criacao: r.criacao, plano: null, missoes: [], lote: null, aviso: "",
+                custo: 0, custos: {}, recebidas: [], restantes: r.restantes, questoes: [], pedidas: auto ? null : total,
+                partes: {}, licao: {}};
+      filtro = "todas";
+      guardar();
+      await acompanhar(parar);
+      return;
+    }
     const ab = await chamarFuncao({acao: "abrir", total});
     cota(ab.restantes);
     const pl = await chamarFuncao({acao: "planejar", criacao: ab.criacao, material: pedido.material,
@@ -1228,7 +1251,7 @@ async function pedir(ev){
       // Missão nova com id de uma que o jogo já tem viraria a mesma missão.
       const usados = new Set(base.missoes.map(m => m.id));
       pl.missoes.forEach(m => { let id = m.id, k = 2; while(usados.has(id)) id = m.id + "_" + k++; usados.add(id); m.id = id; });
-      estado = {...base, acrescentar: false, criacao: ab.criacao, plano: pl.missoes, materialNovo: pedido.material,
+      estado = {...base, acrescentar: false, fila: null, criacao: ab.criacao, plano: pl.missoes, materialNovo: pedido.material,
                 pedido: {...base.pedido, titulo: pedido.titulo, materia: pedido.materia, cor: pedido.cor, ano: pedido.ano,
                          material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
@@ -1255,6 +1278,151 @@ async function pedir(ev){
     if(!estado) estado = anterior;
     contar();
     if(estado){ irPara(3, false); pintar(); } else irPara(2);
+    recado(e.message, true);
+  }
+}
+
+/* ---------- a criação na fila ----------
+   O servidor conduz (_esteira/fila.ts): a tela só olha, de tempos em
+   tempos, o que mudou desde a última olhada. Fechou e voltou, retoma. */
+
+let INTERVALO_FILA = 3000;
+const esperar = ms => new Promise(ok => setTimeout(ok, ms));
+
+/* Porta para o banco, trocada pelo teste. */
+async function lerCriacao(id, desde){
+  const sb = await cliente();
+  // O pedido leva o material inteiro: vem só na primeira olhada.
+  const c = await sb.from("criacoes").select("id,geracao,estado,plano,jogo,erro,titulo:pedido->>titulo,materia:pedido->>materia"
+    + (desde ? "" : ",pedido")).eq("id", id).single();
+  if(c.error) throw new Error(c.error.message);
+  let q = sb.from("tarefas").select("id,tipo,alvo,estado,resultado,erro,custo_usd,atualizado")
+    .eq("criacao", id).order("atualizado");
+  if(desde) q = q.gte("atualizado", desde);
+  const t = await q;
+  if(t.error) throw new Error(t.error.message);
+  return {criacao: c.data, tarefas: t.data};
+}
+
+const SITUACAO_FILA = {fila: "aguardando", fazendo: "escrevendo", falhou: "falhou"};
+const filaTerminou = () => estado && ["pronta", "falhou"].includes(estado.filaEstado);
+
+/* O que chegou entra no rascunho de sempre: as missões em `partes`, as
+   lições em `licao`, as questões na revisão. Questão só entra uma vez. */
+function aplicarCriacao({criacao: c, tarefas}){
+  const e = estado;
+  e.pedido = {...e.pedido, ...(c.pedido || {})};
+  if(c.titulo) e.pedido.titulo = c.titulo;
+  if(c.materia) e.pedido.materia = c.materia;
+  e.criacao = c.geracao;
+  if(c.plano && !e.plano){
+    e.plano = c.plano;
+    e.missoes = c.plano.map(({id, nome}) => ({id, nome}));
+    e.partes = Object.fromEntries(c.plano.map(m => [m.id, {estado: "aguardando"}]));
+    e.licao = Object.fromEntries(c.plano.map(m => [m.id, {estado: "aguardando"}]));
+    // Nome e matéria em branco: o plano sugeriu.
+    if(!$("titulo").value.trim()) $("titulo").value = e.pedido.titulo || "";
+    if(!$("materia").value.trim()) $("materia").value = e.pedido.materia || "";
+    guardarMaterial();
+  }
+  for(const t of tarefas){
+    if(!e.visto || t.atualizado > e.visto) e.visto = t.atualizado;
+    e.custos[t.id] = Number(t.custo_usd) || 0;
+    if(t.tipo === "planejar") continue;
+    const onde = t.tipo === "missao" ? e.partes : e.licao;
+    if(t.estado !== "feita"){ onde[t.alvo] = {estado: SITUACAO_FILA[t.estado], erro: t.erro || ""}; continue; }
+    if(e.recebidas.includes(t.id)) continue;
+    e.recebidas.push(t.id);
+    const r = t.resultado || {};
+    if(t.tipo === "missao"){
+      e.questoes.push(...(r.questoes || []).map(q => ({...q, estado: "pendente"})));
+      onde[t.alvo] = {estado: "pronta", n: (r.questoes || []).length, aviso: r.aviso || ""};
+    }else onde[t.alvo] = {estado: "pronta", aviso: r.aviso || "", passos: r.passos || []};
+  }
+  e.custo = Object.values(e.custos).reduce((a, b) => a + b, 0);
+  e.filaEstado = c.estado;
+  e.filaErro = c.erro || "";
+  // O servidor salvou: o que estava pronto foi para o jogo, como em "Pronto, jogar".
+  if(c.jogo && e.jogoId !== c.jogo){
+    e.jogoId = c.jogo;
+    prontas().forEach(q => { q.estado = "aprovada"; });
+    lembrarJogo(c.jogo, montarConteudo());
+    limparCriacao();
+  }
+}
+
+let olhando = null;
+function acompanhar(parar){
+  if(olhando) return olhando;
+  const fila = estado.fila, t0 = Date.now();
+  gerando = true; contar();
+  irPara(3, false);
+  pintar();
+  olhando = (async () => {
+    let semNoticia = 0;
+    try{
+      while(estado && estado.fila === fila){
+        let r;
+        try{
+          r = await lerCriacao(fila, estado.visto);
+          semNoticia = 0;
+        }catch(e){
+          if(++semNoticia >= 3) recado("Sem notícia do servidor (" + e.message + "). O jogo continua sendo criado; volte depois.", true);
+          await esperar(INTERVALO_FILA * 2);
+          continue;
+        }
+        if(!estado || estado.fila !== fila) break;
+        aplicarCriacao(r);
+        if(estado.plano && parar){ parar(); parar = null; }
+        guardar();
+        pintar();
+        if(filaTerminou()) break;
+        const ps = [...Object.values(estado.partes), ...Object.values(estado.licao)];
+        recado(estado.plano
+          ? "Escrevendo as missões e a lição: " + ps.filter(p => p.estado === "pronta").length + " de " + ps.length
+            + " prontas · " + Math.round((Date.now() - t0) / 1000) + " s. Pode fechar: o jogo fica em Meus jogos quando ficar pronto."
+          : "Dividindo em missões... Pode fechar: o jogo fica em Meus jogos quando ficar pronto.");
+        await esperar(INTERVALO_FILA);
+      }
+    }finally{
+      if(parar) parar();
+      olhando = null;
+      gerando = false;
+      contar();
+    }
+    if(!estado || estado.fila !== fila) return;
+    if(estado.filaEstado === "falhou" && !estado.plano){
+      // O plano não veio: volta ao material, que continua lá.
+      const erro = estado.filaErro || "O jogo não pôde ser criado.";
+      estado = null; guardar();
+      irPara(2);
+      return recado(erro, true);
+    }
+    const falhas = Object.values(estado.partes).filter(p => p.estado === "falhou").length;
+    const semLicao = Object.values(estado.licao).filter(p => p.estado === "falhou").length;
+    recado([estado.filaErro,
+            estado.jogoId && !falhas ? "Pronto: o jogo já está em Meus jogos." : "",
+            falhas ? plural(falhas, "missão não veio", "missões não vieram") + ". Tente de novo na lista de missões, acima." : "",
+            semLicao ? plural(semLicao, "lição de missão não veio", "lições de missão não vieram") + ". Tente de novo em Lição, acima." : ""]
+           .filter(Boolean).join(" "), !!(falhas || semLicao || estado.filaErro));
+    await remedir();
+  })();
+  return olhando;
+}
+
+/* Tentar de novo dentro da fila: a tarefa volta, e a tela volta a olhar. */
+async function tentarNaFila(tipo, id){
+  const onde = tipo === "missao" ? estado.partes : estado.licao;
+  onde[id] = {estado: "aguardando"};
+  pintarResumo();
+  try{
+    await chamarFuncao({acao: "tentar", fila: estado.fila, tipo, alvo: id});
+    estado.filaEstado = "escrevendo";
+    guardar();
+    acompanhar();
+  }catch(e){
+    onde[id] = {estado: "falhou", erro: e.message};
+    pintar();
     recado(e.message, true);
   }
 }
@@ -1336,6 +1504,7 @@ async function gerarLicao(id){
 }
 
 async function tentarLicao(id){
+  if(estado.fila) return tentarNaFila("licao", id);
   estado.licao[id] = {estado: "aguardando"};
   pintarResumo();
   if(filaAtual) filaAtual.push("licao:" + id);
@@ -1350,6 +1519,7 @@ async function criarLicao(){
     const ab = await chamarFuncao({acao: "abrir", total});
     cota(ab.restantes);
     estado.criacao = ab.criacao;
+    estado.fila = null;
     estado.restantes = ab.restantes;
     estado.licao = Object.fromEntries(estado.missoes.map(m => [m.id, {estado: "aguardando"}]));
     guardar();
@@ -1361,6 +1531,7 @@ async function criarLicao(){
 
 /* Com a fila andando, a missão volta para o fim dela; parada, abre outra. */
 async function tentarDeNovo(id){
+  if(estado.fila) return tentarNaFila("missao", id);
   estado.partes[id] = {estado: "aguardando"};
   pintarResumo();
   if(filaAtual) filaAtual.push(id);
@@ -1641,6 +1812,7 @@ function pintar(){
     .filter(([q, i]) => i === editando || passa(q))
     .map(([q, i]) => i === editando ? cartaEdicao(q, i) : cartaLeitura(q, i));
   $("lista").replaceChildren(...(cartas.length ? cartas
+    : estado.fila && !filaTerminou() ? Array.from({length: 3}, () => el("div", {class: "esqueleto"}))
     : [el("p", {class: "nota"}, "Nenhuma questão neste filtro.")]));
   const n = aprovadas().length, pend = estado.questoes.filter(q => q.estado === "pendente").length;
   $("baixar").disabled = !n;
@@ -1712,34 +1884,34 @@ async function remedir(){
 
 /* ---------- entregar ---------- */
 
+/*CONTEUDO>*/
 function slug(t){
-  return t.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
+  return String(t || "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "jogo";
 }
 
 /* O trecho foi conferido contra o material, que é a soma das páginas: a
    página que o contém é a procedência da questão. A comparação ignora
    espaço e aspas, como a conferência do servidor. */
-const plano = t => t.toLowerCase().replace(/[“”"'‘’«»]/g, "").replace(/\s+/g, " ").trim();
+const semAspas = t => String(t || "").toLowerCase().replace(/[“”"'‘’«»]/g, "").replace(/\s+/g, " ").trim();
 function fonteDe(q, p){
-  const t = plano(q.trecho);
-  const pg = (p.paginas || []).find(x => plano(x.texto).includes(t));
+  const t = semAspas(q.trecho);
+  const pg = (p.paginas || []).find(x => semAspas(x.texto).includes(t));
   return pg ? {tipo: /\.pdf$/i.test(pg.nome) ? "pdf" : "foto", detalhe: pg.nome + ", p." + pg.pagina}
             : {tipo: "material", detalhe: p.titulo};
 }
 
-/* No esquema de `conteudo/`, o mesmo que `build/esquema.py` valida. */
-function montarConteudo(){
-  const qs = aprovadas();
-  const usadas = estado.missoes.filter(m => qs.some(q => q.missao === m.id));
-  const p = estado.pedido;
-  return {
+/* `questoes` são as que vão para o jogo, já escolhidas; `licao` é por
+   missão, {id: {passos}}. `cor` é a chave da tabela de cores: sem ela, o
+   jogo sai na cor da matéria. */
+function conteudoDoJogo({pedido: p, missoes, questoes: qs, licao, cor}){
+  const usadas = missoes.filter(m => qs.some(q => q.missao === m.id)).map(({id, nome}) => ({id, nome}));
+  const c = {
     id: slug(p.titulo) + "-" + slug(p.ano), materia: p.materia, titulo: p.titulo, motor: "ceu",
-    cor: Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo),
     missoes: usadas,
     trilhas: [{id: "tudo", nome: "Todas as missões", etapas: [...usadas.map(m => m.id), "all"]}],
     // A lição das missões que ficaram no jogo; `problemas` e `fora` são da revisão.
-    licao: usadas.flatMap(m => ((estado.licao || {})[m.id] || {}).passos || [])
+    licao: usadas.flatMap(m => ((licao || {})[m.id] || {}).passos || [])
       .filter(x => !x.fora).map(({problemas, fora, ...x}) => x),
     questoes: qs.map(q => ({tipo: "escolha", missao: q.missao, icone: q.icone,
       enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao,
@@ -1748,6 +1920,16 @@ function montarConteudo(){
       origem: "derivada", fonte: fonteDe(q, p).tipo === "material" && q.fonte ? q.fonte : fonteDe(q, p),
       trecho: q.trecho})),
   };
+  if(cor) c.cor = cor;
+  return c;
+}
+/*<CONTEUDO*/
+
+/* O jogo da revisão: as aprovadas, na cor escolhida ou na da matéria. */
+function montarConteudo(){
+  const p = estado.pedido;
+  return conteudoDoJogo({pedido: p, missoes: estado.missoes, questoes: aprovadas(), licao: estado.licao,
+                         cor: Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo)});
 }
 
 function baixar(){
@@ -1771,6 +1953,17 @@ async function gravarJogo(linha, id){
     ? "A tabela de jogos ainda não existe: falta rodar supabase db push (GERAR.md)." : r.error.message);
   return r.data.id;
 }
+/* O jogo salvo já fica no aparelho, e o índice o mostra sem esperar a rede. */
+function lembrarJogo(id, c){
+  try{
+    localStorage.setItem("jogo_gerado_" + id, JSON.stringify(c));
+    const antes = (lerDe("jogos_criados_v1") || []).find(j => j.id === id);
+    const lista = (lerDe("jogos_criados_v1") || []).filter(j => j.id !== id);
+    lista.unshift({id, titulo: c.titulo, materia: c.materia, cor: c.cor, questoes: c.questoes.length,
+                   criado: antes ? antes.criado : new Date().toISOString(), atualizado: new Date().toISOString()});
+    localStorage.setItem("jogos_criados_v1", JSON.stringify(lista));
+  }catch(e){}
+}
 function abrirJogo(id){ location.href = "jogar.html?id=" + encodeURIComponent(id); }
 
 async function salvarJogo(){
@@ -1784,15 +1977,7 @@ async function salvarJogo(){
     estado.jogoId = await gravarJogo({titulo: c.titulo, materia: c.materia, ano: estado.pedido.ano || "",
                                       material: estado.pedido.material || "", conteudo: c}, estado.jogoId);
     guardar();
-    // O jogo aberto aqui já fica no aparelho, e o índice o mostra sem esperar a rede.
-    try{
-      localStorage.setItem("jogo_gerado_" + estado.jogoId, JSON.stringify(c));
-      const lista = (lerDe("jogos_criados_v1") || []).filter(j => j.id !== estado.jogoId);
-      const antes = (lerDe("jogos_criados_v1") || []).find(j => j.id === estado.jogoId);
-      lista.unshift({id: estado.jogoId, titulo: c.titulo, materia: c.materia, cor: c.cor, questoes: c.questoes.length,
-                     criado: antes ? antes.criado : new Date().toISOString(), atualizado: new Date().toISOString()});
-      localStorage.setItem("jogos_criados_v1", JSON.stringify(lista));
-    }catch(e){}
+    lembrarJogo(estado.jogoId, c);
     limparCriacao();
     abrirJogo(estado.jogoId);
   }catch(e){
@@ -2185,8 +2370,8 @@ async function iniciar(){
   contar();
   pintarEscolhidos();
   pintarTexto();
-  if(estado)
-    // O que estava a caminho quando a página fechou não volta mais.
+  if(estado && !estado.fila)
+    // O que o navegador conduzia quando a página fechou não volta mais.
     [...Object.values(estado.partes || {}), ...Object.values(estado.licao || {})].forEach(p => {
       if(p.estado === "aguardando" || p.estado === "escrevendo")
         Object.assign(p, {estado: "falhou", erro: "Interrompida: a página fechou antes de chegar."});
@@ -2199,6 +2384,8 @@ async function iniciar(){
       await sb.auth.setSession({access_token: VOLTA.token, refresh_token: VOLTA.refresh});
     const {data} = await sb.auth.getSession();
     mostrarConta(data.session);
+    // A fila seguiu sem a tela: retoma de onde está.
+    if(data.session && estado && estado.fila && !filaTerminou()) acompanhar();
     if(VOLTA && VOLTA.erro) recado(erroDoGoogle(VOLTA.erro), true);
     vigiarSessao(sb);
   }catch(e){

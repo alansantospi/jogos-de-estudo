@@ -241,3 +241,55 @@ A tela de criar também entra com o Google. A volta traz a sessão no
 fragmento da URL, que a tela lê antes de usar o fragmento para as etapas.
 Se o Supabase não tiver `gerar.html` entre as URLs de retorno permitidas,
 ele devolve para o Site URL (a página inicial), que também abre a sessão.
+
+## A fila
+
+Jogo novo é criado pelo servidor, não pela tela
+(`conteudo/spec-criar-em-um-toque.md`): a tela pede `criar`, a função
+abre o jogo do dia e põe o plano na fila (`criacoes` e `tarefas`), e cada
+tarefa (o plano, cada missão, cada lição) é uma chamada da função, até
+quatro ao mesmo tempo por jogo. Quando a última termina, o servidor salva o
+jogo com as questões sem aviso. Fechar a tela não para nada; voltar retoma
+de onde está. Acrescentar questões e criar a lição de jogo antigo continuam
+conduzidos pela tela.
+
+Cada tarefa tenta duas vezes sozinha antes de virar "não veio"; "Tentar de
+novo" dá mais uma, dentro do mesmo jogo. As cercas são as mesmas de
+`reservar_geracao`. A lógica está em `supabase/functions/_esteira/fila.ts`
+e roda em `teste/esteira/fila.test.ts` com o banco em memória.
+
+**Montagem, uma vez** (depois de `supabase db push` da migração `fila`):
+
+1. Um segredo para a função se chamar e para o relógio do banco chamá-la:
+
+   ```sh
+   SEGREDO=$(openssl rand -hex 32)
+   supabase secrets set TRABALHO_SEGREDO=$SEGREDO
+   echo $SEGREDO   # para o passo 2
+   ```
+
+2. No **SQL Editor**, o endereço da função e o mesmo segredo no Vault, onde
+   o relógio os lê (ficam fora do repositório, que é público):
+
+   ```sql
+   select vault.create_secret('https://SEU-PROJETO.supabase.co/functions/v1/gerar', 'gerar_url');
+   select vault.create_secret('O-SEGREDO-DO-PASSO-1', 'trabalho_segredo');
+   ```
+
+3. `sh build/rebuild.sh && supabase functions deploy gerar`.
+
+O relógio (`pg_cron`, a cada minuto, `acordar_fila()`) é a rede de
+segurança: tarefa que ficou sem ninguém, ou cuja chamada morreu no corte de
+150 s, volta a andar em até um minuto. Sem os dois segredos do Vault ele
+não faz nada, e a fila só anda enquanto as chamadas se encadeiam.
+
+Para ver a fila: `select tipo, alvo, estado, tentativas, erro, custo_usd
+from tarefas where criacao = N order by ordem, id;`. Tarefa com "Cortada no
+meio" é a que o corte de 150 s matou duas vezes: se aparecer com
+frequência, é o número que decide subir de plano.
+
+| a tela diz | o que é |
+|---|---|
+| "A fila de criação não está configurada" | falta o passo 1 acima, ou o deploy depois dele |
+| "Já há um jogo sendo criado nesta conta" | uma criação por vez; a tela passa a mostrar a que está em curso |
+| a criação fica em "Dividindo em missões" | a chamada morreu e o relógio não está ligado: confira o passo 2 e `select * from cron.job` |
