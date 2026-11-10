@@ -241,6 +241,7 @@ function pintarConta(){
       + '<button class="primario" onclick="sincronizar()">Sincronizar agora</button>'
       + '<button class="fantasma" onclick="sairConta()">Sair</button>'
       + '<p id="contaRecado" class="recado"></p></div>'
+      + '<div id="convites"></div>'
     : _modoConta === "criar"
     ? '<form class="cartao" onsubmit="entrarConta(event)"><h2>Criar conta</h2>'
       + '<p>Estamos em teste fechado: a conta nova precisa do código de convite que você recebeu.</p>'
@@ -261,6 +262,103 @@ function pintarConta(){
       + '<button class="fantasma" type="button" onclick="entrarGoogle()">Entrar com Google</button>'
       + '<p class="trocar-modo">Recebeu um convite? <button class="link" type="button" onclick="modoConta(\'criar\')">Criar conta</button></p>'
       + '<p id="contaRecado" class="recado" role="status"></p></form>';
+  if(_sessao) pintarConvites().catch(() => {});
+}
+
+/* ---------- convites (só admin) ---------- */
+/* Quem é admin decide o banco (tabela `admins`, migração convites_na_tela);
+   a tela só pergunta. Conta comum nem vê o cartão, e as funções recusam
+   mesmo que alguém as chame direto. */
+const _ERROS_CONVITE = {so_admin: "Só a conta de admin cria convites.",
+  nota_invalida: "Escreva para quem é o convite (até 120 letras).",
+  usos_invalidos: "O número de contas vai de 1 a 500."};
+const _erroConvite = e => { const m = String(e && e.message || e);
+  return Object.entries(_ERROS_CONVITE).find(([k]) => m.includes(k))?.[1] || _emPortugues(m); };
+
+/* O texto pronto para mandar: o endereço é o desta página, sem o fragmento. */
+function mensagemConvite(codigo){
+  return "Você foi convidado para o teste do Jogos de Estudo. Abra "
+    + location.href.split("#")[0].split("?")[0] + "#conta, toque em Criar conta e use o código "
+    + codigo + ".";
+}
+
+let _admin = {uid: null, sim: false};
+async function pintarConvites(){
+  const c = document.getElementById("convites");
+  if(!c || !_sessao) return;
+  // A resposta vale para a sessão: pintarConta roda a cada desenhar().
+  const uid = _sessao.user.id;
+  if(_admin.uid !== uid){
+    try{ _admin = {uid, sim: (await (await _cliente()).rpc("sou_admin")).data === true}; }
+    catch(e){ return; }
+  }
+  const admin = _admin.sim;
+  if(!admin) return c.replaceChildren();
+  c.innerHTML = '<form class="cartao" id="formConvite" onsubmit="criarConvite(event)"><h2>Convites</h2>'
+    + '<p>Cada código cria uma ou mais contas. Só você vê este cartão.</p>'
+    + '<div class="linha-convite">'
+    + '<label class="campo"><span>Para quem</span><input id="conviteNota" required maxlength="120" placeholder="Família da Ana"></label>'
+    + '<label class="campo"><span>Contas</span><input id="conviteUsos" type="number" min="1" max="500" value="1" required inputmode="numeric"></label>'
+    + '</div><button class="primario" type="submit">Criar convite</button>'
+    + '<div id="conviteNovo"></div>'
+    + '<p id="conviteRecado" class="recado" role="status"></p>'
+    + '<ul id="listaConvites" class="lista-convites"></ul></form>';
+  await listarConvites();
+}
+
+async function listarConvites(){
+  const ul = document.getElementById("listaConvites");
+  if(!ul) return;
+  const sb = await _cliente();
+  const {data, error} = await sb.rpc("listar_convites");
+  if(error) return _recadoConvite(_erroConvite(error));
+  ul.innerHTML = (data || []).map(v => '<li class="' + (v.ativo ? "" : "desligado") + '">'
+    + '<div><code>' + esc(v.codigo) + '</code> <span>' + esc(v.nota || "") + '</span></div>'
+    + '<div class="meta-convite">' + v.usos + ' de ' + v.max_usos + ' usado' + (v.max_usos === 1 ? "" : "s")
+    + (v.ativo ? "" : " · desligado")
+    + (v.contas && v.contas.length ? " · " + v.contas.map(esc).join(", ") : "") + '</div>'
+    + '<div class="acoes-convite">'
+    + (v.ativo && v.usos < v.max_usos ? '<button class="fantasma" type="button" data-copiar="' + esc(v.codigo) + '">Copiar mensagem</button>' : "")
+    + '<button class="fantasma" type="button" data-mudar="' + esc(v.codigo) + '" data-ativo="' + (v.ativo ? "0" : "1") + '">'
+    + (v.ativo ? "Desligar" : "Religar") + '</button></div></li>').join("")
+    || '<li class="vazio-convite">Nenhum convite ainda.</li>';
+  ul.querySelectorAll("[data-copiar]").forEach(b => b.onclick = () => copiarConvite(b.dataset.copiar, b));
+  ul.querySelectorAll("[data-mudar]").forEach(b => b.onclick = () => mudarConvite(b.dataset.mudar, b.dataset.ativo === "1"));
+}
+
+function _recadoConvite(t){ const e = document.getElementById("conviteRecado"); if(e) e.textContent = t; }
+
+async function criarConvite(ev){
+  ev.preventDefault();
+  const nota = document.getElementById("conviteNota").value.trim();
+  const usos = parseInt(document.getElementById("conviteUsos").value, 10);
+  _recadoConvite("Criando...");
+  const sb = await _cliente();
+  const {data, error} = await sb.rpc("criar_convite", {nota, max_usos: usos});
+  if(error) return _recadoConvite(_erroConvite(error));
+  _recadoConvite("");
+  document.getElementById("conviteNota").value = "";
+  document.getElementById("conviteUsos").value = "1";
+  const novo = document.getElementById("conviteNovo");
+  novo.innerHTML = '<div class="convite-novo"><span>Convite criado</span><code>' + esc(data) + '</code>'
+    + '<button class="primario" type="button" id="copiarNovo">Copiar mensagem</button></div>';
+  document.getElementById("copiarNovo").onclick = e => copiarConvite(data, e.target);
+  await listarConvites();
+}
+
+async function copiarConvite(codigo, botao){
+  const texto = mensagemConvite(codigo);
+  try{ await navigator.clipboard.writeText(texto); botao.textContent = "Copiado"; }
+  catch(e){ _recadoConvite("Não deu para copiar sozinho. Copie daqui: " + texto); return; }
+  setTimeout(() => { botao.textContent = "Copiar mensagem"; }, 2000);
+}
+
+async function mudarConvite(codigo, ativo){
+  const sb = await _cliente();
+  const {error} = await sb.rpc("mudar_convite", {codigo, ativo});
+  if(error) return _recadoConvite(_erroConvite(error));
+  _recadoConvite(ativo ? "Convite religado." : "Convite desligado: não cria mais contas.");
+  await listarConvites();
 }
 
 /* Volta de uma confirmação de e-mail ou de um login do Google. */

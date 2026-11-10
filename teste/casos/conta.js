@@ -61,4 +61,46 @@ if (!/código de convite/.test(recado())) falhas.push("convite recusado sem expl
 /* 4. os links para termos e privacidade no rodapé */
 if (!document.querySelector('footer a[href="termos.html"]')) falhas.push("o rodapé não leva aos termos");
 
-fim({ok: !falhas.length, resumo: falhas.length ? "" : "entrar, criar com convite e aceite, convite recusado", detalhes: falhas});
+/* 5. convites: conta comum não vê o cartão; admin cria, copia e desliga */
+let admin = false;
+const rpcs = [];
+const convites = [{codigo: "AAAA-111111", nota: "Família <b>Ana</b>", usos: 1, max_usos: 1, ativo: true,
+                   criado: "2026-10-27T10:00:00Z", contas: ["ana@exemplo.com"]}];
+window._cliente = async () => ({rpc: async (nome, args) => {
+  rpcs.push([nome, args]);
+  if (nome === "sou_admin") return {data: admin, error: null};
+  if (!admin) return {data: null, error: {message: "so_admin"}};
+  if (nome === "listar_convites") return {data: convites, error: null};
+  if (nome === "criar_convite") {
+    if (args.max_usos > 500) return {data: null, error: {message: "usos_invalidos"}};
+    convites.unshift({codigo: "BBBB-222222", nota: args.nota, usos: 0, max_usos: args.max_usos, ativo: true, contas: []});
+    return {data: "BBBB-222222", error: null};
+  }
+  if (nome === "mudar_convite") { convites.find(c => c.codigo === args.codigo).ativo = args.ativo; return {data: null, error: null}; }
+}});
+_sessao = {user: {id: "comum", email: "pai@exemplo.com"}};
+pintarConta();
+await espere(() => rpcs.some(r => r[0] === "sou_admin"));
+await new Promise(r => setTimeout(r, 100));
+if (document.getElementById("formConvite")) falhas.push("conta comum vê o cartão de convites");
+
+admin = true; _sessao = {user: {id: "admin", email: "eu@exemplo.com"}};
+pintarConta();
+await espere(() => document.querySelector("#listaConvites li"));
+if (document.querySelector("#listaConvites b")) falhas.push("a nota do convite virou HTML");
+if (!/ana@exemplo\.com/.test($c("listaConvites").innerText)) falhas.push("não mostra quem usou o convite");
+if (document.querySelector('#listaConvites [data-copiar="AAAA-111111"]')) falhas.push("convite esgotado ainda oferece copiar");
+$c("conviteNota").value = "Turma 4B"; $c("conviteUsos").value = "30";
+await criarConvite(new Event("submit"));
+const criado = rpcs.find(r => r[0] === "criar_convite");
+if (!criado || criado[1].nota !== "Turma 4B" || criado[1].max_usos !== 30) falhas.push("criar mandou: " + JSON.stringify(criado));
+if (!/BBBB-222222/.test($c("conviteNovo").innerText)) falhas.push("o código novo não aparece");
+if (!/#conta, toque em Criar conta e use o código BBBB-222222/.test(mensagemConvite("BBBB-222222"))) falhas.push("mensagem do convite: " + mensagemConvite("BBBB-222222"));
+$c("conviteNota").value = "Escola"; $c("conviteUsos").value = "900";
+await criarConvite(new Event("submit"));
+if (!/1 a 500/.test($c("conviteRecado").textContent)) falhas.push("erro do banco sem tradução: " + $c("conviteRecado").textContent);
+document.querySelector('#listaConvites [data-mudar="AAAA-111111"]').click();
+await espere(() => rpcs.some(r => r[0] === "mudar_convite"));
+await espere(() => /Religar/.test(document.querySelector('#listaConvites [data-mudar="AAAA-111111"]').textContent));
+
+fim({ok: !falhas.length, resumo: falhas.length ? "" : "entrar, criar com convite e aceite, convite recusado, convites do admin", detalhes: falhas});

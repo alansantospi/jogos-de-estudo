@@ -40,6 +40,20 @@ h3{font-family:var(--display);font-size:1.125rem;margin:var(--s-6) 0 var(--s-3)}
   font-size:0.875rem;color:var(--texto-2)}
 .aceite input{width:1.25rem;height:1.25rem;margin:2px 0 0;accent-color:var(--ingles)}
 .aceite a,.trocar-modo .link{color:var(--ingles);font-weight:700}
+/* ---------- convites (admin) ---------- */
+.linha-convite{display:grid;grid-template-columns:1fr 6rem;gap:var(--s-3)}
+.convite-novo{display:grid;gap:var(--s-2);padding:var(--s-4);border-radius:var(--r);
+  background:color-mix(in oklch,var(--ingles) 10%,var(--carta))}
+.convite-novo span{font-size:0.875rem;color:var(--texto-2)}
+.convite-novo code,.lista-convites code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;letter-spacing:0.04em}
+.convite-novo code{font-size:1.375rem}
+.lista-convites{list-style:none;margin:0;padding:0;display:grid}
+.lista-convites li{display:grid;gap:4px;padding:var(--s-3) 0;border-top:1px solid var(--risco)}
+.lista-convites li.desligado code{text-decoration:line-through}
+.lista-convites span,.meta-convite{font-size:0.875rem;color:var(--texto-2);overflow-wrap:anywhere}
+.acoes-convite{display:flex;gap:var(--s-2);flex-wrap:wrap}
+.acoes-convite .fantasma{min-height:2.25rem;font-size:0.875rem;padding:0 var(--s-4)}
+.vazio-convite{color:var(--texto-2);font-size:0.875rem}
 footer .legal{display:block;margin-top:var(--s-2);font-size:0.8125rem}
 footer .legal a{color:var(--texto-2)}
 .link{background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline}

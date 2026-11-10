@@ -42,7 +42,21 @@ Na ordem. Nenhum destes passos o código faz por você.
 
 ## Criar convites
 
-No **SQL Editor** do Supabase:
+**Pela tela.** Na aba **Conta** do site, entrado, aparece o cartão
+**Convites** — só para contas na tabela `admins` (migração
+`20261031000000_convites_na_tela.sql`). Ali se cria o código (para quem, e
+quantas contas ele abre, de 1 a 500), copia a mensagem pronta para mandar,
+vê quem já entrou com cada código e desliga ou religa. Para se tornar
+admin, uma vez, no **SQL Editor**:
+
+```sql
+insert into admins select id from auth.users where email = 'seu@email.com';
+```
+
+Conta comum não vê o cartão, e as funções do banco recusam mesmo chamadas
+direto. Tirar um admin: `delete from admins where conta = '…';`.
+
+**Pelo SQL Editor**, do mesmo jeito de antes:
 
 ```sql
 select novo_convite('Família da Ana');        -- um uso
