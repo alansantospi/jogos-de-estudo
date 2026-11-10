@@ -142,9 +142,7 @@ function desenhar(){
   chip.textContent = p ? inicialDe(p.nome) : "+";
   chip.style.background = p ? "var(" + p.cor + ")" : "var(--texto-2)";
   chip.title = p ? p.nome : "Escolher aluno";
-  document.getElementById("subtitulo").textContent = p
-    ? "Jogando como " + p.nome + ". O progresso fica salvo neste aparelho."
-    : "Escolha quem está jogando para o progresso ficar separado.";
+  document.getElementById("subtitulo").textContent = p ? "Jogando como " + p.nome : "Quem vai jogar?";
   pintarPerfis(); pintarJogos(); pintarHistorico(); pintarConta();
 }
 

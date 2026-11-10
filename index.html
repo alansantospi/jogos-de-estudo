@@ -254,7 +254,7 @@ footer .legal a{color:var(--texto-2)}
     <div class="cabeca">
       <div>
         <h1>Jogos de Estudo</h1>
-        <p class="sub" id="subtitulo">Escolha a matéria e comece.</p>
+        <p class="sub" id="subtitulo"></p>
       </div>
       <button id="chipPerfil" class="chip-perfil" onclick="ir('perfis')" aria-label="Trocar de aluno"></button>
     </div>
@@ -338,7 +338,7 @@ footer .legal a{color:var(--texto-2)}
       <div class="titulo-meus"><h2>Meus jogos</h2><a href="gerar.html#meus">Editar ou apagar</a></div>
       <ul class="grade" id="gradeMeus"></ul>
     </section>
-    <footer>Todo jogo tem <b>modo Treino</b>, em que errar não elimina, e revisa sozinho o que você mais erra.<span class="legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></span></footer>
+    <footer><span class="legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></span></footer>
   </section>
 
   <!-- ---------------- perfis ---------------- -->
@@ -564,9 +564,7 @@ function desenhar(){
   chip.textContent = p ? inicialDe(p.nome) : "+";
   chip.style.background = p ? "var(" + p.cor + ")" : "var(--texto-2)";
   chip.title = p ? p.nome : "Escolher aluno";
-  document.getElementById("subtitulo").textContent = p
-    ? "Jogando como " + p.nome + ". O progresso fica salvo neste aparelho."
-    : "Escolha quem está jogando para o progresso ficar separado.";
+  document.getElementById("subtitulo").textContent = p ? "Jogando como " + p.nome : "Quem vai jogar?";
   pintarPerfis(); pintarJogos(); pintarHistorico(); pintarConta();
 }
 

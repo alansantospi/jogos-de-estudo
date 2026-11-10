@@ -131,8 +131,6 @@ input,select,textarea{width:100%;background:var(--carta);color:var(--texto);font
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acao);box-shadow:0 0 0 3px var(--acao-tinta)}
 textarea{resize:vertical;line-height:1.55}
 input[type=checkbox]{accent-color:var(--acao-solida)}
-.sugestao{display:flex;gap:.4rem;align-items:center;margin:.5rem 0 0}
-.sugestao svg{width:1rem;height:1rem;color:var(--acao)}
 .quantas{border:0;padding:0;margin:1.25rem 0 0;min-width:0}
 .quantas legend{font-weight:700;font-size:.9375rem;padding:0;margin-bottom:.45rem}
 .pilulas{display:flex;flex-wrap:wrap;gap:.5rem}
@@ -274,7 +272,6 @@ button{font:inherit;font-weight:800;cursor:pointer}
  background:rgb(255 255 255 / .2);font-size:.875rem;font-weight:800}
 .capa-nome input{min-height:3rem;font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1.2;
  letter-spacing:-0.01em;padding:0 .2rem;margin-left:-.2rem}
-.capa-dica{margin:0;font-size:.8125rem;color:rgb(255 255 255 / .9);min-height:1.2em}
 @media (max-width:30rem){.capa-nome input{font-size:1.4rem}}
 
 .escolha-cor{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;margin:0 0 1rem}
@@ -464,7 +461,6 @@ a.botao{text-decoration:none;font-weight:800}
   <form class="cartao-entrar" id="formEntrar">
     <div>
       <h1 tabindex="-1">Criar jogo</h1>
-      <p class="lead" style="margin:0">Entre com a conta da família. Gerar custa, então cada conta tem um limite por dia.</p>
     </div>
     <label>E-mail <input id="email" type="email" autocomplete="email" required></label>
     <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
@@ -488,8 +484,7 @@ a.botao{text-decoration:none;font-weight:800}
 <!-- meus jogos -->
 <section id="meus" data-e="4" hidden>
   <div class="cabeca-meus">
-    <div><h1 tabindex="-1">Meus jogos</h1>
-    <p class="lead">Os jogos criados nesta conta. Aparecem na página inicial de quem entrar nela.</p></div>
+    <div><h1 tabindex="-1">Meus jogos</h1></div>
     <button class="botao primario" type="button" id="novoJogo"><svg aria-hidden="true"><use href="#i-mais"/></svg>Novo jogo</button>
   </div>
   <div id="listaMeus"></div>
@@ -499,7 +494,6 @@ a.botao{text-decoration:none;font-weight:800}
 <section id="etapa1" data-e="1">
   <div class="faixa-acrescentar" id="faixa1" hidden></div>
   <h1 tabindex="-1">Novo jogo</h1>
-  <p class="lead">Fotos do livro, um PDF ou o resumo da aula. As questões saem só dele.</p>
   <div class="abas" role="tablist" aria-label="Tipo de material">
     <button type="button" role="tab" id="abaFotos" aria-controls="painelFotos" aria-selected="true">
       <svg aria-hidden="true"><use href="#i-camera"/></svg>Fotos ou PDF</button>
@@ -517,24 +511,20 @@ a.botao{text-decoration:none;font-weight:800}
     <label class="solta" id="solta">
       <span class="icone"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
       <strong id="soltaTitulo">Escolha fotos ou um PDF</strong>
-      <span class="dica">Ou arraste para cá. Até 30 páginas; cada página de PDF conta uma.<br>
-        Página inteira no quadro, de frente e com luz.</span>
       <input id="arquivos" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
     </label>
     <ul class="miniaturas" id="miniaturas"></ul>
     <div class="acoes">
       <button class="botao primario" id="botaoLer" type="button" disabled>Ler as páginas</button>
-      <span class="dica" id="dicaLer">A leitura conta como uma das gerações do dia.</span>
     </div>
   </div>
 
   <div id="painelTexto" role="tabpanel" aria-labelledby="abaTexto" hidden>
     <label class="so-leitor" for="textoColado">Texto</label>
     <textarea id="textoColado" rows="12"
-      placeholder="Cole aqui o resumo da aula ou o texto do livro. Se a primeira linha for o título, ela vira o nome do jogo."></textarea>
+      placeholder="Cole o texto aqui"></textarea>
     <div class="contador" id="contadorTexto"></div>
-    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Continuar</button>
-      <span class="dica atalho" aria-hidden="true">⌘ ou Ctrl + Enter</span></div>
+    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Continuar</button></div>
   </div>
 </section>
 
@@ -550,13 +540,9 @@ a.botao{text-decoration:none;font-weight:800}
       <input id="materia" placeholder="Matéria" list="materias" autocomplete="off" maxlength="60"></label>
     <label class="capa-nome"><span class="so-leitor">Nome do jogo</span>
       <input id="titulo" placeholder="Nome do jogo" autocomplete="off" maxlength="120"></label>
-    <p class="capa-dica" id="capaDica"></p>
   </div>
   <div id="escolhaCor"></div>
   <input type="hidden" id="cor" value="">
-  <p class="dica sugestao" id="sugestao" hidden></p>
-
-  <p class="lead" id="leadConferir" hidden>Desmarque o que não deve virar questão. O que estiver escrito à mão fica de fora: resposta de aluno pode estar errada.</p>
   <div id="paginas"></div>
 
   <div class="ajustes">
@@ -601,7 +587,6 @@ a.botao{text-decoration:none;font-weight:800}
 <!-- 3. revisar -->
 <section id="revisao" data-e="3" hidden>
   <h1 tabindex="-1">Revise as questões</h1>
-  <p class="lead" id="leadRevisar">Já dá para jogar: o que passou sem aviso vai para o jogo. O que tem aviso espera você olhar; o resto, revise se quiser.</p>
   <div class="painel" id="resumo"></div>
   <div class="filtros" id="filtros" role="group" aria-label="Mostrar"></div>
   <div id="lista"></div>
@@ -795,7 +780,7 @@ function cota(n){
 /* Relógio de espera: diz quanto passou e quanto costuma levar. */
 function relogio(texto, faixa){
   const t0 = Date.now();
-  const passo = () => recado(texto + " " + Math.round((Date.now() - t0) / 1000) + " s. " + faixa);
+  const passo = () => recado(texto + " " + Math.round((Date.now() - t0) / 1000) + " s" + (faixa ? ". " + faixa : ""));
   passo();
   const id = setInterval(passo, 1000);
   return () => clearInterval(id);
@@ -992,9 +977,7 @@ async function lerArquivos(){
     recado("Preparando as fotos...");
     const arquivos = [];
     for(const x of escolhidos) arquivos.push(await prepararArquivo(x.f));
-    parar = relogio("Lendo " + plural(arquivos.length, "arquivo", "arquivos") + "...",
-                    arquivos.length > LOTE ? "Lê de " + LOTE + " em " + LOTE + " páginas; cada lote leva de meio minuto a um minuto e meio."
-                                           : "Costuma levar de meio minuto a um minuto e meio.");
+    parar = relogio("Lendo as páginas...", "");
     const r = await lerEmLotes(arquivos);
     parar();
     recado("");
@@ -1085,10 +1068,6 @@ function aplicarSugestao(titulo, materia, deOnde){
     else if(!v && sugerido[k] && campo.value === sugerido[k]) campo.value = "";
     sugerido[k] = v;
   });
-  $("sugestao").hidden = !usou.length;
-  if(usou.length) $("sugestao").replaceChildren(icone("livro"),
-    el("span", {}, (usou.length === 2 ? "Nome e matéria tirados" : usou[0] === "titulo" ? "Nome tirado" : "Matéria tirada")
-      + " " + deOnde + ". Mude se quiser."));
   pintarCapa();
 }
 
@@ -1106,8 +1085,7 @@ function seletorCor(nome, aoEscolher, aoVoltar){
   const caixa = el("div", {class: "escolha-cor"}, grupo, dica);
   caixa.atualizar = (k, auto) => {
     grupo.querySelectorAll("input").forEach(r => { r.checked = r.value === k; r.parentNode.classList.toggle("on", r.checked); });
-    dica.replaceChildren(auto ? "Na cor da matéria." : CORES_JOGO[k].nome + ", escolhida por você. ",
-      auto ? "" : el("button", {class: "link", type: "button", onclick: aoVoltar}, "Voltar à cor da matéria"));
+    dica.replaceChildren(auto ? "" : el("button", {class: "link", type: "button", onclick: aoVoltar}, "Voltar à cor da matéria"));
   };
   return caixa;
 }
@@ -1120,16 +1098,12 @@ function pintarCapa(){
   const k = corAtual();
   $("pedido").style.setProperty("--tom", CORES_JOGO[k].valor);
   corPedido.atualizar(k, !$("cor").value);
-  const vazios = [!$("titulo").value.trim() && "o nome", !$("materia").value.trim() && "a matéria"].filter(Boolean);
-  $("capaDica").textContent = vazios.length ? "Em branco, " + vazios.join(" e ") + " sai" + (vazios.length > 1 ? "em" : "")
-    + " do conteúdo na hora de gerar." : "";
 }
 function escolherCor(k){ $("cor").value = k; pintarCapa(); guardarMaterial(); }
 
 function pintarPaginas(){
   const caixa = $("paginas");
   caixa.replaceChildren();
-  $("leadConferir").hidden = !leitura;
   if(!leitura) return;
   if(leitura.aviso){
     const nada = leitura.paginas.every(p => p.legivel === "nao");
@@ -1177,15 +1151,14 @@ function contar(){
   const alem = !auto && !fora && n >= MATERIAL_MIN && q > cabem * 1.15;
   $("estimativa").className = "estimativa" + (alem ? " alem" : "");
   $("estimativa").textContent = fora || n < MATERIAL_MIN ? ""
-    : auto ? "Devem vir umas " + q + " questões" + (cabem > TOTAL_MAX ? ", o máximo de um jogo." : ": o quanto o material sustenta sem repetir.")
-    : alem ? "Pedindo " + q + ", devem vir umas " + cabem + ": as questões só saem do que está no material. Para ter mais, volte e acrescente páginas."
-    : "Este material sustenta umas " + cabem + " questões.";
+    : auto ? "Umas " + q + " questões."
+    : alem ? "Este material dá umas " + cabem + "."
+    : "";
   $("botaoGerar").textContent = gerando ? "Gerando..." : auto ? "Gerar o jogo" : "Gerar " + q + " questões";
   $("dicaGerar").textContent = estado && estado.acrescentar
-      ? "As " + estado.questoes.filter(q => q.estado !== "descartada").length + " questões que o jogo já tem continuam. Conta como outro jogo do dia."
-    : estado && !estado.jogoId ? "Gerar de novo substitui as questões em revisão e conta como outro jogo."
-    : q > 20 ? "Uma missão por vez, " + PARALELO + " ao mesmo tempo: "
-      + (q > 100 ? "uns 5 a 8 minutos." : q >= 60 ? "uns 3 a 5 minutos." : "uns 2 a 3 minutos.")
+      ? "Conta como outro jogo do dia."
+    : estado && !estado.jogoId ? "Substitui as questões em revisão."
+    : q > 20 ? (q > 100 ? "Uns 5 a 8 minutos." : q >= 60 ? "Uns 3 a 5 minutos." : "Uns 2 a 3 minutos.")
     : "";
   pintarCapa();
 }
@@ -1208,7 +1181,6 @@ function limparCriacao(){
   sugerido = {titulo: "", materia: ""};
   ["material", "textoColado", "titulo", "materia", "cor"].forEach(k => { $(k).value = ""; });
   $("quantidade").value = "auto";
-  $("sugestao").hidden = true;
   $("caixaMaterial").open = false;
   pintarPaginas(); pintarTexto(); contar();
   guardarMaterial();
@@ -1238,12 +1210,11 @@ async function pedir(ev){
   const base = estado && estado.acrescentar ? estado : null;
   estado = null;
   irPara(3);
-  $("resumo").replaceChildren(el("p", {style: "margin:0"},
-    "Primeiro o material é dividido em missões; depois cada missão é escrita, conferida contra o material e medida contra os atalhos."));
+  $("resumo").replaceChildren();
   $("filtros").replaceChildren();
   $("lista").replaceChildren(...Array.from({length: 3}, () => el("div", {class: "esqueleto"})));
   $("pe").hidden = true;
-  const parar = relogio("Dividindo o material em missões...", "Leva uns 20 a 40 segundos.");
+  const parar = relogio("Dividindo em missões...", "");
   try{
     const ab = await chamarFuncao({acao: "abrir", total});
     cota(ab.restantes);
@@ -1300,7 +1271,7 @@ async function gerarPartes(ids){
     const ps = [...Object.values(estado.partes || {}), ...Object.values(estado.licao || {})];
     const prontas = ps.filter(p => p.estado === "pronta").length;
     recado("Escrevendo as missões e a lição: " + prontas + " de " + ps.length + " prontas · "
-           + Math.round((Date.now() - t0) / 1000) + " s. Dá para ir revisando as que chegaram.");
+           + Math.round((Date.now() - t0) / 1000) + " s");
   };
   placar();
   const relogioPartes = setInterval(placar, 1000);
@@ -1890,7 +1861,7 @@ function confirmar(chave, botao, texto){
 function pintarMeus(lista){
   const caixa = $("listaMeus");
   if(!lista.length) return caixa.replaceChildren(el("div", {class: "vazio-meus"},
-    el("p", {style: "margin:0 0 1rem"}, "Nenhum jogo criado ainda. Fotografe o livro ou cole o resumo da aula, e em poucos minutos sai um jogo."),
+    el("p", {style: "margin:0 0 1rem"}, "Nenhum jogo ainda."),
     el("button", {class: "botao primario", type: "button", onclick: () => novoJogo()}, "Criar o primeiro")));
   caixa.replaceChildren(...lista.map(j => {
     const apagar = el("button", {class: "botao discreto perigo", type: "button"}, "Apagar");
@@ -1935,8 +1906,7 @@ function linhaDoLink(j){
     if(!abrir || qr.firstChild) return;
     qr.append(el("div", {class: "esqueleto", style: "height:12rem;width:12rem;margin:0"}));
     try{
-      qr.replaceChildren(await desenharQR(campo.value),
-        el("p", {}, "Aponte a câmera do tablet ou do celular da criança: o jogo abre direto, sem conta."));
+      qr.replaceChildren(await desenharQR(campo.value));
     }catch(e){
       qr.replaceChildren(el("p", {}, "Não consegui desenhar o QR code. Copie o link e mande por mensagem."));
     }
@@ -1946,7 +1916,7 @@ function linhaDoLink(j){
     if(confirmar("link" + j.id, desligar, "Toque de novo: o link para de abrir")) mudarLink(j, null, desligar);
   });
   return el("div", {class: "link-jogo"},
-    el("p", {}, "Quem tiver este link joga sem entrar na conta. Não deixa editar; do material, mostra só os trechos que as questões citam."),
+    el("p", {}, "Joga sem conta, não edita."),
     el("div", {class: "acoes"}, campo, copiar, botaoQR, desligar), qr);
 }
 
@@ -2012,7 +1982,6 @@ async function editarJogo(id, botao){
                 trecho: q.trecho || "", fonte: q.fonte, problemas: [], estado: "aprovada"}))};
     guardar();
     irPara(3);
-    recado("Aberto para editar: o que você aprovar vai para o jogo quando tocar em Atualizar.");
     // Sem o material (jogo salvo antes de ele ser guardado), conferir o trecho
     // reprovaria tudo: fica sem reconferência.
     if(estado.pedido.material) await remedir(); else pintar();
@@ -2063,7 +2032,7 @@ function pintarFaixas(){
     const f = $(id);
     f.hidden = !ac;
     if(!ac) return;
-    f.replaceChildren(icone("mais"), el("span", {}, "Acrescentando questões a “" + estado.pedido.titulo + "”. As que o jogo já tem continuam."),
+    f.replaceChildren(icone("mais"), el("span", {}, "Acrescentando a “" + estado.pedido.titulo + "”"),
       el("button", {class: "botao discreto empurra", type: "button", style: "margin-left:auto",
                     onclick: () => { estado.acrescentar = false; guardar(); irPara(3); }}, "Cancelar"));
   });

@@ -203,11 +203,10 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
     pg(0, {materia: "Ciências"}), pg(1, {assunto: "A célula", materia: "Ciências"}), pg(2, {materia: "História"})]});
   if ($("titulo").value !== "A célula" || $("materia").value !== "Ciências")
     falhas.push("a leitura não sugeriu nome e matéria: " + $("titulo").value + " / " + $("materia").value);
-  if ($("sugestao").hidden) falhas.push("a sugestão não diz de onde veio");
   // Sem escolha, o material decide: o padrão é "auto", com a estimativa à vista.
   $("quantidade").value = "auto"; contar();
   if (!document.querySelector('#pilulas input[value="auto"]').checked) falhas.push("o automático não é o marcado");
-  if (!/Devem vir umas 3\d questões: o quanto o material sustenta/.test($("estimativa").textContent))
+  if (!/^Umas 3\d questões\.$/.test($("estimativa").textContent))
     falhas.push("estimativa no automático: " + $("estimativa").textContent);
   if ($("botaoGerar").textContent !== "Gerar o jogo") falhas.push("botão no automático: " + $("botaoGerar").textContent);
   // O que a pessoa escreveu fica; a sugestão nova só ocupa o que ainda era sugestão.
@@ -222,7 +221,7 @@ if (!lerLeitura() || lerLeitura().paginas[0].marcada) falhas.push("a seleção d
   if ($("botaoGerar").textContent !== "Gerar 100 questões") falhas.push("botão com número: " + $("botaoGerar").textContent);
   const marcadas = [...document.querySelectorAll("#pilulas input")].filter(r => r.checked).map(r => r.value).join();
   if (marcadas !== "100") falhas.push("pílulas marcadas depois de escolher 100: " + marcadas);
-  if (!$("estimativa").classList.contains("alem") || !/Pedindo 100, devem vir umas/.test($("estimativa").textContent))
+  if (!$("estimativa").classList.contains("alem") || !/^Este material dá umas \d+\.$/.test($("estimativa").textContent))
     falhas.push("pedir além do material não avisa: " + $("estimativa").textContent);
   leitura.paginas[0].marcada = false; aplicarPaginas();
   if ($("quantidade").value !== "100") falhas.push("depois de escolhida, a quantidade mudou sozinha");
