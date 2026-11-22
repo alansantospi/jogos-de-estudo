@@ -400,6 +400,8 @@ if (!/1 missão não veio/.test($("andamento").innerText)) falhas.push("pronto, 
 [...$("andamento").querySelectorAll("button")].find(b => /^Revisar/.test(b.textContent)).click();
 await espere(() => etapa === 3);
 if ($("voltarPronto").hidden) falhas.push("da revisão não se volta ao jogo pronto");
+if (!criados[0] || JSON.stringify(criados[0].tipos) !== JSON.stringify(["escolha", "vf", "ligar", "ordenar"]))
+  falhas.push("sem mexer, o pedido não leva os quatro tipos: " + JSON.stringify(criados[0] && criados[0].tipos));
 if (criados.length !== 1 || criados[0].automatico || criados[0].total !== 30 || criados[0].titulo !== "Jogo grande")
   falhas.push("o pedido à fila não foi como pedido: " + JSON.stringify(criados[0]));
 if (gerados.length || licoes.length || planos.length) falhas.push("com a fila, a tela ainda pediu partes ela mesma");
@@ -639,5 +641,60 @@ await espere(() => botaoDe("Compartilhar"));
   if (pedido.provider !== "google" || /#/.test(pedido.options.redirectTo))
     falhas.push("ida para o Google: " + JSON.stringify(pedido));
 }
+
+/* tipos de questão: escolhidos antes, mostrados e editados cada um do seu jeito, e preservados ao reabrir */
+try {
+  const caixas = [...document.querySelectorAll("#pilulasTipos input")];
+  caixas.forEach(c => { c.checked = false; c.dispatchEvent(new Event("change")); });
+  if (!$("continuarTexto").disabled && !$("botaoGerar").disabled && tiposEscolhidos().length)
+    falhas.push("sem tipo marcado, ainda dá para criar");
+  if (!/nenhum tipo/.test($("resumoAjustar").textContent)) falhas.push("o resumo de Ajustar não diz que falta tipo: " + $("resumoAjustar").textContent);
+  if (!$("ajustar").open) falhas.push("sem tipo marcado, Ajustar não se abre para mostrar por quê");
+  caixas[1].checked = true; caixas[1].dispatchEvent(new Event("change"));
+  if (!/só verdadeiro ou falso/.test($("resumoAjustar").textContent)) falhas.push("o resumo não diz o tipo escolhido: " + $("resumoAjustar").textContent);
+  if (JSON.stringify(lerDe(MATERIAL).tipos) !== '["vf"]') falhas.push("a escolha de tipos não fica guardada");
+  caixas[0].checked = true; caixas[0].dispatchEvent(new Event("change"));
+  caixas[2].checked = true; caixas[2].dispatchEvent(new Event("change"));
+  if (!/sem ordenar/.test($("resumoAjustar").textContent)) falhas.push("faltando um tipo, o resumo não diz qual: " + $("resumoAjustar").textContent);
+  caixas.forEach(c => { c.checked = true; c.dispatchEvent(new Event("change")); });
+
+  const t = {missao: "a", icone: "livro", explicacao: "Porque sim.", trecho: "Material antigo", fonte: {tipo: "material"}};
+  window.lerJogoConta = async id => ({id, titulo: "Tipos", materia: "Ciências", ano: "4º ano", material: "",
+    conteudo: {missoes: [{id: "a", nome: "A"}], questoes: [
+      {...t, tipo: "vf", enunciado: "Afirmação", certa: false},
+      {...t, tipo: "ligar", enunciado: "Ligue", pares: [["Um", "1"], ["Dois", "2"], ["Três", "3"]]},
+      {...t, tipo: "ordenar", enunciado: "Ordene", sequencia: ["primeiro", "segundo", "terceiro"]},
+      {...t, tipo: "digitar", enunciado: "Digite", aceitas: ["x"]}]}});
+  const botaoAbrir = document.createElement("button");
+  estado = null;
+  await editarJogo("tipos-1", botaoAbrir);
+  await espere(() => estado.jogoId === "tipos-1" && location.hash === "#revisar");
+  if (estado.questoes.map(q => q.tipo).join() !== "vf,ligar,ordenar")
+    falhas.push("reaberto, o jogo não mantém os tipos: " + estado.questoes.map(q => q.tipo).join());
+  const textos = cartas().map(c => c.innerText);
+  if (!/Verdadeiro ou falso/.test(textos[0]) || !/Certa: Falso|Falso/.test(textos[0])) falhas.push("a carta de V ou F não mostra a resposta: " + textos[0]);
+  if (!/Um\s*→\s*1/.test(textos[1])) falhas.push("a carta de ligar não mostra os pares: " + textos[1]);
+  if (!/1\.\s*primeiro[\s\S]*3\.\s*terceiro/.test(textos[2])) falhas.push("a carta de ordenar não mostra a ordem: " + textos[2]);
+  // Editar o V ou F: a resposta é um seletor, e salvar troca.
+  editar(0);
+  const f = $("lista").querySelector("form");
+  if (!f || !f.elements.verdadeira) falhas.push("editar V ou F não oferece a resposta");
+  else { f.elements.verdadeira.value = "sim"; f.requestSubmit(); }
+  await espere(() => !$("lista").querySelector("form"));
+  if (estado.questoes[0].verdadeira !== true) falhas.push("a edição do V ou F não mudou a resposta");
+  editar(1);
+  const g = $("lista").querySelector("form");
+  g.elements.par2.value = ""; g.elements.termo2.value = ""; g.requestSubmit();
+  await espere(() => !$("lista").querySelector("form"));
+  if (estado.questoes[1].pares.length !== 2) falhas.push("par apagado na edição não saiu");
+  const c = conteudoDoJogo({pedido: estado.pedido, missoes: estado.missoes, questoes: estado.questoes});
+  if (c.questoes[0].certa !== true || !Array.isArray(c.questoes[1].pares[0]) || c.questoes[2].sequencia.length !== 3)
+    falhas.push("o jogo montado não leva os tipos no formato de conteudo/: " + JSON.stringify(c.questoes));
+  // Muitas verdadeiras: a revisão avisa o atalho.
+  if (desequilibrioVF(Array.from({length: 8}, (_, k) => ({tipo: "vf", verdadeira: k > 0}))) === "")
+    falhas.push("7 de 8 verdadeiras não geram aviso");
+  if (desequilibrioVF(Array.from({length: 8}, (_, k) => ({tipo: "vf", verdadeira: k % 2 === 0}))) !== "")
+    falhas.push("V ou F equilibrado gerou aviso");
+} catch (e) { falhas.push("tipos: " + e.message + " em " + String(e.stack).split("\n").slice(1, 3).join(" | ")); }
 
 fim({ok: !falhas.length, resumo: falhas.length ? "" : "aprovar, editar, descartar, baixar e ler fotos, jogo grande, salvar e jogar, gerir, link", detalhes: falhas});

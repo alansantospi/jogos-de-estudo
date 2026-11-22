@@ -229,3 +229,22 @@ test("fechar sozinho não toma criação com tarefa por fazer", async () => {
   await fechar(banco, ICONES);
   assert.equal(criacao.estado, "planejando");
 });
+
+test("os tipos escolhidos na criação chegam a cada missão, e o jogo salvo os leva", async () => {
+  const { banco, salvos } = bancoDe({ tipos: ["escolha", "vf"] });
+  const esquemas: string[][] = [];
+  const base = modeloDe(() => null, alvo => [questao(alvo, 1),
+    questao(alvo, 2, { tipo: "vf", enunciado: `O setor secundário ${alvo} transforma matéria-prima.`,
+                       certa: "", erradas: [], verdadeira: true })]);
+  const modelo: Modelo = async p => {
+    const tipo = (p.esquema as any).properties?.questoes?.items?.properties?.tipo;
+    if (tipo) esquemas.push(tipo.enum);
+    return base.modelo(p);
+  };
+  await esvaziar(banco, modelo);
+  assert.equal(esquemas.length, PLANO.length, "um pedido por missão, nenhum regerado");
+  for (const e of esquemas) assert.deepEqual(e, ["escolha", "vf"]);
+  const tipos = salvos[0].conteudo.questoes.map((q: any) => q.tipo);
+  assert.deepEqual(tipos.filter((t: string) => t === "vf").length, PLANO.length);
+  assert.equal(salvos[0].conteudo.questoes.find((q: any) => q.tipo === "vf").certa, true);
+});

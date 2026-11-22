@@ -44,6 +44,11 @@ MUTACOES = [
      "if(c.jogo && e.jogoId !== c.jogo){", "if(c.jogo){"),
     ("gerar.html", "gerar", "questão da fila entrando duas vezes",
      "    if(e.recebidas.includes(t.id)) continue;\n", ""),
+    ("gerar.html", "gerar", "reabrir o jogo e perder o que não é múltipla escolha",
+     "questoes: c.questoes.map(questaoDoConteudo).filter(Boolean)",
+     'questoes: c.questoes.filter(q => q.tipo === "escolha").map(questaoDoConteudo)'),
+    ("gerar.html", "gerar", "edição sem os campos das alternativas erradas",
+     '...q.erradas.map((e, k) => campo("errada"', 'q.erradas.map((e, k) => campo("errada"'),
 ]
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

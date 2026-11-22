@@ -16,7 +16,7 @@
      {acao:"planejar", criacao, material, materia, ano, total}
                                                    — divide em missões
      {acao:"gerar", criacao, material, titulo, materia, ano, quantidade,
-                    missoes, alvo}                 — uma missão do plano
+                    missoes, alvo, tipos?}         — uma missão do plano
      {acao:"licao", criacao, material, materia, ano, missoes, alvo}
                                                    — os passos da lição
                                                      de uma missão
@@ -24,7 +24,7 @@
                                                      revisão editou; não
                                                      chama modelo, não custa
      {acao:"criar", material, titulo, materia, cor, ano, total, automatico,
-                    paginas?}                      — abre o jogo e o põe na
+                    paginas?, tipos?}              — abre o jogo e o põe na
                                                      fila: o servidor conduz
                                                      daqui (_esteira/fila.ts)
      {acao:"tentar", fila, tipo, alvo}             — a tarefa que falhou
@@ -38,8 +38,8 @@
 
 import Anthropic from "npm:@anthropic-ai/sdk@0.133.0";
 import { createClient } from "npm:@supabase/supabase-js@2.117.0";
-import { conferirEntrada, conferirPlano, custo, ErroEsteira, gerar, LIMITES, planejar, remedir,
-         type Modelo, type Uso } from "../_esteira/esteira.ts";
+import { conferirEntrada, conferirPlano, conferirTipos, custo, ErroEsteira, gerar, LIMITES, planejar, remedir,
+         type Entrada, type Modelo, type Uso } from "../_esteira/esteira.ts";
 import { ICONES } from "../_esteira/icones.ts";
 import { conferirArquivos, expandir, ler, LIMITES_LEITURA, type Arquivo } from "../_esteira/leitura.ts";
 import { escreverLicao } from "../_esteira/licao.ts";
@@ -329,6 +329,12 @@ function pedidoDe(corpo: Record<string, unknown>): PedidoCriacao | string {
   const invalido = conferirPlano(p);
   if (invalido) return invalido;
   if (p.cor && !/^[a-z]+$/.test(p.cor)) return "A cor chegou mal formada.";
+  // Sem `tipos` (tela de antes deles), o jogo sai só de múltipla escolha, como era.
+  if (corpo.tipos != null) {
+    const invalidos = conferirTipos(corpo.tipos);
+    if (invalidos) return invalidos;
+    p.tipos = corpo.tipos as PedidoCriacao["tipos"];
+  }
   if (corpo.paginas != null) {
     const ps = corpo.paginas as any[];
     if (!Array.isArray(ps) || ps.length > 60) return "As páginas lidas chegaram mal formadas.";
@@ -511,7 +517,8 @@ Deno.serve(async req => {
                     materia: String(corpo.materia ?? ""), ano: String(corpo.ano ?? ""),
                     quantidade: Number(corpo.quantidade),
                     missoes: missoesDoCorpo,
-                    alvo: corpo.alvo == null ? undefined : String(corpo.alvo) };
+                    alvo: corpo.alvo == null ? undefined : String(corpo.alvo),
+                    tipos: corpo.tipos == null ? undefined : corpo.tipos as Entrada["tipos"] };
   const invalida = conferirEntrada(entrada);
   if (invalida) return erro(400, "entrada", invalida);
 
