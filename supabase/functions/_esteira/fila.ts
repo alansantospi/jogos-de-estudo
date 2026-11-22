@@ -10,12 +10,14 @@
 
 import { custo, ErroEsteira, gerar, planejar, remedir, type Missao, type Modelo, type Uso }
   from "./esteira.ts";
+import type { Tipo as TipoQuestao } from "./conferir.ts";
 import { escreverLicao } from "./licao.ts";
 // @ts-ignore: JavaScript puro, compartilhado com gerar.html
 import { conteudoDoJogo } from "./conteudo.js";
 
 export type PedidoCriacao = { titulo: string; materia: string; cor: string; ano: string;
                               total: number; automatico: boolean; material: string;
+                              tipos?: TipoQuestao[];
                               paginas?: { nome: string; pagina: number; texto: string }[] };
 export type Tipo = "planejar" | "missao" | "licao";
 export type Tarefa = { id: number; criacao: number; tipo: Tipo; alvo: string; tentativas: number };
@@ -83,7 +85,7 @@ async function fazer(t: Tarefa, c: Criacao, banco: Banco, modelo: Modelo, icones
   const res = await banco.reservar(c.conta, "gerar", p.material.length, m.quantidade ?? 1, c.geracao);
   try {
     const r = await gerar({ material: p.material, titulo: p.titulo, materia: p.materia, ano: p.ano,
-                            quantidade: m.quantidade ?? 1, missoes: plano, alvo: t.alvo },
+                            quantidade: m.quantidade ?? 1, missoes: plano, alvo: t.alvo, tipos: p.tipos },
                           modelo, icones, 2, temTempo);
     await banco.registrar(res.id, "feita", r.uso, { entregues: r.questoes.length, rodadas: r.rodadas,
       reprovadas: r.questoes.filter(q => q.problemas.length).length });

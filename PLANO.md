@@ -333,6 +333,11 @@ caminho:
 
 - **Só `escolha`.** É o tipo em que os medidores mordem; `vf` tem viés
   próprio (proporção de verdadeiros) que ainda não se mede.
+  *Revisto em 22/11/2026:* quem cria escolhe os tipos antes de gerar
+  (`escolha`, `vf`, `ligar`, `ordenar`; todos marcados por padrão). O viés
+  do `vf` passou a ser medido na revisão: com 6 ou mais, mais de 70% do
+  mesmo lado vira aviso. Os medidores de atalho seguem só na `escolha`.
+  `digitar` fica de fora até a correção aceitar variações de resposta.
 - **Os medidores existem duas vezes**, em Python no build e em TypeScript na
   função, e `teste/esteira/paridade.ts` cobra que deem o mesmo número sobre
   todo `conteudo/`. Cada regra ganhou uma versão por questão, que é o que

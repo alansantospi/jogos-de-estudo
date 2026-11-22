@@ -142,7 +142,7 @@ input[type=checkbox]{accent-color:var(--acao-solida)}
    estica até o ancestral posicionado e a página ganha rolagem lateral. */
 .pilulas label{position:relative}
 .pilulas input,.amostra input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;min-height:0;padding:0}
-.pilulas .auto{font-size:.9375rem}
+.pilulas .auto,.pilulas.texto label{font-size:.9375rem}
 /* Classe, não :has(:checked): marcar pelo código nem sempre repinta o :has. */
 .pilulas label.on{background:var(--acao-solida);border-color:var(--acao-solida);color:#fff}
 .pilulas label:has(input:focus-visible){outline:3px solid var(--acao);outline-offset:2px}
@@ -384,6 +384,10 @@ button{font:inherit;font-weight:800;cursor:pointer}
 .ops li svg{width:1rem;height:1rem;margin-top:.2rem;color:var(--texto-2)}
 .ops li.certa{border-color:var(--certo);background:var(--certo-tinta)}
 .ops li.certa svg{color:var(--certo);stroke-width:3}
+.ops .num{min-width:1.25rem;font-weight:800;color:var(--certo);font-variant-numeric:tabular-nums}
+.ops .seta{color:var(--texto-2);margin:0 .35rem}
+.carta .linha-par{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.tipo-q{font-weight:700}
 .explica{margin:0 0 .5rem;font-size:.9375rem}
 .origem{margin:.5rem 0;padding:.5rem .75rem;border-radius:10px;background:var(--carta-2);color:var(--texto-2);font-size:.875rem}
 .origem b{color:var(--texto)}
@@ -580,6 +584,15 @@ a.botao{text-decoration:none;font-weight:800}
       <input type="hidden" id="quantidade" value="auto">
       <p class="estimativa" id="estimativa" aria-live="polite"></p>
     </fieldset>
+    <fieldset class="quantas">
+      <legend>Tipos de questão</legend>
+      <div class="pilulas texto" id="pilulasTipos">
+        <label><input type="checkbox" name="tipo" value="escolha" checked>Múltipla escolha</label>
+        <label><input type="checkbox" name="tipo" value="vf" checked>Verdadeiro ou falso</label>
+        <label><input type="checkbox" name="tipo" value="ligar" checked>Ligar</label>
+        <label><input type="checkbox" name="tipo" value="ordenar" checked>Ordenar</label>
+      </div>
+    </fieldset>
     <label class="ano">Ano <select id="ano">
       <option>1º ano</option><option>2º ano</option><option>3º ano</option>
       <option selected>4º ano</option><option>5º ano</option><option>6º ano</option>
@@ -676,6 +689,18 @@ const sustenta = n => Math.floor(n / POR_QUESTAO);
 /* "auto" é o padrão, como nos jogos feitos à mão: o plano recebe o teto e
    decide pelo material. Número escolhido é pedido. */
 const automatico = () => $("quantidade").value === "auto";
+/* Os tipos que o gerador sabe escrever, na ordem das pílulas. */
+const TIPOS = ["escolha", "vf", "ligar", "ordenar"];
+const NOME_TIPO = {escolha: "Múltipla escolha", vf: "Verdadeiro ou falso", ligar: "Ligar", ordenar: "Ordenar"};
+const tiposEscolhidos = () => [...document.querySelectorAll("#pilulasTipos input:checked")].map(c => c.value);
+const tipoDe = q => TIPOS.includes(q.tipo) ? q.tipo : "escolha";
+/* Todos marcados é o padrão e não se diz; faltando um ou dois, diz o que falta. */
+function resumoTipos(tipos){
+  const nome = t => NOME_TIPO[t].toLowerCase(), faltam = TIPOS.filter(t => !tipos.includes(t));
+  if(!tipos.length) return "nenhum tipo";
+  if(!faltam.length) return "";
+  return faltam.length <= 2 ? "sem " + faltam.map(nome).join(" e ") : "só " + tipos.map(nome).join(" e ");
+}
 const esperadas = n => Math.min(TOTAL_MAX, Math.max(TOTAL_MIN, sustenta(n)));
 /* Quantas missões se escrevem ao mesmo tempo. Mais que isso esbarra no
    limite de pedidos simultâneos da API sem terminar mais cedo. */
@@ -1151,7 +1176,9 @@ function contar(){
     + (leitura ? " de " + plural(marcadas, "página", "páginas") : "");
   // Recolhido quando está tudo bem; aberto quando é preciso mexer.
   if(fora || (curto && n)) $("caixaMaterial").open = true;
-  $("botaoGerar").disabled = gerando || fora || curto;
+  const tipos = tiposEscolhidos();
+  document.querySelectorAll("#pilulasTipos input").forEach(c => c.parentNode.classList.toggle("on", c.checked));
+  $("botaoGerar").disabled = gerando || fora || curto || !tipos.length;
   const auto = automatico(), escolhida = Number($("quantidade").value) || 30;
   document.querySelectorAll("#pilulas input").forEach(r => {
     r.checked = r.value === $("quantidade").value;
@@ -1165,8 +1192,11 @@ function contar(){
     : alem ? "Este material dá umas " + cabem + "."
     : "";
   $("botaoGerar").textContent = gerando ? "Criando..." : auto ? "Criar jogo" : "Criar jogo · " + q + " questões";
-  $("resumoAjustar").textContent = [$("materia").value.trim(), auto ? "o material decide" : q + " questões", $("ano").value]
+  $("resumoAjustar").textContent = [$("materia").value.trim(), auto ? "o material decide" : q + " questões", $("ano").value,
+    resumoTipos(tipos)]
     .filter(Boolean).join(" · ");
+  // Sem tipo marcado não há o que criar: o ajuste se abre para mostrar por quê.
+  if(!tipos.length) $("ajustar").open = true;
   $("dicaGerar").textContent = estado && estado.acrescentar
       ? "Conta como outro jogo do dia."
     : estado && !estado.jogoId ? "Substitui as questões em revisão."
@@ -1177,13 +1207,17 @@ function contar(){
 
 function guardarMaterial(){
   guardarEm(MATERIAL, {material: $("material").value, titulo: $("titulo").value, materia: $("materia").value,
-                       cor: $("cor").value, ano: $("ano").value, quantidade: $("quantidade").value});
+                       cor: $("cor").value, ano: $("ano").value, quantidade: $("quantidade").value,
+                       tipos: tiposEscolhidos()});
 }
 function lerMaterial(){
   const m = lerDe(MATERIAL);
   if(!m) return;
   ["material", "titulo", "materia", "cor", "ano", "quantidade"].forEach(k => { if(m[k] != null && m[k] !== "") $(k).value = m[k]; });
   if(!Object.hasOwn(CORES_JOGO, $("cor").value)) $("cor").value = "";
+  // Os tipos são preferência de quem cria: ficam de um jogo para o outro.
+  if(Array.isArray(m.tipos) && m.tipos.length)
+    document.querySelectorAll("#pilulasTipos input").forEach(c => { c.checked = m.tipos.includes(c.value); });
 }
 
 /* Salvou: a próxima criação começa limpa. O ano fica, que é o mesmo aluno;
@@ -1204,7 +1238,8 @@ async function pedir(ev){
   // No automático, o teto vai para o plano, que decide pelo material.
   const auto = automatico(), total = auto ? TOTAL_MAX : Number($("quantidade").value);
   const pedido = {titulo: $("titulo").value.trim(), materia: $("materia").value.trim(), cor: $("cor").value,
-                  ano: $("ano").value, total, material: $("material").value.trim()};
+                  ano: $("ano").value, total, material: $("material").value.trim(), tipos: tiposEscolhidos()};
+  if(!pedido.tipos.length) return recado("Escolha pelo menos um tipo de questão.", true);
   // De que página veio cada questão: guardado agora, que a leitura pode mudar.
   if(leitura) pedido.paginas = leitura.paginas.filter(p => p.marcada)
     .map(p => ({nome: p.nome, pagina: p.pagina, texto: p.texto}));
@@ -1235,7 +1270,7 @@ async function pedir(ev){
       try{
         r = await chamarFuncao({acao: "criar", material: pedido.material, titulo: pedido.titulo,
                                 materia: pedido.materia, cor: pedido.cor, ano: pedido.ano, total,
-                                automatico: auto, paginas: pedido.paginas});
+                                automatico: auto, paginas: pedido.paginas, tipos: pedido.tipos});
       }catch(e){
         // Outra criação em curso nesta conta: a tela passa a acompanhar aquela.
         if(e.codigo !== "em_curso" || !e.dados.fila) throw e;
@@ -1265,6 +1300,7 @@ async function pedir(ev){
       pl.missoes.forEach(m => { let id = m.id, k = 2; while(usados.has(id)) id = m.id + "_" + k++; usados.add(id); m.id = id; });
       estado = {...base, acrescentar: false, fila: null, criacao: ab.criacao, plano: pl.missoes, materialNovo: pedido.material,
                 pedido: {...base.pedido, titulo: pedido.titulo, materia: pedido.materia, cor: pedido.cor, ano: pedido.ano,
+                         tipos: pedido.tipos,
                          material: (base.pedido.material ? base.pedido.material + "\n\n" : "") + pedido.material,
                          paginas: [...(base.pedido.paginas || []), ...(pedido.paginas || [])]},
                 missoes: [...base.missoes, ...pl.missoes.map(({id, nome}) => ({id, nome}))],
@@ -1530,7 +1566,7 @@ async function gerarParte(id){
     // Ao acrescentar, as missões novas saem só do material novo.
     const r = await chamarFuncao({acao: "gerar", criacao: estado.criacao, material: estado.materialNovo || p.material,
       titulo: p.titulo, materia: p.materia, ano: p.ano, quantidade: m.quantidade,
-      missoes: estado.plano, alvo: id});
+      missoes: estado.plano, alvo: id, tipos: p.tipos});
     estado.questoes.push(...r.questoes.map(q => ({...q, estado: "pendente"})));
     estado.custo = (estado.custo || 0) + (r.custo_usd || 0);
     if(r.restantes != null){ estado.restantes = r.restantes; cota(r.restantes); }
@@ -1653,6 +1689,17 @@ function corDaRevisao(){
   identidade.cor.atualizar(Object.hasOwn(CORES_JOGO, p.cor) ? p.cor : corSugerida(p.materia, p.titulo), !p.cor);
 }
 
+/* O atalho do verdadeiro ou falso: se quase todas são verdadeiras, quem
+   chuta "verdadeiro" acerta sem saber. Com poucas, a proporção é ruído. */
+function desequilibrioVF(qs){
+  const vf = qs.filter(q => tipoDe(q) === "vf"), n = vf.length;
+  if(n < 6) return "";
+  const v = vf.filter(q => q.verdadeira === true).length, mais = Math.max(v, n - v);
+  if(mais / n <= 0.7) return "";
+  return "Das " + n + " de verdadeiro ou falso, " + mais + " são " + (v >= n - v ? "verdadeiras" : "falsas")
+    + ": quem chuta sempre \"" + (v >= n - v ? "verdadeiro" : "falso") + "\" acerta quase todas. Troque ou descarte algumas.";
+}
+
 let conferenciaAberta = false;
 function pintarResumo(){
   const l = estado.lote, c = $("resumo"), qs = estado.questoes;
@@ -1675,6 +1722,8 @@ function pintarResumo(){
     el("span", {}, el("b", {}, String(qs.filter(comAviso).length)), "com aviso"),
     n("descartada") ? el("span", {}, el("b", {}, String(n("descartada"))), "descartadas") : null));
   if(estado.aviso) c.append(el("div", {class: "aviso"}, icone("alerta"), el("span", {}, estado.aviso)));
+  const vf = desequilibrioVF(vivas());
+  if(vf) c.append(el("div", {class: "aviso"}, icone("alerta"), el("span", {}, vf)));
   if(estado.plano) c.append(pintarPlano());
   if(estado.licao && Object.keys(estado.licao).length) c.append(pintarLicao());
   if(l){
@@ -1827,17 +1876,32 @@ function cartaLeitura(q, i){
        el("button", {class: "botao discreto", type: "button", onclick: () => marcar(i, "descartada")}, "Descartar")]
     : [el("button", {class: "botao secundario", type: "button", onclick: () => marcar(i, "pendente")}, "Desfazer")];
   return el("article", {class: "carta " + q.estado, "data-i": i, "aria-label": "Questão " + (i + 1)},
-    el("div", {class: "topo"}, el("span", {}, "Questão " + (i + 1) + " · " + missao),
+    el("div", {class: "topo"}, el("span", {}, "Questão " + (i + 1) + " · " + missao + " · ",
+       el("span", {class: "tipo-q"}, NOME_TIPO[tipoDe(q)])),
        el("span", {class: "selo"}, selo)),
     el("div", {class: "enunciado"}, q.enunciado),
-    el("ul", {class: "ops"},
-       el("li", {class: "certa"}, icone("check"), el("span", {}, el("span", {class: "so-leitor"}, "Certa: "), q.certa)),
-       q.erradas.map(e => el("li", {}, icone("xis"), el("span", {}, e)))),
+    respostaLida(q),
     el("p", {class: "explica"}, q.explicacao),
     el("p", {class: "origem"}, el("b", {}, "Do material: "), "“" + q.trecho + "”"),
     (q.problemas || []).length ? el("ul", {class: "problemas"},
       q.problemas.map(p => el("li", {class: p.grave ? "grave" : ""}, icone("alerta"), el("span", {}, p.texto)))) : null,
     el("div", {class: "acoes"}, acoes));
+}
+
+/* A resposta de cada tipo, do jeito que a criança vai ver resolvida. */
+function respostaLida(q){
+  const certa = conteudo => el("li", {class: "certa"}, icone("check"),
+    el("span", {}, el("span", {class: "so-leitor"}, "Certa: "), conteudo));
+  const t = tipoDe(q);
+  if(t === "vf") return el("ul", {class: "ops"},
+    ["Verdadeiro", "Falso"].map((r, k) => (k === 0) === (q.verdadeira === true) ? certa(r)
+      : el("li", {}, icone("xis"), el("span", {}, r))));
+  if(t === "ligar") return el("ul", {class: "ops"}, (q.pares || []).map(([a, b]) =>
+    certa([el("b", {}, a), el("span", {class: "seta", "aria-label": "liga com"}, "→"), b])));
+  if(t === "ordenar") return el("ol", {class: "ops", "aria-label": "Na ordem certa"}, (q.sequencia || []).map((x, k) =>
+    el("li", {class: "certa"}, el("span", {class: "num", "aria-hidden": "true"}, (k + 1) + "."), el("span", {}, x))));
+  return el("ul", {class: "ops"}, certa(q.certa),
+    q.erradas.map(e => el("li", {}, icone("xis"), el("span", {}, e))));
 }
 
 function cartaEdicao(q, i){
@@ -1847,14 +1911,26 @@ function cartaEdicao(q, i){
     el("div", {class: "topo"}, el("span", {}, "Editando a questão " + (i + 1))),
     el("label", {}, "Missão", el("select", {name: "missao"}, estado.missoes.map(m =>
       el("option", {value: m.id, selected: m.id === q.missao}, m.nome)))),
-    campo("enunciado", "Enunciado", q.enunciado, true),
-    campo("certa", "Resposta certa", q.certa),
-    q.erradas.map((e, k) => campo("errada" + k, "Errada " + (k + 1), e)),
+    campo("enunciado", tipoDe(q) === "vf" ? "Afirmação" : "Enunciado", q.enunciado, true),
+    camposResposta(q, campo),
     campo("explicacao", "Explicação", q.explicacao, true),
     campo("trecho", "Trecho do material, copiado letra por letra", q.trecho, true),
     el("div", {class: "acoes"}, el("button", {class: "botao primario", type: "submit"}, "Salvar"),
        el("button", {class: "botao discreto", type: "button", onclick: () => { editandoAgora = null; pintar(); }}, "Cancelar")));
   return f;
+}
+
+/* Os campos da resposta, por tipo. Par ou item deixado em branco sai ao salvar. */
+function camposResposta(q, campo){
+  const t = tipoDe(q);
+  if(t === "vf") return el("label", {}, "A afirmação é", el("select", {name: "verdadeira"},
+    el("option", {value: "sim", selected: q.verdadeira === true}, "Verdadeira"),
+    el("option", {value: "nao", selected: q.verdadeira !== true}, "Falsa")));
+  if(t === "ligar") return (q.pares || []).map(([a, b], k) => el("div", {class: "linha-par"},
+    campo("termo" + k, "Termo " + (k + 1), a), campo("par" + k, "Liga com", b)));
+  if(t === "ordenar") return (q.sequencia || []).map((x, k) => campo("item" + k, (k + 1) + "º", x));
+  return [campo("certa", "Resposta certa", q.certa),
+          ...q.erradas.map((e, k) => campo("errada" + k, "Errada " + (k + 1), e))];
 }
 
 /* `editandoAgora` sobrevive às repinturas: uma missão que chega no meio de
@@ -1918,9 +1994,13 @@ async function salvar(i, f){
   const v = n => f.elements[n].value.trim();
   const q = estado.questoes[i];
   editandoAgora = null;
-  Object.assign(q, {missao: v("missao"), enunciado: v("enunciado"), certa: v("certa"),
-                    erradas: q.erradas.map((_, k) => v("errada" + k)),
+  const t = tipoDe(q);
+  Object.assign(q, {missao: v("missao"), enunciado: v("enunciado"),
                     explicacao: v("explicacao"), trecho: v("trecho"), estado: "pendente"});
+  if(t === "escolha") Object.assign(q, {certa: v("certa"), erradas: q.erradas.map((_, k) => v("errada" + k))});
+  if(t === "vf") q.verdadeira = v("verdadeira") === "sim";
+  if(t === "ligar") q.pares = q.pares.map((_, k) => [v("termo" + k), v("par" + k)]).filter(([a, b]) => a || b);
+  if(t === "ordenar") q.sequencia = q.sequencia.map((_, k) => v("item" + k)).filter(Boolean);
   guardar();
   await remedir();
 }
@@ -2185,9 +2265,9 @@ async function editarJogo(id, botao){
               licao: (c.licao || []).reduce((o, x) => {
                 (o[x.missao] ||= {estado: "pronta", passos: []}).passos.push({...x, problemas: [], fora: false});
                 return o; }, {}),
-              questoes: c.questoes.filter(q => q.tipo === "escolha").map(q => ({missao: q.missao, icone: q.icone,
-                enunciado: q.enunciado, certa: q.certa, erradas: q.erradas, explicacao: q.explicacao || "",
-                trecho: q.trecho || "", fonte: q.fonte, problemas: [], estado: "aprovada"}))};
+              // Tipo que a revisão não edita (digitar, de jogo feito à mão) fica de fora.
+              questoes: c.questoes.map(questaoDoConteudo).filter(Boolean)
+                .map(q => ({...q, problemas: [], estado: "aprovada"}))};
     guardar();
     irPara(3);
     // Sem o material (jogo salvo antes de ele ser guardado), conferir o trecho
@@ -2341,6 +2421,9 @@ function ligar(){
     $(k).addEventListener("input", () => { contar(); guardarMaterial(); }));
   document.querySelectorAll("#pilulas input").forEach(r => r.addEventListener("change", () => {
     $("quantidade").value = r.value;
+    contar(); guardarMaterial();
+  }));
+  document.querySelectorAll("#pilulasTipos input").forEach(c => c.addEventListener("change", () => {
     contar(); guardarMaterial();
   }));
   $("baixar").addEventListener("click", baixar);
