@@ -274,8 +274,11 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 .category-card.dominada .selo{background:var(--materia-solida);color:var(--sobre-materia)}
 .mini-bar{grid-column:1/-1;grid-row:4;height:10px;background:var(--fundo);border-radius:999px;
   overflow:hidden;margin-top:var(--s-2)}
-.mini-bar span{display:block;height:100%;width:0;background:var(--materia);border-radius:999px;
+.mini-bar{position:relative}
+.mini-bar span{position:absolute;inset:0 auto 0 0;height:100%;width:0;background:var(--materia);border-radius:999px;
   transition:width 420ms var(--saida)}
+/* Faixa de baixo: praticadas (acertadas uma vez). A de cima, cheia, são as dominadas. */
+.mini-bar span.praticada{background:color-mix(in oklch, var(--materia) 45%, transparent)}
 .mini-txt{grid-column:1/-1;grid-row:5;font-size:var(--t-xs);font-weight:700;color:var(--texto-3);
   font-variant-numeric:tabular-nums}
 .review-count{grid-column:1/-1;grid-row:3;font-size:var(--t-xs);font-weight:700;color:var(--texto-3)}
@@ -1155,12 +1158,16 @@ function missionInfo(cat){
   const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
   const itens = cat==="all" ? allItems : (bank[cat]||[]);
   const dominadas = itens.filter(q=>{const t=progress.items[q.id];return t&&t.h>=2&&t.h>t.e}).length;
+  // Praticada: já acertada ao menos uma vez. Sem isso, quem jogou uma vez com
+  // 100% via a barra vazia e achava que o conteúdo nem tinha sido feito.
+  const praticadas = itens.filter(q=>{const t=progress.items[q.id];return t&&t.h>=1}).length;
   const pct = itens.length ? Math.round(dominadas/itens.length*100) : 0;
+  const pctPraticadas = itens.length ? Math.round(praticadas/itens.length*100) : 0;
   let estado="nova", rotulo="", icone="";
   if(m.concluidas&&m.melhorAcc>=90){estado="dominada";icone="";rotulo="Dominada"}
   else if(m.concluidas){estado="concluida";icone="✓";rotulo="Concluída"}
   else if(m.iniciada){estado="andamento";icone="▶";rotulo="Em andamento"}
-  return {...m,dominadas,total:itens.length,pct,estado,rotulo,icone};
+  return {...m,dominadas,praticadas,total:itens.length,pct,pctPraticadas,estado,rotulo,icone};
 }
 let progress=defaultProgress();
 function loadProgress(){
@@ -1727,10 +1734,18 @@ function renderCards(){
       selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:'';
       selo.style.display=info.rotulo?'inline-block':'none';
     }
-    const barra=card.querySelector('.mini-bar span');
-    if(barra) barra.style.width=info.pct+'%';
+    const trilho=card.querySelector('.mini-bar');
+    if(trilho){
+      let pr=trilho.querySelector('span.praticada');
+      if(!pr){pr=document.createElement('span');pr.className='praticada';trilho.prepend(pr)}
+      pr.style.width=info.pctPraticadas+'%';
+      const dom=trilho.querySelector('span:not(.praticada)');
+      if(dom) dom.style.width=info.pct+'%';
+    }
     const txt=card.querySelector('.mini-txt');
-    if(txt) txt.textContent=info.total?`${info.dominadas}/${info.total} dominadas`+(info.melhorAcc?` • melhor ${info.melhorAcc}%`:''):'';
+    if(txt) txt.textContent=!info.total?'':
+      !info.praticadas?`0/${info.total} praticadas`:
+      `${info.praticadas}/${info.total} praticadas • ${info.dominadas} dominada${info.dominadas===1?'':'s'}`;
   });
   const n=weakItems().length,c=document.getElementById('reviewCard');
   if(c){
