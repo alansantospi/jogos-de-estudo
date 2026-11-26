@@ -133,7 +133,24 @@ function noPeriodo(l){
 }
 const pct = (a, n) => n ? Math.round(a / n * 100) : 0;
 const dia = q => new Date(q).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"});
-const nomeMissao = (j, m) => (MISSOES[j] && MISSOES[j][m]) || m;
+/* De que jogo é uma linha do histórico. Os prontos estão nas tabelas de
+   cima; o criado na conta grava "g_" + os 12 primeiros caracteres do id (o
+   mesmo corte de `montarJogo`) e é achado na lista de jogos criados. Jogo
+   que não se acha (apagado, ou de outra conta) devolve null, e quem lista
+   o deixa de fora em vez de mostrar "undefined". */
+const ATALHOS = {all: "Tudo misturado", review: "Revisar meus erros"};
+function jogoDe(j){
+  if(PAGINA[j]) return {materia: MATERIA[j], pagina: PAGINA[j], missoes: MISSOES[j] || {}};
+  if(!/^g_/.test(j)) return null;
+  const c = (ler(CRIADOS) || []).find(x =>
+    String(x.id).replace(/[^a-z0-9]/gi, "").slice(0, 12).toLowerCase() === j.slice(2));
+  if(!c) return null;
+  const missoes = {};
+  (Array.isArray(c.missoes) ? c.missoes : []).forEach(m => { if(m && m.id) missoes[m.id] = m.nome; });
+  return {materia: c.titulo || c.materia || "Meu jogo", pagina: "jogar.html?id=" + encodeURIComponent(c.id), missoes};
+}
+const nomeMissao = (j, m) => { const g = jogoDe(j); return (g && g.missoes[m]) || ATALHOS[m] || m; };
+const materiaDe = j => { const g = jogoDe(j); return g ? g.materia : "Jogo apagado"; };
 
 /* ---------- desenho ---------- */
 function desenhar(){
@@ -211,7 +228,7 @@ function pintarJogos(){
   /* Retomar: as últimas partidas quando existem; senão, as missões que
      ficaram começadas e não concluídas — que o progresso guarda desde
      sempre, mesmo sem nenhuma partida registrada. */
-  let itens = historico().slice(-3).reverse().map(x => ({
+  let itens = historico().filter(x => jogoDe(x.j)).slice(-3).reverse().map(x => ({
     j: x.j, m: x.m, nota: pct(x.a, x.n) + "% em " + dia(x.q)}));
   if(!itens.length){
     Object.keys(BASES).forEach(j => {
@@ -226,9 +243,9 @@ function pintarJogos(){
   const c = document.getElementById("retomar");
   c.innerHTML = itens.length
     ? '<h3>Continuar de onde parou</h3><div class="retomar">' + itens.map(x =>
-        '<a class="retomar-item" href="' + PAGINA[x.j] + "#missao/" + encodeURIComponent(x.m) + '">'
+        '<a class="retomar-item" href="' + jogoDe(x.j).pagina + "#missao/" + encodeURIComponent(x.m) + '">'
         + '<b>' + esc(nomeMissao(x.j, x.m)) + "</b>"
-        + '<span>' + MATERIA[x.j] + " · " + x.nota + "</span></a>").join("")
+        + '<span>' + esc(materiaDe(x.j)) + " · " + x.nota + "</span></a>").join("")
       + "</div>"
     : "";
 }
@@ -314,13 +331,15 @@ function pintarHistorico(){
     else if(p < 75) fracos.push({j: d.j, m: d.m, acc: p, fonte: "no período"});
   });
   fracos.sort((a, b) => a.acc - b.acc);
+  // Missão de jogo que não se acha mais não tem para onde levar.
+  for(let i = fracos.length - 1; i >= 0; i--) if(!jogoDe(fracos[i].j)) fracos.splice(i, 1);
   const f = document.getElementById("fracos");
   f.innerHTML = fracos.length
     ? fracos.slice(0, 6).map(d =>
-        '<a class="fraco" href="' + PAGINA[d.j] + "#missao/" + encodeURIComponent(d.m) + '">'
+        '<a class="fraco" href="' + jogoDe(d.j).pagina + "#missao/" + encodeURIComponent(d.m) + '">'
         + '<span class="fraco-pct">' + d.acc + "%</span>"
         + "<b>" + esc(nomeMissao(d.j, d.m)) + "</b>"
-        + "<span>" + MATERIA[d.j] + " · " + d.fonte + "</span></a>").join("")
+        + "<span>" + esc(materiaDe(d.j)) + " · " + d.fonte + "</span></a>").join("")
     : '<p class="vazio">Nada abaixo de 75%. Bom sinal.</p>';
 
   /* ---- partidas: a lista crua ---- */
@@ -328,7 +347,7 @@ function pintarHistorico(){
   l.innerHTML = partidas.length
     ? '<table class="tabela"><thead><tr><th>Quando</th><th>Matéria</th><th>Missão</th><th>Acerto</th></tr></thead><tbody>'
       + partidas.slice().reverse().slice(0, 40).map(x =>
-        "<tr><td>" + dia(x.q) + "</td><td>" + MATERIA[x.j] + "</td><td>"
+        "<tr><td>" + dia(x.q) + "</td><td>" + esc(materiaDe(x.j)) + "</td><td>"
         + esc(nomeMissao(x.j, x.m)) + "</td><td>" + pct(x.a, x.n) + "% <small>("
         + x.a + "/" + x.n + ")</small></td></tr>").join("")
       + "</tbody></table>"
@@ -384,10 +403,11 @@ async function buscarMeusJogos(){
     contaSemSessao = !s.session;
     pintarMeusJogos();
     if(!s.session) return;
-    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado,cor:conteudo->>cor")
+    const {data, error} = await sb.from("jogos").select("id,titulo,materia,criado,cor:conteudo->>cor,missoes:conteudo->missoes")
       .order("criado", {ascending: false});
     if(error) return;
     gravar(CRIADOS, data);
+    desenhar();                            // os nomes dos jogos criados no histórico
     const r = await sb.from("criacoes").select("id,titulo:pedido->>titulo,materia:pedido->>materia,cor:pedido->>cor")
       .in("estado", ["planejando", "escrevendo", "montando"]).limit(1);
     emCriacao = !r.error && r.data && r.data[0] || null;
