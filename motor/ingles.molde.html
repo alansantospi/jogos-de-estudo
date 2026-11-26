@@ -448,6 +448,18 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 /* ---------- fim de partida ---------- */
 .result{padding:var(--s-5) 0;max-width:40rem}
 .trophy{display:none}
+/* Estrelas da partida: entram uma de cada vez, com um pulinho. */
+.estrelas{display:flex;gap:var(--s-2);margin:0 0 var(--s-3)}
+.estrelas[hidden]{display:none}
+.estrelas svg{width:2.75rem;height:2.75rem;fill:var(--risco);stroke:none}
+.estrelas svg.on{fill:var(--materia-solida);animation:estrela-entra .45s cubic-bezier(.3,1.6,.5,1) both}
+.estrelas svg.on:nth-child(2){animation-delay:.2s}
+.estrelas svg.on:nth-child(3){animation-delay:.4s}
+@keyframes estrela-entra{from{transform:scale(0) rotate(-45deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.estrelas svg.on{animation:none}}
+.selo .estrelas-mini{display:inline-flex;gap:1px;margin-left:var(--s-1);vertical-align:-2px}
+.selo .estrelas-mini svg{width:1em;height:1em;fill:currentColor;stroke:none;opacity:.3}
+.selo .estrelas-mini svg.on{opacity:1}
 .result h2{font-size:var(--t-3xl);font-weight:700;margin-bottom:var(--s-2)}
 .rank{display:inline-block;background:var(--materia-solida);color:var(--sobre-materia);border-radius:999px;
   padding:var(--s-2) var(--s-4);font-family:var(--display);font-size:var(--t-lg);font-weight:600;margin:0 0 var(--s-4)}
@@ -1162,6 +1174,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <section id="end" class="screen">
         <div class="result">
           <div class="trophy" id="trophy"></div>
+          <div id="estrelas" class="estrelas" role="img" hidden></div>
           <h2 id="endTitle">Missão concluída!</h2>
           <div class="rank" id="rank"></div>
           <p id="endText" class="subtitle"></p>
@@ -1288,6 +1301,45 @@ function verbosDaMissao(cat){
   if(["time_numbers","world","ticket","contractions","clock_routine"].includes(cat)) return [];
   return verbBank;
 }
+// Estrelas de uma missão: chegar ao fim vale 1, 70% vale 2, 90% vale 3.
+function estrelasDe(acc){ return acc>=90?3:acc>=70?2:1; }
+function estrelasSvg(n){
+  let s="";
+  for(let i=0;i<3;i++) s+='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"'+(i<n?' class="on"':'')+'><use href="#i-estrela"/></svg>';
+  return s;
+}
+function mostrarEstrelas(n){
+  const el=document.getElementById("estrelas"); if(!el) return;
+  el.hidden=!n; el.innerHTML=n?estrelasSvg(n):"";
+  el.setAttribute("aria-label",n+" de 3 estrelas");
+}
+function seloDe(info){
+  if(!info.rotulo) return "";
+  const n=estrelasDe(info.melhorAcc);
+  return `${info.icone} ${info.rotulo}`+(info.concluidas
+    ?`<span class="estrelas-mini" role="img" aria-label="${n} de 3 estrelas">${estrelasSvg(n)}</span>`:"");
+}
+// Frases do fim, sorteadas sem repetir a anterior: a mesma frase toda
+// partida a criança para de ler.
+let _ultimaFrase="";
+function fraseDoFim(faixa){
+  const l=FRASES_FIM[faixa].filter(f=>f!==_ultimaFrase);
+  return _ultimaFrase=l[Math.floor(Math.random()*l.length)];
+}
+const FRASES_FIM={
+  vidas:["Você já aprendeu bastante. Revise a aula e tente novamente para completar as missões.",
+         "A máquina só precisa de mais energia: revise a aula e volte!",
+         "Quase! Mais uma viagem e você chega lá."],
+  otimo:["Excelente domínio do Present Continuous. Você mostrou segurança em gramática, vocabulário e interpretação.",
+         "Mestre do tempo! Você está mandando muito bem no Present Continuous.",
+         "Que viagem! Quase tudo certo: o tempo está do seu lado."],
+  bom:["Muito bom! Você dominou a maior parte do conteúdo e conseguiu voltar ao presente.",
+       "Mandou bem! Mais uma viagem e chega às 3 estrelas.",
+       "Boa! Você voltou ao presente com quase tudo certo."],
+  seguir:["Missão cumprida. Jogue novamente para revisar os pontos que ainda precisam de atenção.",
+          "Você voltou ao presente! Mais uma viagem e as estrelas aumentam.",
+          "Cada viagem deixa você mais forte. Bora de novo?"]
+};
 function missionInfo(cat){
   const m=progress.missions[cat]||{iniciada:false,concluidas:0,melhorAcc:0};
   const lista=verbosDaMissao(cat);
@@ -1445,19 +1497,25 @@ function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
   freqs.forEach((f,i)=>nota(f,0.16,vol,tipo,i*passo));
 }
 
+const _DEGRAUS=[0,2,4,5,7,9,11,12];
+function tomDaSequencia(n){ return 523*Math.pow(2,_DEGRAUS[Math.min(Math.max(n,1),_DEGRAUS.length)-1]/12); }
+
 const sfx={
   toque(){ nota(320,0.05,0.02,"sine"); },
-  acerto(){ arpejo([660,880],0.07,0.045); },
+  // Cada acerto seguido sobe um degrau da escala: a criança ouve a sequência
+  // crescer. Para numa oitava acima, antes de virar apito.
+  acerto(n=1){ const f=tomDaSequencia(n); arpejo([f,f*1.5],0.07,0.045); },
   erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
-  // O combo sobe de tom: quanto maior a sequência, mais alto e mais brilhante.
+  // O combo é o mesmo degrau, com acorde e um brilho na oitava.
   combo(n){
-    const base=520+Math.min(n,8)*45;
-    arpejo([base,base*1.25,base*1.5],0.06,0.05,"triangle");
+    const f=tomDaSequencia(n);
+    arpejo([f,f*1.25,f*1.5,f*2],0.055,0.045,"triangle");
   },
   etapa(){ arpejo([523,659,784],0.09,0.05); },
   missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
   recorde(){ arpejo([784,988,1175,1568],0.09,0.06,"triangle"); },
-  fimDeVidas(){ arpejo([440,349,262],0.14,0.05,"triangle"); }
+  // Perder as vidas é "quase!", não castigo: desce de leve e volta a subir.
+  fimDeVidas(){ arpejo([523,440,392],0.12,0.04,"triangle"); nota(440,0.14,0.035,"sine",0.5); nota(523,0.22,0.035,"sine",0.6); }
 };
 
 function setMudo(v){
@@ -2171,7 +2229,7 @@ function renderCategoryBadges(){
     card.classList.add(info.estado);
     const selo=card.querySelector(".selo");
     if(selo){
-      selo.textContent=info.rotulo?`${info.icone} ${info.rotulo}`:"";
+      selo.innerHTML=seloDe(info);
       selo.style.display=info.rotulo?"inline-block":"none";
     }
     const barra=card.querySelector(".mini-bar span");
@@ -2873,7 +2931,7 @@ function feedback(ok,msg){
   answeredCount++;
   if(ok){
     pontosVoando("+100",true);
-    if(combo>=3){ sfx.combo(combo); pulsarCombo(); } else sfx.acerto();
+    if(combo>=3){ sfx.combo(combo); pulsarCombo(); } else sfx.acerto(combo);
   }else{
     pontosVoando(practiceMode?"−":"−1 vida",false);
     sfx.erro();
@@ -2958,22 +3016,22 @@ function endGame(){
   if(lives<=0){
     rank="Cadete Temporal";
     title="A máquina perdeu energia!";
-    text="Você já aprendeu bastante. Revise a aula e tente novamente para completar as missões.";
+    text=fraseDoFim("vidas");
     trophy="";
   } else if(acc>=90){
     rank="Mestre do Tempo";
     title="Você salvou a máquina do tempo!";
-    text="Excelente domínio do Present Continuous. Você mostrou segurança em gramática, vocabulário e interpretação.";
+    text=fraseDoFim("otimo");
     trophy="";
   } else if(acc>=75){
     rank="Explorador Temporal";
     title="Missão concluída!";
-    text="Muito bom! Você dominou a maior parte do conteúdo e conseguiu voltar ao presente.";
+    text=fraseDoFim("bom");
     trophy="";
   } else {
     rank="Aprendiz do Tempo";
     title="Você voltou ao presente!";
-    text="Missão cumprida. Jogue novamente para revisar os pontos que ainda precisam de atenção.";
+    text=fraseDoFim("seguir");
     trophy="";
   }
   // Recorde so conta no modo desafio, onde o erro tem custo.
@@ -2996,6 +3054,7 @@ function endGame(){
   document.getElementById("endTitle").textContent=title;
   document.getElementById("endText").textContent=text;
   document.getElementById("trophy").textContent=trophy;
+  mostrarEstrelas(lives<=0&&!practiceMode||!total ? 0 : estrelasDe(acc));
 }
 /* ---------- Inicializacao ---------- */
 progress=loadProgress();
@@ -3133,28 +3192,35 @@ function _acenderFoguinho(n){
   if(fogo) fogo.toggleAttribute("hidden", n < 3);
 }
 
-function _ruido(dur, corte, vol){
-  /* Palmas são ruído filtrado, não nota: um estalo curto e seco. */
-  if(!audioCtx || mudo) return;
-  const n = Math.floor(audioCtx.sampleRate * dur);
-  const buf = audioCtx.createBuffer(1, n, audioCtx.sampleRate);
-  const dados = buf.getChannelData(0);
-  for(let i = 0; i < n; i++) dados[i] = (Math.random() * 2 - 1) * (1 - i / n);
-  const src = audioCtx.createBufferSource(); src.buffer = buf;
-  const f = audioCtx.createBiquadFilter(); f.type = "bandpass";
-  f.frequency.value = corte; f.Q.value = 0.8;
-  const g = audioCtx.createGain(); g.gain.value = vol;
-  src.connect(f).connect(g).connect(audioCtx.destination);
-  src.start();
-}
-function palmas(){
-  /* Doze palmas com intervalo irregular: regular demais vira metrônomo. */
+function fanfarra(){
+  /* Fanfarrinha do fim: uma frase alegre em dó maior e um brilho por cima.
+     É nota, não ruído: as palmas de antes eram estouros de ruído três vezes
+     mais altos que o resto e assustavam. Entra depois do som de fim. */
   try{
-    if(typeof ensureAudio === "function") ensureAudio();
-    for(let i = 0; i < 12; i++){
-      const atraso = i * 95 + Math.random() * 55;
-      setTimeout(() => _ruido(0.07, 1400 + Math.random() * 900, 0.16), atraso);
-    }
+    const atraso = 0.55;
+    [[523, 0, 0.14], [659, 0.12, 0.14], [784, 0.24, 0.14], [1047, 0.36, 0.3],
+     [784, 0.62, 0.12], [1047, 0.74, 0.5]].forEach(([f, q, d]) => {
+      nota(f, d, 0.04, "triangle", atraso + q);
+      nota(f * 2, d * 0.6, 0.01, "sine", atraso + q);
+    });
+    [1568, 1760, 2093].forEach((f, i) => nota(f, 0.2, 0.015, "sine", atraso + 1.05 + i * 0.07));
+  }catch(e){}
+}
+
+function _pop(quando){
+  /* Estalinho de bolha para os confetes: um tom que cai rápido, baixinho. */
+  if(mudo) return;
+  const ctx=ensureAudio(); if(!ctx) return;
+  try{
+    const t=ctx.currentTime+quando, o=ctx.createOscillator(), g=ctx.createGain();
+    o.type="sine";
+    o.frequency.setValueAtTime(700+Math.random()*500,t);
+    o.frequency.exponentialRampToValueAtTime(220,t+0.09);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.025,t+0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.1);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t+0.12);
   }catch(e){}
 }
 
@@ -3164,6 +3230,7 @@ function festa(quantidade){
   const caixa = document.getElementById("festaBox");
   if(!caixa) return;
   const n = quantidade || 44;
+  for(let i = 0; i < Math.min(10, Math.round(n / 6)); i++) _pop(0.05 + Math.random() * 0.45);
   for(let i = 0; i < n; i++){
     const p = document.createElement("i");
     p.className = "confete";
@@ -3178,10 +3245,10 @@ function festa(quantidade){
   }
 }
 
-/* Chamado no fim da partida: festa e palmas só quando houve o que comemorar. */
+/* Chamado no fim da partida: festa e fanfarra só quando houve o que comemorar. */
 function comemorar(acertos, total){
   const pct = total ? acertos / total : 0;
-  if(pct >= 0.9){ festa(70); palmas(); }
+  if(pct >= 0.9){ festa(70); fanfarra(); }
   else if(pct >= 0.6){ festa(36); }
 }
 
@@ -3386,7 +3453,7 @@ function _fimSala(){
     ordem.length ? ordem[0].nome + " venceu!" : "Fim da partida";
   document.getElementById("salaOpcoes").innerHTML = "";
   _enviarTodos({t: "fim", placar: ordem.map(j => ({nome: j.nome, pontos: j.pontos}))});
-  if(typeof festa === "function"){ festa(80); palmas(); }
+  if(typeof festa === "function"){ festa(80); fanfarra(); }
 }
 
 function fecharSala(){
