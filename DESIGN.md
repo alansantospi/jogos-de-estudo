@@ -97,6 +97,15 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   a guardar. A tela de fim mostra o que a partida trouxe; a página inicial
   mostra o foguinho dos dias e a aba **Álbum**. `motor/conquistas.js`, com
   teste em `teste/esteira/conquistas.test.ts`.
+- **Multiplicador da sequência**: a partir de 3 acertos seguidos cada acerto
+  vale o dobro, a partir de 6 o triplo; a pílula da sequência mostra ×2/×3.
+  Sem isso os pontos eram só acertos × 100 e a sequência não valia nada.
+- **Partida de 12 questões** no máximo, nos dois motores (a etapa de trilha
+  tem 8). O "Tudo misturado" do inglês tinha 54.
+- **Próximo passo** no fim: o botão principal sugere uma coisa só (tentar
+  de novo, buscar as 3 estrelas, a próxima missão sem 90% ou a próxima
+  trilha); escolher outra missão fica como secundário. `proximoPasso`, com
+  teste em `teste/esteira/proximo.test.ts`.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
   tudo.
 

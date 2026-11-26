@@ -673,7 +673,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
 <span id="migalhaAqui"></span>
 </nav>
 <div id="festaBox" class="festa" aria-hidden="true"></div>
-<div class="wrap"><div class="app"><header><div class="top"><div><h1>%TITULO%</h1><div class="subtitle">%SUBTITULO%</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
+<div class="wrap"><div class="app"><header><div class="top"><div><h1>%TITULO%</h1><div class="subtitle">%SUBTITULO%</div></div><div class="hud"><div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div><div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span id="mult" class="mult" hidden></span><span class="rot">Sequência</span></div><button id="btnSom" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button></div></div></header><main>
 <!--%HERO%--><!--%LICAO%--><section id="categories" class="screen"><div class="lesson-card"><span class="lesson-tag">Escolha o conteúdo</span><div class="mode-toggle"><button class="mode-opt" data-mode="treino" onclick="setPracticeMode(true)">Treino <small>sem vidas</small></button><button class="mode-opt" data-mode="desafio" onclick="setPracticeMode(false)">Desafio <small>5 vidas</small></button></div><div class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lupa"/></svg><input type="search" id="buscaMissao" oninput="filtrarMissoes()" autocomplete="off" placeholder="Buscar assunto..." aria-label="Buscar missão" aria-controls="gradeMissoes"></div><h2 style="margin-top:20px">Trilhas</h2><!--%CARTOES%--><div style="margin-top:18px"><button class="secondary" onclick="goHome()">← Voltar</button></div></div></section>
 <section id="quiz" class="screen"><div class="quiz-top"><button class="exit-btn" onclick="sairDaPartida()">Sair da missão</button></div><div class="question-card"><div class="progress-panel"><div class="progress-head"><span id="progressText">Questão 1</span><span id="progressPct">0%</span></div><div class="track"><div id="fill" class="fill"></div></div><div id="trailMap" class="trail-map"></div></div><div id="stage" class="stage"></div><div id="fonte" class="fonte" style="display:none"></div><div id="illustration" class="illustration"></div><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="special" class="special"></div><div id="feedback" class="feedback" role="status" aria-live="polite"></div><div class="controls"><button id="nextBtn" class="primary" style="display:none" onclick="nextQuestion()">Próxima →</button></div></div></section>
 
@@ -732,7 +732,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
     <div id="salaMeuPlacar" class="sala-placar"></div>
   </div>
 </section>
-<section id="end" class="screen"><div class="result"><div class="trophy"></div><div id="estrelas" class="estrelas" role="img" hidden></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div style="margin-top:16px"><button class="gold" onclick="openCategories()">Escolher nova missão</button></div></div></section>
+<section id="end" class="screen"><div class="result"><div class="trophy"></div><div id="estrelas" class="estrelas" role="img" hidden></div><h2>Missão concluída!</h2><div id="rank" class="rank"></div><p id="endText" class="subtitle"></p><div class="summary"><div class="stat"><span class="small">Pontos</span><strong id="finalScore">0</strong></div><div class="stat"><span class="small">Acertos</span><strong id="finalHits">0</strong></div><div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div></div><div id="missed" class="missed" style="display:none"></div><div class="fim-acoes"><button id="btnProximo" class="gold" type="button">Escolher nova missão</button><button class="secondary" type="button" onclick="openCategories()">Escolher outra missão</button></div></div></section>
 </main></div></div>
 <script>
 
@@ -996,6 +996,9 @@ function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
 }
 
 const _DEGRAUS=[0,2,4,5,7,9,11,12];
+// A sequência vale pontos: a partir de 3 acertos seguidos cada acerto conta
+// em dobro, a partir de 6 em triplo. Manter a sequência vira uma decisão.
+function multiplicador(c){ return c>=6?3:c>=3?2:1; }
 function tomDaSequencia(n){ return 523*Math.pow(2,_DEGRAUS[Math.min(Math.max(n,1),_DEGRAUS.length)-1]/12); }
 
 const sfx={
@@ -1136,8 +1139,10 @@ function resolve(ok,msg){
   const q=questions[index];
   answered++;record(q,ok);
   if(ok){
-    score+=100;hits++;combo++;bestCombo=Math.max(bestCombo,combo);
-    pontosVoando("+100",true);
+    hits++;combo++;bestCombo=Math.max(bestCombo,combo);
+    const mult=multiplicador(combo), ganho=100*mult;
+    score+=ganho;
+    pontosVoando("+"+ganho+(mult>1?" ×"+mult:""),true);
     if(combo>=3){sfx.combo(combo);pulsarCombo();festeja(combo)} else sfx.acerto(combo);
   }else{
     loseLife();combo=0;
@@ -1413,6 +1418,10 @@ function endGame(){
     fraseDoFim(lives<=0&&!practiceMode?'vidas':acc>=90?'otimo':acc>=70?'bom':'seguir');
   mostrarEstrelas(lives<=0&&!practiceMode||!answered ? 0 : estrelasDe(acc));
   if(typeof mostrarNovidades==="function") mostrarNovidades(nov);
+  if(typeof pintarProximo==="function") pintarProximo({estrelas:lives<=0&&!practiceMode||!answered?0:estrelasDe(acc), atual:currentCategory,
+    ordem:Object.keys(bank), titulos:nomes, melhor:c=>(progress.missions[c]||{}).melhorAcc||0,
+    trilha:activeTrail, perdeu:lives<=0&&!practiceMode,
+    trilhas:Object.keys(trails).map(k=>({id:k,nome:trails[k].name,feita:!!progress.trails[k]}))});
   renderMissed();
 }
 
@@ -1591,6 +1600,8 @@ function _acenderFoguinho(n){
   // `.hidden` num <svg> cria uma propriedade solta e deixa o atributo no DOM.
   const fogo = document.getElementById("foguinho");
   if(fogo) fogo.toggleAttribute("hidden", n < 3);
+  const x = document.getElementById("mult");
+  if(x){ const m = multiplicador(n); x.hidden = m < 2; x.textContent = "×" + m; }
 }
 
 function fanfarra(){

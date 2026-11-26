@@ -100,3 +100,36 @@ function mostrarNovidades(nov){
     if(nov.novas.length) _plim(2.2);       // depois da fanfarra
   }catch(e){}
 }
+
+/* ---------- o próximo passo, na tela de fim ----------
+   No fim da partida a vontade de jogar é a maior; uma lista de missões para
+   escolher a desperdiça. O botão principal sugere uma coisa só:
+   - na trilha: tentar de novo se perdeu, senão a próxima trilha por fazer;
+   - sem estrela (perdeu as vidas): tentar de novo;
+   - com 1 ou 2 estrelas: buscar as 3;
+   - com 3: a próxima missão, na ordem, que ainda não tem 90%.
+   `p.ordem` é a ordem das missões, `p.titulos` os nomes delas e `p.melhor(id)` o melhor acerto. */
+function proximoPasso(p){
+  if(p.trilha){
+    if(p.perdeu) return {texto: "Tentar a trilha de novo", ir: () => startTrail(p.trilha)};
+    const t = (p.trilhas || []).find(x => !x.feita && x.id !== p.trilha);
+    if(t) return {texto: "Próxima trilha: " + t.nome, ir: () => startTrail(t.id)};
+    return {texto: "Jogar a trilha de novo", ir: () => startTrail(p.trilha)};
+  }
+  if(!p.estrelas) return {texto: "Tentar de novo", ir: () => startCategory(p.atual)};
+  if(p.estrelas < 3 && p.atual !== "review")
+    return {texto: "Tentar 3 estrelas", ir: () => startCategory(p.atual)};
+  const i = p.ordem.indexOf(p.atual);
+  const resto = i < 0 ? p.ordem : p.ordem.slice(i + 1).concat(p.ordem.slice(0, i));
+  const prox = resto.find(c => p.melhor(c) < 90);
+  if(prox) return {texto: "Próxima: " + (p.titulos[prox] || prox), ir: () => startCategory(prox)};
+  return {texto: "Jogar de novo", ir: () => startCategory(p.atual)};
+}
+function pintarProximo(p){
+  try{
+    const b = document.getElementById("btnProximo"); if(!b) return;
+    const r = proximoPasso(p);
+    b.textContent = r.texto + " →";
+    b.onclick = r.ir;
+  }catch(e){}
+}
