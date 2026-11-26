@@ -66,7 +66,20 @@ const ESTIMATIVA_USD = 0.6;
 const SO_REGERA_ATE_MS = 75_000;
 const ESPERA_MAXIMA_MS = 140_000;
 
-const anthropic = new Anthropic({ timeout: ESPERA_MAXIMA_MS, maxRetries: 1 });
+/* Sem repetição automática: o SDK repete também o pedido que esgotou o
+   tempo, e essa segunda tentativa começa aos 140 s, é cortada junto com a
+   função aos 150 s, paga a entrada e não chega a ser registrada. A
+   repetição é à mão, em `modelo`, só para o erro rápido. */
+const anthropic = new Anthropic({ timeout: ESPERA_MAXIMA_MS, maxRetries: 0 });
+/* Erro que vale repetir na hora: ocupado, sobrecarga, falha do servidor ou
+   conexão caída, desde que tenha chegado rápido. Tempo esgotado não: a
+   fila tenta a tarefa de novo, com o relógio zerado. */
+const REPETE_SE_FALHOU_EM_MS = 20_000;
+const repetivel = (e: unknown) =>
+  !(e instanceof Anthropic.APIConnectionTimeoutError) &&
+  (e instanceof Anthropic.APIConnectionError ||
+   (e instanceof Anthropic.APIError && [408, 409, 429].includes(e.status ?? 0)) ||
+   (e instanceof Anthropic.APIError && (e.status ?? 0) >= 500));
 const admin = createClient(Deno.env.get("SUPABASE_URL")!,
                            Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
                            { auth: { persistSession: false } });
@@ -92,21 +105,29 @@ const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high", mat
     { type: "text", text: `<material>\n${material}\n</material>`, cache_control: { type: "ephemeral" } },
     { type: "text", text: usuario as string },
   ];
+  const pedir = () => anthropic.beta.messages.stream({
+    model: MODELO,
+    max_tokens: 32000,
+    // Recusa de um classificador é refeita em outro modelo, no servidor.
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    thinking: { type: "adaptive" },
+    // Distrator plausível é o trabalho difícil daqui: esforço alto, salvo
+    // quando o pedido diz outro (a leitura).
+    output_config: { effort: esforco, format: { type: "json_schema", schema: esquema } },
+    system: sistema,
+    messages: [{ role: "user", content: conteudo as any }],
+  }).finalMessage();
   let msg;
   try {
-    msg = await anthropic.beta.messages.stream({
-      model: MODELO,
-      max_tokens: 32000,
-      // Recusa de um classificador é refeita em outro modelo, no servidor.
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      thinking: { type: "adaptive" },
-      // Distrator plausível é o trabalho difícil daqui: esforço alto, salvo
-      // quando o pedido diz outro (a leitura).
-      output_config: { effort: esforco, format: { type: "json_schema", schema: esquema } },
-      system: sistema,
-      messages: [{ role: "user", content: conteudo as any }],
-    }).finalMessage();
+    const inicio = Date.now();
+    try {
+      msg = await pedir();
+    } catch (e) {
+      if (!repetivel(e) || Date.now() - inicio > REPETE_SE_FALHOU_EM_MS) throw e;
+      await new Promise(r => setTimeout(r, 1500 + Math.random() * 1500));
+      msg = await pedir();
+    }
   } catch (e) {
     if (e instanceof Anthropic.AuthenticationError || e instanceof Anthropic.PermissionDeniedError)
       throw new ErroEsteira("configuracao", "A chave da API não foi aceita. Veja o passo 3 de GERAR.md.");
