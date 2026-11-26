@@ -10,6 +10,7 @@ import io, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import conteudo as C
 import icons
+import diversao
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -87,6 +88,7 @@ def _sprite(molde, jogo):
               "expandir", "encolher", "palmas", "festa"}
     usados |= {q["icone"] for q in jogo["questoes"]}
     usados |= set(re.findall(r'href="#i-([a-z-]+)"', molde))
+    usados |= diversao.icones()
     return icons.sprite(sorted(usados))
 
 
@@ -104,6 +106,7 @@ def montar(arq, p):
     s = s.replace("/*%BANK%*/", C._bloco_bank(jogo))
     s = s.replace("/*%NOMES%*/", C._bloco_nomes(jogo))
     s = s.replace("/*%TRAILS%*/", C._bloco_trilhas(jogo))
+    s = diversao.embutir(s)
     s = s.replace("<!--%SPRITE%-->", _sprite(s, jogo))
 
     for campo, marca in (("patente", "%PATENTE%"), ("cor", "%COR%"), ("titulo", "%TITULO%"),
@@ -137,6 +140,8 @@ def montar_ingles():
     usados |= {q["icone"] for q in jogo["questoes"]}
     usados |= set(re.findall(r'href="#i-([a-z-]+)"', s))
     usados |= {v.get("ic") for v in jogo["verbos"] if v.get("ic")}
+    usados |= diversao.icones()
+    s = diversao.embutir(s)
     s = s.replace("<!--%SPRITE%-->", icons.sprite(sorted(usados)))
 
     sobrou = re.findall(r"%[A-Z0-9]+%", s)

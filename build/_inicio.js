@@ -143,7 +143,7 @@ function desenhar(){
   chip.style.background = p ? "var(" + p.cor + ")" : "var(--texto-2)";
   chip.title = p ? p.nome : "Escolher aluno";
   document.getElementById("subtitulo").textContent = p ? "Jogando como " + p.nome : "Quem vai jogar?";
-  pintarPerfis(); pintarJogos(); pintarHistorico(); pintarConta();
+  pintarPerfis(); pintarDias(); pintarJogos(); pintarHistorico(); pintarAlbum(); pintarConta();
 }
 
 function pintarPerfis(){
@@ -172,6 +172,32 @@ function pintarPerfis(){
     : "";
 }
 function esc(t){ return String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+/* ---------- dias seguidos e álbum (conquistas.js) ---------- */
+const _ic = n => '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-' + n + '"/></svg>';
+function pintarDias(){
+  const c = document.getElementById("dias");
+  const d = diasSeguidos(historico());
+  if(!perfilAtual() || !d.atual){ c.innerHTML = ""; return; }
+  const n = d.atual + (d.atual === 1 ? " dia seguido" : " dias seguidos");
+  c.innerHTML = '<div class="dias' + (d.jogouHoje ? " feito" : "") + '">' + _ic("fogo")
+    + "<span><b>" + n + "</b>"
+    + (d.jogouHoje ? "Você já jogou hoje. Volte amanhã!"
+                   : "Jogue hoje para não perder" + (d.atual > 1 ? " os seus " + d.atual + " dias!" : "!"))
+    + "</span></div>";
+}
+function pintarAlbum(){
+  const tem = new Set(figurinhasDe(historico()));
+  document.getElementById("albumConta").textContent =
+    tem.size + " de " + FIGURINHAS.length + " figurinhas" + (perfilAtual() ? " de " + perfilAtual().nome : "");
+  document.getElementById("album").innerHTML = FIGURINHAS.map(f => {
+    const ok = tem.has(f.id);
+    return '<div class="figurinha' + (ok ? " ganha" : "") + '">'
+      + '<span class="fig-ic">' + _ic(f.ic) + "</span>"
+      + "<b>" + (ok ? esc(f.nome) : "?") + "</b>"
+      + "<span>" + esc(f.desc) + "</span></div>";
+  }).join("");
+}
 
 function pintarJogos(){
   /* Selo por matéria: quantas missões já foram concluídas. */

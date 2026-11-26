@@ -113,7 +113,7 @@ test("texto do modelo na lição não vira marcação", () => {
 });
 
 test("o jogo com lição ganha os botões de estudar; sem lição, não", () => {
-  const molde = readFileSync(RAIZ + "motor/ceu.molde.html", "utf8").replace("<!--%SPRITE%-->", "");
+  const molde = readFileSync(RAIZ + "motor/ceu.molde.html", "utf8").replace("<!--%SPRITE%-->", "").replace("<!--%DIVERSAO%-->", "");
   const jogo = { titulo: "Pecuária", materia: "Geografia", missoes: [{ id: "pecuaria", nome: "Pecuária" },
     { id: "primario", nome: "Primário" }], trilhas: [{ id: "tudo", nome: "Todas", etapas: ["pecuaria", "primario", "all"] }],
     questoes: [{ tipo: "escolha", missao: "pecuaria", icone: "vaca", enunciado: "q", certa: "c", erradas: ["d", "e", "f"] }],

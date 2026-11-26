@@ -1,0 +1,55 @@
+/* ---------- mascote ---------- */
+.quiz-top{display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-3);min-height:3.5rem}
+.mascote-linha{margin-left:auto;display:flex;align-items:center;gap:var(--s-2)}
+.mascote{width:4rem;height:4rem;overflow:visible;flex:none;stroke:none}
+.mascote .m-pele{fill:var(--materia-solida)}
+.mascote .m-barriga{fill:#fff;opacity:.22}
+.mascote .m-olhos ellipse{fill:#221a33}
+.mascote .m-brilho{fill:#fff}
+.mascote .m-olhos-feliz,.mascote .m-boca-normal{fill:none;stroke:#221a33;stroke-width:2.6;stroke-linecap:round}
+.mascote .m-boca-feliz,.mascote .m-boca-ops{fill:#221a33}
+.mascote .m-bochecha{fill:#ff8fa3;opacity:.7}
+.mascote .m-fogo{fill:#ff9b3d;opacity:0;transform-origin:32px 22px;transform:scale(.3);transition:opacity .2s,transform .25s}
+.mascote .m-olhos-feliz,.mascote .m-boca-feliz,.mascote .m-boca-ops{display:none}
+.mascote.feliz .m-olhos,.mascote.fogo .m-olhos,.mascote.oi .m-olhos,.mascote.em-fogo .m-olhos{display:none}
+.mascote.feliz .m-olhos-feliz,.mascote.fogo .m-olhos-feliz,.mascote.oi .m-olhos-feliz,.mascote.em-fogo .m-olhos-feliz{display:inline}
+.mascote.feliz .m-boca-normal,.mascote.fogo .m-boca-normal,.mascote.oi .m-boca-normal,.mascote.em-fogo .m-boca-normal{display:none}
+.mascote.feliz .m-boca-feliz,.mascote.fogo .m-boca-feliz,.mascote.oi .m-boca-feliz,.mascote.em-fogo .m-boca-feliz{display:inline}
+.mascote.ops .m-boca-normal,.mascote.ops .m-boca-feliz,.mascote.ops .m-olhos-feliz{display:none}
+.mascote.ops .m-boca-ops,.mascote.ops .m-olhos{display:inline}
+.mascote.em-fogo .m-fogo{opacity:1;transform:none;animation:m-chama .5s ease-in-out infinite alternate}
+.mascote .m-corpo{transform-origin:32px 60px}
+.mascote.pula.feliz .m-corpo,.mascote.pula.fogo .m-corpo,.mascote.pula.oi .m-corpo{animation:m-pula .5s cubic-bezier(.3,1.5,.5,1)}
+.mascote.pula.ops .m-corpo{animation:m-treme .4s ease-in-out}
+@keyframes m-pula{0%{transform:none}35%{transform:translateY(-9px) scale(.95,1.06)}70%{transform:translateY(0) scale(1.06,.94)}100%{transform:none}}
+@keyframes m-treme{0%,100%{transform:none}20%{transform:rotate(-8deg)}40%{transform:rotate(7deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+@keyframes m-chama{from{transform:scale(1,1)}to{transform:scale(.9,1.1)}}
+.mascote-fala{margin:0;padding:var(--s-1) var(--s-3);border-radius:999px;background:var(--carta);border:2px solid var(--risco);
+  font-family:var(--display);font-weight:600;font-size:var(--t-sm);color:var(--texto);white-space:nowrap;
+  opacity:0;transform:translateX(6px) scale(.9);transition:opacity .15s,transform .15s}
+.mascote-fala.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .mascote .m-corpo,.mascote.em-fogo .m-fogo{animation:none!important}
+  .mascote-fala{transition:none}
+}
+
+/* ---------- novidades do fim ---------- */
+.novidades{display:grid;gap:var(--s-2);margin:var(--s-4) 0 0;max-width:32rem}
+.novidades[hidden]{display:none}
+.novidade{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-radius:var(--r);
+  background:var(--carta);border:2px solid var(--risco);font-size:var(--t-sm);color:var(--texto-2);
+  animation:novidade-entra .4s 1.2s cubic-bezier(.3,1.5,.5,1) both}
+.novidade b{display:block;color:var(--texto);font-family:var(--display);font-size:var(--t-md,1rem)}
+.novidade small{display:block;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.7rem;color:var(--materia-forte)}
+.novidade a{color:var(--materia-forte);font-weight:700}
+.novidade>svg{width:1.75rem;height:1.75rem;flex:none;fill:#ff9b3d;stroke:none}
+.novidade .fig-ic{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:999px;
+  background:var(--materia-solida);color:var(--sobre-materia);box-shadow:0 0 0 4px var(--materia-clara)}
+.novidade .fig-ic svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.8}
+.novidade.fig{animation-delay:1.8s}
+.novidade.varias{display:grid;gap:var(--s-3);justify-items:start}
+.novidade.varias ul{display:flex;flex-wrap:wrap;gap:var(--s-3);margin:0;padding:0;list-style:none}
+.novidade.varias li{display:flex;flex-direction:column;align-items:center;gap:var(--s-1);width:4.5rem;text-align:center;
+  font-family:var(--display);font-weight:600;font-size:.75rem;line-height:1.15;color:var(--texto)}
+@keyframes novidade-entra{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.novidade{animation:none}}

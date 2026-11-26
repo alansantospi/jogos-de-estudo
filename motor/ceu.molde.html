@@ -913,7 +913,7 @@ function makeQuestions(cat,limite){
 }
 
 /* ---------- telas ---------- */
-function show(id){migalhas(id);document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function show(id){migalhas(id);if(id==="quiz"&&typeof mascote==="function")mascote("oi");document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 function _goHome(){renderStats();renderModeToggle();show('start')}
 
 /* ---------- busca de missão ---------- */
@@ -1002,12 +1002,13 @@ const sfx={
   toque(){ nota(320,0.05,0.02,"sine"); },
   // Cada acerto seguido sobe um degrau da escala: a criança ouve a sequência
   // crescer. Para numa oitava acima, antes de virar apito.
-  acerto(n=1){ const f=tomDaSequencia(n); arpejo([f,f*1.5],0.07,0.045); },
-  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); },
+  acerto(n=1){ const f=tomDaSequencia(n); arpejo([f,f*1.5],0.07,0.045); if(typeof mascote==="function") mascote("feliz"); },
+  erro(){ nota(220,0.16,0.05,"triangle"); nota(165,0.22,0.045,"triangle",0.1); if(typeof mascote==="function") mascote("ops"); },
   // O combo é o mesmo degrau, com acorde e um brilho na oitava.
   combo(n){
     const f=tomDaSequencia(n);
     arpejo([f,f*1.25,f*1.5,f*2],0.055,0.045,"triangle");
+    if(typeof mascote==="function") mascote("fogo");
   },
   etapa(){ arpejo([523,659,784],0.09,0.05); },
   missao(){ arpejo([523,659,784,1047],0.1,0.055); setTimeout(()=>arpejo([784,1047],0.12,0.05),480); },
@@ -1380,7 +1381,7 @@ document.addEventListener('keydown',ev=>{
 
 /* ---------- fim de partida ---------- */
 function endGame(){
-  registrarPartida(hits, answered, score);
+  const nov=registrarPartida(hits, answered, score);
   setTimeout(() => comemorar(hits, answered), 260);
   if(activeTrail&&trailStep>=trails[activeTrail].steps.length-1&&lives>0){progress.trails[activeTrail]=true}
   // Registra a missão como concluída quando o aluno chegou ao fim com vidas.
@@ -1411,6 +1412,7 @@ function endGame(){
   document.getElementById('endText').textContent=
     fraseDoFim(lives<=0&&!practiceMode?'vidas':acc>=90?'otimo':acc>=70?'bom':'seguir');
   mostrarEstrelas(lives<=0&&!practiceMode||!answered ? 0 : estrelasDe(acc));
+  if(typeof mostrarNovidades==="function") mostrarNovidades(nov);
   renderMissed();
 }
 
@@ -1979,15 +1981,19 @@ const HIST_CHAVE = "jogos_historico_v1";
 const HIST_MAX = 400;
 
 function registrarPartida(acertos, total, pontos){
-  if(!total) return;                       // saiu antes de responder: não conta
+  if(!total) return null;                  // saiu antes de responder: não conta
   try{
     const p = perfilAtual();
     const k = HIST_CHAVE + (p ? ":" + p.id : "");
     const lista = JSON.parse(localStorage.getItem(k) || "[]");
+    const antes = lista.slice();
     lista.push({q: Date.now(), j: "%SLUG%", m: currentCategory || "all",
-                t: activeTrail || null, a: acertos, n: total, p: pontos || 0});
+                t: activeTrail || null, a: acertos, n: total, p: pontos || 0, c: bestCombo || 0});
     while(lista.length > HIST_MAX) lista.shift();
     localStorage.setItem(k, JSON.stringify(lista));
-  }catch(e){}
+    // Dias seguidos e figurinhas novas: a tela de fim mostra (diversao.js).
+    return typeof novidadesDa === "function" ? novidadesDa(antes, lista, Date.now()) : null;
+  }catch(e){ return null; }
 }
-</script></body></html>
+</script><!--%DIVERSAO%-->
+</body></html>
