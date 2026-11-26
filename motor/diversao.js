@@ -278,9 +278,10 @@ function _avisoDoDesafio(){
   return true;
 }
 
-/* ---------- avançar sozinho depois do acerto ----------
-   Depois do acerto a partida segue sozinha; tocar em "Próxima" adianta.
-   No erro não: a explicação precisa ser lida. */
+/* ---------- avançar sozinho na sequência ----------
+   Com 3 ou mais acertos seguidos a partida segue sozinha, para não quebrar
+   o ritmo; tocar em "Próxima" adianta. Fora da sequência e no erro, espera:
+   a explicação é para ser lida. */
 let _avancoT = 0;
 function avancarSozinho(posicao, proxima){
   clearTimeout(_avancoT);

@@ -118,8 +118,9 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   tinha escolhido o Desafio continua com ele.
 - **Mascote também na entrada e no fim**, com balão: na entrada cumprimenta
   e lembra os dias seguidos; no fim comemora ou consola conforme as estrelas.
-- **Acerto avança sozinho** em 1,6 s (tocar em "Próxima" adianta); o erro
-  espera, porque a explicação precisa ser lida.
+- **Na sequência, o acerto avança sozinho** em 1,6 s (a partir de 3
+  seguidos; tocar em "Próxima" adianta). Fora dela e no erro, espera: a
+  explicação é para ser lida.
 - **Resposta marcada com ✓ e ✗**, além da cor; e um contador só
   ("Questão 3/9"), sem o percentual repetido.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
