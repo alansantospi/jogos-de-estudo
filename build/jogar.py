@@ -11,11 +11,11 @@ import io, json, os, re, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "build"))
-import icons, licao
+import icons, licao, diversao
 
 ler = lambda *p: io.open(os.path.join(RAIZ, *p), encoding="utf-8").read()
 
-molde = ler("motor", "ceu.molde.html")
+molde = diversao.embutir(ler("motor", "ceu.molde.html"))
 usados = {"som", "mudo", "check", "casa", "lupa", "fogo", "tema", "sol", "lua", "expandir",
           "encolher", "palmas", "festa", "remendo", "dado", "livro"}
 usados |= set(re.findall(r'href="#i-([a-z-]+)"', molde))

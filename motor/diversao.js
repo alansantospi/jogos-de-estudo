@@ -1,0 +1,102 @@
+/* ---------- mascote ----------
+   Uma bolinha que reage à partida: sorri no acerto, faz "ops" no erro e
+   pega fogo na sequência. É enfeite: sem o elemento, nada acontece, e o
+   jogo nunca quebra por causa dela. Os sons chamam `mascote`, então toda
+   forma de questão reage sem cada uma precisar lembrar. */
+const _FALAS = {
+  oi:    ["Vamos lá!", "Bora!", "Estou com você!"],
+  feliz: ["Isso!", "Boa!", "Acertou!", "Mandou bem!", "Show!"],
+  fogo:  ["Pegando fogo!", "Ninguém segura!", "Que sequência!", "Uau!"],
+  ops:   ["Quase!", "Ops!", "A próxima vem!", "Errar faz parte."]
+};
+const _MASCOTE_SVG =
+  '<svg id="mascote" class="mascote" viewBox="0 0 64 64" aria-hidden="true" focusable="false">'
+  + '<path class="m-fogo" d="M32 1c5 7 10 9 8 17-1 4-5 6-8 6s-7-2-8-6c-2-8 3-10 8-17z"/>'
+  + '<g class="m-corpo">'
+  + '<ellipse class="m-pele" cx="32" cy="40" rx="23" ry="20"/>'
+  + '<ellipse class="m-barriga" cx="32" cy="47" rx="12" ry="8"/>'
+  + '<g class="m-olhos"><ellipse cx="24" cy="36" rx="3.2" ry="4.2"/><ellipse cx="40" cy="36" rx="3.2" ry="4.2"/>'
+  + '<circle class="m-brilho" cx="25.2" cy="34.4" r="1.1"/><circle class="m-brilho" cx="41.2" cy="34.4" r="1.1"/></g>'
+  + '<path class="m-olhos-feliz" d="M20.5 37q3.5-5 7 0M36.5 37q3.5-5 7 0"/>'
+  + '<circle class="m-bochecha" cx="16.5" cy="44" r="3.2"/><circle class="m-bochecha" cx="47.5" cy="44" r="3.2"/>'
+  + '<path class="m-boca m-boca-normal" d="M28 45q4 3.5 8 0"/>'
+  + '<path class="m-boca m-boca-feliz" d="M25.5 44q6.5 9 13 0z"/>'
+  + '<ellipse class="m-boca m-boca-ops" cx="32" cy="47" rx="3" ry="3.6"/>'
+  + '</g></svg>';
+
+let _mascoteT = 0, _mascoteFogo = false;
+
+function _poeMascote(){
+  const quiz = document.getElementById("quiz");
+  if(!quiz || document.getElementById("mascote")) return;
+  let topo = quiz.querySelector(".quiz-top");
+  if(!topo){ topo = document.createElement("div"); topo.className = "quiz-top"; quiz.prepend(topo); }
+  const m = document.createElement("div");
+  m.className = "mascote-linha";
+  m.innerHTML = '<p id="mascoteFala" class="mascote-fala"></p>' + _MASCOTE_SVG;
+  topo.appendChild(m);
+}
+addEventListener("DOMContentLoaded", _poeMascote);
+
+function mascote(estado){
+  try{
+    const m = document.getElementById("mascote"); if(!m) return;
+    const f = document.getElementById("mascoteFala");
+    if(estado === "fogo") _mascoteFogo = true;
+    else if(estado === "ops" || estado === "oi") _mascoteFogo = false;
+    const fogo = _mascoteFogo ? " em-fogo" : "";
+    m.setAttribute("class", "mascote " + estado + fogo);
+    void m.getBoundingClientRect();        // reinicia o pulo se ainda estava pulando
+    m.classList.add("pula");
+    const l = _FALAS[estado];
+    if(f && l){
+      f.textContent = l[Math.floor(Math.random() * l.length)];
+      f.classList.remove("on"); void f.offsetWidth; f.classList.add("on");
+    }
+    clearTimeout(_mascoteT);
+    _mascoteT = setTimeout(() => {
+      m.setAttribute("class", "mascote" + fogo);
+      if(f) f.classList.remove("on");
+    }, 1700);
+  }catch(e){}
+}
+
+/* ---------- novidades do fim da partida ----------
+   Dias seguidos e figurinha nova, na tela de fim, embaixo da frase. */
+function _plim(quando){
+  if(typeof nota !== "function") return;
+  [1319, 1760, 2637].forEach((f, i) => nota(f, 0.2, 0.02, "sine", quando + i * 0.07));
+}
+
+function mostrarNovidades(nov){
+  try{
+    let el = document.getElementById("novidades");
+    if(!el){
+      const ref = document.getElementById("endText"); if(!ref) return;
+      el = document.createElement("div");
+      el.id = "novidades"; el.className = "novidades";
+      ref.insertAdjacentElement("afterend", el);
+    }
+    const dias = nov && nov.diasSubiu && nov.dias >= 2;
+    if(!nov || (!dias && !nov.novas.length)){ el.hidden = true; el.innerHTML = ""; return; }
+    const ic = n => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-' + n + '"/></svg>';
+    let h = "";
+    if(dias)
+      h += '<div class="novidade dias">' + ic("fogo") + "<span><b>" + nov.dias
+        + " dias seguidos!</b> Jogue amanhã para chegar a " + (nov.dias + 1) + ".</span></div>";
+    const album = '<a href="index.html#album">Ver o álbum</a>';
+    if(nov.novas.length === 1){
+      const f = nov.novas[0];
+      h += '<div class="novidade fig"><span class="fig-ic">' + ic(f.ic) + "</span><span><small>Figurinha nova</small><b>"
+        + f.nome + "</b>" + f.desc + ". " + album + "</span></div>";
+    }else if(nov.novas.length){
+      // Várias de uma vez (a primeira partida costuma dar algumas): um cartão
+      // só, com as figurinhas lado a lado, em vez de uma pilha de cartões.
+      h += '<div class="novidade fig varias"><div><small>Figurinhas novas</small><b>' + nov.novas.length
+        + " de uma vez!</b></div><ul>" + nov.novas.map(f => '<li title="' + f.desc + '"><span class="fig-ic">'
+        + ic(f.ic) + "</span>" + f.nome + "</li>").join("") + "</ul>" + album + "</div>";
+    }
+    el.innerHTML = h; el.hidden = false;
+    if(nov.novas.length) _plim(2.2);       // depois da fanfarra
+  }catch(e){}
+}

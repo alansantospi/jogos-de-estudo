@@ -88,6 +88,15 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   3; sem vidas, nenhuma. O cartão da missão mostra as do melhor resultado.
 - **Frase do fim** sorteada de uma lista por faixa de acerto, sem repetir a
   anterior.
+- **Mascote**: uma bolinha da cor da matéria no canto da partida. Sorri e
+  pula no acerto, treme e faz "ops" no erro, pega fogo a partir de três
+  seguidas, com um balão de fala curto. Quem chama são os sons, então toda
+  forma de questão reage. `motor/diversao.js`.
+- **Dias seguidos** e **figurinhas** (12, das fáceis às difíceis) saem do
+  histórico de partidas, que já é do perfil e já vai para a conta: nada novo
+  a guardar. A tela de fim mostra o que a partida trouxe; a página inicial
+  mostra o foguinho dos dias e a aba **Álbum**. `motor/conquistas.js`, com
+  teste em `teste/esteira/conquistas.test.ts`.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
   tudo.
 

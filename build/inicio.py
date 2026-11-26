@@ -7,10 +7,12 @@ jogos — mesma origem — em vez de manter uma cópia própria.
 """
 import io, json, re, sys
 sys.path.insert(0, "build")
-import icons
+import icons, diversao
 
 USADOS = ["livro", "terra", "prensa", "nota", "regua", "letras", "globo", "comida", "lupa", "mais",
           "controle", "relogio", "pessoa"]
+# O álbum e o aviso de dias seguidos: os desenhos das figurinhas.
+USADOS += sorted(diversao.icones() - set(USADOS))
 
 SPRITE = {
  "livro": '<path d="M4 5.5A2 2 0 0 1 6 4h6v15H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-6v15h6a2 2 0 0 1 2 1.5z"/>',
@@ -34,6 +36,9 @@ js = io.open("build/_inicio.js", encoding="utf-8").read()
 conta = io.open("build/_conta.js", encoding="utf-8").read()
 missoes = json.load(io.open("build/missoes.json", encoding="utf-8"))
 
+for n in USADOS:
+    SPRITE.setdefault(n, icons._P[n])
+
 sprite = "".join('<symbol id="i-%s" viewBox="0 0 24 24">%s</symbol>' % (n, SPRITE[n]) for n in USADOS)
 
 html = html.replace("/*TOKENS*/", tokens + extra)
@@ -44,7 +49,7 @@ montar = io.open("build/_montar_jogo.js", encoding="utf-8").read()
 cores = re.search(r"/\*CORES>\*/.*?/\*<CORES\*/", montar, re.S)
 if not cores:
     raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
-html = html.replace("/*JS*/", cores.group(0) + "\n" + js + conta)
+html = html.replace("/*JS*/", cores.group(0) + "\n" + diversao.conquistas_js() + js + conta)
 
 io.open("index.html", "w", encoding="utf-8").write(html)
 print("  %-24s perfis, historico e conta (%d KB)" % ("index", len(html) // 1024))
