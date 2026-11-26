@@ -1086,7 +1086,7 @@ function pulsarCombo(){
 }
 
 function setPracticeMode(on){practiceMode=!!on;progress.practice=practiceMode;saveProgress();renderModeToggle();renderLives()}
-function renderModeToggle(){document.querySelectorAll('.mode-opt').forEach(b=>b.classList.toggle('active',(b.dataset.mode==='treino')===practiceMode))}
+function renderModeToggle(){document.querySelectorAll('.mode-opt').forEach(b=>b.classList.toggle('active',(b.dataset.mode==='treino')===practiceMode));if(typeof pintarDesafio==="function")pintarDesafio(progress)}
 function renderLives(){const e=document.getElementById('lives');if(e)e.textContent=practiceMode?'∞':String(lives)}
 function loseLife(){if(!practiceMode)lives--;renderLives()}
 
@@ -1151,6 +1151,7 @@ function resolve(ok,msg){
   }
   feedback(ok,(ok?'Muito bem! ':'')+(msg||q.e));
   updateHud();
+  if(ok&&typeof avancarSozinho==="function") avancarSozinho(()=>index, nextQuestion);
 }
 
 /* ---------- 1. múltipla escolha ---------- */

@@ -131,6 +131,13 @@ function pintarProximo(p){
     const r = proximoPasso(p);
     b.textContent = r.texto + " →";
     b.onclick = r.ir;
+    if(_avisoDoDesafio() && !p.trilha){
+      b.textContent = "Pronto para o Desafio? →";
+      b.onclick = () => { setPracticeMode(false); startCategory(p.atual); };
+    }
+    const l = _FALAS_FIM[p.estrelas] || _FALAS_FIM[0];
+    mascoteParado(document.querySelector("#end .result"), "Fim",
+      p.estrelas >= 3 ? "fogo" : p.estrelas ? "feliz" : "ops", l[Math.floor(Math.random() * l.length)]);
   }catch(e){}
 }
 
@@ -165,6 +172,7 @@ function pintarEntrada(p){
       apagar.parentElement.classList.add("zona-apagar");
       inicio.appendChild(apagar.parentElement);
     }
+    mascoteParado(hero, "Entrada", "oi", _falaDaEntrada(p.jogou));
     if(!p.jogou && licoes.length){
       b.hidden = true;
       licoes.forEach((l, i) => { l.classList.toggle("primary", !i); l.classList.toggle("secondary", !!i); });
@@ -186,3 +194,100 @@ addEventListener("DOMContentLoaded", () => {
     else if(typeof renderStartStats === "function") renderStartStats();
   }catch(e){}
 });
+
+/* ---------- mascote parado: entrada e fim ----------
+   O mesmo bichinho da partida, nos dois momentos fortes: chegar ao jogo e
+   ver o resultado. Fica à esquerda, com o balão à direita. */
+function mascoteParado(onde, sufixo, estado, fala){
+  try{
+    if(!onde) return;
+    let linha = onde.querySelector(".mascote-linha.parado");
+    if(!linha){
+      linha = document.createElement("div");
+      linha.className = "mascote-linha parado";
+      linha.innerHTML = '<p class="mascote-fala on"></p>'
+        + _MASCOTE_SVG.replace('id="mascote"', 'id="mascote' + sufixo + '"');
+      onde.prepend(linha);
+    }
+    const m = linha.querySelector("svg");
+    m.setAttribute("class", "mascote " + estado + (estado === "fogo" ? " em-fogo" : "") + " pula");
+    linha.querySelector(".mascote-fala").textContent = fala;
+  }catch(e){}
+}
+
+function _historicoDoPerfil(){
+  try{
+    const p = typeof perfilAtual === "function" ? perfilAtual() : null;
+    return JSON.parse(localStorage.getItem(HIST_CHAVE + (p ? ":" + p.id : "")) || "[]");
+  }catch(e){ return []; }
+}
+
+function _falaDaEntrada(jogou){
+  if(!jogou) return "Oi! Vamos começar?";
+  const d = diasSeguidos(_historicoDoPerfil());
+  if(d.jogouHoje && d.atual >= 2) return "Já são " + d.atual + " dias seguidos!";
+  if(!d.jogouHoje && d.atual >= 1) return "Bora manter a sequência?";
+  return "Que bom te ver de novo!";
+}
+
+const _FALAS_FIM = {
+  3: ["Uau! Três estrelas!", "Você é demais!", "Perfeito!"],
+  2: ["Quase as três!", "Tá voando!", "Boa!"],
+  1: ["Missão cumprida!", "Cada vez melhor!", "Valeu o esforço!"],
+  0: ["Tudo bem, bora de novo?", "Errar faz parte!", "Na próxima vai!"]
+};
+
+/* ---------- desafio que se destrava ----------
+   O Desafio (com vidas, e o único que vale recorde) não é escolha para quem
+   acabou de chegar: abre depois de 2 estrelas (70%) em alguma missão. Quem
+   já tinha escolhido o Desafio continua com ele. */
+function desafioAberto(prog){
+  return !!prog && (prog.practice === false
+    || Object.values(prog.missions || {}).some(m => m && m.melhorAcc >= 70));
+}
+function pintarDesafio(prog){
+  try{
+    const b = document.querySelector('.mode-opt[data-mode="desafio"]'); if(!b) return;
+    const aberto = desafioAberto(prog);
+    b.disabled = !aberto;
+    b.classList.toggle("trancado", !aberto);
+    const s = b.querySelector("small");
+    if(s) s.textContent = aberto ? "5 vidas · vale recorde" : "abre com 2 estrelas";
+    b.title = aberto ? "" : "Consiga 2 estrelas numa missão do Treino para abrir o Desafio";
+  }catch(e){}
+}
+
+/* Na primeira tela de fim em que o Desafio está aberto e a criança ainda
+   não foi avisada: aviso na lista de novidades e o botão principal convida. */
+function _avisoDoDesafio(){
+  const prog = typeof progress !== "undefined" ? progress : null;
+  if(!prog || prog.avisoDesafio || !desafioAberto(prog)) return false;
+  prog.avisoDesafio = true;
+  if(typeof saveProgress === "function") saveProgress();
+  if(prog.practice === false) return false;          // já estava no Desafio
+  let el = document.getElementById("novidades");
+  if(!el){
+    const ref = document.getElementById("endText"); if(!ref) return false;
+    el = document.createElement("div"); el.id = "novidades"; el.className = "novidades";
+    ref.insertAdjacentElement("afterend", el);
+  }
+  el.insertAdjacentHTML("afterbegin", '<div class="novidade fig"><span class="fig-ic">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-raio"/></svg></span>'
+    + "<span><small>Destravado</small><b>Modo Desafio!</b>Com 5 vidas, e é o que vale recorde.</span></div>");
+  el.hidden = false;
+  return true;
+}
+
+/* ---------- avançar sozinho depois do acerto ----------
+   Depois do acerto a partida segue sozinha; tocar em "Próxima" adianta.
+   No erro não: a explicação precisa ser lida. */
+let _avancoT = 0;
+function avancarSozinho(posicao, proxima){
+  clearTimeout(_avancoT);
+  const era = posicao();
+  _avancoT = setTimeout(() => {
+    const q = document.getElementById("quiz"), b = document.getElementById("nextBtn");
+    if(posicao() !== era || !q || !q.classList.contains("active") || !b || b.style.display === "none") return;
+    proxima();
+  }, 1600);
+}

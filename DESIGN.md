@@ -112,6 +112,16 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   e "apagar progresso" fica no pé da tela. `pintarEntrada`, que reorganiza
   na hora as telas escritas à mão de cada jogo.
 - **Placar só na partida**: pontos, vidas e sequência somem fora do quiz.
+- **Desafio se destrava** com 2 estrelas (70%) em alguma missão; antes
+  disso o botão fica tracejado ("abre com 2 estrelas"). Na primeira tela de
+  fim com ele aberto, um aviso e o botão "Pronto para o Desafio?". Quem já
+  tinha escolhido o Desafio continua com ele.
+- **Mascote também na entrada e no fim**, com balão: na entrada cumprimenta
+  e lembra os dias seguidos; no fim comemora ou consola conforme as estrelas.
+- **Acerto avança sozinho** em 1,6 s (tocar em "Próxima" adianta); o erro
+  espera, porque a explicação precisa ser lida.
+- **Resposta marcada com ✓ e ✗**, além da cor; e um contador só
+  ("Questão 3/9"), sem o percentual repetido.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
   tudo.
 
