@@ -53,3 +53,13 @@
   font-family:var(--display);font-weight:600;font-size:.75rem;line-height:1.15;color:var(--texto)}
 @keyframes novidade-entra{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.novidade{animation:none}}
+
+/* ---------- multiplicador da sequência ---------- */
+.mult{font-family:var(--display);font-weight:700;font-size:.8em;line-height:1;padding:.15em .4em;border-radius:999px;
+  background:#ff9b3d;color:#221a33;animation:mult-entra .3s cubic-bezier(.3,1.6,.5,1)}
+.mult[hidden]{display:none}
+@keyframes mult-entra{from{transform:scale(.4)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.mult{animation:none}}
+
+/* ---------- ações do fim ---------- */
+.fim-acoes{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-5)}

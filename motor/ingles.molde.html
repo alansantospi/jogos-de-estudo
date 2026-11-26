@@ -682,7 +682,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
         </div>
         <div class="hud">
           <div class="pill"><span id="score">0</span><span class="rot">Pontos</span></div>
-          <div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span class="rot">Sequência</span></div>
+          <div class="pill"><span id="lives">5</span><span class="rot">Vidas</span></div><div class="pill"><svg id="foguinho" hidden width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-fogo"/></svg><span id="combo">0</span><span id="mult" class="mult" hidden></span><span class="rot">Sequência</span></div>
           <div class="pill"><span id="modeLabel">Aula</span><span class="rot">Missão</span></div>
           <button id="btnSom" type="button" class="pill som-btn" onclick="alternarSom()" aria-label="Desativar som"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-som"/></svg></button><button id="btnTema" class="pill som-btn" onclick="alternarTema()" aria-label="Tema: seguir o sistema"></button><button id="btnTela" class="pill som-btn" onclick="alternarTela()" aria-label="Tela cheia" hidden></button><button id="btnPerfil" class="pill perfil-btn" onclick="abrirPerfis()" aria-label="Perfil"></button>
         </div>
@@ -1184,7 +1184,7 @@ button[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:0 var(-
             <div class="stat"><span class="small">Precisão</span><strong id="accuracy">0%</strong></div><div class="stat"><span class="small">Melhor combo</span><strong id="bestCombo">0</strong></div><div class="stat"><span class="small">Jornada</span><strong id="journeyResult">Livre</strong></div>
           </div>
           <div id="missedList" class="missed" style="display:none"></div>
-          <div style="margin-top:18px"><button type="button" class="primary" onclick="restart()">Jogar novamente</button></div>
+          <div class="fim-acoes"><button id="btnProximo" type="button" class="primary">Jogar novamente</button><button type="button" class="secondary" onclick="openCategories()">Escolher outra missão</button></div>
         </div>
       </section>
     </main>
@@ -1498,6 +1498,9 @@ function arpejo(freqs,passo=0.075,vol=0.05,tipo="sine"){
 }
 
 const _DEGRAUS=[0,2,4,5,7,9,11,12];
+// A sequência vale pontos: a partir de 3 acertos seguidos cada acerto conta
+// em dobro, a partir de 6 em triplo. Manter a sequência vira uma decisão.
+function multiplicador(c){ return c>=6?3:c>=3?2:1; }
 function tomDaSequencia(n){ return 523*Math.pow(2,_DEGRAUS[Math.min(Math.max(n,1),_DEGRAUS.length)-1]/12); }
 
 const sfx={
@@ -2138,7 +2141,7 @@ function updateProgress(){
 function _startTrail(name){
   activeTrail=name;
   trailStep=0;
-  score=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;
+  score=0;_scoreAnterior=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;
   startTrailStep();
 }
 
@@ -2338,15 +2341,16 @@ function _startCategory(category){
   combo=0;bestCombo=0;answeredCount=0;
   if(category==="all"){
     makeTodasQuestions();
+    questions=questions.slice(0,TAM_PARTIDA);
   }else{
-    questions=makeQuestions(category);
+    questions=makeQuestions(category,TAM_PARTIDA);
   }
   if(!questions.length){
     mostrarConquista("Nada para revisar! Jogue uma missão para gerar revisões.");
     openCategories();
     return;
   }
-  index=0;score=0;lives=5;hits=0;locked=false;
+  index=0;score=0;_scoreAnterior=0;lives=5;hits=0;locked=false;
   document.getElementById("score").textContent=score;
   renderLives();
   const comboEl=document.getElementById("combo"); if(comboEl) comboEl.textContent=combo;
@@ -2379,6 +2383,10 @@ function makeTodasQuestions(){
 let activeTrail=null;
 let trailStep=0;
 let trailQuestionsPerStep=8;
+// Uma rodada boa para criança: uns 5 a 10 minutos. Mais que isso vira
+// abandono no meio, e partida abandonada não conta estrela nem dia.
+const TAM_PARTIDA=12;
+let _scoreAnterior=0;   // para o ponto voando mostrar o que o acerto rendeu
 let questions=[];
 let combo=0;
 let bestCombo=0;
@@ -2931,12 +2939,16 @@ function feedback(ok,msg){
   updateCombo(ok);
   answeredCount++;
   if(ok){
-    pontosVoando("+100",true);
+    // O bônus da sequência vem por cima dos pontos que cada forma de questão já deu.
+    const mult=multiplicador(combo);
+    score+=100*(mult-1);
+    pontosVoando("+"+Math.max(score-_scoreAnterior,0)+(mult>1?" ×"+mult:""),true);
     if(combo>=3){ sfx.combo(combo); pulsarCombo(); } else sfx.acerto(combo);
   }else{
     pontosVoando(practiceMode?"−":"−1 vida",false);
     sfx.erro();
   }
+  _scoreAnterior=score;
   const box=document.getElementById("feedback");
   box.innerHTML='<span class="rotulo">'+(ok?(combo>=3?"Certo — "+combo+" seguidas":"Certo"):"Ainda não")+'</span>';box.append(msg);
   box.className="feedback show "+(ok?"good":"bad");
@@ -3057,6 +3069,10 @@ function endGame(){
   document.getElementById("trophy").textContent=trophy;
   mostrarEstrelas(lives<=0&&!practiceMode||!total ? 0 : estrelasDe(acc));
   if(typeof mostrarNovidades==="function") mostrarNovidades(nov);
+  if(typeof pintarProximo==="function") pintarProximo({estrelas:lives<=0&&!practiceMode||!total?0:estrelasDe(acc), atual:currentCategory,
+    ordem:Object.keys(categoryNames).filter(c=>c!=="all"&&c!=="review"), titulos:categoryNames, melhor:c=>(progress.missions[c]||{}).melhorAcc||0,
+    trilha:activeTrail, perdeu:lives<=0&&!practiceMode,
+    trilhas:Object.keys(trails).map(k=>({id:k,nome:trails[k].name,feita:!!progress.trails[k]}))});
 }
 /* ---------- Inicializacao ---------- */
 progress=loadProgress();
@@ -3070,7 +3086,7 @@ function restart(){
   renderStartStats();
   activeTrail=null;trailStep=0;
   questions=[];
-  index=0;score=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;locked=false;
+  index=0;score=0;_scoreAnterior=0;lives=5;hits=0;combo=0;bestCombo=0;answeredCount=0;locked=false;
   show("start");
   setMode("Aula");
   document.getElementById("bar").style.width="0";
@@ -3192,6 +3208,8 @@ function _acenderFoguinho(n){
   // `.hidden` num <svg> cria uma propriedade solta e deixa o atributo no DOM.
   const fogo = document.getElementById("foguinho");
   if(fogo) fogo.toggleAttribute("hidden", n < 3);
+  const x = document.getElementById("mult");
+  if(x){ const m = multiplicador(n); x.hidden = m < 2; x.textContent = "×" + m; }
 }
 
 function fanfarra(){
