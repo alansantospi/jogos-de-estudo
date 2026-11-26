@@ -12,7 +12,15 @@ Cada jogo chama o Claude Opus 5.5 com esforço alto, e isso é dinheiro de
 verdade. Um jogo é um pedido que divide o material em missões e, por
 missão, um pedido de questões (até 12) e um da lição, quatro ao mesmo
 tempo. Cada pedido manda o material inteiro, então o custo cresce com o
-material e com o número de missões.
+material e com o número de missões. Desde 26/11/2026 o sistema e o material
+vão em cache: o primeiro pedido de questões e o primeiro de lição de cada
+jogo pagam a gravação, e os seguintes leem a 5% do preço de entrada. Para
+isso a fila roda uma tarefa de cada tipo sozinha até a primeira terminar
+(`pegar_tarefa`, migração `20261126000000_aquecer_cache.sql`). As medidas
+abaixo são de antes disso. Em `geracoes`, `tokens_cache_leitura` e
+`tokens_cache_escrita` dizem quanto de `tokens_entrada` veio do cache, e
+`motivos` conta por que a primeira rodada reprovou: é dali que se sabe qual
+regra mais gasta rodada de troca.
 
 **Medido em 26/10/2026**, com 5 fotos de História (4.676 caracteres lidos):
 leitura US$ 0,11; plano US$ 0,04; cinco partes US$ 0,46 — 23 questões por

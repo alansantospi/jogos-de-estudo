@@ -8,7 +8,7 @@
    questão. Como `esteira.ts`, aqui não há rede nem chave. */
 
 import { citacaoNoMaterial, normalizar, type Problema } from "./conferir.ts";
-import { ErroEsteira, type Missao, type Modelo, type Pedido, type Uso } from "./esteira.ts";
+import { ErroEsteira, motivos, type Missao, type Modelo, type Pedido, type Uso } from "./esteira.ts";
 
 /* O formato salvo em `conteudo.licao`, o mesmo que `build/_montar_jogo.js`
    desenha. `ideia`, `alerta`, `saida` e `nota` aceitam <b>; o resto é texto. */
@@ -20,7 +20,8 @@ export type Passo = {
   quiz: { pergunta: string; certa: string; erradas: string[]; retorno: string };
 };
 export type PassoConferido = Passo & { problemas: Problema[] };
-export type Licao = { passos: PassoConferido[]; rodadas: number; uso: Uso[]; aviso?: string };
+export type Licao = { passos: PassoConferido[]; rodadas: number; uso: Uso[]; aviso?: string;
+                      motivos: Record<string, number> };
 export type EntradaLicao = { material: string; materia: string; ano: string;
                              missoes: Missao[]; alvo: string };
 
@@ -53,8 +54,8 @@ function pedidoLicao(e: EntradaLicao, problemas?: string[]): Pedido {
       (outras.length ? `\nAs outras missões têm a sua própria lição. Não ensine o assunto delas:\n` +
         outras.map(m => `- ${m.nome}: ${m.descricao || ""}`).join("\n") + "\n" : "") +
       (problemas?.length ? `\nUma versão anterior destes passos reprovou na conferência:\n` +
-        problemas.map(p => "- " + p).join("\n") + "\nEscreva de novo, corrigindo isso.\n" : "") +
-      `\n<material>\n${e.material.trim()}\n</material>`,
+        problemas.map(p => "- " + p).join("\n") + "\nEscreva de novo, corrigindo isso.\n" : ""),
+    material: e.material.trim(),
     esquema: {
       type: "object", additionalProperties: false, required: ["passos"],
       properties: { passos: { type: "array", items: {
@@ -147,6 +148,7 @@ export async function escreverLicao(e: EntradaLicao, modelo: Modelo,
   try {
     let passos = conferidos(await chamar(pedidoLicao(e)));
     if (!passos.length) throw new ErroEsteira("vazio", "O modelo não escreveu nenhum passo.");
+    const primeira = motivos(passos.map(p => p.problemas));
     let rodadas = 0, aviso: string | undefined;
     if (graves(passos)) {
       if (!temTempo()) aviso = "Faltou tempo para reescrever o passo que reprovou.";
@@ -162,7 +164,7 @@ export async function escreverLicao(e: EntradaLicao, modelo: Modelo,
         }
       }
     }
-    return { passos, rodadas, uso, aviso };
+    return { passos, rodadas, uso, aviso, motivos: primeira };
   } catch (err) {
     if (err instanceof ErroEsteira) { err.uso = uso; throw err; }
     const x = new ErroEsteira("interno", "Erro inesperado na lição.");

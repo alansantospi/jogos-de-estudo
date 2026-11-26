@@ -84,7 +84,14 @@ const responder = (status: number, corpo: unknown) =>
 const erro = (status: number, codigo: string, mensagem: string, extra = {}) =>
   responder(status, { erro: codigo, mensagem, ...extra });
 
-const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high" }) => {
+const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high", material }) => {
+  // O material vem primeiro e com marca de cache: sistema + esquema + material
+  // são iguais em todos os pedidos de questões (e de lição) do jogo, e o
+  // pedido seguinte lê isso do cache a uma fração do preço. Ver `Pedido`.
+  const conteudo = material === undefined ? usuario : [
+    { type: "text", text: `<material>\n${material}\n</material>`, cache_control: { type: "ephemeral" } },
+    { type: "text", text: usuario as string },
+  ];
   let msg;
   try {
     msg = await anthropic.beta.messages.stream({
@@ -98,7 +105,7 @@ const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high" }) =
       // quando o pedido diz outro (a leitura).
       output_config: { effort: esforco, format: { type: "json_schema", schema: esquema } },
       system: sistema,
-      messages: [{ role: "user", content: usuario as any }],
+      messages: [{ role: "user", content: conteudo as any }],
     }).finalMessage();
   } catch (e) {
     if (e instanceof Anthropic.AuthenticationError || e instanceof Anthropic.PermissionDeniedError)
@@ -134,14 +141,19 @@ const modelo: Modelo = async ({ sistema, usuario, esquema, esforco = "high" }) =
 };
 
 async function registrar(id: number, estado: string, usos: Uso[], extra: {
-  entregues?: number; reprovadas?: number; rodadas?: number; erro?: string } = {}) {
+  entregues?: number; reprovadas?: number; rodadas?: number; erro?: string;
+  motivos?: Record<string, number> } = {}) {
   const { error } = await admin.rpc("registrar_geracao", {
     p_id: id, p_estado: estado, p_modelo: usos.at(-1)?.modelo ?? null,
     p_entregues: extra.entregues ?? 0, p_reprovadas: extra.reprovadas ?? 0,
     p_rodadas: extra.rodadas ?? 0,
     p_tokens_entrada: usos.reduce((s, u) => s + u.entrada + u.cacheLeitura + u.cacheEscrita, 0),
     p_tokens_saida: usos.reduce((s, u) => s + u.saida, 0),
-    p_custo_usd: custo(usos), p_erro: extra.erro ?? null });
+    p_custo_usd: custo(usos), p_erro: extra.erro ?? null,
+    // O que de `tokens_entrada` veio do cache: é como se vê se ele pega.
+    p_cache_leitura: usos.reduce((s, u) => s + u.cacheLeitura, 0),
+    p_cache_escrita: usos.reduce((s, u) => s + u.cacheEscrita, 0),
+    p_motivos: extra.motivos ?? null });
   // Não derruba a resposta: a pessoa já pagou pelas questões. Fica no log.
   if (error) console.error("registrar_geracao", id, error.message);
 }
@@ -313,8 +325,16 @@ async function cadeia() {
     return;
   }
   if (!r.tarefa) return;
-  // O plano abre as outras cadeias: até PARALELO por criação.
-  const mais = r.tarefa.tipo === "planejar" ? Math.max(0, Math.min(PARALELO, r.novas) - 1) : 0;
+  // O plano abre as outras cadeias: até PARALELO por criação. Mas só uma
+  // tarefa de cada tipo roda até a primeira dele terminar (o cache, ver
+  // `pegar_tarefa`): as cadeias que não acharam vez morreram, e quem termina
+  // essa primeira acorda as que faltam.
+  let mais = r.tarefa.tipo === "planejar" ? Math.max(0, Math.min(PARALELO, r.novas) - 1) : 0;
+  if (r.tarefa.tipo !== "planejar") {
+    const { count } = await admin.from("tarefas").select("id", { count: "exact", head: true })
+      .eq("criacao", r.tarefa.criacao).eq("tipo", r.tarefa.tipo).in("estado", ["feita", "falhou"]);
+    if (count === 1) mais = PARALELO - 1;
+  }
   await acordar(1 + mais);
 }
 
@@ -504,7 +524,7 @@ Deno.serve(async req => {
     try {
       const r = await escreverLicao(e, modelo, () => Date.now() - inicio < SO_REGERA_ATE_MS);
       await registrar(reserva.id, "feita", r.uso, { entregues: r.passos.length, rodadas: r.rodadas,
-        reprovadas: r.passos.filter(p => p.problemas.some(x => x.grave)).length });
+        reprovadas: r.passos.filter(p => p.problemas.some(x => x.grave)).length, motivos: r.motivos });
       return responder(200, { passos: r.passos, aviso: r.aviso, restantes: reserva.restantes,
                               custo_usd: Number(custo(r.uso).toFixed(4)) });
     } catch (e) {
@@ -530,7 +550,8 @@ Deno.serve(async req => {
   try {
     const r = await gerar(entrada, modelo, ICONES, 2, () => Date.now() - inicio < SO_REGERA_ATE_MS);
     const reprovadas = r.questoes.filter(q => q.problemas.length).length;
-    await registrar(id, "feita", r.uso, { entregues: r.questoes.length, reprovadas, rodadas: r.rodadas });
+    await registrar(id, "feita", r.uso, { entregues: r.questoes.length, reprovadas, rodadas: r.rodadas,
+                                          motivos: r.motivos });
     return responder(200, { missoes: r.missoes, questoes: r.questoes, lote: r.lote,
                             rodadas: r.rodadas, aviso: r.aviso, restantes,
                             custo_usd: Number(custo(r.uso).toFixed(4)) });

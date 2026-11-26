@@ -49,7 +49,8 @@ test("questões boas passam numa chamada só, sem regerar", async () => {
   assert.deepEqual(r.questoes.map(q => q.problemas), [[], [], []]);
   assert.equal(r.lote!.n, 3);
   assert.equal(r.lote!.amostraPequena, true, "três questões não bastam para reprovar pela média");
-  assert.match(pedidos[0].usuario, /<material>\n[\s\S]*<\/material>$/, "o material vai delimitado, como dado");
+  assert.equal(pedidos[0].material, ENTRADA.material.trim(), "o material vai à parte, para o cache");
+  assert.doesNotMatch(pedidos[0].usuario as string, /<material>/, "e não repetido no texto do pedido");
 });
 
 test("regera só as que reprovaram, dizendo por quê", async () => {
@@ -67,6 +68,10 @@ test("regera só as que reprovaram, dizendo por quê", async () => {
   assert.doesNotMatch(pedidos[1].usuario, /Pergunta 1:/, "a que passou não volta ao modelo");
   assert.deepEqual(r.questoes.map(q => q.enunciado.slice(0, 11)), ["Pergunta 1:", "Pergunta 4:", "Pergunta 5:"]);
   assert.deepEqual(r.questoes.map(q => q.rodada), [0, 1, 1]);
+  assert.deepEqual(r.motivos, {
+    "O trecho citado não está no material, ou é curto demais para conferir.": 1,
+    "A certa é bem mais longa que as outras: quem escolhe a maior acerta sem saber.": 1,
+  }, "o motivo da primeira rodada fica contado, mesmo depois da troca");
   assert.equal(r.rodadas, 1);
   assert.equal(r.uso.length, 2, "as duas chamadas entram na conta");
 });

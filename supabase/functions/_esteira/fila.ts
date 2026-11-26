@@ -75,7 +75,7 @@ async function fazer(t: Tarefa, c: Criacao, banco: Banco, modelo: Modelo, icones
       const r = await escreverLicao({ material: p.material, materia: p.materia, ano: p.ano,
                                       missoes: plano, alvo: t.alvo }, modelo, temTempo);
       await banco.registrar(res.id, "feita", r.uso, { entregues: r.passos.length, rodadas: r.rodadas,
-        reprovadas: r.passos.filter(x => x.problemas.some(y => y.grave)).length });
+        reprovadas: r.passos.filter(x => x.problemas.some(y => y.grave)).length, motivos: r.motivos });
       // Passo que não se conferiu contra o material já chega fora da lição.
       return { resultado: { aviso: r.aviso || "",
                             passos: r.passos.map(x => ({ ...x, fora: x.problemas.some(y => y.grave) })) },
@@ -88,7 +88,7 @@ async function fazer(t: Tarefa, c: Criacao, banco: Banco, modelo: Modelo, icones
                             quantidade: m.quantidade ?? 1, missoes: plano, alvo: t.alvo, tipos: p.tipos },
                           modelo, icones, 2, temTempo);
     await banco.registrar(res.id, "feita", r.uso, { entregues: r.questoes.length, rodadas: r.rodadas,
-      reprovadas: r.questoes.filter(q => q.problemas.length).length });
+      reprovadas: r.questoes.filter(q => q.problemas.length).length, motivos: r.motivos });
     return { resultado: { questoes: r.questoes, aviso: r.aviso || "" }, usos: r.uso };
   } catch (e) { await registrarFalha(banco, res.id, e); throw e; }
 }

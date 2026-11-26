@@ -16,9 +16,13 @@ import { chave, medirLote, type Lote } from "./medir.ts";
 
 export type Uso = { modelo: string; entrada: number; saida: number;
                     cacheLeitura: number; cacheEscrita: number };
-/* `usuario` é texto na geração; na leitura, a lista de blocos com as fotos. */
+/* `usuario` é texto na geração; na leitura, a lista de blocos com as fotos.
+   `material`, quando vem, entra ANTES de `usuario` e fica em cache: todos os
+   pedidos de questões (e todos os de lição) de um jogo mandam o mesmo
+   sistema, o mesmo esquema e o mesmo material, e só o fim muda. O que vem
+   depois do material é o que varia de missão para missão. */
 export type Pedido = { sistema: string; usuario: string | unknown[]; esquema: Record<string, unknown>;
-                       esforco?: "low" | "medium" | "high" };
+                       esforco?: "low" | "medium" | "high"; material?: string };
 export type Modelo = (p: Pedido) => Promise<{ saida: unknown; uso: Uso }>;
 
 /* `missoes` e `alvo` vêm do plano (ver `planejar`): o jogo grande é gerado
@@ -30,7 +34,22 @@ export type Entrada = { material: string; titulo: string; materia: string;
 export type Missao = { id: string; nome: string; descricao?: string; quantidade?: number };
 export type Gerada = Questao & { problemas: Problema[]; rodada: number };
 export type Resultado = { missoes: Missao[]; questoes: Gerada[]; lote: Lote | null;
-                          rodadas: number; uso: Uso[]; aviso?: string };
+                          rodadas: number; uso: Uso[]; aviso?: string;
+                          motivos: Record<string, number> };
+
+/* Por que a primeira rodada reprovou, contado por motivo. A troca apaga a
+   questão ruim, e com ela o motivo: sem esta conta não há como saber qual
+   regra do pedido mais gasta rodada de troca. O que varia de questão para
+   questão (nome entre aspas, números) vira marcador, para os motivos
+   iguais somarem juntos. */
+export function motivos(listas: Problema[][]): Record<string, number> {
+  const conta: Record<string, number> = {};
+  for (const p of listas.flat()) {
+    const k = p.texto.replace(/"[^"]*"/g, '"…"').replace(/\d+/g, "N");
+    conta[k] = (conta[k] || 0) + 1;
+  }
+  return conta;
+}
 
 export class ErroEsteira extends Error {
   codigo: string;
@@ -173,8 +192,8 @@ function pedidoInicial(e: Entrada, icones: string[]): Pedido {
   return {
     sistema: SISTEMA,
     usuario: `Matéria: ${e.materia}\nAno: ${e.ano || "não informado"}\n` +
-      `Escreva ${e.quantidade} questões sobre o material abaixo.\n${instrucaoTipos(tiposDe(e.tipos))}\n\n` +
-      `<material>\n${e.material.trim()}\n</material>`,
+      `Escreva ${e.quantidade} questões sobre o material acima.\n${instrucaoTipos(tiposDe(e.tipos))}`,
+    material: e.material.trim(),
     esquema: {
       type: "object", additionalProperties: false, required: ["missoes", "questoes"],
       properties: {
@@ -199,8 +218,8 @@ function pedidoDaMissao(e: Entrada, icones: string[]): Pedido {
       (outras.length ? `\nAs outras missões são escritas em outros pedidos. Não escreva sobre o assunto delas:\n` +
         outras.map(m => `- ${m.nome}: ${m.descricao || ""}`).join("\n") + "\n" : "") +
       `\nTodas as questões levam "missao": "${alvo.id}". Não repita o mesmo ponto em duas questões.\n` +
-      `${instrucaoTipos(tiposDe(e.tipos))}\n\n` +
-      `<material>\n${e.material.trim()}\n</material>`,
+      `${instrucaoTipos(tiposDe(e.tipos))}`,
+    material: e.material.trim(),
     esquema: {
       type: "object", additionalProperties: false, required: ["missoes", "questoes"],
       properties: {
@@ -229,7 +248,8 @@ function pedidoDeTroca(e: Entrada, missoes: Missao[], ruins: Gerada[], icones: s
       `cada uma, na mesma ordem, sobre o mesmo ponto do material, corrigindo o que reprovou. ` +
       `Mantenha o tipo de cada uma, salvo se o tipo não estiver entre os deste jogo.\n` +
       `${instrucaoTipos(tiposDe(e.tipos))}\n\n` +
-      `${lista}\n\n<material>\n${e.material.trim()}\n</material>`,
+      `${lista}`,
+    material: e.material.trim(),
     esquema: {
       type: "object", additionalProperties: false, required: ["questoes"],
       properties: { questoes: { type: "array", items: esquemaQuestao(icones, tiposDe(e.tipos)) } },
@@ -406,6 +426,7 @@ export async function gerar(e: Entrada, modelo: Modelo, icones: string[],
 
     let questoes = lerQuestoes(inicial).slice(0, e.quantidade).map(q => avaliar(q, 0));
     if (!questoes.length) throw new ErroEsteira("vazio", "O modelo não escreveu nenhuma questão.");
+    const primeira = motivos(questoes.map(q => q.problemas));
 
     let feitas = 0, aviso: string | undefined;
     for (let r = 1; r <= rodadas; r++) {
@@ -433,7 +454,7 @@ export async function gerar(e: Entrada, modelo: Modelo, icones: string[],
       });
     }
 
-    return { missoes, questoes, rodadas: feitas, uso, aviso,
+    return { missoes, questoes, rodadas: feitas, uso, aviso, motivos: primeira,
              lote: medirLote(questoes.filter(q => tipoDe(q) === "escolha" && !q.problemas.some(p => p.grave))) };
   } catch (err) {
     // Resposta fora do formato também foi paga: o erro leva o gasto junto.
