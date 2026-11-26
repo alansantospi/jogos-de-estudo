@@ -133,3 +133,56 @@ function pintarProximo(p){
     b.onclick = r.ir;
   }catch(e){}
 }
+
+/* ---------- tela de entrada do jogo ----------
+   Um caminho principal só, decidido pelo que a criança já fez:
+   - nunca jogou e o jogo tem lição: a lição é o botão principal, e não há
+     placar de zeros ("0/91" assusta quem chega);
+   - já jogou (ou não há lição): "Jogar: <próxima trilha por fazer>", e a
+     lição vira secundária;
+   - todas as trilhas feitas: revisar os erros, ou escolher um desafio.
+   "Ir aos desafios" é sempre secundário, e "apagar progresso" desce para o
+   pé da tela, longe do polegar. As telas de entrada são escritas à mão em
+   cada jogo; mexer aqui, na hora, vale para todas. */
+function pintarEntrada(p){
+  try{
+    const inicio = document.getElementById("start");
+    const hero = inicio && inicio.querySelector(".hero"); if(!hero) return;
+    const stats = document.getElementById("startStats"); if(stats) stats.hidden = !p.jogou;
+    const desafios = hero.querySelector('[onclick^="openCategories"]');
+    const fila = desafios && desafios.parentElement; if(!fila) return;
+    desafios.classList.remove("gold", "primary"); desafios.classList.add("secondary");
+    fila.classList.add("acoes-entrada");
+    const licoes = [...fila.querySelectorAll('[onclick^="openLesson"]')];
+    let b = document.getElementById("btnComecar");
+    if(!b){
+      b = document.createElement("button");
+      b.id = "btnComecar"; b.type = "button"; b.className = "gold";
+      fila.prepend(b);
+    }
+    const apagar = hero.querySelector('[onclick^="resetProgress"]');
+    if(apagar && apagar.parentElement !== inicio.lastElementChild){
+      apagar.parentElement.classList.add("zona-apagar");
+      inicio.appendChild(apagar.parentElement);
+    }
+    if(!p.jogou && licoes.length){
+      b.hidden = true;
+      licoes.forEach((l, i) => { l.classList.toggle("primary", !i); l.classList.toggle("secondary", !!i); });
+      return;
+    }
+    licoes.forEach(l => { l.classList.remove("primary"); l.classList.add("secondary"); });
+    b.hidden = false;
+    const t = (p.trilhas || []).find(x => !x.feita);
+    if(t){ b.textContent = "Jogar: " + t.nome + " →"; b.onclick = () => startTrail(t.id); }
+    else if(p.fracos){ b.textContent = "Revisar meus erros →"; b.onclick = () => startCategory("review"); }
+    else { b.textContent = "Escolher um desafio →"; b.onclick = () => openCategories(); }
+  }catch(e){}
+}
+// A primeira contagem da tela de entrada roda antes deste script existir:
+// redesenha quando a página termina de carregar.
+addEventListener("DOMContentLoaded", () => {
+  try{
+    if(typeof renderStats === "function") renderStats();
+    else if(typeof renderStartStats === "function") renderStartStats();
+  }catch(e){}
+});

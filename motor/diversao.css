@@ -63,3 +63,13 @@
 
 /* ---------- ações do fim ---------- */
 .fim-acoes{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-5)}
+
+/* ---------- entrada do jogo e placar ---------- */
+#startStats[hidden]{display:none}
+#btnComecar[hidden]{display:none}
+/* O título da entrada é alinhado à esquerda; os botões e o apagar também. */
+#start .acoes-entrada{justify-content:flex-start!important}
+.zona-apagar{margin-top:clamp(4rem,25vh,12rem);text-align:start;opacity:.75}
+/* O placar só na partida: fora dela mostrava 0 e ∞ e tirava o peso de
+   quando importa. Navegador sem :has continua mostrando, como antes. */
+body:not(:has(#quiz.active)) .hud > div.pill{display:none}

@@ -106,6 +106,12 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   de novo, buscar as 3 estrelas, a próxima missão sem 90% ou a próxima
   trilha); escolher outra missão fica como secundário. `proximoPasso`, com
   teste em `teste/esteira/proximo.test.ts`.
+- **Entrada do jogo** com um caminho principal: quem nunca jogou começa
+  pela lição e não vê placar de zeros; quem já jogou ganha "Jogar: <próxima
+  trilha>" e a lição vira secundária. "Ir aos desafios" é sempre secundário
+  e "apagar progresso" fica no pé da tela. `pintarEntrada`, que reorganiza
+  na hora as telas escritas à mão de cada jogo.
+- **Placar só na partida**: pontos, vidas e sequência somem fora do quiz.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
   tudo.
 

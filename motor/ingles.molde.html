@@ -2221,6 +2221,10 @@ function renderStartStats(){
     `<span class="stat-chip">Dominados <b>${dom}/${verbBank.length}</b></span>`+
     `<span class="stat-chip">A revisar <b>${fracos}</b></span>`+
     `<span class="stat-chip">Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+  if(typeof pintarEntrada==="function") pintarEntrada({
+    jogou:Object.values(progress.missions||{}).some(m=>m&&m.iniciada),
+    trilhas:Object.keys(trails).map(k=>({id:k,nome:trails[k].name,feita:!!progress.trails[k]})),
+    fracos:fracos});
 }
 
 function renderCategoryBadges(){

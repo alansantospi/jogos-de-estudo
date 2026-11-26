@@ -1433,6 +1433,10 @@ function renderStats(){
     `<span class="chip">Dominadas <b>${masteredItems().length}/${allItems.length}</b></span>`+
     `<span class="chip">A revisar <b>${weakItems().length}</b></span>`+
     `<span class="chip">Trilhas <b>${feitas}/${Object.keys(trails).length}</b></span>`;
+  if(typeof pintarEntrada==="function") pintarEntrada({
+    jogou:Object.values(progress.missions||{}).some(m=>m&&m.iniciada),
+    trilhas:Object.keys(trails).map(k=>({id:k,nome:trails[k].name,feita:!!progress.trails[k]})),
+    fracos:weakItems().length});
 }
 function renderCards(){
   // Cada card mostra em que pé está a missão e quanto do conteúdo já foi dominado.
