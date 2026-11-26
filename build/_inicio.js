@@ -182,7 +182,7 @@ function pintarDias(){
   const n = d.atual + (d.atual === 1 ? " dia seguido" : " dias seguidos");
   c.innerHTML = '<div class="dias' + (d.jogouHoje ? " feito" : "") + '">' + _ic("fogo")
     + "<span><b>" + n + "</b>"
-    + (d.jogouHoje ? "Você já jogou hoje. Volte amanhã!"
+    + (d.jogouHoje ? "Sequência garantida hoje! Bora mais uma partida?"
                    : "Jogue hoje para não perder" + (d.atual > 1 ? " os seus " + d.atual + " dias!" : "!"))
     + "</span></div>";
 }

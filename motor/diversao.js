@@ -83,7 +83,7 @@ function mostrarNovidades(nov){
     let h = "";
     if(dias)
       h += '<div class="novidade dias">' + ic("fogo") + "<span><b>" + nov.dias
-        + " dias seguidos!</b> Jogue amanhã para chegar a " + (nov.dias + 1) + ".</span></div>";
+        + " dias seguidos!</b> Sequência garantida hoje. Amanhã ela vira " + (nov.dias + 1) + "!</span></div>";
     const album = '<a href="index.html#album">Ver o álbum</a>';
     if(nov.novas.length === 1){
       const f = nov.novas[0];
