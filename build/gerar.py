@@ -12,6 +12,8 @@ deixaria de bater na primeira troca de projeto.
 import io, os, re, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RAIZ, "build"))
+import diversao
 
 conta = io.open(os.path.join(RAIZ, "build", "_conta.js"), encoding="utf-8").read()
 m = re.search(r"^const CONTA = \{.*?^\};", conta, re.S | re.M)
@@ -38,7 +40,7 @@ if not cores:
     raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
 if "/*%CORES%*/" not in html:
     raise SystemExit("build/gerar/: falta a fenda /*%CORES%*/")
-html = html.replace("/*%CORES%*/", cores.group(0))
+html = html.replace("/*%CORES%*/", cores.group(0) + "\n" + diversao.tempo_js())
 
 # O jogo montado a partir da revisão é o mesmo que a fila monta no servidor.
 esteira = io.open(os.path.join(RAIZ, "supabase", "functions", "_esteira", "conteudo.js"), encoding="utf-8").read()

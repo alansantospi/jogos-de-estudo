@@ -27,8 +27,6 @@ async function apagarJogoConta(id){
   if(error) throw new Error(error.message);
 }
 
-const quando = t => t ? new Date(t).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit", year: "numeric"}) : "";
-
 async function listarMeus(){
   const caixa = $("listaMeus");
   let lista = lerDe("jogos_criados_v1");
@@ -64,7 +62,7 @@ function pintarMeus(lista){
     const editarB = el("button", {class: "botao secundario", type: "button"}, "Editar");
     editarB.addEventListener("click", () => editarJogo(j.id, editarB));
     const meta = [j.materia, j.questoes != null ? plural(j.questoes, "questão", "questões") : null,
-                  "atualizado em " + quando(j.atualizado || j.criado)].filter(Boolean).join(" · ");
+                  "atualizado " + haQuanto(j.atualizado || j.criado)].filter(Boolean).join(" · ");
     const compartilhar = j.link ? null
       : el("button", {class: "botao secundario", type: "button"}, "Compartilhar");
     if(compartilhar) compartilhar.addEventListener("click", () => mudarLink(j, crypto.randomUUID(), compartilhar));

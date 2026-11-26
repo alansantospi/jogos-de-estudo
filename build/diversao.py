@@ -17,6 +17,11 @@ def conquistas_js():
     return _ler("conquistas.js")
 
 
+def tempo_js():
+    """haQuanto: datas em palavras ("há 3 dias") na página inicial e na de criar."""
+    return _ler("tempo.js")
+
+
 def icones():
     """Os desenhos que as figurinhas e os avisos usam: o sprite de cada
     página precisa deles, e o `href` montado em JS não aparece para a busca
