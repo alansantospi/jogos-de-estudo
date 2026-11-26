@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """Monta `gerar.html`, a tela da esteira: pedir, revisar e baixar.
 
+A fonte mora em `build/gerar/`: `pagina.html` (a marcação), `estilo.css` e
+`js/*.js`, um arquivo por etapa da tela, juntados na ordem do nome. A página
+publicada continua sendo um arquivo só.
+
 A URL e a chave pública do Supabase moram em `build/_conta.js`. A página
 leva a mesma declaração, recortada de lá, em vez de uma cópia à mão que
 deixaria de bater na primeira troca de projeto.
@@ -14,9 +18,17 @@ m = re.search(r"^const CONTA = \{.*?^\};", conta, re.S | re.M)
 if not m:
     raise SystemExit("build/_conta.js: não achei a declaração const CONTA = {...};")
 
-html = io.open(os.path.join(RAIZ, "build", "_gerar.html"), encoding="utf-8").read()
+FONTE = os.path.join(RAIZ, "build", "gerar")
+ler = lambda *c: io.open(os.path.join(FONTE, *c), encoding="utf-8", newline="").read()
+html = ler("pagina.html")
+for fenda, texto in [("/*%ESTILO%*/\n", ler("estilo.css")),
+                     ("/*%SCRIPT%*/\n", "".join(ler("js", n) for n in sorted(os.listdir(os.path.join(FONTE, "js")))
+                                               if n.endswith(".js")))]:
+    if html.count(fenda) != 1:
+        raise SystemExit("build/gerar/pagina.html: falta a fenda " + fenda.strip())
+    html = html.replace(fenda, texto)
 if "/*%CONTA%*/" not in html:
-    raise SystemExit("build/_gerar.html: falta a fenda /*%CONTA%*/")
+    raise SystemExit("build/gerar/: falta a fenda /*%CONTA%*/")
 html = html.replace("/*%CONTA%*/", m.group(0))
 
 # As cores de jogo moram em `_montar_jogo.js`, que monta o jogo com elas.
@@ -25,7 +37,7 @@ cores = re.search(r"/\*CORES>\*/.*?/\*<CORES\*/", montar, re.S)
 if not cores:
     raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
 if "/*%CORES%*/" not in html:
-    raise SystemExit("build/_gerar.html: falta a fenda /*%CORES%*/")
+    raise SystemExit("build/gerar/: falta a fenda /*%CORES%*/")
 html = html.replace("/*%CORES%*/", cores.group(0))
 
 # O jogo montado a partir da revisão é o mesmo que a fila monta no servidor.
@@ -34,7 +46,7 @@ bloco = re.search(r"/\*CONTEUDO>\*/.*?/\*<CONTEUDO\*/", esteira, re.S)
 if not bloco:
     raise SystemExit("_esteira/conteudo.js: não achei o bloco /*CONTEUDO>*/ ... /*<CONTEUDO*/")
 if "/*%CONTEUDO%*/" not in html:
-    raise SystemExit("build/_gerar.html: falta a fenda /*%CONTEUDO%*/")
+    raise SystemExit("build/gerar/: falta a fenda /*%CONTEUDO%*/")
 html = html.replace("/*%CONTEUDO%*/", re.sub(r"^export ", "", bloco.group(0), flags=re.M))
 
 # Os desenhos são os mesmos dos jogos (`icons.py`): só os que a tela usa.
@@ -43,7 +55,7 @@ from icons import _P
 USADOS = ["mais", "camera", "escrever", "livro", "xis", "check", "alerta", "relogio", "seta-baixo",
           "controle", "pessoa"]
 if "/*SPRITE*/" not in html:
-    raise SystemExit("build/_gerar.html: falta a fenda /*SPRITE*/")
+    raise SystemExit("build/gerar/: falta a fenda /*SPRITE*/")
 html = html.replace("/*SPRITE*/", "".join(
     '<symbol id="i-%s" viewBox="0 0 24 24">%s</symbol>' % (n, _P[n]) for n in USADOS))
 

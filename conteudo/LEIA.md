@@ -134,3 +134,11 @@ E a saída foi separar por **luminosidade**, não por matiz: travando a clareza
 em 0,70 o melhor possível era 0,097, e deixando-a livre chegou a 0,134, com um
 azul mais claro que todos os outros. Quando o círculo de matiz lota, é a
 clareza que ainda tem espaço.
+
+## As lições em passos
+
+`licao/<jogo>.json` guarda os passos da lição de cada jogo (gramática,
+geografia, restaurante, microscópico), e `licao/<jogo>/*.svg` os desenhos
+que eles nomeiam em `fig`. O formato de um passo está no topo de
+`build/licao.py`, que monta `jogo/<jogo>/licao.html` daqui. Mudar uma lição
+é mudar o JSON e rodar o rebuild; o código só muda quando muda a mecânica.

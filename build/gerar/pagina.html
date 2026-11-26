@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Criar jogo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/*%ESTILO%*/
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">/*SPRITE*/</svg>
+
+<header class="barra">
+  <div class="linha-topo">
+    <a class="marca" href="index.html">Jogos de Estudo</a>
+    <!-- No celular, Meus jogos sai da barra de baixo e fica aqui em cima. -->
+    <a class="link-meus" id="linkMeus" href="gerar.html#meus">Meus jogos</a>
+    <div class="conta" id="conta" hidden>
+      <span class="cota" id="cota" hidden></span>
+      <span class="email" id="emailConta"></span>
+      <button class="botao discreto" id="sair" type="button">Sair</button>
+    </div>
+  </div>
+  <!-- As mesmas abas do índice: daqui se volta a qualquer vista dele. -->
+  <nav class="abas-site" aria-label="Seções">
+    <a href="index.html#jogos"><svg class="ic" aria-hidden="true"><use href="#i-controle"/></svg><span>Jogos</span></a>
+    <a href="index.html#historico"><svg class="ic" aria-hidden="true"><use href="#i-relogio"/></svg><span>Histórico</span></a>
+    <a href="index.html#conta"><svg class="ic" aria-hidden="true"><use href="#i-pessoa"/></svg><span>Conta</span></a>
+    <a class="atual empurra" id="abaCriar" href="gerar.html#material" aria-current="page"><svg aria-hidden="true"><use href="#i-mais"/></svg><span>Criar jogo</span></a>
+    <a id="abaMeus" href="gerar.html#meus">Meus jogos</a>
+  </nav>
+</header>
+
+<main class="wrap">
+<section id="entrar" hidden>
+  <form class="cartao-entrar" id="formEntrar">
+    <div>
+      <h1 tabindex="-1">Criar jogo</h1>
+    </div>
+    <label>E-mail <input id="email" type="email" autocomplete="email" required></label>
+    <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
+    <button class="botao primario" type="submit">Entrar</button>
+    <p class="ou" aria-hidden="true"><span>ou</span></p>
+    <button class="botao secundario" type="button" id="botaoGoogle">Entrar com Google</button>
+    <p class="nota">Ainda não tem conta? Estamos em teste fechado: <a href="index.html#conta">crie a sua</a> com o código de convite que você recebeu.</p>
+    <p class="nota legal"><a href="termos.html">Termos de uso</a> · <a href="privacidade.html">Privacidade</a></p>
+  </form>
+</section>
+
+<div id="app" hidden>
+<ol class="etapas" id="etapas" aria-label="Etapas" hidden>
+  <li><button type="button" data-etapa="1"><span class="num">1</span><span class="rotulo">Material</span></button></li>
+  <li><button type="button" data-etapa="2"><span class="num">2</span><span class="rotulo">Jogo</span></button></li>
+  <li><button type="button" data-etapa="3"><span class="num">3</span><span class="rotulo">Revisar</span></button></li>
+</ol>
+
+<p id="recado" role="status" aria-live="polite"></p>
+
+<!-- meus jogos -->
+<section id="meus" data-e="4" hidden>
+  <div class="cabeca-meus">
+    <div><h1 tabindex="-1">Meus jogos</h1></div>
+    <button class="botao primario" type="button" id="novoJogo"><svg aria-hidden="true"><use href="#i-mais"/></svg>Novo jogo</button>
+  </div>
+  <div id="listaMeus"></div>
+</section>
+
+<!-- 1. material -->
+<section id="etapa1" data-e="1">
+  <div class="faixa-acrescentar" id="faixa1" hidden></div>
+  <h1 tabindex="-1">Novo jogo</h1>
+  <div class="abas" role="tablist" aria-label="Tipo de material">
+    <button type="button" role="tab" id="abaFotos" aria-controls="painelFotos" aria-selected="true">
+      <svg aria-hidden="true"><use href="#i-camera"/></svg>Fotos ou PDF</button>
+    <button type="button" role="tab" id="abaTexto" aria-controls="painelTexto" aria-selected="false">
+      <svg aria-hidden="true"><use href="#i-escrever"/></svg>Colar texto</button>
+  </div>
+
+  <div id="painelFotos" role="tabpanel" aria-labelledby="abaFotos">
+    <!-- No celular, o gesto real é fotografar o livro aberto: a câmera
+         traseira abre direto, uma página por vez. -->
+    <label class="botao primario grande camera" id="camera">
+      <svg aria-hidden="true"><use href="#i-camera"/></svg><span id="cameraRotulo">Fotografar página</span>
+      <input id="fotografar" type="file" accept="image/*" capture="environment">
+    </label>
+    <label class="solta" id="solta">
+      <span class="icone"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
+      <strong id="soltaTitulo">Escolha fotos ou um PDF</strong>
+      <input id="arquivos" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+    </label>
+    <ul class="miniaturas" id="miniaturas"></ul>
+    <div class="acoes">
+      <button class="botao primario grande" id="botaoLer" type="button" disabled>Criar jogo</button>
+    </div>
+  </div>
+
+  <div id="painelTexto" role="tabpanel" aria-labelledby="abaTexto" hidden>
+    <label class="so-leitor" for="textoColado">Texto</label>
+    <textarea id="textoColado" rows="12"
+      placeholder="Cole o texto aqui"></textarea>
+    <div class="contador" id="contadorTexto"></div>
+    <div class="acoes"><button class="botao primario grande" id="continuarTexto" type="button" disabled>Criar jogo</button></div>
+  </div>
+
+  <!-- Sem tocar em nada valem os padrões: nome e matéria sugeridos, cor da
+       matéria, o material decide, o último ano. -->
+  <details class="ajustar" id="ajustar">
+    <summary>Ajustar <small id="resumoAjustar"></small></summary>
+    <div class="dentro-ajustar">
+  <!-- A capa é o card que vai aparecer na página inicial, já na cor do jogo. -->
+  <div class="capa" id="capa">
+    <svg class="marca-capa" aria-hidden="true"><use href="#i-livro"/></svg>
+    <label class="capa-materia"><span class="so-leitor">Matéria</span>
+      <input id="materia" placeholder="Matéria" list="materias" autocomplete="off" maxlength="60"></label>
+    <label class="capa-nome"><span class="so-leitor">Nome do jogo</span>
+      <input id="titulo" placeholder="Nome do jogo" autocomplete="off" maxlength="120"></label>
+  </div>
+  <div id="escolhaCor"></div>
+  <input type="hidden" id="cor" value="">
+
+  <div class="ajustes">
+    <fieldset class="quantas">
+      <legend>Quantas questões</legend>
+      <div class="pilulas" id="pilulas">
+        <label class="auto"><input type="radio" name="qtd" value="auto">O material decide</label>
+        <label><input type="radio" name="qtd" value="10">10</label><label><input type="radio" name="qtd" value="30">30</label>
+        <label><input type="radio" name="qtd" value="60">60</label><label><input type="radio" name="qtd" value="100">100</label>
+        <label><input type="radio" name="qtd" value="200">200</label>
+      </div>
+      <input type="hidden" id="quantidade" value="auto">
+      <p class="estimativa" id="estimativa" aria-live="polite"></p>
+    </fieldset>
+    <fieldset class="quantas">
+      <legend>Tipos de questão</legend>
+      <div class="pilulas texto" id="pilulasTipos">
+        <label><input type="checkbox" name="tipo" value="escolha" checked>Múltipla escolha</label>
+        <label><input type="checkbox" name="tipo" value="vf" checked>Verdadeiro ou falso</label>
+        <label><input type="checkbox" name="tipo" value="ligar" checked>Ligar</label>
+        <label><input type="checkbox" name="tipo" value="ordenar" checked>Ordenar</label>
+      </div>
+    </fieldset>
+    <label class="ano">Ano <select id="ano">
+      <option>1º ano</option><option>2º ano</option><option>3º ano</option>
+      <option selected>4º ano</option><option>5º ano</option><option>6º ano</option>
+      <option>7º ano</option><option>8º ano</option><option>9º ano</option></select></label>
+  </div>
+  <datalist id="materias"><option>Ciências</option><option>Geografia</option><option>História</option>
+    <option>Língua Portuguesa</option><option>Matemática</option><option>Inglês</option><option>Arte</option></datalist>
+
+      <label class="conferir-antes"><input type="checkbox" id="conferirAntes"> Conferir a leitura antes de criar</label>
+    </div>
+  </details>
+</section>
+
+<!-- 2. o jogo: a capa primeiro, o detalhe recolhido -->
+<form id="pedido" data-e="2" hidden novalidate>
+  <div class="faixa-acrescentar" id="faixa2" hidden></div>
+  <h1 tabindex="-1" id="tituloConferir">Confira a leitura</h1>
+  <div id="paginas"></div>
+
+  <details class="caixa-material" id="caixaMaterial">
+    <summary>Ver e editar o texto <small id="resumoMaterial"></small></summary>
+    <div>
+      <label class="so-leitor" for="material">Material</label>
+      <textarea id="material" required placeholder="O texto de onde saem as questões."></textarea>
+      <div class="contador" id="contador"></div>
+    </div>
+  </details>
+  <p class="dica dica-gerar" id="dicaGerar"></p>
+
+  <!-- O botão de gerar fica no polegar, preso ao pé, na cor do jogo. -->
+  <div class="pe pe-gerar">
+    <div class="dentro">
+      <button class="botao discreto" type="button" id="voltar1">Voltar</button>
+      <button class="botao primario grande empurra" id="botaoGerar" type="submit">Criar jogo</button>
+    </div>
+  </div>
+</form>
+
+<!-- criando e pronto: a capa do jogo, o andamento, e Jogar -->
+<section id="criando" data-e="5" hidden>
+  <h1 tabindex="-1" class="so-leitor" id="tituloCriando">Criando o jogo</h1>
+  <div class="capa capa-pronta" id="capaPronta">
+    <svg class="marca-capa" aria-hidden="true"><use href="#i-livro"/></svg>
+    <span class="pilula-materia" id="prontaMateria"></span>
+    <strong class="nome-pronto" id="prontaNome"></strong>
+  </div>
+  <div id="andamento"></div>
+</section>
+
+<!-- 3. revisar -->
+<section id="revisao" data-e="3" hidden>
+  <button class="link voltar-pronto" id="voltarPronto" type="button" hidden>← O jogo</button>
+  <h1 tabindex="-1">Revise as questões</h1>
+  <div class="painel" id="resumo"></div>
+  <div class="filtros" id="filtros" role="group" aria-label="Mostrar"></div>
+  <div id="lista"></div>
+</section>
+</div>
+</main>
+
+<div class="pe" id="pe" hidden>
+  <div class="dentro">
+    <span class="resumo-pe" id="resumoPe"></span>
+    <div class="empurra">
+      <button class="botao discreto perigo" id="recomecar" type="button">Descartar</button>
+      <button class="botao discreto" id="outroJogo" type="button" hidden><svg aria-hidden="true"><use href="#i-mais"/></svg>Novo jogo</button>
+      <button class="botao secundario" id="baixar" type="button" title="O arquivo para conteudo/, para montar pelo build">
+        <svg aria-hidden="true"><use href="#i-seta-baixo"/></svg><span>Baixar</span></button>
+      <button class="botao primario" id="salvar" type="button"><span>Salvar e jogar</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/*%SCRIPT%*/
+</script>
+</body>
+</html>

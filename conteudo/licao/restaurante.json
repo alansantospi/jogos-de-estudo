@@ -1,0 +1,786 @@
+{
+ "passos": [
+  {
+   "missao": "comidas",
+   "titulo": "Um cardápio em quatro partes",
+   "ideia": "O cardápio (<b>menu</b>) separa a comida em partes. Saber o nome da parte já diz o que tem dentro.",
+   "fig": "comidas.svg",
+   "legenda": "O cardápio da página 50, por partes.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "sandwiches",
+       "Sandwiches"
+      ],
+      [
+       "sides",
+       "Side orders"
+      ],
+      [
+       "beverages",
+       "Beverages"
+      ],
+      [
+       "desserts",
+       "Desserts"
+      ]
+     ]
+    ],
+    "saidas": {
+     "sandwiches": "cheeseburger, hamburger, hot dog",
+     "sides": "French fries, onion rings, salad",
+     "beverages": "orange juice, smoothie, soda",
+     "desserts": "apple pie, chocolate cake, ice cream"
+    },
+    "notas": {
+     "sandwiches": "<b>Sanduíches</b>: o prato principal.",
+     "sides": "<b>Acompanhamentos</b>: vêm ao lado do sanduíche.",
+     "beverages": "<b>Bebidas</b>.",
+     "desserts": "<b>Sobremesas</b>: o que se come no fim."
+    },
+    "ident": "fgMenu",
+    "cap": "Toque uma parte do cardápio."
+   },
+   "quiz": {
+    "p": "No cardápio, “Beverages” são:",
+    "o": [
+     [
+      "As bebidas",
+      true
+     ],
+     [
+      "As sobremesas",
+      false
+     ],
+     [
+      "Os sanduíches",
+      false
+     ],
+     [
+      "Os acompanhamentos",
+      false
+     ]
+    ],
+    "r": "Beverages = bebidas: orange juice, smoothie, soda."
+   }
+  },
+  {
+   "missao": "comidas",
+   "titulo": "Sanduíches e acompanhamentos",
+   "ideia": "Muitos nomes se montam com <b>pedaços que você já conhece</b>: cheese é queijo, onion é cebola, rings são anéis.",
+   "revs": [
+    [
+     "Hot dog",
+     "cachorro-quente"
+    ],
+    [
+     "Hamburger",
+     "hambúrguer"
+    ],
+    [
+     "Cheeseburger",
+     "hambúrguer com queijo"
+    ],
+    [
+     "French fries",
+     "batata frita"
+    ],
+    [
+     "Onion rings",
+     "anéis de cebola"
+    ],
+    [
+     "Salad",
+     "salada"
+    ]
+   ],
+   "revs_cap": "Toque cada comida para ver o que ela é.",
+   "revs_oculto": "o que é?",
+   "alerta": "Atenção à escrita: <b>cheeseburger</b> tem dois <b>e</b> no começo — <b>chee</b>se.",
+   "quiz": {
+    "p": "O que o cheeseburger tem a mais que o hamburger?",
+    "o": [
+     [
+      "Queijo",
+      true
+     ],
+     [
+      "Cebola",
+      false
+     ],
+     [
+      "Salsicha",
+      false
+     ],
+     [
+      "Batata",
+      false
+     ]
+    ],
+    "r": "Cheese = queijo."
+   }
+  },
+  {
+   "missao": "bebidas",
+   "titulo": "O que tem para beber",
+   "ideia": "<b>Juice</b> é suco: o que vem antes diz de quê. Orange juice é de laranja, lemon juice é de limão.",
+   "revs": [
+    [
+     "Orange juice",
+     "suco de laranja"
+    ],
+    [
+     "Lemon juice",
+     "suco de limão"
+    ],
+    [
+     "Smoothie",
+     "vitamina batida"
+    ],
+    [
+     "Soda",
+     "refrigerante"
+    ]
+   ],
+   "revs_cap": "Toque cada bebida.",
+   "revs_oculto": "o que é?",
+   "alerta": "<b>Soda</b> não é soda limonada: em inglês é qualquer <b>refrigerante</b>.",
+   "quiz": {
+    "p": "Qual destas é uma bebida?",
+    "o": [
+     [
+      "Smoothie",
+      true
+     ],
+     [
+      "Apple pie",
+      false
+     ],
+     [
+      "Onion rings",
+      false
+     ],
+     [
+      "Hot dog",
+      false
+     ]
+    ],
+    "r": "Smoothie é a vitamina batida."
+   }
+  },
+  {
+   "missao": "sobremesas",
+   "titulo": "A sobremesa tem nome inteiro",
+   "ideia": "Nas sobremesas, a primeira palavra diz <b>o sabor</b> e a segunda diz <b>o que é</b>: apple <b>pie</b>, chocolate <b>cake</b>.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "apple",
+       "apple"
+      ],
+      [
+       "chocolate",
+       "chocolate"
+      ],
+      [
+       "strawberry",
+       "strawberry"
+      ]
+     ],
+     [
+      [
+       "pie",
+       "pie"
+      ],
+      [
+       "cake",
+       "cake"
+      ],
+      [
+       "ice",
+       "ice cream"
+      ]
+     ]
+    ],
+    "saidas": {
+     "apple|pie": "torta de maçã",
+     "apple|cake": "bolo de maçã",
+     "apple|ice": "sorvete de maçã",
+     "chocolate|pie": "torta de chocolate",
+     "chocolate|cake": "bolo de chocolate",
+     "chocolate|ice": "sorvete de chocolate",
+     "strawberry|pie": "torta de morango",
+     "strawberry|cake": "bolo de morango",
+     "strawberry|ice": "sorvete de morango"
+    },
+    "notas": {
+     "apple": "Apple = <b>maçã</b>.",
+     "chocolate": "Chocolate = <b>chocolate</b>.",
+     "strawberry": "Strawberry = <b>morango</b>."
+    },
+    "cap": "Escolha o sabor e o tipo."
+   },
+   "alerta": "Só <b>apple</b> é maçã, a fruta. A sobremesa do cardápio é <b>apple pie</b> — sem o pie, ela não está no cardápio.",
+   "quiz": {
+    "p": "Como se pede a torta de maçã do cardápio?",
+    "o": [
+     [
+      "Apple pie",
+      true
+     ],
+     [
+      "Apple",
+      false
+     ],
+     [
+      "Apple cake",
+      false
+     ],
+     [
+      "Pie apple",
+      false
+     ]
+    ],
+    "r": "Primeiro o sabor, depois o que é: apple pie."
+   }
+  },
+  {
+   "missao": "artigos",
+   "titulo": "A ou AN: escute o começo",
+   "ideia": "Antes de <b>som de vogal</b> (a, e, i, o, u) se usa <b>AN</b>. Antes de som de consoante, <b>A</b>.",
+   "fig": "artigos.svg",
+   "legenda": "Quem decide é o som do começo da palavra que vem depois.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "hotdog",
+       "hot dog"
+      ],
+      [
+       "apple",
+       "apple pie"
+      ],
+      [
+       "soda",
+       "soda"
+      ],
+      [
+       "orange",
+       "orange juice"
+      ],
+      [
+       "ice",
+       "ice cream"
+      ],
+      [
+       "cake",
+       "chocolate cake"
+      ]
+     ]
+    ],
+    "saidas": {
+     "hotdog": "a hot dog",
+     "apple": "an apple pie",
+     "soda": "a soda",
+     "orange": "an orange juice",
+     "ice": "an ice cream",
+     "cake": "a chocolate cake"
+    },
+    "notas": {
+     "hotdog": "<b>h</b> é consoante: <b>A</b>.",
+     "apple": "<b>a</b>pple começa com vogal: <b>AN</b>.",
+     "soda": "<b>s</b> é consoante: <b>A</b>.",
+     "orange": "<b>o</b>range começa com vogal: <b>AN</b>.",
+     "ice": "<b>i</b>ce começa com vogal: <b>AN</b>.",
+     "cake": "Quem conta é <b>ch</b>ocolate, a primeira palavra: <b>A</b>."
+    },
+    "ident": "fgArt",
+    "cap": "Toque uma comida."
+   },
+   "quiz": {
+    "p": "Qual está certo?",
+    "o": [
+     [
+      "an orange juice",
+      true
+     ],
+     [
+      "a orange juice",
+      false
+     ],
+     [
+      "an soda",
+      false
+     ],
+     [
+      "an hot dog",
+      false
+     ]
+    ],
+    "r": "Orange começa com vogal: an."
+   }
+  },
+  {
+   "missao": "artigos",
+   "titulo": "A palavra que vem logo depois",
+   "ideia": "O A ou AN olha <b>só para a palavra seguinte</b>. Em <b>an apple juice</b>, quem manda é apple, não juice.",
+   "revs": [
+    [
+     "___ smoothie",
+     "a smoothie"
+    ],
+    [
+     "___ apple juice",
+     "an apple juice"
+    ],
+    [
+     "___ chocolate cake",
+     "a chocolate cake"
+    ],
+    [
+     "___ ice cream",
+     "an ice cream"
+    ],
+    [
+     "___ cheeseburger",
+     "a cheeseburger"
+    ]
+   ],
+   "revs_cap": "Pense na resposta, depois toque para conferir.",
+   "revs_oculto": "a ou an?",
+   "alerta": "Na página 53 quase todas vão com <b>A</b>. Só duas pedem AN: <b>apple pie</b> e <b>orange juice</b>.",
+   "quiz": {
+    "p": "I'd like ___ ice cream, please.",
+    "o": [
+     [
+      "an",
+      true
+     ],
+     [
+      "a",
+      false
+     ],
+     [
+      "the two",
+      false
+     ],
+     [
+      "is",
+      false
+     ]
+    ],
+    "r": "Ice começa com vogal: an ice cream."
+   }
+  },
+  {
+   "missao": "preco",
+   "titulo": "How much is ou How much are?",
+   "ideia": "Uma coisa só: <b>How much is...? It's...</b> Mais de uma: <b>How much are...? They're...</b>",
+   "fig": "preco.svg",
+   "legenda": "Contar quantas são vem antes de escolher a palavra.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "um",
+       "the hot dog"
+      ],
+      [
+       "varios",
+       "the onion rings"
+      ],
+      [
+       "um2",
+       "the apple pie"
+      ],
+      [
+       "varios2",
+       "the smoothies"
+      ]
+     ]
+    ],
+    "saidas": {
+     "um": "How much is the hot dog? It's $5.50.",
+     "varios": "How much are the onion rings? They're $2.45.",
+     "um2": "How much is the apple pie? It's $3.15.",
+     "varios2": "How much are the smoothies? They're $2.30."
+    },
+    "notas": {
+     "um": "Um só: <b>is</b> e <b>It's</b>.",
+     "varios": "Rings termina em <b>s</b>: são vários. <b>are</b> e <b>They're</b>.",
+     "um2": "Uma torta: <b>is</b> e <b>It's</b>.",
+     "varios2": "Smoothie<b>s</b>: vários. <b>are</b> e <b>They're</b>."
+    },
+    "ident": "fgQtd",
+    "cap": "Toque um pedido."
+   },
+   "alerta": "<b>Onion rings</b> parece um prato só, mas são vários anéis: <b>How much are the onion rings? They're...</b>",
+   "quiz": {
+    "p": "How much ___ the onion rings?",
+    "o": [
+     [
+      "are",
+      true
+     ],
+     [
+      "is",
+      false
+     ],
+     [
+      "it's",
+      false
+     ],
+     [
+      "am",
+      false
+     ]
+    ],
+    "r": "Onion rings está no plural: are."
+   }
+  },
+  {
+   "missao": "numeros",
+   "titulo": "As dezenas até cem",
+   "ideia": "As dezenas terminam em <b>-ty</b>. Os números de 13 a 19 terminam em <b>-teen</b> — e é aí que mora a confusão.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "70",
+       "70"
+      ],
+      [
+       "80",
+       "80"
+      ],
+      [
+       "90",
+       "90"
+      ],
+      [
+       "100",
+       "100"
+      ]
+     ]
+    ],
+    "saidas": {
+     "70": "seventy",
+     "80": "eighty",
+     "90": "ninety",
+     "100": "a hundred"
+    },
+    "notas": {
+     "70": "Cuidado: seven<b>teen</b> é 17.",
+     "80": "Cuidado: eigh<b>teen</b> é 18.",
+     "90": "Cuidado: nine<b>teen</b> é 19.",
+     "100": "Também se diz <b>one hundred</b>."
+    },
+    "cap": "Toque uma dezena."
+   },
+   "alerta": "Entre as dezenas e as unidades vai um <b>tracinho</b>: ninety-one, seventy-nine, eighty-five.",
+   "quiz": {
+    "p": "Como se escreve 90?",
+    "o": [
+     [
+      "ninety",
+      true
+     ],
+     [
+      "nineteen",
+      false
+     ],
+     [
+      "nine",
+      false
+     ],
+     [
+      "ninty",
+      false
+     ]
+    ],
+    "r": "90 = ninety; 19 = nineteen."
+   }
+  },
+  {
+   "missao": "numeros",
+   "titulo": "Um preço, duas partes",
+   "ideia": "O preço se lê assim: <b>os dólares</b>, depois <b>and</b>, depois <b>os centavos</b>.",
+   "fig": "numeros.svg",
+   "legenda": "O ponto separa os dólares dos centavos.",
+   "revs": [
+    [
+     "$5.70",
+     "five dollars and seventy cents"
+    ],
+    [
+     "$1.75",
+     "one dollar and seventy-five cents"
+    ],
+    [
+     "$82.85",
+     "eighty-two dollars and eighty-five cents"
+    ],
+    [
+     "$100.99",
+     "a hundred dollars and ninety-nine cents"
+    ]
+   ],
+   "revs_cap": "Leia em voz alta, depois toque para conferir.",
+   "revs_oculto": "como se lê?",
+   "alerta": "Não pare na dezena: <b>$91.79</b> é <b>ninety-one</b> dollars, não “ninety dollars”. E os centavos também entram.",
+   "quiz": {
+    "p": "Como se lê $91.79?",
+    "o": [
+     [
+      "ninety-one dollars and seventy-nine cents",
+      true
+     ],
+     [
+      "ninety dollars and seventy-nine cents",
+      false
+     ],
+     [
+      "nineteen dollars and seventy-nine cents",
+      false
+     ],
+     [
+      "ninety-one dollars",
+      false
+     ]
+    ],
+    "r": "91 = ninety-one; 79 = seventy-nine."
+   }
+  },
+  {
+   "missao": "pedido",
+   "titulo": "A conversa no balcão",
+   "ideia": "Pedir tem uma ordem: o garçom <b>oferece ajuda</b>, você <b>pede</b>, ele <b>entrega</b>, você <b>pergunta o preço</b> e <b>paga</b>.",
+   "fig": "pedido.svg",
+   "legenda": "O diálogo da página 62, já em ordem.",
+   "revs": [
+    [
+     "How can I help you?",
+     "Como posso ajudar?"
+    ],
+    [
+     "I'd like..., please.",
+     "Eu gostaria de..., por favor."
+    ],
+    [
+     "Here you are.",
+     "Aqui está (o garçom entrega)."
+    ],
+    [
+     "Here it is.",
+     "Aqui está (o cliente paga)."
+    ],
+    [
+     "Have a nice day!",
+     "Tenha um bom dia!"
+    ]
+   ],
+   "revs_cap": "Toque cada frase.",
+   "revs_oculto": "o que quer dizer?",
+   "alerta": "Cada fala aparece <b>uma vez</b>. Ao numerar o diálogo, nenhum número se repete.",
+   "quiz": {
+    "p": "O garçom entrega o hot dog. O que ele diz?",
+    "o": [
+     [
+      "Here you are.",
+      true
+     ],
+     [
+      "How much is it?",
+      false
+     ],
+     [
+      "I'd like a hot dog, please.",
+      false
+     ],
+     [
+      "OK. Here it is. Thanks.",
+      false
+     ]
+    ],
+    "r": "Here you are: aqui está."
+   }
+  },
+  {
+   "missao": "cardapio",
+   "titulo": "Ler o cardápio do Rubi's Diner",
+   "ideia": "Um cardápio traz <b>o nome do restaurante</b>, <b>os pratos</b> e <b>os preços</b>. Não traz informação nutricional nem opinião.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "food",
+       "Food"
+      ],
+      [
+       "bev",
+       "Beverages"
+      ],
+      [
+       "des",
+       "Desserts"
+      ]
+     ]
+    ],
+    "saidas": {
+     "food": "hamburger $2.35 · cheeseburger $3.95 · salad $4.99",
+     "bev": "orange juice $2.73 · lemon juice $2.83 · soda $1.99",
+     "des": "strawberry ice cream $3.83 · apple pie $4.65 · chocolate cake $5.15"
+    },
+    "notas": {
+     "food": "Seis comidas; a mais cara é a <b>salad</b>.",
+     "bev": "Há suco de laranja <b>e</b> de limão.",
+     "des": "<b>Três</b> opções de sobremesa — e nenhuma torta de limão."
+    },
+    "cap": "Toque uma parte do Kids' Menu."
+   },
+   "alerta": "Embaixo está escrito <b>All kids' meals come with a drink</b>: quem compra a refeição ganha a bebida.",
+   "quiz": {
+    "p": "“All kids' meals come with a drink” quer dizer:",
+    "o": [
+     [
+      "A refeição infantil já vem com bebida",
+      true
+     ],
+     [
+      "Criança não pode pedir bebida",
+      false
+     ],
+     [
+      "A bebida é vendida à parte",
+      false
+     ],
+     [
+      "Só adultos ganham bebida",
+      false
+     ]
+    ],
+    "r": "Come with = vem com."
+   }
+  },
+  {
+   "missao": "historia",
+   "titulo": "De Hamburg para St. Louis",
+   "ideia": "No quadrinho, Noah e Joanna descobrem que <b>Hamburg</b> é uma cidade da Alemanha — mas eles estão nos <b>EUA</b>, na feira de St. Louis, em 1904.",
+   "revs": [
+    [
+     "Where's Hamburg?",
+     "It's a city in Germany."
+    ],
+    [
+     "Are we in Hamburg?",
+     "No. We're in the U.S."
+    ],
+    [
+     "What are these?",
+     "Sandwich bags!"
+    ],
+    [
+     "Is that a sandwich?",
+     "Yeah! My invention, a hamburger."
+    ],
+    [
+     "How much is it?",
+     "For you, it's free, kids!"
+    ]
+   ],
+   "revs_cap": "Toque cada pergunta para ver a resposta do quadrinho.",
+   "revs_oculto": "a resposta",
+   "alerta": "Por que tantos diners parecem <b>vagão de trem</b>? Antigamente, alguns vagões eram usados como restaurante.",
+   "quiz": {
+    "p": "Por que o hambúrguer saiu de graça para as crianças?",
+    "o": [
+     [
+      "Elas devolveram os sacos perdidos do cozinheiro",
+      true
+     ],
+     [
+      "Era o aniversário da Joanna",
+      false
+     ],
+     [
+      "A feira dava comida para todos",
+      false
+     ],
+     [
+      "Elas trabalhavam na lanchonete",
+      false
+     ]
+    ],
+    "r": "Excuse me, are these yours? — Oh, yes! Thank you! For you, it's free."
+   }
+  },
+  {
+   "missao": "historia",
+   "titulo": "A voz sobe ou desce",
+   "ideia": "Pergunta de <b>sim ou não</b>: a voz <b>sobe</b> no fim. Pergunta com <b>How, Where, What</b>: a voz <b>desce</b>.",
+   "fig": "historia.svg",
+   "legenda": "A entonação das perguntas do quadrinho, página 56.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "sobe",
+       "Are we in Hamburg?"
+      ],
+      [
+       "sobe2",
+       "Is that a sandwich?"
+      ],
+      [
+       "desce",
+       "Where's Hamburg?"
+      ],
+      [
+       "desce2",
+       "How much is it?"
+      ]
+     ]
+    ],
+    "saidas": {
+     "sobe": "sobe ↗",
+     "sobe2": "sobe ↗",
+     "desce": "desce ↘",
+     "desce2": "desce ↘"
+    },
+    "notas": {
+     "sobe": "A resposta é <b>sim ou não</b>: No, we're in the U.S.",
+     "sobe2": "Resposta <b>sim ou não</b>: Yeah!",
+     "desce": "Começa com <b>Where</b>: pede um lugar.",
+     "desce2": "Começa com <b>How much</b>: pede um preço."
+    },
+    "ident": "fgVoz",
+    "cap": "Toque uma pergunta."
+   },
+   "quiz": {
+    "p": "Em “What are these?”, a voz:",
+    "o": [
+     [
+      "Desce no fim",
+      true
+     ],
+     [
+      "Sobe no fim",
+      false
+     ],
+     [
+      "Fica igual",
+      false
+     ],
+     [
+      "Sobe no começo",
+      false
+     ]
+    ],
+    "r": "Começa com What: desce."
+   }
+  }
+ ]
+}

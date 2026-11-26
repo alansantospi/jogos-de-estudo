@@ -14,10 +14,7 @@ python3 build/esquema.py
 python3 build/documentos.py
 
 echo "== partes geradas"
-python3 build/licao_gramatica.py
-python3 build/licao_geografia.py
-python3 build/licao_restaurante.py
-python3 build/licao_microscopico.py
+python3 build/licao.py
 
 echo "== montagem"
 python3 build/montar.py
