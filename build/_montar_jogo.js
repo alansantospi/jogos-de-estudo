@@ -97,14 +97,14 @@ function mjCartoes(jogo){
     return '<button class="category-card" data-cat="' + mjHtml(m.id) + '" onclick="startCategory('
       + mjHtml(mjJs(m.id)) + ')">' + mjSvg(mjIconeDa(jogo, m.id)) + "<strong>" + mjHtml(m.nome)
       + "</strong><small>" + n + (n === 1 ? " questão" : " questões")
-      + '</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>';
+      + '</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>';
   }).join("");
   return '<div class="trail-grid">' + trilhas + '</div><h2 style="margin-top:24px">Ou escolha um conteúdo</h2>'
     + '<div class="category-grid" id="gradeMissoes"><h3 class="grupo">Atalhos</h3>'
     + '<button class="category-card" data-cat="review" onclick="startCategory(\'review\')">' + mjSvg("remendo")
     + '<strong>Revisar meus erros</strong><small>Só o que você vem errando, para atacar o ponto fraco.</small><span class="review-count"></span></button>'
     + '<button class="category-card" data-cat="all" onclick="startCategory(\'all\')">' + mjSvg("dado")
-    + '<strong>Tudo misturado</strong><small>Todos os conteúdos em uma única partida.</small><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>'
+    + '<strong>Tudo misturado</strong><small>Todos os conteúdos em uma única partida.</small><span class="selo"></span><div class="mini-bar"><span></span></div><div class="mini-txt"></div></button>'
     + '<h3 class="grupo">Conteúdos</h3>' + missoes
     + '<p id="semResultado" class="sem-resultado" hidden>Nenhuma missão com esse nome.</p></div>';
 }

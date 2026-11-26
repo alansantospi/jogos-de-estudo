@@ -78,9 +78,16 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   e não fazer nada.
 - **Foguinho** na pílula de sequência a partir de três acertos: a criança vê a
   sequência crescer sem precisar ler o número.
-- **Palmas** são ruído filtrado, não nota — doze estalos de intervalo
-  irregular. **Festa** são confetes em DOM. Ambos entram no fim da partida:
-  festa a partir de 60% de acerto, festa e palmas a partir de 90%.
+- **Fanfarra** é nota, não ruído: uma frase curta em dó maior com brilho por
+  cima (o ruído das palmas antigas assustava). **Festa** são confetes em DOM. Ambos entram no fim da partida:
+  festa a partir de 60% de acerto, festa e fanfarra a partir de 90%.
+- **Tom da sequência**: cada acerto seguido sobe um degrau da escala de dó
+  maior, até uma oitava; a partir de três, vira acorde com brilho.
+- **Estalinhos** baixos acompanham os confetes, antes da fanfarra.
+- **Estrelas** no fim da partida: chegar ao fim vale 1, 70% vale 2, 90% vale
+  3; sem vidas, nenhuma. O cartão da missão mostra as do melhor resultado.
+- **Frase do fim** sorteada de uma lista por faixa de acerto, sem repetir a
+  anterior.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
   tudo.
 

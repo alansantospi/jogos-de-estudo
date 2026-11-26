@@ -1,0 +1,750 @@
+{
+ "passos": [
+  {
+   "missao": "celula",
+   "titulo": "Tudo que vive é feito de células",
+   "ideia": "O que <b>todo</b> ser vivo tem em comum é ser formado por <b>células</b>, a menor parte viva de um organismo.",
+   "fig": "celula.svg",
+   "legenda": "A célula vegetal tem duas coisas a mais que a animal.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "vegetal",
+       "célula vegetal"
+      ],
+      [
+       "animal",
+       "célula animal"
+      ]
+     ],
+     [
+      [
+       "parede",
+       "parede celular"
+      ],
+      [
+       "cloro",
+       "cloroplastos"
+      ],
+      [
+       "nucleo",
+       "núcleo"
+      ],
+      [
+       "cito",
+       "citoplasma"
+      ]
+     ]
+    ],
+    "saidas": {
+     "vegetal|nucleo": "tem núcleo",
+     "vegetal|cito": "tem citoplasma",
+     "vegetal|parede": "tem parede",
+     "vegetal|cloro": "tem cloroplastos",
+     "animal|nucleo": "tem núcleo",
+     "animal|cito": "tem citoplasma",
+     "animal|parede": "<s>sem parede</s>",
+     "animal|cloro": "<s>sem cloroplastos</s>"
+    },
+    "notas": {
+     "vegetal|nucleo": "O núcleo <b>controla</b> a célula.",
+     "vegetal|cito": "No citoplasma ocorrem <b>várias funções</b>.",
+     "vegetal|parede": "A parede dá <b>sustentação</b>.",
+     "vegetal|cloro": "Os cloroplastos <b>produzem o alimento</b>.",
+     "animal|nucleo": "Nas duas células o núcleo controla tudo.",
+     "animal|cito": "As duas têm citoplasma.",
+     "animal|parede": "Parede celular é só da <b>vegetal</b>.",
+     "animal|cloro": "Cloroplasto é só da <b>vegetal</b>."
+    },
+    "ident": "fgCel",
+    "cap": "Escolha a célula e a parte."
+   },
+   "alerta": "“Núcleo e citoplasma” não é o que todos têm em comum: a <b>bactéria não tem núcleo</b>. O que é de todos é a <b>célula</b>.",
+   "quiz": {
+    "p": "Todos os seres vivos têm algo em comum. O quê?",
+    "o": [
+     [
+      "São formados por células",
+      true
+     ],
+     [
+      "Todos têm núcleo",
+      false
+     ],
+     [
+      "Todos fazem fotossíntese",
+      false
+     ],
+     [
+      "Todos têm parede celular",
+      false
+     ]
+    ],
+    "r": "A célula é a unidade de todo ser vivo."
+   }
+  },
+  {
+   "missao": "unimulti",
+   "titulo": "Uma célula só, ou muitas",
+   "ideia": "<b>Unicelular</b> tem uma única célula, que faz todas as funções. <b>Multicelular</b> tem muitas, e cada uma tem um trabalho.",
+   "revs": [
+    [
+     "Paramécio",
+     "unicelular"
+    ],
+    [
+     "Bactéria",
+     "unicelular"
+    ],
+    [
+     "Levedura",
+     "unicelular"
+    ],
+    [
+     "Cogumelo",
+     "multicelular"
+    ],
+    [
+     "Camelo",
+     "multicelular"
+    ],
+    [
+     "Arbusto",
+     "multicelular"
+    ]
+   ],
+   "revs_cap": "Pense, e toque para conferir.",
+   "revs_oculto": "uni ou multi?",
+   "alerta": "Se dá para ver <b>sem microscópio</b>, é multicelular — o cogumelo e o bolor também.",
+   "quiz": {
+    "p": "Por que os unicelulares são chamados de microrganismos?",
+    "o": [
+     [
+      "Só podem ser vistos com microscópio",
+      true
+     ],
+     [
+      "Vivem só no mar",
+      false
+     ],
+     [
+      "Têm muitas células pequenas",
+      false
+     ],
+     [
+      "Todos causam doenças",
+      false
+     ]
+    ],
+    "r": "Micro quer dizer muito pequeno."
+   }
+  },
+  {
+   "missao": "microscopio",
+   "titulo": "Dois microscópios",
+   "ideia": "O microscópio <b>amplia a imagem</b>. Foi depois dele que os seres unicelulares foram descobertos.",
+   "fig": "microscopio.svg",
+   "legenda": "O que muda é por onde a imagem passa e onde ela aparece.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "otico",
+       "ótico"
+      ],
+      [
+       "eletronico",
+       "eletrônico"
+      ]
+     ]
+    ],
+    "saidas": {
+     "otico": "imagem no próprio aparelho",
+     "eletronico": "imagem no computador"
+    },
+    "notas": {
+     "otico": "A <b>luz</b> atravessa a amostra e passa pelas <b>lentes</b>.",
+     "eletronico": "Mostra <b>ainda mais detalhes</b> — é o único que mostra os vírus."
+    },
+    "ident": "fgMic",
+    "cap": "Toque um microscópio."
+   },
+   "alerta": "Escreve-se <b>ótico</b> ou <b>óptico</b>. “Opitico” não existe.",
+   "quiz": {
+    "p": "Qual microscópio mostra a imagem num computador?",
+    "o": [
+     [
+      "O eletrônico",
+      true
+     ],
+     [
+      "O ótico",
+      false
+     ],
+     [
+      "A lupa",
+      false
+     ],
+     [
+      "Os dois",
+      false
+     ]
+    ],
+    "r": "O eletrônico, mais potente."
+   }
+  },
+  {
+   "missao": "fungos",
+   "titulo": "Fungo não é planta",
+   "ideia": "Fungos são <b>heterótrofos</b>: não produzem o próprio alimento. Eles absorvem a matéria orgânica do ambiente.",
+   "revs": [
+    [
+     "Cogumelo",
+     "multicelular, haste e chapéu"
+    ],
+    [
+     "Bolor",
+     "multicelular, no pão"
+    ],
+    [
+     "Orelha-de-pau",
+     "multicelular, nos troncos"
+    ],
+    [
+     "Levedura",
+     "unicelular e redonda"
+    ]
+   ],
+   "revs_cap": "Os representantes do reino Fungi.",
+   "revs_oculto": "como é?",
+   "alerta": "Fungo <b>não faz fotossíntese</b>, nem quando é verde como o bolor, e <b>não tem flagelo</b>: ele se alastra pela superfície.",
+   "quiz": {
+    "p": "Qual destas é uma característica dos fungos?",
+    "o": [
+     [
+      "Não produzem o próprio alimento",
+      true
+     ],
+     [
+      "Fazem fotossíntese",
+      false
+     ],
+     [
+      "Têm flagelos para nadar",
+      false
+     ],
+     [
+      "São sempre unicelulares",
+      false
+     ]
+    ],
+    "r": "Heterótrofos: dependem de outros seres para se alimentar."
+   }
+  },
+  {
+   "missao": "fungos",
+   "titulo": "Para que servem os fungos",
+   "ideia": "Junto com as bactérias, os fungos são os principais <b>decompositores</b> do planeta. E também estão na cozinha e na farmácia.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "decompor",
+       "na floresta"
+      ],
+      [
+       "queijo",
+       "no queijo"
+      ],
+      [
+       "pao",
+       "no pão e no vinho"
+      ],
+      [
+       "remedio",
+       "na farmácia"
+      ],
+      [
+       "doenca",
+       "na pele"
+      ]
+     ]
+    ],
+    "saidas": {
+     "decompor": "reciclam a matéria orgânica",
+     "queijo": "dão gosto e aroma",
+     "pao": "leveduras fazem a fermentação",
+     "remedio": "alguns produzem antibióticos",
+     "doenca": "causam micoses, como a frieira"
+    },
+    "notas": {
+     "decompor": "A maioria é <b>saprófita</b>: come o que está se decompondo.",
+     "queijo": "Alguns fungos entram na <b>fabricação</b> dos queijos.",
+     "pao": "A <b>levedura</b> é o fermento: faz o pão crescer.",
+     "remedio": "<b>Antibiótico</b> é remédio contra bactérias.",
+     "doenca": "Esse é o lado <b>vilão</b> dos fungos."
+    },
+    "cap": "Toque um lugar onde há fungos."
+   },
+   "quiz": {
+    "p": "Todas são importâncias dos fungos, EXCETO:",
+    "o": [
+     [
+      "Produzem alimento pela fotossíntese",
+      true
+     ],
+     [
+      "Fazem a fermentação",
+      false
+     ],
+     [
+      "Alguns produzem antibióticos",
+      false
+     ],
+     [
+      "Decompõem a matéria orgânica",
+      false
+     ]
+    ],
+    "r": "Fungo não faz fotossíntese."
+   }
+  },
+  {
+   "missao": "protozoarios",
+   "titulo": "Como um protozoário se move",
+   "ideia": "Protozoários são <b>unicelulares</b>, com núcleo, e se classificam pelo <b>jeito de se locomover</b>.",
+   "fig": "protozoarios.svg",
+   "legenda": "Quatro grupos, quatro jeitos.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "flagelados",
+       "flagelados"
+      ],
+      [
+       "ciliados",
+       "ciliados"
+      ],
+      [
+       "rizopodes",
+       "rizópodes"
+      ],
+      [
+       "esporozoarios",
+       "esporozoários"
+      ]
+     ]
+    ],
+    "saidas": {
+     "flagelados": "flagelo: o tripanossomo",
+     "ciliados": "cílios: o paramécio",
+     "rizopodes": "pseudópodes: a ameba",
+     "esporozoarios": "não se locomovem"
+    },
+    "notas": {
+     "flagelados": "<b>Flagelo</b> é longo e fino, como uma cauda.",
+     "ciliados": "<b>Cílios</b> são curtos, como os cílios dos olhos.",
+     "rizopodes": "<b>Pseudópodes</b> são falsos pés: o corpo se estende.",
+     "esporozoarios": "Não têm <b>estrutura locomotora</b>."
+    },
+    "ident": "fgLoc",
+    "cap": "Toque um grupo."
+   },
+   "alerta": "Atenção à escrita: <b>paramécio</b>, <b>ameba</b>, <b>flagelo</b>.",
+   "quiz": {
+    "p": "Como a ameba se locomove?",
+    "o": [
+     [
+      "Estendendo o corpo",
+      true
+     ],
+     [
+      "Com cílios",
+      false
+     ],
+     [
+      "Com flagelo",
+      false
+     ],
+     [
+      "Ela não se move",
+      false
+     ]
+    ],
+    "r": "Pseudópodes: falsos pés."
+   }
+  },
+  {
+   "missao": "algas",
+   "titulo": "As algas que dão o oxigênio",
+   "ideia": "As algas unicelulares formam o <b>fitoplâncton</b>, em mares, rios e lagos. Elas têm clorofila e fazem fotossíntese — mas <b>não são plantas</b>.",
+   "fig": "algas.svg",
+   "legenda": "Não são as árvores: é o fitoplâncton.",
+   "revs": [
+    [
+     "Diatomáceas",
+     "parede rígida em duas partes"
+    ],
+    [
+     "Dinoflagelados",
+     "dois flagelos"
+    ],
+    [
+     "Euglenas",
+     "flexíveis, sem parede rígida"
+    ],
+    [
+     "Algas douradas",
+     "água doce, cor dourada"
+    ]
+   ],
+   "revs_cap": "Toque cada alga do fitoplâncton.",
+   "revs_oculto": "o que tem?",
+   "alerta": "Quando os dinoflagelados se multiplicam muito rápido vem a <b>maré vermelha</b>. Alguns ainda produzem luz: é a <b>bioluminescência</b>.",
+   "quiz": {
+    "p": "Que parte do oxigênio do planeta vem do fitoplâncton?",
+    "o": [
+     [
+      "Cerca de 4/5",
+      true
+     ],
+     [
+      "Cerca de 1/10",
+      false
+     ],
+     [
+      "Quase nada",
+      false
+     ],
+     [
+      "Só metade",
+      false
+     ]
+    ],
+    "r": "Quatro de cada cinco partes."
+   }
+  },
+  {
+   "missao": "bacterias",
+   "titulo": "Os formatos das bactérias",
+   "ideia": "Bactérias são <b>unicelulares</b> e vivem em todos os lugares, do gelo ao calor — até no nosso intestino. Elas se dividem pelo <b>formato</b>.",
+   "fig": "bacterias.svg",
+   "legenda": "Os quatro formatos da página 86.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "coco",
+       "coco"
+      ],
+      [
+       "bacilo",
+       "bacilo"
+      ],
+      [
+       "espirilo",
+       "espirilo"
+      ],
+      [
+       "vibriao",
+       "vibrião"
+      ]
+     ]
+    ],
+    "saidas": {
+     "coco": "bola",
+     "bacilo": "bastão",
+     "espirilo": "espiral",
+     "vibriao": "vírgula"
+    },
+    "notas": {
+     "coco": "Os cocos são os que mais vivem <b>em grupo</b>.",
+     "bacilo": "Bacilo lembra um <b>bastão</b>.",
+     "espirilo": "Espirilo lembra uma <b>mola</b>.",
+     "vibriao": "Vibrião lembra uma <b>vírgula</b>."
+    },
+    "ident": "fgBac",
+    "cap": "Toque um formato."
+   },
+   "quiz": {
+    "p": "Que bactéria tem formato de vírgula?",
+    "o": [
+     [
+      "Vibrião",
+      true
+     ],
+     [
+      "Coco",
+      false
+     ],
+     [
+      "Bacilo",
+      false
+     ],
+     [
+      "Espirilo",
+      false
+     ]
+    ],
+    "r": "O vibrião."
+   }
+  },
+  {
+   "missao": "bacterias",
+   "titulo": "A célula sem núcleo",
+   "ideia": "Protozoários, fungos e algas têm <b>núcleo</b>. A bactéria não: o material genético dela fica <b>espalhado no citoplasma</b>.",
+   "fig": "bacterias-2.svg",
+   "legenda": "É assim que se reconhece uma bactéria.",
+   "alerta": "A maioria das bactérias tem uma <b>cápsula protetora</b>, e muitas se movem com <b>flagelo</b>; algumas usam cílios.",
+   "quiz": {
+    "p": "Unicelular, com material genético espalhado no interior. Quem é?",
+    "o": [
+     [
+      "Uma bactéria",
+      true
+     ],
+     [
+      "Um vírus",
+      false
+     ],
+     [
+      "Um fungo",
+      false
+     ],
+     [
+      "Uma alga",
+      false
+     ]
+    ],
+    "r": "Sem núcleo, material genético solto: bactéria."
+   }
+  },
+  {
+   "missao": "virus",
+   "titulo": "O vírus é diferente de todos",
+   "ideia": "O vírus <b>não é formado por células</b>. Por isso muitos cientistas não o classificam como ser vivo.",
+   "revs": [
+    [
+     "Tem células?",
+     "Não."
+    ],
+    [
+     "Multiplica-se sozinho?",
+     "Não: só dentro de células."
+    ],
+    [
+     "Fora das células?",
+     "Fica inativo, desligado."
+    ],
+    [
+     "Que microscópio mostra?",
+     "Só o eletrônico."
+    ],
+    [
+     "Vírus de planta pega em animal?",
+     "Não: o vírus é seletivo."
+    ],
+    [
+     "O que a maioria faz?",
+     "Causa doenças."
+    ]
+   ],
+   "revs_cap": "Toque cada pergunta.",
+   "revs_oculto": "resposta",
+   "quiz": {
+    "p": "Qual é verdadeira sobre os vírus?",
+    "o": [
+     [
+      "Só se multiplicam usando células",
+      true
+     ],
+     [
+      "São seres unicelulares",
+      false
+     ],
+     [
+      "Aparecem em qualquer microscópio",
+      false
+     ],
+     [
+      "Multiplicam-se em qualquer lugar",
+      false
+     ]
+    ],
+    "r": "Sem células de outro ser, o vírus não faz nada."
+   }
+  },
+  {
+   "missao": "natureza",
+   "titulo": "Os recicladores da natureza",
+   "ideia": "Os microrganismos estão em <b>todos os níveis</b> da cadeia alimentar. Os decompositores — quase todos fungos e bactérias — <b>reciclam os restos</b>.",
+   "fig": "natureza.svg",
+   "legenda": "Sem decompositor, o ciclo não fecha.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "produtor",
+       "produtor"
+      ],
+      [
+       "consumidor",
+       "consumidor"
+      ],
+      [
+       "decompositor",
+       "decompositor"
+      ]
+     ]
+    ],
+    "saidas": {
+     "produtor": "as algas",
+     "consumidor": "o peixe que come fitoplâncton",
+     "decompositor": "os cogumelos do tronco caído"
+    },
+    "notas": {
+     "produtor": "Fazem o alimento e liberam <b>oxigênio</b>.",
+     "consumidor": "Come <b>outros seres</b>.",
+     "decompositor": "O tronco se desfaz: é a <b>decomposição</b>."
+    },
+    "ident": "fgCic",
+    "cap": "Toque um elo da cadeia."
+   },
+   "alerta": "Se os microrganismos sumissem, os <b>restos de seres mortos se acumulariam</b>: não haveria decomposição.",
+   "quiz": {
+    "p": "Um tronco cheio de cogumelos está se desfazendo. Que processo é esse?",
+    "o": [
+     [
+      "Decomposição",
+      true
+     ],
+     [
+      "Fotossíntese",
+      false
+     ],
+     [
+      "Fermentação",
+      false
+     ],
+     [
+      "Maré vermelha",
+      false
+     ]
+    ],
+    "r": "Os cogumelos decompõem o tronco."
+   }
+  },
+  {
+   "missao": "natureza",
+   "titulo": "Ajudar ou atrapalhar",
+   "ideia": "Os microrganismos vivem em <b>relações</b> com outros seres, e isso mantém o equilíbrio da natureza.",
+   "revs": [
+    [
+     "Simbiose",
+     "dois seres se ajudam"
+    ],
+    [
+     "Fungo na raiz do feijão",
+     "leva ferro do solo para a semente"
+    ],
+    [
+     "Parasitismo",
+     "um vive do outro"
+    ],
+    [
+     "Tripanossomo no barbeiro",
+     "parasitismo, também uma relação"
+    ]
+   ],
+   "revs_cap": "Toque cada relação.",
+   "revs_oculto": "o que é?",
+   "quiz": {
+    "p": "O que é simbiose?",
+    "o": [
+     [
+      "Dois seres vivos que se ajudam",
+      true
+     ],
+     [
+      "Um ser que prejudica outro",
+      false
+     ],
+     [
+      "Um fungo que faz fotossíntese",
+      false
+     ],
+     [
+      "A morte de um ser vivo",
+      false
+     ]
+    ],
+    "r": "Os dois se auxiliam."
+   }
+  },
+  {
+   "missao": "saude",
+   "titulo": "Quem causa cada doença",
+   "ideia": "Microrganismos podem ser <b>vilões</b>: alguns fungos, protozoários, bactérias e a maioria dos vírus causam doenças. Saber quem causa ajuda a prevenir.",
+   "maq": {
+    "eixos": [
+     [
+      [
+       "micose",
+       "micose"
+      ],
+      [
+       "chagas",
+       "doença de Chagas"
+      ],
+      [
+       "toxo",
+       "toxoplasmose"
+      ],
+      [
+       "giardia",
+       "giardíase"
+      ]
+     ]
+    ],
+    "saidas": {
+     "micose": "fungo",
+     "chagas": "protozoário: Trypanosoma cruzi",
+     "toxo": "protozoário: Toxoplasma gondii",
+     "giardia": "protozoário flagelado"
+    },
+    "notas": {
+     "micose": "Frieira e sapinho também são de <b>fungos</b>.",
+     "chagas": "Transmitida pelo inseto <b>barbeiro</b>.",
+     "toxo": "Evite <b>carne crua</b>; lave verduras e frutas.",
+     "giardia": "Previne-se com <b>saneamento</b> e higiene pessoal."
+    },
+    "cap": "Toque uma doença."
+   },
+   "alerta": "“Infecção parasitária” não é o nome do protozoário. Na doença de Chagas, o protozoário é o <b>Trypanosoma cruzi</b>.",
+   "quiz": {
+    "p": "Por que lavar as mãos antes de comer?",
+    "o": [
+     [
+      "Para tirar microrganismos que não vemos",
+      true
+     ],
+     [
+      "Porque a água tem vitaminas",
+      false
+     ],
+     [
+      "Para a comida ficar mais gostosa",
+      false
+     ],
+     [
+      "Para matar as algas das mãos",
+      false
+     ]
+    ],
+    "r": "Há microrganismos invisíveis, e alguns causam doenças."
+   }
+  }
+ ]
+}

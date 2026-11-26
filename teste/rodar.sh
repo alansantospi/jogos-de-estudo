@@ -2,10 +2,9 @@
 # Roda tudo: os medidores de conteúdo e os casos no navegador.
 set -e
 cd "$(dirname "$0")/.."
-echo "== medidores"
-python3 build/medir_alternativas.py
-python3 build/medir_plausibilidade.py
-python3 build/verificar.py
+# As páginas não ficam no repositório: monta primeiro. O rebuild já roda os
+# medidores de conteúdo.
+sh build/rebuild.sh
 
 # A esteira roda em Deno no servidor; aqui, em Node (>= 23.6 lê TypeScript).
 echo "

@@ -8,3 +8,13 @@ __pycache__/
 
 # Estado local da CLI do Supabase (projeto ligado, URL do pooler).
 supabase/.temp/
+
+# Saída de `sh build/rebuild.sh`. O site é montado e publicado pelo GitHub
+# (.github/workflows/site.yml); aqui é só para abrir no navegador.
+/*.html
+!/recuperar.html
+/jogo/geografia/licao.html
+/jogo/gramatica/licao.html
+/jogo/microscopico/licao.html
+/jogo/restaurante/licao.html
+_site/

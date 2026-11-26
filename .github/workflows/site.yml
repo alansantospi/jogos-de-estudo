@@ -1,0 +1,77 @@
+# Monta o site, confere e publica no GitHub Pages.
+#
+# As páginas da raiz são saída de `build/rebuild.sh` e não ficam mais no
+# repositório: saem daqui, a cada push no main. Num PR, roda tudo menos a
+# publicação, para o PR mostrar se o build e os testes passam.
+name: Site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Os testes da esteira são TypeScript lido direto pelo Node (>= 23.6).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Montar
+        run: sh build/rebuild.sh
+
+      # icones.ts é gerado, mas fica no repositório: a função de servidor e os
+      # testes o importam direto. Build que o muda e não foi commitado é erro.
+      - name: Arquivos gerados que ficam no repositório estão em dia
+        run: git diff --exit-code supabase/functions/_esteira/icones.ts
+
+      - name: Testes da esteira
+        run: |
+          N="node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON"
+          $N teste/esteira/paridade.ts
+          $N --test --test-reporter=dot teste/esteira/*.test.ts
+
+      - name: Tipos da função de servidor
+        run: deno check supabase/functions/gerar/index.ts
+
+      - name: Juntar as páginas
+        run: |
+          mkdir _site
+          cp *.html _site/
+          ls _site
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
+
+  publicar:
+    if: github.event_name != 'pull_request'
+    needs: conferir
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - id: publicacao
+        uses: actions/deploy-pages@v4

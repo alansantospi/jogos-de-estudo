@@ -30,15 +30,16 @@ então dá para parar e voltar de onde parou.
 É o formato das lições antigas, e é o que se quer na véspera da prova: reler de
 ponta a ponta, sem clicar.
 
-**Os dois saem do mesmo dado** — a lista `P` em `build/licao_gramatica.py`, onde
-cada passo é um dicionário, não HTML pronto. Os pares de `revs` viram cartões no
+**Os dois saem do mesmo dado** — `conteudo/licao/gramatica.json`, onde cada
+passo é um objeto, não HTML pronto, e os desenhos ficam ao lado, em
+`conteudo/licao/gramatica/*.svg`. Os pares de `revs` viram cartões no
 passo a passo e `.mini` no resumo; as saídas da `maq` viram máquina lá e uma
 linha de combinações aqui; o `alerta` aparece nos dois. Escrever o resumo à mão
 seria manter a mesma gramática em dois lugares, e um dos dois envelheceria
 calado — por isso o teste compara as regras e os alertas dos dois modos, e uma
 mutação prova que ele morde.
 
-Ela é **gerada** por `build/licao_gramatica.py`, que roda no rebuild antes da
+Ela é **gerada** por `build/licao.py`, que roda no rebuild antes da
 montagem. Editar `jogo/gramatica/licao.html` à mão não adianta.
 
 Três mecânicas dão conta dos catorze passos, todas por delegação de clique:

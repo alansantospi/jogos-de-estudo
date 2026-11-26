@@ -34,7 +34,10 @@ Na ordem. Nenhum destes passos o código faz por você.
    supabase functions deploy gerar
    ```
 
-   e publicar o site (o GitHub Pages serve o que estiver na `main`).
+   e publicar o site: um push na `main` basta, porque o GitHub monta as
+   páginas e as publica (`.github/workflows/site.yml`). As páginas `.html`
+   da raiz não ficam no repositório; `sh build/rebuild.sh` as gera só para
+   abrir no navegador.
 
 7. **Testar com um convite seu**, numa janela anônima: criar a conta,
    confirmar o e-mail, criar um jogo, ligar o link e abri-lo em outro

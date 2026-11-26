@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Maquinaria das lições em passos curtos, compartilhada pelas matérias.
 
-Cada matéria traz só os seus passos, como dado, e chama `montar`. Daqui saem
+Os passos de cada matéria são dado, em conteudo/licao/<jogo>.json, e os
+desenhos ficam ao lado, em conteudo/licao/<jogo>/*.svg. Daqui saem
 os dois modos — passo a passo e resumo — e é por isso que eles não podem
 divergir: escrever o resumo à mão seria manter a mesma matéria em dois lugares.
 
@@ -16,7 +17,7 @@ Um passo é um dicionário:
     missao   id da missão, para o botão "Treinar isto agora"
     titulo   o título do passo
     ideia    a regra, em uma ou duas frases
-    fig      um desenho (opcional), com `legenda`
+    fig      o nome de um desenho em conteudo/licao/<jogo>/ (opcional), com `legenda`
     revs     pares título → resposta, com `revs_cap` e `revs_oculto`
     maq      dict(eixos, saidas, notas, ident, cap, rotular)
     alerta   a pegadinha; aparece nos dois modos
@@ -505,6 +506,7 @@ def resumo(P):
 def montar(jogo, P):
     """Escreve jogo/<jogo>/licao.html: os passos e o resumo."""
     _carregar(jogo)
+    _giro[0] = 0  # cada lição gira a certa desde o começo, como se rodasse sozinha
     n = len(P)
     faltam = [p["missao"] for p in P if p["missao"] not in NOMES]
     assert not faltam, "%s: passos apontam para missões que não existem: %s" % (jogo, faltam)
@@ -519,3 +521,23 @@ def montar(jogo, P):
     io.open(os.path.join(RAIZ, "jogo", jogo, "licao.html"), "w",
             encoding="utf-8").write(texto)
     print("  %-12s %d passos + resumo, %d KB" % (jogo, n, len(texto) // 1024))
+
+
+JOGOS = ["gramatica", "geografia", "restaurante", "microscopico"]
+
+
+def passos(jogo):
+    """Os passos de conteudo/licao/<jogo>.json, com cada `fig` já trocado
+    pelo SVG do arquivo que ele nomeia."""
+    base = os.path.join(RAIZ, "conteudo", "licao")
+    P = json.load(io.open(os.path.join(base, jogo + ".json"), encoding="utf-8"))["passos"]
+    for p in P:
+        if p.get("fig"):
+            p["fig"] = io.open(os.path.join(base, jogo, p["fig"]), encoding="utf-8",
+                               newline="").read()
+    return P
+
+
+if __name__ == "__main__":
+    for jogo in sys.argv[1:] or JOGOS:
+        montar(jogo, passos(jogo))
