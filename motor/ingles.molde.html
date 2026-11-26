@@ -1567,6 +1567,7 @@ function renderModeToggle(){
     const isTreino=b.dataset.mode==="treino";
     b.classList.toggle("active", isTreino===practiceMode);
   });
+  if(typeof pintarDesafio==="function") pintarDesafio(progress);
 }
 
 function renderLives(){
@@ -2953,6 +2954,7 @@ function feedback(ok,msg){
     sfx.erro();
   }
   _scoreAnterior=score;
+  if(ok&&combo>=3&&typeof avancarSozinho==="function") avancarSozinho(()=>index, nextQuestion);
   const box=document.getElementById("feedback");
   box.innerHTML='<span class="rotulo">'+(ok?(combo>=3?"Certo — "+combo+" seguidas":"Certo"):"Ainda não")+'</span>';box.append(msg);
   box.className="feedback show "+(ok?"good":"bad");

@@ -73,3 +73,22 @@
 /* O placar só na partida: fora dela mostrava 0 e ∞ e tirava o peso de
    quando importa. Navegador sem :has continua mostrando, como antes. */
 body:not(:has(#quiz.active)) .hud > div.pill{display:none}
+
+/* ---------- mascote parado (entrada e fim) ---------- */
+.mascote-linha.parado{margin:0 0 var(--s-3);flex-direction:row-reverse;justify-content:flex-end}
+.mascote-linha.parado .mascote{width:4.5rem;height:4.5rem}
+.mascote-linha.parado .mascote-fala{animation:fala-entra .35s .3s both}
+@keyframes fala-entra{from{opacity:0;transform:translateX(-6px) scale(.9)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mascote-linha.parado .mascote-fala{animation:none}}
+
+/* ---------- desafio trancado ---------- */
+.mode-opt.trancado{opacity:.55;cursor:not-allowed;border-style:dashed}
+.mode-opt.trancado:hover{color:inherit}
+
+/* ---------- respostas: um contador só, e certo/errado além da cor ---------- */
+#progressPct,#progressPercent{display:none}
+.answer.correct,.answer.wrong{border-width:3px}
+.answer.correct::after,.answer.wrong::after{display:grid;place-items:center;position:absolute;right:var(--s-3);top:50%;
+  width:1.75rem;height:1.75rem;margin-top:-.875rem;border-radius:999px;color:#fff;font-weight:900;font-size:1rem;line-height:1}
+.answer.correct::after{content:"✓";background:var(--certo-solida)}
+.answer.wrong::after{content:"✗";background:var(--errado-solida)}
