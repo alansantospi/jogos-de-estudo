@@ -49,7 +49,7 @@ montar = io.open("build/_montar_jogo.js", encoding="utf-8").read()
 cores = re.search(r"/\*CORES>\*/.*?/\*<CORES\*/", montar, re.S)
 if not cores:
     raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
-html = html.replace("/*JS*/", cores.group(0) + "\n" + diversao.conquistas_js() + js + conta)
+html = html.replace("/*JS*/", cores.group(0) + "\n" + diversao.conquistas_js() + diversao.tempo_js() + js + conta)
 
 io.open("index.html", "w", encoding="utf-8").write(html)
 print("  %-24s perfis, historico e conta (%d KB)" % ("index", len(html) // 1024))

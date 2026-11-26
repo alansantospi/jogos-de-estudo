@@ -132,7 +132,6 @@ function noPeriodo(l){
   return l.filter(x => x.q >= corte);
 }
 const pct = (a, n) => n ? Math.round(a / n * 100) : 0;
-const dia = q => new Date(q).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"});
 /* De que jogo é uma linha do histórico. Os prontos estão nas tabelas de
    cima; o criado na conta grava "g_" + os 12 primeiros caracteres do id (o
    mesmo corte de `montarJogo`) e é achado na lista de jogos criados. Jogo
@@ -183,7 +182,7 @@ function pintarPerfis(){
   cx.innerHTML = lixo.length
     ? "<h3>Na lixeira</h3>" + lixo.map((l, i) =>
         '<div class="lixo-item"><b>' + esc(l.nome) + "</b>"
-        + "<span>apagado em " + new Date(l.quando).toLocaleDateString("pt-BR") + "</span>"
+        + "<span>apagado " + haQuanto(l.quando) + "</span>"
         + '<button class="fantasma" onclick="restaurarDaLixeira(' + i + ')">Trazer de volta</button>'
         + "</div>").join("")
     : "";
@@ -229,7 +228,7 @@ function pintarJogos(){
      ficaram começadas e não concluídas — que o progresso guarda desde
      sempre, mesmo sem nenhuma partida registrada. */
   let itens = historico().filter(x => jogoDe(x.j)).slice(-3).reverse().map(x => ({
-    j: x.j, m: x.m, nota: pct(x.a, x.n) + "% em " + dia(x.q)}));
+    j: x.j, m: x.m, nota: pct(x.a, x.n) + "% · " + haQuanto(x.q)}));
   if(!itens.length){
     Object.keys(BASES).forEach(j => {
       const ms = progressoDe(j).missions || {};
@@ -347,7 +346,7 @@ function pintarHistorico(){
   l.innerHTML = partidas.length
     ? '<table class="tabela"><thead><tr><th>Quando</th><th>Matéria</th><th>Missão</th><th>Acerto</th></tr></thead><tbody>'
       + partidas.slice().reverse().slice(0, 40).map(x =>
-        "<tr><td>" + dia(x.q) + "</td><td>" + esc(materiaDe(x.j)) + "</td><td>"
+        "<tr><td title=\"" + new Date(x.q).toLocaleString("pt-BR") + "\">" + haQuanto(x.q) + "</td><td>" + esc(materiaDe(x.j)) + "</td><td>"
         + esc(nomeMissao(x.j, x.m)) + "</td><td>" + pct(x.a, x.n) + "% <small>("
         + x.a + "/" + x.n + ")</small></td></tr>").join("")
       + "</tbody></table>"
@@ -391,7 +390,7 @@ function pintarMeusJogos(){
     + '<svg class="marca" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-livro"/></svg>'
     + '<span class="materia">' + esc(j.materia) + '</span>'
     + '<span><span class="nome">' + esc(j.titulo) + '</span>'
-    + '<span class="desc">Criado em ' + new Date(j.criado).toLocaleDateString("pt-BR") + '.</span></span></a></li>').join("");
+    + '<span class="desc">Criado ' + haQuanto(j.criado) + '.</span></span></a></li>').join("");
 }
 
 async function buscarMeusJogos(){

@@ -121,6 +121,9 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **Na sequência, o acerto avança sozinho** em 1,6 s (a partir de 3
   seguidos; tocar em "Próxima" adianta). Fora dela e no erro, espera: a
   explicação é para ser lida.
+- **Datas em palavras** ("há 25 min", "ontem", "há 2 semanas") na página
+  inicial e na de criar; no histórico, a data exata aparece ao passar o
+  mouse.
 - **Resposta marcada com ✓ e ✗**, além da cor; e um contador só
   ("Questão 3/9"), sem o percentual repetido.
 - `prefers-reduced-motion` desliga confete e pulsação; o botão de mudo cala
