@@ -1,0 +1,47 @@
+/* ---------- a figurinha ----------
+   Cara de figurinha de verdade: moldura clara recortada, um pouco torta,
+   fundo com raios na cor dela. A moldura diz a raridade: prata, ouro ou
+   holográfica, com um brilho que passa de vez em quando. */
+.fig{--c1:#999;--c2:#555;--giro:0deg;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:.35rem;padding:.5rem .5rem .65rem;border-radius:1.1rem;background:#fff;color:#221a33;
+  box-shadow:0 5px 0 rgba(0,0,0,.28),0 12px 22px rgba(0,0,0,.22);transform:rotate(var(--giro));
+  transition:transform .2s cubic-bezier(.3,1.5,.5,1)}
+.fig:nth-child(3n+1){--giro:-2.5deg}
+.fig:nth-child(3n+2){--giro:1.8deg}
+.fig:nth-child(3n){--giro:-1deg}
+.fig:not(.fig-falta):hover{transform:rotate(0deg) translateY(-4px) scale(1.04)}
+.fig-arte{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;border-radius:.8rem;overflow:hidden;
+  background:repeating-conic-gradient(from 0deg at 50% 45%,rgba(255,255,255,.18) 0 9deg,transparent 9deg 18deg),
+    radial-gradient(circle at 50% 40%,var(--c1),var(--c2) 75%)}
+.fig-arte svg{position:relative;width:54%;height:54%;fill:none;stroke:#fff;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 3px 0 rgba(0,0,0,.22))}
+.fig b{font-family:var(--display);font-size:.95rem;line-height:1.1;color:#221a33}
+.fig small{font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .55rem;border-radius:999px;
+  background:#ececf3;color:#5b5670}
+.fig .fig-desc{font-size:.72rem;line-height:1.25;color:#5b5670}
+
+.fig.r-rara{background:linear-gradient(140deg,#fbfcff,#c7d0e2 55%,#eef2fa)}
+.fig.r-rara small{background:#dfe8ff;color:#2d55c7}
+.fig.r-epica{background:linear-gradient(140deg,#fff6c9,#e8b62a 55%,#fff0a8)}
+.fig.r-epica small{background:#fff;color:#a0620a}
+.fig.r-lendaria{background:linear-gradient(120deg,#ffd6e8,#d6f0ff,#fff3c4,#e2d6ff,#ffd6e8);background-size:300% 300%;
+  animation:fig-holo 6s ease-in-out infinite}
+.fig.r-lendaria small{background:linear-gradient(90deg,#ffd23f,#ff8fa3,#7dd3fc);color:#221a33}
+.fig:is(.r-rara,.r-epica,.r-lendaria) .fig-arte::after{content:"";position:absolute;inset:-20% auto -20% 0;width:35%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:fig-brilho 3.8s ease-in-out infinite}
+.fig.r-epica .fig-arte::after{animation-delay:1.2s}
+.fig.r-lendaria .fig-arte::after{animation-duration:2.6s}
+@keyframes fig-brilho{0%{transform:translateX(-130%) skewX(-18deg)}45%,100%{transform:translateX(330%) skewX(-18deg)}}
+@keyframes fig-holo{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+.fig.fig-falta{background:transparent;box-shadow:none;border:2px dashed var(--risco,#555);color:var(--texto-2,#999);transform:none}
+.fig-falta .fig-arte{background:rgba(127,127,127,.12)}
+.fig-falta .fig-arte svg{stroke:currentColor;opacity:.3;filter:none}
+.fig-falta b{color:var(--texto-2,#999)}
+.fig-falta .fig-desc{color:var(--texto-2,#999)}
+
+/* Chegando na tela de fim: vira e cai no lugar. */
+.fig.chega{animation:fig-chega .7s cubic-bezier(.3,1.4,.5,1) both}
+.fig.r-lendaria.chega{animation:fig-chega .7s cubic-bezier(.3,1.4,.5,1) both,fig-holo 6s ease-in-out .7s infinite}
+@keyframes fig-chega{from{opacity:0;transform:rotateY(180deg) scale(.4)}to{opacity:1;transform:rotate(var(--giro))}}
+@media (prefers-reduced-motion:reduce){.fig,.fig .fig-arte::after{animation:none!important}}

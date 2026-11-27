@@ -128,6 +128,10 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   responder (no celular o topo já saiu da tela); a fala dele é o título da
   caixa. Ele entra com a cara de antes e reage na frente da criança; com a
   caixa aberta o do topo some (é um bichinho só, que desce até a resposta).
+- **Figurinhas com cara de figurinha**: cada uma com sua cor, fundo de
+  raios e moldura clara um pouco torta. A moldura diz a raridade (comum;
+  rara = prata; épica = ouro; lendária = holográfica), e as raras têm um
+  brilho que passa. Na tela de fim elas chegam girando, uma depois da outra.
 - **Bichinhos para escolher** no álbum: Bolinha, Gato e Coelho de saída;
   Dino, Coruja e Robô abrem com 4, 7 e 10 figurinhas (a tela de fim avisa).
   A cara e as reações são as mesmas em todos; muda o corpo e a cor. A

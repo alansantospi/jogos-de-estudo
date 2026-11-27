@@ -23,7 +23,7 @@
 .novidade .fig-ic{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:999px;
   background:var(--materia-solida);color:var(--sobre-materia);box-shadow:0 0 0 4px var(--materia-clara)}
 .novidade .fig-ic svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.8}
-.novidade.fig{animation-delay:1.8s}
+.novidade.nv-fig{animation-delay:1.8s}
 .novidade.varias{display:grid;gap:var(--s-3);justify-items:start}
 .novidade.varias ul{display:flex;flex-wrap:wrap;gap:var(--s-3);margin:0;padding:0;list-style:none}
 .novidade.varias li{display:flex;flex-direction:column;align-items:center;gap:var(--s-1);width:4.5rem;text-align:center;
@@ -84,3 +84,23 @@ body:not(:has(#quiz.active)) .hud > div.pill{display:none}
 .resp-bicho .mascote{width:3.5rem;height:3.5rem}
 /* Um bichinho por vez: com a caixa aberta, o do topo some (o espaço fica). */
 #quiz:has(#feedback.show.com-bicho) .quiz-top .mascote-linha{visibility:hidden}
+
+/* ---------- figurinhas novas na tela de fim ---------- */
+.novidade.nv-fig-nova{align-items:center}
+.novidade.nv-fig-nova .fig{width:6.5rem;flex:none;animation-delay:2s}
+.novidade.varias li{width:5rem}
+.novidade.varias .fig{width:5rem;padding:.35rem .35rem .5rem}
+.novidade.varias .fig b{font-size:.75rem}
+.novidade.varias .fig small{font-size:.55rem}
+.novidade.varias li:nth-child(1) .fig{animation-delay:2s}
+.novidade.varias li:nth-child(2) .fig{animation-delay:2.15s}
+.novidade.varias li:nth-child(3) .fig{animation-delay:2.3s}
+.novidade.varias li:nth-child(4) .fig{animation-delay:2.45s}
+.novidade.varias li:nth-child(5) .fig{animation-delay:2.6s}
+.novidade.varias li:nth-child(n+6) .fig{animation-delay:2.75s}
+/* O texto dos avisos é claro; o da figurinha, escuro sobre a moldura. */
+.novidade .fig b{color:#221a33}
+.novidade .fig small{color:#5b5670;background:#ececf3;letter-spacing:.08em}
+.novidade .fig.r-rara small{background:#dfe8ff;color:#2d55c7}
+.novidade .fig.r-epica small{background:#fff;color:#a0620a}
+.novidade .fig.r-lendaria small{background:linear-gradient(90deg,#ffd23f,#ff8fa3,#7dd3fc);color:#221a33}

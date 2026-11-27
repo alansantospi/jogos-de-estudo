@@ -31,31 +31,45 @@ function diasSeguidos(hist, agora){
   return {atual, melhor, jogouHoje};
 }
 
-/* A ordem é a do álbum: das fáceis às difíceis. `ic` é um desenho do sprite. */
+/* A ordem é a do álbum: das fáceis às difíceis. `ic` é um desenho do sprite;
+   `cor`, o degradê do fundo; `raridade`, a moldura (comum, rara = prata,
+   épica = ouro, lendária = holográfica). */
 const FIGURINHAS = [
   {id: "primeira",   nome: "Primeiro passo",   ic: "bandeira",   desc: "Terminar a primeira partida",
+   raridade: "comum", cor: ["#5eead4", "#0d9488"],
    tem: e => e.partidas >= 1},
   {id: "tres",       nome: "Três estrelas",    ic: "estrela",    desc: "90% ou mais numa partida de 5 questões",
+   raridade: "rara", cor: ["#fde047", "#f59e0b"],
    tem: e => e.tresEstrelas},
   {id: "seq5",       nome: "Em chamas",        ic: "fogo",       desc: "Acertar 5 seguidas",
+   raridade: "comum", cor: ["#fdba74", "#ea580c"],
    tem: e => e.combo >= 5},
   {id: "dez",        nome: "Dez partidas",     ic: "alvo",       desc: "Terminar 10 partidas",
+   raridade: "comum", cor: ["#93c5fd", "#2563eb"],
    tem: e => e.partidas >= 10},
   {id: "dias3",      nome: "Três dias",        ic: "calendario", desc: "Jogar 3 dias seguidos",
+   raridade: "rara", cor: ["#c4b5fd", "#7c3aed"],
    tem: e => e.dias >= 3},
   {id: "explorador", nome: "Explorador",       ic: "bussola",    desc: "Jogar 3 jogos diferentes",
+   raridade: "comum", cor: ["#86efac", "#16a34a"],
    tem: e => e.jogos >= 3},
   {id: "gabarito",   nome: "Gabaritou",        ic: "coroa",      desc: "100% numa partida de 5 questões",
+   raridade: "epica", cor: ["#f9a8d4", "#db2777"],
    tem: e => e.perfeita},
   {id: "seq10",      nome: "Relâmpago",        ic: "raio",       desc: "Acertar 10 seguidas",
+   raridade: "epica", cor: ["#67e8f9", "#4f46e5"],
    tem: e => e.combo >= 10},
   {id: "maratona",   nome: "Maratona",         ic: "relogio",    desc: "5 partidas no mesmo dia",
+   raridade: "rara", cor: ["#fca5a5", "#dc2626"],
    tem: e => e.noMesmoDia >= 5},
   {id: "mil",        nome: "Mil pontos",       ic: "planeta",    desc: "Somar 1000 pontos",
+   raridade: "rara", cor: ["#a5b4fc", "#4338ca"],
    tem: e => e.pontos >= 1000},
   {id: "dias7",      nome: "Uma semana",       ic: "foguete",    desc: "Jogar 7 dias seguidos",
+   raridade: "lendaria", cor: ["#fda4af", "#7c3aed"],
    tem: e => e.dias >= 7},
   {id: "cinquenta",  nome: "Cinquenta",        ic: "trofeu",     desc: "Terminar 50 partidas",
+   raridade: "lendaria", cor: ["#fde68a", "#d97706"],
    tem: e => e.partidas >= 50}
 ];
 
@@ -102,3 +116,16 @@ const ACESSORIOS = [
 ];
 // Quantos acessórios já tem, com n figurinhas (0 a 4).
 function nivelDoMascote(n){ return ACESSORIOS.filter(a => n >= a.min).length; }
+
+/* ---------- a figurinha desenhada ----------
+   Igual no álbum e na tela de fim: moldura branca recortada, fundo com raios
+   na cor dela, o desenho grande e o selo da raridade. A que falta mostra só
+   a silhueta. `extra` vai no pé (no álbum, a descrição). */
+const RARIDADE_NOME = {comum: "Comum", rara: "Rara", epica: "Épica", lendaria: "Lendária"};
+function figurinhaHtml(f, ganha, extra){
+  const ic = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-' + f.ic + '"/></svg>';
+  if(!ganha) return '<div class="fig fig-falta"><span class="fig-arte">' + ic + "</span><b>?</b>" + (extra || "") + "</div>";
+  return '<div class="fig r-' + f.raridade + '" style="--c1:' + f.cor[0] + ";--c2:" + f.cor[1] + '">'
+    + '<span class="fig-arte">' + ic + "</span><b>" + f.nome + "</b><small>" + RARIDADE_NOME[f.raridade] + "</small>"
+    + (extra || "") + "</div>";
+}

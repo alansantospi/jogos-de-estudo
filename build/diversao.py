@@ -23,7 +23,8 @@ def bicho_js():
 
 
 def bicho_css():
-    return _ler("bicho.css")
+    """O bichinho e a figurinha: o visual que os jogos e a página inicial dividem."""
+    return _ler("bicho.css") + _ler("figurinha.css")
 
 
 def tempo_js():
