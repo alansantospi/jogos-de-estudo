@@ -126,7 +126,8 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
   quando ele evolui; o álbum diz quanto falta para o próximo.
 - **O bichinho reage na caixa da resposta**, onde o olhar está depois de
   responder (no celular o topo já saiu da tela); a fala dele é o título da
-  caixa. No topo ele fica só com a chama da sequência e o "oi" do começo.
+  caixa. Ele entra com a cara de antes e reage na frente da criança; com a
+  caixa aberta o do topo some (é um bichinho só, que desce até a resposta).
 - **Bichinhos para escolher** no álbum: Bolinha, Gato e Coelho de saída;
   Dino, Coruja e Robô abrem com 4, 7 e 10 figurinhas (a tela de fim avisa).
   A cara e as reações são as mesmas em todos; muda o corpo e a cor. A

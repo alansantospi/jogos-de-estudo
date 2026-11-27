@@ -341,7 +341,8 @@ function marcarFinal(){
 /* ---------- o bichinho na caixa da resposta ----------
    Depois de responder, o olhar está na caixa de "certo/ainda não", não no
    topo (que no celular já saiu da tela). Ele reage ali, e a fala dele vira
-   o título da caixa. */
+   o título da caixa. Enquanto ela está aberta, o do topo se esconde: é um
+   bichinho só, que desce até a resposta. */
 function bichoNaResposta(ok){
   try{
     const box = document.getElementById("feedback"); if(!box) return;
@@ -351,8 +352,13 @@ function bichoNaResposta(ok){
     if(r) r.textContent = l[Math.floor(Math.random() * l.length)] + (ok && seq >= 3 ? " " + seq + " seguidas!" : "");
     const n = _figurinhasAgora(), d = document.createElement("span");
     d.className = "resp-bicho";
-    d.innerHTML = bichoSvg("mascoteResp", bichoEscolhido(n), nivelDoMascote(n), estado + (estado === "fogo" ? " em-fogo" : "") + " pula");
+    // Entra com a cara de antes (neutra, ou em chamas se já estava) e reage
+    // depois que a caixa termina de aparecer: a criança vê ele mudar.
+    const antes = seq > 3 && ok ? "em-fogo" : "";
+    d.innerHTML = bichoSvg("mascoteResp", bichoEscolhido(n), nivelDoMascote(n), antes);
     box.prepend(d);
     box.classList.add("com-bicho");
+    const svg = d.querySelector("svg");
+    setTimeout(() => svg.setAttribute("class", "mascote " + estado + (estado === "fogo" ? " em-fogo" : "") + " pula"), 320);
   }catch(e){}
 }

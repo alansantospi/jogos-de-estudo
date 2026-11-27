@@ -82,3 +82,5 @@ body:not(:has(#quiz.active)) .hud > div.pill{display:none}
 .feedback.com-bicho{display:flow-root}
 .resp-bicho{float:left;margin:-.25rem var(--s-3) var(--s-1) -.25rem}
 .resp-bicho .mascote{width:3.5rem;height:3.5rem}
+/* Um bichinho por vez: com a caixa aberta, o do topo some (o espaço fica). */
+#quiz:has(#feedback.show.com-bicho) .quiz-top .mascote-linha{visibility:hidden}
