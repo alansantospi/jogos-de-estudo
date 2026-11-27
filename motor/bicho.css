@@ -1,7 +1,14 @@
 /* ---------- o bichinho: cara e estados ---------- */
-.mascote{width:4rem;height:4rem;overflow:visible;flex:none;stroke:none}
-.mascote .m-pele,.mascote .b-parte{fill:var(--materia-solida,var(--alt-1))}
-.mascote .m-barriga{fill:#fff;opacity:.22}
+.mascote{--pele:var(--materia-solida,var(--alt-1));--sombra:color-mix(in oklch,var(--pele) 70%,#1a1030);
+  --contorno:#221a33;width:4rem;height:4rem;overflow:visible;flex:none;stroke:none;
+  /* contorno de desenho animado em volta da silhueta toda, e uma sombra no chão */
+  filter:drop-shadow(1.1px 0 0 var(--contorno)) drop-shadow(-1.1px 0 0 var(--contorno)) drop-shadow(0 1.1px 0 var(--contorno))
+    drop-shadow(0 -1.1px 0 var(--contorno)) drop-shadow(0 3px 2px rgba(0,0,0,.28))}
+.mascote .b-parte{fill:var(--pele)}
+.mascote .m-pele,.mascote .m-pes{fill:var(--sombra)}
+.mascote .m-luz{fill:var(--pele)}
+.mascote .m-reflexo{fill:#fff;opacity:.38}
+.mascote .m-barriga{fill:#fff;opacity:.24}
 .mascote .m-olhos ellipse{fill:#221a33}
 .mascote .m-brilho{fill:#fff}
 .mascote .m-olhos-feliz,.mascote .m-boca-normal{fill:none;stroke:#221a33;stroke-width:2.6;stroke-linecap:round}
@@ -30,7 +37,11 @@
 .mascote:is([data-nivel="3"],[data-nivel="4"]) .m-coroa{display:inline}
 .mascote[data-nivel="4"] .m-brilho-aura{display:inline}
 .mascote .m-chapeu path{fill:#ff6b9a}
-.mascote .m-chapeu circle,.mascote .m-coroa,.mascote .m-medalha circle{fill:#ffd23f;stroke:#e0a100;stroke-width:1.2;stroke-linejoin:round}
+.mascote .m-chapeu circle,.mascote .m-coroa path,.mascote .m-medalha circle{fill:#ffd23f;stroke:#e0a100;stroke-width:1.2;stroke-linejoin:round}
+.mascote .m-chapeu .m-listra{fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;opacity:.85}
+.mascote .m-coroa .m-joia{fill:#ff4d6d}
+.mascote .m-coroa .m-joia2{fill:#4da3ff}
+.mascote .m-medalha .m-estrelinha{fill:#e0a100;stroke:none}
 .mascote .m-medalha path{fill:none;stroke:#4da3ff;stroke-width:2.4;stroke-linejoin:round}
 .mascote .m-brilho-aura{fill:none;stroke:#ffd23f;stroke-width:2.2;stroke-dasharray:3 6;stroke-linecap:round;
   transform-origin:32px 40px;animation:m-gira 9s linear infinite}
@@ -42,19 +53,50 @@
 .mascote .b-parte{display:none}
 .mascote[data-bicho="gato"] .b-gato,.mascote[data-bicho="coelho"] .b-coelho,.mascote[data-bicho="dino"] .b-dino,
 .mascote[data-bicho="coruja"] .b-coruja,.mascote[data-bicho="robo"] .b-robo{display:inline}
-.mascote[data-bicho="gato"]{--bicho:#f2994a}
-.mascote[data-bicho="coelho"]{--bicho:#ef8fb6}
-.mascote[data-bicho="dino"]{--bicho:#3fbf7f}
-.mascote[data-bicho="coruja"]{--bicho:#b07a45}
-.mascote[data-bicho="robo"]{--bicho:#7f9cc0}
-.mascote[data-bicho]:not([data-bicho="bolinha"]) :is(.m-pele,.b-parte){fill:var(--bicho)}
-.mascote .b-dentro{fill:#ff8fa3!important;opacity:.75}
-.mascote .b-dino.b-espinho{fill:#f6c343!important}
-.mascote .b-coruja.b-bico{fill:#f6a623!important}
-.mascote .b-robo .b-antena{fill:none!important;stroke:#5b7392;stroke-width:2.4;stroke-linecap:round}
-.mascote .b-robo .b-luz{fill:#ff5d5d!important;animation:b-pisca 1.6s steps(2) infinite}
-.mascote .b-robo rect{fill:#5b7392!important}
+.mascote[data-bicho="gato"]{--pele:#f2994a}
+.mascote[data-bicho="coelho"]{--pele:#f4a3c4}
+.mascote[data-bicho="dino"]{--pele:#3fbf7f}
+.mascote[data-bicho="coruja"]{--pele:#b07a45}
+.mascote[data-bicho="robo"]{--pele:#8fabcf}
+.mascote .b-dentro{fill:#ff8fa3;opacity:.75}
+
+/* gato: rabo enrolado e bigodes */
+.mascote .b-rabo{fill:none;stroke:var(--sombra);stroke-width:5;stroke-linecap:round}
+.mascote .b-bigode{fill:none;stroke:#221a33;stroke-width:1.3;stroke-linecap:round;opacity:.55}
+/* coelho: pezão e pompom */
+.mascote .b-pompom{fill:#fff}
+.mascote .b-pezao{fill:var(--pele)}
+.mascote[data-bicho="coelho"] .m-pes{display:none}
+/* dino: cauda, espinhos e barriga listrada */
+.mascote .b-cauda{fill:var(--sombra)}
+.mascote .b-espinho{fill:#f6c343}
+.mascote .b-listra{fill:none;stroke:var(--sombra);stroke-width:1.6;stroke-linecap:round;opacity:.7}
+/* coruja: olhos em disco, bico, penas e garras */
+.mascote .b-disco{fill:#f3e3c8}
+.mascote .b-bico{fill:#f6a623}
+.mascote .b-pena{fill:none;stroke:var(--sombra);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.mascote .b-garra{fill:none;stroke:#f6a623;stroke-width:1.8;stroke-linecap:round}
+.mascote[data-bicho="coruja"] .m-pes{fill:#f6a623}
+/* robô: casco quadrado, rosto numa tela, olhos de luz */
+.mascote[data-bicho="robo"] .b-redondo{display:none}
+.mascote .b-casco{fill:var(--sombra)}
+.mascote .b-casco-luz{fill:var(--pele)}
+.mascote .b-tela{fill:#22304a}
+.mascote .b-parafuso,.mascote .b-orelha{fill:#5b7392}
+.mascote .b-antena{fill:none;stroke:#5b7392;stroke-width:2.4;stroke-linecap:round}
+.mascote .b-luz{fill:#ff5d5d;animation:b-pisca 1.6s steps(2) infinite}
+.mascote[data-bicho="robo"] :is(.m-olhos ellipse,.m-boca-feliz,.m-boca-ops){fill:#6ff3ff}
+.mascote[data-bicho="robo"] :is(.m-olhos-feliz,.m-boca-normal){stroke:#6ff3ff}
+.mascote[data-bicho="robo"] :is(.m-bochecha,.m-brilho){display:none}
+.mascote[data-bicho="robo"] .m-pes{fill:#5b7392}
 @keyframes b-pisca{50%{opacity:.35}}
-@media (prefers-reduced-motion:reduce){.mascote .b-robo .b-luz{animation:none}}
-.mascote .b-coruja .b-disco{fill:#f3e3c8!important}
-.mascote .b-coruja .b-asa{fill:#8a5a2e!important}
+
+/* ---------- vida parada: respira, pisca e às vezes olha de lado ---------- */
+.mascote:not(.pula) .m-corpo{animation:m-respira 3.4s ease-in-out infinite}
+.mascote .m-olhos{transform-box:fill-box;transform-origin:center;animation:m-vida 7s infinite}
+@keyframes m-respira{0%,100%{transform:none}50%{transform:scale(1.025,.975)}}
+@keyframes m-vida{0%,38%{transform:none}42%,58%{transform:translateX(1.8px)}62%,86%{transform:none}
+  88%{transform:scaleY(.12)}90%{transform:none}93%{transform:scaleY(.12)}95%,100%{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .mascote .m-corpo,.mascote .m-olhos,.mascote .b-luz{animation:none!important}
+}
