@@ -79,9 +79,6 @@ body:not(:has(#quiz.active)) .hud > div.pill{display:none}
 .novidade.acessorio .mascote{width:3.5rem;height:3.5rem;flex:none}
 
 /* ---------- o bichinho na caixa da resposta ---------- */
-.feedback.com-bicho{display:flow-root}
-.resp-bicho{float:left;margin:-.25rem var(--s-3) var(--s-1) -.25rem}
-.resp-bicho .mascote{width:3.5rem;height:3.5rem}
 /* Um bichinho por vez: com a caixa aberta, o do topo some (o espaço fica). */
 #quiz:has(#feedback.show.com-bicho) .quiz-top .mascote-linha{visibility:hidden}
 
@@ -104,3 +101,15 @@ body:not(:has(#quiz.active)) .hud > div.pill{display:none}
 .novidade .fig.r-rara small{background:#dfe8ff;color:#2d55c7}
 .novidade .fig.r-epica small{background:#fff;color:#a0620a}
 .novidade .fig.r-lendaria small{background:linear-gradient(90deg,#ffd23f,#ff8fa3,#7dd3fc);color:#221a33}
+
+/* ---------- depois de responder ---------- */
+/* As alternativas param de reagir ao mouse (uma borda de hover parecia outra
+   resposta marcada) e as que não importam se apagam: sobram a certa e a
+   errada escolhida. */
+#quiz:has(#feedback.show) .answer{pointer-events:none}
+#quiz:has(#feedback.show) .answer:not(.correct):not(.wrong){opacity:.45}
+/* O bichinho numa coluna própria, o texto todo alinhado ao lado dele. */
+.feedback.show.com-bicho{display:grid;grid-template-columns:auto 1fr;column-gap:var(--s-3);align-items:start}
+.feedback.com-bicho .resp-bicho{float:none;margin:-.25rem 0 0 -.25rem;grid-column:1;grid-row:1 / span 20}
+.feedback.com-bicho > :not(.resp-bicho){grid-column:2}
+.resp-bicho .mascote{width:4rem;height:4rem}

@@ -1149,7 +1149,7 @@ function resolve(ok,msg){
     pontosVoando(practiceMode?"−":"−1 vida",false);
     sfx.erro();
   }
-  feedback(ok,(ok?'Muito bem! ':'')+(msg||q.e));
+  feedback(ok,msg||q.e);
   updateHud();
   if(ok&&combo>=3&&typeof avancarSozinho==="function") avancarSozinho(()=>index, nextQuestion);
 }
@@ -1317,11 +1317,25 @@ const RENDER={choice:renderChoice,tf:renderTF,compass:renderCompass,match:render
 /* ---------- rótulo de procedência ---------- */
 /* A fonte vem normalizada do conteúdo: {t:"livro"|"folha", d:"p.49"}. Antes
    cada jogo escrevia à sua maneira e cada motor tinha o seu formatador. */
+/* Nos jogos criados, a fonte vem como "<arquivo>, p.N". O nome que a câmera
+   dá ("1795373984...jpg", "IMG_2041.jpg") não diz nada para a criança: vira
+   "Sua foto". Um nome escrito por gente fica, sem a extensão. Página só no
+   PDF: a foto tem uma só. */
+function rotuloDoArquivo(t, d){
+  const m = /,\s*p\.\s*(\d+)\s*$/.exec(d || "");
+  const nome = String(d || "").replace(/,\s*p\.\s*\d+\s*$/, "");
+  const limpo = nome.replace(/\.(jpe?g|png|heic|heif|webp|gif|pdf)$/i, "").trim();
+  const daCamera = !limpo || /\d{5,}/.test(limpo) || /^(img|dsc|dscn|pxl|photo|image|imagem|foto|screenshot|captura|whatsapp|scan)[\W_\d]/i.test(limpo + " ");
+  const rotulo = daCamera ? (t === "pdf" ? "Seu PDF" : "Sua foto") : limpo.replace(/[_]+/g, " ");
+  return rotulo + (t === "pdf" && m ? ", p." + m[1] : "");
+}
+
 function rotuloFonte(src){
   if(!src) return "";
   if(typeof src === "string") return src;          // conteúdo antigo, se houver
   if(src.t === "livro") return "Livro, " + src.d;
   if(src.t === "folha") return "Folha da escola" + (src.d ? ", " + src.d : "");
+  if(src.t === "foto" || src.t === "pdf") return rotuloDoArquivo(src.t, src.d);
   return src.d || "";
 }
 
