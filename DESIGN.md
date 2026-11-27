@@ -124,6 +124,10 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **O mascote evolui com o álbum**: com 3, 6, 9 e 12 figurinhas ganha
   chapéu, medalha, coroa e brilho, em todos os jogos. A tela de fim avisa
   quando ele evolui; o álbum diz quanto falta para o próximo.
+- **Bichinhos para escolher** no álbum: Bolinha, Gato e Coelho de saída;
+  Dino, Coruja e Robô abrem com 4, 7 e 10 figurinhas (a tela de fim avisa).
+  A cara e as reações são as mesmas em todos; muda o corpo e a cor. A
+  escolha fica no perfil e vale em todos os jogos.
 - **A última questão vale dobro** (partidas de 5 ou mais; na trilha, só a
   da última etapa), avisada com um selo amarelo e um "Capricha nessa!".
 - **Datas em palavras** ("há 25 min", "ontem", "há 2 semanas") na página

@@ -9,25 +9,6 @@ const _FALAS = {
   fogo:  ["Pegando fogo!", "Ninguém segura!", "Que sequência!", "Uau!"],
   ops:   ["Quase!", "Ops!", "A próxima vem!", "Errar faz parte."]
 };
-const _MASCOTE_SVG =
-  '<svg id="mascote" class="mascote" viewBox="0 0 64 64" aria-hidden="true" focusable="false">'
-  + '<circle class="m-brilho-aura" cx="32" cy="40" r="28"/>'
-  + '<path class="m-fogo" d="M32 1c5 7 10 9 8 17-1 4-5 6-8 6s-7-2-8-6c-2-8 3-10 8-17z"/>'
-  + '<g class="m-corpo">'
-  + '<ellipse class="m-pele" cx="32" cy="40" rx="23" ry="20"/>'
-  + '<ellipse class="m-barriga" cx="32" cy="47" rx="12" ry="8"/>'
-  + '<g class="m-chapeu"><path d="M25 23 35 4l7 18z"/><circle cx="35" cy="4" r="2.8"/></g>'
-  + '<path class="m-coroa" d="M21 23V11l5.5 5.5L32 8l5.5 8.5L43 11v12z"/>'
-  + '<g class="m-medalha"><path d="M28 48l4 4.5 4-4.5"/><circle cx="32" cy="56" r="4.6"/></g>'
-  + '<g class="m-olhos"><ellipse cx="24" cy="36" rx="3.2" ry="4.2"/><ellipse cx="40" cy="36" rx="3.2" ry="4.2"/>'
-  + '<circle class="m-brilho" cx="25.2" cy="34.4" r="1.1"/><circle class="m-brilho" cx="41.2" cy="34.4" r="1.1"/></g>'
-  + '<path class="m-olhos-feliz" d="M20.5 37q3.5-5 7 0M36.5 37q3.5-5 7 0"/>'
-  + '<circle class="m-bochecha" cx="16.5" cy="44" r="3.2"/><circle class="m-bochecha" cx="47.5" cy="44" r="3.2"/>'
-  + '<path class="m-boca m-boca-normal" d="M28 45q4 3.5 8 0"/>'
-  + '<path class="m-boca m-boca-feliz" d="M25.5 44q6.5 9 13 0z"/>'
-  + '<ellipse class="m-boca m-boca-ops" cx="32" cy="47" rx="3" ry="3.6"/>'
-  + '</g></svg>';
-
 let _mascoteT = 0, _mascoteFogo = false;
 
 function _poeMascote(){
@@ -44,11 +25,14 @@ function _poeMascote(){
 
 /* Os acessórios dependem das figurinhas do perfil: vão num atributo à
    parte, para a troca de cara (que reescreve a classe) não tirá-los. */
-function _nivelAtual(){
-  try{ return nivelDoMascote(figurinhasDe(_historicoDoPerfil()).length); }catch(e){ return 0; }
+function _figurinhasAgora(){
+  try{ return figurinhasDe(_historicoDoPerfil()).length; }catch(e){ return 0; }
 }
 function _vestir(svg, nivel){
-  if(svg) svg.setAttribute("data-nivel", nivel === undefined ? _nivelAtual() : nivel);
+  if(!svg) return;
+  const n = _figurinhasAgora();
+  svg.setAttribute("data-nivel", nivel === undefined ? nivelDoMascote(n) : nivel);
+  svg.setAttribute("data-bicho", bichoEscolhido(n));
 }
 addEventListener("DOMContentLoaded", _poeMascote);
 
@@ -111,10 +95,14 @@ function mostrarNovidades(nov){
         + ic(f.ic) + "</span>" + f.nome + "</li>").join("") + "</ul>" + album + "</div>";
     }
     if(nov.novas.length){
-      const n1 = figurinhasDe(_historicoDoPerfil()).length, v1 = nivelDoMascote(n1);
-      if(v1 > nivelDoMascote(n1 - nov.novas.length)){
-        h += '<div class="novidade fig acessorio">'
-          + _MASCOTE_SVG.replace('id="mascote"', 'id="mascoteNovo" data-nivel="' + v1 + '"').replace('class="mascote"', 'class="mascote feliz"')
+      const n1 = _figurinhasAgora(), n0 = n1 - nov.novas.length, v1 = nivelDoMascote(n1);
+      BICHOS.filter(b => b.min > n0 && b.min <= n1).forEach(b => {
+        h += '<div class="novidade fig acessorio">' + bichoSvg("bichoNovo-" + b.id, b.id, v1, "feliz")
+          + "<span><small>Bichinho novo</small><b>" + b.nome + " liberado!</b>"
+          + '<a href="index.html#album">Escolher no álbum</a></span></div>';
+      });
+      if(v1 > nivelDoMascote(n0)){
+        h += '<div class="novidade fig acessorio">' + bichoSvg("mascoteNovo", bichoEscolhido(n1), v1, "feliz")
           + "<span><small>Seu bichinho evoluiu</small><b>Ganhou " + ACESSORIOS[v1 - 1].nome + "!</b>"
           + "Agora ele aparece assim em todos os jogos.</span></div>";
         _vestir(document.getElementById("mascote"), v1);
