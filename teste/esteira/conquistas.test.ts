@@ -9,8 +9,8 @@ import vm from "node:vm";
 const RAIZ = new URL("../../", import.meta.url).pathname;
 const ctx = vm.createContext({});
 vm.runInContext(readFileSync(RAIZ + "motor/conquistas.js", "utf8")
-  + ";this.api={diasSeguidos,figurinhasDe,novidadesDa,FIGURINHAS};", ctx);
-const { diasSeguidos, figurinhasDe, novidadesDa, FIGURINHAS } = (ctx as any).api;
+  + ";this.api={diasSeguidos,figurinhasDe,novidadesDa,FIGURINHAS,ACESSORIOS,nivelDoMascote};", ctx);
+const { diasSeguidos, figurinhasDe, novidadesDa, FIGURINHAS, ACESSORIOS, nivelDoMascote } = (ctx as any).api;
 
 // Meio-dia local de um dia do mês: longe da meia-noite e do horário de verão.
 const dia = (d: number, h = 12) => new Date(2026, 10, d, h).getTime();
@@ -72,4 +72,10 @@ test("novidades: só o que esta partida trouxe", () => {
   const outra = novidadesDa(depois, [...depois, partida(9)], dia(9));
   assert.equal(outra.novas.length, 0);
   assert.equal(outra.diasSubiu, false);
+});
+
+test("o mascote ganha um acessório a cada 3 figurinhas, até o álbum completo", () => {
+  assert.deepEqual([0, 2, 3, 5, 6, 9, 11, 12].map(nivelDoMascote), [0, 0, 1, 1, 2, 3, 3, 4]);
+  // O último acessório é para o álbum inteiro.
+  assert.equal(ACESSORIOS[ACESSORIOS.length - 1].min, FIGURINHAS.length);
 });

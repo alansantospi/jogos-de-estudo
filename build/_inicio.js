@@ -205,7 +205,9 @@ function pintarDias(){
 function pintarAlbum(){
   const tem = new Set(figurinhasDe(historico()));
   document.getElementById("albumConta").textContent =
-    tem.size + " de " + FIGURINHAS.length + " figurinhas" + (perfilAtual() ? " de " + perfilAtual().nome : "");
+    tem.size + " de " + FIGURINHAS.length + " figurinhas" + (perfilAtual() ? " de " + perfilAtual().nome : "")
+    + (() => { const p = ACESSORIOS.find(a => tem.size < a.min);
+               return p ? ". Com " + p.min + ", o bichinho ganha " + p.nome + "!" : ". O bichinho já ganhou tudo!"; })();
   document.getElementById("album").innerHTML = FIGURINHAS.map(f => {
     const ok = tem.has(f.id);
     return '<div class="figurinha' + (ok ? " ganha" : "") + '">'

@@ -90,3 +90,15 @@ function novidadesDa(antes, depois, agora){
   const d0 = diasSeguidos(antes, agora), d1 = diasSeguidos(depois, agora);
   return {novas, dias: d1.atual, diasSubiu: !d0.jogouHoje && d1.jogouHoje};
 }
+
+/* ---------- o mascote evolui com o álbum ----------
+   A cada tantas figurinhas o bichinho ganha um acessório, que fica com ele
+   em todos os jogos. É o progresso de longo prazo que se vê sem abrir nada. */
+const ACESSORIOS = [
+  {min: 3,  id: "chapeu",  nome: "um chapéu de festa"},
+  {min: 6,  id: "medalha", nome: "uma medalha"},
+  {min: 9,  id: "coroa",   nome: "uma coroa"},
+  {min: 12, id: "brilho",  nome: "um brilho dourado"}
+];
+// Quantos acessórios já tem, com n figurinhas (0 a 4).
+function nivelDoMascote(n){ return ACESSORIOS.filter(a => n >= a.min).length; }
