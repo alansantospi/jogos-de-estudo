@@ -85,24 +85,25 @@ function mostrarNovidades(nov){
     const album = '<a href="index.html#album">Ver o álbum</a>';
     if(nov.novas.length === 1){
       const f = nov.novas[0];
-      h += '<div class="novidade fig"><span class="fig-ic">' + ic(f.ic) + "</span><span><small>Figurinha nova</small><b>"
-        + f.nome + "</b>" + f.desc + ". " + album + "</span></div>";
+      h += '<div class="novidade nv-fig fig-nova">' + figurinhaHtml(f, true).replace('class="fig ', 'class="fig chega ')
+        + "<span><small>Figurinha nova</small><b>" + f.nome + "</b>" + f.desc + ". " + album + "</span></div>";
     }else if(nov.novas.length){
       // Várias de uma vez (a primeira partida costuma dar algumas): um cartão
       // só, com as figurinhas lado a lado, em vez de uma pilha de cartões.
-      h += '<div class="novidade fig varias"><div><small>Figurinhas novas</small><b>' + nov.novas.length
-        + " de uma vez!</b></div><ul>" + nov.novas.map(f => '<li title="' + f.desc + '"><span class="fig-ic">'
-        + ic(f.ic) + "</span>" + f.nome + "</li>").join("") + "</ul>" + album + "</div>";
+      h += '<div class="novidade nv-fig varias"><div><small>Figurinhas novas</small><b>' + nov.novas.length
+        + " de uma vez!</b></div><ul>" + nov.novas.map((f, i) => '<li title="' + f.desc + '">'
+        + figurinhaHtml(f, true).replace('class="fig ', 'class="fig chega ').replace('">', '" data-i="' + i + '">')
+        + "</li>").join("") + "</ul>" + album + "</div>";
     }
     if(nov.novas.length){
       const n1 = _figurinhasAgora(), n0 = n1 - nov.novas.length, v1 = nivelDoMascote(n1);
       BICHOS.filter(b => b.min > n0 && b.min <= n1).forEach(b => {
-        h += '<div class="novidade fig acessorio">' + bichoSvg("bichoNovo-" + b.id, b.id, v1, "feliz")
+        h += '<div class="novidade nv-fig acessorio">' + bichoSvg("bichoNovo-" + b.id, b.id, v1, "feliz")
           + "<span><small>Bichinho novo</small><b>" + b.nome + " liberado!</b>"
           + '<a href="index.html#album">Escolher no álbum</a></span></div>';
       });
       if(v1 > nivelDoMascote(n0)){
-        h += '<div class="novidade fig acessorio">' + bichoSvg("mascoteNovo", bichoEscolhido(n1), v1, "feliz")
+        h += '<div class="novidade nv-fig acessorio">' + bichoSvg("mascoteNovo", bichoEscolhido(n1), v1, "feliz")
           + "<span><small>Seu bichinho evoluiu</small><b>Ganhou " + ACESSORIOS[v1 - 1].nome + "!</b>"
           + "Agora ele aparece assim em todos os jogos.</span></div>";
         _vestir(document.getElementById("mascote"), v1);
@@ -284,7 +285,7 @@ function _avisoDoDesafio(){
     el = document.createElement("div"); el.id = "novidades"; el.className = "novidades";
     ref.insertAdjacentElement("afterend", el);
   }
-  el.insertAdjacentHTML("afterbegin", '<div class="novidade fig"><span class="fig-ic">'
+  el.insertAdjacentHTML("afterbegin", '<div class="novidade nv-fig"><span class="fig-ic">'
     + '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-raio"/></svg></span>'
     + "<span><small>Destravado</small><b>Modo Desafio!</b>Com 5 vidas, e é o que vale recorde.</span></div>");
   el.hidden = false;

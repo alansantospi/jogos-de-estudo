@@ -208,13 +208,8 @@ function pintarAlbum(){
     tem.size + " de " + FIGURINHAS.length + " figurinhas" + (perfilAtual() ? " de " + perfilAtual().nome : "")
     + (() => { const p = ACESSORIOS.find(a => tem.size < a.min);
                return p ? ". Com " + p.min + ", o bichinho ganha " + p.nome + "!" : ". O bichinho já ganhou tudo!"; })();
-  document.getElementById("album").innerHTML = FIGURINHAS.map(f => {
-    const ok = tem.has(f.id);
-    return '<div class="figurinha' + (ok ? " ganha" : "") + '">'
-      + '<span class="fig-ic">' + _ic(f.ic) + "</span>"
-      + "<b>" + (ok ? esc(f.nome) : "?") + "</b>"
-      + "<span>" + esc(f.desc) + "</span></div>";
-  }).join("");
+  document.getElementById("album").innerHTML = FIGURINHAS.map(f =>
+    figurinhaHtml(f, tem.has(f.id), '<span class="fig-desc">' + esc(f.desc) + "</span>")).join("");
   pintarBichos(tem.size);
 }
 
