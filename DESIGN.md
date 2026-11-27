@@ -121,6 +121,11 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **Na sequência, o acerto avança sozinho** em 1,6 s (a partir de 3
   seguidos; tocar em "Próxima" adianta). Fora dela e no erro, espera: a
   explicação é para ser lida.
+- **O mascote evolui com o álbum**: com 3, 6, 9 e 12 figurinhas ganha
+  chapéu, medalha, coroa e brilho, em todos os jogos. A tela de fim avisa
+  quando ele evolui; o álbum diz quanto falta para o próximo.
+- **A última questão vale dobro** (partidas de 5 ou mais; na trilha, só a
+  da última etapa), avisada com um selo amarelo e um "Capricha nessa!".
 - **Datas em palavras** ("há 25 min", "ontem", "há 2 semanas") na página
   inicial e na de criar; no histórico, a data exata aparece ao passar o
   mouse.

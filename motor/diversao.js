@@ -11,10 +11,14 @@ const _FALAS = {
 };
 const _MASCOTE_SVG =
   '<svg id="mascote" class="mascote" viewBox="0 0 64 64" aria-hidden="true" focusable="false">'
+  + '<circle class="m-brilho-aura" cx="32" cy="40" r="28"/>'
   + '<path class="m-fogo" d="M32 1c5 7 10 9 8 17-1 4-5 6-8 6s-7-2-8-6c-2-8 3-10 8-17z"/>'
   + '<g class="m-corpo">'
   + '<ellipse class="m-pele" cx="32" cy="40" rx="23" ry="20"/>'
   + '<ellipse class="m-barriga" cx="32" cy="47" rx="12" ry="8"/>'
+  + '<g class="m-chapeu"><path d="M25 23 35 4l7 18z"/><circle cx="35" cy="4" r="2.8"/></g>'
+  + '<path class="m-coroa" d="M21 23V11l5.5 5.5L32 8l5.5 8.5L43 11v12z"/>'
+  + '<g class="m-medalha"><path d="M28 48l4 4.5 4-4.5"/><circle cx="32" cy="56" r="4.6"/></g>'
   + '<g class="m-olhos"><ellipse cx="24" cy="36" rx="3.2" ry="4.2"/><ellipse cx="40" cy="36" rx="3.2" ry="4.2"/>'
   + '<circle class="m-brilho" cx="25.2" cy="34.4" r="1.1"/><circle class="m-brilho" cx="41.2" cy="34.4" r="1.1"/></g>'
   + '<path class="m-olhos-feliz" d="M20.5 37q3.5-5 7 0M36.5 37q3.5-5 7 0"/>'
@@ -35,6 +39,16 @@ function _poeMascote(){
   m.className = "mascote-linha";
   m.innerHTML = '<p id="mascoteFala" class="mascote-fala"></p>' + _MASCOTE_SVG;
   topo.appendChild(m);
+  _vestir(m.querySelector("svg"));
+}
+
+/* Os acessórios dependem das figurinhas do perfil: vão num atributo à
+   parte, para a troca de cara (que reescreve a classe) não tirá-los. */
+function _nivelAtual(){
+  try{ return nivelDoMascote(figurinhasDe(_historicoDoPerfil()).length); }catch(e){ return 0; }
+}
+function _vestir(svg, nivel){
+  if(svg) svg.setAttribute("data-nivel", nivel === undefined ? _nivelAtual() : nivel);
 }
 addEventListener("DOMContentLoaded", _poeMascote);
 
@@ -95,6 +109,16 @@ function mostrarNovidades(nov){
       h += '<div class="novidade fig varias"><div><small>Figurinhas novas</small><b>' + nov.novas.length
         + " de uma vez!</b></div><ul>" + nov.novas.map(f => '<li title="' + f.desc + '"><span class="fig-ic">'
         + ic(f.ic) + "</span>" + f.nome + "</li>").join("") + "</ul>" + album + "</div>";
+    }
+    if(nov.novas.length){
+      const n1 = figurinhasDe(_historicoDoPerfil()).length, v1 = nivelDoMascote(n1);
+      if(v1 > nivelDoMascote(n1 - nov.novas.length)){
+        h += '<div class="novidade fig acessorio">'
+          + _MASCOTE_SVG.replace('id="mascote"', 'id="mascoteNovo" data-nivel="' + v1 + '"').replace('class="mascote"', 'class="mascote feliz"')
+          + "<span><small>Seu bichinho evoluiu</small><b>Ganhou " + ACESSORIOS[v1 - 1].nome + "!</b>"
+          + "Agora ele aparece assim em todos os jogos.</span></div>";
+        _vestir(document.getElementById("mascote"), v1);
+      }
     }
     el.innerHTML = h; el.hidden = false;
     if(nov.novas.length) _plim(2.2);       // depois da fanfarra
@@ -209,6 +233,7 @@ function mascoteParado(onde, sufixo, estado, fala){
         + _MASCOTE_SVG.replace('id="mascote"', 'id="mascote' + sufixo + '"');
       onde.prepend(linha);
     }
+    _vestir(linha.querySelector("svg"));
     const m = linha.querySelector("svg");
     m.setAttribute("class", "mascote " + estado + (estado === "fogo" ? " em-fogo" : "") + " pula");
     linha.querySelector(".mascote-fala").textContent = fala;
@@ -291,4 +316,36 @@ function avancarSozinho(posicao, proxima){
     if(posicao() !== era || !q || !q.classList.contains("active") || !b || b.style.display === "none") return;
     proxima();
   }, 1600);
+}
+
+/* ---------- a última questão vale dobro ----------
+   Um fecho com tensão: a partida termina numa questão que vale mais, avisada
+   antes. Só a última da partida inteira (na trilha, a da última etapa). */
+function questaoFinal(){
+  try{
+    if(typeof questions === "undefined" || questions.length < 5 || index !== questions.length - 1) return false;
+    if(typeof activeTrail !== "undefined" && activeTrail && trailStep < trails[activeTrail].steps.length - 1) return false;
+    return true;
+  }catch(e){ return false; }
+}
+function marcarFinal(){
+  try{
+    const topo = document.querySelector("#quiz .quiz-top"); if(!topo) return;
+    let a = topo.querySelector(".final-aviso");
+    const sim = questaoFinal();
+    if(!sim){ if(a) a.remove(); return; }
+    if(a) return;
+    a = document.createElement("span");
+    a.className = "final-aviso";
+    a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-estrela"/></svg>Última questão · vale dobro!';
+    topo.insertBefore(a, topo.querySelector(".mascote-linha"));
+    const f = document.getElementById("mascoteFala");
+    if(f){
+      f.textContent = "Capricha nessa!";
+      f.classList.remove("on"); void f.offsetWidth; f.classList.add("on");
+      clearTimeout(_mascoteT);
+      _mascoteT = setTimeout(() => f.classList.remove("on"), 1700);
+    }
+    if(typeof sfx !== "undefined" && sfx.etapa) sfx.etapa();
+  }catch(e){}
 }

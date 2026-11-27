@@ -1140,9 +1140,9 @@ function resolve(ok,msg){
   answered++;record(q,ok);
   if(ok){
     hits++;combo++;bestCombo=Math.max(bestCombo,combo);
-    const mult=multiplicador(combo), ganho=100*mult;
+    const mult=multiplicador(combo), dobro=typeof questaoFinal==="function"&&questaoFinal()?2:1, ganho=100*mult*dobro;
     score+=ganho;
-    pontosVoando("+"+ganho+(mult>1?" ×"+mult:""),true);
+    pontosVoando("+"+ganho+(mult>1?" ×"+mult:"")+(dobro>1?" dobro!":""),true);
     if(combo>=3){sfx.combo(combo);pulsarCombo();festeja(combo)} else sfx.acerto(combo);
   }else{
     loseLife();combo=0;
@@ -1340,6 +1340,7 @@ function renderQuestion(){
     endGame();return;
   }
   updateProgress();
+  if(typeof marcarFinal==="function") marcarFinal();
   const q=questions[index];
   document.getElementById('stage').textContent=nomes[currentCategory]||currentCategory;
   // Questões tiradas do capítulo do livro ganham um selo, para o aluno reconhecer o que já caiu.

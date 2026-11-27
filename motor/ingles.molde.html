@@ -2606,6 +2606,7 @@ function renderQuestion(){
   }
   locked=false;
   orderSelection=[];
+  if(typeof marcarFinal==="function") marcarFinal();
   const q=questions[index];
   document.getElementById("stageLabel").textContent=q.stage;
   // Questoes vindas da folha da escola ganham um selo.
@@ -2947,7 +2948,9 @@ function feedback(ok,msg){
     // O bônus da sequência vem por cima dos pontos que cada forma de questão já deu.
     const mult=multiplicador(combo);
     score+=100*(mult-1);
-    pontosVoando("+"+Math.max(score-_scoreAnterior,0)+(mult>1?" ×"+mult:""),true);
+    const dobro=typeof questaoFinal==="function"&&questaoFinal();
+    if(dobro) score+=Math.max(score-_scoreAnterior,0);
+    pontosVoando("+"+Math.max(score-_scoreAnterior,0)+(mult>1?" ×"+mult:"")+(dobro?" dobro!":""),true);
     if(combo>=3){ sfx.combo(combo); pulsarCombo(); } else sfx.acerto(combo);
   }else{
     pontosVoando(practiceMode?"−":"−1 vida",false);
