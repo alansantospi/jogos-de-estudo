@@ -77,3 +77,8 @@ body:not(:has(#quiz.active)) .hud > div.pill{display:none}
 .final-aviso svg{width:1rem;height:1rem;fill:currentColor;stroke:none}
 @media (prefers-reduced-motion:reduce){.final-aviso{animation:none}}
 .novidade.acessorio .mascote{width:3.5rem;height:3.5rem;flex:none}
+
+/* ---------- o bichinho na caixa da resposta ---------- */
+.feedback.com-bicho{display:flow-root}
+.resp-bicho{float:left;margin:-.25rem var(--s-3) var(--s-1) -.25rem}
+.resp-bicho .mascote{width:3.5rem;height:3.5rem}

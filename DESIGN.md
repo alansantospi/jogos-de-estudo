@@ -124,6 +124,9 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **O mascote evolui com o álbum**: com 3, 6, 9 e 12 figurinhas ganha
   chapéu, medalha, coroa e brilho, em todos os jogos. A tela de fim avisa
   quando ele evolui; o álbum diz quanto falta para o próximo.
+- **O bichinho reage na caixa da resposta**, onde o olhar está depois de
+  responder (no celular o topo já saiu da tela); a fala dele é o título da
+  caixa. No topo ele fica só com a chama da sequência e o "oi" do começo.
 - **Bichinhos para escolher** no álbum: Bolinha, Gato e Coelho de saída;
   Dino, Coruja e Robô abrem com 4, 7 e 10 figurinhas (a tela de fim avisa).
   A cara e as reações são as mesmas em todos; muda o corpo e a cor. A

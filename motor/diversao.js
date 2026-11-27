@@ -47,7 +47,7 @@ function mascote(estado){
     void m.getBoundingClientRect();        // reinicia o pulo se ainda estava pulando
     m.classList.add("pula");
     const l = _FALAS[estado];
-    if(f && l){
+    if(f && l && estado === "oi"){   // as reações falam na caixa da resposta (bichoNaResposta)
       f.textContent = l[Math.floor(Math.random() * l.length)];
       f.classList.remove("on"); void f.offsetWidth; f.classList.add("on");
     }
@@ -335,5 +335,24 @@ function marcarFinal(){
       _mascoteT = setTimeout(() => f.classList.remove("on"), 1700);
     }
     if(typeof sfx !== "undefined" && sfx.etapa) sfx.etapa();
+  }catch(e){}
+}
+
+/* ---------- o bichinho na caixa da resposta ----------
+   Depois de responder, o olhar está na caixa de "certo/ainda não", não no
+   topo (que no celular já saiu da tela). Ele reage ali, e a fala dele vira
+   o título da caixa. */
+function bichoNaResposta(ok){
+  try{
+    const box = document.getElementById("feedback"); if(!box) return;
+    const seq = typeof combo !== "undefined" ? combo : 0;
+    const estado = !ok ? "ops" : seq >= 3 ? "fogo" : "feliz";
+    const l = _FALAS[estado], r = box.querySelector(".rotulo");
+    if(r) r.textContent = l[Math.floor(Math.random() * l.length)] + (ok && seq >= 3 ? " " + seq + " seguidas!" : "");
+    const n = _figurinhasAgora(), d = document.createElement("span");
+    d.className = "resp-bicho";
+    d.innerHTML = bichoSvg("mascoteResp", bichoEscolhido(n), nivelDoMascote(n), estado + (estado === "fogo" ? " em-fogo" : "") + " pula");
+    box.prepend(d);
+    box.classList.add("com-bicho");
   }catch(e){}
 }
