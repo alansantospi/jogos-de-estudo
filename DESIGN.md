@@ -124,6 +124,11 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **O mascote evolui com o álbum**: com 3, 6, 9 e 12 figurinhas ganha
   chapéu, medalha, coroa e brilho, em todos os jogos. A tela de fim avisa
   quando ele evolui; o álbum diz quanto falta para o próximo.
+- **Depois de responder**, as alternativas param de reagir ao mouse e as
+  que não importam se apagam (sobram a certa e a errada escolhida). O
+  bichinho fica numa coluna própria na caixa, com o texto alinhado ao lado.
+- **Fonte de jogo criado sem nome de arquivo**: o nome que a câmera dá vira
+  "Sua foto" (ou "Seu PDF, p.N"); um nome escrito por gente fica.
 - **Bichinhos com corpo e acabamento**: volume em camadas (sombra embaixo,
   luz em cima, um reflexo), contorno de desenho e sombra no chão. Cada um
   com o seu corpo: gato com rabo e bigodes, coelho com pezão e pompom, dino
