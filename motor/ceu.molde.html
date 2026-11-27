@@ -1366,6 +1366,7 @@ function feedback(ok,msg){
   const f=document.getElementById('feedback');
   f.className='feedback show '+(ok?'good':'bad');
   f.innerHTML='<span class="rotulo">'+(ok?'Certo':'Ainda não')+'</span>';f.append(msg);
+  if(typeof bichoNaResposta==="function") bichoNaResposta(ok);
   document.getElementById('nextBtn').style.display='inline-block';
 }
 function nextQuestion(){index++;renderQuestion()}

@@ -2961,6 +2961,7 @@ function feedback(ok,msg){
   const box=document.getElementById("feedback");
   box.innerHTML='<span class="rotulo">'+(ok?(combo>=3?"Certo — "+combo+" seguidas":"Certo"):"Ainda não")+'</span>';box.append(msg);
   box.className="feedback show "+(ok?"good":"bad");
+  if(typeof bichoNaResposta==="function") bichoNaResposta(ok);
   document.getElementById("nextBtn").style.display="inline-block";
 }
 function shake(){
