@@ -215,7 +215,23 @@ function pintarAlbum(){
       + "<b>" + (ok ? esc(f.nome) : "?") + "</b>"
       + "<span>" + esc(f.desc) + "</span></div>";
   }).join("");
+  pintarBichos(tem.size);
 }
+
+function pintarBichos(n){
+  const atual = bichoEscolhido(n), nivel = nivelDoMascote(n);
+  document.getElementById("bichos").innerHTML = BICHOS.map(b => {
+    const aberto = n >= b.min;
+    return '<button type="button" class="bicho' + (b.id === atual ? " escolhido" : "") + (aberto ? "" : " trancado") + '"'
+      + (aberto ? ' onclick="escolherBicho(\'' + b.id + '\')"' : " disabled")
+      + ' aria-pressed="' + (b.id === atual) + '">'
+      + bichoSvg("bicho-" + b.id, b.id, nivel, b.id === atual ? "feliz" : "")
+      + "<b>" + b.nome + "</b>"
+      + (aberto ? "" : "<small>abre com " + b.min + " figurinhas</small>") + "</button>";
+  }).join("");
+}
+
+function escolherBicho(id){ guardarBicho(id); pintarBichos(figurinhasDe(historico()).length); }
 
 function pintarJogos(){
   /* Selo por matéria: quantas missões já foram concluídas. */

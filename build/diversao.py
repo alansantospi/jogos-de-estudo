@@ -17,6 +17,15 @@ def conquistas_js():
     return _ler("conquistas.js")
 
 
+def bicho_js():
+    """O desenho do bichinho e a escolha dele: nos jogos e no álbum."""
+    return _ler("bicho.js")
+
+
+def bicho_css():
+    return _ler("bicho.css")
+
+
 def tempo_js():
     """haQuanto: datas em palavras ("há 3 dias") na página inicial e na de criar."""
     return _ler("tempo.js")
@@ -32,6 +41,6 @@ def icones():
 def embutir(molde):
     if molde.count(MARCA) != 1:
         raise SystemExit("molde sem %s (ou com mais de um)" % MARCA)
-    bloco = ("<style>" + _ler("diversao.css") + "</style>\n<script>"
-             + conquistas_js() + "\n" + _ler("diversao.js") + "</script>")
+    bloco = ("<style>" + bicho_css() + _ler("diversao.css") + "</style>\n<script>"
+             + conquistas_js() + "\n" + bicho_js() + "\n" + _ler("diversao.js") + "</script>")
     return molde.replace(MARCA, bloco)

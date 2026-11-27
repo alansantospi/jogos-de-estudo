@@ -41,7 +41,7 @@ for n in USADOS:
 
 sprite = "".join('<symbol id="i-%s" viewBox="0 0 24 24">%s</symbol>' % (n, SPRITE[n]) for n in USADOS)
 
-html = html.replace("/*TOKENS*/", tokens + extra)
+html = html.replace("/*TOKENS*/", tokens + extra + diversao.bicho_css())
 html = html.replace("/*SPRITE*/", sprite)
 html = html.replace("/*MISSOES*/", "const MISSOES = " + json.dumps(missoes, ensure_ascii=False) + ";")
 # As cores dos jogos criados: as mesmas com que `_montar_jogo.js` os monta.
@@ -49,7 +49,7 @@ montar = io.open("build/_montar_jogo.js", encoding="utf-8").read()
 cores = re.search(r"/\*CORES>\*/.*?/\*<CORES\*/", montar, re.S)
 if not cores:
     raise SystemExit("build/_montar_jogo.js: não achei o bloco /*CORES>*/ ... /*<CORES*/")
-html = html.replace("/*JS*/", cores.group(0) + "\n" + diversao.conquistas_js() + diversao.tempo_js() + js + conta)
+html = html.replace("/*JS*/", cores.group(0) + "\n" + diversao.conquistas_js() + diversao.tempo_js() + diversao.bicho_js() + js + conta)
 
 io.open("index.html", "w", encoding="utf-8").write(html)
 print("  %-24s perfis, historico e conta (%d KB)" % ("index", len(html) // 1024))

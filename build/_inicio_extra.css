@@ -175,3 +175,15 @@ footer .legal a{color:var(--texto-2)}
 .figurinha.ganha .fig-ic svg{opacity:1}
 @media (prefers-reduced-motion:reduce){.dias.feito svg{animation:none}}
 @media print{.dias,#v-album{display:none!important}}
+
+/* ---------- escolher o bichinho ---------- */
+.bichos{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.5rem,1fr));gap:var(--s-3);margin:var(--s-3) 0 var(--s-6)}
+.bicho{display:flex;flex-direction:column;align-items:center;gap:var(--s-1);padding:var(--s-3) var(--s-2);
+  border:2px solid var(--risco);border-radius:var(--r);background:var(--carta);color:var(--texto);cursor:pointer;font:inherit}
+.bicho .mascote{width:4.5rem;height:4.5rem}
+.bicho b{font-family:var(--display)}
+.bicho small{font-size:.75rem;color:var(--texto-2);text-align:center}
+.bicho:hover:not(:disabled){border-color:var(--alt-1)}
+.bicho.escolhido{border-color:var(--alt-1);box-shadow:0 0 0 3px color-mix(in oklch,var(--alt-1) 35%,transparent)}
+.bicho.trancado{cursor:not-allowed}
+.bicho.trancado .mascote{filter:grayscale(1) brightness(.55);opacity:.7}

@@ -1,0 +1,60 @@
+/* ---------- o bichinho: cara e estados ---------- */
+.mascote{width:4rem;height:4rem;overflow:visible;flex:none;stroke:none}
+.mascote .m-pele,.mascote .b-parte{fill:var(--materia-solida,var(--alt-1))}
+.mascote .m-barriga{fill:#fff;opacity:.22}
+.mascote .m-olhos ellipse{fill:#221a33}
+.mascote .m-brilho{fill:#fff}
+.mascote .m-olhos-feliz,.mascote .m-boca-normal{fill:none;stroke:#221a33;stroke-width:2.6;stroke-linecap:round}
+.mascote .m-boca-feliz,.mascote .m-boca-ops{fill:#221a33}
+.mascote .m-bochecha{fill:#ff8fa3;opacity:.7}
+.mascote .m-fogo{fill:#ff9b3d;opacity:0;transform-origin:32px 22px;transform:scale(.3);transition:opacity .2s,transform .25s}
+.mascote .m-olhos-feliz,.mascote .m-boca-feliz,.mascote .m-boca-ops{display:none}
+.mascote.feliz .m-olhos,.mascote.fogo .m-olhos,.mascote.oi .m-olhos,.mascote.em-fogo .m-olhos{display:none}
+.mascote.feliz .m-olhos-feliz,.mascote.fogo .m-olhos-feliz,.mascote.oi .m-olhos-feliz,.mascote.em-fogo .m-olhos-feliz{display:inline}
+.mascote.feliz .m-boca-normal,.mascote.fogo .m-boca-normal,.mascote.oi .m-boca-normal,.mascote.em-fogo .m-boca-normal{display:none}
+.mascote.feliz .m-boca-feliz,.mascote.fogo .m-boca-feliz,.mascote.oi .m-boca-feliz,.mascote.em-fogo .m-boca-feliz{display:inline}
+.mascote.ops .m-boca-normal,.mascote.ops .m-boca-feliz,.mascote.ops .m-olhos-feliz{display:none}
+.mascote.ops .m-boca-ops,.mascote.ops .m-olhos{display:inline}
+.mascote.em-fogo .m-fogo{opacity:1;transform:none;animation:m-chama .5s ease-in-out infinite alternate}
+.mascote .m-corpo{transform-origin:32px 60px}
+.mascote.pula.feliz .m-corpo,.mascote.pula.fogo .m-corpo,.mascote.pula.oi .m-corpo{animation:m-pula .5s cubic-bezier(.3,1.5,.5,1)}
+.mascote.pula.ops .m-corpo{animation:m-treme .4s ease-in-out}
+@keyframes m-pula{0%{transform:none}35%{transform:translateY(-9px) scale(.95,1.06)}70%{transform:translateY(0) scale(1.06,.94)}100%{transform:none}}
+@keyframes m-treme{0%,100%{transform:none}20%{transform:rotate(-8deg)}40%{transform:rotate(7deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+@keyframes m-chama{from{transform:scale(1,1)}to{transform:scale(.9,1.1)}}
+
+/* ---------- acessórios do mascote (data-nivel = quantos ganhou) ---------- */
+.mascote .m-chapeu,.mascote .m-coroa,.mascote .m-medalha,.mascote .m-brilho-aura{display:none}
+.mascote[data-nivel="1"] .m-chapeu,.mascote[data-nivel="2"] .m-chapeu{display:inline}
+.mascote:is([data-nivel="2"],[data-nivel="3"],[data-nivel="4"]) .m-medalha{display:inline}
+.mascote:is([data-nivel="3"],[data-nivel="4"]) .m-coroa{display:inline}
+.mascote[data-nivel="4"] .m-brilho-aura{display:inline}
+.mascote .m-chapeu path{fill:#ff6b9a}
+.mascote .m-chapeu circle,.mascote .m-coroa,.mascote .m-medalha circle{fill:#ffd23f;stroke:#e0a100;stroke-width:1.2;stroke-linejoin:round}
+.mascote .m-medalha path{fill:none;stroke:#4da3ff;stroke-width:2.4;stroke-linejoin:round}
+.mascote .m-brilho-aura{fill:none;stroke:#ffd23f;stroke-width:2.2;stroke-dasharray:3 6;stroke-linecap:round;
+  transform-origin:32px 40px;animation:m-gira 9s linear infinite}
+@keyframes m-gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.mascote .m-brilho-aura{animation:none}}
+
+
+/* ---------- cada bicho: as partes dele e a cor ---------- */
+.mascote .b-parte{display:none}
+.mascote[data-bicho="gato"] .b-gato,.mascote[data-bicho="coelho"] .b-coelho,.mascote[data-bicho="dino"] .b-dino,
+.mascote[data-bicho="coruja"] .b-coruja,.mascote[data-bicho="robo"] .b-robo{display:inline}
+.mascote[data-bicho="gato"]{--bicho:#f2994a}
+.mascote[data-bicho="coelho"]{--bicho:#ef8fb6}
+.mascote[data-bicho="dino"]{--bicho:#3fbf7f}
+.mascote[data-bicho="coruja"]{--bicho:#b07a45}
+.mascote[data-bicho="robo"]{--bicho:#7f9cc0}
+.mascote[data-bicho]:not([data-bicho="bolinha"]) :is(.m-pele,.b-parte){fill:var(--bicho)}
+.mascote .b-dentro{fill:#ff8fa3!important;opacity:.75}
+.mascote .b-dino.b-espinho{fill:#f6c343!important}
+.mascote .b-coruja.b-bico{fill:#f6a623!important}
+.mascote .b-robo .b-antena{fill:none!important;stroke:#5b7392;stroke-width:2.4;stroke-linecap:round}
+.mascote .b-robo .b-luz{fill:#ff5d5d!important;animation:b-pisca 1.6s steps(2) infinite}
+.mascote .b-robo rect{fill:#5b7392!important}
+@keyframes b-pisca{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.mascote .b-robo .b-luz{animation:none}}
+.mascote .b-coruja .b-disco{fill:#f3e3c8!important}
+.mascote .b-coruja .b-asa{fill:#8a5a2e!important}
