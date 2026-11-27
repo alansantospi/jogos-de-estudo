@@ -215,14 +215,18 @@ function pintarAlbum(){
 
 function pintarBichos(n){
   const atual = bichoEscolhido(n), nivel = nivelDoMascote(n);
+  /* Na moldura das figurinhas: fundo de raios na cor do bicho, selo da
+     raridade; o trancado é a silhueta, como a figurinha que falta. */
   document.getElementById("bichos").innerHTML = BICHOS.map(b => {
-    const aberto = n >= b.min;
-    return '<button type="button" class="bicho' + (b.id === atual ? " escolhido" : "") + (aberto ? "" : " trancado") + '"'
+    const aberto = n >= b.min, eu = b.id === atual;
+    return '<button type="button" class="bicho fig ' + (aberto ? "r-" + b.raridade : "fig-falta") + (eu ? " escolhido" : "") + '"'
+      + ' style="--c1:' + b.cor[0] + ";--c2:" + b.cor[1] + '"'
       + (aberto ? ' onclick="escolherBicho(\'' + b.id + '\')"' : " disabled")
-      + ' aria-pressed="' + (b.id === atual) + '">'
-      + bichoSvg("bicho-" + b.id, b.id, nivel, b.id === atual ? "feliz" : "")
-      + "<b>" + b.nome + "</b>"
-      + (aberto ? "" : "<small>abre com " + b.min + " figurinhas</small>") + "</button>";
+      + ' aria-pressed="' + eu + '">'
+      + '<span class="fig-arte">' + bichoSvg("bicho-" + b.id, b.id, nivel, eu ? "feliz" : "") + "</span>"
+      + "<b>" + (aberto ? b.nome : "?") + "</b>"
+      + (aberto ? "<small>" + (eu ? "Escolhido" : RARIDADE_NOME[b.raridade]) + "</small>"
+                : '<span class="fig-desc">abre com ' + b.min + " figurinhas</span>") + "</button>";
   }).join("");
 }
 

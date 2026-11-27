@@ -124,6 +124,14 @@ Feita para o app crescer em matérias e em conteúdo por matéria.
 - **O mascote evolui com o álbum**: com 3, 6, 9 e 12 figurinhas ganha
   chapéu, medalha, coroa e brilho, em todos os jogos. A tela de fim avisa
   quando ele evolui; o álbum diz quanto falta para o próximo.
+- **Bichinhos com corpo e acabamento**: volume em camadas (sombra embaixo,
+  luz em cima, um reflexo), contorno de desenho e sombra no chão. Cada um
+  com o seu corpo: gato com rabo e bigodes, coelho com pezão e pompom, dino
+  com cauda e barriga listrada, coruja com penas e garras, robô quadrado com
+  o rosto numa tela. Parados, respiram, piscam e às vezes olham de lado. Na
+  escolha, ficam na moldura das figurinhas, com raridade; os trancados são
+  silhueta. (Sem degradê de SVG: precisaria de id, e com vários bichinhos na
+  página, alguns escondidos, a referência quebra.)
 - **O bichinho reage na caixa da resposta**, onde o olhar está depois de
   responder (no celular o topo já saiu da tela); a fala dele é o título da
   caixa. Ele entra com a cara de antes e reage na frente da criança; com a
